@@ -13,10 +13,14 @@ if ! curl -sf "http://localhost:9000/oei-public/" > /dev/null; then
   exit 1
 fi
 
-# Le bucket privé doit exister mais refuser l'accès anonyme (403/401 attendu, pas 404).
+# Le bucket privé doit exister ET refuser l'accès anonyme (403/401 attendu, pas 200 ni 404).
 status=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:9000/oei-membership/")
 if [ "$status" = "404" ]; then
   echo "Bucket 'oei-membership' n'existe pas (404)."
+  exit 1
+fi
+if [ "$status" != "403" ] && [ "$status" != "401" ]; then
+  echo "Bucket 'oei-membership' n'est pas privé (statut attendu 403/401, reçu ${status})."
   exit 1
 fi
 
