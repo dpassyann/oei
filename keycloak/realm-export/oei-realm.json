@@ -1,0 +1,27 @@
+{
+  "realm": "oei",
+  "enabled": true,
+  "displayName": "Ordre des Experts Informaticiens",
+  "loginTheme": "oei",
+  "sslRequired": "external",
+  "roles": {
+    "realm": [
+      { "name": "member", "description": "Membre de l'OEI (fondateur, agréé, associé ou honneur)" },
+      { "name": "admin", "description": "Administrateur habilité à valider les demandes d'adhésion" }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "oei-frontend",
+      "publicClient": true,
+      "protocol": "openid-connect",
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "redirectUris": ["http://localhost:4200/*"],
+      "webOrigins": ["http://localhost:4200"],
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      }
+    }
+  ]
+}
