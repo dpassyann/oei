@@ -31,6 +31,7 @@ Thumbs.db
 # Secrets & local config — NEVER commit
 .env
 infra/.env
+infra/env.local
 infra/data/
 *.local.env
 **/application-secret*.yml
