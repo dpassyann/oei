@@ -1,0 +1,23 @@
+:root {
+  --oei-navy: #0a1e3f;
+  --oei-gold: #e8a530;
+}
+
+body {
+  background-color: var(--oei-navy) !important;
+}
+
+#kc-header, #kc-header-wrapper {
+  color: #ffffff;
+}
+
+.login-pf-page .card-pf {
+  background-color: #ffffff;
+  border-top: 4px solid var(--oei-gold);
+}
+
+.btn-primary {
+  background-color: var(--oei-gold) !important;
+  border-color: var(--oei-gold) !important;
+  color: var(--oei-navy) !important;
+}
