@@ -134,20 +134,13 @@ sequenceDiagram
 - **Node.js** et **pnpm/npm** (frontend, une fois initialisé)
 - **Java** et **Maven** (backend, une fois initialisé)
 
-## 8. Lancement local (infra)
+## 8. Démarrer l'environnement local
 
-```bash
-cp infra/.env.example infra/.env   # puis adapter les valeurs
-./infra/scripts/dev-up.sh          # Postgres + Keycloak (realm oei) + MinIO, avec vérification automatique
-./infra/scripts/dev-down.sh        # arrêt de la stack
-```
-
-**UIs locales** (une fois la stack levée) :
-
-| Service | URL | Rôle |
-|---|---|---|
-| Keycloak | `http://localhost:8081` | Admin console, realm `oei`, thème de login personnalisé |
-| MinIO console | `http://localhost:9001` | Buckets `oei-public` (public) / `oei-membership` (privé) |
+1. `cp infra/.env.example infra/.env` puis adapter les valeurs.
+2. `./infra/scripts/dev-up.sh` — démarre Postgres, Keycloak (realm `oei` + thème de login) et MinIO (buckets `oei-public`/`oei-membership`), puis vérifie que tout est opérationnel.
+3. Console Keycloak : http://localhost:8081 (admin défini dans `infra/.env`).
+4. Console MinIO : http://localhost:9001 (identifiants définis dans `infra/.env`).
+5. `./infra/scripts/dev-down.sh` — arrête la stack.
 
 La mise en cloud (AWS EC2 + Traefik/HTTPS) est traitée dans une itération ultérieure, une fois
 l'environnement local stable — voir §5 du document de design.
