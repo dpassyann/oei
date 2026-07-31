@@ -1,0 +1,43 @@
+# Build outputs
+target/
+build/
+dist/
+out/
+*.class
+
+# Maven
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Node / Angular
+node_modules/
+.angular/
+frontend/**/coverage/
+frontend/**/.pnpm-store/
+frontend/**/api/generated
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets & local config — NEVER commit
+.env
+*.local.env
+**/application-secret*.yml
+**/*-credentials*.json
+
+# Logs & temp
+*.log
+logs/
+tmp/
+
+# Generated OpenAPI clients (regenerated from contracts)
+frontend/**/src/**/infrastructure/clients/**/
