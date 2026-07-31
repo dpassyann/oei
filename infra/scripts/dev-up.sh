@@ -12,6 +12,18 @@ fi
 
 docker compose --env-file "$INFRA_DIR/.env" -f "$INFRA_DIR/docker-compose.yml" up -d
 
-echo "Attente de la disponibilité des services..."
-sleep 5
-"$SCRIPT_DIR/verify-all.sh"
+echo "Attente de la disponibilité des services (Keycloak peut prendre 30-60s à froid)..."
+attempts=0
+max_attempts=18
+verify_log="$(mktemp "${TMPDIR:-/tmp}/oei-verify-all.XXXXXX")"
+trap 'rm -f "$verify_log"' EXIT
+until "$SCRIPT_DIR/verify-all.sh" > "$verify_log" 2>&1; do
+  attempts=$((attempts + 1))
+  if [ "$attempts" -ge "$max_attempts" ]; then
+    echo "Les services ne sont toujours pas prêts après $((max_attempts * 5))s. Dernier résultat :"
+    cat "$verify_log"
+    exit 1
+  fi
+  sleep 5
+done
+cat "$verify_log"
