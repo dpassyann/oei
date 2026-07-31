@@ -58,9 +58,18 @@ Un seul dépôt git, un seul historique entre code et contenu.
 
 ## 5. Infrastructure Docker/AWS et sécurité
 
-- Une instance EC2, `docker-compose` avec : `frontend` (nginx statique), `backend` (Spring Boot), `keycloak`, `postgres` (Keycloak + adhésions), `traefik` (reverse proxy, HTTPS automatique via Let's Encrypt).
-- Sécurité de base non négociable : HTTPS partout, secrets hors git (`.env`), Security Group AWS limité à 80/443/22 (22 restreint), mises à jour régulières des images, sauvegardes de la base Postgres.
+- Environnement de développement : `docker-compose` local uniquement pour l'instant (`keycloak`, `postgres`, `minio`, puis `backend`/`frontend` au fur et à mesure) — la mise en cloud AWS (EC2 + Traefik/HTTPS) est traitée dans une itération ultérieure, une fois l'environnement local stable.
+- Cible de production (à réaliser plus tard) : une instance EC2, `docker-compose` avec `frontend` (nginx statique), `backend` (Spring Boot), `keycloak`, `postgres`, `minio`, `traefik` (reverse proxy, HTTPS automatique via Let's Encrypt).
+- Sécurité de base non négociable dès la mise en production : HTTPS partout, secrets hors git (`.env`), Security Group AWS limité à 80/443/22 (22 restreint), mises à jour régulières des images, sauvegardes des données Postgres et MinIO.
 - Pas de WAF/CDN en v1 — à réévaluer selon le trafic réel.
+
+## 6. Stockage de fichiers (MinIO)
+
+- MinIO (S3-compatible) sert deux usages avec des buckets séparés :
+  - **`oei-public`** : documents publics téléchargeables (PDF du livre blanc, rapports, ressources) — accès en lecture anonyme, écriture réservée au backend.
+  - **`oei-membership`** : pièces jointes privées des demandes d'adhésion (CV, justificatifs) — accès restreint aux utilisateurs authentifiés propriétaires du dossier et au rôle `admin`.
+- Le contenu Markdown reste versionné dans `content/` ; seuls les fichiers binaires (PDF, images, pièces jointes) vont dans MinIO — évite de polluer l'historique git avec des binaires.
+- En local, MinIO tourne en conteneur docker-compose avec persistance sur volume ; en production, migration possible vers S3 managé sans changer le code applicatif (API S3 compatible).
 
 ## Hors périmètre de ce document
 
