@@ -1,0 +1,4 @@
+{
+  "dataSource": "mock",
+  "apiBaseUrl": "/api/v1"
+}

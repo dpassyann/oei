@@ -1,0 +1,7 @@
+{
+  "/config": {
+    "target": "http://localhost:4300",
+    "pathRewrite": { "^/config": "/config.json" },
+    "changeOrigin": true
+  }
+}
