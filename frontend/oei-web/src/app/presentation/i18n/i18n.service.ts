@@ -8,7 +8,7 @@ type TranslationDict = { readonly [key: string]: string | TranslationDict };
 @Injectable({ providedIn: 'root' })
 export class I18nService {
   private readonly cache = new Map<SupportedLanguage, TranslationDict>();
-  readonly currentLang = signal<SupportedLanguage>('fr');
+  readonly currentLang = signal<SupportedLanguage>('en');
 
   async setLang(lang: SupportedLanguage): Promise<void> {
     if (!this.cache.has(lang)) {
