@@ -45,3 +45,9 @@ Thumbs.db
 
 # Generated OpenAPI client (reproducible from openapi/oei-api.yaml via `pnpm generate:api`)
 src/app/infrastructure/api/generated/
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
