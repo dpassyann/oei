@@ -1,0 +1,15 @@
+<main class="oei-page">
+  <h1 class="oei-page__title">Certifications</h1>
+
+  <p class="oei-page__body">
+    Nous construisons un cadre de certification indépendante des éditeurs commerciaux de logiciels, organisé autour
+    d'une échelle de niveaux d'expertise. Chaque niveau sera défini précisément dans le référentiel de compétences,
+    en cours d'élaboration avec des partenaires académiques.
+  </p>
+
+  <ol class="oei-page__levels">
+    @for (level of levels; track level) {
+      <li class="oei-page__level">{{ level }}</li>
+    }
+  </ol>
+</main>

@@ -1,0 +1,11 @@
+<main class="oei-page">
+  <h1 class="oei-page__title">Plan du site</h1>
+
+  <ul class="oei-page__links">
+    @for (link of links; track link.path) {
+      <li class="oei-page__link-item">
+        <a [routerLink]="link.path" class="oei-page__link">{{ link.label }}</a>
+      </li>
+    }
+  </ul>
+</main>

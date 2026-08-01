@@ -1,0 +1,11 @@
+<main class="oei-page">
+  <h1 class="oei-page__title">Nos missions</h1>
+
+  <p class="oei-page__intro">Nous lançons ce mouvement pour :</p>
+
+  <ol class="oei-page__list">
+    @for (commitment of commitments; track commitment) {
+      <li class="oei-page__list-item">{{ commitment }}</li>
+    }
+  </ol>
+</main>

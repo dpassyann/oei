@@ -1,0 +1,43 @@
+:host {
+  display: block;
+}
+
+$oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+
+.oei-page {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem;
+}
+
+.oei-page__title {
+  margin: 0 0 1.5rem;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-page__body {
+  margin: 0 0 1.5rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.oei-page__levels {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.oei-page__level {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid $oei-gold;
+  border-radius: 999px;
+  color: $oei-navy;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
