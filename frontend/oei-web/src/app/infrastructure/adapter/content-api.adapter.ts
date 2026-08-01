@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { ContentRepositoryPort } from '../../domain/port/content-repository.port';
 import { createDocument, Document } from '../../domain/model/document';
+import { RuntimeConfig } from '../config/runtime-config';
 
 // Note: the OpenAPI-generated client (src/app/infrastructure/api/generated/, produced by
 // `pnpm generate:api`) does compile cleanly and exposes a usable `DefaultService.getContent(...)`
@@ -23,10 +24,11 @@ interface ContentDocumentResponse {
 @Injectable({ providedIn: 'root' })
 export class ContentApiAdapter implements ContentRepositoryPort {
   private readonly http = inject(HttpClient);
+  private readonly runtimeConfig = inject(RuntimeConfig);
 
   async getHomeContent(lang: string): Promise<Document> {
     const response = await firstValueFrom(
-      this.http.get<ContentDocumentResponse>(`/api/v1/content/${lang}/home`),
+      this.http.get<ContentDocumentResponse>(`${this.runtimeConfig.apiBaseUrl()}/content/${lang}/home`),
     );
     return createDocument(response);
   }
