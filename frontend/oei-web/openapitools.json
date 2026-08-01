@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+  "spaces": 2,
+  "generator-cli": {
+    "version": "7.16.0",
+    "generators": {
+      "oei-api": {
+        "generatorName": "typescript-angular",
+        "inputSpec": "openapi/oei-api.yaml",
+        "output": "src/app/infrastructure/api/generated",
+        "additionalProperties": {
+          "ngVersion": "22.0.0",
+          "providedInRoot": true,
+          "withInterfaces": true,
+          "useSingleRequestParameter": true,
+          "fileNaming": "kebab-case",
+          "supportsES6": true
+        }
+      }
+    }
+  }
+}

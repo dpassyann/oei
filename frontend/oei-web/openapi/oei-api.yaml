@@ -1,0 +1,42 @@
+openapi: 3.0.3
+info:
+  title: OEI Content API
+  version: "1.0.0"
+paths:
+  /content/{lang}/{slug}:
+    get:
+      operationId: getContent
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Document trouvé
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContentDocument"
+components:
+  schemas:
+    ContentDocument:
+      type: object
+      required: [slug, lang, title, body, isFallback]
+      properties:
+        slug:
+          type: string
+        lang:
+          type: string
+        title:
+          type: string
+        body:
+          type: string
+        isFallback:
+          type: boolean

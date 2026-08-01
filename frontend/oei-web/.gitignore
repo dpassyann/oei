@@ -42,3 +42,6 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Generated OpenAPI client (reproducible from openapi/oei-api.yaml via `pnpm generate:api`)
+src/app/infrastructure/api/generated/
