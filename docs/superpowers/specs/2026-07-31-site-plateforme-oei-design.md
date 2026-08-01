@@ -43,6 +43,27 @@ Un seul dépôt git, un seul historique entre code et contenu.
 - Repli automatique vers l'anglais si un document n'existe pas dans la langue choisie, avec bandeau « traduction à venir ».
 - Page d'accueil : identique à la maquette. Pages secondaires : maquettes à concevoir dans un second temps (après validation de la home), pour ne pas bloquer le début du développement.
 
+## 2 bis. Architecture frontend — DDD + Angular 22 « nouveau style » (2026-08-01)
+
+Précisions apportées après validation de deux références visuelles par l'utilisateur, en plus de l'inspiration `aegis/frontend/aegis-dashboard` (pnpm, Playwright e2e en mode mock, mécanisme de bascule mock/API).
+
+**Style Angular 22 obligatoire** : Signal Forms (`@angular/forms/signals`), OnPush par défaut (implicite), Resource APIs (`resource`/`httpResource`), `provideHttpClient()` avec fetch par défaut, `@Service()` (pas `@Injectable()`), `injectAsync` pour le lazy DI, `provideRouter(routes, withRouterConfig({ paramsInheritanceStrategy: 'always' }))`, Navigation API via `Router.navigating()` dans un `effect()`, `@for` avec `track` obligatoire (erreur de compilation sinon). Détail complet : mémoire `oei-frontend-architecture`.
+
+**Structure DDD** (chaque couche ne dépend que de la couche inférieure, via ports/interfaces) :
+```
+src/app/
+├── domain/{model,service,port}       — aucune dépendance Angular
+├── application/{service,dto}         — services @Service, orchestrent les ports
+├── infrastructure/{adapter,api}      — implémentations des ports + client OpenAPI généré
+└── presentation/{components,pages}   — composants standalone, Signal Forms
+```
+
+**Bascule mock/API** : reprend le mécanisme `RuntimeConfig` d'aegis (signal `dataSource: 'mock' | 'api'`, résolu via `localStorage` → `fetch('/config')` au bootstrap → `window.__OEI_CONFIG__` → défaut `'mock'`), mais transposé en DDD : le port (interface, ex. `ContentRepositoryPort`) a deux adapters d'infrastructure (mock et API réelle), sélectionné par `useFactory` dans `app.config.ts` selon `RuntimeConfig.dataSource()` — pas un `if` dans une façade.
+
+**Outillage** : pnpm, Playwright pour les e2e (mode mock par défaut, sans backend requis pour la suite de base), client API généré via `openapi-generator-cli` (generator `typescript-angular`) dans `infrastructure/api/`.
+
+**Tests par couche** : domaine (pur, sans Angular) → services applicatifs (port mocké via TestBed) → adapters (`HttpTestingController`) → composants (signals/forms) → e2e (Playwright, parcours complets).
+
 ## 3. Backend Spring Security + Keycloak
 
 - Spring Boot expose une API : lecture du contenu (`content/`), gestion du formulaire d'adhésion, endpoints protégés pour l'espace membre.
