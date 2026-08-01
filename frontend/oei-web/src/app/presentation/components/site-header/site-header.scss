@@ -1,0 +1,126 @@
+:host {
+  display: block;
+  font-family:
+    'Segoe UI',
+    -apple-system,
+    BlinkMacSystemFont,
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+}
+
+$oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+
+.oei-header {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  background: $oei-navy;
+  color: #ffffff;
+  padding: 1rem 2.5rem;
+}
+
+.oei-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-right: auto;
+
+  &__mark {
+    width: 2rem;
+    height: 2rem;
+    color: $oei-gold;
+    flex-shrink: 0;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+  }
+
+  &__line {
+    font-size: 0.8rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  &__line--strong {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+}
+
+.oei-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  flex-wrap: wrap;
+
+  &__link {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.95rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 2px solid transparent;
+    opacity: 0.85;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &--active {
+      opacity: 1;
+      border-bottom-color: $oei-gold;
+      font-weight: 600;
+    }
+  }
+}
+
+.oei-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.oei-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.oei-cta-member {
+  background: $oei-gold;
+  color: $oei-navy;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.7rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+
+  &:hover {
+    filter: brightness(1.08);
+  }
+}
+
+@media (max-width: 900px) {
+  .oei-header {
+    flex-wrap: wrap;
+    row-gap: 0.75rem;
+  }
+}

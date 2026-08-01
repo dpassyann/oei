@@ -1,4 +1,14 @@
 {
-  "nav": { "home": "Accueil", "about": "À propos", "join": "Rejoignez le mouvement" },
+  "nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "missions": "Nos missions",
+    "ethics": "Déontologie",
+    "certifications": "Certifications",
+    "resources": "Ressources",
+    "news": "Actualités",
+    "contact": "Contact",
+    "join": "Rejoignez le mouvement"
+  },
   "header": { "memberArea": "Espace membre" }
 }

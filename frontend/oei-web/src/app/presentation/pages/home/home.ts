@@ -1,11 +1,9 @@
 import { Component, effect, inject, PendingTasks, signal } from '@angular/core';
 import { ContentApplicationService } from '../../../application/service/content-application.service';
 import { I18nService } from '../../i18n/i18n.service';
-import { LanguageSwitcher } from '../../components/language-switcher/language-switcher';
 
 @Component({
   selector: 'oei-home',
-  imports: [LanguageSwitcher],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
