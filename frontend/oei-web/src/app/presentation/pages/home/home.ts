@@ -1,6 +1,6 @@
-import { Component, inject, PendingTasks, signal } from '@angular/core';
+import { Component, effect, inject, PendingTasks, signal } from '@angular/core';
 import { ContentApplicationService } from '../../../application/service/content-application.service';
-import { I18nService } from '../../../infrastructure/adapter/i18n.service';
+import { I18nService } from '../../i18n/i18n.service';
 import { LanguageSwitcher } from '../../components/language-switcher/language-switcher';
 
 @Component({
@@ -23,11 +23,20 @@ export class Home {
     // `ComponentFixture.whenStable()` in tests) actually waits for these
     // fetch-backed loads to settle instead of considering the app stable
     // before the signals/i18n dictionary are populated.
-    void this.pendingTasks.run(() => Promise.all([this.loadContent(), this.loadInterfaceStrings()]));
+    void this.pendingTasks.run(() => this.loadInterfaceStrings());
+
+    // Re-loads the hero content whenever the current language changes: this effect
+    // runs once immediately on creation (initial load) and again every time
+    // `i18n.currentLang()` changes (e.g. via the language switcher), keeping the
+    // hero title/body in sync with the selected language.
+    effect(() => {
+      const lang = this.i18n.currentLang();
+      void this.pendingTasks.run(() => this.loadContent(lang));
+    });
   }
 
-  private async loadContent(): Promise<void> {
-    const dto = await this.content.getHomeContent(this.i18n.currentLang());
+  private async loadContent(lang: string): Promise<void> {
+    const dto = await this.content.getHomeContent(lang);
     this.title.set(dto.title);
     this.body.set(dto.body);
     this.isFallback.set(dto.isFallback);

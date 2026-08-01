@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { SUPPORTED_LANGUAGES, SupportedLanguage } from '../../../domain/model/document';
-import { I18nService } from '../../../infrastructure/adapter/i18n.service';
+import { I18nService } from '../../i18n/i18n.service';
 
 @Component({
   selector: 'oei-language-switcher',

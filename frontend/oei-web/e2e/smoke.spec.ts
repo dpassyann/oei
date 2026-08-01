@@ -11,7 +11,11 @@ test.describe('OEI home page — smoke (mock mode)', () => {
 
   test('switching language re-renders interface strings', async ({ page }) => {
     await page.goto('/');
+    const heroHeading = page.locator('.oei-hero h1');
+    const frenchTitle = await heroHeading.textContent();
     await page.locator('oei-language-switcher select').selectOption('en');
     await expect(page.locator('.oei-cta-join')).toHaveText(/join/i);
+    await expect(heroHeading).not.toHaveText(frenchTitle ?? '');
+    await expect(heroHeading).toContainText(/digital trust/i);
   });
 });
