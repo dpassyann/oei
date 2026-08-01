@@ -12,6 +12,14 @@ test.describe('OEI home page — smoke (mock mode)', () => {
   test('switching language re-renders interface strings', async ({ page }) => {
     await page.goto('/');
     const heroHeading = page.locator('.oei-hero h1');
+    // Establish a known starting locale explicitly rather than relying on
+    // whatever the app's default happens to be, so this test stays valid
+    // regardless of which language loads first.
+    await page.locator('oei-language-switcher select').selectOption('fr');
+    // Wait for the French content to actually load (async, mock-adapter-backed)
+    // before capturing it — selecting an option doesn't itself wait for the
+    // resulting content fetch to settle.
+    await expect(heroHeading).not.toContainText(/digital trust/i);
     const frenchTitle = await heroHeading.textContent();
     await page.locator('oei-language-switcher select').selectOption('en');
     await expect(page.locator('.oei-cta-join')).toHaveText(/join/i);
