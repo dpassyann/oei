@@ -1,0 +1,5 @@
+<select class="oei-lang-select" (change)="select($any($event.target).value)" [attr.aria-label]="'Choisir la langue'">
+  @for (lang of languages; track lang) {
+    <option [value]="lang" [selected]="lang === i18n.currentLang()">{{ lang.toUpperCase() }}</option>
+  }
+</select>

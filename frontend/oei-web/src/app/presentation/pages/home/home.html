@@ -1,0 +1,59 @@
+<header class="oei-header">
+  <div class="oei-logo">
+    <svg class="oei-logo__mark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M12 2 3 5v6c0 5.2 3.8 9.4 9 11 5.2-1.6 9-5.8 9-11V5l-9-3Z"
+        stroke="currentColor"
+        stroke-width="1.4"
+        stroke-linejoin="round"
+      />
+      <circle cx="12" cy="11" r="3" stroke="currentColor" stroke-width="1.2" />
+    </svg>
+    <span class="oei-logo__text">
+      <span class="oei-logo__line">Ordre des</span>
+      <span class="oei-logo__line oei-logo__line--strong">Experts Informaticiens</span>
+    </span>
+  </div>
+
+  <nav class="oei-nav">
+    <a href="#" class="oei-nav__link oei-nav__link--active">{{ i18n.translate('nav.home') }}</a>
+    <a href="#" class="oei-nav__link">{{ i18n.translate('nav.about') }}</a>
+  </nav>
+
+  <div class="oei-header__actions">
+    <button type="button" class="oei-icon-btn" aria-label="Rechercher">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.6" />
+        <path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+      </svg>
+    </button>
+    <oei-language-switcher />
+    <button type="button" class="oei-cta-member">{{ i18n.translate('header.memberArea') }}</button>
+  </div>
+</header>
+
+<main class="oei-hero">
+  <div class="oei-hero__content">
+    <h1 class="oei-hero__title">{{ title() }}</h1>
+    <p class="oei-hero__body">{{ body() }}</p>
+    @if (isFallback()) {
+      <p class="oei-fallback-banner">Traduction à venir dans cette langue.</p>
+    }
+    <button type="button" class="oei-cta-join">{{ i18n.translate('nav.join') }}</button>
+  </div>
+
+  <div class="oei-hero__visual" aria-hidden="true">
+    <div class="oei-hero__globe">
+      <svg viewBox="0 0 24 24" fill="none" class="oei-hero__shield">
+        <path
+          d="M12 2 3 5v6c0 5.2 3.8 9.4 9 11 5.2-1.6 9-5.8 9-11V5l-9-3Z"
+          stroke="currentColor"
+          stroke-width="1"
+          stroke-linejoin="round"
+        />
+        <circle cx="12" cy="11" r="3.4" stroke="currentColor" stroke-width="0.8" />
+        <path d="M12 8v6M9 11h6" stroke="currentColor" stroke-width="0.8" />
+      </svg>
+    </div>
+  </div>
+</main>

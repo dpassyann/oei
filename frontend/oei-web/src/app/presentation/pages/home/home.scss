@@ -1,0 +1,220 @@
+:host {
+  display: block;
+  font-family:
+    'Segoe UI',
+    -apple-system,
+    BlinkMacSystemFont,
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+}
+
+$oei-navy: #0a1e3f;
+$oei-navy-light: #12295a;
+$oei-gold: #e8a530;
+
+// ---------------------------------------------------------------------------
+// Header
+// ---------------------------------------------------------------------------
+
+.oei-header {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  background: $oei-navy;
+  color: #ffffff;
+  padding: 1rem 2.5rem;
+}
+
+.oei-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-right: auto;
+
+  &__mark {
+    width: 2rem;
+    height: 2rem;
+    color: $oei-gold;
+    flex-shrink: 0;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+  }
+
+  &__line {
+    font-size: 0.8rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  &__line--strong {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+}
+
+.oei-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+
+  &__link {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.95rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 2px solid transparent;
+    opacity: 0.85;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &--active {
+      opacity: 1;
+      border-bottom-color: $oei-gold;
+      font-weight: 600;
+    }
+  }
+}
+
+.oei-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.oei-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.oei-cta-member,
+.oei-cta-join {
+  background: $oei-gold;
+  color: $oei-navy;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.7rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+
+  &:hover {
+    filter: brightness(1.08);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Hero
+// ---------------------------------------------------------------------------
+
+.oei-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  background: linear-gradient(160deg, $oei-navy 0%, $oei-navy-light 100%);
+  color: #ffffff;
+  padding: 4.5rem 2.5rem;
+  min-height: 26rem;
+}
+
+.oei-hero__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  max-width: 34rem;
+}
+
+.oei-hero__title {
+  margin: 0;
+  font-size: 2.75rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.oei-hero__body {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.oei-fallback-banner {
+  margin: 0;
+  color: $oei-gold;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.oei-cta-join {
+  margin-top: 0.75rem;
+  padding: 0.85rem 1.85rem;
+  font-size: 1rem;
+}
+
+.oei-hero__visual {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18rem;
+  height: 18rem;
+}
+
+.oei-hero__globe {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(232, 165, 48, 0.25), transparent 55%),
+    radial-gradient(circle, $oei-navy-light 0%, $oei-navy 70%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 3rem rgba(59, 122, 222, 0.35) inset;
+}
+
+.oei-hero__shield {
+  width: 40%;
+  height: 40%;
+  color: $oei-gold;
+}
+
+@media (max-width: 900px) {
+  .oei-hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .oei-hero__content {
+    align-items: center;
+  }
+
+  .oei-header {
+    flex-wrap: wrap;
+    row-gap: 0.75rem;
+  }
+}
