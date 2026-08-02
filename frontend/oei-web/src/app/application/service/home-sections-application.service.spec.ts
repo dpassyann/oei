@@ -32,32 +32,53 @@ describe('HomeSectionsApplicationService', () => {
     return TestBed.inject(HomeSectionsApplicationService);
   }
 
-  it('givenPortReturnsStats_whenGetStats_thenReturnsThem', async () => {
-    const service = setup();
-    const stats = await service.getStats();
+  it('givenPortReturnsStats_whenGetStats_thenForwardsLangAndReturnsThem', async () => {
+    let receivedLang: string | undefined;
+    const service = setup({
+      stats: {
+        getHomeStats: (lang) => {
+          receivedLang = lang;
+          return Promise.resolve([createStat({ label: 'Members', value: 42 })]);
+        },
+      },
+    });
+    const stats = await service.getStats('fr');
+    expect(receivedLang).toBe('fr');
     expect(stats).toEqual([createStat({ label: 'Members', value: 42 })]);
   });
 
-  it('givenPortReturnsDomainAreas_whenGetDomainAreas_thenReturnsThem', async () => {
-    const service = setup();
-    const domainAreas = await service.getDomainAreas();
+  it('givenPortReturnsDomainAreas_whenGetDomainAreas_thenForwardsLangAndReturnsThem', async () => {
+    let receivedLang: string | undefined;
+    const service = setup({
+      domains: {
+        getDomainAreas: (lang) => {
+          receivedLang = lang;
+          return Promise.resolve([createDomainArea({ icon: 'icon.svg', title: 'Health', description: 'About health' })]);
+        },
+      },
+    });
+    const domainAreas = await service.getDomainAreas('fr');
+    expect(receivedLang).toBe('fr');
     expect(domainAreas).toEqual([createDomainArea({ icon: 'icon.svg', title: 'Health', description: 'About health' })]);
   });
 
-  it('givenPortReturnsNews_whenGetLatestNews_thenForwardsLimitAndReturnsThem', async () => {
+  it('givenPortReturnsNews_whenGetLatestNews_thenForwardsLimitAndLangAndReturnsThem', async () => {
     let receivedLimit: number | undefined;
+    let receivedLang: string | undefined;
     const service = setup({
       news: {
-        getLatestNews: (limit) => {
+        getLatestNews: (limit, lang) => {
           receivedLimit = limit;
+          receivedLang = lang;
           return Promise.resolve([
             createNewsItem({ title: 'News 1', excerpt: 'Excerpt', imageUrl: 'img.png', path: '/news/1' }),
           ]);
         },
       },
     });
-    const news = await service.getLatestNews(3);
+    const news = await service.getLatestNews(3, 'fr');
     expect(receivedLimit).toBe(3);
+    expect(receivedLang).toBe('fr');
     expect(news).toEqual([createNewsItem({ title: 'News 1', excerpt: 'Excerpt', imageUrl: 'img.png', path: '/news/1' })]);
   });
 });

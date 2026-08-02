@@ -8,10 +8,30 @@
     "resources": "Recursos",
     "news": "Notícias",
     "contact": "Contato",
-    "join": "Junte-se ao movimento"
+    "join": "Junte-se ao movimento",
+    "foundingMembers": "Membros fundadores",
+    "legalNotices": "Avisos legais",
+    "sitemap": "Mapa do site"
   },
   "header": {
-    "memberArea": "Área de membros"
+    "memberArea": "Área de membros",
+    "searchAria": "Pesquisar",
+    "languageSelectAria": "Escolher o idioma"
+  },
+  "brand": {
+    "line1": "A Ordem dos",
+    "line2": "Especialistas em Informática"
+  },
+  "footer": {
+    "quote": "«O digital é o nosso bem comum. Os especialistas em informática são os seus guardiões.»",
+    "quoteAuthor": "— Ordem dos Especialistas em Informática",
+    "newsletterHeading": "Fique informado",
+    "newsletterCopy": "Assine a nossa newsletter para receber as nossas notícias.",
+    "emailPlaceholder": "O seu email",
+    "subscribe": "Inscrever-se",
+    "followUs": "Siga-nos",
+    "becomeFoundingMember": "Torne-se membro fundador",
+    "orgName": "Ordem dos Especialistas em Informática"
   },
   "home": {
     "hero": {

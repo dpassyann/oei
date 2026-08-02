@@ -10,8 +10,8 @@
       <circle cx="12" cy="11" r="3" stroke="currentColor" stroke-width="1.2" />
     </svg>
     <span class="oei-logo__text">
-      <span class="oei-logo__line">Ordre des</span>
-      <span class="oei-logo__line oei-logo__line--strong">Experts Informaticiens</span>
+      <span class="oei-logo__line">{{ i18n.translate('brand.line1') }}</span>
+      <span class="oei-logo__line oei-logo__line--strong">{{ i18n.translate('brand.line2') }}</span>
     </span>
   </div>
 
@@ -28,7 +28,7 @@
   </nav>
 
   <div class="oei-header__actions">
-    <button type="button" class="oei-icon-btn" aria-label="Rechercher">
+    <button type="button" class="oei-icon-btn" [attr.aria-label]="i18n.translate('header.searchAria')">
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.6" />
         <path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />

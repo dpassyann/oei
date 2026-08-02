@@ -8,10 +8,30 @@
     "resources": "Ressources",
     "news": "Actualités",
     "contact": "Contact",
-    "join": "Rejoignez le mouvement"
+    "join": "Rejoignez le mouvement",
+    "foundingMembers": "Membres fondateurs",
+    "legalNotices": "Mentions légales",
+    "sitemap": "Plan du site"
   },
   "header": {
-    "memberArea": "Espace membre"
+    "memberArea": "Espace membre",
+    "searchAria": "Rechercher",
+    "languageSelectAria": "Choisir la langue"
+  },
+  "brand": {
+    "line1": "Ordre des",
+    "line2": "Experts Informaticiens"
+  },
+  "footer": {
+    "quote": "« Le numérique est notre bien commun. Les experts informaticiens en sont les gardiens. »",
+    "quoteAuthor": "— Ordre des Experts Informaticiens",
+    "newsletterHeading": "Restez informé",
+    "newsletterCopy": "Inscrivez-vous à notre newsletter pour recevoir nos actualités.",
+    "emailPlaceholder": "Votre email",
+    "subscribe": "S'inscrire",
+    "followUs": "Suivez-nous",
+    "becomeFoundingMember": "Devenir membre fondateur",
+    "orgName": "Ordre des Experts Informaticiens"
   },
   "home": {
     "hero": {

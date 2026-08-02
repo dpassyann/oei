@@ -15,15 +15,15 @@ export class HomeSectionsApplicationService {
   private readonly domainsPort = inject(DOMAINS_PORT);
   private readonly newsPort = inject(NEWS_PORT);
 
-  getStats(): Promise<Stat[]> {
-    return this.statsPort.getHomeStats();
+  getStats(lang: string): Promise<Stat[]> {
+    return this.statsPort.getHomeStats(lang);
   }
 
-  getDomainAreas(): Promise<DomainArea[]> {
-    return this.domainsPort.getDomainAreas();
+  getDomainAreas(lang: string): Promise<DomainArea[]> {
+    return this.domainsPort.getDomainAreas(lang);
   }
 
-  getLatestNews(limit: number): Promise<NewsItem[]> {
-    return this.newsPort.getLatestNews(limit);
+  getLatestNews(limit: number, lang: string): Promise<NewsItem[]> {
+    return this.newsPort.getLatestNews(limit, lang);
   }
 }

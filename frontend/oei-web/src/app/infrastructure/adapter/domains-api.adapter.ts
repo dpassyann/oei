@@ -7,8 +7,8 @@ import { RuntimeConfig } from '../config/runtime-config';
 export class DomainsApiAdapter implements DomainsPort {
   private readonly runtimeConfig = inject(RuntimeConfig);
 
-  async getDomainAreas(): Promise<DomainArea[]> {
-    const response = await fetch(`${this.runtimeConfig.apiBaseUrl()}/domains`);
+  async getDomainAreas(lang: string): Promise<DomainArea[]> {
+    const response = await fetch(`${this.runtimeConfig.apiBaseUrl()}/domains/${lang}`);
     if (!response.ok) {
       throw new Error(`getDomainAreas failed with status ${response.status}`);
     }

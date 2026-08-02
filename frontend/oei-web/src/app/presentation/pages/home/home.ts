@@ -72,7 +72,7 @@ export class Home {
     effect(() => {
       const lang = this.i18n.currentLang();
       void this.pendingTasks.run(() => this.loadContent(lang));
-      void this.pendingTasks.run(() => this.loadSections());
+      void this.pendingTasks.run(() => this.loadSections(lang));
     });
   }
 
@@ -83,12 +83,12 @@ export class Home {
     this.isFallback.set(dto.isFallback);
   }
 
-  private async loadSections(): Promise<void> {
+  private async loadSections(lang: string): Promise<void> {
     const [stats, domainAreas, latestNews, partnerList] = await Promise.all([
-      this.sections.getStats(),
-      this.sections.getDomainAreas(),
-      this.sections.getLatestNews(NEWS_LIMIT),
-      this.partners.getPartners(),
+      this.sections.getStats(lang),
+      this.sections.getDomainAreas(lang),
+      this.sections.getLatestNews(NEWS_LIMIT, lang),
+      this.partners.getPartners(lang),
     ]);
     this.stats.set(stats);
     this.domainAreas.set(domainAreas);

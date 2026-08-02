@@ -7,8 +7,8 @@ import { RuntimeConfig } from '../config/runtime-config';
 export class NewsApiAdapter implements NewsPort {
   private readonly runtimeConfig = inject(RuntimeConfig);
 
-  async getLatestNews(limit: number): Promise<NewsItem[]> {
-    const response = await fetch(`${this.runtimeConfig.apiBaseUrl()}/news?limit=${limit}`);
+  async getLatestNews(limit: number, lang: string): Promise<NewsItem[]> {
+    const response = await fetch(`${this.runtimeConfig.apiBaseUrl()}/news/${lang}?limit=${limit}`);
     if (!response.ok) {
       throw new Error(`getLatestNews failed with status ${response.status}`);
     }

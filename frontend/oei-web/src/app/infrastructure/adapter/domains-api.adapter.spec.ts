@@ -21,9 +21,9 @@ describe('DomainsApiAdapter', () => {
     vi.stubGlobal('fetch', fetchMock);
 
     const adapter = createAdapter('/api/v1');
-    const domains = await adapter.getDomainAreas();
+    const domains = await adapter.getDomainAreas('fr');
 
-    expect(fetchMock).toHaveBeenCalledWith('/api/v1/domains');
+    expect(fetchMock).toHaveBeenCalledWith('/api/v1/domains/fr');
     expect(domains).toEqual([{ icon: 'shield-lock', title: 'Cybersécurité', description: 'Desc' }]);
   });
 
@@ -35,8 +35,8 @@ describe('DomainsApiAdapter', () => {
     vi.stubGlobal('fetch', fetchMock);
 
     const adapter = createAdapter('/custom-api');
-    await adapter.getDomainAreas();
+    await adapter.getDomainAreas('en');
 
-    expect(fetchMock).toHaveBeenCalledWith('/custom-api/domains');
+    expect(fetchMock).toHaveBeenCalledWith('/custom-api/domains/en');
   });
 });

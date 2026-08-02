@@ -8,10 +8,30 @@
     "resources": "Risorse",
     "news": "Notizie",
     "contact": "Contatto",
-    "join": "Unisciti al movimento"
+    "join": "Unisciti al movimento",
+    "foundingMembers": "Membri fondatori",
+    "legalNotices": "Note legali",
+    "sitemap": "Mappa del sito"
   },
   "header": {
-    "memberArea": "Area membri"
+    "memberArea": "Area membri",
+    "searchAria": "Cerca",
+    "languageSelectAria": "Scegli la lingua"
+  },
+  "brand": {
+    "line1": "L'Ordine degli",
+    "line2": "Esperti Informatici"
+  },
+  "footer": {
+    "quote": "«Il digitale è il nostro bene comune. Gli esperti informatici ne sono i custodi.»",
+    "quoteAuthor": "— Ordine degli Esperti Informatici",
+    "newsletterHeading": "Resta informato",
+    "newsletterCopy": "Iscriviti alla nostra newsletter per ricevere le nostre notizie.",
+    "emailPlaceholder": "La tua email",
+    "subscribe": "Iscriviti",
+    "followUs": "Seguici",
+    "becomeFoundingMember": "Diventa membro fondatore",
+    "orgName": "Ordine degli Esperti Informatici"
   },
   "home": {
     "hero": {

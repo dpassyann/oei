@@ -21,9 +21,9 @@ describe('NewsApiAdapter', () => {
     vi.stubGlobal('fetch', fetchMock);
 
     const adapter = createAdapter('/api/v1');
-    const news = await adapter.getLatestNews(3);
+    const news = await adapter.getLatestNews(3, 'fr');
 
-    expect(fetchMock).toHaveBeenCalledWith('/api/v1/news?limit=3');
+    expect(fetchMock).toHaveBeenCalledWith('/api/v1/news/fr?limit=3');
     expect(news).toEqual([{ title: 'Titre', excerpt: 'Extrait', imageUrl: '/img.jpg', path: '/news/titre' }]);
   });
 
@@ -32,8 +32,8 @@ describe('NewsApiAdapter', () => {
     vi.stubGlobal('fetch', fetchMock);
 
     const adapter = createAdapter('/custom-api');
-    await adapter.getLatestNews(5);
+    await adapter.getLatestNews(5, 'en');
 
-    expect(fetchMock).toHaveBeenCalledWith('/custom-api/news?limit=5');
+    expect(fetchMock).toHaveBeenCalledWith('/custom-api/news/en?limit=5');
   });
 });

@@ -1,12 +1,34 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { SiteFooter } from './site-footer';
+import { I18nService } from '../../i18n/i18n.service';
+
+// Real dictionary lookups go through `fetch`, which the unit test environment doesn't
+// provide — this fake mirrors the handful of keys the template reads, so tests can assert
+// on the rendered wording without depending on network I/O (same pattern as `home.spec.ts`).
+const INTERFACE_STRINGS: Record<string, string> = {
+  'footer.quote': '« Le numérique est notre bien commun. Les experts informaticiens en sont les gardiens. »',
+  'footer.quoteAuthor': '— Ordre des Experts Informaticiens',
+  'footer.newsletterHeading': 'Restez informé',
+  'footer.newsletterCopy': 'Inscrivez-vous à notre newsletter pour recevoir nos actualités.',
+  'footer.emailPlaceholder': 'Votre email',
+  'footer.subscribe': "S'inscrire",
+  'footer.followUs': 'Suivez-nous',
+  'footer.becomeFoundingMember': 'Devenir membre fondateur',
+  'footer.orgName': 'Ordre des Experts Informaticiens',
+  'nav.legalNotices': 'Mentions légales',
+  'nav.sitemap': 'Plan du site',
+};
+
+const FAKE_I18N_SERVICE = {
+  translate: (key: string) => INTERFACE_STRINGS[key] ?? key,
+};
 
 describe('SiteFooter', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [SiteFooter],
-      providers: [provideRouter([])],
+      providers: [provideRouter([]), { provide: I18nService, useValue: FAKE_I18N_SERVICE }],
     });
   });
 

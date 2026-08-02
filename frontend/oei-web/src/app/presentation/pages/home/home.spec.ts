@@ -80,6 +80,7 @@ function fakePartnerService(partners: Partner[]): Pick<PartnerApplicationService
   };
 }
 
+
 const FOUR_STATS: Stat[] = [
   createStat({ label: 'Membres fondateurs', value: 0 }),
   createStat({ label: 'Partenaires académiques', value: 0 }),

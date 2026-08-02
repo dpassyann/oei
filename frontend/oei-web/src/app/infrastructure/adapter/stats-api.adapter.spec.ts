@@ -21,9 +21,9 @@ describe('StatsApiAdapter', () => {
     vi.stubGlobal('fetch', fetchMock);
 
     const adapter = createAdapter('/api/v1');
-    const stats = await adapter.getHomeStats();
+    const stats = await adapter.getHomeStats('fr');
 
-    expect(fetchMock).toHaveBeenCalledWith('/api/v1/stats');
+    expect(fetchMock).toHaveBeenCalledWith('/api/v1/stats/fr');
     expect(stats).toEqual([{ label: 'Membres fondateurs', value: 0 }]);
   });
 
@@ -32,8 +32,8 @@ describe('StatsApiAdapter', () => {
     vi.stubGlobal('fetch', fetchMock);
 
     const adapter = createAdapter('/custom-api');
-    await adapter.getHomeStats();
+    await adapter.getHomeStats('en');
 
-    expect(fetchMock).toHaveBeenCalledWith('/custom-api/stats');
+    expect(fetchMock).toHaveBeenCalledWith('/custom-api/stats/en');
   });
 });

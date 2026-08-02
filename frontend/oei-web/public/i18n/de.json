@@ -8,10 +8,30 @@
     "resources": "Ressourcen",
     "news": "Aktuelles",
     "contact": "Kontakt",
-    "join": "Der Bewegung beitreten"
+    "join": "Der Bewegung beitreten",
+    "foundingMembers": "Gründungsmitglieder",
+    "legalNotices": "Impressum",
+    "sitemap": "Sitemap"
   },
   "header": {
-    "memberArea": "Mitgliederbereich"
+    "memberArea": "Mitgliederbereich",
+    "searchAria": "Suchen",
+    "languageSelectAria": "Sprache wählen"
+  },
+  "brand": {
+    "line1": "Der Orden der",
+    "line2": "IT-Experten"
+  },
+  "footer": {
+    "quote": "„Digitale Technik ist unser Gemeingut. IT-Experten sind ihre Hüter.“",
+    "quoteAuthor": "— Orden der IT-Experten",
+    "newsletterHeading": "Bleiben Sie informiert",
+    "newsletterCopy": "Abonnieren Sie unseren Newsletter, um unsere Neuigkeiten zu erhalten.",
+    "emailPlaceholder": "Ihre E-Mail",
+    "subscribe": "Abonnieren",
+    "followUs": "Folgen Sie uns",
+    "becomeFoundingMember": "Gründungsmitglied werden",
+    "orgName": "Orden der IT-Experten"
   },
   "home": {
     "hero": {

@@ -1,13 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { I18nService } from '../../i18n/i18n.service';
 
 interface SocialLink {
+  // Proper-noun brand names (LinkedIn, X, YouTube, Medium) are not translated —
+  // they're identifiers, not localizable copy.
   readonly name: string;
   readonly href: string;
 }
 
 interface LegalLink {
-  readonly label: string;
+  readonly labelKey: string;
   readonly path: string;
 }
 
@@ -18,6 +21,7 @@ interface LegalLink {
   styleUrl: './site-footer.scss',
 })
 export class SiteFooter {
+  protected readonly i18n = inject(I18nService);
   protected readonly currentYear = new Date().getFullYear();
 
   // Partner logos moved to the home page's dynamic "Ils nous soutiennent" section
@@ -32,7 +36,7 @@ export class SiteFooter {
   ];
 
   protected readonly legalLinks: readonly LegalLink[] = [
-    { label: 'Mentions légales', path: '/mentions-legales' },
-    { label: 'Plan du site', path: '/plan-du-site' },
+    { labelKey: 'nav.legalNotices', path: '/mentions-legales' },
+    { labelKey: 'nav.sitemap', path: '/plan-du-site' },
   ];
 }

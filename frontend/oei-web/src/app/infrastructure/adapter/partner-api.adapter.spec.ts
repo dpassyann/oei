@@ -27,9 +27,9 @@ describe('PartnerApiAdapter', () => {
     vi.stubGlobal('fetch', fetchMock);
 
     const adapter = createAdapter('/api/v1');
-    const partners = await adapter.getPartners();
+    const partners = await adapter.getPartners('fr');
 
-    expect(fetchMock).toHaveBeenCalledWith('/api/v1/partners');
+    expect(fetchMock).toHaveBeenCalledWith('/api/v1/partners/fr');
     expect(partners[0].id).toBe('p1');
   });
 
@@ -38,19 +38,19 @@ describe('PartnerApiAdapter', () => {
     vi.stubGlobal('fetch', fetchMock);
 
     const adapter = createAdapter('/custom-api');
-    await adapter.getPartners();
+    await adapter.getPartners('en');
 
-    expect(fetchMock).toHaveBeenCalledWith('/custom-api/partners');
+    expect(fetchMock).toHaveBeenCalledWith('/custom-api/partners/en');
   });
 
-  it('givenBackendReturnsPartner_whenGetPartner_thenBuildsUrlWithIdAndMapsResult', async () => {
+  it('givenBackendReturnsPartner_whenGetPartner_thenBuildsUrlWithLangAndIdAndMapsResult', async () => {
     const fetchMock = vi.fn().mockResolvedValue({ ok: true, json: () => Promise.resolve(SAMPLE_PARTNER) });
     vi.stubGlobal('fetch', fetchMock);
 
     const adapter = createAdapter('/api/v1');
-    const partner = await adapter.getPartner('p1');
+    const partner = await adapter.getPartner('p1', 'fr');
 
-    expect(fetchMock).toHaveBeenCalledWith('/api/v1/partners/p1');
+    expect(fetchMock).toHaveBeenCalledWith('/api/v1/partners/fr/p1');
     expect(partner.name).toBe('Partenaire Un');
   });
 });

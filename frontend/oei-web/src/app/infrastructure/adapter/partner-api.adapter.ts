@@ -7,8 +7,8 @@ import { RuntimeConfig } from '../config/runtime-config';
 export class PartnerApiAdapter implements PartnerRepositoryPort {
   private readonly runtimeConfig = inject(RuntimeConfig);
 
-  async getPartners(): Promise<Partner[]> {
-    const response = await fetch(`${this.runtimeConfig.apiBaseUrl()}/partners`);
+  async getPartners(lang: string): Promise<Partner[]> {
+    const response = await fetch(`${this.runtimeConfig.apiBaseUrl()}/partners/${lang}`);
     if (!response.ok) {
       throw new Error(`getPartners failed with status ${response.status}`);
     }
@@ -16,8 +16,8 @@ export class PartnerApiAdapter implements PartnerRepositoryPort {
     return data.map((partner) => createPartner(partner));
   }
 
-  async getPartner(id: string): Promise<Partner> {
-    const response = await fetch(`${this.runtimeConfig.apiBaseUrl()}/partners/${id}`);
+  async getPartner(id: string, lang: string): Promise<Partner> {
+    const response = await fetch(`${this.runtimeConfig.apiBaseUrl()}/partners/${lang}/${id}`);
     if (!response.ok) {
       throw new Error(`getPartner failed with status ${response.status}`);
     }

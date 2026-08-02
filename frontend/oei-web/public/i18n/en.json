@@ -8,10 +8,30 @@
     "resources": "Resources",
     "news": "News",
     "contact": "Contact",
-    "join": "Join the movement"
+    "join": "Join the movement",
+    "foundingMembers": "Founding members",
+    "legalNotices": "Legal notices",
+    "sitemap": "Sitemap"
   },
   "header": {
-    "memberArea": "Member area"
+    "memberArea": "Member area",
+    "searchAria": "Search",
+    "languageSelectAria": "Choose the language"
+  },
+  "brand": {
+    "line1": "The Order of",
+    "line2": "IT Experts"
+  },
+  "footer": {
+    "quote": "\"Digital technology is our common good. IT experts are its guardians.\"",
+    "quoteAuthor": "— Order of IT Experts",
+    "newsletterHeading": "Stay informed",
+    "newsletterCopy": "Sign up for our newsletter to receive our news.",
+    "emailPlaceholder": "Your email",
+    "subscribe": "Subscribe",
+    "followUs": "Follow us",
+    "becomeFoundingMember": "Become a founding member",
+    "orgName": "Order of IT Experts"
   },
   "home": {
     "hero": {

@@ -8,10 +8,30 @@
     "resources": "Recursos",
     "news": "Noticias",
     "contact": "Contacto",
-    "join": "Únete al movimiento"
+    "join": "Únete al movimiento",
+    "foundingMembers": "Miembros fundadores",
+    "legalNotices": "Aviso legal",
+    "sitemap": "Mapa del sitio"
   },
   "header": {
-    "memberArea": "Área de miembros"
+    "memberArea": "Área de miembros",
+    "searchAria": "Buscar",
+    "languageSelectAria": "Elegir el idioma"
+  },
+  "brand": {
+    "line1": "La Orden de los",
+    "line2": "Expertos en Informática"
+  },
+  "footer": {
+    "quote": "«La tecnología digital es nuestro bien común. Los expertos en informática son sus guardianes.»",
+    "quoteAuthor": "— Orden de los Expertos en Informática",
+    "newsletterHeading": "Mantente informado",
+    "newsletterCopy": "Suscríbete a nuestro boletín para recibir nuestras noticias.",
+    "emailPlaceholder": "Tu email",
+    "subscribe": "Suscribirse",
+    "followUs": "Síguenos",
+    "becomeFoundingMember": "Conviértete en miembro fundador",
+    "orgName": "Orden de los Expertos en Informática"
   },
   "home": {
     "hero": {

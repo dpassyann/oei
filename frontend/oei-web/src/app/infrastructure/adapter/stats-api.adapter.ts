@@ -7,8 +7,8 @@ import { RuntimeConfig } from '../config/runtime-config';
 export class StatsApiAdapter implements StatsPort {
   private readonly runtimeConfig = inject(RuntimeConfig);
 
-  async getHomeStats(): Promise<Stat[]> {
-    const response = await fetch(`${this.runtimeConfig.apiBaseUrl()}/stats`);
+  async getHomeStats(lang: string): Promise<Stat[]> {
+    const response = await fetch(`${this.runtimeConfig.apiBaseUrl()}/stats/${lang}`);
     if (!response.ok) {
       throw new Error(`getHomeStats failed with status ${response.status}`);
     }

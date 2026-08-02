@@ -9,11 +9,11 @@ import { Partner } from '../../domain/model/partner';
 export class PartnerApplicationService {
   private readonly repository = inject(PARTNER_REPOSITORY_PORT);
 
-  getPartners(): Promise<Partner[]> {
-    return this.repository.getPartners();
+  getPartners(lang: string): Promise<Partner[]> {
+    return this.repository.getPartners(lang);
   }
 
-  getPartner(id: string): Promise<Partner> {
-    return this.repository.getPartner(id);
+  getPartner(id: string, lang: string): Promise<Partner> {
+    return this.repository.getPartner(id, lang);
   }
 }
