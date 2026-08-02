@@ -1,5 +1,5 @@
 import { Service, signal } from '@angular/core';
-import { SupportedLanguage } from '../../domain/model/document';
+import { SUPPORTED_LANGUAGES, SupportedLanguage } from '../../domain/model/document';
 
 // The interface dictionaries are nested (e.g. `{ nav: { home: '...' } }`) so keys are
 // dotted paths (`nav.home`); `translate`/`translateList` walk the path rather than doing
@@ -7,6 +7,23 @@ import { SupportedLanguage } from '../../domain/model/document';
 // that's a variable-length list of localized strings (e.g. a checklist).
 type TranslationValue = string | readonly string[] | TranslationDict;
 type TranslationDict = { readonly [key: string]: TranslationValue };
+
+// Default language is the visitor's browser language when we support it, English otherwise
+// (never French by default — the site targets an international audience). `navigator` is
+// guarded for non-browser test/SSR environments, where it falls back to English.
+function detectBrowserLanguage(): SupportedLanguage {
+  if (typeof navigator === 'undefined') {
+    return 'en';
+  }
+  const candidates = navigator.languages?.length ? navigator.languages : [navigator.language];
+  for (const candidate of candidates) {
+    const primary = candidate?.split('-')[0]?.toLowerCase();
+    if ((SUPPORTED_LANGUAGES as readonly string[]).includes(primary)) {
+      return primary as SupportedLanguage;
+    }
+  }
+  return 'en';
+}
 
 @Service()
 export class I18nService {
@@ -16,7 +33,7 @@ export class I18nService {
   // Map mutation is invisible to Angular's zoneless change detection: only
   // the *signal write* schedules a re-render.
   private readonly cache = signal(new Map<SupportedLanguage, TranslationDict>());
-  readonly currentLang = signal<SupportedLanguage>('en');
+  readonly currentLang = signal<SupportedLanguage>(detectBrowserLanguage());
 
   async setLang(lang: SupportedLanguage): Promise<void> {
     if (!this.cache().has(lang)) {

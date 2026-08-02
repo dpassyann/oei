@@ -14,10 +14,10 @@ test.describe('OEI home page — smoke (mock mode)', () => {
   }) => {
     await page.goto('/');
 
-    // Stats bar: 4 entries, all honestly at "0+" since no real figures exist yet.
-    const statItems = page.locator('.oei-stats__item');
+    // Commitments band stats: 4 entries, all honestly at "0+" since no real figures exist yet.
+    const statItems = page.locator('.oei-commitments__stat');
     await expect(statItems).toHaveCount(4);
-    await expect(page.locator('.oei-stats__value').first()).toHaveText('0+');
+    await expect(page.locator('.oei-commitments__stat-value').first()).toHaveText('0+');
 
     // Domains grid: the 8 fixed domain areas from the mock adapter.
     await expect(page.locator('.oei-domains__card')).toHaveCount(8);
