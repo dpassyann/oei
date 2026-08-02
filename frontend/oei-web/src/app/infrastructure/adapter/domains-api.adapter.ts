@@ -1,17 +1,18 @@
 import { Service, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
 import { DomainsPort } from '../../domain/port/domains.port';
 import { createDomainArea, DomainArea } from '../../domain/model/domain-area';
 import { RuntimeConfig } from '../config/runtime-config';
 
 @Service()
 export class DomainsApiAdapter implements DomainsPort {
-  private readonly http = inject(HttpClient);
   private readonly runtimeConfig = inject(RuntimeConfig);
 
   async getDomainAreas(): Promise<DomainArea[]> {
-    const response = await firstValueFrom(this.http.get<DomainArea[]>(`${this.runtimeConfig.apiBaseUrl()}/domains`));
-    return response.map((domain) => createDomainArea(domain));
+    const response = await fetch(`${this.runtimeConfig.apiBaseUrl()}/domains`);
+    if (!response.ok) {
+      throw new Error(`getDomainAreas failed with status ${response.status}`);
+    }
+    const data = (await response.json()) as DomainArea[];
+    return data.map((domain) => createDomainArea(domain));
   }
 }

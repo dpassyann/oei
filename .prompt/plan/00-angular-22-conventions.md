@@ -11,21 +11,24 @@ Le porteur du projet a fourni une planche de référence (13 fonctionnalités An
 Utiliser `signalForm` (`@angular/forms/signals`) plutôt que les Reactive Forms classiques pour tout nouveau formulaire.
 
 ```typescript
-import { signalForm, Validators } from '@angular/forms';
+**Correction importante (vérifiée le 2026-08-02 contre la version Angular réellement installée)** : la fonction s'appelle `form()`, pas `signalForm()` (nom provisoire du cheat-sheet, non repris dans la version publiée) — exportée depuis `@angular/forms/signals`, pas `@angular/forms` :
 
-interface Profile { name: string; email: string; birthDate: Date | null; }
+```typescript
+import { form, required, email } from '@angular/forms/signals';
+import { signal } from '@angular/core';
 
-const form = signalForm<Profile>({
-  name: ['', Validators.required],
-  email: ['', [Validators.required, Validators.email]],
-  birthDate: [null, Validators.date({ min: new Date(1900, 0, 1) })],
+interface Profile { name: string; email: string; }
+
+const model = signal<Profile>({ name: '', email: '' });
+const profileForm = form(model, (path) => {
+  required(path.name);
+  required(path.email);
+  email(path.email);
 });
 
-if (form.email().hasError('email')) {
-  console.log('Adresse e-mail invalide');
-}
+// Dans le template : profileForm.email().errors(), profileForm.email().value(), etc.
 ```
-**Vérifier avant usage** que `signalForm` existe bel et bien dans le `@angular/forms` installé (`grep` les `.d.ts`) — si absent dans la version installée, utiliser `FormGroup`/`ReactiveFormsModule` comme repli documenté (déjà fait pour le formulaire de téléchargement du Livre Blanc, qui utilise `[ngModel]`/`(ngModelChange)` en attendant).
+**Vérifier systématiquement avant usage** (comme pour toute API récente) que le nom exact exporté correspond à la version installée : `grep -n "^export" node_modules/@angular/forms/types/signals.d.ts`. Le formulaire de téléchargement du Livre Blanc utilise encore `[ngModel]`/`(ngModelChange)` (repli documenté) — bon candidat pour une migration vers `form()` dans un prochain passage, avec attention particulière à la testabilité (un `FieldTree` a une forme différente d'un simple signal, à valider avec un test dédié avant de remplacer l'existant).
 
 ## 2. OnPush par défaut
 

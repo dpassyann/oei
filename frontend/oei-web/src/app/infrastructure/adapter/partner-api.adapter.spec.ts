@@ -1,66 +1,56 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { provideHttpClient } from '@angular/common/http';
+import { vi } from 'vitest';
 import { PartnerApiAdapter } from './partner-api.adapter';
 import { RuntimeConfig } from '../config/runtime-config';
 
-describe('PartnerApiAdapter', () => {
-  let httpMock: HttpTestingController;
+const SAMPLE_PARTNER = {
+  id: 'p1',
+  name: 'Partenaire Un',
+  logoUrl: '/logo.png',
+  description: 'Desc',
+  websiteUrl: 'https://partner.example',
+  category: 'Institution',
+};
 
+describe('PartnerApiAdapter', () => {
   function createAdapter(apiBaseUrl: string): PartnerApiAdapter {
     TestBed.configureTestingModule({
-      providers: [
-        provideHttpClient(),
-        provideHttpClientTesting(),
-        PartnerApiAdapter,
-        { provide: RuntimeConfig, useValue: { apiBaseUrl: () => apiBaseUrl } },
-      ],
+      providers: [PartnerApiAdapter, { provide: RuntimeConfig, useValue: { apiBaseUrl: () => apiBaseUrl } }],
     });
-    httpMock = TestBed.inject(HttpTestingController);
     return TestBed.inject(PartnerApiAdapter);
   }
 
-  afterEach(() => httpMock.verify());
+  afterEach(() => vi.unstubAllGlobals());
 
   it('givenBackendReturnsPartners_whenGetPartners_thenMapsToDomainPartners', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true, json: () => Promise.resolve([SAMPLE_PARTNER]) });
+    vi.stubGlobal('fetch', fetchMock);
+
     const adapter = createAdapter('/api/v1');
-    const promise = adapter.getPartners();
-    const req = httpMock.expectOne('/api/v1/partners');
-    req.flush([
-      {
-        id: 'p1',
-        name: 'Partenaire Un',
-        logoUrl: '/logo.png',
-        description: 'Desc',
-        websiteUrl: 'https://partner.example',
-        category: 'Institution',
-      },
-    ]);
-    const partners = await promise;
+    const partners = await adapter.getPartners();
+
+    expect(fetchMock).toHaveBeenCalledWith('/api/v1/partners');
     expect(partners[0].id).toBe('p1');
   });
 
   it('givenNonDefaultApiBaseUrl_whenGetPartners_thenBuildsUrlFromRuntimeConfig', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true, json: () => Promise.resolve([]) });
+    vi.stubGlobal('fetch', fetchMock);
+
     const adapter = createAdapter('/custom-api');
-    const promise = adapter.getPartners();
-    const req = httpMock.expectOne('/custom-api/partners');
-    req.flush([]);
-    await promise;
+    await adapter.getPartners();
+
+    expect(fetchMock).toHaveBeenCalledWith('/custom-api/partners');
   });
 
   it('givenBackendReturnsPartner_whenGetPartner_thenBuildsUrlWithIdAndMapsResult', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true, json: () => Promise.resolve(SAMPLE_PARTNER) });
+    vi.stubGlobal('fetch', fetchMock);
+
     const adapter = createAdapter('/api/v1');
-    const promise = adapter.getPartner('p1');
-    const req = httpMock.expectOne('/api/v1/partners/p1');
-    req.flush({
-      id: 'p1',
-      name: 'Partenaire Un',
-      logoUrl: '/logo.png',
-      description: 'Desc',
-      websiteUrl: 'https://partner.example',
-      category: 'Institution',
-    });
-    const partner = await promise;
+    const partner = await adapter.getPartner('p1');
+
+    expect(fetchMock).toHaveBeenCalledWith('/api/v1/partners/p1');
     expect(partner.name).toBe('Partenaire Un');
   });
 });

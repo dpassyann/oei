@@ -1,18 +1,14 @@
 import { Service, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
 import { ContentRepositoryPort } from '../../domain/port/content-repository.port';
 import { createDocument, Document } from '../../domain/model/document';
 import { RuntimeConfig } from '../config/runtime-config';
 
-// Note: the OpenAPI-generated client (src/app/infrastructure/api/generated/, produced by
-// `pnpm generate:api`) does compile cleanly and exposes a usable `DefaultService.getContent(...)`
-// method. It is intentionally NOT used here: its `BaseService` defaults `basePath` to
-// `http://localhost` unless a `BASE_PATH`/`Configuration` provider is wired via `provideApi(...)`,
-// which would require additional app.config.ts plumbing beyond what this task specifies, and would
-// change the request URL asserted by this adapter's test (`/api/v1/content/{lang}/home`). Calling
-// `HttpClient` directly against the same path keeps the adapter simple and matches the contract
-// exactly, while the generated client remains available (and its build is verified) for future use.
+// Uses native fetch() directly rather than HttpClient/RxJS — this project avoids Promise-wrapped
+// Observable ceremony where a plain async fetch suffices, consistent with `provideHttpClient(withFetch())`
+// already being the app's default HTTP transport. The OpenAPI-generated client
+// (src/app/infrastructure/api/generated/) compiles cleanly but defaults `basePath` to
+// `http://localhost` unless wired via `provideApi(...)`; calling fetch directly against the same
+// contract path keeps the adapter simple without that extra plumbing.
 interface ContentDocumentResponse {
   slug: string;
   lang: string;
@@ -23,13 +19,14 @@ interface ContentDocumentResponse {
 
 @Service()
 export class ContentApiAdapter implements ContentRepositoryPort {
-  private readonly http = inject(HttpClient);
   private readonly runtimeConfig = inject(RuntimeConfig);
 
   async getHomeContent(lang: string): Promise<Document> {
-    const response = await firstValueFrom(
-      this.http.get<ContentDocumentResponse>(`${this.runtimeConfig.apiBaseUrl()}/content/${lang}/home`),
-    );
-    return createDocument(response);
+    const response = await fetch(`${this.runtimeConfig.apiBaseUrl()}/content/${lang}/home`);
+    if (!response.ok) {
+      throw new Error(`getHomeContent failed with status ${response.status}`);
+    }
+    const data = (await response.json()) as ContentDocumentResponse;
+    return createDocument(data);
   }
 }
