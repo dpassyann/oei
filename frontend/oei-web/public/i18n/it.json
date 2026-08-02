@@ -10,5 +10,27 @@
     "contact": "Contact",
     "join": "Rejoignez le mouvement"
   },
-  "header": { "memberArea": "Espace membre" }
+  "header": {
+    "memberArea": "Espace membre"
+  },
+  "home": {
+    "stats": {
+      "title": "Nos chiffres"
+    },
+    "domains": {
+      "title": "Nos domaines d'action"
+    },
+    "news": {
+      "title": "Actualités",
+      "readMore": "Lire la suite",
+      "empty": "Aucune actualité n'a été publiée pour le moment. Revenez bientôt."
+    },
+    "resources": {
+      "title": "Nos ressources",
+      "viewAll": "Voir toutes les ressources"
+    },
+    "partners": {
+      "title": "Ils nous soutiennent"
+    }
+  }
 }

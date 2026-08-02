@@ -10,5 +10,19 @@
     "contact": "Contact",
     "join": "Join the movement"
   },
-  "header": { "memberArea": "Member area" }
+  "header": { "memberArea": "Member area" },
+  "home": {
+    "stats": { "title": "Our numbers" },
+    "domains": { "title": "Our areas of action" },
+    "news": {
+      "title": "News",
+      "readMore": "Read more",
+      "empty": "No news has been published yet. Check back soon."
+    },
+    "resources": {
+      "title": "Our resources",
+      "viewAll": "View all resources"
+    },
+    "partners": { "title": "They support us" }
+  }
 }

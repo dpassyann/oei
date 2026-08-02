@@ -115,3 +115,233 @@ $oei-gold: #e8a530;
     align-items: center;
   }
 }
+
+// ---------------------------------------------------------------------------
+// Stats bar
+// ---------------------------------------------------------------------------
+
+.oei-stats {
+  background: $oei-navy-light;
+  color: #ffffff;
+}
+
+.oei-stats__list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  list-style: none;
+  margin: 0;
+  padding: 2rem 2.5rem;
+}
+
+.oei-stats__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+.oei-stats__value {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: $oei-gold;
+}
+
+.oei-stats__label {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+// ---------------------------------------------------------------------------
+// Domains grid
+// ---------------------------------------------------------------------------
+
+.oei-domains {
+  padding: 3rem 2.5rem;
+}
+
+.oei-domains__title {
+  margin: 0 0 1.5rem;
+  font-size: 1.6rem;
+  color: $oei-navy;
+}
+
+.oei-domains__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.oei-domains__card {
+  border: 1px solid rgba(10, 30, 63, 0.12);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.oei-domains__icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  color: $oei-navy;
+}
+
+.oei-domains__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.oei-domains__card-title {
+  margin: 0;
+  font-size: 1.05rem;
+  color: $oei-navy;
+}
+
+.oei-domains__card-description {
+  margin: 0;
+  font-size: 0.9rem;
+  color: rgba(10, 30, 63, 0.7);
+}
+
+// ---------------------------------------------------------------------------
+// Actualités + ressources excerpt
+// ---------------------------------------------------------------------------
+
+.oei-news-resources {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  padding: 0 2.5rem 3rem;
+}
+
+.oei-news__title,
+.oei-resources-excerpt__title {
+  margin: 0 0 1rem;
+  font-size: 1.4rem;
+  color: $oei-navy;
+}
+
+.oei-news__empty {
+  color: rgba(10, 30, 63, 0.7);
+}
+
+.oei-news__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.oei-news__item {
+  display: flex;
+  gap: 1rem;
+}
+
+.oei-news__image {
+  width: 6rem;
+  height: 4.5rem;
+  object-fit: cover;
+  border-radius: 0.25rem;
+  flex-shrink: 0;
+}
+
+.oei-news__item-title {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+  color: $oei-navy;
+}
+
+.oei-news__excerpt {
+  margin: 0 0 0.25rem;
+  font-size: 0.9rem;
+  color: rgba(10, 30, 63, 0.7);
+}
+
+.oei-news__link {
+  font-size: 0.85rem;
+  color: $oei-navy-light;
+}
+
+.oei-resources-excerpt__list {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.oei-resources-excerpt__link {
+  color: $oei-navy-light;
+  text-decoration: none;
+
+  &--pending {
+    color: rgba(10, 30, 63, 0.5);
+  }
+}
+
+.oei-resources-excerpt__badge {
+  font-size: 0.75rem;
+  border: 1px solid currentColor;
+  border-radius: 0.75rem;
+  padding: 0.1rem 0.5rem;
+  margin-left: 0.35rem;
+}
+
+.oei-resources-excerpt__view-all {
+  font-weight: 600;
+  color: $oei-navy;
+}
+
+@media (max-width: 900px) {
+  .oei-stats__list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .oei-domains__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .oei-news-resources {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Partners row
+// ---------------------------------------------------------------------------
+
+.oei-partners {
+  background: $oei-navy;
+  color: #ffffff;
+  padding: 2.5rem;
+}
+
+.oei-partners__title {
+  margin: 0 0 1.25rem;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.oei-partners__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.oei-partners__logo {
+  height: 2.25rem;
+  filter: grayscale(1) brightness(2);
+  opacity: 0.85;
+}
