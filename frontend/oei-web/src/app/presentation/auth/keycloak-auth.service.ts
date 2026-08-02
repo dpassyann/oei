@@ -1,4 +1,4 @@
-import { Injectable, InjectionToken, inject } from '@angular/core';
+import { InjectionToken, inject, Service } from '@angular/core';
 
 // Small, local config constant rather than a full runtime-config entry — this plan only
 // needs the login redirect, not the callback/token-exchange step (see login() below).
@@ -63,7 +63,7 @@ function buildAuthorizationUrl(codeChallenge: string): string {
  * (reading the `code` query param and exchanging it — together with the stored
  * `code_verifier` — for tokens) is explicitly out of scope and left for a later plan.
  */
-@Injectable({ providedIn: 'root' })
+@Service()
 export class KeycloakAuthService {
   private readonly navigable = inject(NAVIGABLE);
 

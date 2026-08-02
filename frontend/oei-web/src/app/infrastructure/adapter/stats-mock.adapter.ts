@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { StatsPort } from '../../domain/port/stats.port';
 import { createStat, Stat } from '../../domain/model/stat';
 
@@ -13,7 +13,7 @@ const FIXTURES: Stat[] = [
   createStat({ label: 'Certifications en développement', value: 0 }),
 ];
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class StatsMockAdapter implements StatsPort {
   async getHomeStats(): Promise<Stat[]> {
     return FIXTURES;

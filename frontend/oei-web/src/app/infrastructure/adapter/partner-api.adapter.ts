@@ -1,11 +1,11 @@
-import { Injectable, inject } from '@angular/core';
+import { Service, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { PartnerRepositoryPort } from '../../domain/port/partner-repository.port';
 import { createPartner, Partner } from '../../domain/model/partner';
 import { RuntimeConfig } from '../config/runtime-config';
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class PartnerApiAdapter implements PartnerRepositoryPort {
   private readonly http = inject(HttpClient);
   private readonly runtimeConfig = inject(RuntimeConfig);

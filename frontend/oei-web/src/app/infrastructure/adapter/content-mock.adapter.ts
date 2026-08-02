@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { ContentRepositoryPort } from '../../domain/port/content-repository.port';
 import { createDocument, Document } from '../../domain/model/document';
 
@@ -13,7 +13,7 @@ const FIXTURES: Record<string, { title: string; body: string }> = {
   },
 };
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class ContentMockAdapter implements ContentRepositoryPort {
   async getHomeContent(lang: string): Promise<Document> {
     const fixture = FIXTURES[lang];

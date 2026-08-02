@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { DomainsPort } from '../../domain/port/domains.port';
 import { createDomainArea, DomainArea } from '../../domain/model/domain-area';
 
@@ -48,7 +48,7 @@ const FIXTURES: DomainArea[] = [
   }),
 ];
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class DomainsMockAdapter implements DomainsPort {
   async getDomainAreas(): Promise<DomainArea[]> {
     return FIXTURES;

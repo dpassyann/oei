@@ -1,11 +1,11 @@
-import { Injectable, inject } from '@angular/core';
+import { Service, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { NewsPort } from '../../domain/port/news.port';
 import { createNewsItem, NewsItem } from '../../domain/model/news-item';
 import { RuntimeConfig } from '../config/runtime-config';
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class NewsApiAdapter implements NewsPort {
   private readonly http = inject(HttpClient);
   private readonly runtimeConfig = inject(RuntimeConfig);

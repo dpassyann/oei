@@ -1,11 +1,11 @@
-import { Injectable, signal } from '@angular/core';
+import { Service, signal } from '@angular/core';
 import { SupportedLanguage } from '../../domain/model/document';
 
 // The interface dictionaries are nested (e.g. `{ nav: { home: '...' } }`) so keys are
 // dotted paths (`nav.home`); `translate` walks the path rather than doing a flat lookup.
 type TranslationDict = { readonly [key: string]: string | TranslationDict };
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class I18nService {
   // A signal (not a plain Map) so that populating it — even when `currentLang`
   // itself doesn't change value (e.g. the very first load of the default

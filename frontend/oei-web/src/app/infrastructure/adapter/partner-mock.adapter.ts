@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { PartnerRepositoryPort } from '../../domain/port/partner-repository.port';
 import { createPartner, Partner } from '../../domain/model/partner';
 
@@ -32,7 +32,7 @@ const FIXTURES: Partner[] = [
   }),
 ];
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class PartnerMockAdapter implements PartnerRepositoryPort {
   async getPartners(): Promise<Partner[]> {
     return FIXTURES;
