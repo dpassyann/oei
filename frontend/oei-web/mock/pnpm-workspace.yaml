@@ -1,0 +1,4 @@
+# Standalone workspace root so `pnpm install` here does not get folded into the
+# parent frontend/oei-web pnpm workspace/lockfile — this mock server has its
+# own independent dependency tree (mirrors the iap-apps-ui/mock convention of
+# a separate lockfile).
