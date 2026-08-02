@@ -7,19 +7,25 @@ type TranslationDict = { readonly [key: string]: string | TranslationDict };
 
 @Injectable({ providedIn: 'root' })
 export class I18nService {
-  private readonly cache = new Map<SupportedLanguage, TranslationDict>();
+  // A signal (not a plain Map) so that populating it — even when `currentLang`
+  // itself doesn't change value (e.g. the very first load of the default
+  // language) — notifies every template that calls `translate()`. A plain
+  // Map mutation is invisible to Angular's zoneless change detection: only
+  // the *signal write* schedules a re-render.
+  private readonly cache = signal(new Map<SupportedLanguage, TranslationDict>());
   readonly currentLang = signal<SupportedLanguage>('en');
 
   async setLang(lang: SupportedLanguage): Promise<void> {
-    if (!this.cache.has(lang)) {
+    if (!this.cache().has(lang)) {
       const response = await fetch(`/i18n/${lang}.json`);
-      this.cache.set(lang, await response.json());
+      const dict = (await response.json()) as TranslationDict;
+      this.cache.update((map) => new Map(map).set(lang, dict));
     }
     this.currentLang.set(lang);
   }
 
   translate(key: string): string {
-    const dict = this.cache.get(this.currentLang());
+    const dict = this.cache().get(this.currentLang());
     if (!dict) {
       return key;
     }
