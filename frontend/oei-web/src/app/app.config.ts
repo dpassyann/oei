@@ -7,6 +7,9 @@ import { RuntimeConfig } from './infrastructure/config/runtime-config';
 import { CONTENT_REPOSITORY_PORT } from './domain/port/content-repository.port';
 import { ContentMockAdapter } from './infrastructure/adapter/content-mock.adapter';
 import { ContentApiAdapter } from './infrastructure/adapter/content-api.adapter';
+import { LEAD_CAPTURE_PORT } from './domain/port/lead-capture.port';
+import { LeadCaptureMockAdapter } from './infrastructure/adapter/lead-capture-mock.adapter';
+import { LeadCaptureApiAdapter } from './infrastructure/adapter/lead-capture-api.adapter';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,6 +20,10 @@ export const appConfig: ApplicationConfig = {
     {
       provide: CONTENT_REPOSITORY_PORT,
       useFactory: () => (inject(RuntimeConfig).isMock() ? inject(ContentMockAdapter) : inject(ContentApiAdapter)),
+    },
+    {
+      provide: LEAD_CAPTURE_PORT,
+      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(LeadCaptureMockAdapter) : inject(LeadCaptureApiAdapter)),
     },
   ],
 };

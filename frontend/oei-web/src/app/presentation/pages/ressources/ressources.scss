@@ -1,0 +1,137 @@
+:host {
+  display: block;
+}
+
+$oei-navy: #0a1e3f;
+
+.oei-page {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem;
+}
+
+.oei-page__title {
+  margin: 0 0 1.5rem;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-page__note {
+  margin: 0 0 1.5rem;
+  color: #666;
+  font-style: italic;
+}
+
+.oei-livre-blanc {
+  margin-bottom: 3rem;
+}
+
+.oei-livre-blanc__title,
+.oei-resource-list__title {
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-livre-blanc__covers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.oei-livre-blanc__cover {
+  width: 12rem;
+  height: auto;
+  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+}
+
+.oei-download-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.oei-download-form__label {
+  flex-basis: 100%;
+  font-weight: 600;
+  color: #333;
+}
+
+.oei-download-form__input {
+  padding: 0.6rem 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  min-width: 16rem;
+}
+
+.oei-download-form__submit {
+  padding: 0.6rem 1.2rem;
+  background: $oei-navy;
+  color: #fff;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-weight: 600;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.oei-download-form__message {
+  flex-basis: 100%;
+  margin: 0.5rem 0 0;
+}
+
+.oei-download-form__message--success {
+  color: #146c2e;
+  font-weight: 600;
+}
+
+.oei-download-form__message--error {
+  color: #b3261e;
+}
+
+.oei-resource-list__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.oei-resource-list__item {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.oei-resource-list__link {
+  color: $oei-navy;
+  text-decoration: none;
+  font-weight: 600;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.oei-resource-list__link--pending {
+  color: #666;
+  font-weight: 400;
+  cursor: default;
+}
+
+.oei-resource-list__badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: #eee;
+  color: #666;
+  border-radius: 1rem;
+}

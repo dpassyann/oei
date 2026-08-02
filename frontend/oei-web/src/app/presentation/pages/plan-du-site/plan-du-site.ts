@@ -19,6 +19,7 @@ export class PlanDuSite {
     { label: 'Nos missions', path: '/nos-missions' },
     { label: 'Déontologie', path: '/deontologie' },
     { label: 'Certifications', path: '/certifications' },
+    { label: 'Ressources', path: '/ressources' },
     { label: 'Actualités', path: '/actualites' },
     { label: 'Contact', path: '/contact' },
     { label: 'Mentions légales', path: '/mentions-legales' },
