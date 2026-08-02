@@ -17,11 +17,12 @@
       />
     </div>
 
-    <p class="oei-page__note">Version complète en cours de finalisation.</p>
-
     @if (formStatus() === 'success') {
       <p class="oei-download-form__message oei-download-form__message--success">
-        Merci — le PDF vous sera envoyé dès sa finalisation.
+        Merci — voici votre exemplaire :
+        <a class="oei-download-form__link" href="/assets/livre-blanc/livre-blanc-oei-v2.pdf" target="_blank" rel="noopener" download>
+          télécharger le Livre Blanc (PDF)
+        </a>
       </p>
     } @else {
       <form class="oei-download-form" (ngSubmit)="submitDownloadForm()">

@@ -94,6 +94,12 @@ $oei-navy: #0a1e3f;
   font-weight: 600;
 }
 
+.oei-download-form__link {
+  color: #0a1e3f;
+  text-decoration: underline;
+  font-weight: 700;
+}
+
 .oei-download-form__message--error {
   color: #b3261e;
 }

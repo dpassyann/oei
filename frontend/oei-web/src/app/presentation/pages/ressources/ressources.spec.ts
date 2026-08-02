@@ -56,7 +56,9 @@ describe('Ressources', () => {
     await component.submitDownloadForm();
     fixture.detectChanges();
 
-    expect(compiled.textContent).toContain('Merci — le PDF vous sera envoyé dès sa finalisation.');
+    expect(compiled.textContent).toContain('Merci');
+    const downloadLink = compiled.querySelector('.oei-download-form__link') as HTMLAnchorElement | null;
+    expect(downloadLink?.getAttribute('href')).toBe('/assets/livre-blanc/livre-blanc-oei-v2.pdf');
   });
 
   it('givenMalformedEmail_whenSubmitDownloadForm_thenShowsErrorMessage', async () => {
