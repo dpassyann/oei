@@ -10,10 +10,44 @@
     "contact": "Contact",
     "join": "Join the movement"
   },
-  "header": { "memberArea": "Member area" },
+  "header": {
+    "memberArea": "Member area"
+  },
   "home": {
-    "stats": { "title": "Our numbers" },
-    "domains": { "title": "Our areas of action" },
+    "hero": {
+      "panelTitle": "The Order of IT Experts",
+      "panelBody": "An international movement to recognize, structure and elevate the IT profession.",
+      "checklist": [
+        "Protecting the public and professionals",
+        "Promoting excellence and continuous learning",
+        "Establishing a global code of ethics",
+        "Supporting responsible digital transformation"
+      ]
+    },
+    "commitments": {
+      "0": {
+        "title": "Defending the public interest",
+        "description": "Placing ethics and safety at the heart of digital practices."
+      },
+      "1": {
+        "title": "Valuing expertise",
+        "description": "Recognizing expertise and continuous learning."
+      },
+      "2": {
+        "title": "Establishing an ethical framework",
+        "description": "Setting clear, universal rules."
+      },
+      "3": {
+        "title": "Acting internationally",
+        "description": "Collaborating with institutions, businesses and academia."
+      }
+    },
+    "stats": {
+      "title": "Our numbers"
+    },
+    "domains": {
+      "title": "Our areas of action"
+    },
     "news": {
       "title": "News",
       "readMore": "Read more",
@@ -21,8 +55,23 @@
     },
     "resources": {
       "title": "Our resources",
-      "viewAll": "View all resources"
+      "viewAll": "View all resources",
+      "items": {
+        "deontologie": {
+          "label": "Code of ethics"
+        },
+        "referentiel": {
+          "label": "Skills framework"
+        },
+        "livreBlanc": {
+          "label": "White Paper"
+        }
+      },
+      "pendingBadge": "coming soon"
     },
-    "partners": { "title": "They support us" }
+    "partners": {
+      "title": "They support us"
+    },
+    "fallbackNotice": "Translation coming soon for this language."
   }
 }

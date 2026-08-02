@@ -1,36 +1,77 @@
 {
   "nav": {
-    "home": "Accueil",
-    "about": "À propos",
-    "missions": "Nos missions",
-    "ethics": "Déontologie",
-    "certifications": "Certifications",
-    "resources": "Ressources",
-    "news": "Actualités",
-    "contact": "Contact",
-    "join": "Rejoignez le mouvement"
+    "home": "Inicio",
+    "about": "Sobre nosotros",
+    "missions": "Nuestras misiones",
+    "ethics": "Deontología",
+    "certifications": "Certificaciones",
+    "resources": "Recursos",
+    "news": "Noticias",
+    "contact": "Contacto",
+    "join": "Únete al movimiento"
   },
   "header": {
-    "memberArea": "Espace membre"
+    "memberArea": "Área de miembros"
   },
   "home": {
+    "hero": {
+      "panelTitle": "La Orden de los Expertos en Informática",
+      "panelBody": "Un movimiento internacional para reconocer, estructurar y elevar la profesión informática.",
+      "checklist": [
+        "Proteger al público y a los profesionales",
+        "Promover la excelencia y la formación continua",
+        "Establecer un código deontológico mundial",
+        "Acompañar las transformaciones digitales de manera responsable"
+      ]
+    },
+    "commitments": {
+      "0": {
+        "title": "Defender el interés general",
+        "description": "Situar la ética y la seguridad en el centro de los usos digitales."
+      },
+      "1": {
+        "title": "Valorar las competencias",
+        "description": "Reconocer la experiencia y la formación continua."
+      },
+      "2": {
+        "title": "Instaurar un marco deontológico",
+        "description": "Establecer reglas claras y universales."
+      },
+      "3": {
+        "title": "Actuar a nivel internacional",
+        "description": "Colaborar con instituciones, empresas y universidades."
+      }
+    },
     "stats": {
-      "title": "Nos chiffres"
+      "title": "Nuestras cifras"
     },
     "domains": {
-      "title": "Nos domaines d'action"
+      "title": "Nuestros ámbitos de acción"
     },
     "news": {
-      "title": "Actualités",
-      "readMore": "Lire la suite",
-      "empty": "Aucune actualité n'a été publiée pour le moment. Revenez bientôt."
+      "title": "Noticias",
+      "readMore": "Leer más",
+      "empty": "Todavía no se ha publicado ninguna noticia. Vuelve pronto."
     },
     "resources": {
-      "title": "Nos ressources",
-      "viewAll": "Voir toutes les ressources"
+      "title": "Nuestros recursos",
+      "viewAll": "Ver todos los recursos",
+      "items": {
+        "deontologie": {
+          "label": "Código deontológico"
+        },
+        "referentiel": {
+          "label": "Marco de competencias"
+        },
+        "livreBlanc": {
+          "label": "Libro Blanco"
+        }
+      },
+      "pendingBadge": "próximamente"
     },
     "partners": {
-      "title": "Ils nous soutiennent"
-    }
+      "title": "Nos apoyan"
+    },
+    "fallbackNotice": "Traducción disponible próximamente en este idioma."
   }
 }

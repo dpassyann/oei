@@ -20,6 +20,16 @@ const FAKE_CONTENT_SERVICE = {
 // so tests can assert on the rendered wording without depending on network I/O.
 const INTERFACE_STRINGS: Record<string, string> = {
   'nav.join': 'Rejoignez le mouvement',
+  'home.hero.panelTitle': "L'Ordre des Experts Informaticiens",
+  'home.hero.panelBody': 'Un mouvement international pour reconnaître, structurer et élever la profession informatique.',
+  'home.commitments.0.title': "Défendre l'intérêt général",
+  'home.commitments.0.description': "Placer l'éthique et la sécurité au cœur des usages numériques.",
+  'home.commitments.1.title': 'Valoriser les compétences',
+  'home.commitments.1.description': "Reconnaître l'expertise et la formation continue.",
+  'home.commitments.2.title': 'Instaurer un cadre déontologique',
+  'home.commitments.2.description': 'Établir des règles claires et universelles.',
+  'home.commitments.3.title': 'Agir au niveau international',
+  'home.commitments.3.description': 'Collaborer avec les institutions, entreprises et académies.',
   'home.stats.title': 'Nos chiffres',
   'home.domains.title': "Nos domaines d'action",
   'home.news.title': 'Actualités',
@@ -27,13 +37,28 @@ const INTERFACE_STRINGS: Record<string, string> = {
   'home.news.empty': "Aucune actualité n'a été publiée pour le moment. Revenez bientôt.",
   'home.resources.title': 'Nos ressources',
   'home.resources.viewAll': 'Voir toutes les ressources',
+  'home.resources.items.deontologie.label': 'Code de déontologie',
+  'home.resources.items.referentiel.label': 'Référentiel de compétences',
+  'home.resources.items.livreBlanc.label': 'Livre Blanc',
+  'home.resources.pendingBadge': 'à venir',
   'home.partners.title': 'Ils nous soutiennent',
+  'home.fallbackNotice': 'Traduction à venir dans cette langue.',
+};
+
+const LIST_STRINGS: Record<string, readonly string[]> = {
+  'home.hero.checklist': [
+    'Protéger le public et les professionnels',
+    "Promouvoir l'excellence et la formation continue",
+    'Établir un code de déontologie mondial',
+    'Accompagner les transformations numériques de manière responsable',
+  ],
 };
 
 const FAKE_I18N_SERVICE = {
   currentLang: signal('fr'),
   setLang: () => Promise.resolve(),
   translate: (key: string) => INTERFACE_STRINGS[key] ?? key,
+  translateList: (key: string) => LIST_STRINGS[key] ?? [],
 };
 
 function fakeSectionsService(overrides?: {
@@ -99,9 +124,9 @@ describe('Home', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
 
-    const items = compiled.querySelectorAll('.oei-stats__item');
+    const items = compiled.querySelectorAll('.oei-commitments__stat');
     expect(items.length).toBe(4);
-    expect(compiled.querySelector('.oei-stats__value')?.textContent).toContain('0+');
+    expect(compiled.querySelector('.oei-commitments__stat-value')?.textContent).toContain('0+');
   });
 
   it('givenEightDomainAreas_whenNgOnInit_thenRendersEightDomainCards', async () => {

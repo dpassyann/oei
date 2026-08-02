@@ -10,10 +10,44 @@
     "contact": "Contact",
     "join": "Rejoignez le mouvement"
   },
-  "header": { "memberArea": "Espace membre" },
+  "header": {
+    "memberArea": "Espace membre"
+  },
   "home": {
-    "stats": { "title": "Nos chiffres" },
-    "domains": { "title": "Nos domaines d'action" },
+    "hero": {
+      "panelTitle": "L'Ordre des Experts Informaticiens",
+      "panelBody": "Un mouvement international pour reconnaître, structurer et élever la profession informatique.",
+      "checklist": [
+        "Protéger le public et les professionnels",
+        "Promouvoir l'excellence et la formation continue",
+        "Établir un code de déontologie mondial",
+        "Accompagner les transformations numériques de manière responsable"
+      ]
+    },
+    "commitments": {
+      "0": {
+        "title": "Défendre l'intérêt général",
+        "description": "Placer l'éthique et la sécurité au cœur des usages numériques."
+      },
+      "1": {
+        "title": "Valoriser les compétences",
+        "description": "Reconnaître l'expertise et la formation continue."
+      },
+      "2": {
+        "title": "Instaurer un cadre déontologique",
+        "description": "Établir des règles claires et universelles."
+      },
+      "3": {
+        "title": "Agir au niveau international",
+        "description": "Collaborer avec les institutions, entreprises et académies."
+      }
+    },
+    "stats": {
+      "title": "Nos chiffres"
+    },
+    "domains": {
+      "title": "Nos domaines d'action"
+    },
     "news": {
       "title": "Actualités",
       "readMore": "Lire la suite",
@@ -21,8 +55,23 @@
     },
     "resources": {
       "title": "Nos ressources",
-      "viewAll": "Voir toutes les ressources"
+      "viewAll": "Voir toutes les ressources",
+      "items": {
+        "deontologie": {
+          "label": "Code de déontologie"
+        },
+        "referentiel": {
+          "label": "Référentiel de compétences"
+        },
+        "livreBlanc": {
+          "label": "Livre Blanc"
+        }
+      },
+      "pendingBadge": "à venir"
     },
-    "partners": { "title": "Ils nous soutiennent" }
+    "partners": {
+      "title": "Ils nous soutiennent"
+    },
+    "fallbackNotice": "Traduction à venir dans cette langue."
   }
 }

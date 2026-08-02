@@ -2,8 +2,11 @@ import { Service, signal } from '@angular/core';
 import { SupportedLanguage } from '../../domain/model/document';
 
 // The interface dictionaries are nested (e.g. `{ nav: { home: '...' } }`) so keys are
-// dotted paths (`nav.home`); `translate` walks the path rather than doing a flat lookup.
-type TranslationDict = { readonly [key: string]: string | TranslationDict };
+// dotted paths (`nav.home`); `translate`/`translateList` walk the path rather than doing
+// a flat lookup. A leaf can also be a string array (`translateList`), used for content
+// that's a variable-length list of localized strings (e.g. a checklist).
+type TranslationValue = string | readonly string[] | TranslationDict;
+type TranslationDict = { readonly [key: string]: TranslationValue };
 
 @Service()
 export class I18nService {
@@ -25,13 +28,24 @@ export class I18nService {
   }
 
   translate(key: string): string {
+    const value = this.resolve(key);
+    return typeof value === 'string' ? value : key;
+  }
+
+  translateList(key: string): readonly string[] {
+    const value = this.resolve(key);
+    return Array.isArray(value) ? value : [];
+  }
+
+  private resolve(key: string): TranslationValue | undefined {
     const dict = this.cache().get(this.currentLang());
     if (!dict) {
-      return key;
+      return undefined;
     }
-    const value = key.split('.').reduce<string | TranslationDict | undefined>((node, segment) => {
-      return node && typeof node === 'object' ? node[segment] : undefined;
+    return key.split('.').reduce<TranslationValue | undefined>((node, segment) => {
+      return node && typeof node === 'object' && !Array.isArray(node)
+        ? (node as TranslationDict)[segment]
+        : undefined;
     }, dict);
-    return typeof value === 'string' ? value : key;
   }
 }

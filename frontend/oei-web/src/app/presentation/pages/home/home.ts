@@ -10,12 +10,15 @@ import { NewsItem } from '../../../domain/model/news-item';
 import { Partner } from '../../../domain/model/partner';
 
 interface ResourceExcerptLink {
-  readonly label: string;
+  // `key` is the structural identifier used to build the i18n path
+  // `home.resources.items.<key>.label` — the label itself is never hardcoded here.
+  readonly key: string;
   readonly path?: string;
   readonly fragment?: string;
 }
 
 const NEWS_LIMIT = 3;
+const COMMITMENT_COUNT = 4;
 
 @Component({
   selector: 'oei-home',
@@ -42,11 +45,17 @@ export class Home {
   // Excerpt of the full resource list from the `/ressources` page, truncated to 3
   // entries. Kept as a small local copy (rather than importing `Ressources`' private
   // list) since the home page only ever shows a teaser of it, plus a "see all" link.
+  // Labels are never hardcoded: `key` resolves to `home.resources.items.<key>.label`.
   protected readonly resourceExcerpt: readonly ResourceExcerptLink[] = [
-    { label: 'Code de déontologie', path: '/deontologie' },
-    { label: 'Référentiel de compétences' },
-    { label: 'Livre Blanc', path: '/ressources', fragment: 'livre-blanc' },
+    { key: 'deontologie', path: '/deontologie' },
+    { key: 'referentiel' },
+    { key: 'livreBlanc', path: '/ressources', fragment: 'livre-blanc' },
   ];
+
+  // The 4 founding commitments and the 4 home stats are each rendered from a fixed-size
+  // index range: only the icon (not language content) is structural/static here — titles,
+  // descriptions and stat labels all come from i18n keys or the stats port/adapter.
+  protected readonly commitmentIndexes = Array.from({ length: COMMITMENT_COUNT }, (_, i) => i);
 
   constructor() {
     // Registered as a pending task so zoneless change detection (and

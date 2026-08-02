@@ -4,6 +4,12 @@
   "displayName": "Ordre des Experts Informaticiens",
   "loginTheme": "oei",
   "sslRequired": "external",
+  "registrationAllowed": true,
+  "registrationEmailAsUsername": true,
+  "resetPasswordAllowed": true,
+  "rememberMe": true,
+  "verifyEmail": false,
+  "loginWithEmailAllowed": true,
   "roles": {
     "realm": [
       { "name": "member", "description": "Membre de l'OEI (fondateur, agréé, associé ou honneur)" },
