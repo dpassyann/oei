@@ -20,7 +20,9 @@ interface LegalLink {
 export class SiteFooter {
   protected readonly currentYear = new Date().getFullYear();
 
-  protected readonly partners: readonly string[] = ['IEEE', 'ACM', 'Inria', 'EPFL', 'UNESCO'];
+  // Partner logos moved to the home page's dynamic "Ils nous soutiennent" section
+  // (real Partner entities via PartnerApplicationService) — this static list was
+  // a duplicate of that same concept and has been removed.
 
   protected readonly socialLinks: readonly SocialLink[] = [
     { name: 'LinkedIn', href: '#' },

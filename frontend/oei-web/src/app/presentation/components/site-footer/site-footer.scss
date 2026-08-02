@@ -19,37 +19,6 @@ $oei-gold: #e8a530;
   color: #ffffff;
 }
 
-.oei-footer__partners {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-  padding: 1.25rem 2.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.oei-footer__partners-label {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.65);
-  white-space: nowrap;
-}
-
-.oei-footer__partners-list {
-  display: flex;
-  align-items: center;
-  gap: 1.75rem;
-  flex-wrap: wrap;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.oei-footer__partner {
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: rgba(255, 255, 255, 0.85);
-}
-
 .oei-footer__main {
   display: grid;
   grid-template-columns: 2fr 1.3fr 1fr;
