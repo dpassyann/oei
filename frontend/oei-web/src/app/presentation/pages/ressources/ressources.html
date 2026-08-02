@@ -9,13 +9,24 @@
         class="oei-livre-blanc__cover"
         src="/assets/livre-blanc/couverture-oei.svg"
         alt="Couverture du Livre Blanc de l'Ordre des Experts Informaticiens"
+        (mouseenter)="previewedCover.set('front')"
+        (mouseleave)="previewedCover.set(null)"
       />
       <img
         class="oei-livre-blanc__cover"
-        src="/assets/livre-blanc/quatrieme-couverture-oei.svg"
+        ngSrc="/assets/livre-blanc/quatrieme-couverture-oei.svg"
         alt="Quatrième de couverture du Livre Blanc de l'Ordre des Experts Informaticiens"
+        height="1716" width="1200"
+        (mouseenter)="previewedCover.set('back')"
+        (mouseleave)="previewedCover.set(null)"
       />
     </div>
+
+    @if (previewedCover(); as kind) {
+      <div class="oei-cover-preview" aria-hidden="true">
+        <img class="oei-cover-preview__image" [src]="previewSrc(kind)" alt="" />
+      </div>
+    }
 
     @if (formStatus() === 'success') {
       <p class="oei-download-form__message oei-download-form__message--success">

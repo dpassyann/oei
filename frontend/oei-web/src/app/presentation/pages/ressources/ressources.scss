@@ -47,6 +47,35 @@ $oei-navy: #0a1e3f;
   height: auto;
   box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.15);
   border-radius: 0.25rem;
+  cursor: zoom-in;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.25);
+  }
+}
+
+.oei-cover-preview {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 30, 63, 0.65);
+  // Lets mouseenter/mouseleave keep firing on the underlying thumbnail rather
+  // than on this overlay, so hovering away still hides the preview.
+  pointer-events: none;
+}
+
+.oei-cover-preview__image {
+  max-width: min(90vw, 32rem);
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.45);
+  border-radius: 0.5rem;
 }
 
 .oei-download-form {
