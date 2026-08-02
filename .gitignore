@@ -25,6 +25,9 @@ frontend/**/api/generated
 .project
 .classpath
 
+# Claude Code local state (settings.local.json, agent worktrees)
+.claude/
+
 # OS
 .DS_Store
 Thumbs.db
