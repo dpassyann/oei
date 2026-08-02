@@ -1,5 +1,6 @@
 import { Component, inject, PendingTasks } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { KeycloakAuthService } from '../../auth/keycloak-auth.service';
 import { I18nService } from '../../i18n/i18n.service';
 import { LanguageSwitcher } from '../language-switcher/language-switcher';
 
@@ -17,6 +18,7 @@ interface NavLink {
 export class SiteHeader {
   protected readonly i18n = inject(I18nService);
   private readonly pendingTasks = inject(PendingTasks);
+  protected readonly keycloakAuth = inject(KeycloakAuthService);
 
   protected readonly navLinks: readonly NavLink[] = [
     { path: '/', labelKey: 'nav.home' },
