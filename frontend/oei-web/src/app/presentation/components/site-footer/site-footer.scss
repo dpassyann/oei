@@ -148,6 +148,27 @@ $oei-gold: #e8a530;
   }
 }
 
+.oei-footer__membership {
+  display: flex;
+  justify-content: center;
+  padding: 1.25rem 2.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.oei-footer__membership-link {
+  display: inline-block;
+  padding: 0.6rem 1.5rem;
+  background: $oei-gold;
+  color: $oei-navy;
+  text-decoration: none;
+  font-weight: 700;
+  border-radius: 0.25rem;
+
+  &:hover {
+    filter: brightness(1.08);
+  }
+}
+
 .oei-footer__legal {
   display: flex;
   align-items: center;

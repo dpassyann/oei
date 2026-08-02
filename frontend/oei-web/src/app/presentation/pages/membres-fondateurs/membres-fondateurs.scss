@@ -1,0 +1,97 @@
+:host {
+  display: block;
+}
+
+$oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+
+.oei-page {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem;
+}
+
+.oei-page__title {
+  margin: 0 0 1.5rem;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-page__body {
+  margin: 0 0 2rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.oei-page__note {
+  margin: 0.75rem 0 0;
+  color: #666;
+  font-style: italic;
+}
+
+.oei-page__note--small {
+  font-size: 0.9rem;
+}
+
+.oei-page__link {
+  color: $oei-navy;
+  font-weight: 600;
+}
+
+.oei-fee-tiers {
+  margin-bottom: 2.5rem;
+}
+
+.oei-fee-tiers__title {
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-fee-tiers__table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  th {
+    color: $oei-navy;
+    font-weight: 700;
+  }
+}
+
+.oei-founding-status {
+  padding: 1.75rem;
+  background: #f7f7f7;
+  border-left: 4px solid $oei-gold;
+  border-radius: 0.25rem;
+}
+
+.oei-founding-status__message {
+  margin: 0;
+  font-weight: 700;
+  color: $oei-navy;
+  font-size: 1.1rem;
+}
+
+.oei-cta-join {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.7rem 1.5rem;
+  background: $oei-navy;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 0.25rem;
+  font-weight: 600;
+
+  &:hover {
+    background: #12295a;
+  }
+}

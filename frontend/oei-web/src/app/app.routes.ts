@@ -9,6 +9,7 @@ import { Actualites } from './presentation/pages/actualites/actualites';
 import { Contact } from './presentation/pages/contact/contact';
 import { MentionsLegales } from './presentation/pages/mentions-legales/mentions-legales';
 import { PlanDuSite } from './presentation/pages/plan-du-site/plan-du-site';
+import { MembresFondateurs } from './presentation/pages/membres-fondateurs/membres-fondateurs';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -19,6 +20,7 @@ export const routes: Routes = [
   { path: 'ressources', component: Ressources },
   { path: 'actualites', component: Actualites },
   { path: 'contact', component: Contact },
+  { path: 'membres-fondateurs', component: MembresFondateurs },
   { path: 'mentions-legales', component: MentionsLegales },
   { path: 'plan-du-site', component: PlanDuSite },
 ];

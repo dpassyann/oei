@@ -32,6 +32,16 @@ describe('SiteFooter', () => {
     });
   });
 
+  it('givenComponent_whenCreated_thenRendersFoundingMembersLink', () => {
+    const fixture = TestBed.createComponent(SiteFooter);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    const membershipLink = compiled.querySelector<HTMLAnchorElement>('.oei-footer__membership-link');
+    expect(membershipLink?.getAttribute('href')).toBe('/membres-fondateurs');
+    expect(membershipLink?.textContent).toContain('Devenir membre fondateur');
+  });
+
   it('givenComponent_whenCreated_thenRendersCopyrightWithCurrentYear', () => {
     const fixture = TestBed.createComponent(SiteFooter);
     fixture.detectChanges();

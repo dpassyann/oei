@@ -22,6 +22,7 @@ export class PlanDuSite {
     { label: 'Ressources', path: '/ressources' },
     { label: 'Actualités', path: '/actualites' },
     { label: 'Contact', path: '/contact' },
+    { label: 'Membres fondateurs', path: '/membres-fondateurs' },
     { label: 'Mentions légales', path: '/mentions-legales' },
     { label: 'Plan du site', path: '/plan-du-site' },
   ];

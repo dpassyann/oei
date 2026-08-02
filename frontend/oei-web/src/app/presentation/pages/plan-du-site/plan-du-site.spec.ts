@@ -17,7 +17,7 @@ describe('PlanDuSite', () => {
 
     expect(compiled.querySelector('.oei-page__title')?.textContent).toContain('Plan du site');
     const links = compiled.querySelectorAll<HTMLAnchorElement>('.oei-page__link');
-    expect(links.length).toBe(10);
+    expect(links.length).toBe(11);
     links.forEach((link) => {
       const href = link.getAttribute('href');
       expect(href).toBeTruthy();
