@@ -1,12 +1,44 @@
+import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { MembresFondateurs } from './membres-fondateurs';
+import { I18nService } from '../../i18n/i18n.service';
+
+const INTERFACE_STRINGS: Record<string, string> = {
+  'membresFondateurs.title': 'Membres fondateurs',
+  'membresFondateurs.intro':
+    "L'Ordre des Experts Informaticiens n'est pas un livre à acheter — c'est un mouvement à soutenir.",
+  'membresFondateurs.feeTiers.title': 'Cotisations',
+  'membresFondateurs.feeTiers.categoryHeader': 'Catégorie',
+  'membresFondateurs.feeTiers.annualFeeHeader': 'Cotisation annuelle',
+  'membresFondateurs.feeTiers.tiers.0.label': 'Étudiant',
+  'membresFondateurs.feeTiers.tiers.0.amount': '20 €',
+  'membresFondateurs.feeTiers.tiers.1.label': 'Membre',
+  'membresFondateurs.feeTiers.tiers.1.amount': '50 €',
+  'membresFondateurs.feeTiers.tiers.2.label': 'Membre fondateur',
+  'membresFondateurs.feeTiers.tiers.2.amount': '100 €',
+  'membresFondateurs.feeTiers.tiers.3.label': 'Membre soutien',
+  'membresFondateurs.feeTiers.tiers.3.amount': '250 €',
+  'membresFondateurs.foundingStatus.message':
+    'Mouvement en cours de constitution — soyez parmi les premiers membres fondateurs.',
+  'membresFondateurs.foundingStatus.note':
+    "Le formulaire d'adhésion en ligne arrive bientôt. En attendant, contactez-nous pour manifester votre intérêt à soutenir le mouvement.",
+  'membresFondateurs.foundingStatus.cta': 'Soutenir le mouvement',
+  'membresFondateurs.foundingStatus.contactPrefix': 'Ou écrivez-nous directement à',
+};
+
+const FAKE_I18N_SERVICE = {
+  currentLang: signal('fr'),
+  setLang: () => Promise.resolve(),
+  translate: (key: string) => INTERFACE_STRINGS[key] ?? key,
+  translateList: () => [],
+};
 
 describe('MembresFondateurs', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [MembresFondateurs],
-      providers: [provideRouter([])],
+      providers: [provideRouter([]), { provide: I18nService, useValue: FAKE_I18N_SERVICE }],
     });
   });
 

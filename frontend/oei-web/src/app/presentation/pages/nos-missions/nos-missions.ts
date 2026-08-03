@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { I18nService } from '../../i18n/i18n.service';
 
 @Component({
   selector: 'oei-nos-missions',
@@ -6,12 +7,7 @@ import { Component } from '@angular/core';
   styleUrl: './nos-missions.scss',
 })
 export class NosMissions {
-  protected readonly commitments: readonly string[] = [
-    "Définir ce qu'est un expert informaticien, par niveau de compétence et de responsabilité.",
-    'Proposer un code de déontologie commun, inspiré des professions à haute responsabilité.',
-    "Construire, avec des partenaires académiques, un cadre de certification indépendant des éditeurs commerciaux.",
-    'Défendre une exigence de formation continue tout au long de la carrière.',
-    "Documenter et publier l'état réel de la profession — rémunérations, tendances, ruptures technologiques.",
-    'Devenir un interlocuteur crédible des universités, des entreprises et, à terme, des pouvoirs publics.',
-  ];
+  // Plain list of localized strings with no other structural data (no icon,
+  // no route) — resolved directly via `translateList`, like `home.hero.checklist`.
+  protected readonly i18n = inject(I18nService);
 }

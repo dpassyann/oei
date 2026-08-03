@@ -93,5 +93,120 @@
       "title": "Sie unterstützen uns"
     },
     "fallbackNotice": "Übersetzung für diese Sprache folgt in Kürze."
+  },
+  "aPropos": {
+    "title": "Über uns",
+    "vision": {
+      "heading": "Vision",
+      "body": "Eine Welt, in der die Fachleute, die die digitalen Systeme entwerfen, entwickeln und betreiben, von denen unsere Gesellschaften abhängen — Gesundheitswesen, Luftfahrt, Energie, Finanzen, Verwaltung —, ihren Beruf mit einem Maß an Kompetenz, Ethik und Verantwortung ausüben, das den Herausforderungen, die sie tragen, angemessen anerkannt wird."
+    },
+    "mission": {
+      "heading": "Auftrag",
+      "body": "Das Gemeinwohl zu verteidigen, indem eine verantwortungsvolle, ethische, sichere und nachhaltige Informatik gefördert wird, und den Beruf des IT-Experten schrittweise als Beruf mit hoher Verantwortung anerkennen zu lassen — ausgestattet mit einem gemeinsamen Verhaltenskodex, einem gemeinsamen Kompetenzrahmen, einer Weiterbildungspflicht und einer glaubwürdigen Vertretung gegenüber Institutionen, Hochschulen und Unternehmen."
+    }
+  },
+  "actualites": {
+    "title": "Aktuelles",
+    "empty": "Es wurden noch keine Neuigkeiten veröffentlicht. Schauen Sie bald wieder vorbei."
+  },
+  "certifications": {
+    "title": "Zertifizierungen",
+    "intro": "Wir entwickeln einen von kommerziellen Softwareanbietern unabhängigen Zertifizierungsrahmen, der sich an einer Skala von Kompetenzstufen orientiert. Jede Stufe wird im Kompetenzrahmen, der derzeit gemeinsam mit akademischen Partnern erarbeitet wird, genau definiert.",
+    "levels": {
+      "0": "Praktiker",
+      "1": "Ingenieur",
+      "2": "Architekt",
+      "3": "Experte",
+      "4": "Senior-Experte",
+      "5": "Fellow"
+    }
+  },
+  "contact": {
+    "title": "Kontakt",
+    "bodyPrefix": "Bei Fragen schreiben Sie uns an",
+    "note": "Ein eigenes Kontaktformular ist für eine zukünftige Version der Website geplant."
+  },
+  "deontologie": {
+    "title": "Ethikkodex",
+    "body1": "Unser Verhaltenskodex — die Gesamtheit der Berufsverhaltensregeln, zu deren Einhaltung sich akkreditierte Mitglieder verpflichten — befindet sich derzeit in der Ausarbeitung. Er unterscheidet sich von der Charta, einer weniger verbindlichen freiwilligen Selbstverpflichtung, die sich an ein breiteres Publikum richtet (assoziierte Mitglieder, Partnerunternehmen, Hochschulen).",
+    "body2": "Beide Dokumente werden veröffentlicht, sobald sie vom Führungsgremium der Organisation genehmigt wurden."
+  },
+  "membresFondateurs": {
+    "title": "Gründungsmitglieder",
+    "intro": "Der Orden der IT-Experten ist kein Buch, das man kauft — er ist eine Bewegung, die man unterstützt. Gründungsmitglied zu werden bedeutet, von den allerersten Schritten an am Aufbau einer unabhängigen Berufsorganisation für digitale Experten mitzuwirken.",
+    "feeTiers": {
+      "title": "Mitgliedsbeiträge",
+      "categoryHeader": "Kategorie",
+      "annualFeeHeader": "Jahresbeitrag",
+      "tiers": {
+        "0": { "label": "Student", "amount": "20 €" },
+        "1": { "label": "Mitglied", "amount": "50 €" },
+        "2": { "label": "Gründungsmitglied", "amount": "100 €" },
+        "3": { "label": "Fördermitglied", "amount": "250 €" }
+      }
+    },
+    "foundingStatus": {
+      "message": "Die Bewegung befindet sich derzeit im Aufbau — seien Sie unter den ersten Gründungsmitgliedern.",
+      "note": "Das Online-Beitrittsformular folgt in Kürze. Kontaktieren Sie uns in der Zwischenzeit, um Ihr Interesse an der Unterstützung der Bewegung zu bekunden.",
+      "cta": "Die Bewegung unterstützen",
+      "contactPrefix": "Oder schreiben Sie uns direkt an"
+    }
+  },
+  "mentionsLegales": {
+    "title": "Impressum",
+    "body": "Der Orden der IT-Experten ist derzeit eine Bewegung — eine kollektive Initiative ohne eigene Rechtspersönlichkeit. Die Wahl der Rechtsform (Verein) und ihre Eintragung bei der zuständigen Behörde befinden sich in der Abschlussphase. Diese Seite wird aktualisiert, sobald der rechtliche Status der Organisation feststeht."
+  },
+  "nosMissions": {
+    "title": "Unsere Aufgaben",
+    "intro": "Wir starten diese Bewegung, um:",
+    "commitments": [
+      "Definieren, was ein IT-Experte ist, nach Kompetenz- und Verantwortungsstufe.",
+      "Einen gemeinsamen Verhaltenskodex vorschlagen, inspiriert von Berufen mit hoher Verantwortung.",
+      "Gemeinsam mit akademischen Partnern einen von kommerziellen Anbietern unabhängigen Zertifizierungsrahmen aufbauen.",
+      "Eine Weiterbildungspflicht während der gesamten Laufbahn fordern.",
+      "Den tatsächlichen Zustand des Berufsstands dokumentieren und veröffentlichen — Vergütung, Trends, technologische Umbrüche.",
+      "Ein glaubwürdiger Ansprechpartner für Hochschulen, Unternehmen und langfristig auch für die öffentliche Hand werden."
+    ]
+  },
+  "planDuSite": {
+    "title": "Sitemap",
+    "links": {
+      "home": "Startseite",
+      "about": "Über uns",
+      "missions": "Unsere Aufgaben",
+      "ethics": "Ethikkodex",
+      "certifications": "Zertifizierungen",
+      "resources": "Ressourcen",
+      "news": "Aktuelles",
+      "contact": "Kontakt",
+      "foundingMembers": "Gründungsmitglieder",
+      "legalNotices": "Impressum",
+      "sitemap": "Sitemap"
+    }
+  },
+  "ressources": {
+    "title": "Ressourcen",
+    "livreBlanc": {
+      "title": "Weißbuch",
+      "frontCoverAlt": "Titelseite des Weißbuchs des Ordens der IT-Experten",
+      "backCoverAlt": "Rückseite des Weißbuchs des Ordens der IT-Experten",
+      "successPrefix": "Vielen Dank — hier ist Ihr Exemplar:",
+      "downloadLinkText": "Weißbuch herunterladen (PDF)",
+      "emailLabel": "E-Mail-Adresse",
+      "emailPlaceholder": "sie@beispiel.de",
+      "submitButton": "PDF kostenlos erhalten",
+      "errorMessage": "Ungültige E-Mail-Adresse oder Versand derzeit nicht möglich — bitte versuchen Sie es erneut."
+    },
+    "resourceList": {
+      "title": "Unsere Ressourcen",
+      "pendingBadge": "demnächst",
+      "items": {
+        "deontologie": { "label": "Ethikkodex" },
+        "referentiel": { "label": "Kompetenzrahmen" },
+        "livreBlanc": { "label": "Weißbuch" },
+        "positions": { "label": "Stellungnahmen & Positionen" },
+        "rapports": { "label": "Berichte & Studien" }
+      }
+    }
   }
 }
