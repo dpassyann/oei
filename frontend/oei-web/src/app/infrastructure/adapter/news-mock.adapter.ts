@@ -1,4 +1,5 @@
 import { Service } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { NewsPort } from '../../domain/port/news.port';
 import { NewsItem } from '../../domain/model/news-item';
 
@@ -9,7 +10,7 @@ import { NewsItem } from '../../domain/model/news-item';
 // other section adapters (stats/domains/partners) once real news content exists per language.
 @Service()
 export class NewsMockAdapter implements NewsPort {
-  async getLatestNews(_limit: number, _lang: string): Promise<NewsItem[]> {
-    return [];
+  getLatestNews(_limit: number, _lang: string): Observable<NewsItem[]> {
+    return of([]);
   }
 }

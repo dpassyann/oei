@@ -1,18 +1,20 @@
 import { Service, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { map, Observable } from 'rxjs';
 import { DomainsPort } from '../../domain/port/domains.port';
 import { createDomainArea, DomainArea } from '../../domain/model/domain-area';
 import { RuntimeConfig } from '../config/runtime-config';
 
+// See `src/app/infrastructure/adapter/README.md` for why `HttpClient` (Observable) replaces
+// the previous `fetch()`/Promise implementation.
 @Service()
 export class DomainsApiAdapter implements DomainsPort {
+  private readonly http = inject(HttpClient);
   private readonly runtimeConfig = inject(RuntimeConfig);
 
-  async getDomainAreas(lang: string): Promise<DomainArea[]> {
-    const response = await fetch(`${this.runtimeConfig.apiBaseUrl()}/domains/${lang}`);
-    if (!response.ok) {
-      throw new Error(`getDomainAreas failed with status ${response.status}`);
-    }
-    const data = (await response.json()) as DomainArea[];
-    return data.map((domain) => createDomainArea(domain));
+  getDomainAreas(lang: string): Observable<DomainArea[]> {
+    return this.http
+      .get<DomainArea[]>(`${this.runtimeConfig.apiBaseUrl()}/domains/${lang}`)
+      .pipe(map((data) => data.map((domain) => createDomainArea(domain))));
   }
 }

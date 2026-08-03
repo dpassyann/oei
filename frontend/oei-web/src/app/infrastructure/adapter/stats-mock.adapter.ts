@@ -1,4 +1,5 @@
 import { Service } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { StatsPort } from '../../domain/port/stats.port';
 import { createStat, Stat } from '../../domain/model/stat';
 import { SupportedLanguage } from '../../domain/model/document';
@@ -51,7 +52,7 @@ const FIXTURES: Record<SupportedLanguage, Stat[]> = {
 
 @Service()
 export class StatsMockAdapter implements StatsPort {
-  async getHomeStats(lang: string): Promise<Stat[]> {
-    return FIXTURES[lang as SupportedLanguage] ?? FIXTURES['en'];
+  getHomeStats(lang: string): Observable<Stat[]> {
+    return of(FIXTURES[lang as SupportedLanguage] ?? FIXTURES['en']);
   }
 }

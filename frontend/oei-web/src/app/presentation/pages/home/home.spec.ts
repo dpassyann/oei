@@ -1,6 +1,7 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { of } from 'rxjs';
 import { Home } from './home';
 import { ContentApplicationService } from '../../../application/service/content-application.service';
 import { HomeSectionsApplicationService } from '../../../application/service/home-sections-application.service';
@@ -12,7 +13,7 @@ import { createNewsItem, NewsItem } from '../../../domain/model/news-item';
 import { createPartner, Partner } from '../../../domain/model/partner';
 
 const FAKE_CONTENT_SERVICE = {
-  getHomeContent: () => Promise.resolve({ title: 'Titre test', body: 'Corps test', isFallback: false }),
+  getHomeContent: () => of({ title: 'Titre test', body: 'Corps test', isFallback: false }),
 };
 
 // Real dictionary lookups go through `fetch`, which the unit test environment
@@ -67,16 +68,16 @@ function fakeSectionsService(overrides?: {
   news?: NewsItem[];
 }): Pick<HomeSectionsApplicationService, 'getStats' | 'getDomainAreas' | 'getLatestNews'> {
   return {
-    getStats: () => Promise.resolve(overrides?.stats ?? []),
-    getDomainAreas: () => Promise.resolve(overrides?.domainAreas ?? []),
-    getLatestNews: () => Promise.resolve(overrides?.news ?? []),
+    getStats: () => of(overrides?.stats ?? []),
+    getDomainAreas: () => of(overrides?.domainAreas ?? []),
+    getLatestNews: () => of(overrides?.news ?? []),
   };
 }
 
 function fakePartnerService(partners: Partner[]): Pick<PartnerApplicationService, 'getPartners' | 'getPartner'> {
   return {
-    getPartners: () => Promise.resolve(partners),
-    getPartner: (id) => Promise.resolve(partners.find((partner) => partner.id === id) as Partner),
+    getPartners: () => of(partners),
+    getPartner: (id) => of(partners.find((partner) => partner.id === id) as Partner),
   };
 }
 

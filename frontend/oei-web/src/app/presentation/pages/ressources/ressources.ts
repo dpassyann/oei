@@ -44,9 +44,13 @@ export class Ressources {
     return kind === 'front' ? this.frontCoverSrc : this.backCoverSrc;
   }
 
-  protected async submitDownloadForm(): Promise<void> {
+  protected submitDownloadForm(): void {
     this.formStatus.set('submitting');
-    const result = await this.leadCapture.submitEmail(this.email());
-    this.formStatus.set(result.success ? 'success' : 'error');
+    // `submitEmail` never errors on the Observable's error channel (submission failures are
+    // mapped to `{ success: false }` — see `LeadCaptureApplicationService`), so a single `next`
+    // handler is enough here.
+    this.leadCapture.submitEmail(this.email()).subscribe((result) => {
+      this.formStatus.set(result.success ? 'success' : 'error');
+    });
   }
 }

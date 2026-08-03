@@ -1,4 +1,5 @@
 import { Service } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { DomainsPort } from '../../domain/port/domains.port';
 import { createDomainArea, DomainArea } from '../../domain/model/domain-area';
 import { SupportedLanguage } from '../../domain/model/document';
@@ -266,7 +267,7 @@ const FIXTURES: Record<SupportedLanguage, DomainArea[]> = {
 
 @Service()
 export class DomainsMockAdapter implements DomainsPort {
-  async getDomainAreas(lang: string): Promise<DomainArea[]> {
-    return FIXTURES[lang as SupportedLanguage] ?? FIXTURES['en'];
+  getDomainAreas(lang: string): Observable<DomainArea[]> {
+    return of(FIXTURES[lang as SupportedLanguage] ?? FIXTURES['en']);
   }
 }

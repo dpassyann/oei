@@ -1,42 +1,42 @@
 import { TestBed } from '@angular/core/testing';
-import { vi } from 'vitest';
+import { provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { firstValueFrom } from 'rxjs';
 import { DomainsApiAdapter } from './domains-api.adapter';
 import { RuntimeConfig } from '../config/runtime-config';
 
 describe('DomainsApiAdapter', () => {
-  function createAdapter(apiBaseUrl: string): DomainsApiAdapter {
+  function createAdapter(apiBaseUrl: string): { adapter: DomainsApiAdapter; httpMock: HttpTestingController } {
     TestBed.configureTestingModule({
-      providers: [DomainsApiAdapter, { provide: RuntimeConfig, useValue: { apiBaseUrl: () => apiBaseUrl } }],
+      providers: [
+        DomainsApiAdapter,
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: RuntimeConfig, useValue: { apiBaseUrl: () => apiBaseUrl } },
+      ],
     });
-    return TestBed.inject(DomainsApiAdapter);
+    return { adapter: TestBed.inject(DomainsApiAdapter), httpMock: TestBed.inject(HttpTestingController) };
   }
 
-  afterEach(() => vi.unstubAllGlobals());
-
   it('givenBackendReturnsDomains_whenGetDomainAreas_thenMapsToDomainDomainAreas', async () => {
-    const fetchMock = vi.fn().mockResolvedValue({
-      ok: true,
-      json: () => Promise.resolve([{ icon: 'shield-lock', title: 'Cybersécurité', description: 'Desc' }]),
-    });
-    vi.stubGlobal('fetch', fetchMock);
+    const { adapter, httpMock } = createAdapter('/api/v1');
 
-    const adapter = createAdapter('/api/v1');
-    const domains = await adapter.getDomainAreas('fr');
+    const result = firstValueFrom(adapter.getDomainAreas('fr'));
+    const req = httpMock.expectOne('/api/v1/domains/fr');
+    req.flush([{ icon: 'shield-lock', title: 'Cybersécurité', description: 'Desc' }]);
 
-    expect(fetchMock).toHaveBeenCalledWith('/api/v1/domains/fr');
-    expect(domains).toEqual([{ icon: 'shield-lock', title: 'Cybersécurité', description: 'Desc' }]);
+    expect(await result).toEqual([{ icon: 'shield-lock', title: 'Cybersécurité', description: 'Desc' }]);
+    httpMock.verify();
   });
 
   it('givenNonDefaultApiBaseUrl_whenGetDomainAreas_thenBuildsUrlFromRuntimeConfig', async () => {
-    const fetchMock = vi.fn().mockResolvedValue({
-      ok: true,
-      json: () => Promise.resolve([{ icon: 'shield-lock', title: 'Cybersécurité', description: 'Desc' }]),
-    });
-    vi.stubGlobal('fetch', fetchMock);
+    const { adapter, httpMock } = createAdapter('/custom-api');
 
-    const adapter = createAdapter('/custom-api');
-    await adapter.getDomainAreas('en');
+    const result = firstValueFrom(adapter.getDomainAreas('en'));
+    const req = httpMock.expectOne('/custom-api/domains/en');
+    req.flush([{ icon: 'shield-lock', title: 'Cybersécurité', description: 'Desc' }]);
 
-    expect(fetchMock).toHaveBeenCalledWith('/custom-api/domains/en');
+    await result;
+    httpMock.verify();
   });
 });

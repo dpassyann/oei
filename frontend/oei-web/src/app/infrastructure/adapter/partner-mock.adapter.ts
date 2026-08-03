@@ -1,4 +1,5 @@
 import { Service } from '@angular/core';
+import { Observable, of, throwError } from 'rxjs';
 import { PartnerRepositoryPort } from '../../domain/port/partner-repository.port';
 import { createPartner, Partner } from '../../domain/model/partner';
 import { SupportedLanguage } from '../../domain/model/document';
@@ -171,15 +172,15 @@ const FIXTURES: Record<SupportedLanguage, Partner[]> = {
 
 @Service()
 export class PartnerMockAdapter implements PartnerRepositoryPort {
-  async getPartners(lang: string): Promise<Partner[]> {
-    return FIXTURES[lang as SupportedLanguage] ?? FIXTURES['en'];
+  getPartners(lang: string): Observable<Partner[]> {
+    return of(FIXTURES[lang as SupportedLanguage] ?? FIXTURES['en']);
   }
 
-  async getPartner(id: string, lang: string): Promise<Partner> {
+  getPartner(id: string, lang: string): Observable<Partner> {
     const partner = (FIXTURES[lang as SupportedLanguage] ?? FIXTURES['en']).find((fixture) => fixture.id === id);
     if (!partner) {
-      throw new Error(`Partner not found: ${id}`);
+      return throwError(() => new Error(`Partner not found: ${id}`));
     }
-    return partner;
+    return of(partner);
   }
 }

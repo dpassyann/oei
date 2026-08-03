@@ -1,9 +1,10 @@
+import { firstValueFrom } from 'rxjs';
 import { DomainsMockAdapter } from './domains-mock.adapter';
 
 describe('DomainsMockAdapter', () => {
   it('givenRealVisionCategories_whenGetDomainAreasFr_thenReturnsAllEightDomainsInFrench', async () => {
     const adapter = new DomainsMockAdapter();
-    const domains = await adapter.getDomainAreas('fr');
+    const domains = await firstValueFrom(adapter.getDomainAreas('fr'));
     expect(domains.length).toBe(8);
     expect(domains.map((domain) => domain.title)).toEqual([
       'Cybersécurité',
@@ -20,7 +21,7 @@ describe('DomainsMockAdapter', () => {
 
   it('givenEnglishLang_whenGetDomainAreas_thenReturnsEnglishTitles', async () => {
     const adapter = new DomainsMockAdapter();
-    const domains = await adapter.getDomainAreas('en');
+    const domains = await firstValueFrom(adapter.getDomainAreas('en'));
     expect(domains.map((domain) => domain.title)).toEqual([
       'Cybersecurity',
       'Artificial Intelligence',
@@ -35,7 +36,7 @@ describe('DomainsMockAdapter', () => {
 
   it('givenUnsupportedLang_whenGetDomainAreas_thenFallsBackToEnglish', async () => {
     const adapter = new DomainsMockAdapter();
-    const domains = await adapter.getDomainAreas('xx');
+    const domains = await firstValueFrom(adapter.getDomainAreas('xx'));
     expect(domains[0].title).toBe('Cybersecurity');
   });
 });

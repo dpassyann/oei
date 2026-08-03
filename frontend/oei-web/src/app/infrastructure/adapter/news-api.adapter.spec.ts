@@ -1,39 +1,42 @@
 import { TestBed } from '@angular/core/testing';
-import { vi } from 'vitest';
+import { provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { firstValueFrom } from 'rxjs';
 import { NewsApiAdapter } from './news-api.adapter';
 import { RuntimeConfig } from '../config/runtime-config';
 
 describe('NewsApiAdapter', () => {
-  function createAdapter(apiBaseUrl: string): NewsApiAdapter {
+  function createAdapter(apiBaseUrl: string): { adapter: NewsApiAdapter; httpMock: HttpTestingController } {
     TestBed.configureTestingModule({
-      providers: [NewsApiAdapter, { provide: RuntimeConfig, useValue: { apiBaseUrl: () => apiBaseUrl } }],
+      providers: [
+        NewsApiAdapter,
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: RuntimeConfig, useValue: { apiBaseUrl: () => apiBaseUrl } },
+      ],
     });
-    return TestBed.inject(NewsApiAdapter);
+    return { adapter: TestBed.inject(NewsApiAdapter), httpMock: TestBed.inject(HttpTestingController) };
   }
 
-  afterEach(() => vi.unstubAllGlobals());
-
   it('givenBackendReturnsNews_whenGetLatestNews_thenBuildsUrlWithLimitAndMapsResults', async () => {
-    const fetchMock = vi.fn().mockResolvedValue({
-      ok: true,
-      json: () => Promise.resolve([{ title: 'Titre', excerpt: 'Extrait', imageUrl: '/img.jpg', path: '/news/titre' }]),
-    });
-    vi.stubGlobal('fetch', fetchMock);
+    const { adapter, httpMock } = createAdapter('/api/v1');
 
-    const adapter = createAdapter('/api/v1');
-    const news = await adapter.getLatestNews(3, 'fr');
+    const result = firstValueFrom(adapter.getLatestNews(3, 'fr'));
+    const req = httpMock.expectOne('/api/v1/news/fr?limit=3');
+    req.flush([{ title: 'Titre', excerpt: 'Extrait', imageUrl: '/img.jpg', path: '/news/titre' }]);
 
-    expect(fetchMock).toHaveBeenCalledWith('/api/v1/news/fr?limit=3');
-    expect(news).toEqual([{ title: 'Titre', excerpt: 'Extrait', imageUrl: '/img.jpg', path: '/news/titre' }]);
+    expect(await result).toEqual([{ title: 'Titre', excerpt: 'Extrait', imageUrl: '/img.jpg', path: '/news/titre' }]);
+    httpMock.verify();
   });
 
   it('givenNonDefaultApiBaseUrl_whenGetLatestNews_thenBuildsUrlFromRuntimeConfig', async () => {
-    const fetchMock = vi.fn().mockResolvedValue({ ok: true, json: () => Promise.resolve([]) });
-    vi.stubGlobal('fetch', fetchMock);
+    const { adapter, httpMock } = createAdapter('/custom-api');
 
-    const adapter = createAdapter('/custom-api');
-    await adapter.getLatestNews(5, 'en');
+    const result = firstValueFrom(adapter.getLatestNews(5, 'en'));
+    const req = httpMock.expectOne('/custom-api/news/en?limit=5');
+    req.flush([]);
 
-    expect(fetchMock).toHaveBeenCalledWith('/custom-api/news/en?limit=5');
+    await result;
+    httpMock.verify();
   });
 });

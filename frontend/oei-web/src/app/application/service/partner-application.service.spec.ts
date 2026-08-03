@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { firstValueFrom, of } from 'rxjs';
 import { PartnerApplicationService } from './partner-application.service';
 import { PARTNER_REPOSITORY_PORT, PartnerRepositoryPort } from '../../domain/port/partner-repository.port';
 import { createPartner } from '../../domain/model/partner';
@@ -7,7 +8,7 @@ describe('PartnerApplicationService', () => {
   function setup(fakePort?: PartnerRepositoryPort) {
     const port: PartnerRepositoryPort = fakePort ?? {
       getPartners: () =>
-        Promise.resolve([
+        of([
           createPartner({
             id: 'p1',
             name: 'Partner One',
@@ -18,7 +19,7 @@ describe('PartnerApplicationService', () => {
           }),
         ]),
       getPartner: (id) =>
-        Promise.resolve(
+        of(
           createPartner({
             id,
             name: 'Partner One',
@@ -40,7 +41,7 @@ describe('PartnerApplicationService', () => {
     const service = setup({
       getPartners: (lang) => {
         receivedLang = lang;
-        return Promise.resolve([
+        return of([
           createPartner({
             id: 'p1',
             name: 'Partner One',
@@ -52,7 +53,7 @@ describe('PartnerApplicationService', () => {
         ]);
       },
       getPartner: (id) =>
-        Promise.resolve(
+        of(
           createPartner({
             id,
             name: 'Partner One',
@@ -63,7 +64,7 @@ describe('PartnerApplicationService', () => {
           }),
         ),
     });
-    const partners = await service.getPartners('fr');
+    const partners = await firstValueFrom(service.getPartners('fr'));
     expect(receivedLang).toBe('fr');
     expect(partners).toEqual([
       createPartner({
@@ -81,11 +82,11 @@ describe('PartnerApplicationService', () => {
     let receivedId: string | undefined;
     let receivedLang: string | undefined;
     const service = setup({
-      getPartners: () => Promise.resolve([]),
+      getPartners: () => of([]),
       getPartner: (id, lang) => {
         receivedId = id;
         receivedLang = lang;
-        return Promise.resolve(
+        return of(
           createPartner({
             id,
             name: 'Partner One',
@@ -97,7 +98,7 @@ describe('PartnerApplicationService', () => {
         );
       },
     });
-    const partner = await service.getPartner('p1', 'fr');
+    const partner = await firstValueFrom(service.getPartner('p1', 'fr'));
     expect(receivedId).toBe('p1');
     expect(receivedLang).toBe('fr');
     expect(partner.id).toBe('p1');

@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { of } from 'rxjs';
 import { Ressources } from './ressources';
 import { LEAD_CAPTURE_PORT, LeadCapturePort } from '../../../domain/port/lead-capture.port';
 
@@ -8,7 +9,7 @@ import { LEAD_CAPTURE_PORT, LeadCapturePort } from '../../../domain/port/lead-ca
 // events, which are unreliable to await deterministically under zoneless change detection.
 interface RessourcesTestHandle {
   readonly email: { set(value: string): void };
-  submitDownloadForm(): Promise<void>;
+  submitDownloadForm(): void;
 }
 
 describe('Ressources', () => {
@@ -20,7 +21,7 @@ describe('Ressources', () => {
   }
 
   it('givenComponent_whenCreated_thenRendersBothCoverImagesWithSrcAndAlt', () => {
-    configureWithPort({ submit: () => Promise.resolve() });
+    configureWithPort({ submit: () => of(undefined) });
     const fixture = TestBed.createComponent(Ressources);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
@@ -34,7 +35,7 @@ describe('Ressources', () => {
   });
 
   it('givenComponent_whenCreated_thenRendersResourceListWithFiveEntries', () => {
-    configureWithPort({ submit: () => Promise.resolve() });
+    configureWithPort({ submit: () => of(undefined) });
     const fixture = TestBed.createComponent(Ressources);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
@@ -46,14 +47,14 @@ describe('Ressources', () => {
   });
 
   it('givenValidEmail_whenSubmitDownloadForm_thenShowsSuccessMessage', async () => {
-    configureWithPort({ submit: () => Promise.resolve() });
+    configureWithPort({ submit: () => of(undefined) });
     const fixture = TestBed.createComponent(Ressources);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const component = fixture.componentInstance as unknown as RessourcesTestHandle;
 
     component.email.set('jane.doe@example.com');
-    await component.submitDownloadForm();
+    component.submitDownloadForm();
     fixture.detectChanges();
 
     expect(compiled.textContent).toContain('Merci');
@@ -62,7 +63,7 @@ describe('Ressources', () => {
   });
 
   it('givenMalformedEmail_whenSubmitDownloadForm_thenShowsErrorMessage', async () => {
-    const submit = vi.fn().mockResolvedValue(undefined);
+    const submit = vi.fn().mockReturnValue(of(undefined));
     configureWithPort({ submit });
     const fixture = TestBed.createComponent(Ressources);
     fixture.detectChanges();
@@ -70,7 +71,7 @@ describe('Ressources', () => {
     const component = fixture.componentInstance as unknown as RessourcesTestHandle;
 
     component.email.set('not-an-email');
-    await component.submitDownloadForm();
+    component.submitDownloadForm();
     fixture.detectChanges();
 
     expect(submit).not.toHaveBeenCalled();

@@ -1,4 +1,5 @@
 import { Service } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { ContentRepositoryPort } from '../../domain/port/content-repository.port';
 import { createDocument, Document } from '../../domain/model/document';
 
@@ -15,12 +16,14 @@ const FIXTURES: Record<string, { title: string; body: string }> = {
 
 @Service()
 export class ContentMockAdapter implements ContentRepositoryPort {
-  async getHomeContent(lang: string): Promise<Document> {
+  getHomeContent(lang: string): Observable<Document> {
     const fixture = FIXTURES[lang];
     if (fixture) {
-      return createDocument({ slug: 'home', lang, title: fixture.title, body: fixture.body, isFallback: false });
+      return of(createDocument({ slug: 'home', lang, title: fixture.title, body: fixture.body, isFallback: false }));
     }
     const fallback = FIXTURES['en'];
-    return createDocument({ slug: 'home', lang: 'en', title: fallback.title, body: fallback.body, isFallback: true });
+    return of(
+      createDocument({ slug: 'home', lang: 'en', title: fallback.title, body: fallback.body, isFallback: true }),
+    );
   }
 }
