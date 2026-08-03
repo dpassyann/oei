@@ -1,0 +1,92 @@
+/* OEI Keycloak account console theme — targets the real PatternFly 5 (React)
+   markup rendered by Keycloak 25's "keycloak.v3" account console (verified
+   against the live rendered DOM at /realms/oei/account/, not assumed from
+   generic PatternFly docs). Loaded as an extra stylesheet appended after the
+   console's own bundled CSS, so these rules win the cascade without touching
+   the compiled React app. */
+
+:root {
+  --oei-navy: #0a1e3f;
+  --oei-navy-light: #12295a;
+  --oei-gold: #e8a530;
+}
+
+/* Header (masthead) */
+.pf-v5-c-page__header {
+  background: linear-gradient(160deg, var(--oei-navy) 0%, var(--oei-navy-light) 100%) !important;
+  border-bottom: 1px solid rgba(232, 165, 48, 0.35);
+}
+
+.pf-v5-c-page__header-brand-link,
+.pf-v5-c-page__header-brand-link svg,
+.pf-v5-c-page__header .pf-v5-c-button.pf-m-plain {
+  color: #ffffff !important;
+}
+
+/* Sidebar navigation */
+.pf-v5-c-page__sidebar {
+  background-color: var(--oei-navy) !important;
+}
+
+.pf-v5-c-page__sidebar-body {
+  background-color: var(--oei-navy) !important;
+}
+
+.pf-v5-c-nav__link {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.pf-v5-c-nav__link:hover {
+  color: #ffffff !important;
+  background-color: rgba(232, 165, 48, 0.12) !important;
+}
+
+.pf-v5-c-nav__link.pf-m-current,
+.pf-v5-c-nav__item.pf-m-current > .pf-v5-c-nav__link {
+  color: #ffffff !important;
+  background-color: rgba(232, 165, 48, 0.18) !important;
+}
+
+.pf-v5-c-nav__link.pf-m-current::before,
+.pf-v5-c-nav__item.pf-m-current > .pf-v5-c-nav__link::before {
+  border-color: var(--oei-gold) !important;
+}
+
+/* Page titles */
+.pf-v5-c-title {
+  color: var(--oei-navy);
+}
+
+/* Form controls */
+.pf-v5-c-form-control {
+  border-color: rgba(10, 30, 63, 0.3);
+}
+
+.pf-v5-c-form-control:focus-within,
+input.pf-v5-c-form-control:focus {
+  border-color: var(--oei-navy) !important;
+  box-shadow: 0 0 0 1px var(--oei-navy) !important;
+}
+
+.pf-v5-c-form__label-text {
+  color: var(--oei-navy);
+  font-weight: 600;
+}
+
+/* Primary buttons */
+.pf-v5-c-button.pf-m-primary {
+  background-color: var(--oei-gold) !important;
+  border-color: var(--oei-gold) !important;
+  color: var(--oei-navy) !important;
+  font-weight: 700;
+}
+
+.pf-v5-c-button.pf-m-primary:hover,
+.pf-v5-c-button.pf-m-primary:focus {
+  filter: brightness(1.08);
+}
+
+/* Links (secondary actions, e.g. "Cancel") */
+.pf-v5-c-button.pf-m-link {
+  color: var(--oei-navy-light);
+}
