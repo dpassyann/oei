@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { I18nService } from '../../i18n/i18n.service';
 
 interface SiteLink {
-  readonly label: string;
+  // `key` is the structural identifier used to build the i18n path
+  // `planDuSite.links.<key>` — the label itself is never hardcoded here.
+  readonly key: string;
   readonly path: string;
 }
 
@@ -13,17 +16,19 @@ interface SiteLink {
   styleUrl: './plan-du-site.scss',
 })
 export class PlanDuSite {
+  protected readonly i18n = inject(I18nService);
+
   protected readonly links: readonly SiteLink[] = [
-    { label: 'Accueil', path: '/' },
-    { label: 'À propos', path: '/a-propos' },
-    { label: 'Nos missions', path: '/nos-missions' },
-    { label: 'Déontologie', path: '/deontologie' },
-    { label: 'Certifications', path: '/certifications' },
-    { label: 'Ressources', path: '/ressources' },
-    { label: 'Actualités', path: '/actualites' },
-    { label: 'Contact', path: '/contact' },
-    { label: 'Membres fondateurs', path: '/membres-fondateurs' },
-    { label: 'Mentions légales', path: '/mentions-legales' },
-    { label: 'Plan du site', path: '/plan-du-site' },
+    { key: 'home', path: '/' },
+    { key: 'about', path: '/a-propos' },
+    { key: 'missions', path: '/nos-missions' },
+    { key: 'ethics', path: '/deontologie' },
+    { key: 'certifications', path: '/certifications' },
+    { key: 'resources', path: '/ressources' },
+    { key: 'news', path: '/actualites' },
+    { key: 'contact', path: '/contact' },
+    { key: 'foundingMembers', path: '/membres-fondateurs' },
+    { key: 'legalNotices', path: '/mentions-legales' },
+    { key: 'sitemap', path: '/plan-du-site' },
   ];
 }

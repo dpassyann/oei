@@ -1,8 +1,10 @@
+import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 import { Ressources } from './ressources';
 import { LEAD_CAPTURE_PORT, LeadCapturePort } from '../../../domain/port/lead-capture.port';
+import { I18nService } from '../../i18n/i18n.service';
 
 // Widened view of `Ressources` used only to drive its (intentionally protected,
 // template-only) form state directly from tests without simulating real DOM input
@@ -12,11 +14,42 @@ interface RessourcesTestHandle {
   submitDownloadForm(): void;
 }
 
+const INTERFACE_STRINGS: Record<string, string> = {
+  'ressources.title': 'Ressources',
+  'ressources.livreBlanc.title': 'Livre Blanc',
+  'ressources.livreBlanc.frontCoverAlt': "Couverture du Livre Blanc de l'Ordre des Experts Informaticiens",
+  'ressources.livreBlanc.backCoverAlt': "Quatrième de couverture du Livre Blanc de l'Ordre des Experts Informaticiens",
+  'ressources.livreBlanc.successPrefix': 'Merci — voici votre exemplaire :',
+  'ressources.livreBlanc.downloadLinkText': 'télécharger le Livre Blanc (PDF)',
+  'ressources.livreBlanc.emailLabel': 'Adresse e-mail',
+  'ressources.livreBlanc.emailPlaceholder': 'vous@exemple.com',
+  'ressources.livreBlanc.submitButton': 'Recevoir le PDF gratuitement',
+  'ressources.livreBlanc.errorMessage': 'Adresse e-mail invalide ou envoi impossible pour le moment — merci de réessayer.',
+  'ressources.resourceList.title': 'Nos ressources',
+  'ressources.resourceList.pendingBadge': 'à venir',
+  'ressources.resourceList.items.deontologie.label': 'Code de déontologie',
+  'ressources.resourceList.items.referentiel.label': 'Référentiel de compétences',
+  'ressources.resourceList.items.livreBlanc.label': 'Livre Blanc',
+  'ressources.resourceList.items.positions.label': 'Mentions & Positions',
+  'ressources.resourceList.items.rapports.label': 'Rapports & Études',
+};
+
+const FAKE_I18N_SERVICE = {
+  currentLang: signal('fr'),
+  setLang: () => Promise.resolve(),
+  translate: (key: string) => INTERFACE_STRINGS[key] ?? key,
+  translateList: () => [],
+};
+
 describe('Ressources', () => {
   function configureWithPort(port: LeadCapturePort): void {
     TestBed.configureTestingModule({
       imports: [Ressources],
-      providers: [provideRouter([]), { provide: LEAD_CAPTURE_PORT, useValue: port }],
+      providers: [
+        provideRouter([]),
+        { provide: LEAD_CAPTURE_PORT, useValue: port },
+        { provide: I18nService, useValue: FAKE_I18N_SERVICE },
+      ],
     });
   }
 

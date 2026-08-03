@@ -93,5 +93,120 @@
       "title": "They support us"
     },
     "fallbackNotice": "Translation coming soon for this language."
+  },
+  "aPropos": {
+    "title": "About us",
+    "vision": {
+      "heading": "Vision",
+      "body": "A world where the professionals who design, build and operate the digital systems our societies depend on — healthcare, aviation, energy, finance, public administration — practise their craft with a level of competence, ethics and accountability recognised as commensurate with the stakes they carry."
+    },
+    "mission": {
+      "heading": "Mission",
+      "body": "To defend the public interest by promoting responsible, ethical, secure and sustainable computing, and to progressively secure recognition of the IT expert profession as a high-accountability profession, equipped with a shared code of ethics, a common competency framework, a continuing-education requirement, and credible representation before institutions, universities and businesses."
+    }
+  },
+  "actualites": {
+    "title": "News",
+    "empty": "No news has been published yet. Please check back soon."
+  },
+  "certifications": {
+    "title": "Certifications",
+    "intro": "We are building a certification framework independent of commercial software vendors, organised around a scale of expertise levels. Each level will be precisely defined in the competency framework, currently being developed with academic partners.",
+    "levels": {
+      "0": "Practitioner",
+      "1": "Engineer",
+      "2": "Architect",
+      "3": "Expert",
+      "4": "Senior Expert",
+      "5": "Fellow"
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "bodyPrefix": "For any question, write to us at",
+    "note": "A dedicated contact form is planned for a future version of the site."
+  },
+  "deontologie": {
+    "title": "Ethics",
+    "body1": "Our code of ethics — the set of professional conduct rules that accredited members commit to upholding — is currently being drafted. It differs from the charter, a less binding voluntary commitment aimed at a wider audience (associate members, partner companies, universities).",
+    "body2": "Both documents will be published as soon as they have been approved by the organisation's governance board."
+  },
+  "membresFondateurs": {
+    "title": "Founding members",
+    "intro": "The Order of IT Experts is not a book to buy — it is a movement to support. Becoming a founding member means taking part in building an independent professional organisation for digital experts, right from its very first steps.",
+    "feeTiers": {
+      "title": "Membership fees",
+      "categoryHeader": "Category",
+      "annualFeeHeader": "Annual fee",
+      "tiers": {
+        "0": { "label": "Student", "amount": "€20" },
+        "1": { "label": "Member", "amount": "€50" },
+        "2": { "label": "Founding member", "amount": "€100" },
+        "3": { "label": "Supporting member", "amount": "€250" }
+      }
+    },
+    "foundingStatus": {
+      "message": "Movement currently being formed — be among the first founding members.",
+      "note": "The online membership form is coming soon. In the meantime, contact us to express your interest in supporting the movement.",
+      "cta": "Support the movement",
+      "contactPrefix": "Or write to us directly at"
+    }
+  },
+  "mentionsLegales": {
+    "title": "Legal notice",
+    "body": "At this stage, the Order of IT Experts is a movement — a collective initiative with no legal personality of its own. The choice of legal structure (association) and its registration with the competent authority are currently being finalised. This page will be updated as soon as the organisation's legal status is established."
+  },
+  "nosMissions": {
+    "title": "Our missions",
+    "intro": "We are launching this movement to:",
+    "commitments": [
+      "Define what an IT expert is, by level of competence and responsibility.",
+      "Propose a shared code of ethics, inspired by high-accountability professions.",
+      "Build, with academic partners, a certification framework independent of commercial vendors.",
+      "Advocate for a continuing-education requirement throughout one's career.",
+      "Document and publish the real state of the profession — pay, trends, technological disruptions.",
+      "Become a credible counterpart for universities, businesses and, eventually, public authorities."
+    ]
+  },
+  "planDuSite": {
+    "title": "Sitemap",
+    "links": {
+      "home": "Home",
+      "about": "About",
+      "missions": "Our missions",
+      "ethics": "Ethics",
+      "certifications": "Certifications",
+      "resources": "Resources",
+      "news": "News",
+      "contact": "Contact",
+      "foundingMembers": "Founding members",
+      "legalNotices": "Legal notice",
+      "sitemap": "Sitemap"
+    }
+  },
+  "ressources": {
+    "title": "Resources",
+    "livreBlanc": {
+      "title": "White Paper",
+      "frontCoverAlt": "Cover of the Order of IT Experts' White Paper",
+      "backCoverAlt": "Back cover of the Order of IT Experts' White Paper",
+      "successPrefix": "Thank you — here is your copy:",
+      "downloadLinkText": "download the White Paper (PDF)",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "you@example.com",
+      "submitButton": "Receive the PDF for free",
+      "errorMessage": "Invalid email address or unable to send at this time — please try again."
+    },
+    "resourceList": {
+      "title": "Our resources",
+      "pendingBadge": "coming soon",
+      "items": {
+        "deontologie": { "label": "Code of ethics" },
+        "referentiel": { "label": "Competency framework" },
+        "livreBlanc": { "label": "White Paper" },
+        "positions": { "label": "Positions & Statements" },
+        "rapports": { "label": "Reports & Studies" }
+      }
+    }
   }
 }

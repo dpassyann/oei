@@ -93,5 +93,120 @@
       "title": "Ci sostengono"
     },
     "fallbackNotice": "Traduzione in arrivo per questa lingua."
+  },
+  "aPropos": {
+    "title": "Chi siamo",
+    "vision": {
+      "heading": "Visione",
+      "body": "Un mondo in cui i professionisti che progettano, sviluppano e gestiscono i sistemi digitali da cui dipendono le nostre società — sanità, aviazione, energia, finanza, pubblica amministrazione — esercitano la propria professione con un livello di competenza, etica e responsabilità riconosciuto all'altezza della posta in gioco."
+    },
+    "mission": {
+      "heading": "Missione",
+      "body": "Difendere l'interesse generale promuovendo un'informatica responsabile, etica, sicura e sostenibile, e ottenere il progressivo riconoscimento della professione di esperto informatico come professione ad alta responsabilità, dotata di un codice deontologico comune, di un quadro di competenze condiviso, di un obbligo di formazione continua e di una rappresentanza credibile presso istituzioni, università e imprese."
+    }
+  },
+  "actualites": {
+    "title": "Notizie",
+    "empty": "Non è stata ancora pubblicata alcuna notizia. Torna a trovarci presto."
+  },
+  "certifications": {
+    "title": "Certificazioni",
+    "intro": "Stiamo costruendo un quadro di certificazione indipendente dai fornitori commerciali di software, organizzato attorno a una scala di livelli di competenza. Ogni livello sarà definito con precisione nel quadro delle competenze, attualmente in fase di elaborazione con partner accademici.",
+    "levels": {
+      "0": "Praticante",
+      "1": "Ingegnere",
+      "2": "Architetto",
+      "3": "Esperto",
+      "4": "Esperto senior",
+      "5": "Fellow"
+    }
+  },
+  "contact": {
+    "title": "Contatto",
+    "bodyPrefix": "Per qualsiasi domanda, scrivici a",
+    "note": "È prevista l'introduzione di un modulo di contatto dedicato in una prossima versione del sito."
+  },
+  "deontologie": {
+    "title": "Deontologia",
+    "body1": "Il nostro codice deontologico — l'insieme delle regole di condotta professionale che i membri accreditati si impegnano a rispettare — è attualmente in fase di redazione. Si distingue dalla carta, un impegno volontario meno vincolante rivolto a un pubblico più ampio (membri associati, aziende partner, università).",
+    "body2": "Entrambi i testi saranno pubblicati non appena saranno stati approvati dal consiglio di governance dell'organizzazione."
+  },
+  "membresFondateurs": {
+    "title": "Membri fondatori",
+    "intro": "L'Ordine degli Esperti Informatici non è un libro da acquistare — è un movimento da sostenere. Diventare membro fondatore significa partecipare alla costruzione di un'organizzazione professionale indipendente per gli esperti digitali, fin dai suoi primissimi passi.",
+    "feeTiers": {
+      "title": "Quote associative",
+      "categoryHeader": "Categoria",
+      "annualFeeHeader": "Quota annuale",
+      "tiers": {
+        "0": { "label": "Studente", "amount": "20 €" },
+        "1": { "label": "Membro", "amount": "50 €" },
+        "2": { "label": "Membro fondatore", "amount": "100 €" },
+        "3": { "label": "Membro sostenitore", "amount": "250 €" }
+      }
+    },
+    "foundingStatus": {
+      "message": "Movimento attualmente in fase di costituzione — sii tra i primi membri fondatori.",
+      "note": "Il modulo di adesione online arriverà presto. Nel frattempo, contattaci per manifestare il tuo interesse a sostenere il movimento.",
+      "cta": "Sostieni il movimento",
+      "contactPrefix": "Oppure scrivici direttamente a"
+    }
+  },
+  "mentionsLegales": {
+    "title": "Note legali",
+    "body": "In questa fase, l'Ordine degli Esperti Informatici è un movimento — un'iniziativa collettiva senza personalità giuridica propria. La scelta della forma giuridica (associazione) e la sua registrazione presso l'autorità competente sono in fase di finalizzazione. Questa pagina sarà aggiornata non appena sarà costituito lo status giuridico dell'organizzazione."
+  },
+  "nosMissions": {
+    "title": "Le nostre missioni",
+    "intro": "Lanciamo questo movimento per:",
+    "commitments": [
+      "Definire cosa sia un esperto informatico, per livello di competenza e responsabilità.",
+      "Proporre un codice deontologico comune, ispirato alle professioni ad alta responsabilità.",
+      "Costruire, con partner accademici, un quadro di certificazione indipendente dai fornitori commerciali.",
+      "Sostenere l'obbligo di formazione continua lungo tutto l'arco della carriera.",
+      "Documentare e pubblicare lo stato reale della professione — retribuzioni, tendenze, rotture tecnologiche.",
+      "Diventare un interlocutore credibile per università, imprese e, a lungo termine, pubbliche autorità."
+    ]
+  },
+  "planDuSite": {
+    "title": "Mappa del sito",
+    "links": {
+      "home": "Home",
+      "about": "Chi siamo",
+      "missions": "Le nostre missioni",
+      "ethics": "Deontologia",
+      "certifications": "Certificazioni",
+      "resources": "Risorse",
+      "news": "Notizie",
+      "contact": "Contatto",
+      "foundingMembers": "Membri fondatori",
+      "legalNotices": "Note legali",
+      "sitemap": "Mappa del sito"
+    }
+  },
+  "ressources": {
+    "title": "Risorse",
+    "livreBlanc": {
+      "title": "Libro Bianco",
+      "frontCoverAlt": "Copertina del Libro Bianco dell'Ordine degli Esperti Informatici",
+      "backCoverAlt": "Retro di copertina del Libro Bianco dell'Ordine degli Esperti Informatici",
+      "successPrefix": "Grazie — ecco la tua copia:",
+      "downloadLinkText": "scarica il Libro Bianco (PDF)",
+      "emailLabel": "Indirizzo e-mail",
+      "emailPlaceholder": "tu@esempio.it",
+      "submitButton": "Ricevi il PDF gratuitamente",
+      "errorMessage": "Indirizzo e-mail non valido o invio momentaneamente non disponibile — riprova."
+    },
+    "resourceList": {
+      "title": "Le nostre risorse",
+      "pendingBadge": "in arrivo",
+      "items": {
+        "deontologie": { "label": "Codice deontologico" },
+        "referentiel": { "label": "Quadro delle competenze" },
+        "livreBlanc": { "label": "Libro Bianco" },
+        "positions": { "label": "Posizioni e dichiarazioni" },
+        "rapports": { "label": "Rapporti e studi" }
+      }
+    }
   }
 }

@@ -1,0 +1,81 @@
+/* OEI Keycloak admin console theme — targets the real PatternFly 5 (React)
+   markup rendered by Keycloak 25's "keycloak.v2" admin console (verified
+   against the live rendered DOM at /admin/master/console/, not assumed from
+   generic PatternFly docs). Loaded as an extra stylesheet appended after the
+   console's own bundled CSS, so these rules win the cascade without touching
+   the compiled React app. The base admin console already ships a dark theme;
+   these rules re-tint it navy/gold to match the OEI brand instead of
+   removing dark mode. */
+
+:root {
+  --oei-navy: #0a1e3f;
+  --oei-navy-light: #12295a;
+  --oei-gold: #e8a530;
+}
+
+/* Masthead (top bar) */
+.pf-v5-c-masthead {
+  background: linear-gradient(160deg, var(--oei-navy) 0%, var(--oei-navy-light) 100%) !important;
+  border-bottom: 1px solid rgba(232, 165, 48, 0.35);
+}
+
+.pf-v5-c-masthead__brand,
+.keycloak__pageheader_brand {
+  color: #ffffff !important;
+}
+
+/* Sidebar navigation */
+.pf-v5-c-page__sidebar,
+.pf-v5-c-page__sidebar-body {
+  background-color: var(--oei-navy) !important;
+}
+
+.pf-v5-c-nav__link {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.pf-v5-c-nav__link:hover {
+  color: #ffffff !important;
+  background-color: rgba(232, 165, 48, 0.12) !important;
+}
+
+.pf-v5-c-nav__link.pf-m-current,
+.pf-v5-c-nav__item.pf-m-current > .pf-v5-c-nav__link {
+  color: #ffffff !important;
+  background-color: rgba(232, 165, 48, 0.18) !important;
+}
+
+.pf-v5-c-nav__link.pf-m-current::before,
+.pf-v5-c-nav__item.pf-m-current > .pf-v5-c-nav__link::before {
+  border-color: var(--oei-gold) !important;
+}
+
+/* Tabs (e.g. realm settings, client detail tabs) */
+.pf-v5-c-tabs__item.pf-m-current .pf-v5-c-tabs__link,
+.pf-v5-c-tabs__link[aria-selected="true"] {
+  color: var(--oei-gold);
+}
+
+.pf-v5-c-tabs__item.pf-m-current::after {
+  border-color: var(--oei-gold) !important;
+}
+
+/* Primary buttons */
+.pf-v5-c-button.pf-m-primary {
+  background-color: var(--oei-gold) !important;
+  border-color: var(--oei-gold) !important;
+  color: var(--oei-navy) !important;
+  font-weight: 700;
+}
+
+.pf-v5-c-button.pf-m-primary:hover,
+.pf-v5-c-button.pf-m-primary:focus {
+  filter: brightness(1.08);
+}
+
+/* Form control focus state */
+.pf-v5-c-form-control:focus-within,
+input.pf-v5-c-form-control:focus {
+  border-color: var(--oei-gold) !important;
+  box-shadow: 0 0 0 1px var(--oei-gold) !important;
+}
