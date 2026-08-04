@@ -27,6 +27,16 @@ info:
 tags:
   - name: content-legacy
     description: Endpoint historique de rendu de page, conservé pour compatibilité.
+  - name: home-legacy
+    description: >
+      Endpoints historiques (hors préfixe `/api/public/v1`) consommés directement par
+      `stats-api.adapter.ts`, `domains-api.adapter.ts`, `news-api.adapter.ts`,
+      `partner-api.adapter.ts` et `lead-capture-api.adapter.ts`. Conservés tels quels pour
+      ne pas casser cette intégration frontend existante, au même titre que
+      `GET /content/{lang}/{slug}` (voir `content-legacy`). Le backend Spring Boot réel
+      pourra à terme les exposer aussi sous `/api/public/v1/**` (ex. un futur flux
+      RSS/Atom `/api/public/v1/news/feed.rss` pour les actualités), mais cela reste hors
+      périmètre de ce contrat pour l'instant.
   - name: public-accounts
     description: Inscription et endpoints publics d'amorçage de compte.
   - name: public-content
@@ -113,6 +123,149 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ContentDocument"
+
+  # ---------------------------------------------------------------------------
+  # Home sections (legacy, unversioned — see the `home-legacy` tag description)
+  # ---------------------------------------------------------------------------
+  /api/v1/stats/{lang}:
+    get:
+      tags: [home-legacy]
+      operationId: getHomeStats
+      summary: Statistiques affichées sur la page d'accueil (toutes à 0 tant qu'aucune donnée réelle n'existe).
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Liste des statistiques
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Stat"
+
+  /api/v1/domains/{lang}:
+    get:
+      tags: [home-legacy]
+      operationId: getDomainAreas
+      summary: Les 8 domaines d'action de l'OEI.
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Liste des domaines d'action
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DomainArea"
+
+  /api/v1/news/{lang}:
+    get:
+      tags: [home-legacy]
+      operationId: getLatestNews
+      summary: >
+        Dernières actualités. Le backend réel devra à terme aussi exposer ces actualités
+        sous forme de flux RSS/Atom (ex. `/api/public/v1/news/feed.rss`) pour la
+        syndication externe — hors périmètre de ce contrat pour l'instant.
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Liste des actualités
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/NewsItem"
+
+  /api/v1/partners/{lang}:
+    get:
+      tags: [home-legacy]
+      operationId: getPartners
+      summary: Partenaires (données de démonstration tant qu'aucun partenariat réel n'est confirmé).
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Liste des partenaires
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Partner"
+
+  /api/v1/partners/{lang}/{id}:
+    get:
+      tags: [home-legacy]
+      operationId: getPartner
+      summary: Détail d'un partenaire par id.
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Partenaire trouvé
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Partner"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/v1/leads:
+    post:
+      tags: [home-legacy]
+      operationId: submitLead
+      summary: Capture d'email pour l'envoi du Livre Blanc (simulée par le mock, journalisée en mémoire).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email:
+                  type: string
+                  format: email
+      responses:
+        "204":
+          description: Lead capturé
+        "400":
+          $ref: "#/components/responses/ValidationError"
 
   # ---------------------------------------------------------------------------
   # /api/public/v1 — accounts
@@ -2164,6 +2317,70 @@ components:
           type: string
         isFallback:
           type: boolean
+
+    # -------------------------------------------------------------------------
+    # Home sections (see the `home-legacy` tag)
+    # -------------------------------------------------------------------------
+    Stat:
+      type: object
+      required: [label, value]
+      properties:
+        label:
+          type: string
+        value:
+          type: integer
+
+    DomainArea:
+      type: object
+      required: [icon, title, description]
+      properties:
+        icon:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+
+    NewsItem:
+      type: object
+      required: [title, excerpt, imageUrl, path]
+      properties:
+        title:
+          type: string
+        excerpt:
+          type: string
+        imageUrl:
+          type: string
+        path:
+          type: string
+        category:
+          type: string
+          description: >
+            Champ bonus non encore modélisé côté Angular (`NewsItem`) — voir
+            `mock/src/data/news.ts`.
+          enum:
+            [article, communique, livre-blanc, rapport, evenement, consultation, appel-a-contribution]
+        publishedAt:
+          type: string
+          format: date
+          description: Champ bonus non encore modélisé côté Angular (`NewsItem`).
+
+    Partner:
+      type: object
+      required: [id, name, logoUrl, description, websiteUrl, category]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        logoUrl:
+          type: string
+        description:
+          type: string
+        websiteUrl:
+          type: string
+        category:
+          type: string
 
     # -------------------------------------------------------------------------
     # Identity / Membership / Profile
