@@ -1,0 +1,12 @@
+<nav class="oei-floating-side-menu" aria-label="{{ title() }}">
+  @if (title()) {
+    <p class="oei-floating-side-menu__title">{{ title() }}</p>
+  }
+  <ul class="oei-floating-side-menu__list">
+    @for (link of links(); track link.fragment) {
+      <li>
+        <a class="oei-floating-side-menu__link" [fragment]="link.fragment" [routerLink]="[]">{{ link.label }}</a>
+      </li>
+    }
+  </ul>
+</nav>

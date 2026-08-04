@@ -1,0 +1,54 @@
+$oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+
+.oei-floating-side-menu {
+  position: sticky;
+  top: 5.5rem;
+  align-self: start;
+  width: 14rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid rgba(10, 30, 63, 0.1);
+  border-radius: 0.75rem;
+  background: #ffffff;
+  box-shadow: 0 0.5rem 1.5rem rgba(10, 30, 63, 0.08);
+}
+
+.oei-floating-side-menu__title {
+  margin: 0 0 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(10, 30, 63, 0.55);
+}
+
+.oei-floating-side-menu__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.oei-floating-side-menu__link {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: $oei-navy;
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  padding-left: 0.6rem;
+
+  &:hover {
+    color: $oei-gold;
+    border-left-color: $oei-gold;
+  }
+}
+
+@media (max-width: 900px) {
+  .oei-floating-side-menu {
+    position: static;
+    width: 100%;
+  }
+}

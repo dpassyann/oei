@@ -14,7 +14,26 @@ describe('HomeSectionsApplicationService', () => {
       getHomeStats: () => of([createStat({ label: 'Members', value: 42 })]),
     };
     const fakeDomainsPort: DomainsPort = overrides?.domains ?? {
-      getDomainAreas: () => of([createDomainArea({ icon: 'icon.svg', title: 'Health', description: 'About health' })]),
+      getDomainAreas: () =>
+        of([
+          createDomainArea({
+            slug: 'health',
+            icon: 'icon.svg',
+            title: 'Health',
+            description: 'About health',
+            lastModified: '2026-01-01',
+          }),
+        ]),
+      getDomainArea: (slug) =>
+        of(
+          createDomainArea({
+            slug,
+            icon: 'icon.svg',
+            title: 'Health',
+            description: 'About health',
+            lastModified: '2026-01-01',
+          }),
+        ),
     };
     const fakeNewsPort: NewsPort = overrides?.news ?? {
       getLatestNews: () =>
@@ -51,13 +70,66 @@ describe('HomeSectionsApplicationService', () => {
       domains: {
         getDomainAreas: (lang) => {
           receivedLang = lang;
-          return of([createDomainArea({ icon: 'icon.svg', title: 'Health', description: 'About health' })]);
+          return of([
+            createDomainArea({
+              slug: 'health',
+              icon: 'icon.svg',
+              title: 'Health',
+              description: 'About health',
+              lastModified: '2026-01-01',
+            }),
+          ]);
         },
+        getDomainArea: (slug) =>
+          of(
+            createDomainArea({
+              slug,
+              icon: 'icon.svg',
+              title: 'Health',
+              description: 'About health',
+              lastModified: '2026-01-01',
+            }),
+          ),
       },
     });
     const domainAreas = await firstValueFrom(service.getDomainAreas('fr'));
     expect(receivedLang).toBe('fr');
-    expect(domainAreas).toEqual([createDomainArea({ icon: 'icon.svg', title: 'Health', description: 'About health' })]);
+    expect(domainAreas).toEqual([
+      createDomainArea({
+        slug: 'health',
+        icon: 'icon.svg',
+        title: 'Health',
+        description: 'About health',
+        lastModified: '2026-01-01',
+      }),
+    ]);
+  });
+
+  it('givenPortReturnsDomainArea_whenGetDomainArea_thenForwardsSlugAndLangAndReturnsIt', async () => {
+    let receivedSlug: string | undefined;
+    let receivedLang: string | undefined;
+    const service = setup({
+      domains: {
+        getDomainAreas: () => of([]),
+        getDomainArea: (slug, lang) => {
+          receivedSlug = slug;
+          receivedLang = lang;
+          return of(
+            createDomainArea({
+              slug,
+              icon: 'icon.svg',
+              title: 'Health',
+              description: 'About health',
+              lastModified: '2026-01-01',
+            }),
+          );
+        },
+      },
+    });
+    const domainArea = await firstValueFrom(service.getDomainArea('health', 'fr'));
+    expect(receivedSlug).toBe('health');
+    expect(receivedLang).toBe('fr');
+    expect(domainArea.title).toBe('Health');
   });
 
   it('givenPortReturnsNews_whenGetLatestNews_thenForwardsLimitAndLangAndReturnsThem', async () => {

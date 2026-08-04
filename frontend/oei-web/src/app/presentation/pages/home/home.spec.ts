@@ -92,7 +92,13 @@ const FOUR_STATS: Stat[] = [
 ];
 
 const EIGHT_DOMAINS: DomainArea[] = Array.from({ length: 8 }, (_, index) =>
-  createDomainArea({ icon: 'shield-lock', title: `Domaine ${index + 1}`, description: `Description ${index + 1}` }),
+  createDomainArea({
+    slug: `domaine-${index + 1}`,
+    icon: 'shield-lock',
+    title: `Domaine ${index + 1}`,
+    description: `Description ${index + 1}`,
+    lastModified: '2026-01-01',
+  }),
 );
 
 describe('Home', () => {

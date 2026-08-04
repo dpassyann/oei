@@ -39,4 +39,27 @@ describe('DomainsApiAdapter', () => {
     await result;
     httpMock.verify();
   });
+
+  it('givenBackendReturnsDomain_whenGetDomainArea_thenMapsToDomainArea', async () => {
+    const { adapter, httpMock } = createAdapter('/api/v1');
+
+    const result = firstValueFrom(adapter.getDomainArea('cybersecurite', 'fr'));
+    const req = httpMock.expectOne('/api/v1/domains/fr/cybersecurite');
+    req.flush({
+      slug: 'cybersecurite',
+      icon: 'shield-lock',
+      title: 'Cybersécurité',
+      description: 'Desc',
+      lastModified: '2026-01-01',
+    });
+
+    expect(await result).toEqual({
+      slug: 'cybersecurite',
+      icon: 'shield-lock',
+      title: 'Cybersécurité',
+      description: 'Desc',
+      lastModified: '2026-01-01',
+    });
+    httpMock.verify();
+  });
 });

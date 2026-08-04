@@ -1,0 +1,39 @@
+@if (domain(); as domain) {
+  <main class="oei-domaine-detail">
+    <div class="oei-domaine-detail__content">
+      <a class="oei-page__back" routerLink="/">{{ i18n.translate('domaineDetail.backToHome') }}</a>
+      <h1 class="oei-page__title">{{ domain.title }}</h1>
+      <p class="oei-domaine-detail__last-modified">
+        {{ i18n.translate('domaineDetail.lastModified') }} : {{ formattedLastModified() }}
+      </p>
+      <p class="oei-page__body">{{ domain.description }}</p>
+
+      <section id="apercu" class="oei-domaine-detail__section">
+        <h2>{{ i18n.translate('domaineDetail.sections.apercu') }}</h2>
+        <p class="oei-domaine-detail__placeholder">{{ i18n.translate('domaineDetail.placeholder') }}</p>
+      </section>
+
+      <section id="groupe-de-travail" class="oei-domaine-detail__section">
+        <h2>{{ i18n.translate('domaineDetail.sections.groupe-de-travail') }}</h2>
+        <p class="oei-domaine-detail__placeholder">{{ i18n.translate('domaineDetail.placeholder') }}</p>
+      </section>
+
+      <section id="ressources" class="oei-domaine-detail__section">
+        <h2>{{ i18n.translate('domaineDetail.sections.ressources') }}</h2>
+        <p class="oei-domaine-detail__placeholder">{{ i18n.translate('domaineDetail.placeholder') }}</p>
+      </section>
+
+      <section id="contenu-cms" class="oei-domaine-detail__section">
+        <h2>{{ i18n.translate('domaineDetail.sections.contenu-cms') }}</h2>
+        <p class="oei-domaine-detail__placeholder">{{ i18n.translate('domaineDetail.placeholder') }}</p>
+      </section>
+    </div>
+
+    <oei-floating-side-menu [title]="i18n.translate('domaineDetail.onThisPage')" [links]="sideMenuLinks()" />
+  </main>
+} @else if (notFound()) {
+  <main class="oei-page">
+    <a class="oei-page__back" routerLink="/">{{ i18n.translate('domaineDetail.backToHome') }}</a>
+    <p class="oei-page__empty">{{ i18n.translate('domaineDetail.notFound') }}</p>
+  </main>
+}

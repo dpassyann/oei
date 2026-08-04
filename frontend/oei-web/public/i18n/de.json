@@ -276,5 +276,18 @@
     "backToList": "Zurück zur Partnerliste",
     "visitWebsite": "Webseite besuchen",
     "notFound": "Partner nicht gefunden."
+  },
+  "domaineDetail": {
+    "backToHome": "Zurück zur Startseite",
+    "lastModified": "Zuletzt aktualisiert",
+    "notFound": "Bereich nicht gefunden.",
+    "onThisPage": "Auf dieser Seite",
+    "placeholder": "Inhalt folgt in Kürze — dieser Abschnitt wird schrittweise ergänzt.",
+    "sections": {
+      "apercu": "Überblick",
+      "groupe-de-travail": "Arbeitsgruppe",
+      "ressources": "Ressourcen",
+      "contenu-cms": "Inhalt"
+    }
   }
 }

@@ -1,0 +1,82 @@
+:host {
+  display: block;
+}
+
+$oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+
+.oei-domaine-detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2.5rem;
+  align-items: start;
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem;
+}
+
+.oei-domaine-detail__content {
+  min-width: 0;
+}
+
+.oei-page__back {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  color: $oei-navy;
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover {
+    color: $oei-gold;
+  }
+}
+
+.oei-page__title {
+  margin: 0 0 0.5rem;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-domaine-detail__last-modified {
+  margin: 0 0 1.5rem;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: rgba(10, 30, 63, 0.6);
+}
+
+.oei-page__body {
+  margin: 0 0 2rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.oei-page__empty {
+  margin: 0;
+  color: #666;
+  font-style: italic;
+}
+
+.oei-domaine-detail__section {
+  margin-bottom: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(10, 30, 63, 0.08);
+
+  h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+    color: $oei-navy;
+  }
+}
+
+.oei-domaine-detail__placeholder {
+  margin: 0;
+  color: rgba(10, 30, 63, 0.55);
+  font-style: italic;
+}
+
+@media (max-width: 900px) {
+  .oei-domaine-detail {
+    grid-template-columns: 1fr;
+  }
+}

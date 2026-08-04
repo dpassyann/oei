@@ -17,4 +17,10 @@ export class DomainsApiAdapter implements DomainsPort {
       .get<DomainArea[]>(`${this.runtimeConfig.apiBaseUrl()}/domains/${lang}`)
       .pipe(map((data) => data.map((domain) => createDomainArea(domain))));
   }
+
+  getDomainArea(slug: string, lang: string): Observable<DomainArea> {
+    return this.http
+      .get<DomainArea>(`${this.runtimeConfig.apiBaseUrl()}/domains/${lang}/${slug}`)
+      .pipe(map((data) => createDomainArea(data)));
+  }
 }

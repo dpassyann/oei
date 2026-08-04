@@ -13,6 +13,7 @@ import { MembresFondateurs } from './presentation/pages/membres-fondateurs/membr
 import { Publications } from './presentation/pages/publications/publications';
 import { Partenaires } from './presentation/pages/partenaires/partenaires';
 import { PartenaireDetail } from './presentation/pages/partenaire-detail/partenaire-detail';
+import { DomaineDetail } from './presentation/pages/domaine-detail/domaine-detail';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -25,6 +26,7 @@ export const routes: Routes = [
   { path: 'publications', component: Publications },
   { path: 'partenaires', component: Partenaires },
   { path: 'partenaires/:id', component: PartenaireDetail },
+  { path: 'domaines/:slug', component: DomaineDetail },
   { path: 'contact', component: Contact },
   { path: 'membres-fondateurs', component: MembresFondateurs },
   { path: 'mentions-legales', component: MentionsLegales },

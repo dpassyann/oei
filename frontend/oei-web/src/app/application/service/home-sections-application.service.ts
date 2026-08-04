@@ -27,6 +27,10 @@ export class HomeSectionsApplicationService {
     return this.domainsPort.getDomainAreas(lang);
   }
 
+  getDomainArea(slug: string, lang: string): Observable<DomainArea> {
+    return this.domainsPort.getDomainArea(slug, lang);
+  }
+
   getLatestNews(limit: number, lang: string): Observable<NewsItem[]> {
     return this.newsPort.getLatestNews(limit, lang);
   }

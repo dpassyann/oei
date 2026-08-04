@@ -276,5 +276,18 @@
     "backToList": "Retour à la liste des partenaires",
     "visitWebsite": "Visiter le site",
     "notFound": "Partenaire introuvable."
+  },
+  "domaineDetail": {
+    "backToHome": "Retour à l'accueil",
+    "lastModified": "Dernière mise à jour",
+    "notFound": "Domaine introuvable.",
+    "onThisPage": "Sur cette page",
+    "placeholder": "Contenu à venir — cette section sera enrichie progressivement.",
+    "sections": {
+      "apercu": "Vue d'ensemble",
+      "groupe-de-travail": "Groupe de travail",
+      "ressources": "Ressources",
+      "contenu-cms": "Contenu"
+    }
   }
 }
