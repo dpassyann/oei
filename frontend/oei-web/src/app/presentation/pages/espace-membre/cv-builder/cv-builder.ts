@@ -7,6 +7,7 @@ import { MemberApplicationService } from '../../../../application/service/member
 import { I18nService } from '../../../i18n/i18n.service';
 import { CV_SECTION_TYPES, Cv, CvSectionType, CvTranslationStatus, PdfGenerationJob } from '../../../../domain/model/cv/cv';
 import { CvTemplate } from '../../../../domain/model/cv/cv-template';
+import { MembershipAccessService } from '../../../auth/membership-access.service';
 
 // This component's forms are single-purpose and flat (one select + one text input for
 // "add section", one language code + one text input for "add translation"). Signal Forms
@@ -28,10 +29,13 @@ import { CvTemplate } from '../../../../domain/model/cv/cv-template';
   imports: [FormsModule, NgTemplateOutlet],
   templateUrl: './cv-builder.html',
   styleUrl: './cv-builder.scss',
+  // Component-scoped (not root-singleton) — see `MembershipAccessService`'s doc comment.
+  providers: [MembershipAccessService],
 })
 export class CvBuilder {
   private readonly cvService = inject(CvApplicationService);
   private readonly memberService = inject(MemberApplicationService);
+  protected readonly membershipAccess = inject(MembershipAccessService);
   protected readonly i18n = inject(I18nService);
 
   private readonly cvsResource = rxResource({
@@ -138,9 +142,11 @@ export class CvBuilder {
   // persists the choice on the CV in the background via `updateCv` — a failed/slow
   // persistence never blocks the immediate visual feedback the spec asks for.
   protected selectTemplate(templateId: string): void {
-    const cv = this.cv();
+    // The instant live-preview update is allowed even read-only (it's not persisted below
+    // when read-only) — only the `updateCv` persistence call is gated.
     this.selectedTemplateIdOverride.set(templateId);
-    if (!cv || cv.templateId === templateId) {
+    const cv = this.cv();
+    if (!cv || cv.templateId === templateId || this.membershipAccess.isReadOnly()) {
       return;
     }
     this.cvService.updateCv(cv.id, { ...cv, templateId }).subscribe(() => this.cvsResource.reload());
@@ -149,7 +155,7 @@ export class CvBuilder {
   protected addSection(): void {
     const cv = this.cv();
     const type = this.newSectionType();
-    if (!cv || !type) {
+    if (!cv || !type || this.membershipAccess.isReadOnly()) {
       return;
     }
     this.cvService
@@ -167,7 +173,7 @@ export class CvBuilder {
 
   protected validateTranslation(sectionId: string, language: string): void {
     const cv = this.cv();
-    if (!cv) {
+    if (!cv || this.membershipAccess.isReadOnly()) {
       return;
     }
     this.cvService.validateTranslation(cv.id, sectionId, language).subscribe(() => {
@@ -179,7 +185,7 @@ export class CvBuilder {
     const cv = this.cv();
     const language = this.translationLanguageFor(sectionId);
     const text = this.translationContentFor(sectionId);
-    if (!cv || !language) {
+    if (!cv || !language || this.membershipAccess.isReadOnly()) {
       return;
     }
     this.cvService.addTranslation(cv.id, sectionId, { language, content: { text } }).subscribe(() => {

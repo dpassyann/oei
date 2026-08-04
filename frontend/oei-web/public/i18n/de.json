@@ -280,6 +280,34 @@
     "visitWebsite": "Webseite besuchen",
     "notFound": "Partner nicht gefunden."
   },
+  "inscription": {
+    "title": "Konto erstellen",
+    "intro": "Werden Sie Teil der OEI-Gemeinschaft: Die Kontoerstellung ist kostenlos und schnell.",
+    "freeNotice": "Kostenlos — für die Erstellung Ihres Kontos ist kein Mitgliedsbeitrag erforderlich.",
+    "fields": {
+      "email": "E-Mail-Adresse",
+      "locale": "Sprache",
+      "country": "Land",
+      "consent": "Ich akzeptiere die Nutzungsbedingungen"
+    },
+    "languages": {
+      "fr": "Französisch",
+      "en": "Englisch",
+      "de": "Deutsch",
+      "es": "Spanisch",
+      "it": "Italienisch",
+      "pt": "Portugiesisch"
+    },
+    "submit": "Konto erstellen",
+    "submitting": "Konto wird erstellt…",
+    "error": "Die Kontoerstellung ist fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    "success": {
+      "title": "Ihr Konto wurde erstellt",
+      "body": "Willkommen! Sie können Ihren Mitgliedsbeitrag jetzt begleichen oder dies später in Ihrem Mitgliederbereich tun.",
+      "payNow": "Mitgliedsbeitrag jetzt bezahlen",
+      "later": "Später"
+    }
+  },
   "espaceMembre": {
     "onboarding": {
       "title": "Registrierung und Einstieg",
@@ -554,6 +582,33 @@
           "REVOKED": "Widerrufen",
           "RENEWED": "Erneuert"
         }
+      }
+    },
+    "cotisation": {
+      "title": "Jährlicher Mitgliedsbeitrag",
+      "loading": "Beitragsstatus wird geladen…",
+      "readOnlyBanner": "Ihr Mitgliedsbeitrag für das laufende Jahr ist nicht bezahlt: Ihr Mitgliederbereich ist schreibgeschützt. Begleichen Sie Ihren Beitrag, um den vollen Zugriff wiederzuerlangen.",
+      "backToProfile": "Zurück zu meinem Profil",
+      "upToDate": {
+        "title": "Sie sind auf dem neuesten Stand",
+        "body": "Ihr Mitgliedsbeitrag für den laufenden Zyklus wurde bezahlt."
+      },
+      "due": {
+        "reminder": "Erinnerung: Ihr Mitgliedsbeitrag ist am 22. April fällig.",
+        "justificationPrefix": "entsprechend",
+        "justificationSuffix": "verbleibenden Monaten von den 12 des Zyklus"
+      },
+      "form": {
+        "mockNotice": "Simuliertes Zahlungsformular — es wird kein echter Zahlungsdienstleister verwendet.",
+        "cardNumberLabel": "Kartennummer (Simulation)",
+        "payButton": "Bezahlen",
+        "paying": "Zahlung wird verarbeitet…",
+        "error": "Die Zahlung ist fehlgeschlagen. Bitte versuchen Sie es erneut.",
+        "skip": "Später"
+      },
+      "success": {
+        "title": "Zahlung abgeschlossen",
+        "body": "Vielen Dank! Ihr Mitgliedsbeitrag für den laufenden Zyklus wurde erfasst."
       }
     }
   },

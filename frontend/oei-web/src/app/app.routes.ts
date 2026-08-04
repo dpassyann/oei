@@ -31,6 +31,8 @@ import { CvBuilder } from './presentation/pages/espace-membre/cv-builder/cv-buil
 import { Badges } from './presentation/pages/espace-membre/badges/badges';
 import { CarteNumerique } from './presentation/pages/espace-membre/carte/carte-numerique';
 import { ProfilPublic } from './presentation/pages/espace-membre/profil-public/profil-public';
+import { Inscription } from './presentation/pages/inscription/inscription';
+import { Cotisation } from './presentation/pages/espace-membre/cotisation/cotisation';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -46,6 +48,11 @@ export const routes: Routes = [
   { path: 'domaines/:slug', component: DomaineDetail },
   { path: 'contact', component: Contact },
   { path: 'membres-fondateurs', component: MembresFondateurs },
+  // Free, public account-creation page (adhésion & cotisation plan) — reached from the home
+  // hero's "Rejoignez le mouvement" button when not authenticated. NOT guarded: creating an
+  // account must be reachable by anyone. Distinct from `/espace-membre/inscription`
+  // (`Onboarding`), the detailed professional-profile wizard for already-authenticated members.
+  { path: 'inscription', component: Inscription },
   { path: 'mentions-legales', component: MentionsLegales },
   { path: 'plan-du-site', component: PlanDuSite },
   // Espace membre institutionnel (doc 03) — route racine protégée par un garde simple basé sur
@@ -84,6 +91,9 @@ export const routes: Routes = [
       { path: 'cv', component: CvBuilder },
       { path: 'badges', component: Badges },
       { path: 'carte', component: CarteNumerique },
+      // Mocked cotisation payment page (adhésion & cotisation plan) — see `home.ts`'s
+      // `onJoinClick` and `Inscription`'s "Payer maintenant" choice.
+      { path: 'cotisation', component: Cotisation },
     ],
   },
   { path: 'membres/:publicSlug', component: ProfilPublic },

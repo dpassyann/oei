@@ -1,13 +1,34 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
+import { describe, expect, it, vi } from 'vitest';
 import { CvBuilder } from './cv-builder';
 import { CvApplicationService } from '../../../../application/service/cv-application.service';
 import { MemberApplicationService } from '../../../../application/service/member-application.service';
+import { MembershipFeeApplicationService } from '../../../../application/service/membership-fee-application.service';
 import { I18nService } from '../../../i18n/i18n.service';
 import { Cv, CvSection, CvTranslation } from '../../../../domain/model/cv/cv';
 import { CvTemplate } from '../../../../domain/model/cv/cv-template';
 import { createMember } from '../../../../domain/model/identity/member';
+import { MembershipFeeStatus } from '../../../../domain/model/membership-fee/membership-fee-status';
+
+const PAID_FEE_STATUS: MembershipFeeStatus = {
+  memberId: 'demo-member-1',
+  account: { memberId: 'demo-member-1', tier: 'MEMBER', payments: [] },
+  cycle: {
+    year: 2026,
+    cycleStartDate: new Date('2026-04-22T00:00:00Z'),
+    cycleEndDate: new Date('2027-04-21T00:00:00Z'),
+    reminderStartDate: new Date('2027-03-22T00:00:00Z'),
+    nextDueDate: new Date('2027-04-22T00:00:00Z'),
+  },
+  isPaid: true,
+  reminderActive: false,
+  amountDue: 0,
+  monthsRemaining: 0,
+};
+
+const UNPAID_FEE_STATUS: MembershipFeeStatus = { ...PAID_FEE_STATUS, isPaid: false, amountDue: 24.93, monthsRemaining: 6 };
 
 const INTERFACE_STRINGS: Record<string, string> = {
   'espaceMembre.cv.title': 'Mon CV',
@@ -133,13 +154,14 @@ const FAKE_MEMBER_SERVICE: Pick<MemberApplicationService, 'getCurrentMember'> = 
 };
 
 describe('CvBuilder', () => {
-  function configure(cvServiceOverrides: Partial<CvApplicationService> = {}) {
+  function configure(cvServiceOverrides: Partial<CvApplicationService> = {}, feeStatus: MembershipFeeStatus = PAID_FEE_STATUS) {
     TestBed.configureTestingModule({
       imports: [CvBuilder],
       providers: [
         { provide: I18nService, useValue: FAKE_I18N_SERVICE },
         { provide: CvApplicationService, useValue: fakeCvService(cvServiceOverrides) },
         { provide: MemberApplicationService, useValue: FAKE_MEMBER_SERVICE },
+        { provide: MembershipFeeApplicationService, useValue: { getStatus: () => of(feeStatus) } },
       ],
     });
   }
@@ -246,5 +268,34 @@ describe('CvBuilder', () => {
 
     expect(receivedTemplateId).toBe('template-2');
     expect(compiled.querySelector('.oei-cv-preview--modern')).not.toBeNull();
+  });
+
+  it('givenUnpaidCotisation_whenRendered_thenShowsReadOnlyBannerAndDisablesMutatingButtons', async () => {
+    configure({}, UNPAID_FEE_STATUS);
+    const fixture = TestBed.createComponent(CvBuilder);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector('.oei-read-only-banner')).toBeTruthy();
+    expect(compiled.querySelector<HTMLButtonElement>('.oei-cv-builder__validate-button')?.disabled).toBe(true);
+    expect(compiled.querySelector<HTMLButtonElement>('.oei-cv-builder__add-translation-submit')?.disabled).toBe(true);
+    expect(compiled.querySelector<HTMLButtonElement>('.oei-cv-builder__add-section-submit')?.disabled).toBe(true);
+  });
+
+  it('givenUnpaidCotisation_whenAddSectionCalledDirectly_thenDoesNotPersist', async () => {
+    const addSection = vi.fn().mockReturnValue(of(section({ id: 'section-2', type: 'SUMMARY' })));
+    configure({ addSection }, UNPAID_FEE_STATUS);
+    const fixture = TestBed.createComponent(CvBuilder);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+
+    component['newSectionType'].set('SUMMARY');
+    component['addSection']();
+
+    expect(addSection).not.toHaveBeenCalled();
   });
 });

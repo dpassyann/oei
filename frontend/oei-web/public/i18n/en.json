@@ -280,6 +280,34 @@
     "visitWebsite": "Visit the website",
     "notFound": "Partner not found."
   },
+  "inscription": {
+    "title": "Create an account",
+    "intro": "Join the OEI community: creating an account is free and quick.",
+    "freeNotice": "Free — no cotisation is required to create your account.",
+    "fields": {
+      "email": "Email address",
+      "locale": "Language",
+      "country": "Country",
+      "consent": "I accept the terms of use"
+    },
+    "languages": {
+      "fr": "French",
+      "en": "English",
+      "de": "German",
+      "es": "Spanish",
+      "it": "Italian",
+      "pt": "Portuguese"
+    },
+    "submit": "Create my account",
+    "submitting": "Creating account…",
+    "error": "Account creation failed. Please try again.",
+    "success": {
+      "title": "Your account has been created",
+      "body": "Welcome! You can settle your cotisation right away, or do it later from your member area.",
+      "payNow": "Pay my cotisation now",
+      "later": "Later"
+    }
+  },
   "espaceMembre": {
     "onboarding": {
       "title": "Registration and onboarding",
@@ -554,6 +582,33 @@
           "REVOKED": "Revoked",
           "RENEWED": "Renewed"
         }
+      }
+    },
+    "cotisation": {
+      "title": "Annual cotisation",
+      "loading": "Loading cotisation status…",
+      "readOnlyBanner": "Your cotisation for the current year is unpaid: your member area is read-only. Settle your cotisation to regain full access.",
+      "backToProfile": "Back to my profile",
+      "upToDate": {
+        "title": "You're up to date",
+        "body": "Your cotisation for the current cycle has been paid."
+      },
+      "due": {
+        "reminder": "Reminder: your cotisation is due on 22 April.",
+        "justificationPrefix": "corresponding to",
+        "justificationSuffix": "months remaining out of the 12-month cycle"
+      },
+      "form": {
+        "mockNotice": "Simulated payment form — no real payment processor is used.",
+        "cardNumberLabel": "Card number (simulation)",
+        "payButton": "Pay",
+        "paying": "Paying…",
+        "error": "Payment failed. Please try again.",
+        "skip": "Later"
+      },
+      "success": {
+        "title": "Payment completed",
+        "body": "Thank you! Your cotisation for the current cycle has been recorded."
       }
     }
   },

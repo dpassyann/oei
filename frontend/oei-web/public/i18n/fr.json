@@ -280,6 +280,34 @@
     "visitWebsite": "Visiter le site",
     "notFound": "Partenaire introuvable."
   },
+  "inscription": {
+    "title": "Créer un compte",
+    "intro": "Rejoignez la communauté de l'OEI : la création de compte est gratuite et rapide.",
+    "freeNotice": "Gratuit — aucune cotisation n'est requise pour créer votre compte.",
+    "fields": {
+      "email": "Adresse e-mail",
+      "locale": "Langue",
+      "country": "Pays",
+      "consent": "J'accepte les conditions générales d'utilisation"
+    },
+    "languages": {
+      "fr": "Français",
+      "en": "Anglais",
+      "de": "Allemand",
+      "es": "Espagnol",
+      "it": "Italien",
+      "pt": "Portugais"
+    },
+    "submit": "Créer mon compte",
+    "submitting": "Création en cours…",
+    "error": "La création du compte a échoué. Merci de réessayer.",
+    "success": {
+      "title": "Votre compte a été créé",
+      "body": "Bienvenue ! Vous pouvez régulariser votre cotisation dès maintenant, ou le faire plus tard depuis votre espace membre.",
+      "payNow": "Payer ma cotisation maintenant",
+      "later": "Plus tard"
+    }
+  },
   "espaceMembre": {
     "onboarding": {
       "title": "Inscription et onboarding",
@@ -554,6 +582,33 @@
           "REVOKED": "Révoqué",
           "RENEWED": "Renouvelé"
         }
+      }
+    },
+    "cotisation": {
+      "title": "Cotisation annuelle",
+      "loading": "Chargement du statut de cotisation…",
+      "readOnlyBanner": "Votre cotisation de l'année en cours n'est pas payée : votre espace membre est en lecture seule. Régularisez votre cotisation pour retrouver l'accès complet.",
+      "backToProfile": "Retour à mon profil",
+      "upToDate": {
+        "title": "Vous êtes à jour",
+        "body": "Votre cotisation pour le cycle en cours a bien été réglée."
+      },
+      "due": {
+        "reminder": "Rappel : votre cotisation est due le 22 avril.",
+        "justificationPrefix": "correspondant à",
+        "justificationSuffix": "mois restants sur les 12 du cycle"
+      },
+      "form": {
+        "mockNotice": "Formulaire de paiement simulé — aucun processeur de paiement réel n'est utilisé.",
+        "cardNumberLabel": "Numéro de carte (simulation)",
+        "payButton": "Payer",
+        "paying": "Paiement en cours…",
+        "error": "Le paiement a échoué. Merci de réessayer.",
+        "skip": "Plus tard"
+      },
+      "success": {
+        "title": "Paiement effectué",
+        "body": "Merci ! Votre cotisation pour le cycle en cours a été enregistrée."
       }
     }
   },
