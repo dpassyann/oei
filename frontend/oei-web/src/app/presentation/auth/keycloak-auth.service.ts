@@ -126,4 +126,14 @@ export class KeycloakAuthService {
   clearMockSession(): void {
     sessionStorage.removeItem(MOCK_SESSION_ROLES_STORAGE_KEY);
   }
+
+  /** Demo/test-only convenience wrapper over the mocked session roles, used by the
+   * espace-membre-individuel plan: `true` grants a basic `member` session, `false` clears it. */
+  setMockAuthenticated(value: boolean): void {
+    if (value) {
+      this.setMockSessionRoles(['member']);
+    } else {
+      this.clearMockSession();
+    }
+  }
 }

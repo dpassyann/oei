@@ -1,0 +1,359 @@
+:host {
+  display: block;
+}
+
+$oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+
+.oei-page {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem;
+}
+
+.oei-page__title {
+  margin: 0 0 1.5rem;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-page__body {
+  margin: 0 0 1.5rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.oei-page__empty {
+  margin: 0;
+  color: #666;
+  font-style: italic;
+}
+
+.oei-cv-builder__section-heading {
+  margin: 2rem 0 1rem;
+  font-size: 1.3rem;
+  color: $oei-navy;
+}
+
+.oei-cv-builder__section {
+  border: 1px solid rgba(10, 30, 63, 0.15);
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.oei-cv-builder__section-type {
+  margin: 0 0 0.75rem;
+  color: $oei-navy;
+}
+
+.oei-cv-builder__content {
+  margin: 0 0 1rem;
+}
+
+.oei-cv-builder__content-row {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+
+  dt {
+    font-weight: 600;
+    color: $oei-navy;
+  }
+
+  dd {
+    margin: 0;
+    color: #444;
+  }
+}
+
+.oei-cv-builder__translations {
+  border-top: 1px dashed rgba(10, 30, 63, 0.2);
+  padding-top: 0.75rem;
+}
+
+.oei-cv-builder__translations-title {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  color: $oei-navy;
+}
+
+.oei-cv-builder__no-translations {
+  margin: 0 0 0.5rem;
+  color: #666;
+  font-style: italic;
+}
+
+.oei-cv-builder__translation {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.oei-cv-builder__translation-language {
+  font-weight: 600;
+}
+
+.oei-cv-builder__translation-warning {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #7a2e00;
+  background: #ffe3b3;
+  border: 1px solid #d98c00;
+  border-radius: 999px;
+}
+
+.oei-cv-builder__validate-button,
+.oei-cv-builder__add-section-submit,
+.oei-cv-builder__add-translation-submit,
+.oei-cv-builder__generate-button {
+  background: $oei-navy;
+  color: #fff;
+  border: none;
+  border-radius: 0.35rem;
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+
+  &:hover {
+    background: $oei-gold;
+  }
+
+  &:disabled {
+    background: #999;
+    cursor: not-allowed;
+  }
+}
+
+.oei-cv-builder__add-translation {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.oei-cv-builder__field {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+  color: $oei-navy;
+  gap: 0.25rem;
+
+  input,
+  select {
+    padding: 0.35rem 0.5rem;
+    border: 1px solid rgba(10, 30, 63, 0.25);
+    border-radius: 0.35rem;
+  }
+}
+
+.oei-cv-builder__pdf-notice {
+  color: #7a2e00;
+  background: #fff3e0;
+  border: 1px solid #d98c00;
+  border-radius: 0.35rem;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.oei-cv-builder__download-link {
+  display: inline-block;
+  margin-left: 1rem;
+  color: $oei-navy;
+  font-weight: 600;
+
+  &:hover {
+    color: $oei-gold;
+  }
+}
+
+// --- Template gallery + OEI-branded live preview -----------------------------------
+
+.oei-cv-builder__template-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin: 1rem 0 2rem;
+}
+
+.oei-cv-builder__template-thumb {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+
+  &--selected .oei-cv-builder__template-thumb-frame {
+    outline: 3px solid $oei-gold;
+    outline-offset: 2px;
+  }
+}
+
+.oei-cv-builder__template-thumb-frame {
+  display: block;
+  border-radius: 0.4rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(10, 30, 63, 0.2);
+}
+
+.oei-cv-builder__template-thumb-label {
+  font-size: 0.85rem;
+  color: $oei-navy;
+  font-weight: 600;
+}
+
+.oei-cv-preview {
+  position: relative;
+  overflow: hidden;
+  background: #fdfcf8;
+  border: 1px solid rgba(10, 30, 63, 0.15);
+  border-radius: 0.25rem;
+  padding: 2rem 2.25rem;
+  min-height: 20rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  box-shadow: 0 4px 16px rgba(10, 30, 63, 0.12);
+
+  &--thumb {
+    width: 12rem;
+    height: 16rem;
+    padding: 0.6rem 0.7rem;
+    font-size: 0.32rem;
+    pointer-events: none;
+  }
+
+  // "Modern" template: navy header band + gold seal accents, vs. the "Classic"
+  // template's cream paper + navy seal — a deliberately distinct look per template.
+  &--modern {
+    background: #f3f6fb;
+
+    .oei-cv-preview__header {
+      background: $oei-navy;
+      color: #fff;
+      margin: -2rem -2.25rem 1rem;
+      padding: 1.25rem 2.25rem 1rem;
+    }
+
+    .oei-cv-preview__org {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    .oei-cv-preview__seal-outer {
+      stroke: $oei-gold;
+    }
+
+    .oei-cv-preview__seal-inner {
+      stroke: $oei-gold;
+    }
+  }
+}
+
+// Discreet OEI watermark behind the CV content — same mark as the site header logo,
+// kept very low-opacity so it never interferes with legibility, per the navy/gold charter.
+.oei-cv-preview__watermark {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $oei-navy;
+  opacity: 0.05;
+  pointer-events: none;
+
+  svg {
+    width: 70%;
+    height: 70%;
+  }
+}
+
+// Diploma-style seal: a real graphical medallion (double circle border + institutional
+// small-caps typography), not just a text badge — evokes an official certificate/diploma.
+.oei-cv-preview__seal {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  width: 4.5rem;
+  height: 4.5rem;
+  color: $oei-navy;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.oei-cv-preview__seal-outer,
+.oei-cv-preview__seal-inner {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.oei-cv-preview__seal-text {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  fill: currentColor;
+  letter-spacing: 0.05em;
+}
+
+.oei-cv-preview__seal-subtext {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  fill: currentColor;
+}
+
+.oei-cv-preview__header {
+  position: relative;
+  z-index: 1;
+  border-bottom: 2px solid $oei-gold;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.oei-cv-preview__name {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-cv-preview__org {
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+  color: #555;
+  font-style: italic;
+}
+
+.oei-cv-preview__sections {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.oei-cv-preview__section {
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+
+.oei-cv-preview__section-type {
+  font-weight: 700;
+  color: $oei-navy;
+  min-width: 8rem;
+}
+
+.oei-cv-preview__section-excerpt {
+  color: #333;
+}

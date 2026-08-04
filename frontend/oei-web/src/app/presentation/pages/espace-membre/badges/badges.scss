@@ -1,0 +1,260 @@
+:host {
+  display: block;
+}
+
+$oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+
+.oei-page {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem;
+}
+
+.oei-page__title {
+  margin: 0 0 1.5rem;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-page__body {
+  margin: 0 0 1.5rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.oei-page__empty {
+  margin: 0 0 1.5rem;
+  color: #666;
+  font-style: italic;
+}
+
+.oei-badges__section {
+  margin-bottom: 3rem;
+}
+
+.oei-badges__section-title {
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+  color: $oei-navy;
+}
+
+.oei-badges__list {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: 1.25rem;
+}
+
+.oei-badges__tile {
+  position: relative;
+  padding: 1.1rem;
+  border: 1px solid rgba(10, 30, 63, 0.15);
+  border-radius: 0.5rem;
+}
+
+.oei-badges__tile-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.4rem;
+}
+
+.oei-badges__icon {
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+}
+
+.oei-badges__name {
+  margin: 0;
+  font-size: 1.05rem;
+  color: $oei-navy;
+}
+
+.oei-badges__category {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: $oei-gold;
+  border: 1px solid $oei-gold;
+  border-radius: 999px;
+}
+
+.oei-badges__description {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  color: #444;
+}
+
+.oei-badges__awarded-at {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+// A revocation is never hidden — always visible, in an unmistakably negative color.
+.oei-badges__revoked-tag {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  background: #b3261e;
+  border-radius: 0.25rem;
+}
+
+.oei-badges__cert-list {
+  list-style: none;
+  margin: 0 0 2rem;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: 1.25rem;
+}
+
+.oei-badges__cert-item {
+  padding: 1.1rem;
+  border: 1px solid rgba(10, 30, 63, 0.15);
+  border-radius: 0.5rem;
+}
+
+.oei-badges__cert-name {
+  margin: 0 0 0.25rem;
+  font-size: 1.05rem;
+  color: $oei-navy;
+}
+
+.oei-badges__cert-org {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  color: #444;
+}
+
+.oei-badges__cert-status {
+  display: inline-block;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+
+.oei-badges__cert-status--declared {
+  color: #555;
+  background: #eee;
+  border-color: #ccc;
+}
+
+.oei-badges__cert-status--under-review {
+  color: #8a5a00;
+  background: #fff3d6;
+  border-color: #e8a530;
+}
+
+.oei-badges__cert-status--validated {
+  color: #1c5e2b;
+  background: #e3f5e7;
+  border-color: #2f9e4f;
+}
+
+.oei-badges__cert-status--rejected {
+  color: #7a1913;
+  background: #fbe4e2;
+  border-color: #b3261e;
+}
+
+.oei-badges__cert-status--expired {
+  color: #555;
+  background: #f0f0f0;
+  border-color: #999;
+}
+
+.oei-badges__cert-status--revoked {
+  color: #fff;
+  background: #b3261e;
+  border-color: #7a1913;
+}
+
+.oei-badges__declare-form {
+  max-width: 28rem;
+  padding: 1.25rem;
+  border: 1px dashed rgba(10, 30, 63, 0.3);
+  border-radius: 0.5rem;
+}
+
+.oei-badges__declare-title {
+  margin: 0 0 1rem;
+  font-size: 1.15rem;
+  color: $oei-navy;
+}
+
+.oei-badges__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.9rem;
+  font-size: 0.9rem;
+  color: #333;
+
+  input,
+  select {
+    padding: 0.4rem 0.5rem;
+    border: 1px solid rgba(10, 30, 63, 0.25);
+    border-radius: 0.3rem;
+    font-size: 0.9rem;
+  }
+}
+
+.oei-badges__field--proof {
+  padding: 0.6rem;
+  background: #fff8e8;
+  border: 1px solid $oei-gold;
+  border-radius: 0.4rem;
+}
+
+.oei-badges__field-required::after {
+  content: ' *';
+  color: #b3261e;
+  font-weight: 700;
+}
+
+.oei-badges__field-note {
+  margin: 0.2rem 0 0;
+  font-size: 0.75rem;
+  font-style: italic;
+  color: #7a5a00;
+}
+
+.oei-badges__declare-submit {
+  padding: 0.5rem 1.25rem;
+  font-weight: 600;
+  color: #fff;
+  background: $oei-navy;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.oei-badges__declare-success {
+  margin-top: 0.75rem;
+  color: #1c5e2b;
+  font-weight: 600;
+}
+
+.oei-badges__declare-error {
+  margin-top: 0.75rem;
+  color: #b3261e;
+  font-weight: 600;
+}

@@ -1,0 +1,131 @@
+<main class="oei-page">
+  <h1 class="oei-page__title">{{ i18n.translate('espaceMembre.profil.title') }}</h1>
+
+  @if (!profile() && profileResource.isLoading()) {
+    <p class="oei-page__empty">{{ i18n.translate('espaceMembre.profil.loading') }}</p>
+  } @else if (!profile()) {
+    <p class="oei-page__empty">{{ i18n.translate('espaceMembre.profil.empty') }}</p>
+  } @else {
+    <section class="oei-profil__identity">
+      <h2>{{ member()?.displayName }}</h2>
+      @if (membership(); as membershipValue) {
+        <span class="oei-profil__badge">{{ membershipValue.tier }}</span>
+      }
+      <p class="oei-profil__completeness">
+        {{ i18n.translate('espaceMembre.profil.completeness') }} {{ profile()?.completenessScore }}%
+      </p>
+    </section>
+
+    <section class="oei-profil__legal">
+      <h3>{{ i18n.translate('espaceMembre.profil.legalIdentity.title') }}</h3>
+      <p class="oei-profil__legal-hint">{{ i18n.translate('espaceMembre.profil.legalIdentity.hint') }}</p>
+      <p>{{ member()?.legalName }}</p>
+    </section>
+
+    @if (!editing()) {
+      <section class="oei-profil__view">
+        <p>{{ profile()?.title }}</p>
+        <p>{{ profile()?.summary }}</p>
+        <p>{{ profile()?.location }}</p>
+        <p>{{ i18n.translate('espaceMembre.profil.availability.' + (profile()?.availability ?? 'NOT_AVAILABLE')) }}</p>
+
+        <h3>{{ i18n.translate('espaceMembre.profil.expertiseAreas') }}</h3>
+        <ul class="oei-profil__chips">
+          @for (item of profile()?.expertiseAreas ?? []; track item) {
+            <li class="oei-profil__chip">{{ item }}</li>
+          }
+        </ul>
+
+        <h3>{{ i18n.translate('espaceMembre.profil.technologies') }}</h3>
+        <ul class="oei-profil__chips">
+          @for (item of profile()?.technologies ?? []; track item) {
+            <li class="oei-profil__chip">{{ item }}</li>
+          }
+        </ul>
+
+        <h3>{{ i18n.translate('espaceMembre.profil.sectors') }}</h3>
+        <ul class="oei-profil__chips">
+          @for (item of profile()?.sectors ?? []; track item) {
+            <li class="oei-profil__chip">{{ item }}</li>
+          }
+        </ul>
+
+        <h3>{{ i18n.translate('espaceMembre.profil.languages') }}</h3>
+        <ul class="oei-profil__list">
+          @for (language of profile()?.languages ?? []; track language.language) {
+            <li>{{ language.language }} — {{ language.level }}</li>
+          }
+        </ul>
+
+        <h3>{{ i18n.translate('espaceMembre.profil.experiences') }}</h3>
+        <ul class="oei-profil__list">
+          @for (experience of profile()?.experiences ?? []; track experience.id) {
+            <li>
+              {{ experience.title }} — {{ experience.organization }} ({{ experience.startDate }})
+              @if (isDemoExperience(experience)) {
+                <span class="oei-profil__demo-tag">{{ i18n.translate('espaceMembre.profil.demoTag') }}</span>
+              }
+            </li>
+          }
+        </ul>
+
+        <h3>{{ i18n.translate('espaceMembre.profil.educations') }}</h3>
+        <ul class="oei-profil__list">
+          @for (education of profile()?.educations ?? []; track education.id) {
+            <li>
+              {{ education.program }} — {{ education.institution }} ({{ education.startDate }})
+              @if (isDemoEducation(education)) {
+                <span class="oei-profil__demo-tag">{{ i18n.translate('espaceMembre.profil.demoTag') }}</span>
+              }
+            </li>
+          }
+        </ul>
+
+        <h3>{{ i18n.translate('espaceMembre.profil.skills') }}</h3>
+        <ul class="oei-profil__chips">
+          @for (skill of profile()?.skills ?? []; track skill.id) {
+            <li class="oei-profil__chip">{{ skill.name }}</li>
+          }
+        </ul>
+
+        <button type="button" (click)="startEditing()">{{ i18n.translate('espaceMembre.profil.edit') }}</button>
+      </section>
+    } @else {
+      <section class="oei-profil__edit">
+        @if (saveError()) {
+          <p class="oei-profil__error">{{ i18n.translate('espaceMembre.profil.saveError') }}</p>
+        }
+        <label class="oei-profil__field">
+          {{ i18n.translate('espaceMembre.profil.fields.title') }}
+          <input type="text" [formField]="editForm.title" />
+        </label>
+        <label class="oei-profil__field">
+          {{ i18n.translate('espaceMembre.profil.fields.summary') }}
+          <textarea [formField]="editForm.summary"></textarea>
+        </label>
+        <label class="oei-profil__field">
+          {{ i18n.translate('espaceMembre.profil.fields.location') }}
+          <input type="text" [formField]="editForm.location" />
+        </label>
+        <label class="oei-profil__field">
+          {{ i18n.translate('espaceMembre.profil.fields.availability') }}
+          <select [ngModel]="editForm.availability().value()" (ngModelChange)="setAvailability($event)" name="availability">
+            <option value="">—</option>
+            @for (option of availabilityOptions; track option) {
+              <option [value]="option">{{ i18n.translate('espaceMembre.profil.availability.' + option) }}</option>
+            }
+          </select>
+        </label>
+
+        <div class="oei-profil__edit-actions">
+          <button type="button" [disabled]="saving()" (click)="save()">
+            {{ i18n.translate('espaceMembre.profil.save') }}
+          </button>
+          <button type="button" [disabled]="saving()" (click)="cancelEditing()">
+            {{ i18n.translate('espaceMembre.profil.cancel') }}
+          </button>
+        </div>
+      </section>
+    }
+  }
+</main>

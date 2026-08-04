@@ -1,0 +1,232 @@
+<main class="oei-page">
+  <h1 class="oei-page__title">{{ i18n.translate('espaceMembre.cv.title') }}</h1>
+
+  @if (cv(); as currentCv) {
+    <p class="oei-page__body oei-cv-builder__template">
+      {{ i18n.translate('espaceMembre.cv.templateLabel') }} : {{ templateName() ?? currentCv.templateId }}
+    </p>
+
+    <section class="oei-cv-builder__template-gallery">
+      <h2 class="oei-cv-builder__section-heading">{{ i18n.translate('espaceMembre.cv.templateGallery.title') }}</h2>
+      <p class="oei-page__body">{{ i18n.translate('espaceMembre.cv.templateGallery.intro') }}</p>
+
+      <div class="oei-cv-builder__template-thumbs">
+        @for (template of templates(); track template.id) {
+          <button
+            type="button"
+            class="oei-cv-builder__template-thumb"
+            [class.oei-cv-builder__template-thumb--selected]="selectedTemplateId() === template.id"
+            (click)="selectTemplate(template.id)"
+          >
+            <span class="oei-cv-builder__template-thumb-frame">
+              <ng-container
+                *ngTemplateOutlet="cvPreview; context: { $implicit: template.code, thumb: true }"
+              ></ng-container>
+            </span>
+            <span class="oei-cv-builder__template-thumb-label">{{ template.name }}</span>
+          </button>
+        }
+      </div>
+    </section>
+
+    <section class="oei-cv-builder__live-preview">
+      <h2 class="oei-cv-builder__section-heading">{{ i18n.translate('espaceMembre.cv.livePreview.title') }}</h2>
+      <p class="oei-page__body">{{ i18n.translate('espaceMembre.cv.livePreview.intro') }}</p>
+
+      <ng-container *ngTemplateOutlet="cvPreview; context: { $implicit: selectedTemplateCode(), thumb: false }"></ng-container>
+    </section>
+
+    <!--
+      Reusable OEI-branded CV preview: a discreet OEI watermark + a diploma-style seal
+      (medallion/border), shared by both the small gallery thumbnails (`thumb: true`, scaled
+      down via CSS) and the full-size live preview below — so the two are guaranteed to stay
+      visually consistent, and the live preview always reflects the currently-selected
+      template code instantly.
+    -->
+    <ng-template #cvPreview let-templateCode let-thumb="thumb">
+      <div
+        class="oei-cv-preview"
+        [class.oei-cv-preview--modern]="templateCode === 'MODERN'"
+        [class.oei-cv-preview--thumb]="thumb"
+      >
+        <div class="oei-cv-preview__watermark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path
+              d="M12 2 3 5v6c0 5.2 3.8 9.4 9 11 5.2-1.6 9-5.8 9-11V5l-9-3Z"
+              stroke="currentColor"
+              stroke-width="1.4"
+              stroke-linejoin="round"
+            />
+            <circle cx="12" cy="11" r="3" stroke="currentColor" stroke-width="1.2" />
+          </svg>
+        </div>
+
+        <div class="oei-cv-preview__seal" aria-hidden="true">
+          <svg viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="46" class="oei-cv-preview__seal-outer" />
+            <circle cx="50" cy="50" r="38" class="oei-cv-preview__seal-inner" />
+            <text x="50" y="46" text-anchor="middle" class="oei-cv-preview__seal-text">
+              {{ i18n.translate('espaceMembre.cv.livePreview.sealBrand') }}
+            </text>
+            <text x="50" y="62" text-anchor="middle" class="oei-cv-preview__seal-subtext">
+              {{ i18n.translate('espaceMembre.cv.livePreview.sealCertifiedLabel') }}
+            </text>
+          </svg>
+        </div>
+
+        <header class="oei-cv-preview__header">
+          <p class="oei-cv-preview__name">{{ memberDisplayName() ?? currentCv.memberId }}</p>
+          <p class="oei-cv-preview__org">{{ i18n.translate('espaceMembre.cv.livePreview.orgLine') }}</p>
+        </header>
+
+        <div class="oei-cv-preview__sections">
+          @for (section of sortedSections(); track section.id) {
+            <div class="oei-cv-preview__section">
+              <span class="oei-cv-preview__section-type">
+                {{ i18n.translate('espaceMembre.cv.sectionTypes.' + section.type) }}
+              </span>
+              @if (sectionPreviewText(section.content); as excerpt) {
+                <span class="oei-cv-preview__section-excerpt">{{ excerpt }}</span>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </ng-template>
+
+    <section class="oei-cv-builder__sections">
+      <h2 class="oei-cv-builder__section-heading">{{ i18n.translate('espaceMembre.cv.sectionsTitle') }}</h2>
+
+      @if (sortedSections().length === 0) {
+        <p class="oei-page__empty">{{ i18n.translate('espaceMembre.cv.noSections') }}</p>
+      }
+
+      @for (section of sortedSections(); track section.id) {
+        <article class="oei-cv-builder__section">
+          <h3 class="oei-cv-builder__section-type">
+            {{ i18n.translate('espaceMembre.cv.sectionTypes.' + section.type) }}
+          </h3>
+
+          <dl class="oei-cv-builder__content">
+            @for (entry of objectEntries(section.content); track entry[0]) {
+              <div class="oei-cv-builder__content-row">
+                <dt>{{ entry[0] }}</dt>
+                <dd>{{ entry[1] }}</dd>
+              </div>
+            }
+          </dl>
+
+          <div class="oei-cv-builder__translations">
+            <h4 class="oei-cv-builder__translations-title">
+              {{ i18n.translate('espaceMembre.cv.translationsTitle') }}
+            </h4>
+
+            @if (section.translations.length === 0) {
+              <p class="oei-cv-builder__no-translations">{{ i18n.translate('espaceMembre.cv.noTranslations') }}</p>
+            }
+
+            @for (translation of section.translations; track translation.id) {
+              <div class="oei-cv-builder__translation">
+                <span class="oei-cv-builder__translation-language">{{ translation.language }}</span>
+                <span class="oei-cv-builder__translation-status">
+                  {{ i18n.translate('espaceMembre.cv.translationStatus.' + translation.status) }}
+                </span>
+
+                @if (isMachineGenerated(translation.status)) {
+                  <span class="oei-cv-builder__translation-warning">
+                    {{ i18n.translate('espaceMembre.cv.unvalidatedWarning') }}
+                  </span>
+                }
+
+                @if (isUnvalidated(translation.status)) {
+                  <button
+                    type="button"
+                    class="oei-cv-builder__validate-button"
+                    (click)="validateTranslation(section.id, translation.language)"
+                  >
+                    {{ i18n.translate('espaceMembre.cv.validateTranslation') }}
+                  </button>
+                }
+              </div>
+            }
+
+            <form class="oei-cv-builder__add-translation" (submit)="$event.preventDefault(); addTranslation(section.id)">
+              <label class="oei-cv-builder__field">
+                {{ i18n.translate('espaceMembre.cv.addTranslationLanguageLabel') }}
+                <input
+                  type="text"
+                  [ngModel]="translationLanguageFor(section.id)"
+                  (ngModelChange)="setTranslationLanguage(section.id, $event)"
+                  name="language-{{ section.id }}"
+                />
+              </label>
+              <label class="oei-cv-builder__field">
+                {{ i18n.translate('espaceMembre.cv.addTranslationContentLabel') }}
+                <input
+                  type="text"
+                  [ngModel]="translationContentFor(section.id)"
+                  (ngModelChange)="setTranslationContent(section.id, $event)"
+                  name="content-{{ section.id }}"
+                />
+              </label>
+              <button type="submit" class="oei-cv-builder__add-translation-submit">
+                {{ i18n.translate('espaceMembre.cv.addTranslationSubmit') }}
+              </button>
+            </form>
+          </div>
+        </article>
+      }
+    </section>
+
+    <section class="oei-cv-builder__add-section">
+      <h2 class="oei-cv-builder__section-heading">{{ i18n.translate('espaceMembre.cv.addSectionTitle') }}</h2>
+
+      @if (availableSectionTypes().length === 0) {
+        <p class="oei-page__empty">{{ i18n.translate('espaceMembre.cv.noAvailableSectionTypes') }}</p>
+      } @else {
+        <form (submit)="$event.preventDefault(); addSection()">
+          <label class="oei-cv-builder__field">
+            {{ i18n.translate('espaceMembre.cv.addSectionTypeLabel') }}
+            <select [ngModel]="newSectionType()" (ngModelChange)="newSectionType.set($event)" name="newSectionType">
+              <option value="" disabled>{{ i18n.translate('espaceMembre.cv.addSectionTypeLabel') }}</option>
+              @for (type of availableSectionTypes(); track type) {
+                <option [value]="type">{{ i18n.translate('espaceMembre.cv.sectionTypes.' + type) }}</option>
+              }
+            </select>
+          </label>
+          <label class="oei-cv-builder__field">
+            {{ i18n.translate('espaceMembre.cv.addSectionContentLabel') }}
+            <input
+              type="text"
+              [ngModel]="newSectionContent()"
+              (ngModelChange)="newSectionContent.set($event)"
+              name="newSectionContent"
+            />
+          </label>
+          <button type="submit" class="oei-cv-builder__add-section-submit">
+            {{ i18n.translate('espaceMembre.cv.addSectionSubmit') }}
+          </button>
+        </form>
+      }
+    </section>
+
+    <section class="oei-cv-builder__render">
+      <h2 class="oei-cv-builder__section-heading">{{ i18n.translate('espaceMembre.cv.generatePdfTitle') }}</h2>
+      <p class="oei-cv-builder__pdf-notice">{{ i18n.translate('espaceMembre.cv.pdfDemoNotice') }}</p>
+
+      <button type="button" class="oei-cv-builder__generate-button" [disabled]="renderInProgress()" (click)="generatePdf()">
+        {{ renderInProgress() ? i18n.translate('espaceMembre.cv.generatingPdf') : i18n.translate('espaceMembre.cv.generatePdf') }}
+      </button>
+
+      @if (renderJob(); as job) {
+        @if (job.resultUrl) {
+          <a class="oei-cv-builder__download-link" [href]="job.resultUrl" download>
+            {{ i18n.translate('espaceMembre.cv.downloadPdf') }}
+          </a>
+        }
+      }
+    </section>
+  } @else {
+    <p class="oei-page__empty">{{ i18n.translate('espaceMembre.cv.empty') }}</p>
+  }
+</main>

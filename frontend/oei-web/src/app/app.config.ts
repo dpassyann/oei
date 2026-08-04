@@ -74,6 +74,36 @@ import { INSTITUTION_PUBLIC_PORT } from './domain/port/institution/institution-p
 import { InstitutionPublicMockAdapter } from './infrastructure/adapter/institution-public-mock.adapter';
 import { InstitutionPublicApiAdapter } from './infrastructure/adapter/institution-public-api.adapter';
 
+// Espace membre individuel (bounded contexts: identity, membership, profile, cv,
+// certification, badge, wallet — see docs/adr/0002-v2-foundations.md).
+import { MEMBER_PORT } from './domain/port/identity/member.port';
+import { MemberMockAdapter } from './infrastructure/adapter/member-mock.adapter';
+import { MemberApiAdapter } from './infrastructure/adapter/member-api.adapter';
+import { MEMBERSHIP_PORT } from './domain/port/membership/membership.port';
+import { MembershipMockAdapter } from './infrastructure/adapter/membership-mock.adapter';
+import { MembershipApiAdapter } from './infrastructure/adapter/membership-api.adapter';
+import { PROFESSIONAL_PROFILE_PORT } from './domain/port/profile/professional-profile.port';
+import { ProfessionalProfileMockAdapter } from './infrastructure/adapter/professional-profile-mock.adapter';
+import { ProfessionalProfileApiAdapter } from './infrastructure/adapter/professional-profile-api.adapter';
+import { PUBLIC_PROFILE_PORT } from './domain/port/profile/public-profile.port';
+import { PublicProfileMockAdapter } from './infrastructure/adapter/public-profile-mock.adapter';
+import { PublicProfileApiAdapter } from './infrastructure/adapter/public-profile-api.adapter';
+import { CV_PORT } from './domain/port/cv/cv.port';
+import { CvMockAdapter } from './infrastructure/adapter/cv-mock.adapter';
+import { CvApiAdapter } from './infrastructure/adapter/cv-api.adapter';
+import { CERTIFICATION_PORT } from './domain/port/certification/certification.port';
+import { CertificationMockAdapter } from './infrastructure/adapter/certification-mock.adapter';
+import { CertificationApiAdapter } from './infrastructure/adapter/certification-api.adapter';
+import { BADGE_PORT } from './domain/port/badge/badge.port';
+import { BadgeMockAdapter } from './infrastructure/adapter/badge-mock.adapter';
+import { BadgeApiAdapter } from './infrastructure/adapter/badge-api.adapter';
+import { WALLET_PORT } from './domain/port/wallet/wallet.port';
+import { WalletMockAdapter } from './infrastructure/adapter/wallet-mock.adapter';
+import { WalletApiAdapter } from './infrastructure/adapter/wallet-api.adapter';
+import { DIGITAL_BUSINESS_CARD_PORT } from './domain/port/wallet/digital-business-card.port';
+import { DigitalBusinessCardMockAdapter } from './infrastructure/adapter/digital-business-card-mock.adapter';
+import { DigitalBusinessCardApiAdapter } from './infrastructure/adapter/digital-business-card-api.adapter';
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZonelessChangeDetection(),
@@ -176,6 +206,44 @@ export const appConfig: ApplicationConfig = {
       provide: GIT_SYNCHRONIZATION_PORT,
       useFactory: () =>
         inject(RuntimeConfig).isMock() ? inject(GitSynchronizationMockAdapter) : inject(GitSynchronizationApiAdapter),
+    },
+    {
+      provide: MEMBER_PORT,
+      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(MemberMockAdapter) : inject(MemberApiAdapter)),
+    },
+    {
+      provide: MEMBERSHIP_PORT,
+      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(MembershipMockAdapter) : inject(MembershipApiAdapter)),
+    },
+    {
+      provide: PROFESSIONAL_PROFILE_PORT,
+      useFactory: () =>
+        inject(RuntimeConfig).isMock() ? inject(ProfessionalProfileMockAdapter) : inject(ProfessionalProfileApiAdapter),
+    },
+    {
+      provide: PUBLIC_PROFILE_PORT,
+      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(PublicProfileMockAdapter) : inject(PublicProfileApiAdapter)),
+    },
+    {
+      provide: CV_PORT,
+      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(CvMockAdapter) : inject(CvApiAdapter)),
+    },
+    {
+      provide: CERTIFICATION_PORT,
+      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(CertificationMockAdapter) : inject(CertificationApiAdapter)),
+    },
+    {
+      provide: BADGE_PORT,
+      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(BadgeMockAdapter) : inject(BadgeApiAdapter)),
+    },
+    {
+      provide: WALLET_PORT,
+      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(WalletMockAdapter) : inject(WalletApiAdapter)),
+    },
+    {
+      provide: DIGITAL_BUSINESS_CARD_PORT,
+      useFactory: () =>
+        inject(RuntimeConfig).isMock() ? inject(DigitalBusinessCardMockAdapter) : inject(DigitalBusinessCardApiAdapter),
     },
   ],
 };

@@ -87,5 +87,17 @@ describe('KeycloakAuthService', () => {
 
       expect(service.getSessionRoles()).toEqual([]);
     });
+
+    it('givenSetMockAuthenticatedTrue_whenCalled_thenGrantsABasicMemberSession', () => {
+      service.setMockAuthenticated(true);
+      expect(service.isAuthenticated()).toBe(true);
+      expect(service.getSessionRoles()).toEqual(['member']);
+    });
+
+    it('givenSetMockAuthenticatedFalse_whenCalled_thenIsAuthenticatedBecomesFalse', () => {
+      service.setMockAuthenticated(true);
+      service.setMockAuthenticated(false);
+      expect(service.isAuthenticated()).toBe(false);
+    });
   });
 });

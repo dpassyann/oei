@@ -1,0 +1,120 @@
+<main class="oei-page">
+  <h1 class="oei-page__title">{{ i18n.translate('espaceMembre.carte.title') }}</h1>
+  <p class="oei-page__body">{{ i18n.translate('espaceMembre.carte.intro') }}</p>
+
+  @if (!member() || !card()) {
+    <p class="oei-page__empty">{{ i18n.translate('espaceMembre.carte.loading') }}</p>
+  } @else {
+    <section
+      class="oei-carte-numerique__card"
+      [class.oei-carte-numerique__card--fullscreen]="isFullScreen()"
+      [style.--tier-color]="membership() ? tierColor(membership()!.tier) : null"
+    >
+      <header class="oei-carte-numerique__header">
+        <h2 class="oei-carte-numerique__name">{{ member()!.displayName }}</h2>
+        @if (profile()?.title) {
+          <p class="oei-carte-numerique__title-line">{{ profile()!.title }}</p>
+        }
+        @if (membership(); as membershipValue) {
+          <span class="oei-carte-numerique__tier">{{ tierLabel(membershipValue.tier) }}</span>
+        }
+      </header>
+
+      <div class="oei-carte-numerique__qr-area">
+        <!-- Purely decorative static SVG pattern behind the QR image — no scannable data
+             is generated client-side, since no QR-rendering library is installed and
+             adding one is out of scope for this feature. -->
+        <svg class="oei-carte-numerique__qr-decoration" viewBox="0 0 100 100" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" />
+          <rect x="78" y="2" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" />
+          <rect x="2" y="78" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" />
+        </svg>
+        @if (card()!.qrCodeUrl) {
+          <img
+            class="oei-carte-numerique__qr-image"
+            [src]="card()!.qrCodeUrl"
+            [alt]="i18n.translate('espaceMembre.carte.qrAlt')"
+          />
+        }
+      </div>
+
+      <div class="oei-carte-numerique__actions">
+        @if (card()!.vCardUrl) {
+          <a class="oei-carte-numerique__action" [href]="card()!.vCardUrl" download>
+            {{ i18n.translate('espaceMembre.carte.downloadVcard') }}
+          </a>
+        }
+        <button type="button" class="oei-carte-numerique__action" (click)="share()">
+          {{ i18n.translate('espaceMembre.carte.share.action') }}
+        </button>
+        <button type="button" class="oei-carte-numerique__action" (click)="toggleFullScreen()">
+          {{
+            isFullScreen()
+              ? i18n.translate('espaceMembre.carte.fullscreen.exit')
+              : i18n.translate('espaceMembre.carte.fullscreen.enter')
+          }}
+        </button>
+      </div>
+
+      @if (shareFeedback() === 'shared') {
+        <p class="oei-carte-numerique__share-feedback">{{ i18n.translate('espaceMembre.carte.share.shared') }}</p>
+      }
+      @if (shareFeedback() === 'copied') {
+        <p class="oei-carte-numerique__share-feedback">{{ i18n.translate('espaceMembre.carte.share.copied') }}</p>
+      }
+      @if (shareFeedback() === 'failed') {
+        <p class="oei-carte-numerique__share-feedback oei-carte-numerique__share-feedback--error">
+          {{ i18n.translate('espaceMembre.carte.share.failed') }}
+        </p>
+      }
+    </section>
+  }
+
+  <!-- Apple Wallet / Google Wallet -->
+  <section class="oei-carte-numerique__wallet">
+    <h2 class="oei-carte-numerique__wallet-title">{{ i18n.translate('espaceMembre.carte.wallet.title') }}</h2>
+    <p class="oei-carte-numerique__wallet-disclaimer-intro">
+      {{ i18n.translate('espaceMembre.carte.wallet.disclaimerIntro') }}
+    </p>
+
+    <div class="oei-carte-numerique__wallet-buttons">
+      <button type="button" (click)="issueApple()" [disabled]="issuingProvider() === 'APPLE'">
+        {{ i18n.translate('espaceMembre.carte.wallet.addApple') }}
+      </button>
+      <button type="button" (click)="issueGoogle()" [disabled]="issuingProvider() === 'GOOGLE'">
+        {{ i18n.translate('espaceMembre.carte.wallet.addGoogle') }}
+      </button>
+    </div>
+
+    @if (issueError()) {
+      <p class="oei-carte-numerique__wallet-error">{{ i18n.translate('espaceMembre.carte.wallet.issueError') }}</p>
+    }
+
+    <!-- CRITICAL, unmissable compliance notice — never phrase this ambiguously: a mocked
+         wallet pass must never be presented as a real, usable pass nor as an official ID
+         document. -->
+    @if (justIssuedProvider(); as issuedProvider) {
+      <p class="oei-carte-numerique__wallet-mock-notice" role="alert">
+        {{ i18n.translate('espaceMembre.carte.wallet.mockNotice') }}
+      </p>
+    }
+
+    @if (passes().length === 0) {
+      <p class="oei-page__empty">{{ i18n.translate('espaceMembre.carte.wallet.emptyPasses') }}</p>
+    } @else {
+      <ul class="oei-carte-numerique__pass-list">
+        @for (pass of passes(); track pass.id) {
+          <li class="oei-carte-numerique__pass-item">
+            <span class="oei-carte-numerique__pass-provider">{{ providerLabel(pass.provider) }}</span>
+            <span class="oei-carte-numerique__pass-status">{{ passStatusLabel(pass.status) }}</span>
+            @if (pass.status !== 'REVOKED') {
+              <button type="button" class="oei-carte-numerique__pass-revoke" (click)="revoke(pass.id)">
+                {{ i18n.translate('espaceMembre.carte.wallet.revoke') }}
+              </button>
+            }
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</main>

@@ -1,0 +1,1 @@
+Mock placeholder — not a real PDF. Used only by CvMockAdapter.renderCv() to simulate a completed PDF generation job in the frontend demo/mocked member space. Replace with real backend-generated PDFs once the render pipeline is implemented.

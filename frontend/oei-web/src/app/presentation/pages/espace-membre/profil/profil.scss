@@ -1,0 +1,146 @@
+:host {
+  display: block;
+}
+
+$oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+
+.oei-page {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem;
+}
+
+.oei-page__title {
+  margin: 0 0 1.5rem;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-page__empty {
+  margin: 0;
+  color: #666;
+  font-style: italic;
+}
+
+.oei-profil__identity {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  h2 {
+    margin: 0;
+    color: $oei-navy;
+  }
+}
+
+.oei-profil__badge {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+  background: $oei-gold;
+  border-radius: 999px;
+}
+
+.oei-profil__completeness {
+  margin: 0 0 0 auto;
+  font-weight: 600;
+  color: $oei-navy;
+}
+
+.oei-profil__legal {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: rgba(10, 30, 63, 0.05);
+  border-radius: 0.5rem;
+}
+
+.oei-profil__legal-hint {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  color: #666;
+  font-style: italic;
+}
+
+.oei-profil__view,
+.oei-profil__edit {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.oei-profil__chips,
+.oei-profil__list {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.oei-profil__list {
+  flex-direction: column;
+}
+
+.oei-profil__chip {
+  padding: 0.25rem 0.6rem;
+  background: rgba(232, 165, 48, 0.15);
+  border-radius: 999px;
+  font-size: 0.85rem;
+}
+
+.oei-profil__demo-tag {
+  margin-left: 0.5rem;
+  padding: 0.1rem 0.4rem;
+  font-size: 0.7rem;
+  color: #7f1d1d;
+  background: #fee2e2;
+  border-radius: 0.35rem;
+}
+
+.oei-profil__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  input,
+  select,
+  textarea {
+    padding: 0.5rem;
+    border: 1px solid rgba(10, 30, 63, 0.25);
+    border-radius: 0.35rem;
+    font: inherit;
+  }
+}
+
+.oei-profil__edit-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.oei-profil__error {
+  padding: 0.75rem;
+  color: #7f1d1d;
+  background: #fee2e2;
+  border-radius: 0.5rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  border: 1px solid $oei-navy;
+  border-radius: 0.35rem;
+  background: $oei-navy;
+  color: #fff;
+  cursor: pointer;
+  align-self: flex-start;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
