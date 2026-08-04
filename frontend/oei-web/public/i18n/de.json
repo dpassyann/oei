@@ -276,5 +276,144 @@
     "backToList": "Zurück zur Partnerliste",
     "visitWebsite": "Webseite besuchen",
     "notFound": "Partner nicht gefunden."
+  },
+  "espaceInstitution": {
+    "nav": {
+      "dashboard": "Übersicht",
+      "membres": "Angeschlossene Mitglieder",
+      "publications": "Veröffentlichungen",
+      "opportunites": "Gelegenheiten",
+      "backToDashboard": "Zurück zur Übersicht"
+    },
+    "dashboard": {
+      "title": "Institutionsbereich",
+      "intro": "Überblick über Ihre Institution: angeschlossene Mitglieder, Aktivität und Partnerschaft mit der OEI.",
+      "maturityInProgress": "Daten werden noch aufgebaut",
+      "maturityEstablished": "Konsolidierte Daten",
+      "kpis": {
+        "affiliatedMembers": "Angeschlossene Mitglieder",
+        "activeMembers": "Aktive Mitglieder",
+        "verifiedProfiles": "Verifizierte Profile",
+        "certifications": "Zertifizierungen",
+        "badges": "Abzeichen",
+        "signedCharters": "Unterzeichnete Chartas",
+        "contributions": "Beiträge",
+        "trainings": "Schulungen",
+        "opportunities": "Gelegenheiten",
+        "publications": "Veröffentlichungen",
+        "invitations": "Einladungen"
+      },
+      "partnership": {
+        "title": "Partnerschaft",
+        "level": "Stufe",
+        "verified": "Verifiziert",
+        "notVerified": "Nicht verifiziert"
+      },
+      "levels": {
+        "PROSPECT": "Interessent",
+        "STANDARD": "Standard",
+        "SILVER": "Silber",
+        "GOLD": "Gold",
+        "STRATEGIC": "Strategisch"
+      }
+    },
+    "members": {
+      "title": "Angeschlossene Mitglieder",
+      "intro": "Verwalten Sie die Ihrer Institution angeschlossenen Mitglieder: Einladungen, Bestätigung und Beendigung der Zugehörigkeit.",
+      "listTitle": "Aktive angeschlossene Mitglieder",
+      "empty": "Noch keine angeschlossenen Mitglieder.",
+      "inviteTitle": "Mitarbeiter einladen",
+      "inviteEmailLabel": "Berufliche E-Mail-Adresse",
+      "inviteRoleLabel": "Zugewiesene Rolle",
+      "inviteSubmit": "Einladung senden",
+      "requestsTitle": "Anfragen zur Zugehörigkeit",
+      "requestsEmpty": "Keine ausstehenden Anfragen zur Zugehörigkeit.",
+      "approve": "Genehmigen",
+      "reject": "Ablehnen",
+      "endAffiliation": "Zugehörigkeit beenden",
+      "status": {
+        "PENDING": "Ausstehend",
+        "APPROVED": "Genehmigt",
+        "REJECTED": "Abgelehnt",
+        "ENDED": "Beendet"
+      },
+      "roles": {
+        "OWNER": "Eigentümer",
+        "ADMIN": "Administrator",
+        "HR": "Personalwesen",
+        "TECH_LEAD": "Technischer Leiter",
+        "COMMS": "Kommunikation",
+        "READER": "Leser",
+        "CONTRIBUTOR": "Mitwirkender",
+        "AFFILIATION_VALIDATOR": "Validierer der Zugehörigkeit"
+      }
+    },
+    "publications": {
+      "title": "Institutionelle Veröffentlichungen",
+      "intro": "Verfassen und verfolgen Sie den Workflow Ihrer institutionellen Veröffentlichungen, vom Entwurf bis zur Veröffentlichung.",
+      "empty": "Noch keine institutionellen Veröffentlichungen.",
+      "newTitle": "Neue Veröffentlichung",
+      "typeLabel": "Veröffentlichungstyp",
+      "titleLabel": "Titel",
+      "bodyLabel": "Inhalt",
+      "createSubmit": "Entwurf erstellen",
+      "submitForReview": "Zur Prüfung und Begutachtung einreichen",
+      "types": {
+        "OPINION": "Meinungsbeitrag",
+        "EXPERIENCE_REPORT": "Erfahrungsbericht",
+        "CIO_DECISION": "CIO-Entscheidung",
+        "STUDY": "Studie",
+        "REPORT": "Bericht",
+        "EVENT": "Veranstaltung",
+        "TRAINING": "Schulung",
+        "OPPORTUNITY": "Gelegenheit"
+      },
+      "workflow": {
+        "DRAFT": "Entwurf",
+        "SUBMITTED": "Eingereicht",
+        "CHECKS": "Prüfungen",
+        "REVIEW": "Begutachtung",
+        "CHANGES_REQUESTED": "Änderungen angefordert",
+        "VALIDATED": "Validiert",
+        "TRANSLATED": "Übersetzt",
+        "PUBLISHED": "Veröffentlicht",
+        "ARCHIVED": "Archiviert"
+      }
+    },
+    "opportunities": {
+      "title": "Gelegenheiten",
+      "intro": "Veröffentlichen Sie Gelegenheiten für OEI-Mitglieder: Stellen, Praktika, Mentoring, Pro-bono-Einsätze, Arbeitsgruppen oder Expertenaufrufe.",
+      "empty": "Noch keine veröffentlichten Gelegenheiten.",
+      "newTitle": "Neue Gelegenheit",
+      "typeLabel": "Art der Gelegenheit",
+      "titleLabel": "Titel",
+      "descriptionLabel": "Beschreibung",
+      "expiresLabel": "Ablaufdatum",
+      "createSubmit": "Gelegenheit veröffentlichen",
+      "close": "Schließen",
+      "types": {
+        "JOB": "Stelle",
+        "INTERNSHIP": "Praktikum",
+        "MENTORING": "Mentoring",
+        "PRO_BONO": "Pro-bono-Einsatz",
+        "WORKING_GROUP": "Arbeitsgruppe",
+        "CALL_FOR_EXPERTS": "Expertenaufruf"
+      },
+      "status": {
+        "DRAFT": "Entwurf",
+        "PUBLISHED": "Veröffentlicht",
+        "CLOSED": "Geschlossen",
+        "REPORTED": "Gemeldet"
+      }
+    }
+  },
+  "institutionPublic": {
+    "notFound": "Institution nicht gefunden.",
+    "demoBadge": "Demonstrationsinstitution",
+    "partnershipTitle": "Partnerschaft mit der OEI",
+    "publicationsTitle": "Veröffentlichungen",
+    "publicationsEmpty": "Noch keine veröffentlichten Beiträge.",
+    "opportunitiesTitle": "Gelegenheiten",
+    "opportunitiesEmpty": "Noch keine veröffentlichten Gelegenheiten."
   }
 }

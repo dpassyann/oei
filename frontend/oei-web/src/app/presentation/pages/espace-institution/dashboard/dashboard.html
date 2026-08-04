@@ -1,0 +1,52 @@
+<main class="oei-page">
+  <h1 class="oei-page__title">{{ i18n.translate('espaceInstitution.dashboard.title') }}</h1>
+  <p class="oei-page__body">{{ i18n.translate('espaceInstitution.dashboard.intro') }}</p>
+
+  @if (institution(); as institution) {
+    <div class="oei-institution-dashboard__identity">
+      <img class="oei-institution-dashboard__logo" [src]="institution.logoUrl" [alt]="institution.publicName" />
+      <div>
+        <h2 class="oei-institution-dashboard__name">{{ institution.publicName }}</h2>
+        @if (institution.isDemoData) {
+          <span class="oei-institution-dashboard__demo-badge">{{ i18n.translate('institutionPublic.demoBadge') }}</span>
+        }
+      </div>
+    </div>
+  }
+
+  @if (partnership(); as partnership) {
+    <section class="oei-institution-dashboard__partnership">
+      <h3>{{ i18n.translate('espaceInstitution.dashboard.partnership.title') }}</h3>
+      <p>
+        {{ i18n.translate('espaceInstitution.dashboard.partnership.level') }}:
+        {{ i18n.translate('espaceInstitution.dashboard.levels.' + partnership.level) }}
+        —
+        {{
+          partnership.verified
+            ? i18n.translate('espaceInstitution.dashboard.partnership.verified')
+            : i18n.translate('espaceInstitution.dashboard.partnership.notVerified')
+        }}
+      </p>
+    </section>
+  }
+
+  @if (dashboard(); as dashboard) {
+    @if (dashboard.dataMaturity === 'IN_PROGRESS') {
+      <p class="oei-page__empty">{{ i18n.translate('espaceInstitution.dashboard.maturityInProgress') }}</p>
+    }
+    <ul class="oei-institution-dashboard__kpis">
+      @for (key of kpiKeys; track key) {
+        <li class="oei-institution-dashboard__kpi">
+          <span class="oei-institution-dashboard__kpi-value">{{ kpiValue(key) }}</span>
+          <span class="oei-institution-dashboard__kpi-label">{{ i18n.translate('espaceInstitution.dashboard.kpis.' + key) }}</span>
+        </li>
+      }
+    </ul>
+  }
+
+  <nav class="oei-institution-dashboard__nav">
+    <a routerLink="/espace-institution/membres">{{ i18n.translate('espaceInstitution.nav.membres') }}</a>
+    <a routerLink="/espace-institution/publications">{{ i18n.translate('espaceInstitution.nav.publications') }}</a>
+    <a routerLink="/espace-institution/opportunites">{{ i18n.translate('espaceInstitution.nav.opportunites') }}</a>
+  </nav>
+</main>

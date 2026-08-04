@@ -13,6 +13,12 @@ import { MembresFondateurs } from './presentation/pages/membres-fondateurs/membr
 import { Publications } from './presentation/pages/publications/publications';
 import { Partenaires } from './presentation/pages/partenaires/partenaires';
 import { PartenaireDetail } from './presentation/pages/partenaire-detail/partenaire-detail';
+import { institutionAccessGuard } from './presentation/auth/institution-access.guard';
+import { InstitutionDashboard } from './presentation/pages/espace-institution/dashboard/dashboard';
+import { InstitutionMembers } from './presentation/pages/espace-institution/membres/membres';
+import { InstitutionPublicationsPage } from './presentation/pages/espace-institution/publications/publications';
+import { InstitutionOpportunitiesPage } from './presentation/pages/espace-institution/opportunites/opportunites';
+import { InstitutionPublique } from './presentation/pages/institution-publique/institution-publique';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -29,4 +35,18 @@ export const routes: Routes = [
   { path: 'membres-fondateurs', component: MembresFondateurs },
   { path: 'mentions-legales', component: MentionsLegales },
   { path: 'plan-du-site', component: PlanDuSite },
+  // Espace membre institutionnel (doc 03) — route racine protégée par un garde simple basé sur
+  // KeycloakAuthService (voir `institution-access.guard.ts`). La page publique institutionnelle
+  // (`/institutions/:slug`) reste, elle, accessible sans authentification (doc 03 §"Page publique").
+  {
+    path: 'espace-institution',
+    canActivate: [institutionAccessGuard],
+    children: [
+      { path: '', component: InstitutionDashboard },
+      { path: 'membres', component: InstitutionMembers },
+      { path: 'publications', component: InstitutionPublicationsPage },
+      { path: 'opportunites', component: InstitutionOpportunitiesPage },
+    ],
+  },
+  { path: 'institutions/:slug', component: InstitutionPublique },
 ];

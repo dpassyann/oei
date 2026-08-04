@@ -1,0 +1,49 @@
+<main class="oei-page">
+  @if (page(); as page) {
+    <div class="oei-institution-publique__header">
+      <img class="oei-institution-publique__logo" [src]="page.institution.logoUrl" [alt]="page.institution.publicName" />
+      <div>
+        <h1 class="oei-page__title">{{ page.institution.publicName }}</h1>
+        @if (page.institution.isDemoData) {
+          <span class="oei-institution-publique__demo-badge">{{ i18n.translate('institutionPublic.demoBadge') }}</span>
+        }
+      </div>
+    </div>
+    <p class="oei-page__body">{{ page.institution.description }}</p>
+
+    @if (page.partnership; as partnership) {
+      <section class="oei-institution-publique__section">
+        <h2>{{ i18n.translate('institutionPublic.partnershipTitle') }}</h2>
+        <p>{{ i18n.translate('espaceInstitution.dashboard.levels.' + partnership.level) }}</p>
+      </section>
+    }
+
+    <section class="oei-institution-publique__section">
+      <h2>{{ i18n.translate('institutionPublic.publicationsTitle') }}</h2>
+      @if (page.publications.length === 0) {
+        <p class="oei-page__empty">{{ i18n.translate('institutionPublic.publicationsEmpty') }}</p>
+      } @else {
+        <ul class="oei-institution-publique__list">
+          @for (publication of page.publications; track publication.id) {
+            <li>{{ publication.title }}</li>
+          }
+        </ul>
+      }
+    </section>
+
+    <section class="oei-institution-publique__section">
+      <h2>{{ i18n.translate('institutionPublic.opportunitiesTitle') }}</h2>
+      @if (page.opportunities.length === 0) {
+        <p class="oei-page__empty">{{ i18n.translate('institutionPublic.opportunitiesEmpty') }}</p>
+      } @else {
+        <ul class="oei-institution-publique__list">
+          @for (opportunity of page.opportunities; track opportunity.id) {
+            <li>{{ opportunity.title }}</li>
+          }
+        </ul>
+      }
+    </section>
+  } @else if (notFound()) {
+    <p class="oei-page__empty">{{ i18n.translate('institutionPublic.notFound') }}</p>
+  }
+</main>

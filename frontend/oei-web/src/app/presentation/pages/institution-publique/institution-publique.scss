@@ -1,0 +1,68 @@
+:host {
+  display: block;
+}
+
+$oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+
+.oei-page {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem;
+}
+
+.oei-page__title {
+  margin: 0;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-page__body {
+  margin: 0 0 1.5rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.oei-page__empty {
+  margin: 0;
+  color: #666;
+  font-style: italic;
+}
+
+.oei-institution-publique__header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.oei-institution-publique__logo {
+  width: 4rem;
+  height: 4rem;
+  object-fit: contain;
+}
+
+.oei-institution-publique__demo-badge {
+  display: inline-block;
+  margin-top: 0.25rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(232, 165, 48, 0.15);
+  color: $oei-gold;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.oei-institution-publique__section {
+  margin-bottom: 2rem;
+}
+
+.oei-institution-publique__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
