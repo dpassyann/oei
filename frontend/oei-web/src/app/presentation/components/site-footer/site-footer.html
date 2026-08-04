@@ -1,21 +1,74 @@
 <footer class="oei-footer">
   <div class="oei-footer__main">
     <blockquote class="oei-footer__quote">
-      <p>« Le numérique est notre bien commun. Les experts informaticiens en sont les gardiens. »</p>
-      <cite>— Ordre des Experts Informaticiens</cite>
+      <p>{{ i18n.translate('footer.quote') }}</p>
+      <cite>{{ i18n.translate('footer.quoteAuthor') }}</cite>
     </blockquote>
 
     <div class="oei-footer__newsletter">
-      <h3 class="oei-footer__heading">Restez informé</h3>
-      <p class="oei-footer__newsletter-copy">Inscrivez-vous à notre newsletter pour recevoir nos actualités.</p>
-      <form class="oei-footer__newsletter-form" (submit)="$event.preventDefault()">
-        <input type="email" class="oei-footer__newsletter-input" placeholder="Votre email" aria-label="Votre email" />
-        <button type="submit" class="oei-footer__newsletter-submit">S'inscrire</button>
-      </form>
+      <h3 class="oei-footer__heading">{{ i18n.translate('footer.newsletterHeading') }}</h3>
+      <p class="oei-footer__newsletter-copy">{{ i18n.translate('footer.newsletterCopy') }}</p>
+
+      @if (formStatus() === 'success') {
+        <p class="oei-footer__newsletter-message oei-footer__newsletter-message--success">
+          {{ i18n.translate('footer.newsletter.successMessage') }}
+        </p>
+      } @else {
+        <form class="oei-footer__newsletter-form" (ngSubmit)="submitNewsletter()">
+          <div class="oei-footer__newsletter-row">
+            <input
+              type="email"
+              name="newsletterEmail"
+              class="oei-footer__newsletter-input"
+              [placeholder]="i18n.translate('footer.emailPlaceholder')"
+              [attr.aria-label]="i18n.translate('footer.emailPlaceholder')"
+              required
+              [ngModel]="email()"
+              (ngModelChange)="email.set($event)"
+            />
+            <button type="submit" class="oei-footer__newsletter-submit" [disabled]="formStatus() === 'submitting'">
+              {{ i18n.translate('footer.subscribe') }}
+            </button>
+          </div>
+
+          <label class="oei-footer__newsletter-label" for="newsletter-interests">{{
+            i18n.translate('footer.newsletter.interestsLabel')
+          }}</label>
+          <select
+            id="newsletter-interests"
+            name="newsletterInterests"
+            class="oei-footer__newsletter-interests"
+            multiple
+            [ngModel]="selectedInterests()"
+            (ngModelChange)="selectedInterests.set($event)"
+          >
+            @for (interest of interests; track interest) {
+              <option [value]="interest">{{ i18n.translate('footer.newsletter.interests.' + interest) }}</option>
+            }
+          </select>
+
+          <label class="oei-footer__newsletter-consent">
+            <input
+              type="checkbox"
+              name="newsletterConsent"
+              required
+              [ngModel]="consent()"
+              (ngModelChange)="consent.set($event)"
+            />
+            <span>{{ i18n.translate('footer.newsletter.consentLabel') }}</span>
+          </label>
+
+          @if (formStatus() === 'error') {
+            <p class="oei-footer__newsletter-message oei-footer__newsletter-message--error">
+              {{ i18n.translate('footer.newsletter.errors.' + formErrorReason()) }}
+            </p>
+          }
+        </form>
+      }
     </div>
 
     <div class="oei-footer__social">
-      <h3 class="oei-footer__heading">Suivez-nous</h3>
+      <h3 class="oei-footer__heading">{{ i18n.translate('footer.followUs') }}</h3>
       <ul class="oei-footer__social-list">
         @for (social of socialLinks; track social.name) {
           <li>
@@ -27,14 +80,14 @@
   </div>
 
   <div class="oei-footer__membership">
-    <a routerLink="/membres-fondateurs" class="oei-footer__membership-link">Devenir membre fondateur</a>
+    <a routerLink="/membres-fondateurs" class="oei-footer__membership-link">{{ i18n.translate('footer.becomeFoundingMember') }}</a>
   </div>
 
   <div class="oei-footer__legal">
-    <span class="oei-footer__copyright">&copy; {{ currentYear }} Ordre des Experts Informaticiens</span>
+    <span class="oei-footer__copyright">&copy; {{ currentYear }} {{ i18n.translate('footer.orgName') }}</span>
     <nav class="oei-footer__legal-links">
       @for (link of legalLinks; track link.path) {
-        <a [routerLink]="link.path" class="oei-footer__legal-link">{{ link.label }}</a>
+        <a [routerLink]="link.path" class="oei-footer__legal-link">{{ i18n.translate(link.labelKey) }}</a>
       }
     </nav>
   </div>

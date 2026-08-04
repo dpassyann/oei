@@ -1,39 +1,42 @@
 import { TestBed } from '@angular/core/testing';
-import { vi } from 'vitest';
+import { provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { firstValueFrom } from 'rxjs';
 import { StatsApiAdapter } from './stats-api.adapter';
 import { RuntimeConfig } from '../config/runtime-config';
 
 describe('StatsApiAdapter', () => {
-  function createAdapter(apiBaseUrl: string): StatsApiAdapter {
+  function createAdapter(apiBaseUrl: string): { adapter: StatsApiAdapter; httpMock: HttpTestingController } {
     TestBed.configureTestingModule({
-      providers: [StatsApiAdapter, { provide: RuntimeConfig, useValue: { apiBaseUrl: () => apiBaseUrl } }],
+      providers: [
+        StatsApiAdapter,
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: RuntimeConfig, useValue: { apiBaseUrl: () => apiBaseUrl } },
+      ],
     });
-    return TestBed.inject(StatsApiAdapter);
+    return { adapter: TestBed.inject(StatsApiAdapter), httpMock: TestBed.inject(HttpTestingController) };
   }
 
-  afterEach(() => vi.unstubAllGlobals());
-
   it('givenBackendReturnsStats_whenGetHomeStats_thenMapsToDomainStats', async () => {
-    const fetchMock = vi.fn().mockResolvedValue({
-      ok: true,
-      json: () => Promise.resolve([{ label: 'Membres fondateurs', value: 0 }]),
-    });
-    vi.stubGlobal('fetch', fetchMock);
+    const { adapter, httpMock } = createAdapter('/api/v1');
 
-    const adapter = createAdapter('/api/v1');
-    const stats = await adapter.getHomeStats();
+    const result = firstValueFrom(adapter.getHomeStats('fr'));
+    const req = httpMock.expectOne('/api/v1/stats/fr');
+    req.flush([{ label: 'Membres fondateurs', value: 0 }]);
 
-    expect(fetchMock).toHaveBeenCalledWith('/api/v1/stats');
-    expect(stats).toEqual([{ label: 'Membres fondateurs', value: 0 }]);
+    expect(await result).toEqual([{ label: 'Membres fondateurs', value: 0 }]);
+    httpMock.verify();
   });
 
   it('givenNonDefaultApiBaseUrl_whenGetHomeStats_thenBuildsUrlFromRuntimeConfig', async () => {
-    const fetchMock = vi.fn().mockResolvedValue({ ok: true, json: () => Promise.resolve([]) });
-    vi.stubGlobal('fetch', fetchMock);
+    const { adapter, httpMock } = createAdapter('/custom-api');
 
-    const adapter = createAdapter('/custom-api');
-    await adapter.getHomeStats();
+    const result = firstValueFrom(adapter.getHomeStats('en'));
+    const req = httpMock.expectOne('/custom-api/stats/en');
+    req.flush([]);
 
-    expect(fetchMock).toHaveBeenCalledWith('/custom-api/stats');
+    await result;
+    httpMock.verify();
   });
 });

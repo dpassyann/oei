@@ -1,4 +1,5 @@
 import { Service, inject } from '@angular/core';
+import { Observable } from 'rxjs';
 import { STATS_PORT } from '../../domain/port/stats.port';
 import { DOMAINS_PORT } from '../../domain/port/domains.port';
 import { NEWS_PORT } from '../../domain/port/news.port';
@@ -9,21 +10,24 @@ import { NewsItem } from '../../domain/model/news-item';
 // Note: `@Service()` is used instead of `@Injectable({ providedIn: 'root' })` for
 // consistency with `RuntimeConfig` (see infrastructure/config/runtime-config.ts),
 // where its availability in the installed @angular/core was confirmed.
+//
+// Returns `Observable`s (not `Promise`s) — see `src/app/infrastructure/adapter/README.md`
+// for the RxJS-end-to-end architecture this service is part of.
 @Service()
 export class HomeSectionsApplicationService {
   private readonly statsPort = inject(STATS_PORT);
   private readonly domainsPort = inject(DOMAINS_PORT);
   private readonly newsPort = inject(NEWS_PORT);
 
-  getStats(): Promise<Stat[]> {
-    return this.statsPort.getHomeStats();
+  getStats(lang: string): Observable<Stat[]> {
+    return this.statsPort.getHomeStats(lang);
   }
 
-  getDomainAreas(): Promise<DomainArea[]> {
-    return this.domainsPort.getDomainAreas();
+  getDomainAreas(lang: string): Observable<DomainArea[]> {
+    return this.domainsPort.getDomainAreas(lang);
   }
 
-  getLatestNews(limit: number): Promise<NewsItem[]> {
-    return this.newsPort.getLatestNews(limit);
+  getLatestNews(limit: number, lang: string): Observable<NewsItem[]> {
+    return this.newsPort.getLatestNews(limit, lang);
   }
 }

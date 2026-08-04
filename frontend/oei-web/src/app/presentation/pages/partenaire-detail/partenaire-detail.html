@@ -1,0 +1,15 @@
+<main class="oei-page">
+  @if (partner(); as partner) {
+    <a class="oei-page__back" routerLink="/partenaires">{{ i18n.translate('partenaires.backToList') }}</a>
+    <img class="oei-partenaire-detail__logo" [src]="partner.logoUrl" [alt]="partner.name" />
+    <h1 class="oei-page__title">{{ partner.name }}</h1>
+    <span class="oei-partenaire-detail__badge">{{ partner.category }}</span>
+    <p class="oei-page__body">{{ partner.description }}</p>
+    <a class="oei-partenaire-detail__website" [href]="partner.websiteUrl" target="_blank" rel="noopener">{{
+      i18n.translate('partenaires.visitWebsite')
+    }}</a>
+  } @else if (notFound()) {
+    <a class="oei-page__back" routerLink="/partenaires">{{ i18n.translate('partenaires.backToList') }}</a>
+    <p class="oei-page__empty">{{ i18n.translate('partenaires.notFound') }}</p>
+  }
+</main>

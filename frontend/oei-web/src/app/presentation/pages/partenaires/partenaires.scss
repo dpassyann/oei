@@ -1,0 +1,83 @@
+:host {
+  display: block;
+}
+
+$oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+
+.oei-page {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem;
+}
+
+.oei-page__title {
+  margin: 0 0 1.5rem;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-page__body {
+  margin: 0 0 1.5rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.oei-page__empty {
+  margin: 0;
+  color: #666;
+  font-style: italic;
+}
+
+.oei-partenaires__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: 1.5rem;
+}
+
+.oei-partenaires__link {
+  display: block;
+  padding: 1.25rem;
+  border: 1px solid rgba(10, 30, 63, 0.15);
+  border-radius: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s ease;
+
+  &:hover {
+    border-color: $oei-gold;
+  }
+}
+
+.oei-partenaires__logo {
+  max-width: 100%;
+  max-height: 4rem;
+  margin-bottom: 0.75rem;
+}
+
+.oei-partenaires__name {
+  margin: 0 0 0.35rem;
+  font-size: 1.05rem;
+  color: $oei-navy;
+}
+
+.oei-partenaires__badge {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: $oei-gold;
+  border: 1px solid $oei-gold;
+  border-radius: 999px;
+}
+
+.oei-partenaires__description {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #444;
+}

@@ -1,36 +1,280 @@
 {
   "nav": {
-    "home": "Accueil",
-    "about": "À propos",
-    "missions": "Nos missions",
-    "ethics": "Déontologie",
-    "certifications": "Certifications",
-    "resources": "Ressources",
-    "news": "Actualités",
-    "contact": "Contact",
-    "join": "Rejoignez le mouvement"
+    "home": "Início",
+    "about": "Sobre nós",
+    "missions": "Nossas missões",
+    "ethics": "Deontologia",
+    "certifications": "Certificações",
+    "resources": "Recursos",
+    "news": "Notícias",
+    "contact": "Contato",
+    "join": "Junte-se ao movimento",
+    "foundingMembers": "Membros fundadores",
+    "legalNotices": "Avisos legais",
+    "sitemap": "Mapa do site",
+    "partners": "Parceiros"
   },
   "header": {
-    "memberArea": "Espace membre"
+    "memberArea": "Área de membros",
+    "searchAria": "Pesquisar",
+    "languageSelectAria": "Escolher o idioma"
+  },
+  "brand": {
+    "line1": "A Ordem dos",
+    "line2": "Especialistas em Informática"
+  },
+  "footer": {
+    "quote": "«O digital é o nosso bem comum. Os especialistas em informática são os seus guardiões.»",
+    "quoteAuthor": "— Ordem dos Especialistas em Informática",
+    "newsletterHeading": "Fique informado",
+    "newsletterCopy": "Assine a nossa newsletter para receber as nossas notícias.",
+    "emailPlaceholder": "O seu email",
+    "subscribe": "Inscrever-se",
+    "followUs": "Siga-nos",
+    "becomeFoundingMember": "Torne-se membro fundador",
+    "orgName": "Ordem dos Especialistas em Informática",
+    "newsletter": {
+      "interestsLabel": "Áreas de interesse",
+      "interests": {
+        "cybersecurity": "Cibersegurança",
+        "ai": "Inteligência artificial",
+        "ethics": "Ética",
+        "certification": "Certificação",
+        "governance": "Governação digital",
+        "events": "Eventos"
+      },
+      "consentLabel": "Aceito receber a newsletter da Ordem dos Peritos Informáticos e tomei conhecimento da política de privacidade.",
+      "successMessage": "Obrigado! Foi enviado um email de confirmação — clique no link para confirmar a sua subscrição.",
+      "errors": {
+        "invalidEmail": "Endereço de email inválido.",
+        "consentRequired": "O consentimento é necessário para subscrever a newsletter.",
+        "submissionFailed": "Ocorreu um erro. Tente novamente."
+      }
+    }
   },
   "home": {
+    "hero": {
+      "panelTitle": "A Ordem dos Especialistas em Informática",
+      "panelBody": "Um movimento internacional para reconhecer, estruturar e elevar a profissão de TI.",
+      "checklist": [
+        "Proteger o público e os profissionais",
+        "Promover a excelência e a formação contínua",
+        "Estabelecer um código deontológico mundial",
+        "Acompanhar as transformações digitais de forma responsável"
+      ],
+      "ctaWhitePaper": "Ler o Livro Branco",
+      "ctaMission": "Descobrir a nossa missão"
+    },
+    "commitments": {
+      "0": {
+        "title": "Defender o interesse geral",
+        "description": "Colocar a ética e a segurança no centro dos usos digitais."
+      },
+      "1": {
+        "title": "Valorizar as competências",
+        "description": "Reconhecer a experiência e a formação contínua."
+      },
+      "2": {
+        "title": "Instaurar um quadro deontológico",
+        "description": "Estabelecer regras claras e universais."
+      },
+      "3": {
+        "title": "Agir a nível internacional",
+        "description": "Colaborar com instituições, empresas e universidades."
+      }
+    },
     "stats": {
-      "title": "Nos chiffres"
+      "title": "Nossos números"
     },
     "domains": {
-      "title": "Nos domaines d'action"
+      "title": "Nossas áreas de atuação"
     },
     "news": {
-      "title": "Actualités",
-      "readMore": "Lire la suite",
-      "empty": "Aucune actualité n'a été publiée pour le moment. Revenez bientôt."
+      "title": "Notícias",
+      "readMore": "Ler mais",
+      "empty": "Nenhuma notícia foi publicada ainda. Volte em breve."
     },
     "resources": {
-      "title": "Nos ressources",
-      "viewAll": "Voir toutes les ressources"
+      "title": "Nossos recursos",
+      "viewAll": "Ver todos os recursos",
+      "items": {
+        "deontologie": {
+          "label": "Código deontológico"
+        },
+        "referentiel": {
+          "label": "Quadro de competências"
+        },
+        "livreBlanc": {
+          "label": "Livro Branco"
+        }
+      },
+      "pendingBadge": "em breve"
     },
     "partners": {
-      "title": "Ils nous soutiennent"
+      "title": "Eles nos apoiam"
+    },
+    "fallbackNotice": "Tradução em breve para este idioma."
+  },
+  "aPropos": {
+    "title": "Sobre nós",
+    "vision": {
+      "heading": "Visão",
+      "body": "Um mundo em que os profissionais que concebem, desenvolvem e operam os sistemas digitais dos quais nossas sociedades dependem — saúde, aviação, energia, finanças, administração pública — exercem sua profissão com um nível de competência, ética e responsabilidade reconhecido à altura dos desafios que assumem."
+    },
+    "mission": {
+      "heading": "Missão",
+      "body": "Defender o interesse geral promovendo uma informática responsável, ética, segura e sustentável, e conseguir o reconhecimento progressivo da profissão de especialista em informática como uma profissão de alta responsabilidade, dotada de um código deontológico comum, de um quadro de competências compartilhado, de uma exigência de formação contínua e de uma representação confiável junto a instituições, universidades e empresas."
     }
+  },
+  "actualites": {
+    "title": "Notícias",
+    "empty": "Nenhuma notícia foi publicada ainda. Volte em breve."
+  },
+  "certifications": {
+    "title": "Certificações",
+    "intro": "Estamos construindo um quadro de certificação independente dos fornecedores comerciais de software, organizado em torno de uma escala de níveis de especialização. Cada nível será definido com precisão no quadro de competências, atualmente em elaboração com parceiros acadêmicos.",
+    "levels": {
+      "0": "Praticante",
+      "1": "Engenheiro",
+      "2": "Arquiteto",
+      "3": "Especialista",
+      "4": "Especialista sênior",
+      "5": "Fellow"
+    }
+  },
+  "contact": {
+    "title": "Contato",
+    "bodyPrefix": "Para qualquer dúvida, escreva para nós em",
+    "note": "Está previsto um formulário de contato dedicado para uma futura versão do site."
+  },
+  "deontologie": {
+    "title": "Deontologia",
+    "body1": "Nosso código deontológico — o conjunto de regras de conduta profissional que os membros credenciados se comprometem a respeitar — está atualmente em elaboração. Ele se distingue da carta, um compromisso voluntário menos vinculante destinado a um público mais amplo (membros associados, empresas parceiras, universidades).",
+    "body2": "Ambos os textos serão publicados assim que forem validados pelo conselho de governança da organização."
+  },
+  "membresFondateurs": {
+    "title": "Membros fundadores",
+    "intro": "A Ordem dos Especialistas em Informática não é um livro para comprar — é um movimento para apoiar. Tornar-se membro fundador significa participar da construção de uma organização profissional independente para os especialistas digitais, desde os seus primeiros passos.",
+    "feeTiers": {
+      "title": "Contribuições",
+      "categoryHeader": "Categoria",
+      "annualFeeHeader": "Contribuição anual",
+      "tiers": {
+        "0": {
+          "label": "Estudante",
+          "amount": "20 €"
+        },
+        "1": {
+          "label": "Membro",
+          "amount": "50 €"
+        },
+        "2": {
+          "label": "Membro fundador",
+          "amount": "100 €"
+        },
+        "3": {
+          "label": "Membro apoiador",
+          "amount": "250 €"
+        }
+      }
+    },
+    "foundingStatus": {
+      "message": "Movimento atualmente em formação — seja um dos primeiros membros fundadores.",
+      "note": "O formulário de adesão on-line estará disponível em breve. Enquanto isso, entre em contato conosco para manifestar seu interesse em apoiar o movimento.",
+      "cta": "Apoiar o movimento",
+      "contactPrefix": "Ou escreva diretamente para nós em"
+    }
+  },
+  "mentionsLegales": {
+    "title": "Avisos legais",
+    "body": "Neste estágio, a Ordem dos Especialistas em Informática é um movimento — uma iniciativa coletiva sem personalidade jurídica própria. A escolha da estrutura jurídica (associação) e seu registro junto à autoridade competente estão em fase de finalização. Esta página será atualizada assim que o estatuto legal da organização for constituído."
+  },
+  "nosMissions": {
+    "title": "Nossas missões",
+    "intro": "Estamos lançando este movimento para:",
+    "commitments": [
+      "Definir o que é um especialista em informática, por nível de competência e responsabilidade.",
+      "Propor um código deontológico comum, inspirado nas profissões de alta responsabilidade.",
+      "Construir, com parceiros acadêmicos, um quadro de certificação independente dos fornecedores comerciais.",
+      "Defender uma exigência de formação contínua ao longo de toda a carreira.",
+      "Documentar e publicar o estado real da profissão — remunerações, tendências, rupturas tecnológicas.",
+      "Tornar-se um interlocutor confiável junto a universidades, empresas e, no futuro, poderes públicos."
+    ]
+  },
+  "planDuSite": {
+    "title": "Mapa do site",
+    "links": {
+      "home": "Início",
+      "about": "Sobre nós",
+      "missions": "Nossas missões",
+      "ethics": "Deontologia",
+      "certifications": "Certificações",
+      "resources": "Recursos",
+      "news": "Notícias",
+      "contact": "Contato",
+      "foundingMembers": "Membros fundadores",
+      "legalNotices": "Avisos legais",
+      "sitemap": "Mapa do site",
+      "publications": "Publicações",
+      "partners": "Parceiros"
+    }
+  },
+  "ressources": {
+    "title": "Recursos",
+    "livreBlanc": {
+      "title": "Livro Branco",
+      "frontCoverAlt": "Capa do Livro Branco da Ordem dos Especialistas em Informática",
+      "backCoverAlt": "Contracapa do Livro Branco da Ordem dos Especialistas em Informática",
+      "successPrefix": "Obrigado — aqui está o seu exemplar:",
+      "downloadLinkText": "baixar o Livro Branco (PDF)",
+      "emailLabel": "Endereço de email",
+      "emailPlaceholder": "voce@exemplo.com",
+      "submitButton": "Receber o PDF gratuitamente",
+      "errorMessage": "Endereço de email inválido ou envio indisponível no momento — tente novamente."
+    },
+    "resourceList": {
+      "title": "Nossos recursos",
+      "pendingBadge": "em breve",
+      "items": {
+        "deontologie": {
+          "label": "Código deontológico"
+        },
+        "referentiel": {
+          "label": "Quadro de competências"
+        },
+        "livreBlanc": {
+          "label": "Livro Branco"
+        },
+        "positions": {
+          "label": "Posições e declarações"
+        },
+        "rapports": {
+          "label": "Relatórios e estudos"
+        }
+      }
+    }
+  },
+  "publications": {
+    "title": "Publicações",
+    "intro": "Encontre aqui as publicações da Ordem dos Peritos Informáticos: artigos, comunicados, livros brancos, relatórios, eventos, consultas e chamadas de contribuição.",
+    "empty": "Ainda não foi publicada nenhuma publicação. Volte em breve.",
+    "readMore": "Ler mais",
+    "categories": {
+      "article": "Artigo",
+      "pressRelease": "Comunicado de imprensa",
+      "whitePaper": "Livro branco",
+      "report": "Relatório",
+      "event": "Evento",
+      "consultation": "Consulta",
+      "callForContribution": "Chamada de contribuição"
+    }
+  },
+  "partenaires": {
+    "title": "Parceiros",
+    "intro": "As instituições académicas, empresas, instituições, associações e meios de comunicação que apoiam o movimento da Ordem dos Peritos Informáticos.",
+    "empty": "Ainda não foi validado nenhum parceiro.",
+    "backToList": "Voltar à lista de parceiros",
+    "visitWebsite": "Visitar o site",
+    "notFound": "Parceiro não encontrado."
   }
 }

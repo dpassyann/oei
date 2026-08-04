@@ -3,7 +3,16 @@
   "enabled": true,
   "displayName": "Ordre des Experts Informaticiens",
   "loginTheme": "oei",
+  "accountTheme": "oei",
+  "adminTheme": "oei",
+  "emailTheme": "oei",
   "sslRequired": "external",
+  "registrationAllowed": true,
+  "registrationEmailAsUsername": true,
+  "resetPasswordAllowed": true,
+  "rememberMe": true,
+  "verifyEmail": false,
+  "loginWithEmailAllowed": true,
   "roles": {
     "realm": [
       {

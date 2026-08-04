@@ -1,23 +1,86 @@
+/* OEI Keycloak login theme — targets the real PatternFly 4 markup rendered by
+   Keycloak 25's "keycloak" base theme (verified against the live rendered HTML,
+   not assumed from older Keycloak/PatternFly 3 class names). */
+
 :root {
   --oei-navy: #0a1e3f;
+  --oei-navy-light: #12295a;
   --oei-gold: #e8a530;
 }
 
-body {
-  background-color: var(--oei-navy) !important;
+html.login-pf,
+body,
+.login-pf-page {
+  background: linear-gradient(160deg, var(--oei-navy) 0%, var(--oei-navy-light) 100%) !important;
+  min-height: 100vh;
 }
 
-#kc-header, #kc-header-wrapper {
-  color: #ffffff;
+/* Kill PatternFly's default full-bleed background artwork on the page header. */
+.login-pf-page-header {
+  background: transparent !important;
+  background-image: none !important;
+  border-bottom: 1px solid rgba(232, 165, 48, 0.35);
+  padding: 1.25rem 0;
 }
 
-.login-pf-page .card-pf {
+#kc-header-wrapper {
+  color: #ffffff !important;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  font-size: 1.1rem;
+}
+
+.login-pf-header #kc-page-title {
+  color: var(--oei-navy);
+  font-weight: 700;
+}
+
+.card-pf {
   background-color: #ffffff;
   border-top: 4px solid var(--oei-gold);
+  border-radius: 0.5rem;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.35);
+  padding: 2rem 2.5rem 2.5rem;
+  max-width: 28rem;
+  margin: 3rem auto;
 }
 
-.btn-primary {
+/* Text inputs (PatternFly 4 form controls) */
+.pf-c-form-control {
+  border-color: rgba(10, 30, 63, 0.3) !important;
+  border-radius: 0.25rem;
+}
+
+.pf-c-form-control:focus {
+  border-color: var(--oei-navy) !important;
+  box-shadow: 0 0 0 1px var(--oei-navy) !important;
+}
+
+.pf-c-form__label-text {
+  color: var(--oei-navy);
+  font-weight: 600;
+}
+
+/* Primary submit button (PatternFly 4: pf-c-button pf-m-primary), not the old
+   Bootstrap-style .btn-primary that no longer exists in this markup. */
+.pf-c-button.pf-m-primary {
   background-color: var(--oei-gold) !important;
   border-color: var(--oei-gold) !important;
   color: var(--oei-navy) !important;
+  font-weight: 700;
+}
+
+.pf-c-button.pf-m-primary:hover,
+.pf-c-button.pf-m-primary:focus {
+  filter: brightness(1.08);
+}
+
+/* Password reveal / secondary controls */
+.pf-c-button.pf-m-control {
+  color: var(--oei-navy);
+}
+
+#kc-form-options a,
+#kc-form-options .pf-c-check__label {
+  color: var(--oei-navy-light);
 }

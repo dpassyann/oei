@@ -1,3 +1,4 @@
+import { firstValueFrom } from 'rxjs';
 import { LeadCaptureMockAdapter } from './lead-capture-mock.adapter';
 
 describe('LeadCaptureMockAdapter', () => {
@@ -5,7 +6,7 @@ describe('LeadCaptureMockAdapter', () => {
     const adapter = new LeadCaptureMockAdapter();
     const consoleSpy = vi.spyOn(console, 'info').mockImplementation(() => {});
 
-    await expect(adapter.submit('jane.doe@example.com')).resolves.toBeUndefined();
+    await expect(firstValueFrom(adapter.submit('jane.doe@example.com'))).resolves.toBeUndefined();
 
     expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('jane.doe@example.com'));
   });

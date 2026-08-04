@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { firstValueFrom, of } from 'rxjs';
 import { HomeSectionsApplicationService } from './home-sections-application.service';
 import { STATS_PORT, StatsPort } from '../../domain/port/stats.port';
 import { DOMAINS_PORT, DomainsPort } from '../../domain/port/domains.port';
@@ -10,17 +11,14 @@ import { createNewsItem } from '../../domain/model/news-item';
 describe('HomeSectionsApplicationService', () => {
   function setup(overrides?: { stats?: StatsPort; domains?: DomainsPort; news?: NewsPort }) {
     const fakeStatsPort: StatsPort = overrides?.stats ?? {
-      getHomeStats: () => Promise.resolve([createStat({ label: 'Members', value: 42 })]),
+      getHomeStats: () => of([createStat({ label: 'Members', value: 42 })]),
     };
     const fakeDomainsPort: DomainsPort = overrides?.domains ?? {
-      getDomainAreas: () =>
-        Promise.resolve([createDomainArea({ icon: 'icon.svg', title: 'Health', description: 'About health' })]),
+      getDomainAreas: () => of([createDomainArea({ icon: 'icon.svg', title: 'Health', description: 'About health' })]),
     };
     const fakeNewsPort: NewsPort = overrides?.news ?? {
       getLatestNews: () =>
-        Promise.resolve([
-          createNewsItem({ title: 'News 1', excerpt: 'Excerpt', imageUrl: 'img.png', path: '/news/1' }),
-        ]),
+        of([createNewsItem({ title: 'News 1', excerpt: 'Excerpt', imageUrl: 'img.png', path: '/news/1' })]),
     };
     TestBed.configureTestingModule({
       providers: [
@@ -32,32 +30,51 @@ describe('HomeSectionsApplicationService', () => {
     return TestBed.inject(HomeSectionsApplicationService);
   }
 
-  it('givenPortReturnsStats_whenGetStats_thenReturnsThem', async () => {
-    const service = setup();
-    const stats = await service.getStats();
-    expect(stats).toEqual([createStat({ label: 'Members', value: 42 })]);
-  });
-
-  it('givenPortReturnsDomainAreas_whenGetDomainAreas_thenReturnsThem', async () => {
-    const service = setup();
-    const domainAreas = await service.getDomainAreas();
-    expect(domainAreas).toEqual([createDomainArea({ icon: 'icon.svg', title: 'Health', description: 'About health' })]);
-  });
-
-  it('givenPortReturnsNews_whenGetLatestNews_thenForwardsLimitAndReturnsThem', async () => {
-    let receivedLimit: number | undefined;
+  it('givenPortReturnsStats_whenGetStats_thenForwardsLangAndReturnsThem', async () => {
+    let receivedLang: string | undefined;
     const service = setup({
-      news: {
-        getLatestNews: (limit) => {
-          receivedLimit = limit;
-          return Promise.resolve([
-            createNewsItem({ title: 'News 1', excerpt: 'Excerpt', imageUrl: 'img.png', path: '/news/1' }),
-          ]);
+      stats: {
+        getHomeStats: (lang) => {
+          receivedLang = lang;
+          return of([createStat({ label: 'Members', value: 42 })]);
         },
       },
     });
-    const news = await service.getLatestNews(3);
+    const stats = await firstValueFrom(service.getStats('fr'));
+    expect(receivedLang).toBe('fr');
+    expect(stats).toEqual([createStat({ label: 'Members', value: 42 })]);
+  });
+
+  it('givenPortReturnsDomainAreas_whenGetDomainAreas_thenForwardsLangAndReturnsThem', async () => {
+    let receivedLang: string | undefined;
+    const service = setup({
+      domains: {
+        getDomainAreas: (lang) => {
+          receivedLang = lang;
+          return of([createDomainArea({ icon: 'icon.svg', title: 'Health', description: 'About health' })]);
+        },
+      },
+    });
+    const domainAreas = await firstValueFrom(service.getDomainAreas('fr'));
+    expect(receivedLang).toBe('fr');
+    expect(domainAreas).toEqual([createDomainArea({ icon: 'icon.svg', title: 'Health', description: 'About health' })]);
+  });
+
+  it('givenPortReturnsNews_whenGetLatestNews_thenForwardsLimitAndLangAndReturnsThem', async () => {
+    let receivedLimit: number | undefined;
+    let receivedLang: string | undefined;
+    const service = setup({
+      news: {
+        getLatestNews: (limit, lang) => {
+          receivedLimit = limit;
+          receivedLang = lang;
+          return of([createNewsItem({ title: 'News 1', excerpt: 'Excerpt', imageUrl: 'img.png', path: '/news/1' })]);
+        },
+      },
+    });
+    const news = await firstValueFrom(service.getLatestNews(3, 'fr'));
     expect(receivedLimit).toBe(3);
+    expect(receivedLang).toBe('fr');
     expect(news).toEqual([createNewsItem({ title: 'News 1', excerpt: 'Excerpt', imageUrl: 'img.png', path: '/news/1' })]);
   });
 });

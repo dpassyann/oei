@@ -28,6 +28,7 @@ export class SiteHeader {
     { path: '/certifications', labelKey: 'nav.certifications' },
     { path: '/ressources', labelKey: 'nav.resources' },
     { path: '/actualites', labelKey: 'nav.news' },
+    { path: '/partenaires', labelKey: 'nav.partners' },
     { path: '/contact', labelKey: 'nav.contact' },
   ];
 

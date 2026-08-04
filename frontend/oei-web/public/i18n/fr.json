@@ -8,12 +8,87 @@
     "resources": "Ressources",
     "news": "Actualités",
     "contact": "Contact",
-    "join": "Rejoignez le mouvement"
+    "join": "Rejoignez le mouvement",
+    "foundingMembers": "Membres fondateurs",
+    "legalNotices": "Mentions légales",
+    "sitemap": "Plan du site",
+    "partners": "Partenaires"
   },
-  "header": { "memberArea": "Espace membre" },
+  "header": {
+    "memberArea": "Espace membre",
+    "searchAria": "Rechercher",
+    "languageSelectAria": "Choisir la langue"
+  },
+  "brand": {
+    "line1": "Ordre des",
+    "line2": "Experts Informaticiens"
+  },
+  "footer": {
+    "quote": "« Le numérique est notre bien commun. Les experts informaticiens en sont les gardiens. »",
+    "quoteAuthor": "— Ordre des Experts Informaticiens",
+    "newsletterHeading": "Restez informé",
+    "newsletterCopy": "Inscrivez-vous à notre newsletter pour recevoir nos actualités.",
+    "emailPlaceholder": "Votre email",
+    "subscribe": "S'inscrire",
+    "followUs": "Suivez-nous",
+    "becomeFoundingMember": "Devenir membre fondateur",
+    "orgName": "Ordre des Experts Informaticiens",
+    "newsletter": {
+      "interestsLabel": "Centres d'intérêt",
+      "interests": {
+        "cybersecurity": "Cybersécurité",
+        "ai": "Intelligence artificielle",
+        "ethics": "Éthique",
+        "certification": "Certification",
+        "governance": "Gouvernance numérique",
+        "events": "Événements"
+      },
+      "consentLabel": "J'accepte de recevoir la newsletter de l'Ordre des Experts Informaticiens et j'ai pris connaissance de la politique de confidentialité.",
+      "successMessage": "Merci ! Un email de confirmation vous a été envoyé — cliquez sur le lien qu’il contient pour valider votre inscription.",
+      "errors": {
+        "invalidEmail": "Adresse email invalide.",
+        "consentRequired": "Le consentement est requis pour vous inscrire à la newsletter.",
+        "submissionFailed": "Une erreur est survenue, veuillez réessayer."
+      }
+    }
+  },
   "home": {
-    "stats": { "title": "Nos chiffres" },
-    "domains": { "title": "Nos domaines d'action" },
+    "hero": {
+      "panelTitle": "L'Ordre des Experts Informaticiens",
+      "panelBody": "Un mouvement international pour reconnaître, structurer et élever la profession informatique.",
+      "checklist": [
+        "Protéger le public et les professionnels",
+        "Promouvoir l'excellence et la formation continue",
+        "Établir un code de déontologie mondial",
+        "Accompagner les transformations numériques de manière responsable"
+      ],
+      "ctaWhitePaper": "Lire le Livre Blanc",
+      "ctaMission": "Découvrir notre mission"
+    },
+    "commitments": {
+      "0": {
+        "title": "Défendre l'intérêt général",
+        "description": "Placer l'éthique et la sécurité au cœur des usages numériques."
+      },
+      "1": {
+        "title": "Valoriser les compétences",
+        "description": "Reconnaître l'expertise et la formation continue."
+      },
+      "2": {
+        "title": "Instaurer un cadre déontologique",
+        "description": "Établir des règles claires et universelles."
+      },
+      "3": {
+        "title": "Agir au niveau international",
+        "description": "Collaborer avec les institutions, entreprises et académies."
+      }
+    },
+    "stats": {
+      "title": "Nos chiffres"
+    },
+    "domains": {
+      "title": "Nos domaines d'action"
+    },
     "news": {
       "title": "Actualités",
       "readMore": "Lire la suite",
@@ -21,8 +96,185 @@
     },
     "resources": {
       "title": "Nos ressources",
-      "viewAll": "Voir toutes les ressources"
+      "viewAll": "Voir toutes les ressources",
+      "items": {
+        "deontologie": {
+          "label": "Code de déontologie"
+        },
+        "referentiel": {
+          "label": "Référentiel de compétences"
+        },
+        "livreBlanc": {
+          "label": "Livre Blanc"
+        }
+      },
+      "pendingBadge": "à venir"
     },
-    "partners": { "title": "Ils nous soutiennent" }
+    "partners": {
+      "title": "Ils nous soutiennent"
+    },
+    "fallbackNotice": "Traduction à venir dans cette langue."
+  },
+  "aPropos": {
+    "title": "À propos",
+    "vision": {
+      "heading": "Vision",
+      "body": "Un monde où les professionnels qui conçoivent, développent et exploitent les systèmes numériques dont dépendent nos sociétés — santé, aviation, énergie, finance, administration — exercent leur métier avec un niveau de compétence, d'éthique et de responsabilité reconnu à la hauteur des enjeux qu'ils portent."
+    },
+    "mission": {
+      "heading": "Mission",
+      "body": "Défendre l'intérêt général en promouvant une informatique responsable, éthique, sécurisée et durable, et faire reconnaître progressivement la profession d'expert informaticien comme une profession à haute responsabilité, dotée d'un code de déontologie commun, d'un référentiel de compétences partagé, d'une exigence de formation continue et d'une représentation crédible auprès des institutions, universités et entreprises."
+    }
+  },
+  "actualites": {
+    "title": "Actualités",
+    "empty": "Aucune actualité n'a été publiée pour le moment. Revenez bientôt."
+  },
+  "certifications": {
+    "title": "Certifications",
+    "intro": "Nous construisons un cadre de certification indépendante des éditeurs commerciaux de logiciels, organisé autour d'une échelle de niveaux d'expertise. Chaque niveau sera défini précisément dans le référentiel de compétences, en cours d'élaboration avec des partenaires académiques.",
+    "levels": {
+      "0": "Praticien",
+      "1": "Ingénieur",
+      "2": "Architecte",
+      "3": "Expert",
+      "4": "Expert senior",
+      "5": "Fellow"
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "bodyPrefix": "Pour toute question, écrivez-nous à",
+    "note": "Un formulaire de contact dédié est prévu dans une prochaine version du site."
+  },
+  "deontologie": {
+    "title": "Déontologie",
+    "body1": "Notre code de déontologie — l'ensemble des règles de conduite professionnelle que s'engagent à respecter les membres agréés — est en cours de rédaction. Il se distingue de la charte, un engagement volontaire moins contraignant destiné à un public plus large (membres associés, entreprises partenaires, universités).",
+    "body2": "Ces deux textes seront publiés dès qu'ils auront été validés par le conseil de gouvernance de l'organisation."
+  },
+  "membresFondateurs": {
+    "title": "Membres fondateurs",
+    "intro": "L'Ordre des Experts Informaticiens n'est pas un livre à acheter — c'est un mouvement à soutenir. Devenir membre fondateur, c'est participer à la construction d'une organisation professionnelle indépendante pour les experts du numérique, dès ses tout premiers pas.",
+    "feeTiers": {
+      "title": "Cotisations",
+      "categoryHeader": "Catégorie",
+      "annualFeeHeader": "Cotisation annuelle",
+      "tiers": {
+        "0": {
+          "label": "Étudiant",
+          "amount": "20 €"
+        },
+        "1": {
+          "label": "Membre",
+          "amount": "50 €"
+        },
+        "2": {
+          "label": "Membre fondateur",
+          "amount": "100 €"
+        },
+        "3": {
+          "label": "Membre soutien",
+          "amount": "250 €"
+        }
+      }
+    },
+    "foundingStatus": {
+      "message": "Mouvement en cours de constitution — soyez parmi les premiers membres fondateurs.",
+      "note": "Le formulaire d'adhésion en ligne arrive bientôt. En attendant, contactez-nous pour manifester votre intérêt à soutenir le mouvement.",
+      "cta": "Soutenir le mouvement",
+      "contactPrefix": "Ou écrivez-nous directement à"
+    }
+  },
+  "mentionsLegales": {
+    "title": "Mentions légales",
+    "body": "L'Ordre des Experts Informaticiens est à ce stade un mouvement — une initiative collective sans personnalité juridique propre. Le choix de la structure juridique (association) et son dépôt auprès de l'autorité compétente sont en cours de finalisation. Cette page sera mise à jour dès que le statut légal de l'organisation sera constitué."
+  },
+  "nosMissions": {
+    "title": "Nos missions",
+    "intro": "Nous lançons ce mouvement pour :",
+    "commitments": [
+      "Définir ce qu'est un expert informaticien, par niveau de compétence et de responsabilité.",
+      "Proposer un code de déontologie commun, inspiré des professions à haute responsabilité.",
+      "Construire, avec des partenaires académiques, un cadre de certification indépendant des éditeurs commerciaux.",
+      "Défendre une exigence de formation continue tout au long de la carrière.",
+      "Documenter et publier l'état réel de la profession — rémunérations, tendances, ruptures technologiques.",
+      "Devenir un interlocuteur crédible des universités, des entreprises et, à terme, des pouvoirs publics."
+    ]
+  },
+  "planDuSite": {
+    "title": "Plan du site",
+    "links": {
+      "home": "Accueil",
+      "about": "À propos",
+      "missions": "Nos missions",
+      "ethics": "Déontologie",
+      "certifications": "Certifications",
+      "resources": "Ressources",
+      "news": "Actualités",
+      "contact": "Contact",
+      "foundingMembers": "Membres fondateurs",
+      "legalNotices": "Mentions légales",
+      "sitemap": "Plan du site",
+      "publications": "Publications",
+      "partners": "Partenaires"
+    }
+  },
+  "ressources": {
+    "title": "Ressources",
+    "livreBlanc": {
+      "title": "Livre Blanc",
+      "frontCoverAlt": "Couverture du Livre Blanc de l'Ordre des Experts Informaticiens",
+      "backCoverAlt": "Quatrième de couverture du Livre Blanc de l'Ordre des Experts Informaticiens",
+      "successPrefix": "Merci — voici votre exemplaire :",
+      "downloadLinkText": "télécharger le Livre Blanc (PDF)",
+      "emailLabel": "Adresse e-mail",
+      "emailPlaceholder": "vous@exemple.com",
+      "submitButton": "Recevoir le PDF gratuitement",
+      "errorMessage": "Adresse e-mail invalide ou envoi impossible pour le moment — merci de réessayer."
+    },
+    "resourceList": {
+      "title": "Nos ressources",
+      "pendingBadge": "à venir",
+      "items": {
+        "deontologie": {
+          "label": "Code de déontologie"
+        },
+        "referentiel": {
+          "label": "Référentiel de compétences"
+        },
+        "livreBlanc": {
+          "label": "Livre Blanc"
+        },
+        "positions": {
+          "label": "Mentions & Positions"
+        },
+        "rapports": {
+          "label": "Rapports & Études"
+        }
+      }
+    }
+  },
+  "publications": {
+    "title": "Publications",
+    "intro": "Retrouvez ici les publications de l'Ordre des Experts Informaticiens : articles, communiqués, livres blancs, rapports, événements, consultations et appels à contribution.",
+    "empty": "Aucune publication n'a été mise en ligne pour le moment. Revenez bientôt.",
+    "readMore": "Lire la suite",
+    "categories": {
+      "article": "Article",
+      "pressRelease": "Communiqué",
+      "whitePaper": "Livre blanc",
+      "report": "Rapport",
+      "event": "Événement",
+      "consultation": "Consultation",
+      "callForContribution": "Appel à contribution"
+    }
+  },
+  "partenaires": {
+    "title": "Partenaires",
+    "intro": "Les organisations académiques, entreprises, institutions, associations et médias qui soutiennent le mouvement de l'Ordre des Experts Informaticiens.",
+    "empty": "Aucun partenaire n'a encore été validé.",
+    "backToList": "Retour à la liste des partenaires",
+    "visitWebsite": "Visiter le site",
+    "notFound": "Partenaire introuvable."
   }
 }

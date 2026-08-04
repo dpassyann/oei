@@ -19,14 +19,13 @@ $oei-gold: #e8a530;
 // ---------------------------------------------------------------------------
 
 .oei-hero {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.9fr) minmax(0, 1fr);
   align-items: center;
-  justify-content: space-between;
-  gap: 3rem;
+  gap: 2.5rem;
   background: linear-gradient(160deg, $oei-navy 0%, $oei-navy-light 100%);
   color: #ffffff;
-  padding: 4.5rem 2.5rem;
-  min-height: 26rem;
+  padding: 3.5rem 2.5rem;
 }
 
 .oei-hero__content {
@@ -34,7 +33,6 @@ $oei-gold: #e8a530;
   flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
-  max-width: 34rem;
 }
 
 .oei-hero__title {
@@ -58,6 +56,14 @@ $oei-gold: #e8a530;
   font-size: 0.9rem;
 }
 
+.oei-hero__cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1.25rem;
+  margin-top: 0.75rem;
+}
+
 .oei-cta-join {
   background: $oei-gold;
   color: $oei-navy;
@@ -75,13 +81,29 @@ $oei-gold: #e8a530;
   }
 }
 
+// Discreet secondary CTAs ("Lire le Livre Blanc" / "Découvrir notre mission") — plain text
+// links, not competing visually with the primary gold button, added next to it without
+// altering the hero's grid layout.
+.oei-hero__cta-secondary {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+
+  &:hover {
+    color: $oei-gold;
+  }
+}
+
 .oei-hero__visual {
-  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 18rem;
-  height: 18rem;
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 15rem;
+  justify-self: center;
 }
 
 .oei-hero__globe {
@@ -105,41 +127,136 @@ $oei-gold: #e8a530;
   color: $oei-gold;
 }
 
-@media (max-width: 900px) {
+.oei-hero__panel {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 0.75rem;
+  padding: 1.75rem;
+}
+
+.oei-hero__panel-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: $oei-gold;
+}
+
+.oei-hero__panel-body {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.oei-hero__checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.oei-hero__checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.oei-hero__check {
+  flex-shrink: 0;
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-top: 0.1rem;
+  color: $oei-gold;
+}
+
+@media (max-width: 1100px) {
   .oei-hero {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     text-align: center;
   }
 
   .oei-hero__content {
     align-items: center;
   }
+
+  .oei-hero__visual {
+    justify-self: center;
+  }
 }
 
 // ---------------------------------------------------------------------------
-// Stats bar
+// Commitments band — split white (4 pillars) / navy (4 stats), single row
 // ---------------------------------------------------------------------------
 
-.oei-stats {
-  background: $oei-navy-light;
-  color: #ffffff;
+.oei-commitments {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
 }
 
-.oei-stats__list {
+.oei-commitments__list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   list-style: none;
   margin: 0;
-  padding: 2.25rem 2.5rem;
+  padding: 2.25rem 2rem;
+  background: #ffffff;
 }
 
-.oei-stats__item {
+.oei-commitments__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0 1rem;
+  border-left: 1px solid rgba(10, 30, 63, 0.08);
+
+  &:first-child {
+    border-left: none;
+  }
+}
+
+.oei-commitments__icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  color: $oei-navy-light;
+}
+
+.oei-commitments__title {
+  margin: 0;
+  font-size: 1rem;
+  color: $oei-navy;
+}
+
+.oei-commitments__description {
+  margin: 0;
+  font-size: 0.85rem;
+  color: rgba(10, 30, 63, 0.7);
+}
+
+.oei-commitments__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  list-style: none;
+  margin: 0;
+  padding: 2.25rem 1.5rem;
+  background: $oei-navy;
+  color: #ffffff;
+}
+
+.oei-commitments__stat {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.35rem;
   text-align: center;
-  padding: 0 1rem;
+  gap: 0.3rem;
+  padding: 0 0.5rem;
   border-left: 1px solid rgba(255, 255, 255, 0.12);
 
   &:first-child {
@@ -147,35 +264,56 @@ $oei-gold: #e8a530;
   }
 }
 
-.oei-stats__value {
-  font-size: 2.25rem;
+.oei-commitments__stat-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: $oei-gold;
+}
+
+.oei-commitments__stat-value {
+  font-size: 1.5rem;
   font-weight: 700;
   color: $oei-gold;
 }
 
-.oei-stats__label {
-  font-size: 0.95rem;
+.oei-commitments__stat-label {
+  font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.85);
 }
 
+@media (max-width: 1100px) {
+  .oei-commitments {
+    grid-template-columns: 1fr;
+  }
+
+  .oei-commitments__list,
+  .oei-commitments__stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 // ---------------------------------------------------------------------------
-// Domains grid
+// Home row — Nos domaines d'action / Actualités / Nos ressources, single row
 // ---------------------------------------------------------------------------
 
-.oei-domains {
+.oei-home-row {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 0.85fr;
+  gap: 2rem;
   padding: 3rem 2.5rem;
+  align-items: start;
 }
 
 .oei-domains__title {
   margin: 0 0 1.5rem;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   color: $oei-navy;
 }
 
 .oei-domains__grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.25rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -184,10 +322,10 @@ $oei-gold: #e8a530;
 .oei-domains__card {
   border: 1px solid rgba(10, 30, 63, 0.08);
   border-radius: 0.75rem;
-  padding: 1.5rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.4rem;
   background: #ffffff;
   box-shadow: 0 1px 2px rgba(10, 30, 63, 0.06);
   transition:
@@ -201,8 +339,8 @@ $oei-gold: #e8a530;
 }
 
 .oei-domains__icon {
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 2.25rem;
+  height: 2.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -218,25 +356,15 @@ $oei-gold: #e8a530;
 
 .oei-domains__card-title {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: 0.9rem;
   color: $oei-navy;
 }
 
 .oei-domains__card-description {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.78rem;
+  line-height: 1.3;
   color: rgba(10, 30, 63, 0.7);
-}
-
-// ---------------------------------------------------------------------------
-// Actualités + ressources excerpt
-// ---------------------------------------------------------------------------
-
-.oei-news-resources {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 2rem;
-  padding: 0 2.5rem 3rem;
 }
 
 .oei-news__title,
@@ -320,16 +448,8 @@ $oei-gold: #e8a530;
   color: $oei-navy;
 }
 
-@media (max-width: 900px) {
-  .oei-stats__list {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .oei-domains__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .oei-news-resources {
+@media (max-width: 1100px) {
+  .oei-home-row {
     grid-template-columns: 1fr;
   }
 }

@@ -1,48 +1,59 @@
 <main class="oei-page">
-  <h1 class="oei-page__title">Ressources</h1>
+  <h1 class="oei-page__title">{{ i18n.translate('ressources.title') }}</h1>
 
   <section id="livre-blanc" class="oei-livre-blanc">
-    <h2 class="oei-livre-blanc__title">Livre Blanc</h2>
+    <h2 class="oei-livre-blanc__title">{{ i18n.translate('ressources.livreBlanc.title') }}</h2>
 
     <div class="oei-livre-blanc__covers">
       <img
         class="oei-livre-blanc__cover"
         src="/assets/livre-blanc/couverture-oei.svg"
-        alt="Couverture du Livre Blanc de l'Ordre des Experts Informaticiens"
+        [attr.alt]="i18n.translate('ressources.livreBlanc.frontCoverAlt')"
+        (mouseenter)="previewedCover.set('front')"
+        (mouseleave)="previewedCover.set(null)"
       />
       <img
         class="oei-livre-blanc__cover"
-        src="/assets/livre-blanc/quatrieme-couverture-oei.svg"
-        alt="Quatrième de couverture du Livre Blanc de l'Ordre des Experts Informaticiens"
+        ngSrc="/assets/livre-blanc/quatrieme-couverture-oei.svg"
+        [attr.alt]="i18n.translate('ressources.livreBlanc.backCoverAlt')"
+        height="1716" width="1200"
+        (mouseenter)="previewedCover.set('back')"
+        (mouseleave)="previewedCover.set(null)"
       />
     </div>
 
+    @if (previewedCover(); as kind) {
+      <div class="oei-cover-preview" aria-hidden="true">
+        <img class="oei-cover-preview__image" [src]="previewSrc(kind)" alt="" />
+      </div>
+    }
+
     @if (formStatus() === 'success') {
       <p class="oei-download-form__message oei-download-form__message--success">
-        Merci — voici votre exemplaire :
+        {{ i18n.translate('ressources.livreBlanc.successPrefix') }}
         <a class="oei-download-form__link" href="/assets/livre-blanc/livre-blanc-oei-v2.pdf" target="_blank" rel="noopener" download>
-          télécharger le Livre Blanc (PDF)
+          {{ i18n.translate('ressources.livreBlanc.downloadLinkText') }}
         </a>
       </p>
     } @else {
       <form class="oei-download-form" (ngSubmit)="submitDownloadForm()">
-        <label class="oei-download-form__label" for="download-email">Adresse e-mail</label>
+        <label class="oei-download-form__label" for="download-email">{{ i18n.translate('ressources.livreBlanc.emailLabel') }}</label>
         <input
           id="download-email"
           class="oei-download-form__input"
           type="email"
           name="email"
           required
-          placeholder="vous@exemple.com"
+          [placeholder]="i18n.translate('ressources.livreBlanc.emailPlaceholder')"
           [ngModel]="email()"
           (ngModelChange)="email.set($event)"
         />
         <button type="submit" class="oei-download-form__submit" [disabled]="formStatus() === 'submitting'">
-          Recevoir le PDF gratuitement
+          {{ i18n.translate('ressources.livreBlanc.submitButton') }}
         </button>
         @if (formStatus() === 'error') {
           <p class="oei-download-form__message oei-download-form__message--error">
-            Adresse e-mail invalide ou envoi impossible pour le moment — merci de réessayer.
+            {{ i18n.translate('ressources.livreBlanc.errorMessage') }}
           </p>
         }
       </form>
@@ -50,19 +61,22 @@
   </section>
 
   <section class="oei-resource-list">
-    <h2 class="oei-resource-list__title">Nos ressources</h2>
+    <h2 class="oei-resource-list__title">{{ i18n.translate('ressources.resourceList.title') }}</h2>
     <ul class="oei-resource-list__items">
-      @for (resource of resourceLinks; track resource.label) {
+      @for (resource of resourceLinks; track resource.key) {
         <li class="oei-resource-list__item">
           @if (resource.path) {
-            <a class="oei-resource-list__link" [routerLink]="resource.path">{{ resource.label }}</a>
+            <a class="oei-resource-list__link" [routerLink]="resource.path">{{
+              i18n.translate('ressources.resourceList.items.' + resource.key + '.label')
+            }}</a>
           } @else if (resource.fragment) {
             <a class="oei-resource-list__link" [routerLink]="[]" [fragment]="resource.fragment">{{
-              resource.label
+              i18n.translate('ressources.resourceList.items.' + resource.key + '.label')
             }}</a>
           } @else {
             <span class="oei-resource-list__link oei-resource-list__link--pending"
-              >{{ resource.label }} <span class="oei-resource-list__badge">à venir</span></span
+              >{{ i18n.translate('ressources.resourceList.items.' + resource.key + '.label') }}
+              <span class="oei-resource-list__badge">{{ i18n.translate('ressources.resourceList.pendingBadge') }}</span></span
             >
           }
         </li>

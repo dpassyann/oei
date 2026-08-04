@@ -1,36 +1,280 @@
 {
   "nav": {
-    "home": "Accueil",
-    "about": "À propos",
-    "missions": "Nos missions",
-    "ethics": "Déontologie",
-    "certifications": "Certifications",
-    "resources": "Ressources",
-    "news": "Actualités",
-    "contact": "Contact",
-    "join": "Rejoignez le mouvement"
+    "home": "Home",
+    "about": "Chi siamo",
+    "missions": "Le nostre missioni",
+    "ethics": "Deontologia",
+    "certifications": "Certificazioni",
+    "resources": "Risorse",
+    "news": "Notizie",
+    "contact": "Contatto",
+    "join": "Unisciti al movimento",
+    "foundingMembers": "Membri fondatori",
+    "legalNotices": "Note legali",
+    "sitemap": "Mappa del sito",
+    "partners": "Partner"
   },
   "header": {
-    "memberArea": "Espace membre"
+    "memberArea": "Area membri",
+    "searchAria": "Cerca",
+    "languageSelectAria": "Scegli la lingua"
+  },
+  "brand": {
+    "line1": "L'Ordine degli",
+    "line2": "Esperti Informatici"
+  },
+  "footer": {
+    "quote": "«Il digitale è il nostro bene comune. Gli esperti informatici ne sono i custodi.»",
+    "quoteAuthor": "— Ordine degli Esperti Informatici",
+    "newsletterHeading": "Resta informato",
+    "newsletterCopy": "Iscriviti alla nostra newsletter per ricevere le nostre notizie.",
+    "emailPlaceholder": "La tua email",
+    "subscribe": "Iscriviti",
+    "followUs": "Seguici",
+    "becomeFoundingMember": "Diventa membro fondatore",
+    "orgName": "Ordine degli Esperti Informatici",
+    "newsletter": {
+      "interestsLabel": "Aree di interesse",
+      "interests": {
+        "cybersecurity": "Cybersicurezza",
+        "ai": "Intelligenza artificiale",
+        "ethics": "Etica",
+        "certification": "Certificazione",
+        "governance": "Governance digitale",
+        "events": "Eventi"
+      },
+      "consentLabel": "Accetto di ricevere la newsletter dell'Ordine degli Esperti Informatici e ho preso visione dell'informativa sulla privacy.",
+      "successMessage": "Grazie! Ti abbiamo inviato un'email di conferma — clicca sul link per confermare l'iscrizione.",
+      "errors": {
+        "invalidEmail": "Indirizzo email non valido.",
+        "consentRequired": "Il consenso è obbligatorio per iscriversi alla newsletter.",
+        "submissionFailed": "Si è verificato un errore. Riprova."
+      }
+    }
   },
   "home": {
+    "hero": {
+      "panelTitle": "L'Ordine degli Esperti Informatici",
+      "panelBody": "Un movimento internazionale per riconoscere, strutturare ed elevare la professione informatica.",
+      "checklist": [
+        "Proteggere il pubblico e i professionisti",
+        "Promuovere l'eccellenza e la formazione continua",
+        "Stabilire un codice deontologico mondiale",
+        "Accompagnare le trasformazioni digitali in modo responsabile"
+      ],
+      "ctaWhitePaper": "Leggi il Libro Bianco",
+      "ctaMission": "Scopri la nostra missione"
+    },
+    "commitments": {
+      "0": {
+        "title": "Difendere l'interesse generale",
+        "description": "Porre l'etica e la sicurezza al centro degli usi digitali."
+      },
+      "1": {
+        "title": "Valorizzare le competenze",
+        "description": "Riconoscere l'esperienza e la formazione continua."
+      },
+      "2": {
+        "title": "Istituire un quadro deontologico",
+        "description": "Stabilire regole chiare e universali."
+      },
+      "3": {
+        "title": "Agire a livello internazionale",
+        "description": "Collaborare con istituzioni, aziende e università."
+      }
+    },
     "stats": {
-      "title": "Nos chiffres"
+      "title": "I nostri numeri"
     },
     "domains": {
-      "title": "Nos domaines d'action"
+      "title": "I nostri ambiti d'azione"
     },
     "news": {
-      "title": "Actualités",
-      "readMore": "Lire la suite",
-      "empty": "Aucune actualité n'a été publiée pour le moment. Revenez bientôt."
+      "title": "Notizie",
+      "readMore": "Leggi tutto",
+      "empty": "Nessuna notizia è stata ancora pubblicata. Torna presto."
     },
     "resources": {
-      "title": "Nos ressources",
-      "viewAll": "Voir toutes les ressources"
+      "title": "Le nostre risorse",
+      "viewAll": "Vedi tutte le risorse",
+      "items": {
+        "deontologie": {
+          "label": "Codice deontologico"
+        },
+        "referentiel": {
+          "label": "Quadro delle competenze"
+        },
+        "livreBlanc": {
+          "label": "Libro Bianco"
+        }
+      },
+      "pendingBadge": "in arrivo"
     },
     "partners": {
-      "title": "Ils nous soutiennent"
+      "title": "Ci sostengono"
+    },
+    "fallbackNotice": "Traduzione in arrivo per questa lingua."
+  },
+  "aPropos": {
+    "title": "Chi siamo",
+    "vision": {
+      "heading": "Visione",
+      "body": "Un mondo in cui i professionisti che progettano, sviluppano e gestiscono i sistemi digitali da cui dipendono le nostre società — sanità, aviazione, energia, finanza, pubblica amministrazione — esercitano la propria professione con un livello di competenza, etica e responsabilità riconosciuto all'altezza della posta in gioco."
+    },
+    "mission": {
+      "heading": "Missione",
+      "body": "Difendere l'interesse generale promuovendo un'informatica responsabile, etica, sicura e sostenibile, e ottenere il progressivo riconoscimento della professione di esperto informatico come professione ad alta responsabilità, dotata di un codice deontologico comune, di un quadro di competenze condiviso, di un obbligo di formazione continua e di una rappresentanza credibile presso istituzioni, università e imprese."
     }
+  },
+  "actualites": {
+    "title": "Notizie",
+    "empty": "Non è stata ancora pubblicata alcuna notizia. Torna a trovarci presto."
+  },
+  "certifications": {
+    "title": "Certificazioni",
+    "intro": "Stiamo costruendo un quadro di certificazione indipendente dai fornitori commerciali di software, organizzato attorno a una scala di livelli di competenza. Ogni livello sarà definito con precisione nel quadro delle competenze, attualmente in fase di elaborazione con partner accademici.",
+    "levels": {
+      "0": "Praticante",
+      "1": "Ingegnere",
+      "2": "Architetto",
+      "3": "Esperto",
+      "4": "Esperto senior",
+      "5": "Fellow"
+    }
+  },
+  "contact": {
+    "title": "Contatto",
+    "bodyPrefix": "Per qualsiasi domanda, scrivici a",
+    "note": "È prevista l'introduzione di un modulo di contatto dedicato in una prossima versione del sito."
+  },
+  "deontologie": {
+    "title": "Deontologia",
+    "body1": "Il nostro codice deontologico — l'insieme delle regole di condotta professionale che i membri accreditati si impegnano a rispettare — è attualmente in fase di redazione. Si distingue dalla carta, un impegno volontario meno vincolante rivolto a un pubblico più ampio (membri associati, aziende partner, università).",
+    "body2": "Entrambi i testi saranno pubblicati non appena saranno stati approvati dal consiglio di governance dell'organizzazione."
+  },
+  "membresFondateurs": {
+    "title": "Membri fondatori",
+    "intro": "L'Ordine degli Esperti Informatici non è un libro da acquistare — è un movimento da sostenere. Diventare membro fondatore significa partecipare alla costruzione di un'organizzazione professionale indipendente per gli esperti digitali, fin dai suoi primissimi passi.",
+    "feeTiers": {
+      "title": "Quote associative",
+      "categoryHeader": "Categoria",
+      "annualFeeHeader": "Quota annuale",
+      "tiers": {
+        "0": {
+          "label": "Studente",
+          "amount": "20 €"
+        },
+        "1": {
+          "label": "Membro",
+          "amount": "50 €"
+        },
+        "2": {
+          "label": "Membro fondatore",
+          "amount": "100 €"
+        },
+        "3": {
+          "label": "Membro sostenitore",
+          "amount": "250 €"
+        }
+      }
+    },
+    "foundingStatus": {
+      "message": "Movimento attualmente in fase di costituzione — sii tra i primi membri fondatori.",
+      "note": "Il modulo di adesione online arriverà presto. Nel frattempo, contattaci per manifestare il tuo interesse a sostenere il movimento.",
+      "cta": "Sostieni il movimento",
+      "contactPrefix": "Oppure scrivici direttamente a"
+    }
+  },
+  "mentionsLegales": {
+    "title": "Note legali",
+    "body": "In questa fase, l'Ordine degli Esperti Informatici è un movimento — un'iniziativa collettiva senza personalità giuridica propria. La scelta della forma giuridica (associazione) e la sua registrazione presso l'autorità competente sono in fase di finalizzazione. Questa pagina sarà aggiornata non appena sarà costituito lo status giuridico dell'organizzazione."
+  },
+  "nosMissions": {
+    "title": "Le nostre missioni",
+    "intro": "Lanciamo questo movimento per:",
+    "commitments": [
+      "Definire cosa sia un esperto informatico, per livello di competenza e responsabilità.",
+      "Proporre un codice deontologico comune, ispirato alle professioni ad alta responsabilità.",
+      "Costruire, con partner accademici, un quadro di certificazione indipendente dai fornitori commerciali.",
+      "Sostenere l'obbligo di formazione continua lungo tutto l'arco della carriera.",
+      "Documentare e pubblicare lo stato reale della professione — retribuzioni, tendenze, rotture tecnologiche.",
+      "Diventare un interlocutore credibile per università, imprese e, a lungo termine, pubbliche autorità."
+    ]
+  },
+  "planDuSite": {
+    "title": "Mappa del sito",
+    "links": {
+      "home": "Home",
+      "about": "Chi siamo",
+      "missions": "Le nostre missioni",
+      "ethics": "Deontologia",
+      "certifications": "Certificazioni",
+      "resources": "Risorse",
+      "news": "Notizie",
+      "contact": "Contatto",
+      "foundingMembers": "Membri fondatori",
+      "legalNotices": "Note legali",
+      "sitemap": "Mappa del sito",
+      "publications": "Pubblicazioni",
+      "partners": "Partner"
+    }
+  },
+  "ressources": {
+    "title": "Risorse",
+    "livreBlanc": {
+      "title": "Libro Bianco",
+      "frontCoverAlt": "Copertina del Libro Bianco dell'Ordine degli Esperti Informatici",
+      "backCoverAlt": "Retro di copertina del Libro Bianco dell'Ordine degli Esperti Informatici",
+      "successPrefix": "Grazie — ecco la tua copia:",
+      "downloadLinkText": "scarica il Libro Bianco (PDF)",
+      "emailLabel": "Indirizzo e-mail",
+      "emailPlaceholder": "tu@esempio.it",
+      "submitButton": "Ricevi il PDF gratuitamente",
+      "errorMessage": "Indirizzo e-mail non valido o invio momentaneamente non disponibile — riprova."
+    },
+    "resourceList": {
+      "title": "Le nostre risorse",
+      "pendingBadge": "in arrivo",
+      "items": {
+        "deontologie": {
+          "label": "Codice deontologico"
+        },
+        "referentiel": {
+          "label": "Quadro delle competenze"
+        },
+        "livreBlanc": {
+          "label": "Libro Bianco"
+        },
+        "positions": {
+          "label": "Posizioni e dichiarazioni"
+        },
+        "rapports": {
+          "label": "Rapporti e studi"
+        }
+      }
+    }
+  },
+  "publications": {
+    "title": "Pubblicazioni",
+    "intro": "Qui trovi le pubblicazioni dell’Ordine degli Esperti Informatici: articoli, comunicati, libri bianchi, rapporti, eventi, consultazioni e inviti a contribuire.",
+    "empty": "Nessuna pubblicazione è stata ancora pubblicata. Torna presto.",
+    "readMore": "Continua a leggere",
+    "categories": {
+      "article": "Articolo",
+      "pressRelease": "Comunicato stampa",
+      "whitePaper": "Libro bianco",
+      "report": "Rapporto",
+      "event": "Evento",
+      "consultation": "Consultazione",
+      "callForContribution": "Invito a contribuire"
+    }
+  },
+  "partenaires": {
+    "title": "Partner",
+    "intro": "Le istituzioni accademiche, le aziende, le istituzioni, le associazioni e i media che sostengono il movimento dell'Ordine degli Esperti Informatici.",
+    "empty": "Nessun partner è stato ancora convalidato.",
+    "backToList": "Torna all'elenco dei partner",
+    "visitWebsite": "Visita il sito",
+    "notFound": "Partner non trovato."
   }
 }

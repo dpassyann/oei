@@ -20,6 +20,12 @@
     <clipPath id="globeClip">
       <circle cx="1000" cy="975" r="305"/>
     </clipPath>
+    <clipPath id="photoClip">
+      <rect x="110" y="1020" width="232" height="285"/>
+    </clipPath>
+    <filter id="grayscale">
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
   </defs>
 
   <!-- Fond -->
@@ -84,15 +90,16 @@
     <circle cx="900" cy="1230" r="6" fill="#E8A530" stroke="none"/>
   </g>
 
-  <!-- Bloc auteur -->
+  <!-- Bloc auteur — photo en niveaux de gris, fond uni bleu nuit -->
+  <rect x="110" y="1020" width="232" height="285" fill="#0A2348"/>
+  <image
+    href="photo-auteur-nb-source.png"
+    x="110" y="1020" width="232" height="285"
+    preserveAspectRatio="xMidYMid slice"
+    clip-path="url(#photoClip)"
+    filter="url(#grayscale)"
+  />
   <rect x="110" y="1020" width="232" height="285" fill="none" stroke="#E8A530" stroke-width="2"/>
-  <g stroke="#8F9BB0" fill="none" stroke-width="4">
-    <rect x="175" y="1080" width="102" height="78" rx="14"/>
-    <path d="M200 1080 L215 1058 H250 L265 1080"/>
-    <circle cx="226" cy="1118" r="24"/>
-  </g>
-  <text x="226" y="1215" text-anchor="middle" class="sans muted" font-size="20" letter-spacing="3">VOTRE PHOTO</text>
-  <text x="226" y="1248" text-anchor="middle" class="sans muted" font-size="18" letter-spacing="3">N&amp;B</text>
 
   <line x1="370" y1="1020" x2="370" y2="1305" stroke="#E8A530" stroke-width="2"/>
 
