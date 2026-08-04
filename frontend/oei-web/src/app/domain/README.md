@@ -40,10 +40,11 @@ individuel, espace membre institutionnel, CMS/gouvernance).
 | `governance` | CMS/gouvernance documentaire | Contributions membres, diff, décisions, synchronisation Git |
 
 Les bounded contexts préexistants du site public (`document`, `domain-area`,
-`news-item`, `partner`, `stat` dans `model/`, et leurs ports associés) restent à
-plat à la racine de `model/`/`port/` : ils ne sont pas rattachés à un chantier
-fonctionnel des 3 prompts 02/03/04 et ne sont donc pas concernés par cette
-convention de sous-dossier.
+`news-item`, `partner`, `publication`, `newsletter-subscription`, `stat` dans
+`model/`, et leurs ports associés) restent à plat à la racine de
+`model/`/`port/` : ils ne sont pas rattachés à un chantier fonctionnel des 3
+prompts 02/03/04 et ne sont donc pas concernés par cette convention de
+sous-dossier.
 
 ## Ce qui n'est PAS fait ici (hors périmètre de cette fondation)
 
