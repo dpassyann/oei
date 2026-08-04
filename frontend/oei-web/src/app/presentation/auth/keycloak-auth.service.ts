@@ -1,4 +1,4 @@
-import { InjectionToken, inject, Service } from '@angular/core';
+import { InjectionToken, inject, Service, signal } from '@angular/core';
 
 // Small, local config constant rather than a full runtime-config entry — this plan only
 // needs the login redirect, not the callback/token-exchange step (see login() below).
@@ -63,9 +63,31 @@ function buildAuthorizationUrl(codeChallenge: string): string {
  * (reading the `code` query param and exchanging it — together with the stored
  * `code_verifier` — for tokens) is explicitly out of scope and left for a later plan.
  */
+const MOCK_AUTH_STORAGE_KEY = 'oei_mock_authenticated';
+
+function resolveInitialMockAuthenticated(): boolean {
+  // The espace-membre guard (`presentation/auth/member-space.guard.ts`) needs *some*
+  // authenticated/not-authenticated state to check, but the real Keycloak callback/token
+  // exchange step is explicitly out of scope for this plan (see class doc above) — so we
+  // keep a simple mocked "connected" flag instead, defaulting to `true` so the demo member
+  // space is reachable without a real login round-trip, and offer `setMockAuthenticated()`
+  // for demo/tests to simulate a "logged out" state without needing a real Keycloak session.
+  try {
+    const stored = sessionStorage.getItem(MOCK_AUTH_STORAGE_KEY);
+    return stored === null ? true : stored === 'true';
+  } catch {
+    return true;
+  }
+}
+
 @Service()
 export class KeycloakAuthService {
   private readonly navigable = inject(NAVIGABLE);
+
+  private readonly mockAuthenticatedSignal = signal<boolean>(resolveInitialMockAuthenticated());
+
+  /** Mocked "is the visitor connected" state — see `resolveInitialMockAuthenticated()` above. */
+  readonly isAuthenticated = this.mockAuthenticatedSignal.asReadonly();
 
   login(): void {
     const verifier = generateCodeVerifier();
@@ -75,5 +97,15 @@ export class KeycloakAuthService {
       const authorizationUrl = buildAuthorizationUrl(codeChallenge);
       this.navigable.navigate(authorizationUrl);
     });
+  }
+
+  /** Demo/test-only toggle for the mocked authenticated state (see class doc). */
+  setMockAuthenticated(value: boolean): void {
+    this.mockAuthenticatedSignal.set(value);
+    try {
+      sessionStorage.setItem(MOCK_AUTH_STORAGE_KEY, String(value));
+    } catch {
+      // sessionStorage unavailable (private mode, etc.) — not blocking, in-memory signal still updates.
+    }
   }
 }

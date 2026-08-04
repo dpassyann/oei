@@ -1,0 +1,46 @@
+<main class="oei-page">
+  @if (profile(); as publicProfile) {
+    <h1 class="oei-page__title">{{ publicProfile.publicSlug }}</h1>
+    <p class="oei-page__body oei-profil-public__intro">
+      {{ i18n.translate('espaceMembre.profilPublic.visibleFieldsIntro') }} {{ visibleFieldsLabel() }}
+    </p>
+
+    @if (publicProfile.seoDescription) {
+      <p class="oei-profil-public__seo-description">{{ publicProfile.seoDescription }}</p>
+    }
+
+    <dl class="oei-profil-public__meta">
+      @if (publicProfile.publishedAt) {
+        <div class="oei-profil-public__meta-row">
+          <dt>{{ i18n.translate('espaceMembre.profilPublic.publishedAtLabel') }}</dt>
+          <dd>{{ publicProfile.publishedAt }}</dd>
+        </div>
+      }
+      <div class="oei-profil-public__meta-row">
+        <dt>{{ i18n.translate('espaceMembre.profilPublic.viewsCountLabel') }}</dt>
+        <dd>{{ publicProfile.viewsCount }}</dd>
+      </div>
+    </dl>
+
+    <p class="oei-profil-public__privacy-note">{{ i18n.translate('espaceMembre.profilPublic.privacyNote') }}</p>
+
+    <div class="oei-profil-public__actions">
+      <a class="oei-profil-public__action" routerLink="/espace-membre/carte">
+        {{ i18n.translate('espaceMembre.profilPublic.viewQr') }}
+      </a>
+      <a class="oei-profil-public__action" routerLink="/espace-membre/cv">
+        {{ i18n.translate('espaceMembre.profilPublic.downloadPdf') }}
+      </a>
+      <button type="button" class="oei-profil-public__action oei-profil-public__action--button" (click)="share()">
+        {{ i18n.translate('espaceMembre.profilPublic.share') }}
+      </button>
+    </div>
+
+    @if (shareConfirmation()) {
+      <p class="oei-profil-public__share-confirmation">{{ i18n.translate('espaceMembre.profilPublic.shareConfirmation') }}</p>
+    }
+  } @else if (notFound()) {
+    <h1 class="oei-page__title">{{ i18n.translate('espaceMembre.profilPublic.notFoundTitle') }}</h1>
+    <p class="oei-page__empty">{{ i18n.translate('espaceMembre.profilPublic.notFound') }}</p>
+  }
+</main>

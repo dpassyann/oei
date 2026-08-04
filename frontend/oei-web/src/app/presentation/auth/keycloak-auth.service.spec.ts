@@ -59,4 +59,13 @@ describe('KeycloakAuthService', () => {
 
     expect(firstChallenge).not.toBe(secondChallenge);
   });
+
+  it('givenNoStoredMockAuthState_whenCreated_thenDefaultsToAuthenticated', () => {
+    expect(service.isAuthenticated()).toBe(true);
+  });
+
+  it('givenSetMockAuthenticatedFalse_whenCalled_thenIsAuthenticatedBecomesFalse', () => {
+    service.setMockAuthenticated(false);
+    expect(service.isAuthenticated()).toBe(false);
+  });
 });

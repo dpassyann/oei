@@ -13,6 +13,13 @@ import { MembresFondateurs } from './presentation/pages/membres-fondateurs/membr
 import { Publications } from './presentation/pages/publications/publications';
 import { Partenaires } from './presentation/pages/partenaires/partenaires';
 import { PartenaireDetail } from './presentation/pages/partenaire-detail/partenaire-detail';
+import { memberSpaceGuard } from './presentation/auth/member-space.guard';
+import { Onboarding } from './presentation/pages/espace-membre/onboarding/onboarding';
+import { Profil } from './presentation/pages/espace-membre/profil/profil';
+import { CvBuilder } from './presentation/pages/espace-membre/cv-builder/cv-builder';
+import { Badges } from './presentation/pages/espace-membre/badges/badges';
+import { CarteNumerique } from './presentation/pages/espace-membre/carte/carte-numerique';
+import { ProfilPublic } from './presentation/pages/espace-membre/profil-public/profil-public';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -29,4 +36,20 @@ export const routes: Routes = [
   { path: 'membres-fondateurs', component: MembresFondateurs },
   { path: 'mentions-legales', component: MentionsLegales },
   { path: 'plan-du-site', component: PlanDuSite },
+  // Espace membre individuel (docs/adr/0002-v2-foundations.md, .prompt/plan/02-...):
+  // guarded by `memberSpaceGuard` (mocked auth state, see KeycloakAuthService). The
+  // public-profile page is intentionally NOT under this guard — it's public by design.
+  {
+    path: 'espace-membre',
+    canActivate: [memberSpaceGuard],
+    children: [
+      { path: '', redirectTo: 'profil', pathMatch: 'full' },
+      { path: 'inscription', component: Onboarding },
+      { path: 'profil', component: Profil },
+      { path: 'cv', component: CvBuilder },
+      { path: 'badges', component: Badges },
+      { path: 'carte', component: CarteNumerique },
+    ],
+  },
+  { path: 'membres/:publicSlug', component: ProfilPublic },
 ];

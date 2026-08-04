@@ -276,5 +276,282 @@
     "backToList": "Volver a la lista de socios",
     "visitWebsite": "Visitar el sitio web",
     "notFound": "Socio no encontrado."
+  },
+  "espaceMembre": {
+    "onboarding": {
+      "title": "Registro e incorporación",
+      "intro": "Complete su perfil en unos pocos pasos.",
+      "draftRestored": "Borrador restaurado.",
+      "confirmation": "Su perfil se ha guardado.",
+      "error": "Se ha producido un error.",
+      "progress": "Paso",
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "finish": "Finalizar",
+      "add": "Añadir",
+      "steps": {
+        "compte": "Cuenta",
+        "languePays": "Idioma y país",
+        "identite": "Identidad",
+        "photo": "Foto",
+        "titre": "Título",
+        "resume": "Resumen",
+        "expertises": "Áreas de especialización",
+        "experiences": "Experiencia",
+        "formations": "Formación",
+        "certifications": "Certificaciones",
+        "langues": "Idiomas",
+        "visibilite": "Visibilidad",
+        "charte": "Carta ética",
+        "adhesion": "Afiliación"
+      },
+      "compte": {
+        "cgu": "Acepto las condiciones de uso",
+        "email": "Correo electrónico"
+      },
+      "languePays": {
+        "langue": "Idioma",
+        "pays": "País"
+      },
+      "identite": {
+        "displayName": "Nombre público"
+      },
+      "photo": {
+        "url": "URL de la foto"
+      },
+      "titre": {
+        "label": "Título"
+      },
+      "resume": {
+        "label": "Resumen"
+      },
+      "expertises": {
+        "label": "Áreas de especialización (una a la vez)"
+      },
+      "experiences": {
+        "organization": "Organización",
+        "jobTitle": "Puesto",
+        "startDate": "Fecha de inicio"
+      },
+      "formations": {
+        "institution": "Institución",
+        "program": "Programa",
+        "startDate": "Fecha de inicio"
+      },
+      "certifications": {
+        "label": "Certificación (nombre — organización emisora)"
+      },
+      "langues": {
+        "language": "Idioma",
+        "level": "Nivel"
+      },
+      "visibilite": {
+        "hint": "Elija qué campos son visibles públicamente en su perfil.",
+        "fields": {
+          "title": "Título",
+          "summary": "Resumen",
+          "location": "Ubicación",
+          "expertiseAreas": "Áreas de especialización",
+          "technologies": "Tecnologías",
+          "sectors": "Sectores",
+          "languages": "Idiomas",
+          "experiences": "Experiencia",
+          "educations": "Formación",
+          "certifications": "Certificaciones",
+          "badges": "Insignias",
+          "membershipTier": "Categoría de afiliación"
+        }
+      },
+      "charte": {
+        "label": "Acepto la carta ética de la OEI"
+      },
+      "adhesion": {
+        "summary": "Su categoría de afiliación predeterminada es:"
+      }
+    },
+    "profil": {
+      "title": "Perfil profesional",
+      "loading": "Cargando perfil…",
+      "empty": "No hay ningún perfil disponible.",
+      "completeness": "Grado de completitud:",
+      "legalIdentity": {
+        "title": "Identidad legal (privada)",
+        "hint": "Esta información nunca se muestra públicamente."
+      },
+      "expertiseAreas": "Áreas de especialización",
+      "technologies": "Tecnologías",
+      "sectors": "Sectores",
+      "languages": "Idiomas",
+      "experiences": "Experiencia",
+      "educations": "Formación",
+      "skills": "Competencias",
+      "demoTag": "Demostración",
+      "edit": "Editar",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "saveError": "Se ha producido un error al guardar.",
+      "fields": {
+        "title": "Título",
+        "summary": "Resumen",
+        "location": "Ubicación",
+        "availability": "Disponibilidad"
+      },
+      "availability": {
+        "AVAILABLE": "Disponible",
+        "OPEN_TO_OPPORTUNITIES": "Abierto a oportunidades",
+        "NOT_AVAILABLE": "No disponible"
+      }
+    },
+    "cv": {
+      "title": "Mi currículum",
+      "empty": "Todavía no se ha creado ningún currículum.",
+      "templateLabel": "Plantilla",
+      "sectionsTitle": "Secciones",
+      "noSections": "Todavía no hay secciones.",
+      "sectionTypes": {
+        "IDENTITY": "Identidad",
+        "SUMMARY": "Resumen",
+        "EXPERIENCE": "Experiencia profesional",
+        "PROJECT": "Proyecto",
+        "EDUCATION": "Formación",
+        "CERTIFICATION": "Certificación",
+        "SKILL": "Competencia",
+        "LANGUAGE": "Idioma",
+        "PUBLICATION": "Publicación",
+        "CONFERENCE": "Conferencia",
+        "ENGAGEMENT": "Compromiso",
+        "DISTINCTION": "Distinción",
+        "REFERENCE": "Referencia"
+      },
+      "translationsTitle": "Traducciones",
+      "noTranslations": "Todavía no hay traducciones.",
+      "translationStatus": {
+        "MACHINE_GENERATED": "Traducción automática",
+        "PENDING_VALIDATION": "Pendiente de validación",
+        "VALIDATED": "Validada"
+      },
+      "unvalidatedWarning": "Traducción automática no validada",
+      "validateTranslation": "Validar esta traducción",
+      "addTranslationLanguageLabel": "Idioma",
+      "addTranslationContentLabel": "Contenido",
+      "addTranslationSubmit": "Añadir una traducción",
+      "addSectionTitle": "Añadir una sección",
+      "addSectionTypeLabel": "Tipo de sección",
+      "addSectionContentLabel": "Contenido",
+      "addSectionSubmit": "Añadir sección",
+      "noAvailableSectionTypes": "Ya se han añadido todas las secciones.",
+      "generatePdfTitle": "Generación de PDF",
+      "pdfDemoNotice": "Este es un PDF de demostración: el motor de renderizado final aún no está implementado. Las plantillas premium solo están preparadas por el momento, no terminadas.",
+      "generatePdf": "Generar PDF",
+      "generatingPdf": "Generando…",
+      "downloadPdf": "Descargar PDF",
+      "templateGallery": {
+        "title": "Galería de plantillas",
+        "intro": "Elija una plantilla; la vista previa de abajo se actualiza al instante con sus propios datos."
+      },
+      "livePreview": {
+        "title": "Vista previa en vivo",
+        "intro": "Esta vista previa utiliza sus datos reales con la marca de agua y el sello de la OEI, al estilo de un diploma oficial.",
+        "orgLine": "Orden de los Expertos Informáticos",
+        "sealBrand": "OEI",
+        "sealCertifiedLabel": "CERTIFICADO"
+      }
+    },
+    "profilPublic": {
+      "visibleFieldsIntro": "Este perfil destaca los siguientes campos:",
+      "publishedAtLabel": "Publicado el",
+      "viewsCountLabel": "Número de visitas",
+      "privacyNote": "Estadísticas respetuosas con la privacidad: no se realiza ningún seguimiento individual de los visitantes.",
+      "viewQr": "Ver código QR",
+      "downloadPdf": "Descargar PDF",
+      "share": "Compartir",
+      "shareConfirmation": "Enlace copiado al portapapeles.",
+      "notFoundTitle": "Perfil no encontrado",
+      "notFound": "Este perfil público no existe o ya no está publicado."
+    },
+    "badges": {
+      "title": "Mis insignias y certificaciones",
+      "intro": "Encuentre aquí sus insignias obtenidas y certificaciones declaradas.",
+      "sectionBadges": "Insignias",
+      "emptyBadges": "Todavía no ha recibido ninguna insignia.",
+      "badgeRevoked": "Revocada",
+      "badgeUnknownPrefix": "Insignia:",
+      "awardedAtPrefix": "Otorgada el",
+      "sectionCertifications": "Certificaciones",
+      "emptyCertifications": "Todavía no ha declarado ninguna certificación.",
+      "certificationStatus": {
+        "DECLARED": "Declarada",
+        "UNDER_REVIEW": "En revisión",
+        "VALIDATED": "Validada",
+        "REJECTED": "Rechazada",
+        "EXPIRED": "Caducada",
+        "REVOKED": "Revocada"
+      },
+      "category": {
+        "MEMBERSHIP": "Afiliación",
+        "CONTRIBUTION": "Contribución",
+        "CERTIFICATION": "Certificación",
+        "RECOGNITION": "Reconocimiento"
+      },
+      "declareForm": {
+        "title": "Declarar una certificación",
+        "name": "Nombre de la certificación",
+        "issuingOrganization": "Organización emisora",
+        "recognizedCertification": "Certificación reconocida (opcional)",
+        "recognizedCertificationNone": "Ninguna",
+        "issuedAt": "Fecha de obtención",
+        "proofDocumentUrl": "Referencia de justificante",
+        "proofDocumentNote": "La carga de un documento real no está implementada en esta demostración: introduzca en su lugar una URL o referencia.",
+        "submit": "Declarar",
+        "successMessage": "Su certificación se ha declarado correctamente.",
+        "errorMessage": "La declaración ha fallado. Vuelva a intentarlo."
+      }
+    },
+    "carte": {
+      "title": "Tarjeta profesional digital",
+      "intro": "Su tarjeta de afiliación digital, lista para compartir o añadir a su wallet móvil.",
+      "loading": "Cargando su tarjeta…",
+      "qrAlt": "Código QR que enlaza con su perfil público",
+      "downloadVcard": "Descargar vCard",
+      "fullscreen": {
+        "enter": "Pantalla completa",
+        "exit": "Salir de pantalla completa"
+      },
+      "share": {
+        "action": "Compartir",
+        "title": "Mi tarjeta profesional de la OEI",
+        "shared": "Tarjeta compartida.",
+        "copied": "Enlace copiado al portapapeles.",
+        "failed": "Error al compartir."
+      },
+      "tier": {
+        "STANDARD": "Estándar",
+        "SILVER": "Plata",
+        "GOLD": "Oro",
+        "FOUNDING": "Miembro fundador",
+        "HONORARY": "Miembro honorario",
+        "INSTITUTIONAL_AFFILIATE": "Afiliado institucional"
+      },
+      "wallet": {
+        "title": "Apple Wallet / Google Wallet",
+        "disclaimerIntro": "Esta función genera un pase de demostración, sin certificado de emisor real.",
+        "addApple": "Añadir a Apple Wallet",
+        "addGoogle": "Añadir a Google Wallet",
+        "issueError": "Error al añadir a la wallet.",
+        "mockNotice": "Pase de demostración añadido (simulación) — esto no es un documento de identidad oficial.",
+        "emptyPasses": "Todavía no ha añadido ningún pase.",
+        "revoke": "Revocar",
+        "provider": {
+          "APPLE": "Apple Wallet",
+          "GOOGLE": "Google Wallet"
+        },
+        "passStatus": {
+          "MOCKED": "Simulado",
+          "ISSUED": "Emitido",
+          "REVOKED": "Revocado",
+          "RENEWED": "Renovado"
+        }
+      }
+    }
   }
 }

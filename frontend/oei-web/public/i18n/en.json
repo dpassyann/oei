@@ -276,5 +276,282 @@
     "backToList": "Back to the partner list",
     "visitWebsite": "Visit the website",
     "notFound": "Partner not found."
+  },
+  "espaceMembre": {
+    "onboarding": {
+      "title": "Registration and onboarding",
+      "intro": "Complete your profile in a few steps.",
+      "draftRestored": "Draft restored.",
+      "confirmation": "Your profile has been saved.",
+      "error": "Something went wrong.",
+      "progress": "Step",
+      "previous": "Previous",
+      "next": "Next",
+      "finish": "Finish",
+      "add": "Add",
+      "steps": {
+        "compte": "Account",
+        "languePays": "Language and country",
+        "identite": "Identity",
+        "photo": "Photo",
+        "titre": "Title",
+        "resume": "Summary",
+        "expertises": "Expertise",
+        "experiences": "Experience",
+        "formations": "Education",
+        "certifications": "Certifications",
+        "langues": "Languages",
+        "visibilite": "Visibility",
+        "charte": "Charter",
+        "adhesion": "Membership"
+      },
+      "compte": {
+        "cgu": "I accept the terms of service",
+        "email": "Email"
+      },
+      "languePays": {
+        "langue": "Language",
+        "pays": "Country"
+      },
+      "identite": {
+        "displayName": "Public name"
+      },
+      "photo": {
+        "url": "Photo URL"
+      },
+      "titre": {
+        "label": "Title"
+      },
+      "resume": {
+        "label": "Summary"
+      },
+      "expertises": {
+        "label": "Areas of expertise (one at a time)"
+      },
+      "experiences": {
+        "organization": "Organization",
+        "jobTitle": "Job title",
+        "startDate": "Start date"
+      },
+      "formations": {
+        "institution": "Institution",
+        "program": "Program",
+        "startDate": "Start date"
+      },
+      "certifications": {
+        "label": "Certification (name — issuing organization)"
+      },
+      "langues": {
+        "language": "Language",
+        "level": "Level"
+      },
+      "visibilite": {
+        "hint": "Choose which fields are publicly visible on your profile.",
+        "fields": {
+          "title": "Title",
+          "summary": "Summary",
+          "location": "Location",
+          "expertiseAreas": "Areas of expertise",
+          "technologies": "Technologies",
+          "sectors": "Sectors",
+          "languages": "Languages",
+          "experiences": "Experience",
+          "educations": "Education",
+          "certifications": "Certifications",
+          "badges": "Badges",
+          "membershipTier": "Membership tier"
+        }
+      },
+      "charte": {
+        "label": "I accept the OEI's ethical charter"
+      },
+      "adhesion": {
+        "summary": "Your default membership tier is:"
+      }
+    },
+    "profil": {
+      "title": "Professional profile",
+      "loading": "Loading profile…",
+      "empty": "No profile available.",
+      "completeness": "Completeness:",
+      "legalIdentity": {
+        "title": "Legal identity (private)",
+        "hint": "This information is never displayed publicly."
+      },
+      "expertiseAreas": "Areas of expertise",
+      "technologies": "Technologies",
+      "sectors": "Sectors",
+      "languages": "Languages",
+      "experiences": "Experience",
+      "educations": "Education",
+      "skills": "Skills",
+      "demoTag": "Demonstration",
+      "edit": "Edit",
+      "save": "Save",
+      "cancel": "Cancel",
+      "saveError": "Something went wrong while saving.",
+      "fields": {
+        "title": "Title",
+        "summary": "Summary",
+        "location": "Location",
+        "availability": "Availability"
+      },
+      "availability": {
+        "AVAILABLE": "Available",
+        "OPEN_TO_OPPORTUNITIES": "Open to opportunities",
+        "NOT_AVAILABLE": "Not available"
+      }
+    },
+    "cv": {
+      "title": "My CV",
+      "empty": "No CV has been created yet.",
+      "templateLabel": "Template",
+      "sectionsTitle": "Sections",
+      "noSections": "No sections yet.",
+      "sectionTypes": {
+        "IDENTITY": "Identity",
+        "SUMMARY": "Summary",
+        "EXPERIENCE": "Professional experience",
+        "PROJECT": "Project",
+        "EDUCATION": "Education",
+        "CERTIFICATION": "Certification",
+        "SKILL": "Skill",
+        "LANGUAGE": "Language",
+        "PUBLICATION": "Publication",
+        "CONFERENCE": "Conference",
+        "ENGAGEMENT": "Engagement",
+        "DISTINCTION": "Distinction",
+        "REFERENCE": "Reference"
+      },
+      "translationsTitle": "Translations",
+      "noTranslations": "No translations yet.",
+      "translationStatus": {
+        "MACHINE_GENERATED": "Machine translation",
+        "PENDING_VALIDATION": "Pending validation",
+        "VALIDATED": "Validated"
+      },
+      "unvalidatedWarning": "Unvalidated machine translation",
+      "validateTranslation": "Validate this translation",
+      "addTranslationLanguageLabel": "Language",
+      "addTranslationContentLabel": "Content",
+      "addTranslationSubmit": "Add a translation",
+      "addSectionTitle": "Add a section",
+      "addSectionTypeLabel": "Section type",
+      "addSectionContentLabel": "Content",
+      "addSectionSubmit": "Add section",
+      "noAvailableSectionTypes": "All sections have already been added.",
+      "generatePdfTitle": "PDF generation",
+      "pdfDemoNotice": "This is a demonstration PDF: the final rendering engine is not yet implemented. The premium templates are currently only prepared, not yet built.",
+      "generatePdf": "Generate PDF",
+      "generatingPdf": "Generating…",
+      "downloadPdf": "Download PDF",
+      "templateGallery": {
+        "title": "Template gallery",
+        "intro": "Choose a template — the preview below updates instantly with your own data."
+      },
+      "livePreview": {
+        "title": "Live preview",
+        "intro": "This preview uses your real data with the OEI watermark and seal, in the style of an official diploma.",
+        "orgLine": "Order of IT Experts",
+        "sealBrand": "OEI",
+        "sealCertifiedLabel": "CERTIFIED"
+      }
+    },
+    "profilPublic": {
+      "visibleFieldsIntro": "This profile highlights the following fields:",
+      "publishedAtLabel": "Published on",
+      "viewsCountLabel": "View count",
+      "privacyNote": "Privacy-respecting statistics: no individual visitor tracking is performed.",
+      "viewQr": "View QR code",
+      "downloadPdf": "Download PDF",
+      "share": "Share",
+      "shareConfirmation": "Link copied to clipboard.",
+      "notFoundTitle": "Profile not found",
+      "notFound": "This public profile does not exist or is no longer published."
+    },
+    "badges": {
+      "title": "My badges and certifications",
+      "intro": "Find your earned badges and declared certifications here.",
+      "sectionBadges": "Badges",
+      "emptyBadges": "You have not yet received any badges.",
+      "badgeRevoked": "Revoked",
+      "badgeUnknownPrefix": "Badge:",
+      "awardedAtPrefix": "Awarded on",
+      "sectionCertifications": "Certifications",
+      "emptyCertifications": "You have not declared any certifications.",
+      "certificationStatus": {
+        "DECLARED": "Declared",
+        "UNDER_REVIEW": "Under review",
+        "VALIDATED": "Validated",
+        "REJECTED": "Rejected",
+        "EXPIRED": "Expired",
+        "REVOKED": "Revoked"
+      },
+      "category": {
+        "MEMBERSHIP": "Membership",
+        "CONTRIBUTION": "Contribution",
+        "CERTIFICATION": "Certification",
+        "RECOGNITION": "Recognition"
+      },
+      "declareForm": {
+        "title": "Declare a certification",
+        "name": "Certification name",
+        "issuingOrganization": "Issuing organization",
+        "recognizedCertification": "Recognized certification (optional)",
+        "recognizedCertificationNone": "None",
+        "issuedAt": "Date obtained",
+        "proofDocumentUrl": "Proof reference",
+        "proofDocumentNote": "Uploading a real document is not implemented in this demonstration: enter a URL or reference instead.",
+        "submit": "Declare",
+        "successMessage": "Your certification has been declared successfully.",
+        "errorMessage": "The declaration failed. Please try again."
+      }
+    },
+    "carte": {
+      "title": "Digital business card",
+      "intro": "Your digital membership card, ready to share or add to your mobile wallet.",
+      "loading": "Loading your card…",
+      "qrAlt": "QR code linking to your public profile",
+      "downloadVcard": "Download vCard",
+      "fullscreen": {
+        "enter": "Full screen",
+        "exit": "Exit full screen"
+      },
+      "share": {
+        "action": "Share",
+        "title": "My OEI professional card",
+        "shared": "Card shared.",
+        "copied": "Link copied to clipboard.",
+        "failed": "Sharing failed."
+      },
+      "tier": {
+        "STANDARD": "Standard",
+        "SILVER": "Silver",
+        "GOLD": "Gold",
+        "FOUNDING": "Founding member",
+        "HONORARY": "Honorary",
+        "INSTITUTIONAL_AFFILIATE": "Institutional affiliate"
+      },
+      "wallet": {
+        "title": "Apple Wallet / Google Wallet",
+        "disclaimerIntro": "This feature generates a demonstration pass, without a real publisher certificate.",
+        "addApple": "Add to Apple Wallet",
+        "addGoogle": "Add to Google Wallet",
+        "issueError": "Adding to wallet failed.",
+        "mockNotice": "Demonstration pass added (simulation) — this is not an official identity document.",
+        "emptyPasses": "You have not added any passes yet.",
+        "revoke": "Revoke",
+        "provider": {
+          "APPLE": "Apple Wallet",
+          "GOOGLE": "Google Wallet"
+        },
+        "passStatus": {
+          "MOCKED": "Simulated",
+          "ISSUED": "Issued",
+          "REVOKED": "Revoked",
+          "RENEWED": "Renewed"
+        }
+      }
+    }
   }
 }

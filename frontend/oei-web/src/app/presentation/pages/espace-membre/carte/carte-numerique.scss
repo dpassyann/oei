@@ -1,0 +1,235 @@
+:host {
+  display: block;
+}
+
+$oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+
+.oei-page {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem;
+}
+
+.oei-page__title {
+  margin: 0 0 1.5rem;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-page__body {
+  margin: 0 0 1.5rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.oei-page__empty {
+  margin: 0 0 1.5rem;
+  color: #666;
+  font-style: italic;
+}
+
+.oei-carte-numerique__card {
+  --tier-color: #{$oei-navy};
+
+  position: relative;
+  max-width: 24rem;
+  margin: 0 0 3rem;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  border: 2px solid var(--tier-color);
+  background: linear-gradient(135deg, #fff, #f7f7fb);
+  box-shadow: 0 4px 14px rgba(10, 30, 63, 0.15);
+}
+
+.oei-carte-numerique__card--fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  max-width: none;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.oei-carte-numerique__header {
+  margin-bottom: 1.25rem;
+}
+
+.oei-carte-numerique__name {
+  margin: 0 0 0.2rem;
+  font-size: 1.4rem;
+  color: $oei-navy;
+}
+
+.oei-carte-numerique__title-line {
+  margin: 0 0 0.4rem;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.oei-carte-numerique__tier {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--tier-color);
+  border-radius: 999px;
+}
+
+.oei-carte-numerique__qr-area {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 9rem;
+  height: 9rem;
+  margin: 0 auto 1.25rem;
+}
+
+.oei-carte-numerique__qr-decoration {
+  position: absolute;
+  inset: 0;
+  color: var(--tier-color);
+  opacity: 0.5;
+}
+
+.oei-carte-numerique__qr-image {
+  position: relative;
+  width: 7rem;
+  height: 7rem;
+  object-fit: contain;
+  background: #fff;
+}
+
+.oei-carte-numerique__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.oei-carte-numerique__action {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: $oei-navy;
+  background: #fff;
+  border: 1px solid $oei-navy;
+  border-radius: 0.3rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.oei-carte-numerique__share-feedback {
+  margin: 0.75rem 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #1c5e2b;
+}
+
+.oei-carte-numerique__share-feedback--error {
+  color: #b3261e;
+}
+
+.oei-carte-numerique__wallet {
+  max-width: 32rem;
+}
+
+.oei-carte-numerique__wallet-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+  color: $oei-navy;
+}
+
+.oei-carte-numerique__wallet-disclaimer-intro {
+  margin: 0 0 1rem;
+  font-size: 0.85rem;
+  color: #666;
+  font-style: italic;
+}
+
+.oei-carte-numerique__wallet-buttons {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+
+  button {
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    color: #fff;
+    background: $oei-navy;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.oei-carte-numerique__wallet-error {
+  color: #b3261e;
+  font-weight: 600;
+}
+
+// Unmissable: bold, high-contrast, and never just a subtle toast — this is a compliance
+// requirement, not a styling preference.
+.oei-carte-numerique__wallet-mock-notice {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  color: #7a1913;
+  background: #fbe4e2;
+  border: 2px solid #b3261e;
+  border-radius: 0.4rem;
+}
+
+.oei-carte-numerique__pass-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.oei-carte-numerique__pass-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid rgba(10, 30, 63, 0.15);
+  border-radius: 0.4rem;
+}
+
+.oei-carte-numerique__pass-provider {
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-carte-numerique__pass-status {
+  font-size: 0.8rem;
+  color: #555;
+}
+
+.oei-carte-numerique__pass-revoke {
+  margin-left: auto;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #b3261e;
+  background: #fff;
+  border: 1px solid #b3261e;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}

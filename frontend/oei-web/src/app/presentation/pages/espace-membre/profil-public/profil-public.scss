@@ -1,0 +1,91 @@
+:host {
+  display: block;
+}
+
+$oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+
+.oei-page {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem;
+}
+
+.oei-page__title {
+  margin: 0 0 1rem;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-page__body {
+  margin: 0 0 1.5rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.oei-page__empty {
+  margin: 0;
+  color: #666;
+  font-style: italic;
+}
+
+.oei-profil-public__seo-description {
+  font-style: italic;
+  color: #555;
+  margin: 0 0 1.5rem;
+}
+
+.oei-profil-public__meta {
+  margin: 0 0 1.5rem;
+}
+
+.oei-profil-public__meta-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+
+  dt {
+    font-weight: 600;
+    color: $oei-navy;
+  }
+
+  dd {
+    margin: 0;
+    color: #444;
+  }
+}
+
+.oei-profil-public__privacy-note {
+  font-size: 0.85rem;
+  color: #666;
+  margin: 0 0 1.5rem;
+}
+
+.oei-profil-public__actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.oei-profil-public__action {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 0.35rem;
+  background: $oei-navy;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+
+  &:hover {
+    background: $oei-gold;
+  }
+}
+
+.oei-profil-public__share-confirmation {
+  margin-top: 0.75rem;
+  color: $oei-navy;
+  font-weight: 600;
+}

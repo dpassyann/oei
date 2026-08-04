@@ -1,5 +1,5 @@
 import { Component, inject, PendingTasks } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { KeycloakAuthService } from '../../auth/keycloak-auth.service';
 import { I18nService } from '../../i18n/i18n.service';
 import { LanguageSwitcher } from '../language-switcher/language-switcher';
@@ -19,6 +19,7 @@ export class SiteHeader {
   protected readonly i18n = inject(I18nService);
   private readonly pendingTasks = inject(PendingTasks);
   protected readonly keycloakAuth = inject(KeycloakAuthService);
+  private readonly router = inject(Router);
 
   protected readonly navLinks: readonly NavLink[] = [
     { path: '/', labelKey: 'nav.home' },
@@ -45,5 +46,13 @@ export class SiteHeader {
         // No i18n server / offline: labels fall back to their raw translation keys.
       }
     });
+  }
+
+  // The espace-membre routes are behind `memberSpaceGuard`, which itself calls
+  // `keycloakAuth.login()` when the mocked "connected" state is false — so this
+  // handler always just navigates and lets the guard decide, rather than
+  // duplicating the login-or-not branching here.
+  protected goToMemberSpace(): void {
+    void this.router.navigateByUrl('/espace-membre');
   }
 }
