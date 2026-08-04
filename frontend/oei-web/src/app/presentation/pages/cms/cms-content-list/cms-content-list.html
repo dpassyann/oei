@@ -1,0 +1,79 @@
+<main class="oei-cms-list">
+  <header class="oei-cms-list__header">
+    <div>
+      <h1>{{ i18n.translate('cms.list.title') }}</h1>
+      <p>{{ i18n.translate('cms.list.intro') }}</p>
+    </div>
+    <div class="oei-cms-list__header-actions">
+      <a routerLink="/cms/contributions">{{ i18n.translate('cms.list.openContributions') }}</a>
+      <a routerLink="/cms/new" class="oei-cms-list__new">{{ i18n.translate('cms.list.newContent') }}</a>
+    </div>
+  </header>
+
+  <section class="oei-cms-list__filters">
+    <label>
+      {{ i18n.translate('cms.list.filters.type') }}
+      <select (change)="onTypeFilterChange($any($event.target).value)">
+        <option value="">{{ i18n.translate('cms.list.filters.all') }}</option>
+        @for (type of contentTypes; track type) {
+          <option [value]="type">{{ i18n.translate('cms.type.' + type) }}</option>
+        }
+      </select>
+    </label>
+
+    <label>
+      {{ i18n.translate('cms.list.filters.status') }}
+      <select (change)="onStatusFilterChange($any($event.target).value)">
+        <option value="">{{ i18n.translate('cms.list.filters.all') }}</option>
+        @for (status of workflowStatuses; track status) {
+          <option [value]="status">{{ i18n.translate('cms.status.' + status) }}</option>
+        }
+      </select>
+    </label>
+
+    <label>
+      {{ i18n.translate('cms.list.filters.language') }}
+      <input type="text" (input)="onLanguageFilterChange($any($event.target).value)" />
+    </label>
+
+    <label>
+      {{ i18n.translate('cms.list.filters.query') }}
+      <input type="text" (input)="onQueryFilterChange($any($event.target).value)" />
+    </label>
+  </section>
+
+  @if (contents().length === 0) {
+    <p class="oei-cms-list__empty">{{ i18n.translate('cms.list.empty') }}</p>
+  } @else {
+    <table class="oei-cms-list__table">
+      <thead>
+        <tr>
+          <th>{{ i18n.translate('cms.list.columns.title') }}</th>
+          <th>{{ i18n.translate('cms.list.columns.type') }}</th>
+          <th>{{ i18n.translate('cms.list.columns.status') }}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (content of contents(); track content.id) {
+          <tr>
+            <td>{{ content.title }}</td>
+            <td>{{ i18n.translate('cms.type.' + content.type) }}</td>
+            <td><span class="oei-cms-status" [attr.data-status]="content.status">{{ i18n.translate('cms.status.' + content.status) }}</span></td>
+            <td><a [routerLink]="['/cms', content.id]">{{ i18n.translate('cms.list.open') }}</a></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  <section class="oei-cms-list__git-sync">
+    <h2>{{ i18n.translate('cms.gitSync.legend') }}</h2>
+    <button type="button" [disabled]="synchronizing()" (click)="triggerSynchronization()">
+      {{ i18n.translate('cms.gitSync.trigger') }}
+    </button>
+    @if (lastSynchronization(); as last) {
+      <p>{{ i18n.translate('cms.gitSync.lastRun') }}: {{ last.status }} ({{ last.commitsProcessed }})</p>
+    }
+  </section>
+</main>

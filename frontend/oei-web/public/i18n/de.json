@@ -277,6 +277,132 @@
     "visitWebsite": "Webseite besuchen",
     "notFound": "Partner nicht gefunden."
   },
+  "cms": {
+    "type": {
+      "PAGE": "Seite",
+      "ARTICLE": "Artikel",
+      "NEWS": "Nachricht",
+      "EVENT": "Veranstaltung",
+      "WHITEPAPER": "Whitepaper",
+      "MANIFESTO": "Manifest",
+      "GLOSSARY": "Glossar",
+      "STATUTES": "Satzung",
+      "REGULATION": "Reglement",
+      "ETHICS_CODE": "Ethikkodex",
+      "COMPETENCY_FRAMEWORK": "Kompetenzrahmen",
+      "CHARTER": "Charta",
+      "REPORT": "Bericht",
+      "BOOK": "Buch",
+      "PRESS_RELEASE": "Pressemitteilung"
+    },
+    "status": {
+      "DRAFT": "Entwurf",
+      "IN_REVIEW": "In Prüfung",
+      "LEGAL_REVIEW": "Rechtsprüfung",
+      "GOVERNANCE_REVIEW": "Governance-Prüfung",
+      "APPROVED": "Genehmigt",
+      "TRANSLATION_PENDING": "Übersetzung ausstehend",
+      "SCHEDULED": "Geplant",
+      "PUBLISHED": "Veröffentlicht",
+      "ARCHIVED": "Archiviert",
+      "REJECTED": "Abgelehnt"
+    },
+    "contributionStatus": {
+      "PROPOSED": "Vorgeschlagen",
+      "IN_CONSULTATION": "In Konsultation",
+      "ACCEPTED": "Angenommen",
+      "REJECTED": "Abgelehnt",
+      "MERGED": "Zusammengeführt"
+    },
+    "list": {
+      "title": "CMS-Inhalte",
+      "intro": "Redaktionelles Back-Office: Markdown-Pipeline, Freigabe-Workflow und Dokumenten-Governance.",
+      "filters": {
+        "type": "Typ",
+        "status": "Status",
+        "language": "Sprache",
+        "query": "Suche",
+        "all": "Alle"
+      },
+      "columns": {
+        "title": "Titel",
+        "type": "Typ",
+        "status": "Status"
+      },
+      "newContent": "Neuer Inhalt",
+      "empty": "Kein Inhalt entspricht den Filtern.",
+      "openContributions": "Mitgliederbeiträge",
+      "open": "Öffnen"
+    },
+    "editor": {
+      "newTitle": "Neuer Inhalt",
+      "title": "Inhalts-Editor",
+      "notFound": "Inhalt nicht gefunden.",
+      "metadata": {
+        "legend": "Metadaten (Front Matter)",
+        "type": "Typ",
+        "slug": "Slug",
+        "titleField": "Titel",
+        "language": "Sprache",
+        "sourceType": "Quelle",
+        "tags": "Tags (kommagetrennt)",
+        "approvalRequired": "Governance-Genehmigung erforderlich",
+        "decisionId": "Entscheidungsreferenz"
+      },
+      "body": {
+        "legend": "Markdown-Inhalt",
+        "markdown": "Markdown",
+        "preview": "Vorschau"
+      },
+      "actions": {
+        "create": "Entwurf erstellen",
+        "saveVersion": "Neue Version speichern",
+        "submit": "Zur Prüfung einreichen",
+        "approveLegal": "Genehmigen (rechtlich)",
+        "approveGovernance": "Genehmigen (Governance)",
+        "reject": "Ablehnen (zurück zu Entwurf)",
+        "requestTranslation": "Übersetzung anfordern",
+        "schedule": "Planen",
+        "publish": "Veröffentlichen",
+        "archive": "Archivieren"
+      },
+      "status": {
+        "current": "Aktueller Status"
+      },
+      "versions": {
+        "legend": "Versionsverlauf"
+      }
+    },
+    "contributions": {
+      "title": "Mitgliederbeiträge",
+      "intro": "Von Mitgliedern eingereichte Markdown-Patch-Vorschläge mit Diff, Kommentaren und Entscheidung.",
+      "empty": "Noch kein Beitrag.",
+      "columns": {
+        "content": "Inhalt",
+        "author": "Autor",
+        "status": "Status"
+      },
+      "diff": {
+        "legend": "Vorgeschlagener Diff"
+      },
+      "comments": {
+        "legend": "Kommentare",
+        "empty": "Keine Kommentare.",
+        "placeholder": "Kommentar hinzufügen…",
+        "submit": "Senden"
+      }
+    },
+    "gitSync": {
+      "legend": "Git-Synchronisierung (nur Lesen)",
+      "trigger": "Synchronisieren",
+      "lastRun": "Letzte Synchronisierung",
+      "files": "Synchronisierte Dateien"
+    },
+    "common": {
+      "yes": "Ja",
+      "no": "Nein"
+    }
+  },
   "espaceInstitution": {
     "nav": {
       "dashboard": "Übersicht",

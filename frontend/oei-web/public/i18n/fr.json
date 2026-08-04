@@ -277,6 +277,132 @@
     "visitWebsite": "Visiter le site",
     "notFound": "Partenaire introuvable."
   },
+  "cms": {
+    "type": {
+      "PAGE": "Page",
+      "ARTICLE": "Article",
+      "NEWS": "Actualité",
+      "EVENT": "Événement",
+      "WHITEPAPER": "Livre blanc",
+      "MANIFESTO": "Manifeste",
+      "GLOSSARY": "Glossaire",
+      "STATUTES": "Statuts",
+      "REGULATION": "Règlement",
+      "ETHICS_CODE": "Code de déontologie",
+      "COMPETENCY_FRAMEWORK": "Référentiel de compétences",
+      "CHARTER": "Charte",
+      "REPORT": "Rapport",
+      "BOOK": "Livre",
+      "PRESS_RELEASE": "Communiqué de presse"
+    },
+    "status": {
+      "DRAFT": "Brouillon",
+      "IN_REVIEW": "En révision",
+      "LEGAL_REVIEW": "Revue juridique",
+      "GOVERNANCE_REVIEW": "Revue de gouvernance",
+      "APPROVED": "Approuvé",
+      "TRANSLATION_PENDING": "Traduction en attente",
+      "SCHEDULED": "Programmé",
+      "PUBLISHED": "Publié",
+      "ARCHIVED": "Archivé",
+      "REJECTED": "Rejeté"
+    },
+    "contributionStatus": {
+      "PROPOSED": "Proposée",
+      "IN_CONSULTATION": "En consultation",
+      "ACCEPTED": "Acceptée",
+      "REJECTED": "Rejetée",
+      "MERGED": "Intégrée"
+    },
+    "list": {
+      "title": "Contenus CMS",
+      "intro": "Back-office éditorial : pipeline Markdown, workflow de validation et gouvernance documentaire.",
+      "filters": {
+        "type": "Type",
+        "status": "Statut",
+        "language": "Langue",
+        "query": "Recherche",
+        "all": "Tous"
+      },
+      "columns": {
+        "title": "Titre",
+        "type": "Type",
+        "status": "Statut"
+      },
+      "newContent": "Nouveau contenu",
+      "empty": "Aucun contenu ne correspond aux filtres.",
+      "openContributions": "Contributions membres",
+      "open": "Ouvrir"
+    },
+    "editor": {
+      "newTitle": "Nouveau contenu",
+      "title": "Éditeur de contenu",
+      "notFound": "Contenu introuvable.",
+      "metadata": {
+        "legend": "Métadonnées (front matter)",
+        "type": "Type",
+        "slug": "Slug",
+        "titleField": "Titre",
+        "language": "Langue",
+        "sourceType": "Source",
+        "tags": "Tags (séparés par virgule)",
+        "approvalRequired": "Approbation de gouvernance requise",
+        "decisionId": "Référence de décision"
+      },
+      "body": {
+        "legend": "Corps Markdown",
+        "markdown": "Markdown",
+        "preview": "Aperçu"
+      },
+      "actions": {
+        "create": "Créer le brouillon",
+        "saveVersion": "Enregistrer une nouvelle version",
+        "submit": "Soumettre en revue",
+        "approveLegal": "Approuver (juridique)",
+        "approveGovernance": "Approuver (gouvernance)",
+        "reject": "Rejeter (retour brouillon)",
+        "requestTranslation": "Demander une traduction",
+        "schedule": "Programmer",
+        "publish": "Publier",
+        "archive": "Archiver"
+      },
+      "status": {
+        "current": "Statut actuel"
+      },
+      "versions": {
+        "legend": "Historique des versions"
+      }
+    },
+    "contributions": {
+      "title": "Contributions membres",
+      "intro": "Propositions de patch Markdown soumises par les membres, avec diff, commentaires et décision.",
+      "empty": "Aucune contribution pour le moment.",
+      "columns": {
+        "content": "Contenu",
+        "author": "Auteur",
+        "status": "Statut"
+      },
+      "diff": {
+        "legend": "Diff proposé"
+      },
+      "comments": {
+        "legend": "Commentaires",
+        "empty": "Aucun commentaire.",
+        "placeholder": "Ajouter un commentaire…",
+        "submit": "Envoyer"
+      }
+    },
+    "gitSync": {
+      "legend": "Synchronisation Git (lecture seule)",
+      "trigger": "Synchroniser",
+      "lastRun": "Dernière synchronisation",
+      "files": "Fichiers synchronisés"
+    },
+    "common": {
+      "yes": "Oui",
+      "no": "Non"
+    }
+  },
   "espaceInstitution": {
     "nav": {
       "dashboard": "Tableau de bord",

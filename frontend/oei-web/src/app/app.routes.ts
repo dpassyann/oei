@@ -20,6 +20,10 @@ import { InstitutionMembers } from './presentation/pages/espace-institution/memb
 import { InstitutionPublicationsPage } from './presentation/pages/espace-institution/publications/publications';
 import { InstitutionOpportunitiesPage } from './presentation/pages/espace-institution/opportunites/opportunites';
 import { InstitutionPublique } from './presentation/pages/institution-publique/institution-publique';
+import { CmsContentList } from './presentation/pages/cms/cms-content-list/cms-content-list';
+import { CmsContentEditor } from './presentation/pages/cms/cms-content-editor/cms-content-editor';
+import { CmsContributions } from './presentation/pages/cms/cms-contributions/cms-contributions';
+import { cmsGuard } from './presentation/auth/cms.guard';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -51,4 +55,13 @@ export const routes: Routes = [
     ],
   },
   { path: 'institutions/:slug', component: InstitutionPublique },
+  {
+    path: 'cms',
+    canActivate: [cmsGuard],
+    children: [
+      { path: '', component: CmsContentList },
+      { path: 'contributions', component: CmsContributions },
+      { path: ':id', component: CmsContentEditor },
+    ],
+  },
 ];

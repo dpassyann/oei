@@ -277,6 +277,132 @@
     "visitWebsite": "Visitar o site",
     "notFound": "Parceiro não encontrado."
   },
+  "cms": {
+    "type": {
+      "PAGE": "Página",
+      "ARTICLE": "Artigo",
+      "NEWS": "Notícia",
+      "EVENT": "Evento",
+      "WHITEPAPER": "Livro branco",
+      "MANIFESTO": "Manifesto",
+      "GLOSSARY": "Glossário",
+      "STATUTES": "Estatutos",
+      "REGULATION": "Regulamento",
+      "ETHICS_CODE": "Código de ética",
+      "COMPETENCY_FRAMEWORK": "Referencial de competências",
+      "CHARTER": "Carta",
+      "REPORT": "Relatório",
+      "BOOK": "Livro",
+      "PRESS_RELEASE": "Comunicado de imprensa"
+    },
+    "status": {
+      "DRAFT": "Rascunho",
+      "IN_REVIEW": "Em revisão",
+      "LEGAL_REVIEW": "Revisão jurídica",
+      "GOVERNANCE_REVIEW": "Revisão de governança",
+      "APPROVED": "Aprovado",
+      "TRANSLATION_PENDING": "Tradução pendente",
+      "SCHEDULED": "Agendado",
+      "PUBLISHED": "Publicado",
+      "ARCHIVED": "Arquivado",
+      "REJECTED": "Rejeitado"
+    },
+    "contributionStatus": {
+      "PROPOSED": "Proposta",
+      "IN_CONSULTATION": "Em consulta",
+      "ACCEPTED": "Aceite",
+      "REJECTED": "Rejeitada",
+      "MERGED": "Integrada"
+    },
+    "list": {
+      "title": "Conteúdos CMS",
+      "intro": "Back-office editorial: pipeline Markdown, fluxo de aprovação e governança documental.",
+      "filters": {
+        "type": "Tipo",
+        "status": "Estado",
+        "language": "Idioma",
+        "query": "Pesquisa",
+        "all": "Todos"
+      },
+      "columns": {
+        "title": "Título",
+        "type": "Tipo",
+        "status": "Estado"
+      },
+      "newContent": "Novo conteúdo",
+      "empty": "Nenhum conteúdo corresponde aos filtros.",
+      "openContributions": "Contribuições de membros",
+      "open": "Abrir"
+    },
+    "editor": {
+      "newTitle": "Novo conteúdo",
+      "title": "Editor de conteúdo",
+      "notFound": "Conteúdo não encontrado.",
+      "metadata": {
+        "legend": "Metadados (front matter)",
+        "type": "Tipo",
+        "slug": "Slug",
+        "titleField": "Título",
+        "language": "Idioma",
+        "sourceType": "Fonte",
+        "tags": "Etiquetas (separadas por vírgula)",
+        "approvalRequired": "Aprovação de governança necessária",
+        "decisionId": "Referência da decisão"
+      },
+      "body": {
+        "legend": "Corpo Markdown",
+        "markdown": "Markdown",
+        "preview": "Pré-visualização"
+      },
+      "actions": {
+        "create": "Criar rascunho",
+        "saveVersion": "Guardar nova versão",
+        "submit": "Submeter para revisão",
+        "approveLegal": "Aprovar (jurídico)",
+        "approveGovernance": "Aprovar (governança)",
+        "reject": "Rejeitar (voltar a rascunho)",
+        "requestTranslation": "Solicitar tradução",
+        "schedule": "Agendar",
+        "publish": "Publicar",
+        "archive": "Arquivar"
+      },
+      "status": {
+        "current": "Estado atual"
+      },
+      "versions": {
+        "legend": "Histórico de versões"
+      }
+    },
+    "contributions": {
+      "title": "Contribuições de membros",
+      "intro": "Propostas de patch Markdown submetidas pelos membros, com diff, comentários e decisão.",
+      "empty": "Ainda sem contribuições.",
+      "columns": {
+        "content": "Conteúdo",
+        "author": "Autor",
+        "status": "Estado"
+      },
+      "diff": {
+        "legend": "Diff proposto"
+      },
+      "comments": {
+        "legend": "Comentários",
+        "empty": "Sem comentários.",
+        "placeholder": "Adicionar um comentário…",
+        "submit": "Enviar"
+      }
+    },
+    "gitSync": {
+      "legend": "Sincronização Git (apenas leitura)",
+      "trigger": "Sincronizar",
+      "lastRun": "Última sincronização",
+      "files": "Ficheiros sincronizados"
+    },
+    "common": {
+      "yes": "Sim",
+      "no": "Não"
+    }
+  },
   "espaceInstitution": {
     "nav": {
       "dashboard": "Painel de controlo",

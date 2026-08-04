@@ -277,6 +277,132 @@
     "visitWebsite": "Visit the website",
     "notFound": "Partner not found."
   },
+  "cms": {
+    "type": {
+      "PAGE": "Page",
+      "ARTICLE": "Article",
+      "NEWS": "News",
+      "EVENT": "Event",
+      "WHITEPAPER": "Whitepaper",
+      "MANIFESTO": "Manifesto",
+      "GLOSSARY": "Glossary",
+      "STATUTES": "Statutes",
+      "REGULATION": "Regulation",
+      "ETHICS_CODE": "Code of ethics",
+      "COMPETENCY_FRAMEWORK": "Competency framework",
+      "CHARTER": "Charter",
+      "REPORT": "Report",
+      "BOOK": "Book",
+      "PRESS_RELEASE": "Press release"
+    },
+    "status": {
+      "DRAFT": "Draft",
+      "IN_REVIEW": "In review",
+      "LEGAL_REVIEW": "Legal review",
+      "GOVERNANCE_REVIEW": "Governance review",
+      "APPROVED": "Approved",
+      "TRANSLATION_PENDING": "Translation pending",
+      "SCHEDULED": "Scheduled",
+      "PUBLISHED": "Published",
+      "ARCHIVED": "Archived",
+      "REJECTED": "Rejected"
+    },
+    "contributionStatus": {
+      "PROPOSED": "Proposed",
+      "IN_CONSULTATION": "In consultation",
+      "ACCEPTED": "Accepted",
+      "REJECTED": "Rejected",
+      "MERGED": "Merged"
+    },
+    "list": {
+      "title": "CMS content",
+      "intro": "Editorial back office: Markdown pipeline, approval workflow and document governance.",
+      "filters": {
+        "type": "Type",
+        "status": "Status",
+        "language": "Language",
+        "query": "Search",
+        "all": "All"
+      },
+      "columns": {
+        "title": "Title",
+        "type": "Type",
+        "status": "Status"
+      },
+      "newContent": "New content",
+      "empty": "No content matches the filters.",
+      "openContributions": "Member contributions",
+      "open": "Open"
+    },
+    "editor": {
+      "newTitle": "New content",
+      "title": "Content editor",
+      "notFound": "Content not found.",
+      "metadata": {
+        "legend": "Metadata (front matter)",
+        "type": "Type",
+        "slug": "Slug",
+        "titleField": "Title",
+        "language": "Language",
+        "sourceType": "Source",
+        "tags": "Tags (comma-separated)",
+        "approvalRequired": "Governance approval required",
+        "decisionId": "Decision reference"
+      },
+      "body": {
+        "legend": "Markdown body",
+        "markdown": "Markdown",
+        "preview": "Preview"
+      },
+      "actions": {
+        "create": "Create draft",
+        "saveVersion": "Save new version",
+        "submit": "Submit for review",
+        "approveLegal": "Approve (legal)",
+        "approveGovernance": "Approve (governance)",
+        "reject": "Reject (back to draft)",
+        "requestTranslation": "Request translation",
+        "schedule": "Schedule",
+        "publish": "Publish",
+        "archive": "Archive"
+      },
+      "status": {
+        "current": "Current status"
+      },
+      "versions": {
+        "legend": "Version history"
+      }
+    },
+    "contributions": {
+      "title": "Member contributions",
+      "intro": "Markdown patch proposals submitted by members, with diff, comments and decision.",
+      "empty": "No contribution yet.",
+      "columns": {
+        "content": "Content",
+        "author": "Author",
+        "status": "Status"
+      },
+      "diff": {
+        "legend": "Proposed diff"
+      },
+      "comments": {
+        "legend": "Comments",
+        "empty": "No comments.",
+        "placeholder": "Add a comment…",
+        "submit": "Send"
+      }
+    },
+    "gitSync": {
+      "legend": "Git synchronization (read-only)",
+      "trigger": "Synchronize",
+      "lastRun": "Last synchronization",
+      "files": "Synced files"
+    },
+    "common": {
+      "yes": "Yes",
+      "no": "No"
+    }
+  },
   "espaceInstitution": {
     "nav": {
       "dashboard": "Dashboard",

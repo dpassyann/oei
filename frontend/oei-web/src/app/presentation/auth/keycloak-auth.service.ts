@@ -7,7 +7,16 @@ const KEYCLOAK_REALM = 'oei';
 const KEYCLOAK_CLIENT_ID = 'oei-frontend';
 const REDIRECT_URI = 'http://localhost:4300/';
 const PKCE_VERIFIER_STORAGE_KEY = 'oei_pkce_code_verifier';
-const ACCESS_TOKEN_STORAGE_KEY = 'oei_access_token';
+
+// Design decision (documented — the callback/token-exchange step is explicitly out of scope, see
+// the class-level note below): with no real token exchange implemented yet, the CMS route guard
+// (`presentation/auth/cms.guard.ts`) still needs *some* signal to decide whether the current
+// visitor may reach `/cms`. Rather than inventing a parallel ad hoc mechanism, this reads a small,
+// clearly-named `sessionStorage` entry that a real callback step would populate with the decoded
+// JWT's realm roles once implemented — and that a mocked login flow (or an e2e test) can set
+// directly in the meantime. This is *not* a security boundary (no signature verification, no
+// tokens): it only gates which back-office UI renders in this mocked-end-to-end plan.
+const MOCK_SESSION_ROLES_STORAGE_KEY = 'oei_mock_session_roles';
 
 /**
  * Abstraction over the actual browser navigation so tests can assert on the
@@ -78,20 +87,43 @@ export class KeycloakAuthService {
     });
   }
 
+  /** Realm roles for the current mocked session (see `MOCK_SESSION_ROLES_STORAGE_KEY` above) —
+   * empty when nobody is "logged in". */
+  getSessionRoles(): readonly string[] {
+    try {
+      const raw = sessionStorage.getItem(MOCK_SESSION_ROLES_STORAGE_KEY);
+      if (!raw) return [];
+      const parsed: unknown = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed.filter((role): role is string => typeof role === 'string') : [];
+    } catch {
+      return [];
+    }
+  }
+
   /**
-   * Whether the current visitor holds a session token, used by route guards (e.g.
-   * `institutionAccessGuard`) to protect `/espace-institution`.
+   * Whether the current visitor holds a mocked session, used by route guards (e.g.
+   * `institutionAccessGuard`, `cmsGuard`) to protect back-office areas.
    *
    * NOTE: as documented above, this plan does not implement the PKCE callback/token-exchange
-   * step — nothing in the current codebase ever writes `ACCESS_TOKEN_STORAGE_KEY`. This method
-   * is therefore honestly always `false` today (any guard using it always redirects to
-   * `login()`), and will start reflecting real sessions once the callback route is built.
+   * step — nothing writes real tokens yet. This reflects the *mocked* session roles set via
+   * `setMockSessionRoles()` (by a mocked login flow or a test), not a verified JWT.
    */
   isAuthenticated(): boolean {
-    try {
-      return sessionStorage.getItem(ACCESS_TOKEN_STORAGE_KEY) !== null;
-    } catch {
-      return false;
-    }
+    return this.getSessionRoles().length > 0;
+  }
+
+  hasAnyRole(roles: readonly string[]): boolean {
+    const sessionRoles = this.getSessionRoles();
+    return roles.some((role) => sessionRoles.includes(role));
+  }
+
+  /** Test/mock-only helper: sets the mocked session roles (e.g. `['admin']`) so route guards and
+   * back-office UI behave as if a real Keycloak login had completed. */
+  setMockSessionRoles(roles: readonly string[]): void {
+    sessionStorage.setItem(MOCK_SESSION_ROLES_STORAGE_KEY, JSON.stringify(roles));
+  }
+
+  clearMockSession(): void {
+    sessionStorage.removeItem(MOCK_SESSION_ROLES_STORAGE_KEY);
   }
 }
