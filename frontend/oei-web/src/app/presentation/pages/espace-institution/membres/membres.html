@@ -1,0 +1,58 @@
+<main class="oei-page">
+  <a class="oei-page__back" routerLink="/espace-institution">{{ i18n.translate('espaceInstitution.nav.backToDashboard') }}</a>
+  <h1 class="oei-page__title">{{ i18n.translate('espaceInstitution.members.title') }}</h1>
+  <p class="oei-page__body">{{ i18n.translate('espaceInstitution.members.intro') }}</p>
+
+  <section class="oei-institution-members__section">
+    <h2>{{ i18n.translate('espaceInstitution.members.listTitle') }}</h2>
+    @if (members().length === 0) {
+      <p class="oei-page__empty">{{ i18n.translate('espaceInstitution.members.empty') }}</p>
+    } @else {
+      <ul class="oei-institution-members__list">
+        @for (member of members(); track member.id) {
+          <li class="oei-institution-members__item">
+            <span>{{ member.memberDisplayName }}</span>
+            <button type="button" (click)="endAffiliation(member.id)">{{ i18n.translate('espaceInstitution.members.endAffiliation') }}</button>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+
+  <section class="oei-institution-members__section">
+    <h2>{{ i18n.translate('espaceInstitution.members.requestsTitle') }}</h2>
+    @if (pendingRequests().length === 0) {
+      <p class="oei-page__empty">{{ i18n.translate('espaceInstitution.members.requestsEmpty') }}</p>
+    } @else {
+      <ul class="oei-institution-members__list">
+        @for (request of pendingRequests(); track request.id) {
+          <li class="oei-institution-members__item">
+            <span>{{ request.memberDisplayName }}</span>
+            <span class="oei-institution-members__status">{{ i18n.translate('espaceInstitution.members.status.' + request.status) }}</span>
+            <button type="button" (click)="approve(request.id)">{{ i18n.translate('espaceInstitution.members.approve') }}</button>
+            <button type="button" (click)="reject(request.id)">{{ i18n.translate('espaceInstitution.members.reject') }}</button>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+
+  <section class="oei-institution-members__section">
+    <h2>{{ i18n.translate('espaceInstitution.members.inviteTitle') }}</h2>
+    <form class="oei-institution-members__invite-form" (ngSubmit)="sendInvitation()">
+      <label>
+        {{ i18n.translate('espaceInstitution.members.inviteEmailLabel') }}
+        <input type="email" name="inviteEmail" required [(ngModel)]="inviteEmail" />
+      </label>
+      <label>
+        {{ i18n.translate('espaceInstitution.members.inviteRoleLabel') }}
+        <select name="inviteRole" [(ngModel)]="inviteRole">
+          @for (role of institutionRoles; track role) {
+            <option [value]="role">{{ i18n.translate('espaceInstitution.members.roles.' + role) }}</option>
+          }
+        </select>
+      </label>
+      <button type="submit">{{ i18n.translate('espaceInstitution.members.inviteSubmit') }}</button>
+    </form>
+  </section>
+</main>

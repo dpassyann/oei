@@ -1,0 +1,47 @@
+<main class="oei-page">
+  <a class="oei-page__back" routerLink="/espace-institution">{{ i18n.translate('espaceInstitution.nav.backToDashboard') }}</a>
+  <h1 class="oei-page__title">{{ i18n.translate('espaceInstitution.publications.title') }}</h1>
+  <p class="oei-page__body">{{ i18n.translate('espaceInstitution.publications.intro') }}</p>
+
+  @if (publications().length === 0) {
+    <p class="oei-page__empty">{{ i18n.translate('espaceInstitution.publications.empty') }}</p>
+  } @else {
+    <ul class="oei-institution-publications__list">
+      @for (publication of publications(); track publication.id) {
+        <li class="oei-institution-publications__item">
+          <div>
+            <span class="oei-institution-publications__type">{{ i18n.translate('espaceInstitution.publications.types.' + publication.type) }}</span>
+            <h2>{{ publication.title }}</h2>
+            <span class="oei-institution-publications__workflow-status">{{ i18n.translate('espaceInstitution.publications.workflow.' + publication.status) }}</span>
+          </div>
+          @if (publication.status === 'DRAFT' || publication.status === 'CHANGES_REQUESTED') {
+            <button type="button" (click)="submit(publication.id)">{{ i18n.translate('espaceInstitution.publications.submitForReview') }}</button>
+          }
+        </li>
+      }
+    </ul>
+  }
+
+  <section class="oei-institution-publications__new">
+    <h2>{{ i18n.translate('espaceInstitution.publications.newTitle') }}</h2>
+    <form (ngSubmit)="createPublication()">
+      <label>
+        {{ i18n.translate('espaceInstitution.publications.typeLabel') }}
+        <select name="type" [(ngModel)]="newType">
+          @for (type of publicationTypes; track type) {
+            <option [value]="type">{{ i18n.translate('espaceInstitution.publications.types.' + type) }}</option>
+          }
+        </select>
+      </label>
+      <label>
+        {{ i18n.translate('espaceInstitution.publications.titleLabel') }}
+        <input type="text" name="title" required [(ngModel)]="newTitle" />
+      </label>
+      <label>
+        {{ i18n.translate('espaceInstitution.publications.bodyLabel') }}
+        <textarea name="body" required [(ngModel)]="newBody"></textarea>
+      </label>
+      <button type="submit">{{ i18n.translate('espaceInstitution.publications.createSubmit') }}</button>
+    </form>
+  </section>
+</main>

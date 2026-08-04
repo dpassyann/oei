@@ -7,6 +7,7 @@ const KEYCLOAK_REALM = 'oei';
 const KEYCLOAK_CLIENT_ID = 'oei-frontend';
 const REDIRECT_URI = 'http://localhost:4300/';
 const PKCE_VERIFIER_STORAGE_KEY = 'oei_pkce_code_verifier';
+const ACCESS_TOKEN_STORAGE_KEY = 'oei_access_token';
 
 /**
  * Abstraction over the actual browser navigation so tests can assert on the
@@ -75,5 +76,22 @@ export class KeycloakAuthService {
       const authorizationUrl = buildAuthorizationUrl(codeChallenge);
       this.navigable.navigate(authorizationUrl);
     });
+  }
+
+  /**
+   * Whether the current visitor holds a session token, used by route guards (e.g.
+   * `institutionAccessGuard`) to protect `/espace-institution`.
+   *
+   * NOTE: as documented above, this plan does not implement the PKCE callback/token-exchange
+   * step — nothing in the current codebase ever writes `ACCESS_TOKEN_STORAGE_KEY`. This method
+   * is therefore honestly always `false` today (any guard using it always redirects to
+   * `login()`), and will start reflecting real sessions once the callback route is built.
+   */
+  isAuthenticated(): boolean {
+    try {
+      return sessionStorage.getItem(ACCESS_TOKEN_STORAGE_KEY) !== null;
+    } catch {
+      return false;
+    }
   }
 }

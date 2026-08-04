@@ -59,4 +59,13 @@ describe('KeycloakAuthService', () => {
 
     expect(firstChallenge).not.toBe(secondChallenge);
   });
+
+  it('givenNoAccessTokenStored_whenIsAuthenticated_thenReturnsFalse', () => {
+    expect(service.isAuthenticated()).toBe(false);
+  });
+
+  it('givenAccessTokenStored_whenIsAuthenticated_thenReturnsTrue', () => {
+    sessionStorage.setItem('oei_access_token', 'fake-token');
+    expect(service.isAuthenticated()).toBe(true);
+  });
 });

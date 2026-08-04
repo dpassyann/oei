@@ -1,0 +1,107 @@
+:host {
+  display: block;
+}
+
+$oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+
+.oei-page {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem;
+}
+
+.oei-page__title {
+  margin: 0 0 1.5rem;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-page__body {
+  margin: 0 0 1.5rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.oei-page__empty {
+  margin: 0 0 1.5rem;
+  color: #666;
+  font-style: italic;
+}
+
+.oei-institution-dashboard__identity {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.oei-institution-dashboard__logo {
+  width: 3.5rem;
+  height: 3.5rem;
+  object-fit: contain;
+}
+
+.oei-institution-dashboard__name {
+  margin: 0;
+  color: $oei-navy;
+}
+
+.oei-institution-dashboard__demo-badge {
+  display: inline-block;
+  margin-top: 0.25rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(232, 165, 48, 0.15);
+  color: $oei-gold;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.oei-institution-dashboard__partnership {
+  margin-bottom: 1.5rem;
+}
+
+.oei-institution-dashboard__kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  gap: 1rem;
+  list-style: none;
+  margin: 0 0 2rem;
+  padding: 0;
+}
+
+.oei-institution-dashboard__kpi {
+  padding: 1rem;
+  border: 1px solid rgba(10, 30, 63, 0.15);
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.oei-institution-dashboard__kpi-value {
+  display: block;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-institution-dashboard__kpi-label {
+  display: block;
+  font-size: 0.8rem;
+  color: #555;
+}
+
+.oei-institution-dashboard__nav {
+  display: flex;
+  gap: 1.5rem;
+
+  a {
+    color: $oei-navy;
+    font-weight: 600;
+
+    &:hover {
+      color: $oei-gold;
+    }
+  }
+}

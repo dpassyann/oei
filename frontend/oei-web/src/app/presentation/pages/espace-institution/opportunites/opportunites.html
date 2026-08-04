@@ -1,0 +1,51 @@
+<main class="oei-page">
+  <a class="oei-page__back" routerLink="/espace-institution">{{ i18n.translate('espaceInstitution.nav.backToDashboard') }}</a>
+  <h1 class="oei-page__title">{{ i18n.translate('espaceInstitution.opportunities.title') }}</h1>
+  <p class="oei-page__body">{{ i18n.translate('espaceInstitution.opportunities.intro') }}</p>
+
+  @if (opportunities().length === 0) {
+    <p class="oei-page__empty">{{ i18n.translate('espaceInstitution.opportunities.empty') }}</p>
+  } @else {
+    <ul class="oei-institution-opportunities__list">
+      @for (opportunity of opportunities(); track opportunity.id) {
+        <li class="oei-institution-opportunities__item">
+          <div>
+            <span class="oei-institution-opportunities__type">{{ i18n.translate('espaceInstitution.opportunities.types.' + opportunity.type) }}</span>
+            <h2>{{ opportunity.title }}</h2>
+            <span class="oei-institution-opportunities__status">{{ i18n.translate('espaceInstitution.opportunities.status.' + opportunity.status) }}</span>
+          </div>
+          @if (opportunity.status === 'PUBLISHED') {
+            <button type="button" (click)="close(opportunity.id)">{{ i18n.translate('espaceInstitution.opportunities.close') }}</button>
+          }
+        </li>
+      }
+    </ul>
+  }
+
+  <section class="oei-institution-opportunities__new">
+    <h2>{{ i18n.translate('espaceInstitution.opportunities.newTitle') }}</h2>
+    <form (ngSubmit)="createOpportunity()">
+      <label>
+        {{ i18n.translate('espaceInstitution.opportunities.typeLabel') }}
+        <select name="type" [(ngModel)]="newType">
+          @for (type of opportunityTypes; track type) {
+            <option [value]="type">{{ i18n.translate('espaceInstitution.opportunities.types.' + type) }}</option>
+          }
+        </select>
+      </label>
+      <label>
+        {{ i18n.translate('espaceInstitution.opportunities.titleLabel') }}
+        <input type="text" name="title" required [(ngModel)]="newTitle" />
+      </label>
+      <label>
+        {{ i18n.translate('espaceInstitution.opportunities.descriptionLabel') }}
+        <textarea name="description" required [(ngModel)]="newDescription"></textarea>
+      </label>
+      <label>
+        {{ i18n.translate('espaceInstitution.opportunities.expiresLabel') }}
+        <input type="date" name="expiresAt" [(ngModel)]="newExpiresAt" />
+      </label>
+      <button type="submit">{{ i18n.translate('espaceInstitution.opportunities.createSubmit') }}</button>
+    </form>
+  </section>
+</main>

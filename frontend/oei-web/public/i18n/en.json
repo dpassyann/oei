@@ -277,6 +277,145 @@
     "visitWebsite": "Visit the website",
     "notFound": "Partner not found."
   },
+  "espaceInstitution": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "membres": "Affiliated members",
+      "publications": "Publications",
+      "opportunites": "Opportunities",
+      "backToDashboard": "Back to dashboard"
+    },
+    "dashboard": {
+      "title": "Institution area",
+      "intro": "Overview of your institution: affiliated members, activity and partnership with the OEI.",
+      "maturityInProgress": "Data still being built up",
+      "maturityEstablished": "Consolidated data",
+      "kpis": {
+        "affiliatedMembers": "Affiliated members",
+        "activeMembers": "Active members",
+        "verifiedProfiles": "Verified profiles",
+        "certifications": "Certifications",
+        "badges": "Badges",
+        "signedCharters": "Signed charters",
+        "contributions": "Contributions",
+        "trainings": "Trainings",
+        "opportunities": "Opportunities",
+        "publications": "Publications",
+        "invitations": "Invitations"
+      },
+      "partnership": {
+        "title": "Partnership",
+        "level": "Level",
+        "verified": "Verified",
+        "notVerified": "Not verified"
+      },
+      "levels": {
+        "PROSPECT": "Prospect",
+        "STANDARD": "Standard",
+        "SILVER": "Silver",
+        "GOLD": "Gold",
+        "STRATEGIC": "Strategic"
+      }
+    },
+    "members": {
+      "title": "Affiliated members",
+      "intro": "Manage members affiliated with your institution: invitations, affiliation validation and termination.",
+      "listTitle": "Active affiliated members",
+      "empty": "No affiliated members yet.",
+      "inviteTitle": "Invite an employee",
+      "inviteEmailLabel": "Professional email address",
+      "inviteRoleLabel": "Assigned role",
+      "inviteSubmit": "Send invitation",
+      "requestsTitle": "Affiliation requests",
+      "requestsEmpty": "No pending affiliation requests.",
+      "approve": "Approve",
+      "reject": "Reject",
+      "endAffiliation": "End affiliation",
+      "status": {
+        "PENDING": "Pending",
+        "APPROVED": "Approved",
+        "REJECTED": "Rejected",
+        "ENDED": "Ended"
+      },
+      "roles": {
+        "OWNER": "Owner",
+        "ADMIN": "Administrator",
+        "HR": "Human resources",
+        "TECH_LEAD": "Technical lead",
+        "COMMS": "Communications",
+        "READER": "Reader",
+        "CONTRIBUTOR": "Contributor",
+        "AFFILIATION_VALIDATOR": "Affiliation validator"
+      }
+    },
+    "publications": {
+      "title": "Institutional publications",
+      "intro": "Write and track the workflow of your institutional publications, from drafting through to publication.",
+      "empty": "No institutional publications yet.",
+      "newTitle": "New publication",
+      "typeLabel": "Publication type",
+      "titleLabel": "Title",
+      "bodyLabel": "Content",
+      "createSubmit": "Create draft",
+      "submitForReview": "Submit for checks and review",
+      "types": {
+        "OPINION": "Opinion piece",
+        "EXPERIENCE_REPORT": "Experience report",
+        "CIO_DECISION": "CIO decision",
+        "STUDY": "Study",
+        "REPORT": "Report",
+        "EVENT": "Event",
+        "TRAINING": "Training",
+        "OPPORTUNITY": "Opportunity"
+      },
+      "workflow": {
+        "DRAFT": "Draft",
+        "SUBMITTED": "Submitted",
+        "CHECKS": "Checks",
+        "REVIEW": "Review",
+        "CHANGES_REQUESTED": "Changes requested",
+        "VALIDATED": "Validated",
+        "TRANSLATED": "Translated",
+        "PUBLISHED": "Published",
+        "ARCHIVED": "Archived"
+      }
+    },
+    "opportunities": {
+      "title": "Opportunities",
+      "intro": "Publish opportunities for OEI members: jobs, internships, mentoring, pro bono missions, working groups or calls for experts.",
+      "empty": "No published opportunities yet.",
+      "newTitle": "New opportunity",
+      "typeLabel": "Opportunity type",
+      "titleLabel": "Title",
+      "descriptionLabel": "Description",
+      "expiresLabel": "Expiry date",
+      "createSubmit": "Publish opportunity",
+      "close": "Close",
+      "types": {
+        "JOB": "Job",
+        "INTERNSHIP": "Internship",
+        "MENTORING": "Mentoring",
+        "PRO_BONO": "Pro bono mission",
+        "WORKING_GROUP": "Working group",
+        "CALL_FOR_EXPERTS": "Call for experts"
+      },
+      "status": {
+        "DRAFT": "Draft",
+        "PUBLISHED": "Published",
+        "CLOSED": "Closed",
+        "REPORTED": "Reported"
+      }
+    }
+  },
+  "institutionPublic": {
+    "notFound": "Institution not found.",
+    "demoBadge": "Demonstration institution",
+    "partnershipTitle": "Partnership with the OEI",
+    "publicationsTitle": "Publications",
+    "publicationsEmpty": "No publications published yet.",
+    "opportunitiesTitle": "Opportunities",
+    "opportunitiesEmpty": "No opportunities published yet."
+  },
   "domaineDetail": {
     "backToHome": "Back to home",
     "lastModified": "Last updated",

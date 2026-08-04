@@ -277,6 +277,145 @@
     "visitWebsite": "Visita il sito",
     "notFound": "Partner non trovato."
   },
+  "espaceInstitution": {
+    "nav": {
+      "dashboard": "Pannello di controllo",
+      "membres": "Membri affiliati",
+      "publications": "Pubblicazioni",
+      "opportunites": "Opportunità",
+      "backToDashboard": "Torna al pannello di controllo"
+    },
+    "dashboard": {
+      "title": "Area istituzione",
+      "intro": "Panoramica della vostra istituzione: membri affiliati, attività e partnership con l'OEI.",
+      "maturityInProgress": "Dati in fase di costituzione",
+      "maturityEstablished": "Dati consolidati",
+      "kpis": {
+        "affiliatedMembers": "Membri affiliati",
+        "activeMembers": "Membri attivi",
+        "verifiedProfiles": "Profili verificati",
+        "certifications": "Certificazioni",
+        "badges": "Badge",
+        "signedCharters": "Carte firmate",
+        "contributions": "Contributi",
+        "trainings": "Formazioni",
+        "opportunities": "Opportunità",
+        "publications": "Pubblicazioni",
+        "invitations": "Inviti"
+      },
+      "partnership": {
+        "title": "Partnership",
+        "level": "Livello",
+        "verified": "Verificata",
+        "notVerified": "Non verificata"
+      },
+      "levels": {
+        "PROSPECT": "Prospect",
+        "STANDARD": "Standard",
+        "SILVER": "Argento",
+        "GOLD": "Oro",
+        "STRATEGIC": "Strategico"
+      }
+    },
+    "members": {
+      "title": "Membri affiliati",
+      "intro": "Gestite i membri affiliati alla vostra istituzione: inviti, convalida e cessazione dell'affiliazione.",
+      "listTitle": "Membri affiliati attivi",
+      "empty": "Nessun membro affiliato per il momento.",
+      "inviteTitle": "Invita un dipendente",
+      "inviteEmailLabel": "Indirizzo email professionale",
+      "inviteRoleLabel": "Ruolo assegnato",
+      "inviteSubmit": "Invia invito",
+      "requestsTitle": "Richieste di affiliazione",
+      "requestsEmpty": "Nessuna richiesta di affiliazione in sospeso.",
+      "approve": "Approva",
+      "reject": "Rifiuta",
+      "endAffiliation": "Termina affiliazione",
+      "status": {
+        "PENDING": "In attesa",
+        "APPROVED": "Approvata",
+        "REJECTED": "Rifiutata",
+        "ENDED": "Terminata"
+      },
+      "roles": {
+        "OWNER": "Proprietario",
+        "ADMIN": "Amministratore",
+        "HR": "Risorse umane",
+        "TECH_LEAD": "Responsabile tecnico",
+        "COMMS": "Comunicazione",
+        "READER": "Lettore",
+        "CONTRIBUTOR": "Collaboratore",
+        "AFFILIATION_VALIDATOR": "Validatore di affiliazione"
+      }
+    },
+    "publications": {
+      "title": "Pubblicazioni istituzionali",
+      "intro": "Redigete e seguite il workflow delle vostre pubblicazioni istituzionali, dalla bozza alla pubblicazione.",
+      "empty": "Nessuna pubblicazione istituzionale per il momento.",
+      "newTitle": "Nuova pubblicazione",
+      "typeLabel": "Tipo di pubblicazione",
+      "titleLabel": "Titolo",
+      "bodyLabel": "Contenuto",
+      "createSubmit": "Crea bozza",
+      "submitForReview": "Invia per controlli e revisione",
+      "types": {
+        "OPINION": "Opinione",
+        "EXPERIENCE_REPORT": "Resoconto di esperienza",
+        "CIO_DECISION": "Decisione del CIO",
+        "STUDY": "Studio",
+        "REPORT": "Rapporto",
+        "EVENT": "Evento",
+        "TRAINING": "Formazione",
+        "OPPORTUNITY": "Opportunità"
+      },
+      "workflow": {
+        "DRAFT": "Bozza",
+        "SUBMITTED": "Inviata",
+        "CHECKS": "Controlli",
+        "REVIEW": "Revisione",
+        "CHANGES_REQUESTED": "Modifiche richieste",
+        "VALIDATED": "Validata",
+        "TRANSLATED": "Tradotta",
+        "PUBLISHED": "Pubblicata",
+        "ARCHIVED": "Archiviata"
+      }
+    },
+    "opportunities": {
+      "title": "Opportunità",
+      "intro": "Pubblicate opportunità per i membri dell'OEI: lavoro, stage, mentoring, missioni pro bono, gruppi di lavoro o call for experts.",
+      "empty": "Nessuna opportunità pubblicata per il momento.",
+      "newTitle": "Nuova opportunità",
+      "typeLabel": "Tipo di opportunità",
+      "titleLabel": "Titolo",
+      "descriptionLabel": "Descrizione",
+      "expiresLabel": "Data di scadenza",
+      "createSubmit": "Pubblica opportunità",
+      "close": "Chiudi",
+      "types": {
+        "JOB": "Lavoro",
+        "INTERNSHIP": "Stage",
+        "MENTORING": "Mentoring",
+        "PRO_BONO": "Missione pro bono",
+        "WORKING_GROUP": "Gruppo di lavoro",
+        "CALL_FOR_EXPERTS": "Call for experts"
+      },
+      "status": {
+        "DRAFT": "Bozza",
+        "PUBLISHED": "Pubblicata",
+        "CLOSED": "Chiusa",
+        "REPORTED": "Segnalata"
+      }
+    }
+  },
+  "institutionPublic": {
+    "notFound": "Istituzione non trovata.",
+    "demoBadge": "Istituzione dimostrativa",
+    "partnershipTitle": "Partnership con l'OEI",
+    "publicationsTitle": "Pubblicazioni",
+    "publicationsEmpty": "Nessuna pubblicazione pubblicata per il momento.",
+    "opportunitiesTitle": "Opportunità",
+    "opportunitiesEmpty": "Nessuna opportunità pubblicata per il momento."
+  },
   "domaineDetail": {
     "backToHome": "Torna alla home",
     "lastModified": "Ultimo aggiornamento",
