@@ -1,0 +1,61 @@
+<main class="oei-cms-contributions">
+  <p><a routerLink="/cms">&larr; {{ i18n.translate('cms.list.title') }}</a></p>
+  <h1>{{ i18n.translate('cms.contributions.title') }}</h1>
+  <p>{{ i18n.translate('cms.contributions.intro') }}</p>
+
+  @if (contributions().length === 0) {
+    <p class="oei-cms-contributions__empty">{{ i18n.translate('cms.contributions.empty') }}</p>
+  } @else {
+    <table class="oei-cms-contributions__table">
+      <thead>
+        <tr>
+          <th>{{ i18n.translate('cms.contributions.columns.content') }}</th>
+          <th>{{ i18n.translate('cms.contributions.columns.author') }}</th>
+          <th>{{ i18n.translate('cms.contributions.columns.status') }}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (contribution of contributions(); track contribution.id) {
+          <tr>
+            <td>{{ contribution.contentId }}</td>
+            <td>{{ contribution.authorMemberId }}</td>
+            <td>{{ i18n.translate('cms.contributionStatus.' + contribution.status) }}</td>
+            <td><button type="button" (click)="select(contribution)">{{ i18n.translate('cms.list.open') }}</button></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  @if (selectedContribution(); as contribution) {
+    <section class="oei-cms-contributions__diff">
+      <h2>{{ i18n.translate('cms.contributions.diff.legend') }}</h2>
+      <pre>@for (line of diff(); track $index) {
+<span [attr.data-diff-type]="line.type">{{ line.type === 'removed' ? '- ' : line.type === 'added' ? '+ ' : '  ' }}{{ line.text }}</span>
+}</pre>
+    </section>
+
+    <section class="oei-cms-contributions__comments">
+      <h2>{{ i18n.translate('cms.contributions.comments.legend') }}</h2>
+      @if (comments().length === 0) {
+        <p>{{ i18n.translate('cms.contributions.comments.empty') }}</p>
+      } @else {
+        <ul>
+          @for (comment of comments(); track comment.id) {
+            <li>{{ comment.authorId }}: {{ comment.body }}</li>
+          }
+        </ul>
+      }
+      <form (submit)="$event.preventDefault(); submitComment()">
+        <input
+          type="text"
+          [attr.placeholder]="i18n.translate('cms.contributions.comments.placeholder')"
+          [value]="newComment()"
+          (input)="onNewCommentChange($any($event.target).value)"
+        />
+        <button type="submit">{{ i18n.translate('cms.contributions.comments.submit') }}</button>
+      </form>
+    </section>
+  }
+</main>

@@ -28,6 +28,18 @@ import { PublicationsApiAdapter } from './infrastructure/adapter/publications-ap
 import { NEWSLETTER_SUBSCRIPTION_PORT } from './domain/port/newsletter-subscription.port';
 import { NewsletterSubscriptionMockAdapter } from './infrastructure/adapter/newsletter-subscription-mock.adapter';
 import { NewsletterSubscriptionApiAdapter } from './infrastructure/adapter/newsletter-subscription-api.adapter';
+import { ADMIN_CONTENT_PORT } from './domain/port/cms/admin-content.port';
+import { AdminContentMockAdapter } from './infrastructure/adapter/admin-content-mock.adapter';
+import { AdminContentApiAdapter } from './infrastructure/adapter/admin-content-api.adapter';
+import { PUBLIC_CONTENT_PORT } from './domain/port/cms/public-content.port';
+import { PublicContentMockAdapter } from './infrastructure/adapter/public-content-mock.adapter';
+import { PublicContentApiAdapter } from './infrastructure/adapter/public-content-api.adapter';
+import { CONTRIBUTION_PORT } from './domain/port/governance/contribution.port';
+import { ContributionMockAdapter } from './infrastructure/adapter/contribution-mock.adapter';
+import { ContributionApiAdapter } from './infrastructure/adapter/contribution-api.adapter';
+import { GIT_SYNCHRONIZATION_PORT } from './domain/port/governance/git-synchronization.port';
+import { GitSynchronizationMockAdapter } from './infrastructure/adapter/git-synchronization-mock.adapter';
+import { GitSynchronizationApiAdapter } from './infrastructure/adapter/git-synchronization-api.adapter';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -67,6 +79,23 @@ export const appConfig: ApplicationConfig = {
       provide: NEWSLETTER_SUBSCRIPTION_PORT,
       useFactory: () =>
         inject(RuntimeConfig).isMock() ? inject(NewsletterSubscriptionMockAdapter) : inject(NewsletterSubscriptionApiAdapter),
+    },
+    {
+      provide: ADMIN_CONTENT_PORT,
+      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(AdminContentMockAdapter) : inject(AdminContentApiAdapter)),
+    },
+    {
+      provide: PUBLIC_CONTENT_PORT,
+      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(PublicContentMockAdapter) : inject(PublicContentApiAdapter)),
+    },
+    {
+      provide: CONTRIBUTION_PORT,
+      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(ContributionMockAdapter) : inject(ContributionApiAdapter)),
+    },
+    {
+      provide: GIT_SYNCHRONIZATION_PORT,
+      useFactory: () =>
+        inject(RuntimeConfig).isMock() ? inject(GitSynchronizationMockAdapter) : inject(GitSynchronizationApiAdapter),
     },
   ],
 };

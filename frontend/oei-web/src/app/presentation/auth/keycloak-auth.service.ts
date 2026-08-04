@@ -8,6 +8,16 @@ const KEYCLOAK_CLIENT_ID = 'oei-frontend';
 const REDIRECT_URI = 'http://localhost:4300/';
 const PKCE_VERIFIER_STORAGE_KEY = 'oei_pkce_code_verifier';
 
+// Design decision (documented — the callback/token-exchange step is explicitly out of scope, see
+// the class-level note below): with no real token exchange implemented yet, the CMS route guard
+// (`presentation/auth/cms.guard.ts`) still needs *some* signal to decide whether the current
+// visitor may reach `/cms`. Rather than inventing a parallel ad hoc mechanism, this reads a small,
+// clearly-named `sessionStorage` entry that a real callback step would populate with the decoded
+// JWT's realm roles once implemented — and that a mocked login flow (or an e2e test) can set
+// directly in the meantime. This is *not* a security boundary (no signature verification, no
+// tokens): it only gates which back-office UI renders in this mocked-end-to-end plan.
+const MOCK_SESSION_ROLES_STORAGE_KEY = 'oei_mock_session_roles';
+
 /**
  * Abstraction over the actual browser navigation so tests can assert on the
  * constructed authorization URL without triggering a real page navigation.
@@ -75,5 +85,37 @@ export class KeycloakAuthService {
       const authorizationUrl = buildAuthorizationUrl(codeChallenge);
       this.navigable.navigate(authorizationUrl);
     });
+  }
+
+  /** Realm roles for the current mocked session (see `MOCK_SESSION_ROLES_STORAGE_KEY` above) —
+   * empty when nobody is "logged in". */
+  getSessionRoles(): readonly string[] {
+    try {
+      const raw = sessionStorage.getItem(MOCK_SESSION_ROLES_STORAGE_KEY);
+      if (!raw) return [];
+      const parsed: unknown = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed.filter((role): role is string => typeof role === 'string') : [];
+    } catch {
+      return [];
+    }
+  }
+
+  isAuthenticated(): boolean {
+    return this.getSessionRoles().length > 0;
+  }
+
+  hasAnyRole(roles: readonly string[]): boolean {
+    const sessionRoles = this.getSessionRoles();
+    return roles.some((role) => sessionRoles.includes(role));
+  }
+
+  /** Test/mock-only helper: sets the mocked session roles (e.g. `['admin']`) so the CMS guard and
+   * back-office UI behave as if a real Keycloak login had completed. */
+  setMockSessionRoles(roles: readonly string[]): void {
+    sessionStorage.setItem(MOCK_SESSION_ROLES_STORAGE_KEY, JSON.stringify(roles));
+  }
+
+  clearMockSession(): void {
+    sessionStorage.removeItem(MOCK_SESSION_ROLES_STORAGE_KEY);
   }
 }

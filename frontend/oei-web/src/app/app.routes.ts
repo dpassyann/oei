@@ -13,6 +13,10 @@ import { MembresFondateurs } from './presentation/pages/membres-fondateurs/membr
 import { Publications } from './presentation/pages/publications/publications';
 import { Partenaires } from './presentation/pages/partenaires/partenaires';
 import { PartenaireDetail } from './presentation/pages/partenaire-detail/partenaire-detail';
+import { CmsContentList } from './presentation/pages/cms/cms-content-list/cms-content-list';
+import { CmsContentEditor } from './presentation/pages/cms/cms-content-editor/cms-content-editor';
+import { CmsContributions } from './presentation/pages/cms/cms-contributions/cms-contributions';
+import { cmsGuard } from './presentation/auth/cms.guard';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -29,4 +33,13 @@ export const routes: Routes = [
   { path: 'membres-fondateurs', component: MembresFondateurs },
   { path: 'mentions-legales', component: MentionsLegales },
   { path: 'plan-du-site', component: PlanDuSite },
+  {
+    path: 'cms',
+    canActivate: [cmsGuard],
+    children: [
+      { path: '', component: CmsContentList },
+      { path: 'contributions', component: CmsContributions },
+      { path: ':id', component: CmsContentEditor },
+    ],
+  },
 ];

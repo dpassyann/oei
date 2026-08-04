@@ -59,4 +59,33 @@ describe('KeycloakAuthService', () => {
 
     expect(firstChallenge).not.toBe(secondChallenge);
   });
+
+  describe('mock session roles', () => {
+    it('givenNoSession_whenCheckingAuthentication_thenIsNotAuthenticated', () => {
+      expect(service.isAuthenticated()).toBe(false);
+      expect(service.getSessionRoles()).toEqual([]);
+    });
+
+    it('givenMockRolesSet_whenCheckingAuthentication_thenIsAuthenticatedWithThoseRoles', () => {
+      service.setMockSessionRoles(['admin']);
+
+      expect(service.isAuthenticated()).toBe(true);
+      expect(service.getSessionRoles()).toEqual(['admin']);
+      expect(service.hasAnyRole(['admin'])).toBe(true);
+      expect(service.hasAnyRole(['member'])).toBe(false);
+    });
+
+    it('givenMockRolesCleared_whenCheckingAuthentication_thenIsNotAuthenticatedAgain', () => {
+      service.setMockSessionRoles(['member']);
+      service.clearMockSession();
+
+      expect(service.isAuthenticated()).toBe(false);
+    });
+
+    it('givenCorruptedStorageValue_whenGettingSessionRoles_thenReturnsEmptyArray', () => {
+      sessionStorage.setItem('oei_mock_session_roles', 'not-json');
+
+      expect(service.getSessionRoles()).toEqual([]);
+    });
+  });
 });

@@ -947,6 +947,56 @@ paths:
               schema:
                 $ref: "#/components/schemas/ContentContribution"
 
+  /api/member/v1/contributions/{id}/comments:
+    get:
+      tags: [member-contributions]
+      operationId: listContributionComments
+      summary: Commentaires sur une contribution (consultation).
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Commentaires
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ContentComment"
+    post:
+      tags: [member-contributions]
+      operationId: addContributionComment
+      summary: Ajoute un commentaire sur une contribution.
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [body]
+              properties:
+                body:
+                  type: string
+      responses:
+        "201":
+          description: Commentaire ajouté
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContentComment"
+
   # ---------------------------------------------------------------------------
   # /api/institution/v1 — account
   # ---------------------------------------------------------------------------
@@ -1474,7 +1524,9 @@ paths:
     get:
       tags: [admin-content]
       operationId: listAdminContent
-      summary: Liste le contenu CMS/gouvernance (filtres type, statut, langue).
+      summary: >
+        Liste le contenu CMS/gouvernance (filtres type, statut, langue, tag, et recherche texte
+        libre `q` sur titre/corps — voir ADR 0002: étendu plutôt que remplacé).
       security: [{ bearerAuth: [admin] }]
       parameters:
         - name: type
@@ -1487,6 +1539,15 @@ paths:
             $ref: "#/components/schemas/ContentWorkflowStatus"
         - name: lang
           in: query
+          schema:
+            type: string
+        - name: tag
+          in: query
+          schema:
+            type: string
+        - name: q
+          in: query
+          description: Recherche texte libre sur le titre et le corps de la version courante.
           schema:
             type: string
       responses:
@@ -1630,6 +1691,42 @@ paths:
       responses:
         "200":
           description: Contenu rejeté
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Content"
+
+  /api/admin/v1/content/{id}/translations/request:
+    post:
+      tags: [admin-content]
+      operationId: requestAdminContentTranslation
+      summary: >
+        Marque le contenu comme en attente de traduction avant programmation/publication
+        (APPROVED -> TRANSLATION_PENDING). Ajouté (ADR 0002: étendre plutôt que remplacer) car le
+        workflow du plan 04 distingue explicitement cette étape de `createAdminContentTranslation`
+        (qui, elle, enregistre une traduction concrète pour une langue donnée).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - $ref: "#/components/parameters/ContentId"
+      responses:
+        "200":
+          description: Contenu en attente de traduction
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Content"
+
+  /api/admin/v1/content/{id}/schedule:
+    post:
+      tags: [admin-content]
+      operationId: scheduleAdminContent
+      summary: Programme la publication (APPROVED/TRANSLATION_PENDING -> SCHEDULED).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - $ref: "#/components/parameters/ContentId"
+      responses:
+        "200":
+          description: Contenu programmé
           content:
             application/json:
               schema:
@@ -1865,6 +1962,24 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GitSynchronization"
+
+  /api/admin/v1/git/synchronizations/latest/files:
+    get:
+      tags: [admin-git]
+      operationId: listLatestGitSyncedFiles
+      summary: >
+        Fichiers Markdown (avec front matter) récupérés par la dernière synchronisation en
+        lecture. Lecture seule, jamais d'écriture vers le dépôt Git.
+      security: [{ bearerAuth: [admin] }]
+      responses:
+        "200":
+          description: Fichiers synchronisés
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GitSyncedFile"
 
   # ---------------------------------------------------------------------------
   # /api/admin/v1 — institutions oversight
@@ -3226,6 +3341,10 @@ components:
           $ref: "#/components/schemas/ContentSourceType"
         title:
           type: string
+        tags:
+          type: array
+          items:
+            type: string
         governance:
           $ref: "#/components/schemas/ContentGovernance"
 
@@ -3472,6 +3591,20 @@ components:
           type: array
           items:
             type: string
+
+    GitSyncedFile:
+      type: object
+      required: [path, gitRef, commitSha, rawContent]
+      properties:
+        path:
+          type: string
+        gitRef:
+          type: string
+        commitSha:
+          type: string
+        rawContent:
+          type: string
+          description: Contenu brut (front matter YAML + corps Markdown) tel que lu dans le dépôt.
 
     MediaAsset:
       type: object

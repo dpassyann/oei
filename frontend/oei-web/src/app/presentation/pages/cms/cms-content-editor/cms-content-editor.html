@@ -1,0 +1,96 @@
+<main class="oei-cms-editor">
+  <p><a routerLink="/cms">&larr; {{ i18n.translate('cms.list.title') }}</a></p>
+
+  @if (isNew()) {
+    <h1>{{ i18n.translate('cms.editor.newTitle') }}</h1>
+    <form (submit)="$event.preventDefault(); createDraft()">
+      <label>
+        {{ i18n.translate('cms.editor.metadata.type') }}
+        <select (change)="onNewTypeChange($any($event.target).value)">
+          @for (type of contentTypes; track type) {
+            <option [value]="type">{{ i18n.translate('cms.type.' + type) }}</option>
+          }
+        </select>
+      </label>
+      <label>
+        {{ i18n.translate('cms.editor.metadata.slug') }}
+        <input type="text" (input)="onNewSlugChange($any($event.target).value)" />
+      </label>
+      <label>
+        {{ i18n.translate('cms.editor.metadata.titleField') }}
+        <input type="text" (input)="onNewTitleChange($any($event.target).value)" />
+      </label>
+      <button type="submit">{{ i18n.translate('cms.editor.actions.create') }}</button>
+    </form>
+  } @else if (notFound()) {
+    <p>{{ i18n.translate('cms.editor.notFound') }}</p>
+  } @else if (content(); as content) {
+    <h1>{{ content.title }}</h1>
+    <p>
+      {{ i18n.translate('cms.editor.status.current') }}:
+      <span class="oei-cms-status" [attr.data-status]="content.status">{{ i18n.translate('cms.status.' + content.status) }}</span>
+    </p>
+
+    <fieldset>
+      <legend>{{ i18n.translate('cms.editor.metadata.legend') }}</legend>
+      <dl>
+        <dt>{{ i18n.translate('cms.editor.metadata.type') }}</dt>
+        <dd>{{ i18n.translate('cms.type.' + content.type) }}</dd>
+        <dt>{{ i18n.translate('cms.editor.metadata.slug') }}</dt>
+        <dd>{{ content.slug }}</dd>
+        <dt>{{ i18n.translate('cms.editor.metadata.approvalRequired') }}</dt>
+        <dd>{{ i18n.translate(content.governance.approvalRequired ? 'cms.common.yes' : 'cms.common.no') }}</dd>
+        <dt>{{ i18n.translate('cms.editor.metadata.decisionId') }}</dt>
+        <dd>{{ content.governance.decisionId ?? '—' }}</dd>
+      </dl>
+    </fieldset>
+
+    <fieldset class="oei-cms-editor__body">
+      <legend>{{ i18n.translate('cms.editor.body.legend') }}</legend>
+      <div class="oei-cms-editor__body-grid">
+        <div>
+          <h2>{{ i18n.translate('cms.editor.body.markdown') }}</h2>
+          <textarea rows="14" [value]="bodyDraft() || currentVersion()?.body || ''" (input)="onBodyDraftChange($any($event.target).value)"></textarea>
+        </div>
+        <div>
+          <h2>{{ i18n.translate('cms.editor.body.preview') }}</h2>
+          <div class="oei-cms-editor__preview" [innerHTML]="previewHtml()"></div>
+        </div>
+      </div>
+      <button type="button" (click)="saveVersion()">{{ i18n.translate('cms.editor.actions.saveVersion') }}</button>
+    </fieldset>
+
+    <fieldset class="oei-cms-editor__actions">
+      <legend>{{ i18n.translate('cms.editor.status.current') }}</legend>
+      @if (availableActions().includes('submit')) {
+        <button type="button" (click)="submit()">{{ i18n.translate('cms.editor.actions.submit') }}</button>
+      }
+      @if (availableActions().includes('approve')) {
+        <button type="button" (click)="approve('LEGAL')">{{ i18n.translate('cms.editor.actions.approveLegal') }}</button>
+        <button type="button" (click)="approve('GOVERNANCE')">{{ i18n.translate('cms.editor.actions.approveGovernance') }}</button>
+        <button type="button" (click)="reject()">{{ i18n.translate('cms.editor.actions.reject') }}</button>
+      }
+      @if (availableActions().includes('requestTranslation')) {
+        <button type="button" (click)="requestTranslation()">{{ i18n.translate('cms.editor.actions.requestTranslation') }}</button>
+      }
+      @if (availableActions().includes('schedule')) {
+        <button type="button" (click)="schedule()">{{ i18n.translate('cms.editor.actions.schedule') }}</button>
+      }
+      @if (availableActions().includes('publish')) {
+        <button type="button" (click)="publish()">{{ i18n.translate('cms.editor.actions.publish') }}</button>
+      }
+      @if (availableActions().includes('archive')) {
+        <button type="button" (click)="archive()">{{ i18n.translate('cms.editor.actions.archive') }}</button>
+      }
+    </fieldset>
+
+    <fieldset>
+      <legend>{{ i18n.translate('cms.editor.versions.legend') }}</legend>
+      <ul>
+        @for (version of versions(); track version.id) {
+          <li>{{ version.version }} — {{ i18n.translate('cms.status.' + version.status) }} ({{ version.createdAt }})</li>
+        }
+      </ul>
+    </fieldset>
+  }
+</main>

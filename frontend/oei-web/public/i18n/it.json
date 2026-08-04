@@ -276,5 +276,131 @@
     "backToList": "Torna all'elenco dei partner",
     "visitWebsite": "Visita il sito",
     "notFound": "Partner non trovato."
+  },
+  "cms": {
+    "type": {
+      "PAGE": "Pagina",
+      "ARTICLE": "Articolo",
+      "NEWS": "Notizia",
+      "EVENT": "Evento",
+      "WHITEPAPER": "Libro bianco",
+      "MANIFESTO": "Manifesto",
+      "GLOSSARY": "Glossario",
+      "STATUTES": "Statuto",
+      "REGULATION": "Regolamento",
+      "ETHICS_CODE": "Codice deontologico",
+      "COMPETENCY_FRAMEWORK": "Quadro delle competenze",
+      "CHARTER": "Carta",
+      "REPORT": "Rapporto",
+      "BOOK": "Libro",
+      "PRESS_RELEASE": "Comunicato stampa"
+    },
+    "status": {
+      "DRAFT": "Bozza",
+      "IN_REVIEW": "In revisione",
+      "LEGAL_REVIEW": "Revisione legale",
+      "GOVERNANCE_REVIEW": "Revisione di governance",
+      "APPROVED": "Approvato",
+      "TRANSLATION_PENDING": "Traduzione in sospeso",
+      "SCHEDULED": "Programmato",
+      "PUBLISHED": "Pubblicato",
+      "ARCHIVED": "Archiviato",
+      "REJECTED": "Rifiutato"
+    },
+    "contributionStatus": {
+      "PROPOSED": "Proposta",
+      "IN_CONSULTATION": "In consultazione",
+      "ACCEPTED": "Accettata",
+      "REJECTED": "Rifiutata",
+      "MERGED": "Integrata"
+    },
+    "list": {
+      "title": "Contenuti CMS",
+      "intro": "Back-office editoriale: pipeline Markdown, workflow di approvazione e governance documentale.",
+      "filters": {
+        "type": "Tipo",
+        "status": "Stato",
+        "language": "Lingua",
+        "query": "Ricerca",
+        "all": "Tutti"
+      },
+      "columns": {
+        "title": "Titolo",
+        "type": "Tipo",
+        "status": "Stato"
+      },
+      "newContent": "Nuovo contenuto",
+      "empty": "Nessun contenuto corrisponde ai filtri.",
+      "openContributions": "Contributi dei membri",
+      "open": "Apri"
+    },
+    "editor": {
+      "newTitle": "Nuovo contenuto",
+      "title": "Editor di contenuti",
+      "notFound": "Contenuto non trovato.",
+      "metadata": {
+        "legend": "Metadati (front matter)",
+        "type": "Tipo",
+        "slug": "Slug",
+        "titleField": "Titolo",
+        "language": "Lingua",
+        "sourceType": "Fonte",
+        "tags": "Tag (separati da virgola)",
+        "approvalRequired": "Approvazione di governance richiesta",
+        "decisionId": "Riferimento della decisione"
+      },
+      "body": {
+        "legend": "Corpo Markdown",
+        "markdown": "Markdown",
+        "preview": "Anteprima"
+      },
+      "actions": {
+        "create": "Crea bozza",
+        "saveVersion": "Salva nuova versione",
+        "submit": "Invia in revisione",
+        "approveLegal": "Approva (legale)",
+        "approveGovernance": "Approva (governance)",
+        "reject": "Rifiuta (torna a bozza)",
+        "requestTranslation": "Richiedi traduzione",
+        "schedule": "Pianifica",
+        "publish": "Pubblica",
+        "archive": "Archivia"
+      },
+      "status": {
+        "current": "Stato attuale"
+      },
+      "versions": {
+        "legend": "Cronologia delle versioni"
+      }
+    },
+    "contributions": {
+      "title": "Contributi dei membri",
+      "intro": "Proposte di patch Markdown inviate dai membri, con diff, commenti e decisione.",
+      "empty": "Nessun contributo per ora.",
+      "columns": {
+        "content": "Contenuto",
+        "author": "Autore",
+        "status": "Stato"
+      },
+      "diff": {
+        "legend": "Diff proposto"
+      },
+      "comments": {
+        "legend": "Commenti",
+        "empty": "Nessun commento.",
+        "placeholder": "Aggiungi un commento…",
+        "submit": "Invia"
+      }
+    },
+    "gitSync": {
+      "legend": "Sincronizzazione Git (sola lettura)",
+      "trigger": "Sincronizza",
+      "lastRun": "Ultima sincronizzazione",
+      "files": "File sincronizzati"
+    },
+    "common": {
+      "yes": "Sì",
+      "no": "No"
+    }
   }
 }
