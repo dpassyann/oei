@@ -3,7 +3,6 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { I18nService } from '../../i18n/i18n.service';
 import { NewsletterApplicationService } from '../../../application/service/newsletter-application.service';
-import { NEWSLETTER_INTERESTS, NewsletterInterest } from '../../../domain/model/newsletter-subscription';
 
 interface SocialLink {
   // Proper-noun brand names (LinkedIn, X, YouTube, Medium) are not translated —
@@ -48,27 +47,24 @@ export class SiteFooter {
 
   // Doc 01, section 10 ("Newsletter") requires email + language + interests + consent +
   // double opt-in + unsubscribe + a GDPR log — the language and the double-opt-in/log parts
-  // are handled server-side (see `NewsletterSubscriptionMockAdapter`); this component collects
-  // the visitor-facing fields (email, interests, consent) and reports the resulting status.
-  protected readonly interests = NEWSLETTER_INTERESTS;
+  // are handled server-side (see `NewsletterSubscriptionMockAdapter`). Interests are kept in
+  // the domain/port for later, but deliberately not exposed in this V1 form (kept simple:
+  // email + consent only) — always submitted as an empty list until a V2 UI adds them back.
   protected readonly email = signal('');
-  protected readonly selectedInterests = signal<readonly NewsletterInterest[]>([]);
   protected readonly consent = signal(false);
   protected readonly formStatus = signal<NewsletterFormStatus>('idle');
   protected readonly formErrorReason = signal<'invalidEmail' | 'consentRequired' | 'submissionFailed' | null>(null);
 
   protected submitNewsletter(): void {
     this.formStatus.set('submitting');
-    this.newsletter
-      .subscribe(this.email(), this.i18n.currentLang(), this.selectedInterests(), this.consent())
-      .subscribe((outcome) => {
-        if (outcome.success) {
-          this.formStatus.set('success');
-          this.formErrorReason.set(null);
-        } else {
-          this.formStatus.set('error');
-          this.formErrorReason.set(outcome.reason);
-        }
-      });
+    this.newsletter.subscribe(this.email(), this.i18n.currentLang(), [], this.consent()).subscribe((outcome) => {
+      if (outcome.success) {
+        this.formStatus.set('success');
+        this.formErrorReason.set(null);
+      } else {
+        this.formStatus.set('error');
+        this.formErrorReason.set(outcome.reason);
+      }
+    });
   }
 }

@@ -17,7 +17,10 @@
   "header": {
     "memberArea": "Área de membros",
     "searchAria": "Pesquisar",
-    "languageSelectAria": "Escolher o idioma"
+    "languageSelectAria": "Escolher o idioma",
+    "welcome": "Bem-vindo(a)",
+    "viewProfile": "Ver meu perfil",
+    "logout": "Sair"
   },
   "brand": {
     "line1": "A Ordem dos",

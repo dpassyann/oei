@@ -5,13 +5,7 @@
     @if (isFallback()) {
       <p class="oei-fallback-banner">{{ i18n.translate('home.fallbackNotice') }}</p>
     }
-    <div class="oei-hero__cta-group">
-      <button type="button" class="oei-cta-join">{{ i18n.translate('nav.join') }}</button>
-      <a class="oei-hero__cta-secondary" routerLink="/ressources" fragment="livre-blanc">{{
-        i18n.translate('home.hero.ctaWhitePaper')
-      }}</a>
-      <a class="oei-hero__cta-secondary" routerLink="/nos-missions">{{ i18n.translate('home.hero.ctaMission') }}</a>
-    </div>
+    <button type="button" class="oei-cta-join">{{ i18n.translate('nav.join') }}</button>
   </div>
 
   <div class="oei-hero__visual" aria-hidden="true">
@@ -133,7 +127,7 @@
       @for (domain of domainAreas(); track domain.slug) {
         <li class="oei-domains__card">
           <a class="oei-domains__card-link" [routerLink]="['/domaines', domain.slug]">
-            <span class="oei-domains__icon" aria-hidden="true">
+            <span class="oei-domains__icon" [class.oei-domains__icon--green]="domain.icon === 'leaf'" aria-hidden="true">
               @switch (domain.icon) {
                 @case ('shield-lock') {
                   <svg viewBox="0 0 24 24" fill="none">
@@ -260,8 +254,9 @@
     <ul class="oei-partners__list">
       @for (partner of partnerList(); track partner.id) {
         <li class="oei-partners__item">
-          <a class="oei-partners__link" routerLink="/partenaires" [title]="partner.name">
+          <a class="oei-partners__link" [href]="partner.websiteUrl" target="_blank" rel="noopener" [attr.aria-label]="partner.name">
             <img class="oei-partners__logo" [src]="partner.logoUrl" [alt]="partner.name" />
+            <span class="oei-partners__tooltip">{{ partner.description }}</span>
           </a>
         </li>
       }

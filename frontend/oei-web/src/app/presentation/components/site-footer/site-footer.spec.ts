@@ -107,13 +107,14 @@ describe('SiteFooter', () => {
     );
   });
 
-  it('givenComponent_whenCreated_thenRendersInterestsAndConsentFields', () => {
+  it('givenComponent_whenCreated_thenRendersConsentFieldButNoInterestsPicker', () => {
     configure();
     const fixture = TestBed.createComponent(SiteFooter);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
 
-    expect(compiled.querySelectorAll('#newsletter-interests option').length).toBe(6);
+    // V1 keeps the newsletter form simple: email + consent only, no interests picker.
+    expect(compiled.querySelector('#newsletter-interests')).toBeNull();
     expect(compiled.querySelector('.oei-footer__newsletter-consent input[type="checkbox"]')).toBeTruthy();
   });
 

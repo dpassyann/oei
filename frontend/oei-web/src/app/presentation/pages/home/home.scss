@@ -56,14 +56,6 @@ $oei-gold: #e8a530;
   font-size: 0.9rem;
 }
 
-.oei-hero__cta-group {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.4rem 1.25rem;
-  margin-top: 0.75rem;
-}
-
 .oei-cta-join {
   background: $oei-gold;
   color: $oei-navy;
@@ -78,21 +70,6 @@ $oei-gold: #e8a530;
 
   &:hover {
     filter: brightness(1.08);
-  }
-}
-
-// Discreet secondary CTAs ("Lire le Livre Blanc" / "Découvrir notre mission") — plain text
-// links, not competing visually with the primary gold button, added next to it without
-// altering the hero's grid layout.
-.oei-hero__cta-secondary {
-  color: rgba(255, 255, 255, 0.85);
-  font-weight: 600;
-  font-size: 0.9rem;
-  text-decoration: underline;
-  text-underline-offset: 0.2rem;
-
-  &:hover {
-    color: $oei-gold;
   }
 }
 
@@ -299,9 +276,18 @@ $oei-gold: #e8a530;
 .oei-home-row {
   display: grid;
   grid-template-columns: 1.3fr 1fr 0.85fr;
-  gap: 2rem;
+  gap: 1.5rem;
   padding: 3rem 2.5rem;
   align-items: start;
+}
+
+// Thin vertical rule between the Domaines/Actualités/Ressources columns, drawn on the
+// two inner columns rather than as separate <hr> elements so it aligns with the content
+// top regardless of column height.
+.oei-home-row > :nth-child(2),
+.oei-home-row > :nth-child(3) {
+  border-left: 1px solid rgba(10, 30, 63, 0.08);
+  padding-left: 1.5rem;
 }
 
 .oei-domains__title {
@@ -312,23 +298,19 @@ $oei-gold: #e8a530;
 
 .oei-domains__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.oei-domains__card {
-  aspect-ratio: 1 / 1;
-  max-width: 10rem;
-}
-
 .oei-domains__card-link {
   height: 100%;
+  min-height: 8.5rem;
   border: 1px solid rgba(10, 30, 63, 0.08);
   border-radius: 0.75rem;
-  padding: 1rem;
+  padding: 1.1rem;
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
@@ -340,8 +322,13 @@ $oei-gold: #e8a530;
     transform 0.18s ease;
 
   &:hover {
-    box-shadow: 0 0.5rem 1.25rem rgba(10, 30, 63, 0.12);
-    transform: translateY(-2px);
+    box-shadow: 0 0.75rem 1.5rem rgba(10, 30, 63, 0.16);
+    transform: translateY(-4px);
+    border-color: rgba(232, 165, 48, 0.4);
+
+    .oei-domains__icon {
+      transform: scale(1.08);
+    }
   }
 }
 
@@ -354,6 +341,14 @@ $oei-gold: #e8a530;
   border-radius: 50%;
   background: rgba(232, 165, 48, 0.14);
   color: $oei-navy;
+  transition: transform 0.18s ease;
+
+  // "Informatique Verte" is the one domain shown in a green accent in the mockup —
+  // every other domain icon stays navy.
+  &--green {
+    background: rgba(45, 143, 80, 0.14);
+    color: #2d8f50;
+  }
 }
 
 .oei-domains__icon svg {
@@ -487,6 +482,11 @@ $oei-gold: #e8a530;
   padding: 0;
 }
 
+.oei-partners__link {
+  position: relative;
+  display: inline-flex;
+}
+
 .oei-partners__logo {
   height: 2rem;
   opacity: 0.9;
@@ -495,4 +495,45 @@ $oei-gold: #e8a530;
   &:hover {
     opacity: 1;
   }
+}
+
+.oei-partners__tooltip {
+  position: absolute;
+  bottom: calc(100% + 0.6rem);
+  left: 50%;
+  transform: translateX(-50%) translateY(0.25rem);
+  min-width: 12rem;
+  max-width: 16rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.4rem;
+  background: #ffffff;
+  color: $oei-navy;
+  font-size: 0.8rem;
+  line-height: 1.35;
+  box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.2);
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+  z-index: 5;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 0.35rem solid transparent;
+    border-top-color: #ffffff;
+  }
+}
+
+.oei-partners__link:hover .oei-partners__tooltip,
+.oei-partners__link:focus-visible .oei-partners__tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
 }

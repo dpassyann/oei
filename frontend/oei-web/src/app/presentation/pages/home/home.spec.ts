@@ -126,7 +126,7 @@ describe('Home', () => {
     expect(fixture.nativeElement.textContent).toContain('Titre test');
   });
 
-  it('givenComponent_whenNgOnInit_thenRendersSecondaryHeroCtasNextToPrimaryJoinButton', async () => {
+  it('givenComponent_whenNgOnInit_thenRendersOnlyThePrimaryJoinButtonInTheHero', async () => {
     configure();
     const fixture = TestBed.createComponent(Home);
     fixture.detectChanges();
@@ -135,10 +135,9 @@ describe('Home', () => {
     const compiled = fixture.nativeElement as HTMLElement;
 
     expect(compiled.querySelector('.oei-cta-join')).not.toBeNull();
-    const secondaryLinks = compiled.querySelectorAll<HTMLAnchorElement>('.oei-hero__cta-secondary');
-    expect(secondaryLinks.length).toBe(2);
-    expect(compiled.textContent).toContain('Lire le Livre Blanc');
-    expect(compiled.textContent).toContain('Découvrir notre mission');
+    // The mockup shows a single hero CTA — no secondary "Lire le Livre Blanc"/"Découvrir notre
+    // mission" links crowding the primary "Rejoignez le mouvement" button.
+    expect(compiled.querySelectorAll('.oei-hero__cta-secondary').length).toBe(0);
   });
 
   it('givenFourStats_whenNgOnInit_thenRendersFourStatEntriesWithPlusSuffix', async () => {

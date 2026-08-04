@@ -4,6 +4,7 @@ import { of } from 'rxjs';
 import { App } from './app';
 import { routes } from './app.routes';
 import { NEWSLETTER_SUBSCRIPTION_PORT } from './domain/port/newsletter-subscription.port';
+import { MEMBER_PORT } from './domain/port/identity/member.port';
 
 describe('App', () => {
   beforeEach(async () => {
@@ -11,11 +12,12 @@ describe('App', () => {
       imports: [App],
       providers: [
         provideRouter(routes),
-        // `SiteFooter` (always-rendered chrome, not behind the router-outlet) injects
-        // `NewsletterApplicationService`, which requires this token — unlike the routed page
-        // ports (e.g. `CONTENT_REPOSITORY_PORT`), it must be available as soon as `App` itself
-        // is created.
+        // `SiteFooter`/`SiteHeader` (always-rendered chrome, not behind the router-outlet) inject
+        // `NewsletterApplicationService`/`MemberApplicationService`, which require these tokens —
+        // unlike the routed page ports (e.g. `CONTENT_REPOSITORY_PORT`), they must be available
+        // as soon as `App` itself is created.
         { provide: NEWSLETTER_SUBSCRIPTION_PORT, useValue: { subscribe: () => of({ status: 'pendingConfirmation' }) } },
+        { provide: MEMBER_PORT, useValue: { getCurrentMember: () => of(null) } },
       ],
     }).compileComponents();
   });

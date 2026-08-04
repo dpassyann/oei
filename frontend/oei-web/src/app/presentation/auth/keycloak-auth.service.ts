@@ -1,4 +1,4 @@
-import { InjectionToken, inject, Service } from '@angular/core';
+import { InjectionToken, inject, Service, signal } from '@angular/core';
 
 // Small, local config constant rather than a full runtime-config entry — this plan only
 // needs the login redirect, not the callback/token-exchange step (see login() below).
@@ -17,6 +17,17 @@ const PKCE_VERIFIER_STORAGE_KEY = 'oei_pkce_code_verifier';
 // directly in the meantime. This is *not* a security boundary (no signature verification, no
 // tokens): it only gates which back-office UI renders in this mocked-end-to-end plan.
 const MOCK_SESSION_ROLES_STORAGE_KEY = 'oei_mock_session_roles';
+
+function readStoredSessionRoles(): readonly string[] {
+  try {
+    const raw = sessionStorage.getItem(MOCK_SESSION_ROLES_STORAGE_KEY);
+    if (!raw) return [];
+    const parsed: unknown = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed.filter((role): role is string => typeof role === 'string') : [];
+  } catch {
+    return [];
+  }
+}
 
 /**
  * Abstraction over the actual browser navigation so tests can assert on the
@@ -77,6 +88,12 @@ function buildAuthorizationUrl(codeChallenge: string): string {
 export class KeycloakAuthService {
   private readonly navigable = inject(NAVIGABLE);
 
+  // Signal-backed (not a plain read-from-storage getter) so that any component — notably the
+  // header's connected-state dropdown — reactively re-renders the moment `setMockSessionRoles`/
+  // `clearMockSession`/`setMockAuthenticated` is called anywhere in the app, without needing a
+  // navigation to happen first (route guards re-invoke naturally on navigation; components don't).
+  private readonly sessionRolesSignal = signal<readonly string[]>(readStoredSessionRoles());
+
   login(): void {
     const verifier = generateCodeVerifier();
     sessionStorage.setItem(PKCE_VERIFIER_STORAGE_KEY, verifier);
@@ -90,14 +107,7 @@ export class KeycloakAuthService {
   /** Realm roles for the current mocked session (see `MOCK_SESSION_ROLES_STORAGE_KEY` above) —
    * empty when nobody is "logged in". */
   getSessionRoles(): readonly string[] {
-    try {
-      const raw = sessionStorage.getItem(MOCK_SESSION_ROLES_STORAGE_KEY);
-      if (!raw) return [];
-      const parsed: unknown = JSON.parse(raw);
-      return Array.isArray(parsed) ? parsed.filter((role): role is string => typeof role === 'string') : [];
-    } catch {
-      return [];
-    }
+    return this.sessionRolesSignal();
   }
 
   /**
@@ -109,11 +119,11 @@ export class KeycloakAuthService {
    * `setMockSessionRoles()` (by a mocked login flow or a test), not a verified JWT.
    */
   isAuthenticated(): boolean {
-    return this.getSessionRoles().length > 0;
+    return this.sessionRolesSignal().length > 0;
   }
 
   hasAnyRole(roles: readonly string[]): boolean {
-    const sessionRoles = this.getSessionRoles();
+    const sessionRoles = this.sessionRolesSignal();
     return roles.some((role) => sessionRoles.includes(role));
   }
 
@@ -121,10 +131,12 @@ export class KeycloakAuthService {
    * back-office UI behave as if a real Keycloak login had completed. */
   setMockSessionRoles(roles: readonly string[]): void {
     sessionStorage.setItem(MOCK_SESSION_ROLES_STORAGE_KEY, JSON.stringify(roles));
+    this.sessionRolesSignal.set(roles);
   }
 
   clearMockSession(): void {
     sessionStorage.removeItem(MOCK_SESSION_ROLES_STORAGE_KEY);
+    this.sessionRolesSignal.set([]);
   }
 
   /** Demo/test-only convenience wrapper over the mocked session roles, used by the

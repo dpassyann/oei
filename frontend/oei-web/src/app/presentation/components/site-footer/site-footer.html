@@ -31,22 +31,6 @@
             </button>
           </div>
 
-          <label class="oei-footer__newsletter-label" for="newsletter-interests">{{
-            i18n.translate('footer.newsletter.interestsLabel')
-          }}</label>
-          <select
-            id="newsletter-interests"
-            name="newsletterInterests"
-            class="oei-footer__newsletter-interests"
-            multiple
-            [ngModel]="selectedInterests()"
-            (ngModelChange)="selectedInterests.set($event)"
-          >
-            @for (interest of interests; track interest) {
-              <option [value]="interest">{{ i18n.translate('footer.newsletter.interests.' + interest) }}</option>
-            }
-          </select>
-
           <label class="oei-footer__newsletter-consent">
             <input
               type="checkbox"
@@ -72,7 +56,38 @@
       <ul class="oei-footer__social-list">
         @for (social of socialLinks; track social.name) {
           <li>
-            <a [href]="social.href" class="oei-footer__social-link" [attr.aria-label]="social.name">{{ social.name[0] }}</a>
+            <a [href]="social.href" class="oei-footer__social-link" [attr.aria-label]="social.name" target="_blank" rel="noopener">
+              @switch (social.name) {
+                @case ('LinkedIn') {
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path
+                      d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.5h4V21H3V9.5Zm7 0h3.8v1.64h.05c.53-.98 1.83-2.02 3.77-2.02 4.03 0 4.78 2.55 4.78 5.86V21h-4v-5.4c0-1.29-.02-2.94-1.86-2.94-1.87 0-2.15 1.4-2.15 2.85V21h-4V9.5Z"
+                    />
+                  </svg>
+                }
+                @case ('X') {
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path
+                      d="M13.9 10.6 21 3h-2.2l-6.2 6.6L7.6 3H2l7.5 10.4L2.3 21h2.2l6.6-7 5.3 7H22l-8.1-10.4Zm-2.3 2.5-.8-1.1L4.9 4.5h2.2l4.9 6.7.8 1.1 6.4 8.7h-2.2l-5.2-7Z"
+                    />
+                  </svg>
+                }
+                @case ('YouTube') {
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path
+                      d="M22 12s0-3.4-.43-5a2.8 2.8 0 0 0-2-2C17.9 4.5 12 4.5 12 4.5s-5.9 0-7.57.5a2.8 2.8 0 0 0-2 2C2 8.6 2 12 2 12s0 3.4.43 5a2.8 2.8 0 0 0 2 2C6.1 19.5 12 19.5 12 19.5s5.9 0 7.57-.5a2.8 2.8 0 0 0 2-2C22 15.4 22 12 22 12ZM10 15.3V8.7l6 3.3-6 3.3Z"
+                    />
+                  </svg>
+                }
+                @case ('Medium') {
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path
+                      d="M4 5.5 8.6 5.5 13.5 15.4 17.8 5.5 22 5.5 22 5.9 20.7 7.1C20.5 7.2 20.5 7.4 20.5 7.6L20.5 17.6C20.5 17.8 20.5 18 20.7 18.1L21.9 19.3 21.9 19.6 16 19.6 16 19.3 17.3 18C17.4 17.9 17.4 17.9 17.4 17.7L17.4 9.4 12.7 19.6 12.1 19.6 6.6 9.4 6.6 16.4C6.6 16.7 6.7 16.9 6.9 17.1L8.5 19.3 8.5 19.6 4 19.6 4 19.3 5.6 17.1C5.8 16.9 5.9 16.7 5.9 16.4L5.9 7.4C5.9 7.2 5.8 7 5.6 6.8L4 5.8Z"
+                    />
+                  </svg>
+                }
+              }
+            </a>
           </li>
         }
       </ul>

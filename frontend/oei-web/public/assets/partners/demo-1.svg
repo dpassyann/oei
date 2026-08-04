@@ -1,4 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="160" height="48" viewBox="0 0 160 48">
-  <rect width="160" height="48" rx="6" fill="#ffffff" fill-opacity="0"/>
-  <text x="80" y="30" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#ffffff">DEMO 1</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="52" viewBox="0 0 180 52">
+  <g fill="none" stroke="#ffffff" stroke-width="1.6">
+    <circle cx="18" cy="26" r="12"/>
+    <path d="M18 14v24M5 26h26" stroke-width="1"/>
+    <path d="M10 18c5 3 12 3 16 0M10 34c5-3 12-3 16 0" stroke-width="1"/>
+  </g>
+  <text x="42" y="23" font-family="Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="700" fill="#ffffff" letter-spacing="0.5">
+    PARTENAIRE
+  </text>
+  <text x="42" y="37" font-family="Segoe UI, Arial, sans-serif" font-size="12.5" font-weight="700" fill="#ffffff" letter-spacing="0.5">
+    DÉMONSTRATION A
+  </text>
 </svg>

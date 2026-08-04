@@ -17,7 +17,10 @@
   "header": {
     "memberArea": "Área de miembros",
     "searchAria": "Buscar",
-    "languageSelectAria": "Elegir el idioma"
+    "languageSelectAria": "Elegir el idioma",
+    "welcome": "Bienvenido/a",
+    "viewProfile": "Ver mi perfil",
+    "logout": "Cerrar sesión"
   },
   "brand": {
     "line1": "La Orden de los",

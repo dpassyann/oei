@@ -27,6 +27,14 @@ $oei-gold: #e8a530;
   background: linear-gradient(160deg, $oei-navy 0%, $oei-navy-light 100%);
 }
 
+// Thin vertical rule between the quote/newsletter/social columns, matching the same
+// treatment used for the Domaines/Actualités/Ressources row on the home page.
+.oei-footer__main > :nth-child(2),
+.oei-footer__main > :nth-child(3) {
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  padding-left: 1.5rem;
+}
+
 .oei-footer__quote {
   margin: 0;
   font-size: 1.1rem;
@@ -79,20 +87,6 @@ $oei-gold: #e8a530;
   &::placeholder {
     color: rgba(255, 255, 255, 0.5);
   }
-}
-
-.oei-footer__newsletter-label {
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.75);
-}
-
-.oei-footer__newsletter-interests {
-  padding: 0.4rem 0.6rem;
-  border-radius: 0.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
-  font-size: 0.85rem;
 }
 
 .oei-footer__newsletter-consent {
@@ -149,8 +143,14 @@ $oei-gold: #e8a530;
   background: rgba(255, 255, 255, 0.1);
   color: #ffffff;
   text-decoration: none;
-  font-weight: 700;
-  font-size: 0.85rem;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+
+  svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
 
   &:hover {
     background: $oei-gold;

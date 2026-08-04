@@ -1,13 +1,23 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { vi } from 'vitest';
+import { of } from 'rxjs';
 import { SiteHeader } from './site-header';
+import { KeycloakAuthService } from '../../auth/keycloak-auth.service';
+import { MemberApplicationService } from '../../../application/service/member-application.service';
+import { createMember } from '../../../domain/model/identity/member';
 
 describe('SiteHeader', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [SiteHeader],
-      providers: [provideRouter([])],
+      providers: [
+        provideRouter([]),
+        // Not connected in these base tests, so this fake is never actually called — but
+        // `MemberApplicationService` is injected eagerly in `SiteHeader`'s field initializer
+        // regardless of connection state, so it must still be constructible.
+        { provide: MemberApplicationService, useValue: { getCurrentMember: () => of(null) } },
+      ],
     });
   });
 
@@ -45,5 +55,56 @@ describe('SiteHeader', () => {
     button?.click();
 
     expect(navigateSpy).toHaveBeenCalledWith('/espace-membre');
+  });
+
+  describe('connected state', () => {
+    function configureConnected(): void {
+      TestBed.configureTestingModule({
+        imports: [SiteHeader],
+        providers: [
+          provideRouter([]),
+          {
+            provide: KeycloakAuthService,
+            useValue: { isAuthenticated: () => true, clearMockSession: () => undefined },
+          },
+          {
+            provide: MemberApplicationService,
+            useValue: { getCurrentMember: () => of(createMember({ id: 'm1', publicSlug: 'jane', displayName: 'Jane Dupont (Démonstration)', locale: 'fr', country: 'CH', createdAt: '2026-01-01' })) },
+          },
+        ],
+      });
+    }
+
+    it('givenConnectedMember_whenCreated_thenRendersWelcomeDropdownInsteadOfMemberAreaButton', async () => {
+      configureConnected();
+      const fixture = TestBed.createComponent(SiteHeader);
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+      const compiled = fixture.nativeElement as HTMLElement;
+
+      expect(compiled.querySelector('.oei-cta-member')).toBeNull();
+      expect(compiled.querySelector('.oei-member-menu__trigger')?.textContent).toContain('Jane Dupont (Démonstration)');
+    });
+
+    it('givenDropdownOpen_whenLogoutClicked_thenClearsSessionAndNavigatesHome', async () => {
+      configureConnected();
+      const fixture = TestBed.createComponent(SiteHeader);
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+      const router = TestBed.inject(Router);
+      const navigateSpy = vi.spyOn(router, 'navigateByUrl');
+      const keycloakAuth = TestBed.inject(KeycloakAuthService);
+      const clearSpy = vi.spyOn(keycloakAuth, 'clearMockSession');
+      const compiled = fixture.nativeElement as HTMLElement;
+
+      compiled.querySelector<HTMLButtonElement>('.oei-member-menu__trigger')?.click();
+      fixture.detectChanges();
+      compiled.querySelector<HTMLButtonElement>('.oei-member-menu__item--button')?.click();
+
+      expect(clearSpy).toHaveBeenCalled();
+      expect(navigateSpy).toHaveBeenCalledWith('/');
+    });
   });
 });

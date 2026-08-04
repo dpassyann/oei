@@ -17,7 +17,10 @@
   "header": {
     "memberArea": "Mitgliederbereich",
     "searchAria": "Suchen",
-    "languageSelectAria": "Sprache wählen"
+    "languageSelectAria": "Sprache wählen",
+    "welcome": "Willkommen",
+    "viewProfile": "Mein Profil ansehen",
+    "logout": "Abmelden"
   },
   "brand": {
     "line1": "Der Orden der",
