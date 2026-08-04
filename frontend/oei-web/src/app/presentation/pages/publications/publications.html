@@ -1,0 +1,28 @@
+<main class="oei-page">
+  <h1 class="oei-page__title">{{ i18n.translate('publications.title') }}</h1>
+  <p class="oei-page__body">{{ i18n.translate('publications.intro') }}</p>
+
+  <ul class="oei-publications__categories">
+    @for (category of categories; track category) {
+      <li class="oei-publications__category">{{ i18n.translate('publications.categories.' + category) }}</li>
+    }
+  </ul>
+
+  @if (publications().length === 0) {
+    <p class="oei-page__empty">{{ i18n.translate('publications.empty') }}</p>
+  } @else {
+    <ul class="oei-publications__list">
+      @for (publication of publications(); track publication.id) {
+        <li class="oei-publications__item">
+          <img class="oei-publications__image" [src]="publication.imageUrl" [alt]="publication.title" />
+          <div class="oei-publications__body">
+            <span class="oei-publications__category-tag">{{ i18n.translate('publications.categories.' + publication.category) }}</span>
+            <h2 class="oei-publications__item-title">{{ publication.title }}</h2>
+            <p class="oei-publications__excerpt">{{ publication.excerpt }}</p>
+            <a class="oei-publications__link" [href]="publication.link">{{ i18n.translate('publications.readMore') }}</a>
+          </div>
+        </li>
+      }
+    </ul>
+  }
+</main>

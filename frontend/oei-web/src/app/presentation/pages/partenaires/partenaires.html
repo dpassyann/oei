@@ -1,0 +1,21 @@
+<main class="oei-page">
+  <h1 class="oei-page__title">{{ i18n.translate('partenaires.title') }}</h1>
+  <p class="oei-page__body">{{ i18n.translate('partenaires.intro') }}</p>
+
+  @if (partners().length === 0) {
+    <p class="oei-page__empty">{{ i18n.translate('partenaires.empty') }}</p>
+  } @else {
+    <ul class="oei-partenaires__list">
+      @for (partner of partners(); track partner.id) {
+        <li class="oei-partenaires__item">
+          <a class="oei-partenaires__link" [routerLink]="['/partenaires', partner.id]">
+            <img class="oei-partenaires__logo" [src]="partner.logoUrl" [alt]="partner.name" />
+            <h2 class="oei-partenaires__name">{{ partner.name }}</h2>
+            <span class="oei-partenaires__badge">{{ partner.category }}</span>
+            <p class="oei-partenaires__description">{{ partner.description }}</p>
+          </a>
+        </li>
+      }
+    </ul>
+  }
+</main>

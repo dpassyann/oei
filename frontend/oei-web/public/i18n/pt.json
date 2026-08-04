@@ -11,7 +11,8 @@
     "join": "Junte-se ao movimento",
     "foundingMembers": "Membros fundadores",
     "legalNotices": "Avisos legais",
-    "sitemap": "Mapa do site"
+    "sitemap": "Mapa do site",
+    "partners": "Parceiros"
   },
   "header": {
     "memberArea": "Área de membros",
@@ -31,7 +32,25 @@
     "subscribe": "Inscrever-se",
     "followUs": "Siga-nos",
     "becomeFoundingMember": "Torne-se membro fundador",
-    "orgName": "Ordem dos Especialistas em Informática"
+    "orgName": "Ordem dos Especialistas em Informática",
+    "newsletter": {
+      "interestsLabel": "Áreas de interesse",
+      "interests": {
+        "cybersecurity": "Cibersegurança",
+        "ai": "Inteligência artificial",
+        "ethics": "Ética",
+        "certification": "Certificação",
+        "governance": "Governação digital",
+        "events": "Eventos"
+      },
+      "consentLabel": "Aceito receber a newsletter da Ordem dos Peritos Informáticos e tomei conhecimento da política de privacidade.",
+      "successMessage": "Obrigado! Foi enviado um email de confirmação — clique no link para confirmar a sua subscrição.",
+      "errors": {
+        "invalidEmail": "Endereço de email inválido.",
+        "consentRequired": "O consentimento é necessário para subscrever a newsletter.",
+        "submissionFailed": "Ocorreu um erro. Tente novamente."
+      }
+    }
   },
   "home": {
     "hero": {
@@ -42,7 +61,9 @@
         "Promover a excelência e a formação contínua",
         "Estabelecer um código deontológico mundial",
         "Acompanhar as transformações digitais de forma responsável"
-      ]
+      ],
+      "ctaWhitePaper": "Ler o Livro Branco",
+      "ctaMission": "Descobrir a nossa missão"
     },
     "commitments": {
       "0": {
@@ -139,10 +160,22 @@
       "categoryHeader": "Categoria",
       "annualFeeHeader": "Contribuição anual",
       "tiers": {
-        "0": { "label": "Estudante", "amount": "20 €" },
-        "1": { "label": "Membro", "amount": "50 €" },
-        "2": { "label": "Membro fundador", "amount": "100 €" },
-        "3": { "label": "Membro apoiador", "amount": "250 €" }
+        "0": {
+          "label": "Estudante",
+          "amount": "20 €"
+        },
+        "1": {
+          "label": "Membro",
+          "amount": "50 €"
+        },
+        "2": {
+          "label": "Membro fundador",
+          "amount": "100 €"
+        },
+        "3": {
+          "label": "Membro apoiador",
+          "amount": "250 €"
+        }
       }
     },
     "foundingStatus": {
@@ -181,7 +214,9 @@
       "contact": "Contato",
       "foundingMembers": "Membros fundadores",
       "legalNotices": "Avisos legais",
-      "sitemap": "Mapa do site"
+      "sitemap": "Mapa do site",
+      "publications": "Publicações",
+      "partners": "Parceiros"
     }
   },
   "ressources": {
@@ -201,12 +236,45 @@
       "title": "Nossos recursos",
       "pendingBadge": "em breve",
       "items": {
-        "deontologie": { "label": "Código deontológico" },
-        "referentiel": { "label": "Quadro de competências" },
-        "livreBlanc": { "label": "Livro Branco" },
-        "positions": { "label": "Posições e declarações" },
-        "rapports": { "label": "Relatórios e estudos" }
+        "deontologie": {
+          "label": "Código deontológico"
+        },
+        "referentiel": {
+          "label": "Quadro de competências"
+        },
+        "livreBlanc": {
+          "label": "Livro Branco"
+        },
+        "positions": {
+          "label": "Posições e declarações"
+        },
+        "rapports": {
+          "label": "Relatórios e estudos"
+        }
       }
     }
+  },
+  "publications": {
+    "title": "Publicações",
+    "intro": "Encontre aqui as publicações da Ordem dos Peritos Informáticos: artigos, comunicados, livros brancos, relatórios, eventos, consultas e chamadas de contribuição.",
+    "empty": "Ainda não foi publicada nenhuma publicação. Volte em breve.",
+    "readMore": "Ler mais",
+    "categories": {
+      "article": "Artigo",
+      "pressRelease": "Comunicado de imprensa",
+      "whitePaper": "Livro branco",
+      "report": "Relatório",
+      "event": "Evento",
+      "consultation": "Consulta",
+      "callForContribution": "Chamada de contribuição"
+    }
+  },
+  "partenaires": {
+    "title": "Parceiros",
+    "intro": "As instituições académicas, empresas, instituições, associações e meios de comunicação que apoiam o movimento da Ordem dos Peritos Informáticos.",
+    "empty": "Ainda não foi validado nenhum parceiro.",
+    "backToList": "Voltar à lista de parceiros",
+    "visitWebsite": "Visitar o site",
+    "notFound": "Parceiro não encontrado."
   }
 }

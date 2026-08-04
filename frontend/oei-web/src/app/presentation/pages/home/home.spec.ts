@@ -21,6 +21,8 @@ const FAKE_CONTENT_SERVICE = {
 // so tests can assert on the rendered wording without depending on network I/O.
 const INTERFACE_STRINGS: Record<string, string> = {
   'nav.join': 'Rejoignez le mouvement',
+  'home.hero.ctaWhitePaper': 'Lire le Livre Blanc',
+  'home.hero.ctaMission': 'Découvrir notre mission',
   'home.hero.panelTitle': "L'Ordre des Experts Informaticiens",
   'home.hero.panelBody': 'Un mouvement international pour reconnaître, structurer et élever la profession informatique.',
   'home.commitments.0.title': "Défendre l'intérêt général",
@@ -116,6 +118,21 @@ describe('Home', () => {
     fixture.detectChanges();
     await fixture.whenStable();
     expect(fixture.nativeElement.textContent).toContain('Titre test');
+  });
+
+  it('givenComponent_whenNgOnInit_thenRendersSecondaryHeroCtasNextToPrimaryJoinButton', async () => {
+    configure();
+    const fixture = TestBed.createComponent(Home);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector('.oei-cta-join')).not.toBeNull();
+    const secondaryLinks = compiled.querySelectorAll<HTMLAnchorElement>('.oei-hero__cta-secondary');
+    expect(secondaryLinks.length).toBe(2);
+    expect(compiled.textContent).toContain('Lire le Livre Blanc');
+    expect(compiled.textContent).toContain('Découvrir notre mission');
   });
 
   it('givenFourStats_whenNgOnInit_thenRendersFourStatEntriesWithPlusSuffix', async () => {

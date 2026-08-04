@@ -11,7 +11,8 @@
     "join": "Unisciti al movimento",
     "foundingMembers": "Membri fondatori",
     "legalNotices": "Note legali",
-    "sitemap": "Mappa del sito"
+    "sitemap": "Mappa del sito",
+    "partners": "Partner"
   },
   "header": {
     "memberArea": "Area membri",
@@ -31,7 +32,25 @@
     "subscribe": "Iscriviti",
     "followUs": "Seguici",
     "becomeFoundingMember": "Diventa membro fondatore",
-    "orgName": "Ordine degli Esperti Informatici"
+    "orgName": "Ordine degli Esperti Informatici",
+    "newsletter": {
+      "interestsLabel": "Aree di interesse",
+      "interests": {
+        "cybersecurity": "Cybersicurezza",
+        "ai": "Intelligenza artificiale",
+        "ethics": "Etica",
+        "certification": "Certificazione",
+        "governance": "Governance digitale",
+        "events": "Eventi"
+      },
+      "consentLabel": "Accetto di ricevere la newsletter dell'Ordine degli Esperti Informatici e ho preso visione dell'informativa sulla privacy.",
+      "successMessage": "Grazie! Ti abbiamo inviato un'email di conferma — clicca sul link per confermare l'iscrizione.",
+      "errors": {
+        "invalidEmail": "Indirizzo email non valido.",
+        "consentRequired": "Il consenso è obbligatorio per iscriversi alla newsletter.",
+        "submissionFailed": "Si è verificato un errore. Riprova."
+      }
+    }
   },
   "home": {
     "hero": {
@@ -42,7 +61,9 @@
         "Promuovere l'eccellenza e la formazione continua",
         "Stabilire un codice deontologico mondiale",
         "Accompagnare le trasformazioni digitali in modo responsabile"
-      ]
+      ],
+      "ctaWhitePaper": "Leggi il Libro Bianco",
+      "ctaMission": "Scopri la nostra missione"
     },
     "commitments": {
       "0": {
@@ -139,10 +160,22 @@
       "categoryHeader": "Categoria",
       "annualFeeHeader": "Quota annuale",
       "tiers": {
-        "0": { "label": "Studente", "amount": "20 €" },
-        "1": { "label": "Membro", "amount": "50 €" },
-        "2": { "label": "Membro fondatore", "amount": "100 €" },
-        "3": { "label": "Membro sostenitore", "amount": "250 €" }
+        "0": {
+          "label": "Studente",
+          "amount": "20 €"
+        },
+        "1": {
+          "label": "Membro",
+          "amount": "50 €"
+        },
+        "2": {
+          "label": "Membro fondatore",
+          "amount": "100 €"
+        },
+        "3": {
+          "label": "Membro sostenitore",
+          "amount": "250 €"
+        }
       }
     },
     "foundingStatus": {
@@ -181,7 +214,9 @@
       "contact": "Contatto",
       "foundingMembers": "Membri fondatori",
       "legalNotices": "Note legali",
-      "sitemap": "Mappa del sito"
+      "sitemap": "Mappa del sito",
+      "publications": "Pubblicazioni",
+      "partners": "Partner"
     }
   },
   "ressources": {
@@ -201,12 +236,45 @@
       "title": "Le nostre risorse",
       "pendingBadge": "in arrivo",
       "items": {
-        "deontologie": { "label": "Codice deontologico" },
-        "referentiel": { "label": "Quadro delle competenze" },
-        "livreBlanc": { "label": "Libro Bianco" },
-        "positions": { "label": "Posizioni e dichiarazioni" },
-        "rapports": { "label": "Rapporti e studi" }
+        "deontologie": {
+          "label": "Codice deontologico"
+        },
+        "referentiel": {
+          "label": "Quadro delle competenze"
+        },
+        "livreBlanc": {
+          "label": "Libro Bianco"
+        },
+        "positions": {
+          "label": "Posizioni e dichiarazioni"
+        },
+        "rapports": {
+          "label": "Rapporti e studi"
+        }
       }
     }
+  },
+  "publications": {
+    "title": "Pubblicazioni",
+    "intro": "Qui trovi le pubblicazioni dell’Ordine degli Esperti Informatici: articoli, comunicati, libri bianchi, rapporti, eventi, consultazioni e inviti a contribuire.",
+    "empty": "Nessuna pubblicazione è stata ancora pubblicata. Torna presto.",
+    "readMore": "Continua a leggere",
+    "categories": {
+      "article": "Articolo",
+      "pressRelease": "Comunicato stampa",
+      "whitePaper": "Libro bianco",
+      "report": "Rapporto",
+      "event": "Evento",
+      "consultation": "Consultazione",
+      "callForContribution": "Invito a contribuire"
+    }
+  },
+  "partenaires": {
+    "title": "Partner",
+    "intro": "Le istituzioni accademiche, le aziende, le istituzioni, le associazioni e i media che sostengono il movimento dell'Ordine degli Esperti Informatici.",
+    "empty": "Nessun partner è stato ancora convalidato.",
+    "backToList": "Torna all'elenco dei partner",
+    "visitWebsite": "Visita il sito",
+    "notFound": "Partner non trovato."
   }
 }

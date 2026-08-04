@@ -11,7 +11,8 @@
     "join": "Join the movement",
     "foundingMembers": "Founding members",
     "legalNotices": "Legal notices",
-    "sitemap": "Sitemap"
+    "sitemap": "Sitemap",
+    "partners": "Partners"
   },
   "header": {
     "memberArea": "Member area",
@@ -31,7 +32,25 @@
     "subscribe": "Subscribe",
     "followUs": "Follow us",
     "becomeFoundingMember": "Become a founding member",
-    "orgName": "Order of IT Experts"
+    "orgName": "Order of IT Experts",
+    "newsletter": {
+      "interestsLabel": "Areas of interest",
+      "interests": {
+        "cybersecurity": "Cybersecurity",
+        "ai": "Artificial Intelligence",
+        "ethics": "Ethics",
+        "certification": "Certification",
+        "governance": "Digital governance",
+        "events": "Events"
+      },
+      "consentLabel": "I agree to receive the Order of IT Experts' newsletter and I have read the privacy policy.",
+      "successMessage": "Thank you! A confirmation email has been sent — click the link inside to confirm your subscription.",
+      "errors": {
+        "invalidEmail": "Invalid email address.",
+        "consentRequired": "Consent is required to subscribe to the newsletter.",
+        "submissionFailed": "Something went wrong — please try again."
+      }
+    }
   },
   "home": {
     "hero": {
@@ -42,7 +61,9 @@
         "Promoting excellence and continuous learning",
         "Establishing a global code of ethics",
         "Supporting responsible digital transformation"
-      ]
+      ],
+      "ctaWhitePaper": "Read the White Paper",
+      "ctaMission": "Discover our mission"
     },
     "commitments": {
       "0": {
@@ -139,10 +160,22 @@
       "categoryHeader": "Category",
       "annualFeeHeader": "Annual fee",
       "tiers": {
-        "0": { "label": "Student", "amount": "€20" },
-        "1": { "label": "Member", "amount": "€50" },
-        "2": { "label": "Founding member", "amount": "€100" },
-        "3": { "label": "Supporting member", "amount": "€250" }
+        "0": {
+          "label": "Student",
+          "amount": "€20"
+        },
+        "1": {
+          "label": "Member",
+          "amount": "€50"
+        },
+        "2": {
+          "label": "Founding member",
+          "amount": "€100"
+        },
+        "3": {
+          "label": "Supporting member",
+          "amount": "€250"
+        }
       }
     },
     "foundingStatus": {
@@ -181,7 +214,9 @@
       "contact": "Contact",
       "foundingMembers": "Founding members",
       "legalNotices": "Legal notice",
-      "sitemap": "Sitemap"
+      "sitemap": "Sitemap",
+      "publications": "Publications",
+      "partners": "Partners"
     }
   },
   "ressources": {
@@ -201,12 +236,45 @@
       "title": "Our resources",
       "pendingBadge": "coming soon",
       "items": {
-        "deontologie": { "label": "Code of ethics" },
-        "referentiel": { "label": "Competency framework" },
-        "livreBlanc": { "label": "White Paper" },
-        "positions": { "label": "Positions & Statements" },
-        "rapports": { "label": "Reports & Studies" }
+        "deontologie": {
+          "label": "Code of ethics"
+        },
+        "referentiel": {
+          "label": "Competency framework"
+        },
+        "livreBlanc": {
+          "label": "White Paper"
+        },
+        "positions": {
+          "label": "Positions & Statements"
+        },
+        "rapports": {
+          "label": "Reports & Studies"
+        }
       }
     }
+  },
+  "publications": {
+    "title": "Publications",
+    "intro": "Find the Order of IT Experts' publications here: articles, press releases, white papers, reports, events, consultations and calls for contribution.",
+    "empty": "No publication has been posted yet. Check back soon.",
+    "readMore": "Read more",
+    "categories": {
+      "article": "Article",
+      "pressRelease": "Press release",
+      "whitePaper": "White paper",
+      "report": "Report",
+      "event": "Event",
+      "consultation": "Consultation",
+      "callForContribution": "Call for contribution"
+    }
+  },
+  "partenaires": {
+    "title": "Partners",
+    "intro": "The academic institutions, businesses, institutions, associations and media supporting the Order of IT Experts movement.",
+    "empty": "No partner has been validated yet.",
+    "backToList": "Back to the partner list",
+    "visitWebsite": "Visit the website",
+    "notFound": "Partner not found."
   }
 }

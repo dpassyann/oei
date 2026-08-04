@@ -56,6 +56,14 @@ $oei-gold: #e8a530;
   font-size: 0.9rem;
 }
 
+.oei-hero__cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1.25rem;
+  margin-top: 0.75rem;
+}
+
 .oei-cta-join {
   background: $oei-gold;
   color: $oei-navy;
@@ -70,6 +78,21 @@ $oei-gold: #e8a530;
 
   &:hover {
     filter: brightness(1.08);
+  }
+}
+
+// Discreet secondary CTAs ("Lire le Livre Blanc" / "Découvrir notre mission") — plain text
+// links, not competing visually with the primary gold button, added next to it without
+// altering the hero's grid layout.
+.oei-hero__cta-secondary {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+
+  &:hover {
+    color: $oei-gold;
   }
 }
 

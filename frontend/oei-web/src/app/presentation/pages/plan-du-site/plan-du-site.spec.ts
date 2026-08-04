@@ -13,6 +13,8 @@ const INTERFACE_STRINGS: Record<string, string> = {
   'planDuSite.links.certifications': 'Certifications',
   'planDuSite.links.resources': 'Ressources',
   'planDuSite.links.news': 'Actualités',
+  'planDuSite.links.publications': 'Publications',
+  'planDuSite.links.partners': 'Partenaires',
   'planDuSite.links.contact': 'Contact',
   'planDuSite.links.foundingMembers': 'Membres fondateurs',
   'planDuSite.links.legalNotices': 'Mentions légales',
@@ -41,7 +43,7 @@ describe('PlanDuSite', () => {
 
     expect(compiled.querySelector('.oei-page__title')?.textContent).toContain('Plan du site');
     const links = compiled.querySelectorAll<HTMLAnchorElement>('.oei-page__link');
-    expect(links.length).toBe(11);
+    expect(links.length).toBe(13);
     links.forEach((link) => {
       const href = link.getAttribute('href');
       expect(href).toBeTruthy();

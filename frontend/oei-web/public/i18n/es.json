@@ -11,7 +11,8 @@
     "join": "Únete al movimiento",
     "foundingMembers": "Miembros fundadores",
     "legalNotices": "Aviso legal",
-    "sitemap": "Mapa del sitio"
+    "sitemap": "Mapa del sitio",
+    "partners": "Socios"
   },
   "header": {
     "memberArea": "Área de miembros",
@@ -31,7 +32,25 @@
     "subscribe": "Suscribirse",
     "followUs": "Síguenos",
     "becomeFoundingMember": "Conviértete en miembro fundador",
-    "orgName": "Orden de los Expertos en Informática"
+    "orgName": "Orden de los Expertos en Informática",
+    "newsletter": {
+      "interestsLabel": "Áreas de interés",
+      "interests": {
+        "cybersecurity": "Ciberseguridad",
+        "ai": "Inteligencia artificial",
+        "ethics": "Ética",
+        "certification": "Certificación",
+        "governance": "Gobernanza digital",
+        "events": "Eventos"
+      },
+      "consentLabel": "Acepto recibir el boletín de la Orden de Expertos en Informática y he leído la política de privacidad.",
+      "successMessage": "¡Gracias! Se ha enviado un correo de confirmación — haga clic en el enlace para confirmar su suscripción.",
+      "errors": {
+        "invalidEmail": "Dirección de correo electrónico no válida.",
+        "consentRequired": "Se requiere el consentimiento para suscribirse al boletín.",
+        "submissionFailed": "Se produjo un error. Inténtelo de nuevo."
+      }
+    }
   },
   "home": {
     "hero": {
@@ -42,7 +61,9 @@
         "Promover la excelencia y la formación continua",
         "Establecer un código deontológico mundial",
         "Acompañar las transformaciones digitales de manera responsable"
-      ]
+      ],
+      "ctaWhitePaper": "Leer el Libro Blanco",
+      "ctaMission": "Descubrir nuestra misión"
     },
     "commitments": {
       "0": {
@@ -139,10 +160,22 @@
       "categoryHeader": "Categoría",
       "annualFeeHeader": "Cuota anual",
       "tiers": {
-        "0": { "label": "Estudiante", "amount": "20 €" },
-        "1": { "label": "Miembro", "amount": "50 €" },
-        "2": { "label": "Miembro fundador", "amount": "100 €" },
-        "3": { "label": "Miembro benefactor", "amount": "250 €" }
+        "0": {
+          "label": "Estudiante",
+          "amount": "20 €"
+        },
+        "1": {
+          "label": "Miembro",
+          "amount": "50 €"
+        },
+        "2": {
+          "label": "Miembro fundador",
+          "amount": "100 €"
+        },
+        "3": {
+          "label": "Miembro benefactor",
+          "amount": "250 €"
+        }
       }
     },
     "foundingStatus": {
@@ -181,7 +214,9 @@
       "contact": "Contacto",
       "foundingMembers": "Miembros fundadores",
       "legalNotices": "Aviso legal",
-      "sitemap": "Mapa del sitio"
+      "sitemap": "Mapa del sitio",
+      "publications": "Publicaciones",
+      "partners": "Socios"
     }
   },
   "ressources": {
@@ -201,12 +236,45 @@
       "title": "Nuestros recursos",
       "pendingBadge": "próximamente",
       "items": {
-        "deontologie": { "label": "Código deontológico" },
-        "referentiel": { "label": "Marco de competencias" },
-        "livreBlanc": { "label": "Libro Blanco" },
-        "positions": { "label": "Posiciones y declaraciones" },
-        "rapports": { "label": "Informes y estudios" }
+        "deontologie": {
+          "label": "Código deontológico"
+        },
+        "referentiel": {
+          "label": "Marco de competencias"
+        },
+        "livreBlanc": {
+          "label": "Libro Blanco"
+        },
+        "positions": {
+          "label": "Posiciones y declaraciones"
+        },
+        "rapports": {
+          "label": "Informes y estudios"
+        }
       }
     }
+  },
+  "publications": {
+    "title": "Publicaciones",
+    "intro": "Encuentre aquí las publicaciones de la Orden de Expertos en Informática: artículos, comunicados, libros blancos, informes, eventos, consultas y convocatorias de contribución.",
+    "empty": "Todavía no se ha publicado ninguna publicación. Vuelva pronto.",
+    "readMore": "Leer más",
+    "categories": {
+      "article": "Artículo",
+      "pressRelease": "Comunicado de prensa",
+      "whitePaper": "Libro blanco",
+      "report": "Informe",
+      "event": "Evento",
+      "consultation": "Consulta",
+      "callForContribution": "Convocatoria de contribución"
+    }
+  },
+  "partenaires": {
+    "title": "Socios",
+    "intro": "Las instituciones académicas, empresas, instituciones, asociaciones y medios que apoyan el movimiento de la Orden de Expertos en Informática.",
+    "empty": "Aún no se ha validado ningún socio.",
+    "backToList": "Volver a la lista de socios",
+    "visitWebsite": "Visitar el sitio web",
+    "notFound": "Socio no encontrado."
   }
 }

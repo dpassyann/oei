@@ -11,7 +11,8 @@
     "join": "Rejoignez le mouvement",
     "foundingMembers": "Membres fondateurs",
     "legalNotices": "Mentions légales",
-    "sitemap": "Plan du site"
+    "sitemap": "Plan du site",
+    "partners": "Partenaires"
   },
   "header": {
     "memberArea": "Espace membre",
@@ -31,7 +32,25 @@
     "subscribe": "S'inscrire",
     "followUs": "Suivez-nous",
     "becomeFoundingMember": "Devenir membre fondateur",
-    "orgName": "Ordre des Experts Informaticiens"
+    "orgName": "Ordre des Experts Informaticiens",
+    "newsletter": {
+      "interestsLabel": "Centres d'intérêt",
+      "interests": {
+        "cybersecurity": "Cybersécurité",
+        "ai": "Intelligence artificielle",
+        "ethics": "Éthique",
+        "certification": "Certification",
+        "governance": "Gouvernance numérique",
+        "events": "Événements"
+      },
+      "consentLabel": "J'accepte de recevoir la newsletter de l'Ordre des Experts Informaticiens et j'ai pris connaissance de la politique de confidentialité.",
+      "successMessage": "Merci ! Un email de confirmation vous a été envoyé — cliquez sur le lien qu’il contient pour valider votre inscription.",
+      "errors": {
+        "invalidEmail": "Adresse email invalide.",
+        "consentRequired": "Le consentement est requis pour vous inscrire à la newsletter.",
+        "submissionFailed": "Une erreur est survenue, veuillez réessayer."
+      }
+    }
   },
   "home": {
     "hero": {
@@ -42,7 +61,9 @@
         "Promouvoir l'excellence et la formation continue",
         "Établir un code de déontologie mondial",
         "Accompagner les transformations numériques de manière responsable"
-      ]
+      ],
+      "ctaWhitePaper": "Lire le Livre Blanc",
+      "ctaMission": "Découvrir notre mission"
     },
     "commitments": {
       "0": {
@@ -139,10 +160,22 @@
       "categoryHeader": "Catégorie",
       "annualFeeHeader": "Cotisation annuelle",
       "tiers": {
-        "0": { "label": "Étudiant", "amount": "20 €" },
-        "1": { "label": "Membre", "amount": "50 €" },
-        "2": { "label": "Membre fondateur", "amount": "100 €" },
-        "3": { "label": "Membre soutien", "amount": "250 €" }
+        "0": {
+          "label": "Étudiant",
+          "amount": "20 €"
+        },
+        "1": {
+          "label": "Membre",
+          "amount": "50 €"
+        },
+        "2": {
+          "label": "Membre fondateur",
+          "amount": "100 €"
+        },
+        "3": {
+          "label": "Membre soutien",
+          "amount": "250 €"
+        }
       }
     },
     "foundingStatus": {
@@ -181,7 +214,9 @@
       "contact": "Contact",
       "foundingMembers": "Membres fondateurs",
       "legalNotices": "Mentions légales",
-      "sitemap": "Plan du site"
+      "sitemap": "Plan du site",
+      "publications": "Publications",
+      "partners": "Partenaires"
     }
   },
   "ressources": {
@@ -201,12 +236,45 @@
       "title": "Nos ressources",
       "pendingBadge": "à venir",
       "items": {
-        "deontologie": { "label": "Code de déontologie" },
-        "referentiel": { "label": "Référentiel de compétences" },
-        "livreBlanc": { "label": "Livre Blanc" },
-        "positions": { "label": "Mentions & Positions" },
-        "rapports": { "label": "Rapports & Études" }
+        "deontologie": {
+          "label": "Code de déontologie"
+        },
+        "referentiel": {
+          "label": "Référentiel de compétences"
+        },
+        "livreBlanc": {
+          "label": "Livre Blanc"
+        },
+        "positions": {
+          "label": "Mentions & Positions"
+        },
+        "rapports": {
+          "label": "Rapports & Études"
+        }
       }
     }
+  },
+  "publications": {
+    "title": "Publications",
+    "intro": "Retrouvez ici les publications de l'Ordre des Experts Informaticiens : articles, communiqués, livres blancs, rapports, événements, consultations et appels à contribution.",
+    "empty": "Aucune publication n'a été mise en ligne pour le moment. Revenez bientôt.",
+    "readMore": "Lire la suite",
+    "categories": {
+      "article": "Article",
+      "pressRelease": "Communiqué",
+      "whitePaper": "Livre blanc",
+      "report": "Rapport",
+      "event": "Événement",
+      "consultation": "Consultation",
+      "callForContribution": "Appel à contribution"
+    }
+  },
+  "partenaires": {
+    "title": "Partenaires",
+    "intro": "Les organisations académiques, entreprises, institutions, associations et médias qui soutiennent le mouvement de l'Ordre des Experts Informaticiens.",
+    "empty": "Aucun partenaire n'a encore été validé.",
+    "backToList": "Retour à la liste des partenaires",
+    "visitWebsite": "Visiter le site",
+    "notFound": "Partenaire introuvable."
   }
 }

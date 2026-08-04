@@ -22,6 +22,12 @@ import { NewsApiAdapter } from './infrastructure/adapter/news-api.adapter';
 import { PARTNER_REPOSITORY_PORT } from './domain/port/partner-repository.port';
 import { PartnerMockAdapter } from './infrastructure/adapter/partner-mock.adapter';
 import { PartnerApiAdapter } from './infrastructure/adapter/partner-api.adapter';
+import { PUBLICATIONS_PORT } from './domain/port/publications.port';
+import { PublicationsMockAdapter } from './infrastructure/adapter/publications-mock.adapter';
+import { PublicationsApiAdapter } from './infrastructure/adapter/publications-api.adapter';
+import { NEWSLETTER_SUBSCRIPTION_PORT } from './domain/port/newsletter-subscription.port';
+import { NewsletterSubscriptionMockAdapter } from './infrastructure/adapter/newsletter-subscription-mock.adapter';
+import { NewsletterSubscriptionApiAdapter } from './infrastructure/adapter/newsletter-subscription-api.adapter';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -52,6 +58,15 @@ export const appConfig: ApplicationConfig = {
     {
       provide: PARTNER_REPOSITORY_PORT,
       useFactory: () => (inject(RuntimeConfig).isMock() ? inject(PartnerMockAdapter) : inject(PartnerApiAdapter)),
+    },
+    {
+      provide: PUBLICATIONS_PORT,
+      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(PublicationsMockAdapter) : inject(PublicationsApiAdapter)),
+    },
+    {
+      provide: NEWSLETTER_SUBSCRIPTION_PORT,
+      useFactory: () =>
+        inject(RuntimeConfig).isMock() ? inject(NewsletterSubscriptionMockAdapter) : inject(NewsletterSubscriptionApiAdapter),
     },
   ],
 };

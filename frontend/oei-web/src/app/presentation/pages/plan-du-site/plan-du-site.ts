@@ -26,6 +26,8 @@ export class PlanDuSite {
     { key: 'certifications', path: '/certifications' },
     { key: 'resources', path: '/ressources' },
     { key: 'news', path: '/actualites' },
+    { key: 'publications', path: '/publications' },
+    { key: 'partners', path: '/partenaires' },
     { key: 'contact', path: '/contact' },
     { key: 'foundingMembers', path: '/membres-fondateurs' },
     { key: 'legalNotices', path: '/mentions-legales' },

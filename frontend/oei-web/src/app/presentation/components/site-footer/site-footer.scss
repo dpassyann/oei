@@ -58,6 +58,12 @@ $oei-gold: #e8a530;
 
 .oei-footer__newsletter-form {
   display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.oei-footer__newsletter-row {
+  display: flex;
   gap: 0.5rem;
 }
 
@@ -72,6 +78,41 @@ $oei-gold: #e8a530;
 
   &::placeholder {
     color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.oei-footer__newsletter-label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.oei-footer__newsletter-interests {
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  font-size: 0.85rem;
+}
+
+.oei-footer__newsletter-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.oei-footer__newsletter-message {
+  margin: 0;
+  font-size: 0.85rem;
+
+  &--success {
+    color: #ffffff;
+  }
+
+  &--error {
+    color: #ffb4b4;
   }
 }
 

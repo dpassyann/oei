@@ -5,7 +5,13 @@
     @if (isFallback()) {
       <p class="oei-fallback-banner">{{ i18n.translate('home.fallbackNotice') }}</p>
     }
-    <button type="button" class="oei-cta-join">{{ i18n.translate('nav.join') }}</button>
+    <div class="oei-hero__cta-group">
+      <button type="button" class="oei-cta-join">{{ i18n.translate('nav.join') }}</button>
+      <a class="oei-hero__cta-secondary" routerLink="/ressources" fragment="livre-blanc">{{
+        i18n.translate('home.hero.ctaWhitePaper')
+      }}</a>
+      <a class="oei-hero__cta-secondary" routerLink="/nos-missions">{{ i18n.translate('home.hero.ctaMission') }}</a>
+    </div>
   </div>
 
   <div class="oei-hero__visual" aria-hidden="true">

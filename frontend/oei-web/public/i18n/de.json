@@ -11,7 +11,8 @@
     "join": "Der Bewegung beitreten",
     "foundingMembers": "Gründungsmitglieder",
     "legalNotices": "Impressum",
-    "sitemap": "Sitemap"
+    "sitemap": "Sitemap",
+    "partners": "Partner"
   },
   "header": {
     "memberArea": "Mitgliederbereich",
@@ -31,7 +32,25 @@
     "subscribe": "Abonnieren",
     "followUs": "Folgen Sie uns",
     "becomeFoundingMember": "Gründungsmitglied werden",
-    "orgName": "Orden der IT-Experten"
+    "orgName": "Orden der IT-Experten",
+    "newsletter": {
+      "interestsLabel": "Interessengebiete",
+      "interests": {
+        "cybersecurity": "Cybersicherheit",
+        "ai": "Künstliche Intelligenz",
+        "ethics": "Ethik",
+        "certification": "Zertifizierung",
+        "governance": "Digitale Governance",
+        "events": "Veranstaltungen"
+      },
+      "consentLabel": "Ich stimme zu, den Newsletter des Ordens der IT-Experten zu erhalten, und habe die Datenschutzerklärung zur Kenntnis genommen.",
+      "successMessage": "Danke! Eine Bestätigungs-E-Mail wurde gesendet — klicken Sie auf den enthaltenen Link, um Ihre Anmeldung zu bestätigen.",
+      "errors": {
+        "invalidEmail": "Ungültige E-Mail-Adresse.",
+        "consentRequired": "Für die Anmeldung zum Newsletter ist eine Einwilligung erforderlich.",
+        "submissionFailed": "Ein Fehler ist aufgetreten — bitte versuchen Sie es erneut."
+      }
+    }
   },
   "home": {
     "hero": {
@@ -42,7 +61,9 @@
         "Förderung von Exzellenz und kontinuierlicher Weiterbildung",
         "Einführung eines weltweiten Ethikkodex",
         "Begleitung verantwortungsvoller digitaler Transformationen"
-      ]
+      ],
+      "ctaWhitePaper": "Weißbuch lesen",
+      "ctaMission": "Unsere Mission entdecken"
     },
     "commitments": {
       "0": {
@@ -139,10 +160,22 @@
       "categoryHeader": "Kategorie",
       "annualFeeHeader": "Jahresbeitrag",
       "tiers": {
-        "0": { "label": "Student", "amount": "20 €" },
-        "1": { "label": "Mitglied", "amount": "50 €" },
-        "2": { "label": "Gründungsmitglied", "amount": "100 €" },
-        "3": { "label": "Fördermitglied", "amount": "250 €" }
+        "0": {
+          "label": "Student",
+          "amount": "20 €"
+        },
+        "1": {
+          "label": "Mitglied",
+          "amount": "50 €"
+        },
+        "2": {
+          "label": "Gründungsmitglied",
+          "amount": "100 €"
+        },
+        "3": {
+          "label": "Fördermitglied",
+          "amount": "250 €"
+        }
       }
     },
     "foundingStatus": {
@@ -181,7 +214,9 @@
       "contact": "Kontakt",
       "foundingMembers": "Gründungsmitglieder",
       "legalNotices": "Impressum",
-      "sitemap": "Sitemap"
+      "sitemap": "Sitemap",
+      "publications": "Publikationen",
+      "partners": "Partner"
     }
   },
   "ressources": {
@@ -201,12 +236,45 @@
       "title": "Unsere Ressourcen",
       "pendingBadge": "demnächst",
       "items": {
-        "deontologie": { "label": "Ethikkodex" },
-        "referentiel": { "label": "Kompetenzrahmen" },
-        "livreBlanc": { "label": "Weißbuch" },
-        "positions": { "label": "Stellungnahmen & Positionen" },
-        "rapports": { "label": "Berichte & Studien" }
+        "deontologie": {
+          "label": "Ethikkodex"
+        },
+        "referentiel": {
+          "label": "Kompetenzrahmen"
+        },
+        "livreBlanc": {
+          "label": "Weißbuch"
+        },
+        "positions": {
+          "label": "Stellungnahmen & Positionen"
+        },
+        "rapports": {
+          "label": "Berichte & Studien"
+        }
       }
     }
+  },
+  "publications": {
+    "title": "Publikationen",
+    "intro": "Hier finden Sie die Publikationen des Ordens der IT-Experten: Artikel, Pressemitteilungen, Weißbücher, Berichte, Veranstaltungen, Konsultationen und Aufrufe zur Mitwirkung.",
+    "empty": "Es wurde noch keine Publikation veröffentlicht. Schauen Sie bald wieder vorbei.",
+    "readMore": "Weiterlesen",
+    "categories": {
+      "article": "Artikel",
+      "pressRelease": "Pressemitteilung",
+      "whitePaper": "Weißbuch",
+      "report": "Bericht",
+      "event": "Veranstaltung",
+      "consultation": "Konsultation",
+      "callForContribution": "Aufruf zur Mitwirkung"
+    }
+  },
+  "partenaires": {
+    "title": "Partner",
+    "intro": "Die akademischen Einrichtungen, Unternehmen, Institutionen, Verbände und Medien, die die Bewegung des Ordens der IT-Experten unterstützen.",
+    "empty": "Es wurde noch kein Partner bestätigt.",
+    "backToList": "Zurück zur Partnerliste",
+    "visitWebsite": "Webseite besuchen",
+    "notFound": "Partner nicht gefunden."
   }
 }
