@@ -1,0 +1,54 @@
+<main class="oei-page oei-inscription">
+  <h1 class="oei-page__title">{{ i18n.translate('inscription.title') }}</h1>
+  <p class="oei-inscription__intro">{{ i18n.translate('inscription.intro') }}</p>
+  <p class="oei-inscription__free-notice">{{ i18n.translate('inscription.freeNotice') }}</p>
+
+  @if (status() === 'success') {
+    <section class="oei-inscription__success" role="status">
+      <h2>{{ i18n.translate('inscription.success.title') }}</h2>
+      <p>{{ i18n.translate('inscription.success.body') }}</p>
+      <div class="oei-inscription__success-actions">
+        <a class="oei-inscription__cta-primary" routerLink="/espace-membre/cotisation">{{
+          i18n.translate('inscription.success.payNow')
+        }}</a>
+        <a class="oei-inscription__cta-secondary" routerLink="/espace-membre/profil">{{
+          i18n.translate('inscription.success.later')
+        }}</a>
+      </div>
+    </section>
+  } @else {
+    <form class="oei-inscription__form" (submit)="$event.preventDefault(); submit()">
+      @if (status() === 'error') {
+        <p class="oei-inscription__error" role="alert">{{ i18n.translate('inscription.error') }}</p>
+      }
+
+      <label class="oei-inscription__field">
+        {{ i18n.translate('inscription.fields.email') }}
+        <input type="email" required [ngModel]="email()" (ngModelChange)="email.set($event)" name="email" />
+      </label>
+
+      <label class="oei-inscription__field">
+        {{ i18n.translate('inscription.fields.locale') }}
+        <select [ngModel]="locale()" (ngModelChange)="setLocale($event)" name="locale">
+          @for (language of supportedLanguages; track language) {
+            <option [value]="language">{{ i18n.translate('inscription.languages.' + language) }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="oei-inscription__field">
+        {{ i18n.translate('inscription.fields.country') }}
+        <input type="text" required [ngModel]="country()" (ngModelChange)="country.set($event)" name="country" />
+      </label>
+
+      <label class="oei-inscription__consent">
+        <input type="checkbox" [ngModel]="consentAccepted()" (ngModelChange)="consentAccepted.set($event)" name="consent" />
+        {{ i18n.translate('inscription.fields.consent') }}
+      </label>
+
+      <button type="submit" [disabled]="!canSubmit()">
+        {{ status() === 'submitting' ? i18n.translate('inscription.submitting') : i18n.translate('inscription.submit') }}
+      </button>
+    </form>
+  }
+</main>

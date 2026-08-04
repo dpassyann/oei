@@ -277,6 +277,34 @@
     "visitWebsite": "Visita il sito",
     "notFound": "Partner non trovato."
   },
+  "inscription": {
+    "title": "Crea un account",
+    "intro": "Unisciti alla comunità dell'OEI: la creazione dell'account è gratuita e rapida.",
+    "freeNotice": "Gratuito — non è richiesta alcuna quota per creare il tuo account.",
+    "fields": {
+      "email": "Indirizzo e-mail",
+      "locale": "Lingua",
+      "country": "Paese",
+      "consent": "Accetto le condizioni generali di utilizzo"
+    },
+    "languages": {
+      "fr": "Francese",
+      "en": "Inglese",
+      "de": "Tedesco",
+      "es": "Spagnolo",
+      "it": "Italiano",
+      "pt": "Portoghese"
+    },
+    "submit": "Crea il mio account",
+    "submitting": "Creazione dell'account in corso…",
+    "error": "Creazione dell'account non riuscita. Riprova.",
+    "success": {
+      "title": "Il tuo account è stato creato",
+      "body": "Benvenuto! Puoi regolarizzare subito la tua quota, oppure farlo più tardi dalla tua area riservata.",
+      "payNow": "Paga subito la mia quota",
+      "later": "Più tardi"
+    }
+  },
   "espaceMembre": {
     "onboarding": {
       "title": "Registrazione e onboarding",
@@ -551,6 +579,33 @@
           "REVOKED": "Revocato",
           "RENEWED": "Rinnovato"
         }
+      }
+    },
+    "cotisation": {
+      "title": "Quota annuale",
+      "loading": "Caricamento dello stato della quota…",
+      "readOnlyBanner": "La tua quota per l'anno in corso non è stata pagata: la tua area riservata è in sola lettura. Regolarizza la tua quota per riottenere l'accesso completo.",
+      "backToProfile": "Torna al mio profilo",
+      "upToDate": {
+        "title": "Sei in regola",
+        "body": "La tua quota per il ciclo in corso è stata pagata."
+      },
+      "due": {
+        "reminder": "Promemoria: la tua quota scade il 22 aprile.",
+        "justificationPrefix": "corrispondente a",
+        "justificationSuffix": "mesi rimanenti sui 12 del ciclo"
+      },
+      "form": {
+        "mockNotice": "Modulo di pagamento simulato — non viene utilizzato alcun processore di pagamento reale.",
+        "cardNumberLabel": "Numero di carta (simulazione)",
+        "payButton": "Paga",
+        "paying": "Pagamento in corso…",
+        "error": "Il pagamento non è riuscito. Riprova.",
+        "skip": "Più tardi"
+      },
+      "success": {
+        "title": "Pagamento completato",
+        "body": "Grazie! La tua quota per il ciclo in corso è stata registrata."
       }
     }
   },

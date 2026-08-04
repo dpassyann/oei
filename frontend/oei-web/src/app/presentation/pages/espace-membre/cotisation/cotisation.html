@@ -1,0 +1,60 @@
+<main class="oei-page oei-cotisation">
+  <h1 class="oei-page__title">{{ i18n.translate('espaceMembre.cotisation.title') }}</h1>
+
+  @if (loading() && !status()) {
+    <p class="oei-page__empty">{{ i18n.translate('espaceMembre.cotisation.loading') }}</p>
+  } @else if (status(); as membershipFeeStatus) {
+    <p class="oei-cotisation__tier">
+      {{ i18n.translate('membresFondateurs.feeTiers.tiers.' + feeTierGridIndex[membershipFeeStatus.account.tier] + '.label') }}
+    </p>
+
+    @if (paymentState() === 'success') {
+      <!-- Checked before `isPaid` on purpose: right after paying, `statusResource.reload()`
+           flips `isPaid` to true in the same tick, which would otherwise make this
+           transient success confirmation unreachable — the visitor would jump straight to
+           the "up to date" panel below without ever seeing "payment completed". -->
+      <section class="oei-cotisation__payment-success" role="status">
+        <h2>{{ i18n.translate('espaceMembre.cotisation.success.title') }}</h2>
+        <p>{{ i18n.translate('espaceMembre.cotisation.success.body') }}</p>
+        <a routerLink="/espace-membre/profil">{{ i18n.translate('espaceMembre.cotisation.backToProfile') }}</a>
+      </section>
+    } @else if (membershipFeeStatus.isPaid) {
+      <section class="oei-cotisation__up-to-date" role="status">
+        <h2>{{ i18n.translate('espaceMembre.cotisation.upToDate.title') }}</h2>
+        <p>{{ i18n.translate('espaceMembre.cotisation.upToDate.body') }}</p>
+        <a routerLink="/espace-membre/profil">{{ i18n.translate('espaceMembre.cotisation.backToProfile') }}</a>
+      </section>
+    } @else {
+      @if (membershipFeeStatus.reminderActive) {
+        <p class="oei-cotisation__reminder" role="alert">{{ i18n.translate('espaceMembre.cotisation.due.reminder') }}</p>
+      }
+
+      <section class="oei-cotisation__amount">
+        <p class="oei-cotisation__amount-value">{{ membershipFeeStatus.amountDue }} €</p>
+        <p class="oei-cotisation__justification">
+          {{ i18n.translate('espaceMembre.cotisation.due.justificationPrefix') }}
+          {{ membershipFeeStatus.monthsRemaining }}
+          {{ i18n.translate('espaceMembre.cotisation.due.justificationSuffix') }}
+        </p>
+      </section>
+
+      <form class="oei-cotisation__form" (submit)="$event.preventDefault(); pay()">
+        @if (paymentState() === 'error') {
+          <p class="oei-cotisation__error" role="alert">{{ i18n.translate('espaceMembre.cotisation.form.error') }}</p>
+        }
+        <p class="oei-cotisation__mock-notice">{{ i18n.translate('espaceMembre.cotisation.form.mockNotice') }}</p>
+        <label class="oei-cotisation__field">
+          {{ i18n.translate('espaceMembre.cotisation.form.cardNumberLabel') }}
+          <input type="text" [ngModel]="cardNumber()" (ngModelChange)="cardNumber.set($event)" name="cardNumber" placeholder="4242 4242 4242 4242" />
+        </label>
+
+        <div class="oei-cotisation__actions">
+          <button type="submit" [disabled]="!canPay()">
+            {{ paymentState() === 'submitting' ? i18n.translate('espaceMembre.cotisation.form.paying') : i18n.translate('espaceMembre.cotisation.form.payButton') }}
+          </button>
+          <a class="oei-cotisation__skip" routerLink="/espace-membre/profil">{{ i18n.translate('espaceMembre.cotisation.form.skip') }}</a>
+        </div>
+      </form>
+    }
+  }
+</main>

@@ -47,6 +47,10 @@ tags:
     description: Profils publics, cartes numériques et vérification de badges/pass.
   - name: member-profile
     description: Profil professionnel du membre connecté.
+  - name: member-membership-fee
+    description: >
+      Cotisation annuelle du membre connecté (cycle 22 avril → 21 avril, calcul au
+      prorata, paiement mocké — voir plan "adhésion & cotisation").
   - name: member-cv
     description: CV Builder (sections, traductions, rendu PDF).
   - name: member-certifications
@@ -568,6 +572,50 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EthicalCharterSignature"
+
+  # ---------------------------------------------------------------------------
+  # /api/member/v1 — cotisation annuelle (adhésion & cotisation plan)
+  # ---------------------------------------------------------------------------
+  /api/member/v1/membership-fee/account:
+    get:
+      tags: [member-membership-fee]
+      operationId: getMyMembershipFeeAccount
+      summary: >
+        Palier de cotisation et historique des paiements du membre connecté — sans
+        raisonnement sur le cycle en cours (voir `MembershipFeeAccount`), qui est dérivé
+        côté client (mock) / serveur (réel) par la fonction pure de calcul au prorata.
+      security: [{ bearerAuth: [member] }]
+      responses:
+        "200":
+          description: Compte de cotisation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MembershipFeeAccount"
+
+  /api/member/v1/membership-fee/payments:
+    post:
+      tags: [member-membership-fee]
+      operationId: payMyMembershipFee
+      summary: >
+        Enregistre le paiement (mocké — aucun processeur de paiement réel) de la
+        cotisation du cycle courant, au montant prorata calculé côté appelant.
+      security: [{ bearerAuth: [member] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MembershipFeePaymentRequest"
+      responses:
+        "201":
+          description: Paiement enregistré
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MembershipFeePayment"
+        "400":
+          $ref: "#/components/responses/ValidationError"
 
   # ---------------------------------------------------------------------------
   # /api/member/v1 — CV builder
@@ -2546,6 +2594,68 @@ components:
           type: string
           format: date-time
           nullable: true
+
+    MembershipFeeTier:
+      type: string
+      description: >
+        Grille tarifaire déjà publiée sur `/membres-fondateurs` (20€ / 50€ / 100€ / 250€
+        par an) — voir `domain/model/membership-fee/membership-fee-tier.ts`.
+      enum: [STUDENT, MEMBER, FOUNDING, SUPPORTER]
+
+    MembershipFeePaymentStatus:
+      type: string
+      enum: [PAID, FAILED]
+
+    MembershipFeePayment:
+      type: object
+      required: [id, memberId, cycleYear, tier, amount, status, paidAt]
+      properties:
+        id:
+          type: string
+        memberId:
+          type: string
+        cycleYear:
+          type: integer
+          description: Année de démarrage du cycle réglé (22 avril de cette année).
+        tier:
+          $ref: "#/components/schemas/MembershipFeeTier"
+        amount:
+          type: number
+          format: double
+          description: Montant réellement réglé (prorata si paiement en cours de cycle).
+        status:
+          $ref: "#/components/schemas/MembershipFeePaymentStatus"
+        paidAt:
+          type: string
+          format: date-time
+
+    MembershipFeeAccount:
+      type: object
+      required: [memberId, tier, payments]
+      properties:
+        memberId:
+          type: string
+        tier:
+          $ref: "#/components/schemas/MembershipFeeTier"
+        payments:
+          type: array
+          items:
+            $ref: "#/components/schemas/MembershipFeePayment"
+
+    MembershipFeePaymentRequest:
+      type: object
+      required: [tier, cycleYear, amount]
+      properties:
+        tier:
+          $ref: "#/components/schemas/MembershipFeeTier"
+        cycleYear:
+          type: integer
+        amount:
+          type: number
+          format: double
+          description: >
+            Montant prorata calculé côté client (voir `calculateProratedFee`) — non
+            recalculé côté serveur dans ce contrat mocké.
 
     Member:
       type: object

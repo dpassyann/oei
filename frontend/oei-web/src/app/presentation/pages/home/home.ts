@@ -1,9 +1,11 @@
 import { Component, computed, inject, PendingTasks } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ContentApplicationService } from '../../../application/service/content-application.service';
 import { HomeSectionsApplicationService } from '../../../application/service/home-sections-application.service';
 import { PartnerApplicationService } from '../../../application/service/partner-application.service';
+import { MembershipFeeApplicationService } from '../../../application/service/membership-fee-application.service';
+import { KeycloakAuthService } from '../../auth/keycloak-auth.service';
 import { I18nService } from '../../i18n/i18n.service';
 
 interface ResourceExcerptLink {
@@ -27,6 +29,9 @@ export class Home {
   private readonly content = inject(ContentApplicationService);
   private readonly sections = inject(HomeSectionsApplicationService);
   private readonly partners = inject(PartnerApplicationService);
+  private readonly membershipFeeService = inject(MembershipFeeApplicationService);
+  private readonly keycloakAuth = inject(KeycloakAuthService);
+  private readonly router = inject(Router);
   private readonly pendingTasks = inject(PendingTasks);
   protected readonly i18n = inject(I18nService);
 
@@ -93,6 +98,31 @@ export class Home {
     // this isn't a `rxResource` because `I18nService.setLang` isn't a per-language-param data
     // load reused elsewhere — it mutates the shared dictionary used by `i18n.translate(...)`.
     void this.pendingTasks.run(() => this.loadInterfaceStrings());
+  }
+
+  /**
+   * "Rejoignez le mouvement" hero button routing logic (product spec, point 1):
+   * - not authenticated -> free public account-creation page (`/inscription`);
+   * - authenticated but the current cotisation cycle isn't paid -> the (mocked) cotisation
+   *   payment page (`/espace-membre/cotisation`);
+   * - authenticated and up to date -> neutral behaviour: the member's own profile page.
+   * The fee status check is a one-shot subscribe (like `LeadCapturePort.submit` — see
+   * `infrastructure/adapter/README.md`), not a resource, since it only needs to run once per
+   * click, not stay reactively bound to a template.
+   */
+  protected onJoinClick(): void {
+    if (!this.keycloakAuth.isAuthenticated()) {
+      void this.router.navigateByUrl('/inscription');
+      return;
+    }
+
+    this.membershipFeeService.getStatus().subscribe((status) => {
+      if (!status.isPaid) {
+        void this.router.navigateByUrl('/espace-membre/cotisation');
+      } else {
+        void this.router.navigateByUrl('/espace-membre/profil');
+      }
+    });
   }
 
   private async loadInterfaceStrings(): Promise<void> {

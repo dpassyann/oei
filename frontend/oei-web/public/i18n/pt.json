@@ -277,6 +277,34 @@
     "visitWebsite": "Visitar o site",
     "notFound": "Parceiro não encontrado."
   },
+  "inscription": {
+    "title": "Criar uma conta",
+    "intro": "Junte-se à comunidade da OEI: criar uma conta é gratuito e rápido.",
+    "freeNotice": "Gratuito — não é necessária nenhuma quota para criar a sua conta.",
+    "fields": {
+      "email": "Endereço de e-mail",
+      "locale": "Idioma",
+      "country": "País",
+      "consent": "Aceito os termos gerais de utilização"
+    },
+    "languages": {
+      "fr": "Francês",
+      "en": "Inglês",
+      "de": "Alemão",
+      "es": "Espanhol",
+      "it": "Italiano",
+      "pt": "Português"
+    },
+    "submit": "Criar a minha conta",
+    "submitting": "A criar a conta…",
+    "error": "Não foi possível criar a conta. Por favor, tente novamente.",
+    "success": {
+      "title": "A sua conta foi criada",
+      "body": "Bem-vindo! Pode regularizar já a sua quota, ou fazê-lo mais tarde a partir da sua área de membro.",
+      "payNow": "Pagar a minha quota agora",
+      "later": "Mais tarde"
+    }
+  },
   "espaceMembre": {
     "onboarding": {
       "title": "Registo e integração",
@@ -551,6 +579,33 @@
           "REVOKED": "Revogado",
           "RENEWED": "Renovado"
         }
+      }
+    },
+    "cotisation": {
+      "title": "Quota anual",
+      "loading": "A carregar o estado da quota…",
+      "readOnlyBanner": "A sua quota do ano em curso não está paga: a sua área de membro está em modo só de leitura. Regularize a sua quota para recuperar o acesso completo.",
+      "backToProfile": "Voltar ao meu perfil",
+      "upToDate": {
+        "title": "Está em dia",
+        "body": "A sua quota para o ciclo em curso foi paga."
+      },
+      "due": {
+        "reminder": "Lembrete: a sua quota vence a 22 de abril.",
+        "justificationPrefix": "correspondente a",
+        "justificationSuffix": "meses restantes dos 12 do ciclo"
+      },
+      "form": {
+        "mockNotice": "Formulário de pagamento simulado — não é utilizado nenhum processador de pagamento real.",
+        "cardNumberLabel": "Número do cartão (simulação)",
+        "payButton": "Pagar",
+        "paying": "A processar o pagamento…",
+        "error": "O pagamento falhou. Por favor, tente novamente.",
+        "skip": "Mais tarde"
+      },
+      "success": {
+        "title": "Pagamento concluído",
+        "body": "Obrigado! A sua quota para o ciclo em curso foi registada."
       }
     }
   },

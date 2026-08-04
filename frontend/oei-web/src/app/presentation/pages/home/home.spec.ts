@@ -1,16 +1,20 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { of } from 'rxjs';
+import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 import { Home } from './home';
 import { ContentApplicationService } from '../../../application/service/content-application.service';
 import { HomeSectionsApplicationService } from '../../../application/service/home-sections-application.service';
 import { PartnerApplicationService } from '../../../application/service/partner-application.service';
+import { MembershipFeeApplicationService } from '../../../application/service/membership-fee-application.service';
+import { KeycloakAuthService } from '../../auth/keycloak-auth.service';
 import { I18nService } from '../../i18n/i18n.service';
 import { createStat, Stat } from '../../../domain/model/stat';
 import { createDomainArea, DomainArea } from '../../../domain/model/domain-area';
 import { createNewsItem, NewsItem } from '../../../domain/model/news-item';
 import { createPartner, Partner } from '../../../domain/model/partner';
+import { MembershipFeeStatus } from '../../../domain/model/membership-fee/membership-fee-status';
 
 const FAKE_CONTENT_SERVICE = {
   getHomeContent: () => of({ title: 'Titre test', body: 'Corps test', isFallback: false }),
@@ -101,8 +105,35 @@ const EIGHT_DOMAINS: DomainArea[] = Array.from({ length: 8 }, (_, index) =>
   }),
 );
 
+const UNPAID_STATUS: MembershipFeeStatus = {
+  memberId: 'demo-member-1',
+  account: { memberId: 'demo-member-1', tier: 'MEMBER', payments: [] },
+  cycle: {
+    year: 2026,
+    cycleStartDate: new Date('2026-04-22T00:00:00Z'),
+    cycleEndDate: new Date('2027-04-21T00:00:00Z'),
+    reminderStartDate: new Date('2027-03-22T00:00:00Z'),
+    nextDueDate: new Date('2027-04-22T00:00:00Z'),
+  },
+  isPaid: false,
+  reminderActive: false,
+  amountDue: 24.93,
+  monthsRemaining: 6,
+};
+
+const PAID_STATUS: MembershipFeeStatus = { ...UNPAID_STATUS, isPaid: true, amountDue: 0, monthsRemaining: 0 };
+
 describe('Home', () => {
-  function configure(options?: { stats?: Stat[]; domainAreas?: DomainArea[]; news?: NewsItem[]; partners?: Partner[] }) {
+  beforeEach(() => sessionStorage.clear());
+  afterEach(() => sessionStorage.clear());
+
+  function configure(options?: {
+    stats?: Stat[];
+    domainAreas?: DomainArea[];
+    news?: NewsItem[];
+    partners?: Partner[];
+    membershipFeeStatus?: MembershipFeeStatus;
+  }) {
     TestBed.configureTestingModule({
       imports: [Home],
       providers: [
@@ -114,6 +145,10 @@ describe('Home', () => {
           useValue: fakeSectionsService({ stats: options?.stats, domainAreas: options?.domainAreas, news: options?.news }),
         },
         { provide: PartnerApplicationService, useValue: fakePartnerService(options?.partners ?? []) },
+        {
+          provide: MembershipFeeApplicationService,
+          useValue: { getStatus: () => of(options?.membershipFeeStatus ?? PAID_STATUS) },
+        },
       ],
     });
   }
@@ -243,5 +278,49 @@ describe('Home', () => {
     const logos = compiled.querySelectorAll<HTMLImageElement>('.oei-partners__logo');
     expect(logos.length).toBe(1);
     expect(logos[0].getAttribute('src')).toBe('/assets/partners/demo-1.svg');
+  });
+
+  describe('"Rejoignez le mouvement" hero button routing', () => {
+    it('givenNotAuthenticated_whenClickingJoin_thenNavigatesToInscriptionPage', async () => {
+      configure();
+      const fixture = TestBed.createComponent(Home);
+      const router = TestBed.inject(Router);
+      const navigateSpy = vi.spyOn(router, 'navigateByUrl');
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      (fixture.nativeElement as HTMLElement).querySelector<HTMLButtonElement>('.oei-cta-join')?.click();
+
+      expect(navigateSpy).toHaveBeenCalledWith('/inscription');
+    });
+
+    it('givenAuthenticatedWithUnpaidCotisation_whenClickingJoin_thenNavigatesToCotisationPage', async () => {
+      configure({ membershipFeeStatus: UNPAID_STATUS });
+      sessionStorage.setItem('oei_mock_session_roles', JSON.stringify(['member']));
+      const fixture = TestBed.createComponent(Home);
+      const router = TestBed.inject(Router);
+      const navigateSpy = vi.spyOn(router, 'navigateByUrl');
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      (fixture.nativeElement as HTMLElement).querySelector<HTMLButtonElement>('.oei-cta-join')?.click();
+      await vi.waitFor(() => expect(navigateSpy).toHaveBeenCalledWith('/espace-membre/cotisation'));
+    });
+
+    it('givenAuthenticatedAndUpToDate_whenClickingJoin_thenNavigatesToProfilePage', async () => {
+      configure({ membershipFeeStatus: PAID_STATUS });
+      sessionStorage.setItem('oei_mock_session_roles', JSON.stringify(['member']));
+      const fixture = TestBed.createComponent(Home);
+      const router = TestBed.inject(Router);
+      const navigateSpy = vi.spyOn(router, 'navigateByUrl');
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      (fixture.nativeElement as HTMLElement).querySelector<HTMLButtonElement>('.oei-cta-join')?.click();
+      await vi.waitFor(() => expect(navigateSpy).toHaveBeenCalledWith('/espace-membre/profil'));
+    });
   });
 });

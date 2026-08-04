@@ -1,14 +1,17 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
+import { describe, expect, it, vi } from 'vitest';
 import { Profil } from './profil';
 import { MemberApplicationService } from '../../../../application/service/member-application.service';
 import { MembershipApplicationService } from '../../../../application/service/membership-application.service';
 import { ProfessionalProfileApplicationService } from '../../../../application/service/professional-profile-application.service';
+import { MembershipFeeApplicationService } from '../../../../application/service/membership-fee-application.service';
 import { I18nService } from '../../../i18n/i18n.service';
 import { createMember, Member } from '../../../../domain/model/identity/member';
 import { Membership } from '../../../../domain/model/membership/membership';
 import { ProfessionalProfile } from '../../../../domain/model/profile/professional-profile';
+import { MembershipFeeStatus } from '../../../../domain/model/membership-fee/membership-fee-status';
 
 const INTERFACE_STRINGS: Record<string, string> = {
   'espaceMembre.profil.title': 'Profil professionnel',
@@ -91,10 +94,28 @@ function buildProfile(overrides: Partial<ProfessionalProfile> = {}): Professiona
   };
 }
 
+const PAID_FEE_STATUS: MembershipFeeStatus = {
+  memberId: 'demo-member-1',
+  account: { memberId: 'demo-member-1', tier: 'MEMBER', payments: [] },
+  cycle: {
+    year: 2026,
+    cycleStartDate: new Date('2026-04-22T00:00:00Z'),
+    cycleEndDate: new Date('2027-04-21T00:00:00Z'),
+    reminderStartDate: new Date('2027-03-22T00:00:00Z'),
+    nextDueDate: new Date('2027-04-22T00:00:00Z'),
+  },
+  isPaid: true,
+  reminderActive: false,
+  amountDue: 0,
+  monthsRemaining: 0,
+};
+
+const UNPAID_FEE_STATUS: MembershipFeeStatus = { ...PAID_FEE_STATUS, isPaid: false, amountDue: 24.93, monthsRemaining: 6 };
+
 describe('Profil', () => {
   let updateProfileSpy: ReturnType<typeof vi.fn>;
 
-  function configure(profile: ProfessionalProfile | undefined) {
+  function configure(profile: ProfessionalProfile | undefined, feeStatus: MembershipFeeStatus = PAID_FEE_STATUS) {
     updateProfileSpy = vi.fn((updated: ProfessionalProfile) => of(updated));
 
     TestBed.configureTestingModule({
@@ -117,6 +138,7 @@ describe('Profil', () => {
             submitVerificationRequest: () => of(undefined),
           },
         },
+        { provide: MembershipFeeApplicationService, useValue: { getStatus: () => of(feeStatus) } },
       ],
     });
   }
@@ -176,5 +198,44 @@ describe('Profil', () => {
     const compiled = fixture.nativeElement as HTMLElement;
 
     expect(compiled.querySelector('.oei-page__empty')?.textContent).toContain('Aucun profil');
+  });
+
+  it('givenUnpaidCotisation_whenRendered_thenShowsReadOnlyBannerAndDisablesEditButton', async () => {
+    configure(buildProfile(), UNPAID_FEE_STATUS);
+    const fixture = TestBed.createComponent(Profil);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector('.oei-read-only-banner')).toBeTruthy();
+    const editButton = compiled.querySelector('.oei-profil__view button') as HTMLButtonElement | null;
+    expect(editButton?.disabled).toBe(true);
+  });
+
+  it('givenUnpaidCotisation_whenStartEditingCalledDirectly_thenDoesNotEnterEditMode', async () => {
+    configure(buildProfile(), UNPAID_FEE_STATUS);
+    const fixture = TestBed.createComponent(Profil);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+
+    component['startEditing']();
+
+    expect(component['editing']()).toBe(false);
+  });
+
+  it('givenPaidCotisation_whenRendered_thenNoReadOnlyBannerAndEditButtonEnabled', async () => {
+    configure(buildProfile(), PAID_FEE_STATUS);
+    const fixture = TestBed.createComponent(Profil);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector('.oei-read-only-banner')).toBeFalsy();
+    const editButton = compiled.querySelector('.oei-profil__view button') as HTMLButtonElement | null;
+    expect(editButton?.disabled).toBe(false);
   });
 });

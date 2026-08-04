@@ -7,6 +7,7 @@ import { MembershipApplicationService } from '../../../../application/service/me
 import { ProfessionalProfileApplicationService } from '../../../../application/service/professional-profile-application.service';
 import { Availability, Experience, Education, ProfessionalProfile } from '../../../../domain/model/profile/professional-profile';
 import { I18nService } from '../../../i18n/i18n.service';
+import { MembershipAccessService } from '../../../auth/membership-access.service';
 
 // Signal Forms (`form()`/`required()` from `@angular/forms/signals`, verified against
 // node_modules/@angular/forms/types/signals.d.ts) work well for this page's *flat*
@@ -30,11 +31,15 @@ const AVAILABILITY_OPTIONS: readonly Availability[] = ['AVAILABLE', 'OPEN_TO_OPP
   imports: [FormsModule, FormField],
   templateUrl: './profil.html',
   styleUrl: './profil.scss',
+  // Component-scoped (not root-singleton) so the cotisation status is re-fetched fresh every
+  // time this guarded page is entered — see `MembershipAccessService`'s doc comment.
+  providers: [MembershipAccessService],
 })
 export class Profil {
   private readonly professionalProfileApplicationService = inject(ProfessionalProfileApplicationService);
   private readonly membershipApplicationService = inject(MembershipApplicationService);
   private readonly memberApplicationService = inject(MemberApplicationService);
+  protected readonly membershipAccess = inject(MembershipAccessService);
   protected readonly i18n = inject(I18nService);
 
   protected readonly availabilityOptions = AVAILABILITY_OPTIONS;
@@ -65,6 +70,9 @@ export class Profil {
   });
 
   protected startEditing(): void {
+    if (this.membershipAccess.isReadOnly()) {
+      return;
+    }
     const current = this.profile();
     this.editModel.set({
       title: current?.title ?? '',

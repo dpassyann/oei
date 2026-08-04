@@ -277,6 +277,34 @@
     "visitWebsite": "Visitar el sitio web",
     "notFound": "Socio no encontrado."
   },
+  "inscription": {
+    "title": "Crear una cuenta",
+    "intro": "Únase a la comunidad de la OEI: crear una cuenta es gratuito y rápido.",
+    "freeNotice": "Gratis — no se requiere ninguna cuota para crear su cuenta.",
+    "fields": {
+      "email": "Correo electrónico",
+      "locale": "Idioma",
+      "country": "País",
+      "consent": "Acepto las condiciones generales de uso"
+    },
+    "languages": {
+      "fr": "Francés",
+      "en": "Inglés",
+      "de": "Alemán",
+      "es": "Español",
+      "it": "Italiano",
+      "pt": "Portugués"
+    },
+    "submit": "Crear mi cuenta",
+    "submitting": "Creando cuenta…",
+    "error": "No se pudo crear la cuenta. Por favor, inténtelo de nuevo.",
+    "success": {
+      "title": "Su cuenta ha sido creada",
+      "body": "¡Bienvenido! Puede pagar su cuota ahora mismo o hacerlo más tarde desde su espacio de miembro.",
+      "payNow": "Pagar mi cuota ahora",
+      "later": "Más tarde"
+    }
+  },
   "espaceMembre": {
     "onboarding": {
       "title": "Registro e incorporación",
@@ -551,6 +579,33 @@
           "REVOKED": "Revocado",
           "RENEWED": "Renovado"
         }
+      }
+    },
+    "cotisation": {
+      "title": "Cuota anual",
+      "loading": "Cargando el estado de la cuota…",
+      "readOnlyBanner": "Su cuota del año en curso no está pagada: su espacio de miembro es de solo lectura. Regularice su cuota para recuperar el acceso completo.",
+      "backToProfile": "Volver a mi perfil",
+      "upToDate": {
+        "title": "Está al día",
+        "body": "Su cuota para el ciclo en curso ha sido pagada."
+      },
+      "due": {
+        "reminder": "Recordatorio: su cuota vence el 22 de abril.",
+        "justificationPrefix": "correspondiente a",
+        "justificationSuffix": "meses restantes de los 12 del ciclo"
+      },
+      "form": {
+        "mockNotice": "Formulario de pago simulado — no se utiliza ningún procesador de pago real.",
+        "cardNumberLabel": "Número de tarjeta (simulación)",
+        "payButton": "Pagar",
+        "paying": "Procesando el pago…",
+        "error": "El pago ha fallado. Por favor, inténtelo de nuevo.",
+        "skip": "Más tarde"
+      },
+      "success": {
+        "title": "Pago realizado",
+        "body": "¡Gracias! Su cuota para el ciclo en curso ha sido registrada."
       }
     }
   },

@@ -1,6 +1,10 @@
 <main class="oei-page">
   <h1 class="oei-page__title">{{ i18n.translate('espaceMembre.cv.title') }}</h1>
 
+  @if (membershipAccess.isReadOnly()) {
+    <p class="oei-read-only-banner" role="alert">{{ i18n.translate('espaceMembre.cotisation.readOnlyBanner') }}</p>
+  }
+
   @if (cv(); as currentCv) {
     <p class="oei-page__body oei-cv-builder__template">
       {{ i18n.translate('espaceMembre.cv.templateLabel') }} : {{ templateName() ?? currentCv.templateId }}
@@ -142,6 +146,7 @@
                   <button
                     type="button"
                     class="oei-cv-builder__validate-button"
+                    [disabled]="membershipAccess.isReadOnly()"
                     (click)="validateTranslation(section.id, translation.language)"
                   >
                     {{ i18n.translate('espaceMembre.cv.validateTranslation') }}
@@ -169,7 +174,7 @@
                   name="content-{{ section.id }}"
                 />
               </label>
-              <button type="submit" class="oei-cv-builder__add-translation-submit">
+              <button type="submit" class="oei-cv-builder__add-translation-submit" [disabled]="membershipAccess.isReadOnly()">
                 {{ i18n.translate('espaceMembre.cv.addTranslationSubmit') }}
               </button>
             </form>
@@ -203,7 +208,7 @@
               name="newSectionContent"
             />
           </label>
-          <button type="submit" class="oei-cv-builder__add-section-submit">
+          <button type="submit" class="oei-cv-builder__add-section-submit" [disabled]="membershipAccess.isReadOnly()">
             {{ i18n.translate('espaceMembre.cv.addSectionSubmit') }}
           </button>
         </form>

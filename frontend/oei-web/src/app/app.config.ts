@@ -104,6 +104,15 @@ import { DIGITAL_BUSINESS_CARD_PORT } from './domain/port/wallet/digital-busines
 import { DigitalBusinessCardMockAdapter } from './infrastructure/adapter/digital-business-card-mock.adapter';
 import { DigitalBusinessCardApiAdapter } from './infrastructure/adapter/digital-business-card-api.adapter';
 
+// Adhésion & cotisation (free account creation + annual cotisation cycle — see
+// domain/model/membership-fee/ and the home hero "Rejoignez le mouvement" button).
+import { ACCOUNT_REGISTRATION_PORT } from './domain/port/identity/account-registration.port';
+import { AccountRegistrationMockAdapter } from './infrastructure/adapter/account-registration-mock.adapter';
+import { AccountRegistrationApiAdapter } from './infrastructure/adapter/account-registration-api.adapter';
+import { MEMBERSHIP_FEE_PORT } from './domain/port/membership-fee/membership-fee.port';
+import { MembershipFeeMockAdapter } from './infrastructure/adapter/membership-fee-mock.adapter';
+import { MembershipFeeApiAdapter } from './infrastructure/adapter/membership-fee-api.adapter';
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZonelessChangeDetection(),
@@ -244,6 +253,15 @@ export const appConfig: ApplicationConfig = {
       provide: DIGITAL_BUSINESS_CARD_PORT,
       useFactory: () =>
         inject(RuntimeConfig).isMock() ? inject(DigitalBusinessCardMockAdapter) : inject(DigitalBusinessCardApiAdapter),
+    },
+    {
+      provide: ACCOUNT_REGISTRATION_PORT,
+      useFactory: () =>
+        inject(RuntimeConfig).isMock() ? inject(AccountRegistrationMockAdapter) : inject(AccountRegistrationApiAdapter),
+    },
+    {
+      provide: MEMBERSHIP_FEE_PORT,
+      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(MembershipFeeMockAdapter) : inject(MembershipFeeApiAdapter)),
     },
   ],
 };
