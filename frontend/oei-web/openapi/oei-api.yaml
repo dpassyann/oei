@@ -1,11 +1,100 @@
 openapi: 3.0.3
 info:
-  title: OEI Content API
-  version: "1.0.0"
+  title: OEI Platform API
+  version: "2.0.0"
+  description: >
+    Contrat API transverse de la plateforme OEI (Ordre des Experts Informaticiens).
+
+    Ce document est le contrat de fondation (voir ADR 0002) pour les trois chantiers
+    fonctionnels : espace membre individuel, espace membre institutionnel et
+    CMS/gouvernance documentaire. Il ne décrit QUE la forme des échanges (schémas,
+    chemins, codes de statut) ; il n'implique aucune implémentation serveur réelle à ce
+    stade — les adapters `*-mock.adapter.ts` simulent ces réponses en attendant le
+    backend Spring Boot.
+
+    Conventions de versionnement des chemins :
+    - `/api/public/v1/**` : accessible sans authentification, données publiques.
+    - `/api/member/v1/**` : requiert un JWT Keycloak avec au moins le rôle realm `member`.
+    - `/api/institution/v1/**` : requiert un JWT Keycloak avec un rôle `institution-*`
+      pour l'institution résolue depuis le token (isolation multi-tenant — voir
+      `docs/architecture/keycloak-roles.md`).
+    - `/api/admin/v1/**` : requiert le rôle realm `admin`.
+
+    L'endpoint historique `GET /content/{lang}/{slug}` (hors préfixe versionné) est
+    conservé tel quel pour ne pas casser l'intégration frontend existante
+    (`content-api.adapter.ts`) ; les nouveaux endpoints de contenu public vivent sous
+    `/api/public/v1/content` et `/api/public/v1/documents`.
+tags:
+  - name: content-legacy
+    description: Endpoint historique de rendu de page, conservé pour compatibilité.
+  - name: public-accounts
+    description: Inscription et endpoints publics d'amorçage de compte.
+  - name: public-content
+    description: Contenu CMS et documents normatifs publics (lecture seule).
+  - name: public-institutions
+    description: Pages publiques institutionnelles.
+  - name: public-members
+    description: Profils publics, cartes numériques et vérification de badges/pass.
+  - name: member-profile
+    description: Profil professionnel du membre connecté.
+  - name: member-cv
+    description: CV Builder (sections, traductions, rendu PDF).
+  - name: member-certifications
+    description: Déclaration et suivi des certifications.
+  - name: member-badges
+    description: Badges obtenus par le membre connecté.
+  - name: member-public-profile
+    description: Publication du profil public et de la carte numérique.
+  - name: member-wallet
+    description: Apple Wallet / Google Wallet (mocké en V1).
+  - name: member-verification
+    description: Demandes de vérification d'identité/profil/certification.
+  - name: member-affiliation
+    description: Rattachement du membre à une institution employeuse.
+  - name: member-contributions
+    description: Contributions du membre au contenu normatif (patchs, commentaires).
+  - name: institution-account
+    description: Compte institution, domaines email et partenariat.
+  - name: institution-roles
+    description: Rôles et affectations internes à l'institution.
+  - name: institution-invitations
+    description: Invitations d'employés à rejoindre l'espace institutionnel.
+  - name: institution-affiliations
+    description: Validation des demandes d'affiliation de membres.
+  - name: institution-dashboard
+    description: KPI et tableau de bord institutionnel.
+  - name: institution-publications
+    description: Publications institutionnelles et workflow de modération.
+  - name: institution-opportunities
+    description: Opportunités (emploi, stage, mentorat, mission, groupe de travail).
+  - name: institution-recognition
+    description: Propositions de reconnaissance (badge, formation) faites à un membre.
+  - name: institution-audit
+    description: Journal d'audit institutionnel.
+  - name: admin-content
+    description: Gestion et workflow du contenu CMS/gouvernance.
+  - name: admin-media
+    description: Médiathèque et scan antivirus.
+  - name: admin-books
+    description: Compilation de livres et génération PDF.
+  - name: admin-git
+    description: Synchronisation en lecture avec le dépôt Git normatif.
+  - name: admin-institutions
+    description: Supervision des institutions par l'OEI.
+  - name: admin-members
+    description: Supervision des membres, certifications et vérifications par l'OEI.
+  - name: admin-audit
+    description: Journal d'audit global.
+security: []
 paths:
+  # ---------------------------------------------------------------------------
+  # Legacy (unchanged)
+  # ---------------------------------------------------------------------------
   /content/{lang}/{slug}:
     get:
+      tags: [content-legacy]
       operationId: getContent
+      summary: Rendu d'une page de contenu (endpoint historique, ne pas modifier la forme).
       parameters:
         - name: lang
           in: path
@@ -24,8 +113,2043 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ContentDocument"
+
+  # ---------------------------------------------------------------------------
+  # /api/public/v1 — accounts
+  # ---------------------------------------------------------------------------
+  /api/public/v1/accounts:
+    post:
+      tags: [public-accounts]
+      operationId: registerAccount
+      summary: Crée un compte membre (email vérifié ou OIDC) et démarre l'onboarding.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AccountRegistration"
+      responses:
+        "201":
+          description: Compte créé
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Member"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "409":
+          $ref: "#/components/responses/Conflict"
+
+  # ---------------------------------------------------------------------------
+  # /api/public/v1 — content & governance documents (read-only)
+  # ---------------------------------------------------------------------------
+  /api/public/v1/content/{slug}:
+    get:
+      tags: [public-content]
+      operationId: getPublicContent
+      summary: Récupère la version publiée d'un contenu CMS par slug (langue négociée via Accept-Language).
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: lang
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Contenu publié
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContentVersion"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/public/v1/documents/{slug}/versions:
+    get:
+      tags: [public-content]
+      operationId: listPublicDocumentVersions
+      summary: Historique versionné public d'un document normatif (statuts, règlement, chartes...).
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Liste des versions publiées
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContentVersionPage"
+
+  /api/public/v1/badges/catalog:
+    get:
+      tags: [public-members]
+      operationId: listBadgeCatalog
+      summary: Catalogue public des badges OEI (définitions, pas les attributions).
+      responses:
+        "200":
+          description: Catalogue de badges
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Badge"
+
+  # ---------------------------------------------------------------------------
+  # /api/public/v1 — institutions (public pages)
+  # ---------------------------------------------------------------------------
+  /api/public/v1/institutions/{slug}:
+    get:
+      tags: [public-institutions]
+      operationId: getPublicInstitution
+      summary: Page publique d'une institution.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Institution publique
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstitutionPublicPage"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/public/v1/institutions/{slug}/publications:
+    get:
+      tags: [public-institutions]
+      operationId: listPublicInstitutionPublications
+      summary: Publications institutionnelles publiées et modérées.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Publications publiées
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstitutionPublicationPage"
+
+  /api/public/v1/institutions/{slug}/opportunities:
+    get:
+      tags: [public-institutions]
+      operationId: listPublicInstitutionOpportunities
+      summary: Opportunités publiées par l'institution (emploi, stage, mentorat...).
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Opportunités publiées
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstitutionOpportunityPage"
+
+  # ---------------------------------------------------------------------------
+  # /api/public/v1 — members (public profile, card, wallet verification)
+  # ---------------------------------------------------------------------------
+  /api/public/v1/members/{publicSlug}:
+    get:
+      tags: [public-members]
+      operationId: getPublicMemberProfile
+      summary: Profil public d'un membre (respecte la visibilité champ par champ).
+      parameters:
+        - name: publicSlug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Profil public
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicProfile"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/public/v1/members/{publicSlug}/cv:
+    get:
+      tags: [public-members]
+      operationId: getPublicMemberCv
+      summary: Métadonnées du CV publié (URL de rendu PDF), si le membre l'a rendu public.
+      parameters:
+        - name: publicSlug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Référence du CV public
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [pdfUrl, language, generatedAt]
+                properties:
+                  pdfUrl:
+                    type: string
+                    format: uri
+                  language:
+                    type: string
+                  generatedAt:
+                    type: string
+                    format: date-time
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/public/v1/wallet/passes/{serialNumber}/verify:
+    get:
+      tags: [public-members]
+      operationId: verifyWalletPass
+      summary: Lien de vérification public d'un pass Wallet (jamais présenté comme pièce d'identité).
+      parameters:
+        - name: serialNumber
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Résultat de vérification
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WalletPassVerification"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # ---------------------------------------------------------------------------
+  # /api/member/v1 — profile
+  # ---------------------------------------------------------------------------
+  /api/member/v1/profile:
+    get:
+      tags: [member-profile]
+      operationId: getMyProfile
+      summary: Profil professionnel du membre connecté.
+      security: [{ bearerAuth: [member] }]
+      responses:
+        "200":
+          description: Profil professionnel
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfessionalProfile"
+    put:
+      tags: [member-profile]
+      operationId: updateMyProfile
+      summary: Met à jour le profil professionnel du membre connecté.
+      security: [{ bearerAuth: [member] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProfessionalProfile"
+      responses:
+        "200":
+          description: Profil mis à jour
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfessionalProfile"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+
+  /api/member/v1/membership:
+    get:
+      tags: [member-profile]
+      operationId: getMyMembership
+      summary: Niveau d'adhésion, statut et historique du membre connecté.
+      security: [{ bearerAuth: [member] }]
+      responses:
+        "200":
+          description: Adhésion
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Membership"
+
+  /api/member/v1/ethical-charter/sign:
+    post:
+      tags: [member-profile]
+      operationId: signEthicalCharter
+      summary: Signature de la charte éthique en vigueur.
+      security: [{ bearerAuth: [member] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [version]
+              properties:
+                version:
+                  type: string
+      responses:
+        "201":
+          description: Signature enregistrée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EthicalCharterSignature"
+
+  # ---------------------------------------------------------------------------
+  # /api/member/v1 — CV builder
+  # ---------------------------------------------------------------------------
+  /api/member/v1/cv/templates:
+    get:
+      tags: [member-cv]
+      operationId: listCvTemplates
+      summary: Templates de rendu PDF disponibles.
+      security: [{ bearerAuth: [member] }]
+      responses:
+        "200":
+          description: Templates
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CvTemplate"
+
+  /api/member/v1/cv:
+    get:
+      tags: [member-cv]
+      operationId: listMyCvs
+      summary: Liste des CV du membre connecté.
+      security: [{ bearerAuth: [member] }]
+      responses:
+        "200":
+          description: CV
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Cv"
+    post:
+      tags: [member-cv]
+      operationId: createCv
+      summary: Crée un CV (sections manuelles, import PDF/DOCX futur non couvert en V1).
+      security: [{ bearerAuth: [member] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CvCreation"
+      responses:
+        "201":
+          description: CV créé
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cv"
+
+  /api/member/v1/cv/{id}:
+    get:
+      tags: [member-cv]
+      operationId: getCv
+      summary: Détail d'un CV avec ses sections et traductions.
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - $ref: "#/components/parameters/CvId"
+      responses:
+        "200":
+          description: CV
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cv"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      tags: [member-cv]
+      operationId: updateCv
+      summary: Met à jour les métadonnées d'un CV (template, langue source).
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - $ref: "#/components/parameters/CvId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CvCreation"
+      responses:
+        "200":
+          description: CV mis à jour
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cv"
+
+  /api/member/v1/cv/{id}/sections:
+    post:
+      tags: [member-cv]
+      operationId: addCvSection
+      summary: Ajoute une section au CV.
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - $ref: "#/components/parameters/CvId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CvSection"
+      responses:
+        "201":
+          description: Section ajoutée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CvSection"
+
+  /api/member/v1/cv/{id}/sections/{sectionId}:
+    put:
+      tags: [member-cv]
+      operationId: updateCvSection
+      summary: Met à jour le contenu d'une section (langue source).
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - $ref: "#/components/parameters/CvId"
+        - name: sectionId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CvSection"
+      responses:
+        "200":
+          description: Section mise à jour
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CvSection"
+
+  /api/member/v1/cv/{id}/sections/{sectionId}/translations:
+    post:
+      tags: [member-cv]
+      operationId: requestCvSectionTranslation
+      summary: Déclenche/soumet une traduction pour une section (automatique ou manuelle, non publiée tant que non validée).
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - $ref: "#/components/parameters/CvId"
+        - name: sectionId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CvTranslation"
+      responses:
+        "201":
+          description: Traduction créée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CvTranslation"
+
+  /api/member/v1/cv/{id}/sections/{sectionId}/translations/{language}/validate:
+    post:
+      tags: [member-cv]
+      operationId: validateCvSectionTranslation
+      summary: Validation humaine d'une traduction avant qu'elle ne soit exploitable dans un rendu PDF.
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - $ref: "#/components/parameters/CvId"
+        - name: sectionId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: language
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Traduction validée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CvTranslation"
+
+  /api/member/v1/cv/{id}/render:
+    post:
+      tags: [member-cv]
+      operationId: renderCv
+      summary: Déclenche le rendu HTML/CSS vers PDF (A4, polices intégrées, QR vers profil, badges sélectionnables).
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - $ref: "#/components/parameters/CvId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CvRenderRequest"
+      responses:
+        "202":
+          description: Job de génération PDF accepté (asynchrone)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PdfGenerationJob"
+
+  # ---------------------------------------------------------------------------
+  # /api/member/v1 — certifications
+  # ---------------------------------------------------------------------------
+  /api/member/v1/certifications:
+    get:
+      tags: [member-certifications]
+      operationId: listMyCertifications
+      summary: Certifications déclarées par le membre connecté.
+      security: [{ bearerAuth: [member] }]
+      responses:
+        "200":
+          description: Certifications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Certification"
+    post:
+      tags: [member-certifications]
+      operationId: declareCertification
+      summary: Déclare une certification (organisme, preuve) — vérification catalogue puis validation auto/manuelle.
+      security: [{ bearerAuth: [member] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CertificationDeclaration"
+      responses:
+        "201":
+          description: Certification déclarée, en attente de validation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Certification"
+
+  /api/member/v1/certifications/{id}:
+    get:
+      tags: [member-certifications]
+      operationId: getMyCertification
+      summary: Détail d'une certification déclarée (statut, historique).
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Certification
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Certification"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # ---------------------------------------------------------------------------
+  # /api/member/v1 — badges
+  # ---------------------------------------------------------------------------
+  /api/member/v1/badges:
+    get:
+      tags: [member-badges]
+      operationId: listMyBadges
+      summary: Badges obtenus par le membre connecté (avec source, dates, historique).
+      security: [{ bearerAuth: [member] }]
+      responses:
+        "200":
+          description: Badges obtenus
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BadgeAward"
+
+  # ---------------------------------------------------------------------------
+  # /api/member/v1 — public profile & digital card
+  # ---------------------------------------------------------------------------
+  /api/member/v1/public-profile:
+    get:
+      tags: [member-public-profile]
+      operationId: getMyPublicProfileSettings
+      summary: Paramètres de visibilité et statistiques du profil public.
+      security: [{ bearerAuth: [member] }]
+      responses:
+        "200":
+          description: Profil public
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicProfile"
+
+  /api/member/v1/public-profile/publish:
+    post:
+      tags: [member-public-profile]
+      operationId: publishPublicProfile
+      summary: Publie ou met à jour le profil public (URL personnalisée, visibilité par champ, SEO).
+      security: [{ bearerAuth: [member] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PublicProfilePublication"
+      responses:
+        "200":
+          description: Profil public publié
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicProfile"
+
+  /api/member/v1/digital-card:
+    post:
+      tags: [member-public-profile]
+      operationId: generateDigitalCard
+      summary: Génère/rafraîchit la carte professionnelle numérique (QR, vCard).
+      security: [{ bearerAuth: [member] }]
+      responses:
+        "200":
+          description: Carte numérique
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DigitalBusinessCard"
+
+  # ---------------------------------------------------------------------------
+  # /api/member/v1 — wallet (mocked)
+  # ---------------------------------------------------------------------------
+  /api/member/v1/wallet/apple-pass:
+    post:
+      tags: [member-wallet]
+      operationId: createAppleWalletPass
+      summary: >
+        Génère un objet Apple Wallet Pass MOCKÉ (aucun .pkpass signé réel en V1 — pas de
+        certificat éditeur disponible). Représente la structure attendue pour le futur
+        rendu serveur signé (voir ADR 0002 §Wallet).
+      security: [{ bearerAuth: [member] }]
+      responses:
+        "201":
+          description: Pass Apple Wallet mocké
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WalletPass"
+
+  /api/member/v1/wallet/google-pass:
+    post:
+      tags: [member-wallet]
+      operationId: createGoogleWalletPass
+      summary: >
+        Génère un objet Google Wallet Generic Pass MOCKÉ (pas de JWT signé par un compte
+        de service Google réel en V1).
+      security: [{ bearerAuth: [member] }]
+      responses:
+        "201":
+          description: Pass Google Wallet mocké
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WalletPass"
+
+  /api/member/v1/wallet/passes:
+    get:
+      tags: [member-wallet]
+      operationId: listMyWalletPasses
+      summary: Liste des pass Wallet émis (mockés) pour le membre connecté.
+      security: [{ bearerAuth: [member] }]
+      responses:
+        "200":
+          description: Pass Wallet
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/WalletPass"
+
+  /api/member/v1/wallet/passes/{id}/revoke:
+    post:
+      tags: [member-wallet]
+      operationId: revokeMyWalletPass
+      summary: Révoque un pass Wallet (perte, changement de statut, renouvellement).
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Pass révoqué
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WalletPass"
+
+  # ---------------------------------------------------------------------------
+  # /api/member/v1 — verification requests
+  # ---------------------------------------------------------------------------
+  /api/member/v1/verification-requests:
+    get:
+      tags: [member-verification]
+      operationId: listMyVerificationRequests
+      summary: Demandes de vérification (identité, profil, certification) du membre.
+      security: [{ bearerAuth: [member] }]
+      responses:
+        "200":
+          description: Demandes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/VerificationRequest"
+    post:
+      tags: [member-verification]
+      operationId: createVerificationRequest
+      summary: Soumet une demande de vérification.
+      security: [{ bearerAuth: [member] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VerificationRequestCreation"
+      responses:
+        "201":
+          description: Demande créée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VerificationRequest"
+
+  # ---------------------------------------------------------------------------
+  # /api/member/v1 — employment affiliation (Gold via employeur partenaire)
+  # ---------------------------------------------------------------------------
+  /api/member/v1/employment-affiliations:
+    get:
+      tags: [member-affiliation]
+      operationId: listMyEmploymentAffiliations
+      summary: Rattachements du membre à une institution employeuse.
+      security: [{ bearerAuth: [member] }]
+      responses:
+        "200":
+          description: Rattachements
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/EmploymentAffiliation"
+    post:
+      tags: [member-affiliation]
+      operationId: requestEmploymentAffiliation
+      summary: Demande de rattachement à une institution (email de domaine seul insuffisant, nécessite validation institution).
+      security: [{ bearerAuth: [member] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [institutionId]
+              properties:
+                institutionId:
+                  type: string
+      responses:
+        "201":
+          description: Demande de rattachement créée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmploymentAffiliation"
+
+  # ---------------------------------------------------------------------------
+  # /api/member/v1 — contributions to normative content
+  # ---------------------------------------------------------------------------
+  /api/member/v1/contributions:
+    get:
+      tags: [member-contributions]
+      operationId: listMyContributions
+      summary: Contributions (patchs Markdown, commentaires) soumises par le membre.
+      security: [{ bearerAuth: [member] }]
+      responses:
+        "200":
+          description: Contributions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ContentContribution"
+    post:
+      tags: [member-contributions]
+      operationId: createContribution
+      summary: Propose un patch Markdown ou une contribution sur un contenu (jamais une modification directe d'un texte publié).
+      security: [{ bearerAuth: [member] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContentContributionCreation"
+      responses:
+        "201":
+          description: Contribution proposée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContentContribution"
+
+  # ---------------------------------------------------------------------------
+  # /api/institution/v1 — account
+  # ---------------------------------------------------------------------------
+  /api/institution/v1/account:
+    get:
+      tags: [institution-account]
+      operationId: getMyInstitutionAccount
+      summary: Compte institutionnel de l'utilisateur connecté (résolu depuis le token, isolation multi-tenant).
+      security: [{ bearerAuth: [institution] }]
+      responses:
+        "200":
+          description: Institution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Institution"
+    put:
+      tags: [institution-account]
+      operationId: updateMyInstitutionAccount
+      summary: Met à jour les informations institutionnelles (nom public, logo, description, contacts).
+      security: [{ bearerAuth: [institution] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Institution"
+      responses:
+        "200":
+          description: Institution mise à jour
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Institution"
+
+  /api/institution/v1/partnership:
+    get:
+      tags: [institution-account]
+      operationId: getMyPartnership
+      summary: Niveau de partenariat, vérification et durée.
+      security: [{ bearerAuth: [institution] }]
+      responses:
+        "200":
+          description: Partenariat
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Partnership"
+
+  # ---------------------------------------------------------------------------
+  # /api/institution/v1 — roles
+  # ---------------------------------------------------------------------------
+  /api/institution/v1/roles:
+    get:
+      tags: [institution-roles]
+      operationId: listInstitutionRoleAssignments
+      summary: Rôles internes affectés aux membres de l'équipe institutionnelle.
+      security: [{ bearerAuth: [institution] }]
+      responses:
+        "200":
+          description: Affectations de rôle
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InstitutionMembership"
+
+  /api/institution/v1/roles/{memberId}:
+    put:
+      tags: [institution-roles]
+      operationId: updateInstitutionRoleAssignment
+      summary: Change le rôle interne d'un membre de l'équipe institutionnelle (owner/admin uniquement).
+      security: [{ bearerAuth: [institution] }]
+      parameters:
+        - name: memberId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [role]
+              properties:
+                role:
+                  $ref: "#/components/schemas/InstitutionRole"
+      responses:
+        "200":
+          description: Rôle mis à jour
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstitutionMembership"
+    delete:
+      tags: [institution-roles]
+      operationId: removeInstitutionRoleAssignment
+      summary: Retire un membre de l'équipe institutionnelle.
+      security: [{ bearerAuth: [institution] }]
+      parameters:
+        - name: memberId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Rôle retiré
+
+  # ---------------------------------------------------------------------------
+  # /api/institution/v1 — invitations
+  # ---------------------------------------------------------------------------
+  /api/institution/v1/invitations:
+    get:
+      tags: [institution-invitations]
+      operationId: listInstitutionInvitations
+      summary: Invitations émises par l'institution.
+      security: [{ bearerAuth: [institution] }]
+      responses:
+        "200":
+          description: Invitations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InstitutionInvitation"
+    post:
+      tags: [institution-invitations]
+      operationId: createInstitutionInvitation
+      summary: Invite un employé à rejoindre l'espace institutionnel avec un rôle donné.
+      security: [{ bearerAuth: [institution] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InstitutionInvitationCreation"
+      responses:
+        "201":
+          description: Invitation créée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstitutionInvitation"
+
+  /api/institution/v1/invitations/{id}/revoke:
+    post:
+      tags: [institution-invitations]
+      operationId: revokeInstitutionInvitation
+      summary: Révoque une invitation en attente.
+      security: [{ bearerAuth: [institution] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Invitation révoquée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstitutionInvitation"
+
+  # ---------------------------------------------------------------------------
+  # /api/institution/v1 — members & affiliations
+  # ---------------------------------------------------------------------------
+  /api/institution/v1/members:
+    get:
+      tags: [institution-affiliations]
+      operationId: listInstitutionMembers
+      summary: Membres affiliés à l'institution (isolation stricte — uniquement SES membres).
+      security: [{ bearerAuth: [institution] }]
+      responses:
+        "200":
+          description: Membres affiliés
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MemberInstitutionAffiliation"
+
+  /api/institution/v1/affiliations:
+    get:
+      tags: [institution-affiliations]
+      operationId: listInstitutionAffiliationRequests
+      summary: Demandes d'affiliation en attente ou historisées.
+      security: [{ bearerAuth: [institution] }]
+      responses:
+        "200":
+          description: Demandes d'affiliation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MemberInstitutionAffiliation"
+
+  /api/institution/v1/affiliations/{id}/approve:
+    post:
+      tags: [institution-affiliations]
+      operationId: approveInstitutionAffiliation
+      summary: Approuve une demande d'affiliation (rôle réservé au validateur d'affiliation).
+      security: [{ bearerAuth: [institution] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Affiliation approuvée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemberInstitutionAffiliation"
+
+  /api/institution/v1/affiliations/{id}/reject:
+    post:
+      tags: [institution-affiliations]
+      operationId: rejectInstitutionAffiliation
+      summary: Rejette une demande d'affiliation.
+      security: [{ bearerAuth: [institution] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Affiliation rejetée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemberInstitutionAffiliation"
+
+  /api/institution/v1/affiliations/{id}:
+    delete:
+      tags: [institution-affiliations]
+      operationId: endInstitutionAffiliation
+      summary: Met fin à une affiliation (gestion des départs), journalisée dans l'audit.
+      security: [{ bearerAuth: [institution] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Affiliation terminée
+
+  # ---------------------------------------------------------------------------
+  # /api/institution/v1 — dashboard
+  # ---------------------------------------------------------------------------
+  /api/institution/v1/dashboard:
+    get:
+      tags: [institution-dashboard]
+      operationId: getInstitutionDashboard
+      summary: KPI institutionnels (membres affiliés/actifs, certifications, badges, chartes, contributions...).
+      security: [{ bearerAuth: [institution] }]
+      responses:
+        "200":
+          description: Dashboard
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstitutionDashboard"
+
+  # ---------------------------------------------------------------------------
+  # /api/institution/v1 — publications
+  # ---------------------------------------------------------------------------
+  /api/institution/v1/publications:
+    get:
+      tags: [institution-publications]
+      operationId: listInstitutionPublications
+      summary: Publications de l'institution, tous statuts confondus.
+      security: [{ bearerAuth: [institution] }]
+      responses:
+        "200":
+          description: Publications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InstitutionPublication"
+    post:
+      tags: [institution-publications]
+      operationId: createInstitutionPublication
+      summary: Crée une publication institutionnelle en brouillon.
+      security: [{ bearerAuth: [institution] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InstitutionPublicationCreation"
+      responses:
+        "201":
+          description: Publication créée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstitutionPublication"
+
+  /api/institution/v1/publications/{id}:
+    get:
+      tags: [institution-publications]
+      operationId: getInstitutionPublication
+      summary: Détail d'une publication institutionnelle.
+      security: [{ bearerAuth: [institution] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Publication
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstitutionPublication"
+    put:
+      tags: [institution-publications]
+      operationId: updateInstitutionPublication
+      summary: Met à jour le contenu d'une publication au statut DRAFT ou CHANGES_REQUESTED.
+      security: [{ bearerAuth: [institution] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InstitutionPublicationCreation"
+      responses:
+        "200":
+          description: Publication mise à jour
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstitutionPublication"
+
+  /api/institution/v1/publications/{id}/submit:
+    post:
+      tags: [institution-publications]
+      operationId: submitInstitutionPublication
+      summary: Soumet la publication pour contrôles et revue de modération OEI.
+      security: [{ bearerAuth: [institution] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Publication soumise
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstitutionPublication"
+
+  # ---------------------------------------------------------------------------
+  # /api/institution/v1 — opportunities
+  # ---------------------------------------------------------------------------
+  /api/institution/v1/opportunities:
+    get:
+      tags: [institution-opportunities]
+      operationId: listInstitutionOpportunities
+      summary: Opportunités publiées par l'institution.
+      security: [{ bearerAuth: [institution] }]
+      responses:
+        "200":
+          description: Opportunités
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InstitutionOpportunity"
+    post:
+      tags: [institution-opportunities]
+      operationId: createInstitutionOpportunity
+      summary: Crée une opportunité (emploi, stage, mentorat, mission pro bono, groupe de travail, appel à experts).
+      security: [{ bearerAuth: [institution] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InstitutionOpportunityCreation"
+      responses:
+        "201":
+          description: Opportunité créée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstitutionOpportunity"
+
+  /api/institution/v1/opportunities/{id}:
+    put:
+      tags: [institution-opportunities]
+      operationId: updateInstitutionOpportunity
+      summary: Met à jour une opportunité.
+      security: [{ bearerAuth: [institution] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InstitutionOpportunityCreation"
+      responses:
+        "200":
+          description: Opportunité mise à jour
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstitutionOpportunity"
+
+  /api/institution/v1/opportunities/{id}/close:
+    post:
+      tags: [institution-opportunities]
+      operationId: closeInstitutionOpportunity
+      summary: Clôture une opportunité (fin de durée ou pourvue).
+      security: [{ bearerAuth: [institution] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Opportunité clôturée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstitutionOpportunity"
+
+  # ---------------------------------------------------------------------------
+  # /api/institution/v1 — recognition proposals
+  # ---------------------------------------------------------------------------
+  /api/institution/v1/badge-proposals:
+    get:
+      tags: [institution-recognition]
+      operationId: listInstitutionBadgeProposals
+      summary: Propositions de reconnaissance faites par l'institution à ses membres affiliés.
+      security: [{ bearerAuth: [institution] }]
+      responses:
+        "200":
+          description: Propositions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InstitutionBadgeProposal"
+    post:
+      tags: [institution-recognition]
+      operationId: createInstitutionBadgeProposal
+      summary: >
+        Propose une reconnaissance à un membre affilié (formation, contribution, mentorat,
+        publication, distinction interne) — soumise à acceptation du membre ; l'OEI reste
+        seul décideur pour un badge OEI officiel.
+      security: [{ bearerAuth: [institution] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InstitutionBadgeProposalCreation"
+      responses:
+        "201":
+          description: Proposition créée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstitutionBadgeProposal"
+
+  # ---------------------------------------------------------------------------
+  # /api/institution/v1 — audit
+  # ---------------------------------------------------------------------------
+  /api/institution/v1/audit-log:
+    get:
+      tags: [institution-audit]
+      operationId: listInstitutionAuditLog
+      summary: Journal d'audit des actions institutionnelles (invitations, affiliations, publications...).
+      security: [{ bearerAuth: [institution] }]
+      responses:
+        "200":
+          description: Entrées d'audit
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InstitutionAuditLog"
+
+  # ---------------------------------------------------------------------------
+  # /api/admin/v1 — content (CMS / gouvernance)
+  # ---------------------------------------------------------------------------
+  /api/admin/v1/content:
+    get:
+      tags: [admin-content]
+      operationId: listAdminContent
+      summary: Liste le contenu CMS/gouvernance (filtres type, statut, langue).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - name: type
+          in: query
+          schema:
+            $ref: "#/components/schemas/ContentType"
+        - name: status
+          in: query
+          schema:
+            $ref: "#/components/schemas/ContentWorkflowStatus"
+        - name: lang
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Contenus
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContentPage"
+    post:
+      tags: [admin-content]
+      operationId: createAdminContent
+      summary: Crée un contenu (brouillon initial).
+      security: [{ bearerAuth: [admin] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContentCreation"
+      responses:
+        "201":
+          description: Contenu créé
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Content"
+
+  /api/admin/v1/content/{id}:
+    get:
+      tags: [admin-content]
+      operationId: getAdminContent
+      summary: Détail d'un contenu avec ses versions.
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - $ref: "#/components/parameters/ContentId"
+      responses:
+        "200":
+          description: Contenu
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Content"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      tags: [admin-content]
+      operationId: updateAdminContent
+      summary: >
+        Crée une nouvelle version d'un contenu (jamais d'écrasement d'une version publiée
+        d'un document normatif — voir contrainte d'acceptation du CMS).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - $ref: "#/components/parameters/ContentId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContentVersionCreation"
+      responses:
+        "200":
+          description: Nouvelle version créée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContentVersion"
+
+  /api/admin/v1/content/{id}/versions:
+    get:
+      tags: [admin-content]
+      operationId: listAdminContentVersions
+      summary: Historique complet des versions (y compris non publiées) pour rollback/audit.
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - $ref: "#/components/parameters/ContentId"
+      responses:
+        "200":
+          description: Versions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContentVersionPage"
+
+  /api/admin/v1/content/{id}/submit:
+    post:
+      tags: [admin-content]
+      operationId: submitAdminContent
+      summary: Soumet la version courante en revue (DRAFT -> IN_REVIEW).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - $ref: "#/components/parameters/ContentId"
+      responses:
+        "200":
+          description: Contenu soumis
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Content"
+
+  /api/admin/v1/content/{id}/approve:
+    post:
+      tags: [admin-content]
+      operationId: approveAdminContent
+      summary: Enregistre une approbation (légale ou de gouvernance) sur la version courante.
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - $ref: "#/components/parameters/ContentId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContentApprovalCreation"
+      responses:
+        "200":
+          description: Approbation enregistrée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContentApproval"
+
+  /api/admin/v1/content/{id}/reject:
+    post:
+      tags: [admin-content]
+      operationId: rejectAdminContent
+      summary: Rejette la version courante (retour en DRAFT avec commentaire).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - $ref: "#/components/parameters/ContentId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [comment]
+              properties:
+                comment:
+                  type: string
+      responses:
+        "200":
+          description: Contenu rejeté
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Content"
+
+  /api/admin/v1/content/{id}/publish:
+    post:
+      tags: [admin-content]
+      operationId: publishAdminContent
+      summary: Publie la version approuvée (APPROVED/SCHEDULED -> PUBLISHED).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - $ref: "#/components/parameters/ContentId"
+      responses:
+        "200":
+          description: Contenu publié
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContentPublication"
+
+  /api/admin/v1/content/{id}/archive:
+    post:
+      tags: [admin-content]
+      operationId: archiveAdminContent
+      summary: Archive une version publiée (jamais de suppression physique).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - $ref: "#/components/parameters/ContentId"
+      responses:
+        "200":
+          description: Contenu archivé
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Content"
+
+  /api/admin/v1/content/{id}/translations:
+    post:
+      tags: [admin-content]
+      operationId: createAdminContentTranslation
+      summary: Ajoute/soumet une traduction pour une version de contenu.
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - $ref: "#/components/parameters/ContentId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContentTranslation"
+      responses:
+        "201":
+          description: Traduction créée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContentTranslation"
+
+  /api/admin/v1/content/{id}/translations/{language}/validate:
+    post:
+      tags: [admin-content]
+      operationId: validateAdminContentTranslation
+      summary: Validation humaine d'une traduction (une traduction devient obsolète si la source change).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - $ref: "#/components/parameters/ContentId"
+        - name: language
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Traduction validée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContentTranslation"
+
+  /api/admin/v1/content/{id}/contributions:
+    get:
+      tags: [admin-content]
+      operationId: listAdminContentContributions
+      summary: Contributions membres proposées sur ce contenu (avec diff).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - $ref: "#/components/parameters/ContentId"
+      responses:
+        "200":
+          description: Contributions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ContentContribution"
+
+  # ---------------------------------------------------------------------------
+  # /api/admin/v1 — media
+  # ---------------------------------------------------------------------------
+  /api/admin/v1/media:
+    get:
+      tags: [admin-media]
+      operationId: listMediaAssets
+      summary: Médiathèque (images, pièces jointes).
+      security: [{ bearerAuth: [admin] }]
+      responses:
+        "200":
+          description: Médias
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MediaAsset"
+    post:
+      tags: [admin-media]
+      operationId: uploadMediaAsset
+      summary: Enregistre un média (le fichier binaire est scanné avant mise à disposition).
+      security: [{ bearerAuth: [admin] }]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "201":
+          description: Média enregistré (scan en cours)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MediaAsset"
+
+  # ---------------------------------------------------------------------------
+  # /api/admin/v1 — books
+  # ---------------------------------------------------------------------------
+  /api/admin/v1/books:
+    post:
+      tags: [admin-books]
+      operationId: createBookCompilation
+      summary: Compile plusieurs contenus en un livre (table des matières, couverture, ISBN facultatif).
+      security: [{ bearerAuth: [admin] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BookCompilationCreation"
+      responses:
+        "201":
+          description: Compilation créée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookCompilation"
+
+  /api/admin/v1/books/{id}/render:
+    post:
+      tags: [admin-books]
+      operationId: renderBookCompilation
+      summary: Génère le PDF (et à terme EPUB) du livre compilé.
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "202":
+          description: Job de génération accepté
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PdfGenerationJob"
+
+  # ---------------------------------------------------------------------------
+  # /api/admin/v1 — git synchronization (read-only sync)
+  # ---------------------------------------------------------------------------
+  /api/admin/v1/git/synchronize:
+    post:
+      tags: [admin-git]
+      operationId: triggerGitSynchronization
+      summary: Déclenche une synchronisation en lecture depuis le dépôt Git normatif (idempotente).
+      security: [{ bearerAuth: [admin] }]
+      responses:
+        "202":
+          description: Synchronisation démarrée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GitSynchronization"
+
+  /api/admin/v1/git/synchronizations:
+    get:
+      tags: [admin-git]
+      operationId: listGitSynchronizations
+      summary: Historique des synchronisations Git.
+      security: [{ bearerAuth: [admin] }]
+      responses:
+        "200":
+          description: Synchronisations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GitSynchronization"
+
+  /api/admin/v1/git/synchronizations/{id}:
+    get:
+      tags: [admin-git]
+      operationId: getGitSynchronization
+      summary: Détail d'une synchronisation (commits traités, erreurs).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Synchronisation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GitSynchronization"
+
+  # ---------------------------------------------------------------------------
+  # /api/admin/v1 — institutions oversight
+  # ---------------------------------------------------------------------------
+  /api/admin/v1/institutions:
+    get:
+      tags: [admin-institutions]
+      operationId: listAdminInstitutions
+      summary: Liste de toutes les institutions (vérification, partenariat).
+      security: [{ bearerAuth: [admin] }]
+      responses:
+        "200":
+          description: Institutions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Institution"
+
+  /api/admin/v1/institutions/{id}/verify:
+    post:
+      tags: [admin-institutions]
+      operationId: verifyInstitution
+      summary: Vérifie/valide une institution (convention, documents).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Institution vérifiée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Institution"
+
+  /api/admin/v1/institutions/{id}/partnership:
+    put:
+      tags: [admin-institutions]
+      operationId: updateInstitutionPartnership
+      summary: Met à jour le niveau de partenariat d'une institution (dont validation Gold employeur).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Partnership"
+      responses:
+        "200":
+          description: Partenariat mis à jour
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Partnership"
+
+  # ---------------------------------------------------------------------------
+  # /api/admin/v1 — members oversight
+  # ---------------------------------------------------------------------------
+  /api/admin/v1/members:
+    get:
+      tags: [admin-members]
+      operationId: listAdminMembers
+      summary: Liste de tous les membres (recherche, filtres de niveau/statut).
+      security: [{ bearerAuth: [admin] }]
+      responses:
+        "200":
+          description: Membres
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Member"
+
+  /api/admin/v1/certifications/{id}/validate:
+    post:
+      tags: [admin-members]
+      operationId: validateCertification
+      summary: Validation manuelle d'une certification déclarée (hors catalogue auto-validé).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Certification validée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Certification"
+
+  /api/admin/v1/certifications/{id}/reject:
+    post:
+      tags: [admin-members]
+      operationId: rejectCertification
+      summary: Rejette une certification déclarée.
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Certification rejetée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Certification"
+
+  /api/admin/v1/badges/{memberId}/award:
+    post:
+      tags: [admin-members]
+      operationId: awardBadge
+      summary: Attribution manuelle d'un badge OEI officiel à un membre.
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - name: memberId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [badgeId]
+              properties:
+                badgeId:
+                  type: string
+      responses:
+        "201":
+          description: Badge attribué
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadgeAward"
+
+  /api/admin/v1/verification-requests/{id}/approve:
+    post:
+      tags: [admin-members]
+      operationId: approveVerificationRequest
+      summary: Approuve une demande de vérification (identité, profil, certification).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Demande approuvée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VerificationRequest"
+
+  /api/admin/v1/verification-requests/{id}/reject:
+    post:
+      tags: [admin-members]
+      operationId: rejectVerificationRequest
+      summary: Rejette une demande de vérification.
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Demande rejetée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VerificationRequest"
+
+  # ---------------------------------------------------------------------------
+  # /api/admin/v1 — global audit
+  # ---------------------------------------------------------------------------
+  /api/admin/v1/audit-log:
+    get:
+      tags: [admin-audit]
+      operationId: listAdminAuditLog
+      summary: Journal d'audit global de la plateforme.
+      security: [{ bearerAuth: [admin] }]
+      responses:
+        "200":
+          description: Entrées d'audit
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InstitutionAuditLog"
+
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >
+        Jeton OIDC émis par Keycloak (realm `oei`). Les rôles requis par préfixe de
+        chemin sont documentés dans `docs/architecture/keycloak-roles.md`.
+
+  parameters:
+    CvId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    ContentId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+
+  responses:
+    NotFound:
+      description: Ressource introuvable
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    Conflict:
+      description: Conflit (ex. compte déjà existant)
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    ValidationError:
+      description: Erreur de validation
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+
   schemas:
+    # -------------------------------------------------------------------------
+    # Common
+    # -------------------------------------------------------------------------
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
+
+    PageMetadata:
+      type: object
+      required: [page, pageSize, totalItems]
+      properties:
+        page:
+          type: integer
+        pageSize:
+          type: integer
+        totalItems:
+          type: integer
+
     ContentDocument:
       type: object
       required: [slug, lang, title, body, isFallback]
@@ -40,3 +2164,1396 @@ components:
           type: string
         isFallback:
           type: boolean
+
+    # -------------------------------------------------------------------------
+    # Identity / Membership / Profile
+    # -------------------------------------------------------------------------
+    AccountRegistration:
+      type: object
+      required: [email, locale, country, consentAccepted]
+      properties:
+        email:
+          type: string
+          format: email
+        locale:
+          type: string
+        country:
+          type: string
+        consentAccepted:
+          type: boolean
+        oidcSubject:
+          type: string
+          description: Identifiant OIDC si inscription via fournisseur externe (Keycloak).
+
+    MembershipTier:
+      type: string
+      enum: [STANDARD, SILVER, GOLD, FOUNDING, HONORARY, INSTITUTIONAL_AFFILIATE]
+
+    MembershipStatus:
+      type: string
+      enum: [PENDING, ACTIVE, SUSPENDED, TERMINATED]
+
+    Membership:
+      type: object
+      required: [memberId, tier, status]
+      properties:
+        memberId:
+          type: string
+        tier:
+          $ref: "#/components/schemas/MembershipTier"
+        status:
+          $ref: "#/components/schemas/MembershipStatus"
+        startedAt:
+          type: string
+          format: date-time
+        renewedAt:
+          type: string
+          format: date-time
+          nullable: true
+        endsAt:
+          type: string
+          format: date-time
+          nullable: true
+
+    Member:
+      type: object
+      required: [id, publicSlug, displayName, locale, country]
+      properties:
+        id:
+          type: string
+        publicSlug:
+          type: string
+        displayName:
+          type: string
+        legalName:
+          type: string
+          description: Identité légale, distincte du nom public, jamais exposée sans base légale.
+        locale:
+          type: string
+        country:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        membership:
+          $ref: "#/components/schemas/Membership"
+
+    LanguageProficiency:
+      type: object
+      required: [language, level]
+      properties:
+        language:
+          type: string
+        level:
+          type: string
+          enum: [A1, A2, B1, B2, C1, C2, NATIVE]
+
+    Experience:
+      type: object
+      required: [id, organization, title, startDate]
+      properties:
+        id:
+          type: string
+        organization:
+          type: string
+        title:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+          nullable: true
+        current:
+          type: boolean
+        description:
+          type: string
+        isDemoData:
+          type: boolean
+          default: false
+
+    Education:
+      type: object
+      required: [id, institution, program, startDate]
+      properties:
+        id:
+          type: string
+        institution:
+          type: string
+        program:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+          nullable: true
+        description:
+          type: string
+
+    Skill:
+      type: object
+      required: [id, name, category]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        category:
+          type: string
+        verified:
+          type: boolean
+          default: false
+
+    ProfessionalProfile:
+      type: object
+      required: [memberId]
+      properties:
+        memberId:
+          type: string
+        title:
+          type: string
+        summary:
+          type: string
+        location:
+          type: string
+        availability:
+          type: string
+          enum: [AVAILABLE, OPEN_TO_OPPORTUNITIES, NOT_AVAILABLE]
+        expertiseAreas:
+          type: array
+          items:
+            type: string
+        technologies:
+          type: array
+          items:
+            type: string
+        sectors:
+          type: array
+          items:
+            type: string
+        languages:
+          type: array
+          items:
+            $ref: "#/components/schemas/LanguageProficiency"
+        experiences:
+          type: array
+          items:
+            $ref: "#/components/schemas/Experience"
+        educations:
+          type: array
+          items:
+            $ref: "#/components/schemas/Education"
+        skills:
+          type: array
+          items:
+            $ref: "#/components/schemas/Skill"
+        completenessScore:
+          type: integer
+          minimum: 0
+          maximum: 100
+
+    RecognizedCertification:
+      type: object
+      required: [id, name, issuingOrganization]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        issuingOrganization:
+          type: string
+        catalogReference:
+          type: string
+        autoValidate:
+          type: boolean
+          default: false
+
+    CertificationStatus:
+      type: string
+      enum: [DECLARED, UNDER_REVIEW, VALIDATED, REJECTED, EXPIRED, REVOKED]
+
+    CertificationDeclaration:
+      type: object
+      required: [name, issuingOrganization]
+      properties:
+        name:
+          type: string
+        issuingOrganization:
+          type: string
+        recognizedCertificationId:
+          type: string
+          nullable: true
+        issuedAt:
+          type: string
+          format: date
+        expiresAt:
+          type: string
+          format: date
+          nullable: true
+        proofDocumentUrl:
+          type: string
+          format: uri
+
+    Certification:
+      allOf:
+        - $ref: "#/components/schemas/CertificationDeclaration"
+        - type: object
+          required: [id, memberId, status]
+          properties:
+            id:
+              type: string
+            memberId:
+              type: string
+            status:
+              $ref: "#/components/schemas/CertificationStatus"
+            validatedBy:
+              type: string
+              nullable: true
+            validatedAt:
+              type: string
+              format: date-time
+              nullable: true
+
+    Badge:
+      type: object
+      required: [id, code, name, category]
+      properties:
+        id:
+          type: string
+        code:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        iconUrl:
+          type: string
+          format: uri
+        category:
+          type: string
+          enum: [MEMBERSHIP, CONTRIBUTION, CERTIFICATION, RECOGNITION]
+
+    BadgeAward:
+      type: object
+      required: [id, badgeId, memberId, awardedAt, source]
+      properties:
+        id:
+          type: string
+        badgeId:
+          type: string
+        memberId:
+          type: string
+        awardedAt:
+          type: string
+          format: date-time
+        source:
+          type: string
+          enum: [AUTOMATIC, MANUAL, INSTITUTION_PROPOSAL]
+        awardedBy:
+          type: string
+          nullable: true
+        revoked:
+          type: boolean
+          default: false
+        revokedAt:
+          type: string
+          format: date-time
+          nullable: true
+
+    EthicalCharterSignature:
+      type: object
+      required: [id, memberId, version, signedAt]
+      properties:
+        id:
+          type: string
+        memberId:
+          type: string
+        version:
+          type: string
+        signedAt:
+          type: string
+          format: date-time
+
+    CvTemplate:
+      type: object
+      required: [id, code, name]
+      properties:
+        id:
+          type: string
+        code:
+          type: string
+        name:
+          type: string
+        previewUrl:
+          type: string
+          format: uri
+
+    CvTranslationStatus:
+      type: string
+      enum: [MACHINE_GENERATED, PENDING_VALIDATION, VALIDATED]
+
+    CvTranslation:
+      type: object
+      required: [language, status]
+      properties:
+        id:
+          type: string
+        sectionId:
+          type: string
+        language:
+          type: string
+        content:
+          type: object
+          additionalProperties: true
+        status:
+          $ref: "#/components/schemas/CvTranslationStatus"
+        translatedAt:
+          type: string
+          format: date-time
+        validatedBy:
+          type: string
+          nullable: true
+
+    CvSectionType:
+      type: string
+      enum:
+        - IDENTITY
+        - SUMMARY
+        - EXPERIENCE
+        - PROJECT
+        - EDUCATION
+        - CERTIFICATION
+        - SKILL
+        - LANGUAGE
+        - PUBLICATION
+        - CONFERENCE
+        - ENGAGEMENT
+        - DISTINCTION
+        - REFERENCE
+
+    CvSection:
+      type: object
+      required: [type, order, content]
+      properties:
+        id:
+          type: string
+        cvId:
+          type: string
+        type:
+          $ref: "#/components/schemas/CvSectionType"
+        order:
+          type: integer
+        content:
+          type: object
+          additionalProperties: true
+        translations:
+          type: array
+          items:
+            $ref: "#/components/schemas/CvTranslation"
+
+    CvCreation:
+      type: object
+      required: [templateId, sourceLanguage]
+      properties:
+        templateId:
+          type: string
+        sourceLanguage:
+          type: string
+
+    Cv:
+      allOf:
+        - $ref: "#/components/schemas/CvCreation"
+        - type: object
+          required: [id, memberId, status]
+          properties:
+            id:
+              type: string
+            memberId:
+              type: string
+            status:
+              type: string
+              enum: [DRAFT, READY]
+            sections:
+              type: array
+              items:
+                $ref: "#/components/schemas/CvSection"
+
+    CvRenderRequest:
+      type: object
+      required: [language]
+      properties:
+        language:
+          type: string
+        includeBadges:
+          type: array
+          items:
+            type: string
+          description: Identifiants de badges sélectionnés pour apparaître dans le rendu.
+
+    PublicProfile:
+      type: object
+      required: [memberId, publicSlug]
+      properties:
+        memberId:
+          type: string
+        publicSlug:
+          type: string
+        visibleFields:
+          type: array
+          items:
+            type: string
+        seoDescription:
+          type: string
+        publishedAt:
+          type: string
+          format: date-time
+          nullable: true
+        viewsCount:
+          type: integer
+
+    PublicProfilePublication:
+      type: object
+      required: [publicSlug, visibleFields]
+      properties:
+        publicSlug:
+          type: string
+        visibleFields:
+          type: array
+          items:
+            type: string
+        seoDescription:
+          type: string
+
+    DigitalBusinessCard:
+      type: object
+      required: [memberId, publicSlug]
+      properties:
+        memberId:
+          type: string
+        publicSlug:
+          type: string
+        qrCodeUrl:
+          type: string
+          format: uri
+        vCardUrl:
+          type: string
+          format: uri
+        theme:
+          type: string
+
+    WalletPassProvider:
+      type: string
+      enum: [APPLE, GOOGLE]
+
+    WalletPassStatus:
+      type: string
+      enum: [MOCKED, ISSUED, REVOKED, RENEWED]
+
+    WalletPass:
+      type: object
+      required: [id, memberId, provider, status, serialNumber, mocked]
+      properties:
+        id:
+          type: string
+        memberId:
+          type: string
+        provider:
+          $ref: "#/components/schemas/WalletPassProvider"
+        status:
+          $ref: "#/components/schemas/WalletPassStatus"
+        serialNumber:
+          type: string
+        verificationUrl:
+          type: string
+          format: uri
+        levelColor:
+          type: string
+          description: Couleur associée au niveau d'adhésion affiché sur le pass.
+        issuedAt:
+          type: string
+          format: date-time
+        revokedAt:
+          type: string
+          format: date-time
+          nullable: true
+        mocked:
+          type: boolean
+          description: >
+            Toujours `true` en V1 : représente la structure du pass sans génération d'un
+            .pkpass signé réel (aucun certificat éditeur Apple/Google disponible). Ne doit
+            jamais être présenté comme une pièce d'identité officielle.
+
+    WalletPassVerification:
+      type: object
+      required: [valid, status]
+      properties:
+        valid:
+          type: boolean
+        memberPublicSlug:
+          type: string
+        status:
+          $ref: "#/components/schemas/WalletPassStatus"
+        tier:
+          $ref: "#/components/schemas/MembershipTier"
+
+    EmploymentAffiliation:
+      type: object
+      required: [id, memberId, institutionId, verificationMethod, status]
+      properties:
+        id:
+          type: string
+        memberId:
+          type: string
+        institutionId:
+          type: string
+        verificationMethod:
+          type: string
+          enum: [EMAIL_DOMAIN, INSTITUTION_VALIDATION]
+        status:
+          type: string
+          enum: [PENDING, VERIFIED, REJECTED, ENDED]
+        startedAt:
+          type: string
+          format: date-time
+        endedAt:
+          type: string
+          format: date-time
+          nullable: true
+
+    VerificationRequestCreation:
+      type: object
+      required: [type]
+      properties:
+        type:
+          type: string
+          enum: [IDENTITY, PROFILE, CERTIFICATION]
+        referenceId:
+          type: string
+          description: Identifiant de l'objet concerné (ex. certification déclarée).
+
+    VerificationRequest:
+      allOf:
+        - $ref: "#/components/schemas/VerificationRequestCreation"
+        - type: object
+          required: [id, memberId, status, submittedAt]
+          properties:
+            id:
+              type: string
+            memberId:
+              type: string
+            status:
+              type: string
+              enum: [PENDING, APPROVED, REJECTED]
+            submittedAt:
+              type: string
+              format: date-time
+            reviewedAt:
+              type: string
+              format: date-time
+              nullable: true
+            reviewerId:
+              type: string
+              nullable: true
+
+    ContentVersionPage:
+      type: object
+      required: [items, pageMetadata]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContentVersion"
+        pageMetadata:
+          $ref: "#/components/schemas/PageMetadata"
+
+    # -------------------------------------------------------------------------
+    # Institution
+    # -------------------------------------------------------------------------
+    InstitutionDomain:
+      type: object
+      required: [id, domain, verified]
+      properties:
+        id:
+          type: string
+        domain:
+          type: string
+        verified:
+          type: boolean
+        verifiedAt:
+          type: string
+          format: date-time
+          nullable: true
+
+    Institution:
+      type: object
+      required: [id, legalName, publicName, publicSlug, country]
+      properties:
+        id:
+          type: string
+        legalName:
+          type: string
+        publicName:
+          type: string
+        logoUrl:
+          type: string
+          format: uri
+        country:
+          type: string
+        sectors:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+        emailDomains:
+          type: array
+          items:
+            $ref: "#/components/schemas/InstitutionDomain"
+        publicSlug:
+          type: string
+        isDemoData:
+          type: boolean
+          default: false
+          description: >
+            Doit être explicitement vrai pour toute institution fictive utilisée en
+            démonstration — jamais présentée comme partenaire officiel sans validation.
+
+    PartnershipLevel:
+      type: string
+      enum: [PROSPECT, STANDARD, SILVER, GOLD, STRATEGIC]
+
+    Partnership:
+      type: object
+      required: [institutionId, level, verified]
+      properties:
+        institutionId:
+          type: string
+        level:
+          $ref: "#/components/schemas/PartnershipLevel"
+        verified:
+          type: boolean
+        startedAt:
+          type: string
+          format: date-time
+        endsAt:
+          type: string
+          format: date-time
+          nullable: true
+        agreementDocumentUrl:
+          type: string
+          format: uri
+
+    InstitutionRole:
+      type: string
+      enum:
+        - OWNER
+        - ADMIN
+        - HR
+        - TECH_LEAD
+        - COMMS
+        - READER
+        - CONTRIBUTOR
+        - AFFILIATION_VALIDATOR
+
+    InstitutionMembership:
+      type: object
+      required: [memberId, institutionId, role]
+      properties:
+        memberId:
+          type: string
+        institutionId:
+          type: string
+        role:
+          $ref: "#/components/schemas/InstitutionRole"
+        grantedAt:
+          type: string
+          format: date-time
+        grantedBy:
+          type: string
+
+    InstitutionInvitationCreation:
+      type: object
+      required: [email, role]
+      properties:
+        email:
+          type: string
+          format: email
+        role:
+          $ref: "#/components/schemas/InstitutionRole"
+
+    InstitutionInvitation:
+      allOf:
+        - $ref: "#/components/schemas/InstitutionInvitationCreation"
+        - type: object
+          required: [id, institutionId, status, invitedAt]
+          properties:
+            id:
+              type: string
+            institutionId:
+              type: string
+            status:
+              type: string
+              enum: [PENDING, ACCEPTED, EXPIRED, REVOKED]
+            invitedBy:
+              type: string
+            invitedAt:
+              type: string
+              format: date-time
+            expiresAt:
+              type: string
+              format: date-time
+
+    MemberInstitutionAffiliation:
+      type: object
+      required: [id, memberId, institutionId, status]
+      properties:
+        id:
+          type: string
+        memberId:
+          type: string
+        institutionId:
+          type: string
+        status:
+          type: string
+          enum: [PENDING, APPROVED, REJECTED, ENDED]
+        requestedAt:
+          type: string
+          format: date-time
+        decidedAt:
+          type: string
+          format: date-time
+          nullable: true
+        decidedBy:
+          type: string
+          nullable: true
+
+    InstitutionDashboard:
+      type: object
+      required: [institutionId]
+      properties:
+        institutionId:
+          type: string
+        affiliatedMembers:
+          type: integer
+        activeMembers:
+          type: integer
+        verifiedProfiles:
+          type: integer
+        certifications:
+          type: integer
+        badges:
+          type: integer
+        signedCharters:
+          type: integer
+        contributions:
+          type: integer
+        trainings:
+          type: integer
+        opportunities:
+          type: integer
+        publications:
+          type: integer
+        invitations:
+          type: integer
+
+    InstitutionPublicationType:
+      type: string
+      enum:
+        - OPINION
+        - EXPERIENCE_REPORT
+        - CIO_DECISION
+        - STUDY
+        - REPORT
+        - EVENT
+        - TRAINING
+        - OPPORTUNITY
+
+    PublicationWorkflowStatus:
+      type: string
+      enum:
+        - DRAFT
+        - SUBMITTED
+        - CHECKS
+        - REVIEW
+        - CHANGES_REQUESTED
+        - VALIDATED
+        - TRANSLATED
+        - PUBLISHED
+        - ARCHIVED
+
+    InstitutionPublicationCreation:
+      type: object
+      required: [type, title, body]
+      properties:
+        type:
+          $ref: "#/components/schemas/InstitutionPublicationType"
+        title:
+          type: string
+        body:
+          type: string
+
+    InstitutionPublication:
+      allOf:
+        - $ref: "#/components/schemas/InstitutionPublicationCreation"
+        - type: object
+          required: [id, institutionId, status]
+          properties:
+            id:
+              type: string
+            institutionId:
+              type: string
+            status:
+              $ref: "#/components/schemas/PublicationWorkflowStatus"
+            authorMemberId:
+              type: string
+            submittedAt:
+              type: string
+              format: date-time
+              nullable: true
+            publishedAt:
+              type: string
+              format: date-time
+              nullable: true
+
+    InstitutionPublicationPage:
+      type: object
+      required: [items, pageMetadata]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/InstitutionPublication"
+        pageMetadata:
+          $ref: "#/components/schemas/PageMetadata"
+
+    InstitutionOpportunityType:
+      type: string
+      enum: [JOB, INTERNSHIP, MENTORING, PRO_BONO, WORKING_GROUP, CALL_FOR_EXPERTS]
+
+    InstitutionOpportunityCreation:
+      type: object
+      required: [type, title, description]
+      properties:
+        type:
+          $ref: "#/components/schemas/InstitutionOpportunityType"
+        title:
+          type: string
+        description:
+          type: string
+        expiresAt:
+          type: string
+          format: date-time
+
+    InstitutionOpportunity:
+      allOf:
+        - $ref: "#/components/schemas/InstitutionOpportunityCreation"
+        - type: object
+          required: [id, institutionId, status]
+          properties:
+            id:
+              type: string
+            institutionId:
+              type: string
+            status:
+              type: string
+              enum: [DRAFT, PUBLISHED, CLOSED, REPORTED]
+            publishedAt:
+              type: string
+              format: date-time
+              nullable: true
+
+    InstitutionOpportunityPage:
+      type: object
+      required: [items, pageMetadata]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/InstitutionOpportunity"
+        pageMetadata:
+          $ref: "#/components/schemas/PageMetadata"
+
+    InstitutionBadgeProposalCreation:
+      type: object
+      required: [memberId, proposedBadgeCode, justification]
+      properties:
+        memberId:
+          type: string
+        proposedBadgeCode:
+          type: string
+        justification:
+          type: string
+
+    InstitutionBadgeProposal:
+      allOf:
+        - $ref: "#/components/schemas/InstitutionBadgeProposalCreation"
+        - type: object
+          required: [id, institutionId, status]
+          properties:
+            id:
+              type: string
+            institutionId:
+              type: string
+            status:
+              type: string
+              enum:
+                - PENDING
+                - ACCEPTED_BY_MEMBER
+                - DECLINED_BY_MEMBER
+                - REJECTED_BY_OEI
+                - AWARDED
+
+    InstitutionContribution:
+      type: object
+      required: [id, institutionId, type, description, status]
+      properties:
+        id:
+          type: string
+        institutionId:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+
+    InstitutionAuditLog:
+      type: object
+      required: [id, actorId, action, occurredAt]
+      properties:
+        id:
+          type: string
+        institutionId:
+          type: string
+          nullable: true
+        actorId:
+          type: string
+        action:
+          type: string
+        targetType:
+          type: string
+        targetId:
+          type: string
+        occurredAt:
+          type: string
+          format: date-time
+        metadata:
+          type: object
+          additionalProperties: true
+
+    InstitutionPublicPage:
+      type: object
+      required: [institution]
+      properties:
+        institution:
+          $ref: "#/components/schemas/Institution"
+        partnership:
+          $ref: "#/components/schemas/Partnership"
+        publications:
+          type: array
+          items:
+            $ref: "#/components/schemas/InstitutionPublication"
+        opportunities:
+          type: array
+          items:
+            $ref: "#/components/schemas/InstitutionOpportunity"
+
+    # -------------------------------------------------------------------------
+    # CMS / Governance
+    # -------------------------------------------------------------------------
+    ContentType:
+      type: string
+      enum:
+        - PAGE
+        - ARTICLE
+        - NEWS
+        - EVENT
+        - WHITEPAPER
+        - MANIFESTO
+        - GLOSSARY
+        - STATUTES
+        - REGULATION
+        - ETHICS_CODE
+        - COMPETENCY_FRAMEWORK
+        - CHARTER
+        - REPORT
+        - BOOK
+        - PRESS_RELEASE
+
+    ContentWorkflowStatus:
+      type: string
+      enum:
+        - DRAFT
+        - IN_REVIEW
+        - LEGAL_REVIEW
+        - GOVERNANCE_REVIEW
+        - APPROVED
+        - TRANSLATION_PENDING
+        - SCHEDULED
+        - PUBLISHED
+        - ARCHIVED
+        - REJECTED
+
+    ContentSourceType:
+      type: string
+      enum: [GIT, CMS]
+      description: >
+        GIT pour les documents normatifs (source de vérité Markdown versionnée), CMS pour
+        les contenus éditoriaux gérés en base.
+
+    ContentGovernance:
+      type: object
+      properties:
+        approvalRequired:
+          type: boolean
+        decisionId:
+          type: string
+          nullable: true
+
+    ContentCreation:
+      type: object
+      required: [type, slug, sourceType, title]
+      properties:
+        type:
+          $ref: "#/components/schemas/ContentType"
+        slug:
+          type: string
+        sourceType:
+          $ref: "#/components/schemas/ContentSourceType"
+        title:
+          type: string
+        governance:
+          $ref: "#/components/schemas/ContentGovernance"
+
+    Content:
+      allOf:
+        - $ref: "#/components/schemas/ContentCreation"
+        - type: object
+          required: [id, status]
+          properties:
+            id:
+              type: string
+            currentVersionId:
+              type: string
+              nullable: true
+            status:
+              $ref: "#/components/schemas/ContentWorkflowStatus"
+
+    ContentPage:
+      type: object
+      required: [items, pageMetadata]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Content"
+        pageMetadata:
+          $ref: "#/components/schemas/PageMetadata"
+
+    ContentVersionCreation:
+      type: object
+      required: [language, title, body]
+      properties:
+        language:
+          type: string
+        title:
+          type: string
+        body:
+          type: string
+        frontMatter:
+          type: object
+          additionalProperties: true
+
+    ContentVersion:
+      allOf:
+        - $ref: "#/components/schemas/ContentVersionCreation"
+        - type: object
+          required: [id, contentId, version, status]
+          properties:
+            id:
+              type: string
+            contentId:
+              type: string
+            version:
+              type: string
+            authorIds:
+              type: array
+              items:
+                type: string
+            status:
+              $ref: "#/components/schemas/ContentWorkflowStatus"
+            createdAt:
+              type: string
+              format: date-time
+
+    ContentTranslationStatus:
+      type: string
+      enum: [PENDING, MACHINE_GENERATED, IN_REVIEW, VALIDATED, OUTDATED]
+
+    ContentTranslation:
+      type: object
+      required: [language, status]
+      properties:
+        id:
+          type: string
+        contentVersionId:
+          type: string
+        language:
+          type: string
+        status:
+          $ref: "#/components/schemas/ContentTranslationStatus"
+        translatorId:
+          type: string
+          nullable: true
+        validatedBy:
+          type: string
+          nullable: true
+        validatedAt:
+          type: string
+          format: date-time
+          nullable: true
+
+    ContentApprovalCreation:
+      type: object
+      required: [role, decision]
+      properties:
+        role:
+          type: string
+          enum: [LEGAL, GOVERNANCE]
+        decision:
+          type: string
+          enum: [APPROVED, REJECTED, CHANGES_REQUESTED]
+        comment:
+          type: string
+
+    ContentApproval:
+      allOf:
+        - $ref: "#/components/schemas/ContentApprovalCreation"
+        - type: object
+          required: [id, contentVersionId, approverId, decidedAt]
+          properties:
+            id:
+              type: string
+            contentVersionId:
+              type: string
+            approverId:
+              type: string
+            decidedAt:
+              type: string
+              format: date-time
+
+    ContentDecision:
+      type: object
+      required: [id, contentId, decisionId, sponsor]
+      properties:
+        id:
+          type: string
+        contentId:
+          type: string
+        decisionId:
+          type: string
+          description: Référence métier de décision de gouvernance (ex. DEC-2026-001).
+        sponsor:
+          type: string
+        justification:
+          type: string
+        effectiveDate:
+          type: string
+          format: date
+        publishedAt:
+          type: string
+          format: date-time
+          nullable: true
+
+    ContentContributionCreation:
+      type: object
+      required: [contentId, patch]
+      properties:
+        contentId:
+          type: string
+        patch:
+          type: string
+          description: Patch Markdown proposé (diffable contre la version courante).
+
+    ContentContribution:
+      allOf:
+        - $ref: "#/components/schemas/ContentContributionCreation"
+        - type: object
+          required: [id, authorMemberId, status, createdAt]
+          properties:
+            id:
+              type: string
+            authorMemberId:
+              type: string
+            status:
+              type: string
+              enum: [PROPOSED, IN_CONSULTATION, ACCEPTED, REJECTED, MERGED]
+            createdAt:
+              type: string
+              format: date-time
+
+    ContentComment:
+      type: object
+      required: [id, authorId, body, createdAt]
+      properties:
+        id:
+          type: string
+        contributionId:
+          type: string
+          nullable: true
+        contentId:
+          type: string
+          nullable: true
+        authorId:
+          type: string
+        body:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    ContentPublication:
+      type: object
+      required: [id, contentVersionId, publishedAt]
+      properties:
+        id:
+          type: string
+        contentVersionId:
+          type: string
+        publishedAt:
+          type: string
+          format: date-time
+        publishedBy:
+          type: string
+        channel:
+          type: string
+
+    DocumentSource:
+      type: object
+      required: [id, contentId, gitRepository, gitPath]
+      properties:
+        id:
+          type: string
+        contentId:
+          type: string
+        gitRepository:
+          type: string
+        gitPath:
+          type: string
+        gitRef:
+          type: string
+
+    GitSynchronizationStatus:
+      type: string
+      enum: [RUNNING, SUCCESS, FAILED]
+
+    GitSynchronization:
+      type: object
+      required: [id, status]
+      properties:
+        id:
+          type: string
+        startedAt:
+          type: string
+          format: date-time
+        finishedAt:
+          type: string
+          format: date-time
+          nullable: true
+        status:
+          $ref: "#/components/schemas/GitSynchronizationStatus"
+        commitsProcessed:
+          type: integer
+        errors:
+          type: array
+          items:
+            type: string
+
+    MediaAsset:
+      type: object
+      required: [id, filename, url, mimeType]
+      properties:
+        id:
+          type: string
+        filename:
+          type: string
+        url:
+          type: string
+          format: uri
+        mimeType:
+          type: string
+        sizeBytes:
+          type: integer
+        uploadedBy:
+          type: string
+        uploadedAt:
+          type: string
+          format: date-time
+        scanStatus:
+          type: string
+          enum: [PENDING, CLEAN, INFECTED]
+          default: PENDING
+
+    BookCompilationCreation:
+      type: object
+      required: [title, contentIds]
+      properties:
+        title:
+          type: string
+        contentIds:
+          type: array
+          items:
+            type: string
+        coverAssetId:
+          type: string
+        isbn:
+          type: string
+          nullable: true
+
+    BookCompilation:
+      allOf:
+        - $ref: "#/components/schemas/BookCompilationCreation"
+        - type: object
+          required: [id, version]
+          properties:
+            id:
+              type: string
+            tableOfContents:
+              type: array
+              items:
+                type: string
+            version:
+              type: string
+
+    PdfGenerationJobStatus:
+      type: string
+      enum: [QUEUED, PROCESSING, DONE, FAILED]
+
+    PdfGenerationJob:
+      type: object
+      required: [id, targetType, targetId, status]
+      properties:
+        id:
+          type: string
+        targetType:
+          type: string
+          enum: [CV, BOOK]
+        targetId:
+          type: string
+        status:
+          $ref: "#/components/schemas/PdfGenerationJobStatus"
+        resultUrl:
+          type: string
+          format: uri
+          nullable: true
+        requestedAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+          nullable: true

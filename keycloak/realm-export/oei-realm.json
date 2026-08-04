@@ -6,8 +6,82 @@
   "sslRequired": "external",
   "roles": {
     "realm": [
-      { "name": "member", "description": "Membre de l'OEI (fondateur, agréé, associé ou honneur)" },
-      { "name": "admin", "description": "Administrateur habilité à valider les demandes d'adhésion" }
+      {
+        "name": "member",
+        "description": "Membre de l'OEI (rôle de base, tous niveaux confondus). Toujours combiné à un rôle de niveau member-*."
+      },
+      {
+        "name": "admin",
+        "description": "Administrateur OEI habilité à valider les demandes d'adhésion et à modérer la plateforme."
+      },
+      {
+        "name": "member-standard",
+        "description": "Niveau d'adhésion Standard.",
+        "composite": true,
+        "composites": { "realm": ["member"] }
+      },
+      {
+        "name": "member-silver",
+        "description": "Niveau d'adhésion Silver.",
+        "composite": true,
+        "composites": { "realm": ["member"] }
+      },
+      {
+        "name": "member-gold",
+        "description": "Niveau d'adhésion Gold (obtenu directement ou via rattachement à un employeur partenaire vérifié).",
+        "composite": true,
+        "composites": { "realm": ["member"] }
+      },
+      {
+        "name": "member-founding",
+        "description": "Membre fondateur de l'OEI.",
+        "composite": true,
+        "composites": { "realm": ["member"] }
+      },
+      {
+        "name": "member-honorary",
+        "description": "Membre honoraire, distinction attribuée par l'OEI.",
+        "composite": true,
+        "composites": { "realm": ["member"] }
+      },
+      {
+        "name": "member-institutional-affiliate",
+        "description": "Membre rattaché à une institution partenaire (statut d'affiliation actif, distinct du niveau d'adhésion personnel).",
+        "composite": true,
+        "composites": { "realm": ["member"] }
+      },
+      {
+        "name": "institution-owner",
+        "description": "Propriétaire du compte institution : seul rôle habilité à transférer la propriété ou clôturer le compte."
+      },
+      {
+        "name": "institution-admin",
+        "description": "Administrateur institutionnel : gère les rôles internes, invitations et paramètres du compte."
+      },
+      {
+        "name": "institution-hr",
+        "description": "Responsable RH institutionnel : gère les affiliations d'employés et les avantages collaborateurs."
+      },
+      {
+        "name": "institution-tech-lead",
+        "description": "Responsable technique institutionnel : référent sur les sujets techniques et les groupes de travail."
+      },
+      {
+        "name": "institution-comms",
+        "description": "Responsable communication institutionnel : rédige et soumet les publications institutionnelles."
+      },
+      {
+        "name": "institution-reader",
+        "description": "Lecteur institutionnel : accès en lecture seule au dashboard et à la bibliothèque, sans droit d'action."
+      },
+      {
+        "name": "institution-contributor",
+        "description": "Contributeur institutionnel : peut proposer des publications et des contributions, sans droit de validation."
+      },
+      {
+        "name": "institution-affiliation-validator",
+        "description": "Validateur d'affiliation : seul rôle habilité à approuver/rejeter une demande d'affiliation de membre à l'institution."
+      }
     ]
   },
   "clients": [
@@ -21,7 +95,39 @@
       "webOrigins": ["http://localhost:4300"],
       "attributes": {
         "pkce.code.challenge.method": "S256"
-      }
+      },
+      "protocolMappers": [
+        {
+          "name": "institution-group-path",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-group-membership-mapper",
+          "consentRequired": false,
+          "config": {
+            "full.path": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true",
+            "claim.name": "groups"
+          }
+        }
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "name": "institutions",
+      "path": "/institutions",
+      "subGroups": [
+        {
+          "name": "demo-institution",
+          "path": "/institutions/demo-institution",
+          "attributes": {
+            "institutionId": ["demo-institution"],
+            "isDemoData": ["true"]
+          },
+          "realmRoles": ["institution-owner"]
+        }
+      ]
     }
   ]
 }
