@@ -124,15 +124,13 @@ const UNPAID_STATUS: MembershipFeeStatus = {
 const PAID_STATUS: MembershipFeeStatus = { ...UNPAID_STATUS, isPaid: true, amountDue: 0, monthsRemaining: 0 };
 
 describe('Home', () => {
-  beforeEach(() => sessionStorage.clear());
-  afterEach(() => sessionStorage.clear());
-
   function configure(options?: {
     stats?: Stat[];
     domainAreas?: DomainArea[];
     news?: NewsItem[];
     partners?: Partner[];
     membershipFeeStatus?: MembershipFeeStatus;
+    authenticated?: boolean;
   }) {
     TestBed.configureTestingModule({
       imports: [Home],
@@ -149,6 +147,10 @@ describe('Home', () => {
           provide: MembershipFeeApplicationService,
           useValue: { getStatus: () => of(options?.membershipFeeStatus ?? PAID_STATUS) },
         },
+        // Real `KeycloakAuthService` needs `OAuthService` (angular-oauth2-oidc) injected — a
+        // plain object standing in for the whole service (as guard specs already do) avoids
+        // wiring up the real OIDC library in these unit tests.
+        { provide: KeycloakAuthService, useValue: { isAuthenticated: () => options?.authenticated ?? false } },
       ],
     });
   }
@@ -295,8 +297,7 @@ describe('Home', () => {
     });
 
     it('givenAuthenticatedWithUnpaidCotisation_whenClickingJoin_thenNavigatesToCotisationPage', async () => {
-      configure({ membershipFeeStatus: UNPAID_STATUS });
-      sessionStorage.setItem('oei_mock_session_roles', JSON.stringify(['member']));
+      configure({ membershipFeeStatus: UNPAID_STATUS, authenticated: true });
       const fixture = TestBed.createComponent(Home);
       const router = TestBed.inject(Router);
       const navigateSpy = vi.spyOn(router, 'navigateByUrl');
@@ -309,8 +310,7 @@ describe('Home', () => {
     });
 
     it('givenAuthenticatedAndUpToDate_whenClickingJoin_thenNavigatesToProfilePage', async () => {
-      configure({ membershipFeeStatus: PAID_STATUS });
-      sessionStorage.setItem('oei_mock_session_roles', JSON.stringify(['member']));
+      configure({ membershipFeeStatus: PAID_STATUS, authenticated: true });
       const fixture = TestBed.createComponent(Home);
       const router = TestBed.inject(Router);
       const navigateSpy = vi.spyOn(router, 'navigateByUrl');

@@ -5,6 +5,7 @@ import { App } from './app';
 import { routes } from './app.routes';
 import { NEWSLETTER_SUBSCRIPTION_PORT } from './domain/port/newsletter-subscription.port';
 import { MEMBER_PORT } from './domain/port/identity/member.port';
+import { KeycloakAuthService } from './presentation/auth/keycloak-auth.service';
 
 describe('App', () => {
   beforeEach(async () => {
@@ -18,6 +19,10 @@ describe('App', () => {
         // as soon as `App` itself is created.
         { provide: NEWSLETTER_SUBSCRIPTION_PORT, useValue: { subscribe: () => of({ status: 'pendingConfirmation' }) } },
         { provide: MEMBER_PORT, useValue: { getCurrentMember: () => of(null) } },
+        // Real `KeycloakAuthService` needs `OAuthService` (angular-oauth2-oidc), which in turn
+        // needs a bootstrap-time `configure()`/`loadDiscoveryDocumentAndTryLogin()` call this
+        // test doesn't perform — stand in with a plain "not connected" fake instead.
+        { provide: KeycloakAuthService, useValue: { isAuthenticated: () => false } },
       ],
     }).compileComponents();
   });

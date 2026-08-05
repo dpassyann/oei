@@ -1,117 +1,102 @@
 import { TestBed } from '@angular/core/testing';
+import { OAuthService } from 'angular-oauth2-oidc';
 import { vi } from 'vitest';
-import { KeycloakAuthService, NAVIGABLE, type Navigable } from './keycloak-auth.service';
+import { KeycloakAuthService } from './keycloak-auth.service';
+
+/** Base64url-encodes a JWT payload, exactly like a real Keycloak access token would carry it —
+ * no signature verification happens client-side here (nor in `KeycloakAuthService`, see its doc
+ * comment), so an arbitrary/unsigned third segment is fine for these tests. */
+function fakeAccessToken(payload: Record<string, unknown>): string {
+  const base64url = (value: string) =>
+    btoa(value).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  const header = base64url(JSON.stringify({ alg: 'RS256', typ: 'JWT' }));
+  const body = base64url(JSON.stringify(payload));
+  return `${header}.${body}.fake-signature`;
+}
 
 describe('KeycloakAuthService', () => {
-  let navigateSpy: ReturnType<typeof vi.fn<(url: string) => void>>;
+  let oauthService: {
+    initCodeFlow: ReturnType<typeof vi.fn>;
+    hasValidAccessToken: ReturnType<typeof vi.fn>;
+    getAccessToken: ReturnType<typeof vi.fn>;
+    logOut: ReturnType<typeof vi.fn>;
+  };
   let service: KeycloakAuthService;
 
   beforeEach(() => {
-    navigateSpy = vi.fn<(url: string) => void>();
-    const testNavigable: Navigable = { navigate: navigateSpy };
+    oauthService = {
+      initCodeFlow: vi.fn(),
+      hasValidAccessToken: vi.fn().mockReturnValue(false),
+      getAccessToken: vi.fn().mockReturnValue(''),
+      logOut: vi.fn(),
+    };
 
     TestBed.configureTestingModule({
-      providers: [{ provide: NAVIGABLE, useValue: testNavigable }],
+      providers: [{ provide: OAuthService, useValue: oauthService }],
     });
 
     service = TestBed.inject(KeycloakAuthService);
-    sessionStorage.clear();
   });
 
-  it('givenLogin_whenCalled_thenNavigatesToKeycloakAuthorizationUrlWithExpectedParams', async () => {
+  it('givenLogin_whenCalled_thenInitiatesTheRealCodeFlowWithNoExtraParams', () => {
     service.login();
 
-    await vi.waitFor(() => expect(navigateSpy).toHaveBeenCalledTimes(1));
-
-    const calledUrl = new URL(navigateSpy.mock.calls[0][0] as string);
-
-    expect(calledUrl.origin).toBe('http://localhost:8081');
-    expect(calledUrl.pathname).toBe('/realms/oei/protocol/openid-connect/auth');
-    expect(calledUrl.searchParams.get('client_id')).toBe('oei-frontend');
-    expect(calledUrl.searchParams.get('response_type')).toBe('code');
-    expect(calledUrl.searchParams.get('redirect_uri')).toBe('http://localhost:4300/');
-    expect(calledUrl.searchParams.get('scope')).toBe('openid');
-    expect(calledUrl.searchParams.get('code_challenge_method')).toBe('S256');
-    expect(calledUrl.searchParams.get('code_challenge')).toBeTruthy();
+    expect(oauthService.initCodeFlow).toHaveBeenCalledWith();
   });
 
-  it('givenLogin_whenCalled_thenStoresPkceCodeVerifierInSessionStorage', async () => {
-    expect(sessionStorage.length).toBe(0);
-
-    service.login();
-
-    await vi.waitFor(() => expect(sessionStorage.length).toBeGreaterThan(0));
-  });
-
-  it('givenLogin_whenCalledTwice_thenGeneratesDifferentCodeChallengesEachTime', async () => {
-    service.login();
-    await vi.waitFor(() => expect(navigateSpy).toHaveBeenCalledTimes(1));
-
-    service.login();
-    await vi.waitFor(() => expect(navigateSpy).toHaveBeenCalledTimes(2));
-
-    const firstChallenge = new URL(navigateSpy.mock.calls[0][0] as string).searchParams.get(
-      'code_challenge',
-    );
-    const secondChallenge = new URL(navigateSpy.mock.calls[1][0] as string).searchParams.get(
-      'code_challenge',
-    );
-
-    expect(firstChallenge).not.toBe(secondChallenge);
-  });
-
-  it('givenRegister_whenCalled_thenNavigatesToKeycloakAuthorizationUrlWithRegisterAction', async () => {
+  it('givenRegister_whenCalled_thenInitiatesTheCodeFlowWithKeycloakRegisterAction', () => {
     service.register();
 
-    await vi.waitFor(() => expect(navigateSpy).toHaveBeenCalledTimes(1));
-
-    const calledUrl = new URL(navigateSpy.mock.calls[0][0] as string);
-
-    expect(calledUrl.origin).toBe('http://localhost:8081');
-    expect(calledUrl.pathname).toBe('/realms/oei/protocol/openid-connect/auth');
-    expect(calledUrl.searchParams.get('client_id')).toBe('oei-frontend');
-    expect(calledUrl.searchParams.get('kc_action')).toBe('REGISTER');
-    expect(calledUrl.searchParams.get('code_challenge')).toBeTruthy();
+    expect(oauthService.initCodeFlow).toHaveBeenCalledWith('', { kc_action: 'REGISTER' });
   });
 
-  describe('mock session roles', () => {
-    it('givenNoSession_whenCheckingAuthentication_thenIsNotAuthenticated', () => {
+  it('givenLogout_whenCalled_thenDelegatesToOAuthServiceLogOut', () => {
+    service.logout();
+
+    expect(oauthService.logOut).toHaveBeenCalledTimes(1);
+  });
+
+  describe('isAuthenticated', () => {
+    it('givenNoValidAccessToken_whenChecked_thenIsNotAuthenticated', () => {
+      oauthService.hasValidAccessToken.mockReturnValue(false);
+
       expect(service.isAuthenticated()).toBe(false);
-      expect(service.getSessionRoles()).toEqual([]);
     });
 
-    it('givenMockRolesSet_whenCheckingAuthentication_thenIsAuthenticatedWithThoseRoles', () => {
-      service.setMockSessionRoles(['admin']);
+    it('givenValidAccessToken_whenChecked_thenIsAuthenticated', () => {
+      oauthService.hasValidAccessToken.mockReturnValue(true);
 
       expect(service.isAuthenticated()).toBe(true);
-      expect(service.getSessionRoles()).toEqual(['admin']);
+    });
+  });
+
+  describe('hasAnyRole', () => {
+    it('givenNoValidAccessToken_whenCheckingRoles_thenNeverMatches', () => {
+      oauthService.hasValidAccessToken.mockReturnValue(false);
+
+      expect(service.hasAnyRole(['admin', 'member'])).toBe(false);
+    });
+
+    it('givenAccessTokenWithRealmAccessRoles_whenCheckingMatchingRole_thenMatches', () => {
+      oauthService.hasValidAccessToken.mockReturnValue(true);
+      oauthService.getAccessToken.mockReturnValue(fakeAccessToken({ realm_access: { roles: ['admin', 'member'] } }));
+
       expect(service.hasAnyRole(['admin'])).toBe(true);
-      expect(service.hasAnyRole(['member'])).toBe(false);
+      expect(service.hasAnyRole(['editor'])).toBe(false);
     });
 
-    it('givenMockRolesCleared_whenCheckingAuthentication_thenIsNotAuthenticatedAgain', () => {
-      service.setMockSessionRoles(['member']);
-      service.clearMockSession();
+    it('givenAccessTokenWithoutRealmAccessClaim_whenCheckingRoles_thenNeverMatches', () => {
+      oauthService.hasValidAccessToken.mockReturnValue(true);
+      oauthService.getAccessToken.mockReturnValue(fakeAccessToken({ sub: 'user-1' }));
 
-      expect(service.isAuthenticated()).toBe(false);
+      expect(service.hasAnyRole(['admin'])).toBe(false);
     });
 
-    it('givenCorruptedStorageValue_whenGettingSessionRoles_thenReturnsEmptyArray', () => {
-      sessionStorage.setItem('oei_mock_session_roles', 'not-json');
+    it('givenMalformedAccessToken_whenCheckingRoles_thenReturnsFalseInsteadOfThrowing', () => {
+      oauthService.hasValidAccessToken.mockReturnValue(true);
+      oauthService.getAccessToken.mockReturnValue('not-a-jwt');
 
-      expect(service.getSessionRoles()).toEqual([]);
-    });
-
-    it('givenSetMockAuthenticatedTrue_whenCalled_thenGrantsABasicMemberSession', () => {
-      service.setMockAuthenticated(true);
-      expect(service.isAuthenticated()).toBe(true);
-      expect(service.getSessionRoles()).toEqual(['member']);
-    });
-
-    it('givenSetMockAuthenticatedFalse_whenCalled_thenIsAuthenticatedBecomesFalse', () => {
-      service.setMockAuthenticated(true);
-      service.setMockAuthenticated(false);
-      expect(service.isAuthenticated()).toBe(false);
+      expect(service.hasAnyRole(['admin'])).toBe(false);
     });
   });
 });

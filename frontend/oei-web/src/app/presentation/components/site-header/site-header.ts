@@ -25,10 +25,10 @@ export class SiteHeader {
   private readonly router = inject(Router);
   private readonly elementRef = inject(ElementRef<HTMLElement>);
 
-  // Reactive, not a one-off check: `KeycloakAuthService.isAuthenticated()` is signal-backed
-  // internally, so this `computed` re-evaluates the moment any part of the app calls
-  // `setMockSessionRoles`/`clearMockSession` (e.g. after the mocked login/account-creation flow),
-  // without requiring a navigation for the header to pick up the change.
+  // `KeycloakAuthService.isAuthenticated()` reflects the real `OAuthService.hasValidAccessToken()`
+  // (not a signal). Wrapping it in `computed` still lets the template re-render on the next
+  // change-detection pass after the app-initializer's token exchange resolves or after `logout()`,
+  // without this component needing to know about that timing itself.
   protected readonly isConnected = computed(() => this.keycloakAuth.isAuthenticated());
 
   protected readonly isDropdownOpen = signal(false);
@@ -94,7 +94,7 @@ export class SiteHeader {
   }
 
   protected logout(): void {
-    this.keycloakAuth.clearMockSession();
+    this.keycloakAuth.logout();
     this.isDropdownOpen.set(false);
     void this.router.navigateByUrl('/');
   }

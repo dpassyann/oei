@@ -1,6 +1,7 @@
 import { ApplicationConfig, inject, provideAppInitializer, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter, withRouterConfig } from '@angular/router';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { AuthConfig, OAuthService, provideOAuthClient } from 'angular-oauth2-oidc';
 
 import { routes } from './app.routes';
 import { RuntimeConfig } from './infrastructure/config/runtime-config';
@@ -113,12 +114,42 @@ import { MEMBERSHIP_FEE_PORT } from './domain/port/membership-fee/membership-fee
 import { MembershipFeeMockAdapter } from './infrastructure/adapter/membership-fee-mock.adapter';
 import { MembershipFeeApiAdapter } from './infrastructure/adapter/membership-fee-api.adapter';
 
+// Real Keycloak Authorization Code + PKCE config (realm `oei`, client `oei-frontend` — see
+// `keycloak/realm-export/oei-realm.json`: publicClient, standardFlowEnabled,
+// directAccessGrantsEnabled=false, pkce.code.challenge.method=S256, redirectUris
+// `http://localhost:4300/*`). `requireHttps`/`strictDiscoveryDocumentValidation` are relaxed only
+// because this targets a local, unencrypted Keycloak (`http://localhost:8081`) — both must be
+// revisited before any non-local deployment.
+const OEI_AUTH_CONFIG: AuthConfig = {
+  issuer: 'http://localhost:8081/realms/oei',
+  clientId: 'oei-frontend',
+  redirectUri: window.location.origin + '/',
+  responseType: 'code',
+  scope: 'openid',
+  requireHttps: false,
+  strictDiscoveryDocumentValidation: false,
+};
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZonelessChangeDetection(),
     provideRouter(routes, withRouterConfig({ paramsInheritanceStrategy: 'always' })),
     provideHttpClient(withFetch()),
+    provideOAuthClient(),
     provideAppInitializer(() => inject(RuntimeConfig).load()),
+    // Blocking app initializer (runs, like the one above, before the router resolves its first
+    // navigation): loads Keycloak's discovery document and, if the URL carries a `?code=...`
+    // from a Keycloak redirect, exchanges it for real tokens (`loadDiscoveryDocumentAndTryLogin`
+    // covers both). Route guards (`memberSpaceGuard`, `institutionAccessGuard`, `cmsGuard`) rely
+    // on `KeycloakAuthService.isAuthenticated()`/`hasAnyRole()` already reflecting a real,
+    // possibly-just-obtained token by the time they run — without this being an app initializer,
+    // there would be a race: the guard could see "not authenticated" and redirect to login even
+    // though the user just came back from a successful Keycloak login.
+    provideAppInitializer(() => {
+      const oauthService = inject(OAuthService);
+      oauthService.configure(OEI_AUTH_CONFIG);
+      return oauthService.loadDiscoveryDocumentAndTryLogin();
+    }),
     {
       provide: CONTENT_REPOSITORY_PORT,
       useFactory: () => (inject(RuntimeConfig).isMock() ? inject(ContentMockAdapter) : inject(ContentApiAdapter)),

@@ -17,6 +17,9 @@ describe('SiteHeader', () => {
         // `MemberApplicationService` is injected eagerly in `SiteHeader`'s field initializer
         // regardless of connection state, so it must still be constructible.
         { provide: MemberApplicationService, useValue: { getCurrentMember: () => of(null) } },
+        // Real `KeycloakAuthService` needs `OAuthService` (angular-oauth2-oidc) injected — stand
+        // in with a plain "not connected" fake, as the guard specs already do.
+        { provide: KeycloakAuthService, useValue: { isAuthenticated: () => false, logout: () => undefined } },
       ],
     });
   });
@@ -65,7 +68,7 @@ describe('SiteHeader', () => {
           provideRouter([]),
           {
             provide: KeycloakAuthService,
-            useValue: { isAuthenticated: () => true, clearMockSession: () => undefined },
+            useValue: { isAuthenticated: () => true, logout: () => undefined },
           },
           {
             provide: MemberApplicationService,
@@ -96,14 +99,14 @@ describe('SiteHeader', () => {
       const router = TestBed.inject(Router);
       const navigateSpy = vi.spyOn(router, 'navigateByUrl');
       const keycloakAuth = TestBed.inject(KeycloakAuthService);
-      const clearSpy = vi.spyOn(keycloakAuth, 'clearMockSession');
+      const logoutSpy = vi.spyOn(keycloakAuth, 'logout');
       const compiled = fixture.nativeElement as HTMLElement;
 
       compiled.querySelector<HTMLButtonElement>('.oei-member-menu__trigger')?.click();
       fixture.detectChanges();
       compiled.querySelector<HTMLButtonElement>('.oei-member-menu__item--button')?.click();
 
-      expect(clearSpy).toHaveBeenCalled();
+      expect(logoutSpy).toHaveBeenCalled();
       expect(navigateSpy).toHaveBeenCalledWith('/');
     });
   });

@@ -79,7 +79,7 @@ export const routes: Routes = [
     ],
   },
   // Espace membre individuel (docs/adr/0002-v2-foundations.md, .prompt/plan/02-...):
-  // guarded by `memberSpaceGuard` (mocked auth state, see KeycloakAuthService). The
+  // guarded by `memberSpaceGuard` (real Keycloak session, see KeycloakAuthService). The
   // public-profile page is intentionally NOT under this guard — it's public by design.
   {
     path: 'espace-membre',
