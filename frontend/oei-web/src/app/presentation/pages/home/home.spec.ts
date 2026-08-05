@@ -280,18 +280,18 @@ describe('Home', () => {
   });
 
   describe('"Rejoignez le mouvement" hero button routing', () => {
-    it('givenNotAuthenticated_whenClickingJoin_thenNavigatesToInscriptionPage', async () => {
+    it('givenNotAuthenticated_whenClickingJoin_thenTriggersKeycloakRegistration', async () => {
       configure();
       const fixture = TestBed.createComponent(Home);
-      const router = TestBed.inject(Router);
-      const navigateSpy = vi.spyOn(router, 'navigateByUrl');
+      const keycloakAuth = TestBed.inject(KeycloakAuthService);
+      const registerSpy = vi.spyOn(keycloakAuth, 'register').mockImplementation(() => {});
       fixture.detectChanges();
       await fixture.whenStable();
       fixture.detectChanges();
 
       (fixture.nativeElement as HTMLElement).querySelector<HTMLButtonElement>('.oei-cta-join')?.click();
 
-      expect(navigateSpy).toHaveBeenCalledWith('/inscription');
+      expect(registerSpy).toHaveBeenCalled();
     });
 
     it('givenAuthenticatedWithUnpaidCotisation_whenClickingJoin_thenNavigatesToCotisationPage', async () => {

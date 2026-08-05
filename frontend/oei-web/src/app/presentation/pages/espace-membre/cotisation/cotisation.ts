@@ -8,11 +8,12 @@ import { I18nService } from '../../../i18n/i18n.service';
 
 type PaymentFormStatus = 'idle' | 'submitting' | 'success' | 'error';
 
-// Mocked cotisation payment page — reached either from the home hero button (authenticated
-// visitor with an unpaid current cycle, see `home.ts`'s `onJoinClick`) or from the optional
-// "Payer maintenant" choice at the end of `/inscription`. No real payment processor is
-// involved: the form only simulates a successful charge (see
-// `MembershipFeeMockAdapter.payFee`).
+// Mocked cotisation payment page — reached from the home hero button (authenticated visitor
+// with an unpaid current cycle, see `home.ts`'s `onJoinClick`). Account creation itself now
+// happens on Keycloak's native registration screen (see `KeycloakAuthService.register()`);
+// the former homemade `/inscription` Angular page's optional "Payer maintenant" choice no
+// longer exists as such. No real payment processor is involved here: the form only simulates a
+// successful charge (see `MembershipFeeMockAdapter.payFee`).
 @Component({
   selector: 'oei-cotisation',
   imports: [FormsModule, RouterLink],
