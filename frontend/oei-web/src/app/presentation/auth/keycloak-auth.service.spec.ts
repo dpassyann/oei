@@ -60,6 +60,20 @@ describe('KeycloakAuthService', () => {
     expect(firstChallenge).not.toBe(secondChallenge);
   });
 
+  it('givenRegister_whenCalled_thenNavigatesToKeycloakAuthorizationUrlWithRegisterAction', async () => {
+    service.register();
+
+    await vi.waitFor(() => expect(navigateSpy).toHaveBeenCalledTimes(1));
+
+    const calledUrl = new URL(navigateSpy.mock.calls[0][0] as string);
+
+    expect(calledUrl.origin).toBe('http://localhost:8081');
+    expect(calledUrl.pathname).toBe('/realms/oei/protocol/openid-connect/auth');
+    expect(calledUrl.searchParams.get('client_id')).toBe('oei-frontend');
+    expect(calledUrl.searchParams.get('kc_action')).toBe('REGISTER');
+    expect(calledUrl.searchParams.get('code_challenge')).toBeTruthy();
+  });
+
   describe('mock session roles', () => {
     it('givenNoSession_whenCheckingAuthentication_thenIsNotAuthenticated', () => {
       expect(service.isAuthenticated()).toBe(false);

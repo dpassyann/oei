@@ -84,3 +84,27 @@ body,
 #kc-form-options .pf-c-check__label {
   color: var(--oei-navy-light);
 }
+
+/* "country" custom attribute (declarative User Profile, `select` input type) — the
+   registration form renders it as a standard PatternFly 4 <select class="pf-c-form-control">,
+   so it already picks up the `.pf-c-form-control` rules above; this only tunes affordances
+   specific to a <select> (cursor, disabled option color) that a text <input> doesn't need. */
+select.pf-c-form-control {
+  cursor: pointer;
+  color: var(--oei-navy);
+}
+
+/* "consentAccepted" custom attribute (declarative User Profile, `multiselect-checkboxes`
+   input type, single "accepted" option) — rendered as a PatternFly 4 checkbox group, same
+   markup family as the native "remember me" checkbox already styled above via
+   `#kc-form-options .pf-c-check__label`. Scoped by `data-testid`/name-independent class so it
+   also matches this checkbox when it renders outside `#kc-form-options` (registration page). */
+.pf-c-check__label {
+  color: var(--oei-navy-light);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.pf-c-check__input:checked {
+  accent-color: var(--oei-gold);
+}

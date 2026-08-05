@@ -102,7 +102,9 @@ export class Home {
 
   /**
    * "Rejoignez le mouvement" hero button routing logic (product spec, point 1):
-   * - not authenticated -> free public account-creation page (`/inscription`);
+   * - not authenticated -> Keycloak's native registration screen (see
+   *   `KeycloakAuthService.register()` — the former homemade `/inscription` Angular page was
+   *   removed to avoid duplicating Keycloak's own enrollment screen);
    * - authenticated but the current cotisation cycle isn't paid -> the (mocked) cotisation
    *   payment page (`/espace-membre/cotisation`);
    * - authenticated and up to date -> neutral behaviour: the member's own profile page.
@@ -112,7 +114,7 @@ export class Home {
    */
   protected onJoinClick(): void {
     if (!this.keycloakAuth.isAuthenticated()) {
-      void this.router.navigateByUrl('/inscription');
+      this.keycloakAuth.register();
       return;
     }
 

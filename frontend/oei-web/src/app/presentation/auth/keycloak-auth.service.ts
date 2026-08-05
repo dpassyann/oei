@@ -65,7 +65,7 @@ async function computeCodeChallenge(verifier: string): Promise<string> {
   return base64UrlEncode(new Uint8Array(digest));
 }
 
-function buildAuthorizationUrl(codeChallenge: string): string {
+function buildAuthorizationUrl(codeChallenge: string, extraParams?: Record<string, string>): string {
   const params = new URLSearchParams({
     client_id: KEYCLOAK_CLIENT_ID,
     response_type: 'code',
@@ -73,6 +73,7 @@ function buildAuthorizationUrl(codeChallenge: string): string {
     scope: 'openid',
     code_challenge: codeChallenge,
     code_challenge_method: 'S256',
+    ...extraParams,
   });
   return `${KEYCLOAK_BASE_URL}/realms/${KEYCLOAK_REALM}/protocol/openid-connect/auth?${params.toString()}`;
 }
@@ -100,6 +101,33 @@ export class KeycloakAuthService {
 
     void computeCodeChallenge(verifier).then((codeChallenge) => {
       const authorizationUrl = buildAuthorizationUrl(codeChallenge);
+      this.navigable.navigate(authorizationUrl);
+    });
+  }
+
+  /**
+   * Initiates account creation via Keycloak's native registration screen, replacing the former
+   * homemade `/inscription` Angular page (removed — see `app.routes.ts`'s note at the same
+   * location). This reuses the exact same authorization-code + PKCE redirect as `login()`, only
+   * adding the standard `kc_action=REGISTER` query param so the standard Keycloak login theme
+   * (`login.ftl`) renders the registration form instead of the login form on first paint — this
+   * is the documented Keycloak convention (kept working across the classic and declarative
+   * User Profile setups; no separate `/registrations` endpoint is required from Keycloak 24+
+   * onward, which is what this realm runs — see `infra/docker-compose.yml`,
+   * `quay.io/keycloak/keycloak:25.0`). The custom OEI login theme
+   * (`keycloak/themes/oei/login/`) carries the extra business fields (country, consent) via the
+   * declarative User Profile — see that theme's README for details.
+   *
+   * NOTE: exactly like `login()` above, only the redirect step is implemented here. The
+   * callback route (reading the `code` query param and exchanging it for tokens) remains
+   * explicitly out of scope and left for a later plan.
+   */
+  register(): void {
+    const verifier = generateCodeVerifier();
+    sessionStorage.setItem(PKCE_VERIFIER_STORAGE_KEY, verifier);
+
+    void computeCodeChallenge(verifier).then((codeChallenge) => {
+      const authorizationUrl = buildAuthorizationUrl(codeChallenge, { kc_action: 'REGISTER' });
       this.navigable.navigate(authorizationUrl);
     });
   }

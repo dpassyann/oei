@@ -27,37 +27,61 @@
         "name": "member-standard",
         "description": "Niveau d'adhésion Standard.",
         "composite": true,
-        "composites": { "realm": ["member"] }
+        "composites": {
+          "realm": [
+            "member"
+          ]
+        }
       },
       {
         "name": "member-silver",
         "description": "Niveau d'adhésion Silver.",
         "composite": true,
-        "composites": { "realm": ["member"] }
+        "composites": {
+          "realm": [
+            "member"
+          ]
+        }
       },
       {
         "name": "member-gold",
         "description": "Niveau d'adhésion Gold (obtenu directement ou via rattachement à un employeur partenaire vérifié).",
         "composite": true,
-        "composites": { "realm": ["member"] }
+        "composites": {
+          "realm": [
+            "member"
+          ]
+        }
       },
       {
         "name": "member-founding",
         "description": "Membre fondateur de l'OEI.",
         "composite": true,
-        "composites": { "realm": ["member"] }
+        "composites": {
+          "realm": [
+            "member"
+          ]
+        }
       },
       {
         "name": "member-honorary",
         "description": "Membre honoraire, distinction attribuée par l'OEI.",
         "composite": true,
-        "composites": { "realm": ["member"] }
+        "composites": {
+          "realm": [
+            "member"
+          ]
+        }
       },
       {
         "name": "member-institutional-affiliate",
         "description": "Membre rattaché à une institution partenaire (statut d'affiliation actif, distinct du niveau d'adhésion personnel).",
         "composite": true,
-        "composites": { "realm": ["member"] }
+        "composites": {
+          "realm": [
+            "member"
+          ]
+        }
       },
       {
         "name": "institution-owner",
@@ -100,8 +124,12 @@
       "protocol": "openid-connect",
       "standardFlowEnabled": true,
       "directAccessGrantsEnabled": false,
-      "redirectUris": ["http://localhost:4300/*"],
-      "webOrigins": ["http://localhost:4300"],
+      "redirectUris": [
+        "http://localhost:4300/*"
+      ],
+      "webOrigins": [
+        "http://localhost:4300"
+      ],
       "attributes": {
         "pkce.code.challenge.method": "S256"
       },
@@ -131,12 +159,37 @@
           "name": "demo-institution",
           "path": "/institutions/demo-institution",
           "attributes": {
-            "institutionId": ["demo-institution"],
-            "isDemoData": ["true"]
+            "institutionId": [
+              "demo-institution"
+            ],
+            "isDemoData": [
+              "true"
+            ]
           },
-          "realmRoles": ["institution-owner"]
+          "realmRoles": [
+            "institution-owner"
+          ]
         }
       ]
     }
-  ]
+  ],
+  "internationalizationEnabled": true,
+  "supportedLocales": [
+    "fr"
+  ],
+  "defaultLocale": "fr",
+  "components": {
+    "org.keycloak.userprofile.UserProfileProvider": [
+      {
+        "id": "9c9c6b1a-9b7a-4b7a-9c6e-declarative01",
+        "providerId": "declarative-user-profile",
+        "subComponents": {},
+        "config": {
+          "kc.user.profile.config": [
+            "{\"attributes\":[{\"name\":\"country\",\"displayName\":\"${country}\",\"validations\":{\"options\":{\"options\":[\"AF\",\"ZA\",\"AL\",\"DZ\",\"DE\",\"AD\",\"AO\",\"AI\",\"AQ\",\"AG\",\"SA\",\"AR\",\"AM\",\"AW\",\"AU\",\"AT\",\"AZ\",\"BS\",\"BH\",\"BD\",\"BB\",\"BE\",\"BZ\",\"BJ\",\"BM\",\"BT\",\"BY\",\"MM\",\"BO\",\"BA\",\"BW\",\"BR\",\"BN\",\"BG\",\"BF\",\"BI\",\"KH\",\"CM\",\"CA\",\"CV\",\"CL\",\"CN\",\"CY\",\"CO\",\"KM\",\"CG\",\"CD\",\"KP\",\"KR\",\"CR\",\"CI\",\"HR\",\"CU\",\"CW\",\"DK\",\"DJ\",\"DM\",\"EG\",\"AE\",\"EC\",\"ER\",\"ES\",\"EE\",\"SZ\",\"US\",\"ET\",\"FJ\",\"FI\",\"FR\",\"GA\",\"GM\",\"GE\",\"GH\",\"GI\",\"GR\",\"GD\",\"GL\",\"GP\",\"GU\",\"GT\",\"GG\",\"GN\",\"GQ\",\"GW\",\"GY\",\"GF\",\"HT\",\"HN\",\"HK\",\"HU\",\"BV\",\"CX\",\"IM\",\"NF\",\"AX\",\"KY\",\"CC\",\"CK\",\"FK\",\"FO\",\"GS\",\"HM\",\"MH\",\"UM\",\"PN\",\"SB\",\"TC\",\"VG\",\"VI\",\"IN\",\"ID\",\"IR\",\"IQ\",\"IE\",\"IS\",\"IL\",\"IT\",\"JM\",\"JP\",\"JE\",\"JO\",\"KZ\",\"KE\",\"KG\",\"KI\",\"KW\",\"LA\",\"LS\",\"LV\",\"LB\",\"LR\",\"LY\",\"LI\",\"LT\",\"LU\",\"MO\",\"MK\",\"MG\",\"MY\",\"MW\",\"MV\",\"ML\",\"MT\",\"MA\",\"MQ\",\"MU\",\"MR\",\"YT\",\"MX\",\"FM\",\"MD\",\"MC\",\"MN\",\"ME\",\"MS\",\"MZ\",\"NA\",\"NR\",\"NP\",\"NI\",\"NE\",\"NG\",\"NU\",\"NO\",\"NC\",\"NZ\",\"OM\",\"UG\",\"UZ\",\"PK\",\"PW\",\"PS\",\"PA\",\"PG\",\"PY\",\"NL\",\"PE\",\"PH\",\"PL\",\"PF\",\"PR\",\"PT\",\"QA\",\"CF\",\"DO\",\"CZ\",\"RE\",\"RO\",\"GB\",\"RU\",\"RW\",\"EH\",\"BL\",\"KN\",\"SM\",\"MF\",\"SX\",\"PM\",\"VC\",\"SH\",\"LC\",\"SV\",\"WS\",\"AS\",\"ST\",\"SN\",\"RS\",\"SC\",\"SL\",\"SG\",\"SK\",\"SI\",\"SO\",\"SD\",\"SS\",\"LK\",\"SE\",\"CH\",\"SR\",\"SJ\",\"SY\",\"TJ\",\"TW\",\"TZ\",\"TD\",\"TF\",\"IO\",\"TH\",\"TL\",\"TG\",\"TK\",\"TO\",\"TT\",\"TN\",\"TM\",\"TR\",\"TV\",\"UA\",\"UY\",\"VU\",\"VA\",\"VE\",\"VN\",\"WF\",\"YE\",\"ZM\",\"ZW\"]}},\"annotations\":{\"inputType\":\"select\"},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":false},{\"name\":\"consentAccepted\",\"displayName\":\"${consentAccepted}\",\"validations\":{\"options\":{\"options\":[\"accepted\"]}},\"annotations\":{\"inputType\":\"multiselect-checkboxes\"},\"required\":{\"roles\":[\"user\"]},\"permissions\":{\"view\":[\"admin\",\"user\"],\"edit\":[\"admin\",\"user\"]},\"multivalued\":true}],\"groups\":[]}"
+          ]
+        }
+      }
+    ]
+  }
 }
