@@ -150,7 +150,10 @@ describe('Home', () => {
         // Real `KeycloakAuthService` needs `OAuthService` (angular-oauth2-oidc) injected — a
         // plain object standing in for the whole service (as guard specs already do) avoids
         // wiring up the real OIDC library in these unit tests.
-        { provide: KeycloakAuthService, useValue: { isAuthenticated: () => options?.authenticated ?? false } },
+        {
+          provide: KeycloakAuthService,
+          useValue: { isAuthenticated: () => options?.authenticated ?? false, register: () => {} },
+        },
       ],
     });
   }
