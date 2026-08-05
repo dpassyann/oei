@@ -56,6 +56,11 @@
               }}</a>
             </li>
             <li>
+              <a class="oei-member-menu__item" routerLink="/espace-institution" (click)="closeDropdown()">{{
+                i18n.translate('header.viewInstitutionSpace')
+              }}</a>
+            </li>
+            <li>
               <button type="button" class="oei-member-menu__item oei-member-menu__item--button" (click)="logout()">
                 {{ i18n.translate('header.logout') }}
               </button>
