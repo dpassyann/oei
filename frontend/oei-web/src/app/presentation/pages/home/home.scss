@@ -305,6 +305,15 @@ $oei-gold: #e8a530;
   padding: 0;
 }
 
+// `.oei-domains__card` is the <li> grid item. Without `min-width: 0`, an unbreakable
+// localized string (long German compound words, French multi-word titles) pushes its
+// track past its allotted `1fr` share and overflows into the neighbouring card instead
+// of wrapping — this is what makes adjacent cards visually collide ("se marchent
+// dessus") at narrow/medium viewports.
+.oei-domains__card {
+  min-width: 0;
+}
+
 .oei-domains__card-link {
   height: 100%;
   min-height: 8.5rem;
@@ -313,10 +322,12 @@ $oei-gold: #e8a530;
   padding: 1.1rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.4rem;
   background: #ffffff;
   box-shadow: 0 1px 2px rgba(10, 30, 63, 0.06);
   text-decoration: none;
+  text-align: center;
   transition:
     box-shadow 0.18s ease,
     transform 0.18s ease;
@@ -333,9 +344,13 @@ $oei-gold: #e8a530;
 }
 
 // No background shape behind the icon — the mockup uses plain, unadorned line icons,
-// not icons sitting inside a tinted circle.
+// not icons sitting inside a tinted circle. The icon sits in its own square slot,
+// centered both horizontally and vertically, with the label stacked underneath.
 .oei-domains__icon {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
   width: 2rem;
   height: 2rem;
   color: $oei-navy;
@@ -449,6 +464,19 @@ $oei-gold: #e8a530;
 
 @media (max-width: 1100px) {
   .oei-home-row {
+    grid-template-columns: 1fr;
+  }
+
+  // `.oei-domains__grid` doesn't inherit the row's stacking above — it stays hard-coded
+  // to 4 columns at every viewport, which overflows once the domains column is the sole
+  // full-width block. Widen it to 2x4 here to keep each card's min-content readable.
+  .oei-domains__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .oei-domains__grid {
     grid-template-columns: 1fr;
   }
 }
