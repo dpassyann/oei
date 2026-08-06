@@ -315,7 +315,10 @@ $oei-gold: #e8a530;
 }
 
 .oei-domains__card-link {
-  height: 100%;
+  // No `height: 100%` here: `.oei-domains__card` (the <li> grid item) has no definite
+  // height of its own — it's stretched by the grid, which some browsers resolve
+  // inconsistently for a `height: 100%` descendant, causing adjacent cards to render at
+  // the wrong height and visually collide. `min-height` alone gives a consistent floor.
   min-height: 8.5rem;
   border: 1px solid rgba(10, 30, 63, 0.08);
   border-radius: 0.75rem;
