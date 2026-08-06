@@ -93,7 +93,7 @@
   <!-- Bloc auteur — photo en niveaux de gris, fond uni bleu nuit -->
   <rect x="110" y="1020" width="232" height="285" fill="#0A2348"/>
   <image
-    href="photo-auteur-nb-source.png"
+    href="./photo-auteur-nb-source.png"
     x="110" y="1020" width="232" height="285"
     preserveAspectRatio="xMidYMid slice"
     clip-path="url(#photoClip)"
