@@ -1,14 +1,14 @@
 ---
 title: "Livre Blanc — Pour une reconnaissance progressive de la profession informatique"
-version: "v3"
-status: "troisième rédaction — ajout d'une section À propos de l'auteur, d'une section À propos de l'OEI (vision, mission, valeurs) et d'une bibliographie de référence"
-date: "2026-08-01"
+version: "v3.1"
+status: "version 3.1 de consolidation — intègre une définition opérationnelle de l'expert informaticien, une clarification de la structure à deux niveaux (entité légale / mouvement) et de l'ambition internationale, une hiérarchie explicite des finalités, et des nuances sur la causalité (cybercriminalité, pannes majeures) et sur la singularité de la profession, à la suite d'une relecture externe"
+date: "2026-08-06"
 ---
 
 # Livre Blanc
 ## Pour une reconnaissance progressive de la profession informatique
 
-*Ordre des Experts Informaticiens (OEI) — Mouvement fondateur — Version 3*
+*Ordre des Experts Informaticiens (OEI) — Mouvement fondateur international — Version 3.1*
 
 ---
 
@@ -89,6 +89,12 @@ Notre devise — **« Compétence. Éthique. Responsabilité. »** — résume l
 - **Indépendance.** Nous construisons notre légitimité, nos référentiels et nos évaluations à l'écart des intérêts commerciaux, en particulier des éditeurs de logiciels dont nous entendons rester distincts.
 - **Ouverture.** Nous défendons une profession accueillante aux talents de tous horizons, transparente dans ses processus, et nous n'érigeons d'exigence que là où la sécurité collective le justifie.
 
+### Nom, structure et ambition internationale
+
+L'Ordre des Experts Informaticiens (OEI) est le nom du *mouvement* : celui qui porte la vision exposée dans ce Livre blanc et rassemble les membres fondateurs. Il ne se confond pas avec le nom de l'*entité juridique* qui l'héberge. Pour éviter toute ambiguïté avec les ordres professionnels légalement constitués — une question que plusieurs relecteurs nous ont à juste titre posée —, l'association porteuse sera enregistrée sous un nom institutionnel distinct, de la forme **OEI Foundation** ou **Institut international de la responsabilité informatique**, avec la mention explicite « porteur du mouvement Ordre des Experts Informaticiens ». Cette structure à deux niveaux permet à l'entité légale de rester neutre et sans ambiguïté, tandis que le mouvement conserve le nom qui porte sa vision et sa mémoire symbolique. Le nom légal définitif sera arrêté avec l'appui d'un conseil juridique, avant tout dépôt de marque ; jusque-là, ce Livre blanc emploie systématiquement la formule complète *Ordre des Experts Informaticiens — Mouvement fondateur international*.
+
+Cette même exigence de clarté s'applique à notre ambition géographique. L'OEI est conçu, dès l'origine, comme une initiative *internationale* : ce Livre blanc appelle explicitement à « ouvrir une discussion internationale sur la manière dont notre profession peut prendre pleinement possession de son rôle ». Mais une ambition internationale n'efface pas la réalité juridique : le siège social, le nom légal de l'association et ses représentations territoriales devront, à mesure de son développement, être distingués — et articulés — pays par pays, dans le respect des cadres juridiques locaux (voir aussi l'Annexe A). Le sigle OEI reste inchangé ; c'est le cadre institutionnel qui l'entoure qui se précisera progressivement.
+
 ---
 
 ## Synthèse exécutive
@@ -117,6 +123,10 @@ Nous ne proposons pas d'encadrer uniformément l'ensemble des métiers du numér
 
 > Toute personne assumant la responsabilité technique d'un système critique devrait répondre à des exigences minimales de compétence, de formation continue et de déontologie.
 
+### Qui est un expert informaticien ?
+
+Cette question nous a été posée directement, et nous devons y répondre sans détour plutôt que de la laisser en suspens. Un expert informaticien n'est pas défini par le seul diplôme, la seule ancienneté ou la maîtrise d'un produit commercial. Son expertise résulte d'une combinaison vérifiable de connaissances, d'expérience, de réalisations démontrées, de responsabilité effectivement exercée, de capacité de jugement face à des situations complexes, de formation continue et d'engagement déontologique. C'est cette définition, opérationnalisée par le Référentiel de compétences (voir section 10), qui distingue l'expertise professionnelle durable de la simple productivité apparente ou de la certification commerciale — et qui répond à la fois aux incidents évoqués plus haut et au paradoxe scolaire : savoir écrire du code, même appris jeune, n'équivaut pas à porter cette responsabilité.
+
 ### Ce que nous proposons de construire
 
 1. **Un référentiel de compétences et de niveaux d'expertise**, transparent et public, décrivant ce qu'est un expert informaticien selon une échelle graduée (Praticien, Ingénieur, Architecte, Expert, Expert senior, Fellow).
@@ -134,6 +144,8 @@ Les données précises sur la profession informatique sont dispersées et métho
 - Le marché des technologies d'intelligence artificielle connaît une **croissance rapide**, à deux chiffres selon la plupart des analyses sectorielles, ce qui accroît d'autant la surface des décisions confiées à des systèmes automatisés.
 - Les incidents logiciels majeurs illustrent des ordres de grandeur parlants : une défaillance de déploiement a coûté à une firme financière **environ 440 millions de dollars en moins d'une heure** en 2012 ; une mise à jour défectueuse d'un logiciel de sécurité a provoqué, en 2024, la panne d'**environ 8,5 millions d'appareils** dans le monde en quelques heures, selon l'éditeur du système d'exploitation concerné.
 - La **dépendance numérique** des sociétés — quelques fournisseurs de cloud, quelques bibliothèques universelles, quelques composants déployés à l'identique sur des millions de machines — concentre le risque : une défaillance en un point peut désormais se propager à l'échelle planétaire.
+
+Ces chiffres mesurent l'ampleur du problème ; ils ne démontrent pas qu'une organisation professionnelle ferait mécaniquement diminuer la cybercriminalité — aucune organisation ne peut empêcher un attaquant déterminé d'agir. Ils montrent en revanche que la compétence, la formation continue et la responsabilité des professionnels sont devenues des composantes essentielles de la résilience numérique : c'est sur ce registre, plus modeste et plus honnête qu'une promesse de réduction mécanique, que se situe notre contribution attendue.
 
 ### La feuille de route
 
@@ -182,6 +194,8 @@ Dans l'**aéronautique**, le vol inaugural d'Ariane 5, en 1996, s'est soldé par
 Dans la **finance**, la firme Knight Capital a perdu environ 440 millions de dollars en moins d'une heure, en 2012, à la suite du déploiement défectueux d'un logiciel de négociation automatisée qui a passé des ordres erronés à un rythme incontrôlable — un incident qui a failli emporter l'entreprise. Dans l'**énergie**, la grande panne électrique qui a touché le nord-est de l'Amérique du Nord en 2003, privant des dizaines de millions de personnes de courant, a été aggravée par un défaut logiciel dans le système d'alarme d'un centre de contrôle, qui a empêché les opérateurs de percevoir à temps la dégradation de la situation. Enfin, en 2024, une simple mise à jour défectueuse d'un logiciel de sécurité largement déployé a provoqué, selon l'éditeur de système d'exploitation concerné, la panne d'environ 8,5 millions d'appareils dans le monde en quelques heures — clouant des avions au sol, perturbant des hôpitaux, des banques et des administrations. Cet épisode a rendu tangible une réalité que les experts nomment depuis longtemps : la *dépendance systémique*. Un composant unique, présent partout, devient un point de défaillance planétaire.
 
 Ce qui relie ces incidents, par-delà la diversité des secteurs, c'est qu'aucun ne relève de la fatalité. Chacun met en cause des chaînes de décisions humaines : des choix d'architecture, des arbitrages de délai, des procédures de test insuffisantes, des responsabilités diluées. C'est précisément ce que les disciplines qui encadrent les systèmes critiques cherchent à discipliner — et c'est là que se joue l'écart, sur lequel nous reviendrons, entre la rigueur imposée aux artefacts et la liberté totale laissée aux personnes.
+
+Il faut cependant se garder d'une lecture trop rapide de ces épisodes, qui reviendrait à assimiler panne majeure et incompétence individuelle. Aucun des cas cités ci-dessus ne démontre un manque de compétence technique des professionnels concernés : les enquêtes mettent en cause, selon les cas, des défauts de spécification, des choix d'architecture discutables a posteriori, des tests insuffisants, des contraintes économiques, une gouvernance défaillante ou une dilution des responsabilités entre plusieurs équipes — rarement une simple erreur qu'une meilleure compétence individuelle aurait suffi à éviter. C'est précisément ce constat qui fonde notre thèse : la compétence technique, même réelle, ne suffit pas ; elle doit s'inscrire dans un cadre collectif de gouvernance, de déontologie et de capacité à signaler les risques, faute de quoi les meilleures compétences individuelles restent impuissantes face à des défaillances organisationnelles.
 
 ## 4. Les nouveaux risques : IA, cybersécurité, dépendance systémique
 
@@ -234,6 +248,8 @@ Considérons maintenant l'autre versant. Dans la très grande majorité des pays
 
 Le paradoxe se formule alors simplement : nous encadrons scrupuleusement les artefacts, et pas du tout les personnes qui les produisent. Or la qualité et la sûreté d'un système ne tiennent pas seulement à la conformité de ses composants à des normes ; elles tiennent aux jugements, aux arbitrages et à l'intégrité des professionnels qui les assemblent. Les normes techniques présupposent des praticiens compétents pour les appliquer avec discernement — mais rien ne garantit cette compétence, ni ne la maintient dans le temps. C'est un angle mort collectif.
 
+Faut-il pour autant prétendre que l'informatique serait la seule profession dans cette situation ? Non, et il serait malhonnête de le laisser croire. Le consulting en management, la sécurité privée hors actes réglementés, l'analyse de données (*data science*), une partie du conseil en conformité ou certains métiers du bâtiment hors actes réservés combinent, eux aussi, une normalisation technique dense et un accès professionnel largement ouvert. La singularité de l'informatique ne vient donc pas de son isolement, mais de la combinaison, à ce degré, de quatre facteurs : sa présence dans tous les secteurs d'activité, la vitesse de son évolution, sa capacité de propagation à l'échelle mondiale, et des conséquences pouvant être à la fois physiques, économiques et sociales. Peu de professions réunissent ces quatre traits simultanément ; c'est cette combinaison, plus que l'absence de tout comparant, qui justifie notre démarche.
+
 Il faut se garder d'une conclusion excessive. Ce paradoxe ne signifie pas qu'il faille réglementer l'ensemble du métier, ni ériger des barrières là où l'ouverture a fait ses preuves. Il signifie qu'un chaînon manque : entre la norme technique, qui s'applique à l'objet, et le droit commun, qui s'applique à tous, il n'existe pas de cadre professionnel intermédiaire propre aux systèmes critiques. C'est ce chaînon que nous proposons de construire, en commençant par le documenter et le rendre désirable, plutôt qu'en prétendant l'imposer.
 
 ## 7. Modèles internationaux existants
@@ -271,6 +287,15 @@ flowchart LR
     T -. "entretient et<br/>renouvelle" .-> FC
 ```
 
+Nous voulons être clairs sur la finalité de cette proposition, car la question nous a été posée à raison : structurer une profession peut être perçu comme une tentative de limiter la concurrence, de protéger un marché de l'emploi ou de restreindre l'accès au métier — un réflexe corporatiste que les ordres professionnels ont parfois pu incarner par le passé. Ce n'est pas notre logique, et nous posons cette hiérarchie sans ambiguïté :
+
+1. la protection du public ;
+2. la confiance dans les systèmes dont dépendent nos sociétés ;
+3. la qualité professionnelle ;
+4. la reconnaissance des experts.
+
+La reconnaissance et la protection des professionnels — meilleure lisibilité de carrière, refus légitime d'instructions dangereuses, protection contre l'usurpation d'expertise — sont une conséquence désirable de cette structuration, non sa finalité première. C'est cette hiérarchie, et non l'inverse, qui distingue notre démarche d'une entreprise corporatiste.
+
 Il importe de redire ce que nous ne sommes pas. Nous ne sommes pas un ordre professionnel au sens légal ; nous n'avons pas le pouvoir de créer des actes réservés ni de conditionner l'accès au métier. Nous sommes un mouvement fondateur, adossé à une association, qui construit un corpus. Si ce corpus acquiert une légitimité suffisante, il pourra servir de base à une discussion future avec les universités, les entreprises et, le cas échéant, les pouvoirs publics, dans les pays où le cadre juridique le permet. Nous ne cherchons pas à ériger une barrière artificielle ni un monopole, mais à améliorer la qualité, la transparence et la confiance — au bénéfice des professionnels eux-mêmes autant que de la société.
 
 ## 9. Gouvernance proposée
@@ -288,6 +313,8 @@ Deux organes n'ont vocation à voir le jour que dans une phase de maturité avan
 ## 10. Cadre de certification et niveaux
 
 La certification est le chantier le plus délicat, car c'est celui où le risque de reproduire les travers que nous dénonçons est le plus grand. Le marché regorge déjà de certifications ; beaucoup attestent la maîtrise d'un produit commercial particulier plutôt qu'une compétence professionnelle transférable et durable. Notre ambition est précisément de proposer une *certification indépendante*, au sens de notre glossaire : délivrée par l'organisation ou ses partenaires académiques, et non liée à un éditeur commercial de logiciels.
+
+Avant de détailler cette échelle, il faut lever une confusion fréquente, qui nous a d'ailleurs été signalée par une relectrice extérieure au domaine : l'enseignement des bases du code au collège, désormais répandu dans de nombreux systèmes scolaires, ne fait pas de chaque élève un professionnel de l'informatique, tout comme l'enseignement des sciences à l'école ne fait pas de chaque élève un ingénieur. Nous distinguons donc quatre paliers bien différents. La **culture numérique** est la capacité générale à comprendre et à utiliser les technologies numériques — un objectif d'éducation pour tous, non un statut professionnel. Le **praticien informatique** réalise des activités techniques dans un périmètre défini, généralement sous supervision. Le **professionnel** exerce régulièrement une activité informatique avec des responsabilités identifiées. L'**expert informaticien**, enfin, est le professionnel capable de traiter des situations complexes, de produire un jugement autonome, d'en démontrer la validité et d'en assumer les conséquences — la définition posée dans la synthèse exécutive de ce document.
 
 Le socle de ce cadre est une échelle de *niveaux d'expertise*, que notre glossaire fixe ainsi : Praticien, Ingénieur, Architecte, Expert, Expert senior, et Fellow. Cette progression n'est pas une hiérarchie de prestige mais une gradation de responsabilité et d'autonomie, que l'on peut lire comme le cycle de vie professionnel de l'expert informaticien : à chaque échelon correspondent des connaissances, des aptitudes démontrées et une expérience vérifiable qui s'approfondissent.
 
@@ -444,4 +471,4 @@ Je souscris à ces engagements librement, conscient qu'ils me lient sur l'honneu
 
 ---
 
-*Ce Livre blanc constitue une troisième rédaction complète, destinée à être enrichie par les retours de la communauté avant publication d'une version consolidée. Il intègre désormais une préface personnelle de l'auteur et une section À propos de l'auteur, une section À propos de l'OEI (vision, mission, valeurs), une synthèse exécutive autonome, des schémas explicatifs, une version condensée du code de déontologie, une charte du membre fondateur, un panorama international et une bibliographie de référence. Les termes employés suivent les définitions du Glossaire fondateur de l'OEI, document de référence auquel le lecteur est invité à se reporter.*
+*Ce Livre blanc constitue une version 3.1 de consolidation, établie à la suite d'une relecture externe de la version 3. Il intègre désormais, outre la préface personnelle de l'auteur, la section À propos de l'auteur, la section À propos de l'OEI (vision, mission, valeurs), la synthèse exécutive autonome, les schémas explicatifs, la version condensée du code de déontologie, la charte du membre fondateur, le panorama international et la bibliographie de référence : une clarification de la structure à deux niveaux entre l'entité légale et le mouvement ainsi que de l'ambition internationale (section À propos de l'OEI), une définition opérationnelle explicite de l'expert informaticien (synthèse exécutive et section 10), une hiérarchie explicite des finalités plaçant la protection du public avant la reconnaissance professionnelle (section 8), une distinction entre culture numérique et expertise professionnelle (section 10), et des nuances de causalité sur la cybercriminalité (synthèse exécutive) et sur les causes des pannes majeures (section 3), pour éviter toute promesse ou tout raccourci que les faits ne permettent pas d'établir. Les termes employés suivent les définitions du Glossaire fondateur de l'OEI, document de référence auquel le lecteur est invité à se reporter.*
