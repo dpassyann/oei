@@ -10,6 +10,27 @@
 
   <div class="oei-hero__visual" aria-hidden="true">
     <div class="oei-hero__globe">
+      <svg class="oei-hero__orbits" viewBox="-150 -150 300 300" fill="none">
+        @for (orbit of heroOrbits; track orbit.rotate) {
+          <g [attr.transform]="'rotate(' + orbit.rotate + ')'">
+            <ellipse
+              class="oei-hero__orbit-ring"
+              cx="0"
+              cy="0"
+              [attr.rx]="orbit.rx"
+              [attr.ry]="orbit.ry"
+            />
+            <ellipse
+              class="oei-hero__orbit-glow"
+              [style.animation-duration.s]="orbit.duration"
+              cx="0"
+              cy="0"
+              [attr.rx]="orbit.rx"
+              [attr.ry]="orbit.ry"
+            />
+          </g>
+        }
+      </svg>
       <svg
         viewBox="-290 -260 580 715"
         fill="none"

@@ -67,6 +67,23 @@ export class Home {
     stream: ({ params }) => this.partners.getPartners(params),
   });
 
+  // Purely decorative "rotating interconnected globe" behind the hero shield: three
+  // ellipses at different tilt angles stand in for latitude/meridian lines of a wireframe
+  // globe (the whole `<svg class="oei-hero__orbits">` spins slowly via CSS), each with a
+  // brighter "neon" arc (`.oei-hero__orbit-glow`, animated `stroke-dashoffset`) that appears
+  // to travel around its ring — evoking constant, live interconnection rather than a static
+  // decoration. Static data, not content — no i18n/CMS involvement.
+  protected readonly heroOrbits: readonly {
+    readonly rotate: number;
+    readonly rx: number;
+    readonly ry: number;
+    readonly duration: number;
+  }[] = [
+    { rotate: 0, rx: 130, ry: 60, duration: 7 },
+    { rotate: 60, rx: 130, ry: 60, duration: 9 },
+    { rotate: 120, rx: 90, ry: 130, duration: 11 },
+  ];
+
   protected readonly title = computed(() => this.contentResource.value()?.title ?? '');
   protected readonly body = computed(() => this.contentResource.value()?.body ?? '');
   protected readonly isFallback = computed(() => this.contentResource.value()?.isFallback ?? false);

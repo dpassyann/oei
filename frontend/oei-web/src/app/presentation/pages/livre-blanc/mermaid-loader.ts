@@ -19,7 +19,9 @@ interface MermaidModule {
 let mermaidModulePromise: Promise<MermaidModule> | undefined;
 
 function loadMermaid(): Promise<MermaidModule> {
-  mermaidModulePromise ??= import(/* webpackIgnore: true */ MERMAID_CDN_URL) as Promise<MermaidModule>;
+  mermaidModulePromise ??= import(
+    /* webpackIgnore: true */ /* @vite-ignore */ MERMAID_CDN_URL
+  ) as Promise<MermaidModule>;
   return mermaidModulePromise;
 }
 
