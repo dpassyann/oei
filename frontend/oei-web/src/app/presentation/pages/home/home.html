@@ -10,6 +10,16 @@
 
   <div class="oei-hero__visual" aria-hidden="true">
     <div class="oei-hero__globe">
+      <svg class="oei-hero__world-map" viewBox="-150 -150 300 300">
+        <clipPath id="oei-hero-world-clip">
+          <circle cx="0" cy="0" r="148" />
+        </clipPath>
+        <g clip-path="url(#oei-hero-world-clip)">
+          @for (dot of worldMapDots; track dot.x + '-' + dot.y) {
+            <circle [attr.cx]="dot.x" [attr.cy]="dot.y" r="2.4" />
+          }
+        </g>
+      </svg>
       <svg class="oei-hero__orbits" viewBox="-150 -150 300 300" fill="none">
         @for (orbit of heroOrbits; track orbit.rotate) {
           <g [attr.transform]="'rotate(' + orbit.rotate + ')'">
