@@ -319,7 +319,9 @@ $oei-gold: #e8a530;
   // height of its own — it's stretched by the grid, which some browsers resolve
   // inconsistently for a `height: 100%` descendant, causing adjacent cards to render at
   // the wrong height and visually collide. `min-height` alone gives a consistent floor.
-  min-height: 8.5rem;
+  // Bumped from 8.5rem alongside the larger icon below so the two-line
+  // descriptions still have breathing room and cards don't feel cramped.
+  min-height: 9rem;
   border: 1px solid rgba(10, 30, 63, 0.08);
   border-radius: 0.75rem;
   padding: 1.1rem;
@@ -354,8 +356,10 @@ $oei-gold: #e8a530;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 2rem;
-  height: 2rem;
+  // Was 2rem — too close to a favicon inside an 8.5rem-tall card compared to
+  // the mockup, where each domain icon is a clearly legible, prominent mark.
+  width: 2.5rem;
+  height: 2.5rem;
   color: $oei-navy;
   transition: transform 0.18s ease;
 

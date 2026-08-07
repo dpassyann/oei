@@ -29,8 +29,11 @@ $oei-gold: #e8a530;
   margin-right: auto;
 
   &__mark {
-    width: 2rem;
-    height: 2rem;
+    // Sized so the shield fills most of the header's height, matching the
+    // mockup where the crest is a strong brand mark rather than a favicon-sized
+    // detail (2rem previously made it disappear next to the wordmark).
+    width: 2.75rem;
+    height: 2.75rem;
     color: $oei-gold;
     flex-shrink: 0;
   }
