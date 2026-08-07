@@ -59,6 +59,36 @@
         >{{ i18n.translate(link.labelKey) }}</a
       >
     }
+
+    <div class="oei-nav-dropdown">
+      <button
+        type="button"
+        class="oei-nav-dropdown__trigger"
+        (click)="toggleResourcesMenu()"
+        [attr.aria-expanded]="isResourcesMenuOpen()"
+      >
+        {{ i18n.translate('nav.resources') }}
+        <svg class="oei-nav-dropdown__chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+      @if (isResourcesMenuOpen()) {
+        <ul class="oei-nav-dropdown__menu">
+          @for (link of resourceLinks; track link.path) {
+            <li>
+              <a
+                [routerLink]="link.path"
+                routerLinkActive="oei-nav-dropdown__item--active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                class="oei-nav-dropdown__item"
+                (click)="closeResourcesMenu()"
+                >{{ i18n.translate(link.labelKey) }}</a
+              >
+            </li>
+          }
+        </ul>
+      }
+    </div>
   </nav>
 
   <div class="oei-header__actions">

@@ -27,18 +27,34 @@ describe('SiteHeader', () => {
     });
   });
 
-  it('givenComponent_whenCreated_thenRendersTenNavLinksWithNonEmptyRouterLinks', () => {
+  it('givenComponent_whenCreated_thenRendersEightNavLinksWithNonEmptyRouterLinks', () => {
     const fixture = TestBed.createComponent(SiteHeader);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const links = compiled.querySelectorAll<HTMLAnchorElement>('.oei-nav__link');
 
-    expect(links.length).toBe(10);
+    expect(links.length).toBe(8);
     links.forEach((link) => {
       const href = link.getAttribute('href');
       expect(href).toBeTruthy();
       expect(href).not.toBe('#');
     });
+  });
+
+  it('givenResourcesDropdownClosed_whenTriggerClicked_thenShowsResourcesAndWhitePaperLinks', () => {
+    const fixture = TestBed.createComponent(SiteHeader);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector('.oei-nav-dropdown__menu')).toBeFalsy();
+
+    compiled.querySelector<HTMLButtonElement>('.oei-nav-dropdown__trigger')?.click();
+    fixture.detectChanges();
+
+    const items = compiled.querySelectorAll<HTMLAnchorElement>('.oei-nav-dropdown__item');
+    expect(items.length).toBe(2);
+    expect(items[0].getAttribute('href')).toBe('/ressources');
+    expect(items[1].getAttribute('href')).toBe('/livre-blanc');
   });
 
   it('givenComponent_whenCreated_thenRendersLanguageSwitcherAndMemberAreaButton', () => {

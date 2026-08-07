@@ -203,8 +203,61 @@ $oei-gold: #e8a530;
   }
 }
 
+.oei-livre-blanc-page__download-cta {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 3rem;
+  padding: 2rem;
+  border-radius: 1rem;
+  background: linear-gradient(160deg, $oei-navy 0%, #12295a 100%);
+  color: #ffffff;
+}
+
+.oei-livre-blanc-page__download-cta-covers {
+  display: flex;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.oei-livre-blanc-page__download-cta-cover {
+  width: 6rem;
+  height: auto;
+  border-radius: 0.35rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.35);
+}
+
+.oei-livre-blanc-page__download-cta-text {
+  h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.4rem;
+    color: #ffffff;
+  }
+
+  p {
+    margin: 0 0 1rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .oei-livre-blanc-page__download {
+    background: $oei-gold;
+    color: $oei-navy;
+
+    &:hover {
+      background: #ffffff;
+    }
+  }
+}
+
 @media (max-width: 900px) {
   .oei-livre-blanc-page {
     grid-template-columns: 1fr;
+  }
+
+  .oei-livre-blanc-page__download-cta {
+    flex-direction: column;
+    text-align: center;
   }
 }

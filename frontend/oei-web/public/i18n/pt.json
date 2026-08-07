@@ -900,6 +900,13 @@
     "fallbackNotice": "Tradução ainda não disponível — a versão em francês é exibida enquanto isso.",
     "loading": "Carregando o documento…",
     "notFound": "O Livro Branco não pôde ser encontrado neste momento.",
-    "backToHome": "Voltar ao início"
+    "backToHome": "Voltar ao início",
+    "downloadCta": {
+      "title": "Quer continuar a ler?",
+      "body": "Esta página apresenta a síntese executiva do Livro Branco. As 14 secções completas — análise detalhada, modelos internacionais, governança, quadro de certificação, roteiro — estão disponíveis no PDF completo.",
+      "button": "Descarregar o Livro Branco completo (PDF)",
+      "frontCoverAlt": "Capa do Livro Branco da Ordem dos Especialistas Informáticos",
+      "backCoverAlt": "Contracapa do Livro Branco da Ordem dos Especialistas Informáticos"
+    }
   }
 }

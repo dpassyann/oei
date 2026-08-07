@@ -900,6 +900,13 @@
     "fallbackNotice": "Translation not available yet — showing the French version in the meantime.",
     "loading": "Loading the document…",
     "notFound": "The White Paper could not be found right now.",
-    "backToHome": "Back to home"
+    "backToHome": "Back to home",
+    "downloadCta": {
+      "title": "Want to keep reading?",
+      "body": "This page shows the White Paper's executive summary. All 14 full sections — detailed analysis, international models, governance, certification framework, roadmap — are available in the complete PDF.",
+      "button": "Download the full White Paper (PDF)",
+      "frontCoverAlt": "Cover of the Order of Computer Experts' White Paper",
+      "backCoverAlt": "Back cover of the Order of Computer Experts' White Paper"
+    }
   }
 }

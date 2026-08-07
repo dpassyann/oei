@@ -900,6 +900,13 @@
     "fallbackNotice": "Traduction non disponible pour le moment — version française affichée en attendant.",
     "loading": "Chargement du document…",
     "notFound": "Le Livre Blanc est introuvable pour le moment.",
-    "backToHome": "Retour à l'accueil"
+    "backToHome": "Retour à l'accueil",
+    "downloadCta": {
+      "title": "Envie de lire la suite ?",
+      "body": "Cette page présente la synthèse exécutive du Livre Blanc. Les 14 sections complètes — analyse détaillée, modèles internationaux, gouvernance, cadre de certification, feuille de route — sont disponibles dans le PDF complet.",
+      "button": "Télécharger le Livre Blanc complet (PDF)",
+      "frontCoverAlt": "Couverture du Livre Blanc de l'Ordre des Experts Informaticiens",
+      "backCoverAlt": "Quatrième de couverture du Livre Blanc de l'Ordre des Experts Informaticiens"
+    }
   }
 }

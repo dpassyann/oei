@@ -29,6 +29,34 @@
         <p class="oei-livre-blanc-page__loading">{{ i18n.translate('livreBlancPage.loading') }}</p>
       } @else {
         <article #body class="oei-livre-blanc-page__body" [innerHTML]="contentHtml()"></article>
+
+        <section class="oei-livre-blanc-page__download-cta">
+          <div class="oei-livre-blanc-page__download-cta-covers">
+            <img
+              class="oei-livre-blanc-page__download-cta-cover"
+              src="/assets/livre-blanc/couverture-oei.svg"
+              [attr.alt]="i18n.translate('livreBlancPage.downloadCta.frontCoverAlt')"
+            />
+            <img
+              class="oei-livre-blanc-page__download-cta-cover"
+              src="/assets/livre-blanc/quatrieme-couverture-oei.svg"
+              [attr.alt]="i18n.translate('livreBlancPage.downloadCta.backCoverAlt')"
+            />
+          </div>
+          <div class="oei-livre-blanc-page__download-cta-text">
+            <h2>{{ i18n.translate('livreBlancPage.downloadCta.title') }}</h2>
+            <p>{{ i18n.translate('livreBlancPage.downloadCta.body') }}</p>
+            <a
+              class="oei-livre-blanc-page__download"
+              [href]="pdfHref"
+              target="_blank"
+              rel="noopener"
+              download
+            >
+              {{ i18n.translate('livreBlancPage.downloadCta.button') }}
+            </a>
+          </div>
+        </section>
       }
     </div>
 

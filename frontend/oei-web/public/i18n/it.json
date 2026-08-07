@@ -900,6 +900,13 @@
     "fallbackNotice": "Traduzione non ancora disponibile — nel frattempo viene mostrata la versione francese.",
     "loading": "Caricamento del documento…",
     "notFound": "Il Libro Bianco non è al momento disponibile.",
-    "backToHome": "Torna alla home"
+    "backToHome": "Torna alla home",
+    "downloadCta": {
+      "title": "Vuoi continuare a leggere?",
+      "body": "Questa pagina mostra la sintesi esecutiva del Libro Bianco. Tutte le 14 sezioni complete — analisi dettagliata, modelli internazionali, governance, quadro di certificazione, roadmap — sono disponibili nel PDF completo.",
+      "button": "Scarica il Libro Bianco completo (PDF)",
+      "frontCoverAlt": "Copertina del Libro Bianco dell'Ordine degli Esperti Informatici",
+      "backCoverAlt": "Retrocopertina del Libro Bianco dell'Ordine degli Esperti Informatici"
+    }
   }
 }

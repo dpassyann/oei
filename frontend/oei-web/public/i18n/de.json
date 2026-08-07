@@ -900,6 +900,13 @@
     "fallbackNotice": "Übersetzung noch nicht verfügbar — es wird vorübergehend die französische Version angezeigt.",
     "loading": "Dokument wird geladen…",
     "notFound": "Das Weißbuch konnte derzeit nicht gefunden werden.",
-    "backToHome": "Zurück zur Startseite"
+    "backToHome": "Zurück zur Startseite",
+    "downloadCta": {
+      "title": "Mehr lesen?",
+      "body": "Diese Seite zeigt die Kurzfassung des Weißbuchs. Alle 14 vollständigen Abschnitte — detaillierte Analyse, internationale Modelle, Governance, Zertifizierungsrahmen, Roadmap — finden Sie im vollständigen PDF.",
+      "button": "Vollständiges Weißbuch herunterladen (PDF)",
+      "frontCoverAlt": "Umschlag des Weißbuchs des Ordens der Informatikexperten",
+      "backCoverAlt": "Rückseite des Weißbuchs des Ordens der Informatikexperten"
+    }
   }
 }

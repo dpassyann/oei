@@ -5,7 +5,13 @@
   <ul class="oei-floating-side-menu__list">
     @for (link of links(); track link.fragment) {
       <li>
-        <a class="oei-floating-side-menu__link" [fragment]="link.fragment" [routerLink]="[]">{{ link.label }}</a>
+        <a
+          class="oei-floating-side-menu__link"
+          [fragment]="link.fragment"
+          [routerLink]="[]"
+          [title]="link.label"
+          >{{ link.label }}</a
+        >
       </li>
     }
   </ul>

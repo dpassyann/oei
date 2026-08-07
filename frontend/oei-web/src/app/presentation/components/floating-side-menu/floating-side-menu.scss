@@ -5,7 +5,9 @@ $oei-gold: #e8a530;
   position: sticky;
   top: 5.5rem;
   align-self: start;
-  width: 14rem;
+  width: 19rem;
+  max-height: calc(100vh - 7rem);
+  overflow-y: auto;
   padding: 1.25rem 1.5rem;
   border: 1px solid rgba(10, 30, 63, 0.1);
   border-radius: 0.75rem;
@@ -33,6 +35,9 @@ $oei-gold: #e8a530;
 
 .oei-floating-side-menu__link {
   display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   font-size: 0.9rem;
   font-weight: 600;
   color: $oei-navy;

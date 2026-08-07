@@ -82,6 +82,68 @@ $oei-gold: #e8a530;
   }
 }
 
+.oei-nav-dropdown {
+  position: relative;
+
+  &__trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    color: #ffffff;
+    font-size: 0.95rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 2px solid transparent;
+    opacity: 0.85;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &__chevron {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  &__menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    min-width: 12rem;
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem;
+    background: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.75rem 1.75rem rgba(0, 0, 0, 0.25);
+    z-index: 20;
+  }
+
+  &__item {
+    display: block;
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border-radius: 0.35rem;
+    color: $oei-navy;
+    text-decoration: none;
+    font-size: 0.9rem;
+    text-align: left;
+
+    &:hover {
+      background: rgba(10, 30, 63, 0.06);
+    }
+
+    &--active {
+      font-weight: 600;
+      background: rgba(232, 165, 48, 0.12);
+    }
+  }
+}
+
 .oei-header__actions {
   display: flex;
   align-items: center;

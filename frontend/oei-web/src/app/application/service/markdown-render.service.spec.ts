@@ -7,6 +7,7 @@ import {
   MarkdownRenderService,
   slugify,
   stripFrontmatter,
+  truncateAfterSection,
 } from './markdown-render.service';
 
 describe('markdownToUnsafeHtml', () => {
@@ -104,6 +105,42 @@ describe('stripFrontmatter', () => {
     const markdown = '# Livre Blanc\n\nCorps.';
 
     expect(stripFrontmatter(markdown)).toBe(markdown);
+  });
+});
+
+describe('truncateAfterSection', () => {
+  it('givenMatchingHeading_whenTruncating_thenKeepsThatSectionAndDropsWhatFollows', () => {
+    const markdown = [
+      '# Livre Blanc',
+      '',
+      '## Synthèse exécutive',
+      '',
+      '### Le problème',
+      '',
+      'Un paragraphe.',
+      '',
+      '## 1. Pourquoi ce document',
+      '',
+      'Un autre paragraphe.',
+    ].join('\n');
+
+    const truncated = truncateAfterSection(markdown, 'Synthèse exécutive');
+
+    expect(truncated).toContain('### Le problème');
+    expect(truncated).toContain('Un paragraphe.');
+    expect(truncated).not.toContain('1. Pourquoi ce document');
+  });
+
+  it('givenNoMatchingHeading_whenTruncating_thenReturnsInputUnchanged', () => {
+    const markdown = '# Livre Blanc\n\n## 1. Introduction\n\nCorps.';
+
+    expect(truncateAfterSection(markdown, 'Synthèse exécutive')).toBe(markdown);
+  });
+
+  it('givenMatchingHeadingIsTheLastSection_whenTruncating_thenReturnsInputUnchanged', () => {
+    const markdown = '# Livre Blanc\n\n## Synthèse exécutive\n\nCorps.';
+
+    expect(truncateAfterSection(markdown, 'Synthèse exécutive')).toBe(markdown);
   });
 });
 

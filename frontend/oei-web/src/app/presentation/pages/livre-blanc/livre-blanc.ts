@@ -6,6 +6,7 @@ import {
   extractHeadings,
   MarkdownRenderService,
   stripFrontmatter,
+  truncateAfterSection,
 } from '../../../application/service/markdown-render.service';
 import { I18nService } from '../../i18n/i18n.service';
 import {
@@ -50,8 +51,15 @@ export class LivreBlanc {
   // The Markdown source (front matter stripped: it's metadata — title/version/status/date —
   // not document body) is rendered exactly once per language change here, not on every
   // template read, since both the HTML and the table of contents are derived from it.
+  //
+  // Only the "Synthèse exécutive" section (and everything before it — préfaces, à propos) is
+  // shown online: the full Livre Blanc is reserved for the PDF download, which the page pushes
+  // readers towards right after this section (see `livre-blanc.html`'s download CTA block).
   private readonly bodyMarkdown = computed(() =>
-    stripFrontmatter(this.documentResource.value()?.body ?? ''),
+    truncateAfterSection(
+      stripFrontmatter(this.documentResource.value()?.body ?? ''),
+      'Synthèse exécutive',
+    ),
   );
 
   // No 1ère/4ème de couverture to strip: the source Markdown never contained them (see plan) —

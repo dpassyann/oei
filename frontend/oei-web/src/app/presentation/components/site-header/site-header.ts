@@ -56,12 +56,20 @@ export class SiteHeader {
     { path: '/nos-missions', labelKey: 'nav.missions' },
     { path: '/deontologie', labelKey: 'nav.ethics' },
     { path: '/certifications', labelKey: 'nav.certifications' },
-    { path: '/ressources', labelKey: 'nav.resources' },
-    { path: '/livre-blanc', labelKey: 'nav.whitePaper' },
     { path: '/actualites', labelKey: 'nav.news' },
     { path: '/partenaires', labelKey: 'nav.partners' },
     { path: '/contact', labelKey: 'nav.contact' },
   ];
+
+  // "Ressources" is a dropdown (not a flat nav link) precisely so that /livre-blanc — one of
+  // several resources, not a standalone top-level destination — lives inside it rather than
+  // crowding the top-level nav with its own entry.
+  protected readonly resourceLinks: readonly NavLink[] = [
+    { path: '/ressources', labelKey: 'nav.resources' },
+    { path: '/livre-blanc', labelKey: 'nav.whitePaper' },
+  ];
+
+  protected readonly isResourcesMenuOpen = signal(false);
 
   constructor() {
     // The header/footer render on every route (outside <router-outlet>), so
@@ -95,14 +103,24 @@ export class SiteHeader {
     this.isDropdownOpen.set(false);
   }
 
+  protected toggleResourcesMenu(): void {
+    this.isResourcesMenuOpen.update((open) => !open);
+  }
+
+  protected closeResourcesMenu(): void {
+    this.isResourcesMenuOpen.set(false);
+  }
+
   @HostListener('document:click', ['$event.target'])
   protected onDocumentClick(target: EventTarget | null): void {
-    if (
-      this.isDropdownOpen() &&
-      target instanceof Node &&
-      !this.elementRef.nativeElement.contains(target)
-    ) {
+    if (!(target instanceof Node) || this.elementRef.nativeElement.contains(target)) {
+      return;
+    }
+    if (this.isDropdownOpen()) {
       this.isDropdownOpen.set(false);
+    }
+    if (this.isResourcesMenuOpen()) {
+      this.isResourcesMenuOpen.set(false);
     }
   }
 

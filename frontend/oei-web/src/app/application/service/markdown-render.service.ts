@@ -91,6 +91,46 @@ export function stripFrontmatter(markdown: string): string {
  * build a table of contents/floating side menu. Headings inside fenced code blocks (```...```)
  * are ignored. `slug` matches exactly what `markdownToUnsafeHtml({ headingIds: true })` writes as
  * the corresponding element's `id`. */
+/** Keeps only the Markdown up to (and including) the section started by a `##` heading whose
+ * text matches `headingText` (case-insensitive), stopping right before the *next* `##` heading —
+ * i.e. everything up to and including that section's own `###` subsections, but none of the
+ * sections that follow it. Used to show only the executive summary of the Livre Blanc online
+ * and push readers to the PDF download for the rest. Returns the input unchanged if no heading
+ * matches (fail open — better to show the full document than to show nothing). */
+export function truncateAfterSection(markdown: string, headingText: string): string {
+  const lines = markdown.replace(/\r\n/g, '\n').split('\n');
+  const normalized = headingText.trim().toLowerCase();
+  let startIndex = -1;
+  let inFence = false;
+  for (let i = 0; i < lines.length; i++) {
+    if (/^```/.test(lines[i].trim())) {
+      inFence = !inFence;
+      continue;
+    }
+    if (inFence) continue;
+    const match = /^##\s+(.*)$/.exec(lines[i]);
+    if (match && match[1].trim().toLowerCase() === normalized) {
+      startIndex = i;
+      break;
+    }
+  }
+  if (startIndex === -1) {
+    return markdown;
+  }
+  inFence = false;
+  for (let i = startIndex + 1; i < lines.length; i++) {
+    if (/^```/.test(lines[i].trim())) {
+      inFence = !inFence;
+      continue;
+    }
+    if (inFence) continue;
+    if (/^##\s+/.test(lines[i])) {
+      return lines.slice(0, i).join('\n');
+    }
+  }
+  return markdown;
+}
+
 export function extractHeadings(
   markdown: string,
   levels: readonly number[] = [2, 3],
