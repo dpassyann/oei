@@ -14,6 +14,7 @@ import { Publications } from './presentation/pages/publications/publications';
 import { Partenaires } from './presentation/pages/partenaires/partenaires';
 import { PartenaireDetail } from './presentation/pages/partenaire-detail/partenaire-detail';
 import { DomaineDetail } from './presentation/pages/domaine-detail/domaine-detail';
+import { LivreBlanc } from './presentation/pages/livre-blanc/livre-blanc';
 import { institutionAccessGuard } from './presentation/auth/institution-access.guard';
 import { InstitutionDashboard } from './presentation/pages/espace-institution/dashboard/dashboard';
 import { InstitutionMembers } from './presentation/pages/espace-institution/membres/membres';
@@ -40,6 +41,7 @@ export const routes: Routes = [
   { path: 'deontologie', component: Deontologie },
   { path: 'certifications', component: Certifications },
   { path: 'ressources', component: Ressources },
+  { path: 'livre-blanc', component: LivreBlanc },
   { path: 'actualites', component: Actualites },
   { path: 'publications', component: Publications },
   { path: 'partenaires', component: Partenaires },

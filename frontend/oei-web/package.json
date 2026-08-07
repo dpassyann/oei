@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.conf.json",
-    "start:e2e": "ng serve --proxy-config proxy.conf.json --port 4320",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "NODE_OPTIONS=--no-experimental-webstorage ng test",
+    "copy:content": "node scripts/copy-content-assets.mjs",
+    "start": "node scripts/copy-content-assets.mjs && ng serve --proxy-config proxy.conf.json",
+    "start:e2e": "node scripts/copy-content-assets.mjs && ng serve --proxy-config proxy.conf.json --port 4320",
+    "build": "node scripts/copy-content-assets.mjs && ng build",
+    "watch": "node scripts/copy-content-assets.mjs && ng build --watch --configuration development",
+    "test": "node scripts/copy-content-assets.mjs && NODE_OPTIONS=--no-experimental-webstorage ng test",
     "generate:api": "openapi-generator-cli generate",
     "e2e": "playwright test"
   },

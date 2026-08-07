@@ -25,6 +25,7 @@ export class PlanDuSite {
     { key: 'ethics', path: '/deontologie' },
     { key: 'certifications', path: '/certifications' },
     { key: 'resources', path: '/ressources' },
+    { key: 'whitePaper', path: '/livre-blanc' },
     { key: 'news', path: '/actualites' },
     { key: 'publications', path: '/publications' },
     { key: 'partners', path: '/partenaires' },

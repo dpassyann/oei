@@ -2,7 +2,7 @@
 <svg xmlns="http://www.w3.org/2000/svg"
      width="1600" height="2400" viewBox="0 0 1600 2400"
      role="img" aria-labelledby="title desc">
-  <title id="title">Livre blanc — Ordre des Experts Informaticiens</title>
+  <title id="title">Livre blanc v3.1 — Ordre des Experts Informaticiens</title>
   <desc id="desc">Couverture institutionnelle bleu nuit, doré et blanc avec logo bouclier et globe.</desc>
 
   <defs>
@@ -20,7 +20,7 @@
   <rect width="1600" height="2400" fill="#0a1e3f"/>
 
   <!-- Logo vectoriel -->
-  <g transform="translate(800 420)" fill="none" stroke="#e8a530" stroke-width="10"
+  <g transform="translate(800 400)" fill="none" stroke="#e8a530" stroke-width="10"
      stroke-linecap="round" stroke-linejoin="round">
     <!-- Bouclier -->
     <path d="M0,-250
@@ -77,13 +77,23 @@
   </g>
 
   <!-- Nom de l'organisation -->
-  <text x="800" y="980"
+  <text x="800" y="960"
         text-anchor="middle"
         class="sans gold"
         font-size="42"
         font-weight="600"
         letter-spacing="7">
     ORDRE DES EXPERTS INFORMATICIENS
+  </text>
+
+  <!-- Mention mouvement / ambition internationale (v3.1) -->
+  <text x="800" y="1015"
+        text-anchor="middle"
+        class="sans white"
+        font-size="25"
+        font-weight="500"
+        letter-spacing="5">
+    MOUVEMENT FONDATEUR INTERNATIONAL
   </text>
 
   <!-- Séparateur -->
@@ -143,4 +153,15 @@
   </text>
 
   <line x1="755" y1="2210" x2="845" y2="2210" stroke="#e8a530" stroke-width="3"/>
+
+  <!-- Version (v3.1) -->
+  <text x="800" y="2280"
+        text-anchor="middle"
+        class="sans gold"
+        font-size="22"
+        font-weight="500"
+        letter-spacing="4"
+        opacity="0.85">
+    VERSION 3.1
+  </text>
 </svg>

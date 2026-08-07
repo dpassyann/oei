@@ -1,4 +1,9 @@
-import { ApplicationConfig, inject, provideAppInitializer, provideZonelessChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  inject,
+  provideAppInitializer,
+  provideZonelessChangeDetection,
+} from '@angular/core';
 import { provideRouter, withRouterConfig } from '@angular/router';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { AuthConfig, OAuthService, provideOAuthClient } from 'angular-oauth2-oidc';
@@ -114,6 +119,12 @@ import { MEMBERSHIP_FEE_PORT } from './domain/port/membership-fee/membership-fee
 import { MembershipFeeMockAdapter } from './infrastructure/adapter/membership-fee-mock.adapter';
 import { MembershipFeeApiAdapter } from './infrastructure/adapter/membership-fee-api.adapter';
 
+// Livre Blanc page (`/livre-blanc`): reads `content/<lang>/200-WHITE-PAPERS/livre-blanc-complet.md`
+// straight out of the static `assets/content/` bundle — there is no backend endpoint for it, so
+// there is a single adapter (no mock/api split, see its own comment for why).
+import { MARKDOWN_ASSET_PORT } from './domain/port/markdown-asset.port';
+import { MarkdownAssetAdapter } from './infrastructure/adapter/markdown-asset.adapter';
+
 // Real Keycloak Authorization Code + PKCE config (realm `oei`, client `oei-frontend` — see
 // `keycloak/realm-export/oei-realm.json`: publicClient, standardFlowEnabled,
 // directAccessGrantsEnabled=false, pkce.code.challenge.method=S256, redirectUris
@@ -152,142 +163,210 @@ export const appConfig: ApplicationConfig = {
     }),
     {
       provide: CONTENT_REPOSITORY_PORT,
-      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(ContentMockAdapter) : inject(ContentApiAdapter)),
+      useFactory: () =>
+        inject(RuntimeConfig).isMock() ? inject(ContentMockAdapter) : inject(ContentApiAdapter),
     },
     {
       provide: LEAD_CAPTURE_PORT,
-      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(LeadCaptureMockAdapter) : inject(LeadCaptureApiAdapter)),
+      useFactory: () =>
+        inject(RuntimeConfig).isMock()
+          ? inject(LeadCaptureMockAdapter)
+          : inject(LeadCaptureApiAdapter),
     },
     {
       provide: STATS_PORT,
-      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(StatsMockAdapter) : inject(StatsApiAdapter)),
+      useFactory: () =>
+        inject(RuntimeConfig).isMock() ? inject(StatsMockAdapter) : inject(StatsApiAdapter),
     },
     {
       provide: DOMAINS_PORT,
-      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(DomainsMockAdapter) : inject(DomainsApiAdapter)),
+      useFactory: () =>
+        inject(RuntimeConfig).isMock() ? inject(DomainsMockAdapter) : inject(DomainsApiAdapter),
     },
     {
       provide: NEWS_PORT,
-      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(NewsMockAdapter) : inject(NewsApiAdapter)),
+      useFactory: () =>
+        inject(RuntimeConfig).isMock() ? inject(NewsMockAdapter) : inject(NewsApiAdapter),
     },
     {
       provide: PARTNER_REPOSITORY_PORT,
-      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(PartnerMockAdapter) : inject(PartnerApiAdapter)),
+      useFactory: () =>
+        inject(RuntimeConfig).isMock() ? inject(PartnerMockAdapter) : inject(PartnerApiAdapter),
     },
     {
       provide: PUBLICATIONS_PORT,
-      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(PublicationsMockAdapter) : inject(PublicationsApiAdapter)),
+      useFactory: () =>
+        inject(RuntimeConfig).isMock()
+          ? inject(PublicationsMockAdapter)
+          : inject(PublicationsApiAdapter),
     },
     {
       provide: NEWSLETTER_SUBSCRIPTION_PORT,
       useFactory: () =>
-        inject(RuntimeConfig).isMock() ? inject(NewsletterSubscriptionMockAdapter) : inject(NewsletterSubscriptionApiAdapter),
+        inject(RuntimeConfig).isMock()
+          ? inject(NewsletterSubscriptionMockAdapter)
+          : inject(NewsletterSubscriptionApiAdapter),
     },
     {
       provide: INSTITUTION_ACCOUNT_PORT,
-      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(InstitutionAccountMockAdapter) : inject(InstitutionAccountApiAdapter)),
+      useFactory: () =>
+        inject(RuntimeConfig).isMock()
+          ? inject(InstitutionAccountMockAdapter)
+          : inject(InstitutionAccountApiAdapter),
     },
     {
       provide: INSTITUTION_ROLES_PORT,
-      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(InstitutionRolesMockAdapter) : inject(InstitutionRolesApiAdapter)),
+      useFactory: () =>
+        inject(RuntimeConfig).isMock()
+          ? inject(InstitutionRolesMockAdapter)
+          : inject(InstitutionRolesApiAdapter),
     },
     {
       provide: INSTITUTION_INVITATIONS_PORT,
       useFactory: () =>
-        inject(RuntimeConfig).isMock() ? inject(InstitutionInvitationsMockAdapter) : inject(InstitutionInvitationsApiAdapter),
+        inject(RuntimeConfig).isMock()
+          ? inject(InstitutionInvitationsMockAdapter)
+          : inject(InstitutionInvitationsApiAdapter),
     },
     {
       provide: INSTITUTION_AFFILIATIONS_PORT,
       useFactory: () =>
-        inject(RuntimeConfig).isMock() ? inject(InstitutionAffiliationsMockAdapter) : inject(InstitutionAffiliationsApiAdapter),
+        inject(RuntimeConfig).isMock()
+          ? inject(InstitutionAffiliationsMockAdapter)
+          : inject(InstitutionAffiliationsApiAdapter),
     },
     {
       provide: INSTITUTION_DASHBOARD_PORT,
       useFactory: () =>
-        inject(RuntimeConfig).isMock() ? inject(InstitutionDashboardMockAdapter) : inject(InstitutionDashboardApiAdapter),
+        inject(RuntimeConfig).isMock()
+          ? inject(InstitutionDashboardMockAdapter)
+          : inject(InstitutionDashboardApiAdapter),
     },
     {
       provide: INSTITUTION_PUBLICATIONS_PORT,
       useFactory: () =>
-        inject(RuntimeConfig).isMock() ? inject(InstitutionPublicationsMockAdapter) : inject(InstitutionPublicationsApiAdapter),
+        inject(RuntimeConfig).isMock()
+          ? inject(InstitutionPublicationsMockAdapter)
+          : inject(InstitutionPublicationsApiAdapter),
     },
     {
       provide: INSTITUTION_OPPORTUNITIES_PORT,
       useFactory: () =>
-        inject(RuntimeConfig).isMock() ? inject(InstitutionOpportunitiesMockAdapter) : inject(InstitutionOpportunitiesApiAdapter),
+        inject(RuntimeConfig).isMock()
+          ? inject(InstitutionOpportunitiesMockAdapter)
+          : inject(InstitutionOpportunitiesApiAdapter),
     },
     {
       provide: INSTITUTION_BADGE_PROPOSALS_PORT,
       useFactory: () =>
-        inject(RuntimeConfig).isMock() ? inject(InstitutionBadgeProposalsMockAdapter) : inject(InstitutionBadgeProposalsApiAdapter),
+        inject(RuntimeConfig).isMock()
+          ? inject(InstitutionBadgeProposalsMockAdapter)
+          : inject(InstitutionBadgeProposalsApiAdapter),
     },
     {
       provide: INSTITUTION_AUDIT_LOG_PORT,
       useFactory: () =>
-        inject(RuntimeConfig).isMock() ? inject(InstitutionAuditLogMockAdapter) : inject(InstitutionAuditLogApiAdapter),
+        inject(RuntimeConfig).isMock()
+          ? inject(InstitutionAuditLogMockAdapter)
+          : inject(InstitutionAuditLogApiAdapter),
     },
     {
       provide: INSTITUTION_PUBLIC_PORT,
-      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(InstitutionPublicMockAdapter) : inject(InstitutionPublicApiAdapter)),
+      useFactory: () =>
+        inject(RuntimeConfig).isMock()
+          ? inject(InstitutionPublicMockAdapter)
+          : inject(InstitutionPublicApiAdapter),
     },
     {
       provide: ADMIN_CONTENT_PORT,
-      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(AdminContentMockAdapter) : inject(AdminContentApiAdapter)),
+      useFactory: () =>
+        inject(RuntimeConfig).isMock()
+          ? inject(AdminContentMockAdapter)
+          : inject(AdminContentApiAdapter),
     },
     {
       provide: PUBLIC_CONTENT_PORT,
-      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(PublicContentMockAdapter) : inject(PublicContentApiAdapter)),
+      useFactory: () =>
+        inject(RuntimeConfig).isMock()
+          ? inject(PublicContentMockAdapter)
+          : inject(PublicContentApiAdapter),
     },
     {
       provide: CONTRIBUTION_PORT,
-      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(ContributionMockAdapter) : inject(ContributionApiAdapter)),
+      useFactory: () =>
+        inject(RuntimeConfig).isMock()
+          ? inject(ContributionMockAdapter)
+          : inject(ContributionApiAdapter),
     },
     {
       provide: GIT_SYNCHRONIZATION_PORT,
       useFactory: () =>
-        inject(RuntimeConfig).isMock() ? inject(GitSynchronizationMockAdapter) : inject(GitSynchronizationApiAdapter),
+        inject(RuntimeConfig).isMock()
+          ? inject(GitSynchronizationMockAdapter)
+          : inject(GitSynchronizationApiAdapter),
     },
     {
       provide: MEMBER_PORT,
-      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(MemberMockAdapter) : inject(MemberApiAdapter)),
+      useFactory: () =>
+        inject(RuntimeConfig).isMock() ? inject(MemberMockAdapter) : inject(MemberApiAdapter),
     },
     {
       provide: MEMBERSHIP_PORT,
-      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(MembershipMockAdapter) : inject(MembershipApiAdapter)),
+      useFactory: () =>
+        inject(RuntimeConfig).isMock()
+          ? inject(MembershipMockAdapter)
+          : inject(MembershipApiAdapter),
     },
     {
       provide: PROFESSIONAL_PROFILE_PORT,
       useFactory: () =>
-        inject(RuntimeConfig).isMock() ? inject(ProfessionalProfileMockAdapter) : inject(ProfessionalProfileApiAdapter),
+        inject(RuntimeConfig).isMock()
+          ? inject(ProfessionalProfileMockAdapter)
+          : inject(ProfessionalProfileApiAdapter),
     },
     {
       provide: PUBLIC_PROFILE_PORT,
-      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(PublicProfileMockAdapter) : inject(PublicProfileApiAdapter)),
+      useFactory: () =>
+        inject(RuntimeConfig).isMock()
+          ? inject(PublicProfileMockAdapter)
+          : inject(PublicProfileApiAdapter),
     },
     {
       provide: CV_PORT,
-      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(CvMockAdapter) : inject(CvApiAdapter)),
+      useFactory: () =>
+        inject(RuntimeConfig).isMock() ? inject(CvMockAdapter) : inject(CvApiAdapter),
     },
     {
       provide: CERTIFICATION_PORT,
-      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(CertificationMockAdapter) : inject(CertificationApiAdapter)),
+      useFactory: () =>
+        inject(RuntimeConfig).isMock()
+          ? inject(CertificationMockAdapter)
+          : inject(CertificationApiAdapter),
     },
     {
       provide: BADGE_PORT,
-      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(BadgeMockAdapter) : inject(BadgeApiAdapter)),
+      useFactory: () =>
+        inject(RuntimeConfig).isMock() ? inject(BadgeMockAdapter) : inject(BadgeApiAdapter),
     },
     {
       provide: WALLET_PORT,
-      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(WalletMockAdapter) : inject(WalletApiAdapter)),
+      useFactory: () =>
+        inject(RuntimeConfig).isMock() ? inject(WalletMockAdapter) : inject(WalletApiAdapter),
     },
     {
       provide: DIGITAL_BUSINESS_CARD_PORT,
       useFactory: () =>
-        inject(RuntimeConfig).isMock() ? inject(DigitalBusinessCardMockAdapter) : inject(DigitalBusinessCardApiAdapter),
+        inject(RuntimeConfig).isMock()
+          ? inject(DigitalBusinessCardMockAdapter)
+          : inject(DigitalBusinessCardApiAdapter),
     },
     {
       provide: MEMBERSHIP_FEE_PORT,
-      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(MembershipFeeMockAdapter) : inject(MembershipFeeApiAdapter)),
+      useFactory: () =>
+        inject(RuntimeConfig).isMock()
+          ? inject(MembershipFeeMockAdapter)
+          : inject(MembershipFeeApiAdapter),
     },
+    { provide: MARKDOWN_ASSET_PORT, useClass: MarkdownAssetAdapter },
   ],
 };

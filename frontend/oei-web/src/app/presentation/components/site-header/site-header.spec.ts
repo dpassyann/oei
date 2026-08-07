@@ -19,18 +19,21 @@ describe('SiteHeader', () => {
         { provide: MemberApplicationService, useValue: { getCurrentMember: () => of(null) } },
         // Real `KeycloakAuthService` needs `OAuthService` (angular-oauth2-oidc) injected — stand
         // in with a plain "not connected" fake, as the guard specs already do.
-        { provide: KeycloakAuthService, useValue: { isAuthenticated: () => false, logout: () => undefined } },
+        {
+          provide: KeycloakAuthService,
+          useValue: { isAuthenticated: () => false, logout: () => undefined },
+        },
       ],
     });
   });
 
-  it('givenComponent_whenCreated_thenRendersNineNavLinksWithNonEmptyRouterLinks', () => {
+  it('givenComponent_whenCreated_thenRendersTenNavLinksWithNonEmptyRouterLinks', () => {
     const fixture = TestBed.createComponent(SiteHeader);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const links = compiled.querySelectorAll<HTMLAnchorElement>('.oei-nav__link');
 
-    expect(links.length).toBe(9);
+    expect(links.length).toBe(10);
     links.forEach((link) => {
       const href = link.getAttribute('href');
       expect(href).toBeTruthy();
@@ -72,7 +75,19 @@ describe('SiteHeader', () => {
           },
           {
             provide: MemberApplicationService,
-            useValue: { getCurrentMember: () => of(createMember({ id: 'm1', publicSlug: 'jane', displayName: 'Jane Dupont (Démonstration)', locale: 'fr', country: 'CH', createdAt: '2026-01-01' })) },
+            useValue: {
+              getCurrentMember: () =>
+                of(
+                  createMember({
+                    id: 'm1',
+                    publicSlug: 'jane',
+                    displayName: 'Jane Dupont (Démonstration)',
+                    locale: 'fr',
+                    country: 'CH',
+                    createdAt: '2026-01-01',
+                  }),
+                ),
+            },
           },
         ],
       });
@@ -87,7 +102,9 @@ describe('SiteHeader', () => {
       const compiled = fixture.nativeElement as HTMLElement;
 
       expect(compiled.querySelector('.oei-cta-member')).toBeNull();
-      expect(compiled.querySelector('.oei-member-menu__trigger')?.textContent).toContain('Jane Dupont (Démonstration)');
+      expect(compiled.querySelector('.oei-member-menu__trigger')?.textContent).toContain(
+        'Jane Dupont (Démonstration)',
+      );
     });
 
     it('givenDropdownOpen_whenLogoutClicked_thenClearsSessionAndNavigatesHome', async () => {

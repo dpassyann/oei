@@ -6,6 +6,7 @@
     "ethics": "Deontologia",
     "certifications": "Certificazioni",
     "resources": "Risorse",
+    "whitePaper": "Libro Bianco",
     "news": "Notizie",
     "contact": "Contatto",
     "join": "Unisciti al movimento",
@@ -214,6 +215,7 @@
       "ethics": "Deontologia",
       "certifications": "Certificazioni",
       "resources": "Risorse",
+      "whitePaper": "Libro Bianco",
       "news": "Notizie",
       "contact": "Contatto",
       "foundingMembers": "Membri fondatori",
@@ -890,5 +892,14 @@
       "ressources": "Risorse",
       "contenu-cms": "Contenuto"
     }
+  },
+  "livreBlancPage": {
+    "title": "Libro Bianco",
+    "downloadPdf": "Scarica il PDF",
+    "tableOfContents": "Indice",
+    "fallbackNotice": "Traduzione non ancora disponibile — nel frattempo viene mostrata la versione francese.",
+    "loading": "Caricamento del documento…",
+    "notFound": "Il Libro Bianco non è al momento disponibile.",
+    "backToHome": "Torna alla home"
   }
 }

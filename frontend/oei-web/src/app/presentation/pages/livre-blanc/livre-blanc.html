@@ -1,0 +1,40 @@
+@if (notFound()) {
+  <main class="oei-page">
+    <a class="oei-page__back" routerLink="/">{{ i18n.translate('livreBlancPage.backToHome') }}</a>
+    <p class="oei-page__empty">{{ i18n.translate('livreBlancPage.notFound') }}</p>
+  </main>
+} @else {
+  <main class="oei-livre-blanc-page">
+    <div class="oei-livre-blanc-page__content">
+      <a class="oei-page__back" routerLink="/">{{ i18n.translate('livreBlancPage.backToHome') }}</a>
+
+      <header class="oei-livre-blanc-page__header">
+        <h1 class="oei-page__title">{{ i18n.translate('livreBlancPage.title') }}</h1>
+        <a
+          class="oei-livre-blanc-page__download"
+          [href]="pdfHref"
+          target="_blank"
+          rel="noopener"
+          download
+        >
+          {{ i18n.translate('livreBlancPage.downloadPdf') }}
+        </a>
+      </header>
+
+      @if (isFallback()) {
+        <p class="oei-fallback-banner">{{ i18n.translate('livreBlancPage.fallbackNotice') }}</p>
+      }
+
+      @if (loading()) {
+        <p class="oei-livre-blanc-page__loading">{{ i18n.translate('livreBlancPage.loading') }}</p>
+      } @else {
+        <article #body class="oei-livre-blanc-page__body" [innerHTML]="contentHtml()"></article>
+      }
+    </div>
+
+    <oei-floating-side-menu
+      [title]="i18n.translate('livreBlancPage.tableOfContents')"
+      [links]="sideMenuLinks()"
+    />
+  </main>
+}

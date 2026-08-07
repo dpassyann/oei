@@ -1,0 +1,210 @@
+:host {
+  display: block;
+}
+
+$oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+
+.oei-livre-blanc-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2.5rem;
+  align-items: start;
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem;
+}
+
+.oei-livre-blanc-page__content {
+  min-width: 0;
+}
+
+.oei-page__back {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  color: $oei-navy;
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover {
+    color: $oei-gold;
+  }
+}
+
+.oei-livre-blanc-page__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.oei-page__title {
+  margin: 0;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-livre-blanc-page__download {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: 999px;
+  background: $oei-navy;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:hover {
+    background: $oei-gold;
+    color: $oei-navy;
+  }
+}
+
+.oei-fallback-banner {
+  margin: 0 0 1.5rem;
+  color: $oei-gold;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.oei-livre-blanc-page__loading {
+  margin: 0;
+  color: #666;
+  font-style: italic;
+}
+
+.oei-page__empty {
+  margin: 0;
+  color: #666;
+  font-style: italic;
+}
+
+// Markdown body — rendered via `MarkdownRenderService`/`[innerHTML]`, so the selectors below
+// target raw HTML tags rather than component-scoped classes for most of it.
+.oei-livre-blanc-page__body {
+  line-height: 1.7;
+  color: #222;
+
+  :first-child {
+    margin-top: 0;
+  }
+
+  h1 {
+    margin: 0 0 0.75rem;
+    font-size: 2rem;
+    color: $oei-navy;
+  }
+
+  h2 {
+    margin: 2.5rem 0 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(10, 30, 63, 0.1);
+    font-size: 1.5rem;
+    color: $oei-navy;
+    scroll-margin-top: 5.5rem;
+  }
+
+  h3 {
+    margin: 1.75rem 0 0.75rem;
+    font-size: 1.15rem;
+    color: $oei-navy;
+    scroll-margin-top: 5.5rem;
+  }
+
+  p {
+    margin: 0 0 1rem;
+  }
+
+  ul,
+  ol {
+    margin: 0 0 1rem;
+    padding-left: 1.5rem;
+  }
+
+  li {
+    margin-bottom: 0.4rem;
+  }
+
+  strong {
+    color: $oei-navy;
+  }
+
+  a {
+    color: $oei-navy;
+    text-decoration: underline;
+
+    &:hover {
+      color: $oei-gold;
+    }
+  }
+
+  hr {
+    margin: 2rem 0;
+    border: none;
+    border-top: 1px solid rgba(10, 30, 63, 0.12);
+  }
+
+  blockquote {
+    margin: 1.5rem 0;
+    padding: 1rem 1.25rem;
+    border-left: 3px solid $oei-gold;
+    background: rgba(232, 165, 48, 0.08);
+    font-style: italic;
+    color: $oei-navy;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  // Fenced ```mermaid blocks: rendered as a labelled box with the raw diagram source (see
+  // `markdown-render.service.ts`'s comment — no diagram engine is used, this is a deliberate,
+  // documented limitation), not an actual rendered diagram.
+  .markdown-diagram {
+    margin: 1.5rem 0;
+    padding: 1rem 1.25rem;
+    border: 1px dashed rgba(10, 30, 63, 0.3);
+    border-radius: 0.5rem;
+    background: rgba(10, 30, 63, 0.03);
+  }
+
+  .markdown-diagram__label {
+    margin: 0 0 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: rgba(10, 30, 63, 0.6);
+  }
+
+  .markdown-diagram__source {
+    margin: 0;
+    overflow-x: auto;
+    font-family: 'SF Mono', Consolas, monospace;
+    font-size: 0.8rem;
+    color: #333;
+    white-space: pre;
+  }
+
+  pre code {
+    display: block;
+    overflow-x: auto;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background: rgba(10, 30, 63, 0.04);
+    font-family: 'SF Mono', Consolas, monospace;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .oei-livre-blanc-page {
+    grid-template-columns: 1fr;
+  }
+}

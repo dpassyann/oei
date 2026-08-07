@@ -6,6 +6,7 @@
     "ethics": "Ethics",
     "certifications": "Certifications",
     "resources": "Resources",
+    "whitePaper": "White Paper",
     "news": "News",
     "contact": "Contact",
     "join": "Join the movement",
@@ -214,6 +215,7 @@
       "ethics": "Ethics",
       "certifications": "Certifications",
       "resources": "Resources",
+      "whitePaper": "White Paper",
       "news": "News",
       "contact": "Contact",
       "foundingMembers": "Founding members",
@@ -890,5 +892,14 @@
       "ressources": "Resources",
       "contenu-cms": "Content"
     }
+  },
+  "livreBlancPage": {
+    "title": "White Paper",
+    "downloadPdf": "Download the PDF",
+    "tableOfContents": "Table of contents",
+    "fallbackNotice": "Translation not available yet — showing the French version in the meantime.",
+    "loading": "Loading the document…",
+    "notFound": "The White Paper could not be found right now.",
+    "backToHome": "Back to home"
   }
 }

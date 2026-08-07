@@ -6,6 +6,7 @@
     "ethics": "Deontologia",
     "certifications": "Certificações",
     "resources": "Recursos",
+    "whitePaper": "Livro Branco",
     "news": "Notícias",
     "contact": "Contato",
     "join": "Junte-se ao movimento",
@@ -214,6 +215,7 @@
       "ethics": "Deontologia",
       "certifications": "Certificações",
       "resources": "Recursos",
+      "whitePaper": "Livro Branco",
       "news": "Notícias",
       "contact": "Contato",
       "foundingMembers": "Membros fundadores",
@@ -890,5 +892,14 @@
       "ressources": "Recursos",
       "contenu-cms": "Conteúdo"
     }
+  },
+  "livreBlancPage": {
+    "title": "Livro Branco",
+    "downloadPdf": "Baixar o PDF",
+    "tableOfContents": "Sumário",
+    "fallbackNotice": "Tradução ainda não disponível — a versão em francês é exibida enquanto isso.",
+    "loading": "Carregando o documento…",
+    "notFound": "O Livro Branco não pôde ser encontrado neste momento.",
+    "backToHome": "Voltar ao início"
   }
 }

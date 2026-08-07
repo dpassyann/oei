@@ -6,6 +6,7 @@
     "ethics": "Ethikkodex",
     "certifications": "Zertifizierungen",
     "resources": "Ressourcen",
+    "whitePaper": "Weißbuch",
     "news": "Aktuelles",
     "contact": "Kontakt",
     "join": "Der Bewegung beitreten",
@@ -214,6 +215,7 @@
       "ethics": "Ethikkodex",
       "certifications": "Zertifizierungen",
       "resources": "Ressourcen",
+      "whitePaper": "Weißbuch",
       "news": "Aktuelles",
       "contact": "Kontakt",
       "foundingMembers": "Gründungsmitglieder",
@@ -890,5 +892,14 @@
       "ressources": "Ressourcen",
       "contenu-cms": "Inhalt"
     }
+  },
+  "livreBlancPage": {
+    "title": "Weißbuch",
+    "downloadPdf": "PDF herunterladen",
+    "tableOfContents": "Inhaltsverzeichnis",
+    "fallbackNotice": "Übersetzung noch nicht verfügbar — es wird vorübergehend die französische Version angezeigt.",
+    "loading": "Dokument wird geladen…",
+    "notFound": "Das Weißbuch konnte derzeit nicht gefunden werden.",
+    "backToHome": "Zurück zur Startseite"
   }
 }

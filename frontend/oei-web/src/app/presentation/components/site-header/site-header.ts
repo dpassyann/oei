@@ -1,4 +1,12 @@
-import { Component, computed, ElementRef, HostListener, inject, PendingTasks, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  ElementRef,
+  HostListener,
+  inject,
+  PendingTasks,
+  signal,
+} from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { KeycloakAuthService } from '../../auth/keycloak-auth.service';
@@ -49,6 +57,7 @@ export class SiteHeader {
     { path: '/deontologie', labelKey: 'nav.ethics' },
     { path: '/certifications', labelKey: 'nav.certifications' },
     { path: '/ressources', labelKey: 'nav.resources' },
+    { path: '/livre-blanc', labelKey: 'nav.whitePaper' },
     { path: '/actualites', labelKey: 'nav.news' },
     { path: '/partenaires', labelKey: 'nav.partners' },
     { path: '/contact', labelKey: 'nav.contact' },
@@ -88,7 +97,11 @@ export class SiteHeader {
 
   @HostListener('document:click', ['$event.target'])
   protected onDocumentClick(target: EventTarget | null): void {
-    if (this.isDropdownOpen() && target instanceof Node && !this.elementRef.nativeElement.contains(target)) {
+    if (
+      this.isDropdownOpen() &&
+      target instanceof Node &&
+      !this.elementRef.nativeElement.contains(target)
+    ) {
       this.isDropdownOpen.set(false);
     }
   }

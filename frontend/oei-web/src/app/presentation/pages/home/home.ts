@@ -83,7 +83,7 @@ export class Home {
   protected readonly resourceExcerpt: readonly ResourceExcerptLink[] = [
     { key: 'deontologie', path: '/deontologie' },
     { key: 'referentiel' },
-    { key: 'livreBlanc', path: '/ressources', fragment: 'livre-blanc' },
+    { key: 'livreBlanc', path: '/livre-blanc' },
   ];
 
   // The 4 founding commitments and the 4 home stats are each rendered from a fixed-size

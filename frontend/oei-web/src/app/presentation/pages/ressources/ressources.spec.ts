@@ -92,7 +92,7 @@ describe('Ressources', () => {
 
     expect(compiled.textContent).toContain('Merci');
     const downloadLink = compiled.querySelector('.oei-download-form__link') as HTMLAnchorElement | null;
-    expect(downloadLink?.getAttribute('href')).toBe('/assets/livre-blanc/livre-blanc-oei-v2.pdf');
+    expect(downloadLink?.getAttribute('href')).toBe('/assets/livre-blanc/livre-blanc-oei.pdf');
   });
 
   it('givenMalformedEmail_whenSubmitDownloadForm_thenShowsErrorMessage', async () => {

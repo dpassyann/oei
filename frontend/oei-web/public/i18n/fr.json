@@ -6,6 +6,7 @@
     "ethics": "Déontologie",
     "certifications": "Certifications",
     "resources": "Ressources",
+    "whitePaper": "Livre Blanc",
     "news": "Actualités",
     "contact": "Contact",
     "join": "Rejoignez le mouvement",
@@ -214,6 +215,7 @@
       "ethics": "Déontologie",
       "certifications": "Certifications",
       "resources": "Ressources",
+      "whitePaper": "Livre Blanc",
       "news": "Actualités",
       "contact": "Contact",
       "foundingMembers": "Membres fondateurs",
@@ -890,5 +892,14 @@
       "ressources": "Ressources",
       "contenu-cms": "Contenu"
     }
+  },
+  "livreBlancPage": {
+    "title": "Livre Blanc",
+    "downloadPdf": "Télécharger le PDF",
+    "tableOfContents": "Sommaire",
+    "fallbackNotice": "Traduction non disponible pour le moment — version française affichée en attendant.",
+    "loading": "Chargement du document…",
+    "notFound": "Le Livre Blanc est introuvable pour le moment.",
+    "backToHome": "Retour à l'accueil"
   }
 }
