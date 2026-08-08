@@ -31,7 +31,7 @@ export const DEMO_INSTITUTION: Institution = createInstitution({
   id: DEMO_INSTITUTION_ID,
   legalName: 'OEI Démonstration SA',
   publicName: 'OEI Démonstration — Institution',
-  logoUrl: '/img/institutions/demo-institution-logo.svg',
+  logoUrl: '/assets/institutions/demo-institution-logo.svg',
   country: 'CH',
   sectors: ['banking', 'consulting'],
   description:

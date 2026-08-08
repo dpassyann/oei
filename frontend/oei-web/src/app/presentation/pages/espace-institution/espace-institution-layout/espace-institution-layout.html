@@ -1,0 +1,20 @@
+<div class="oei-espace-institution-layout">
+  <nav class="oei-espace-institution-layout__menu" aria-label="{{ i18n.translate('espaceInstitution.dashboard.title') }}">
+    <ul class="oei-espace-institution-layout__list">
+      @for (link of links; track link.labelKey) {
+        <li>
+          <a
+            class="oei-espace-institution-layout__link"
+            [routerLink]="link.routerLink"
+            routerLinkActive="oei-espace-institution-layout__link--active"
+            [routerLinkActiveOptions]="{ exact: link.exact }"
+            >{{ i18n.translate(link.labelKey) }}</a
+          >
+        </li>
+      }
+    </ul>
+  </nav>
+  <div class="oei-espace-institution-layout__content">
+    <router-outlet />
+  </div>
+</div>

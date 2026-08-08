@@ -58,6 +58,21 @@ describe('InstitutionDashboard', () => {
     expect(compiled.querySelectorAll('.oei-institution-dashboard__kpi').length).toBe(11);
   });
 
+  it('givenDemoInstitution_whenCreated_thenRendersCompanyLogoWithInstitutionAltText', async () => {
+    configure();
+    const fixture = TestBed.createComponent(InstitutionDashboard);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    const logo = compiled.querySelector<HTMLImageElement>('.oei-institution-dashboard__logo');
+
+    // Logo d'entreprise, pas une photo de profil : source dédiée à l'institution (`logoUrl`,
+    // distincte de tout champ "portrait" de membre) et alt text = nom de l'institution.
+    expect(logo?.getAttribute('src')).toBe(DEMO_INSTITUTION.logoUrl);
+    expect(logo?.getAttribute('alt')).toBe(DEMO_INSTITUTION.publicName);
+  });
+
   it('givenInProgressMaturity_whenCreated_thenShowsHonestInProgressMessage', async () => {
     configure();
     const fixture = TestBed.createComponent(InstitutionDashboard);

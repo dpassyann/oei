@@ -1,6 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { InstitutionAffiliationsApplicationService } from '../../../../application/service/institution-affiliations-application.service';
 import { InstitutionInvitationsApplicationService } from '../../../../application/service/institution-invitations-application.service';
@@ -9,7 +8,7 @@ import { I18nService } from '../../../i18n/i18n.service';
 
 @Component({
   selector: 'oei-institution-members',
-  imports: [RouterLink, FormsModule],
+  imports: [FormsModule],
   templateUrl: './membres.html',
   styleUrl: './membres.scss',
 })

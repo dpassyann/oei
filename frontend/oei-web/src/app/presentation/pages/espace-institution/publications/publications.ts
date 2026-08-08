@@ -1,6 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { InstitutionPublicationsApplicationService } from '../../../../application/service/institution-publications-application.service';
 import { InstitutionPublicationType, PUBLICATION_WORKFLOW_STEPS } from '../../../../domain/model/institution/institution-publication';
@@ -19,7 +18,7 @@ const PUBLICATION_TYPES: readonly InstitutionPublicationType[] = [
 
 @Component({
   selector: 'oei-institution-publications',
-  imports: [RouterLink, FormsModule],
+  imports: [FormsModule],
   templateUrl: './publications.html',
   styleUrl: './publications.scss',
 })

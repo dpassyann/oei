@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="Logo institution de démonstration">
+  <rect width="128" height="128" rx="14" fill="#0a1e3f"/>
+  <g fill="none" stroke="#e8a530" stroke-width="3">
+    <rect x="24" y="30" width="80" height="68" rx="4"/>
+    <path d="M24 46h80M44 30v68M84 30v68"/>
+    <path d="M34 58h6M34 70h6M34 82h6M54 58h6M54 70h6M54 82h6M94 58h6M94 70h6M94 82h6" stroke-width="2"/>
+  </g>
+  <text x="64" y="114" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#ffffff" letter-spacing="0.5">
+    OEI DEMO
+  </text>
+</svg>

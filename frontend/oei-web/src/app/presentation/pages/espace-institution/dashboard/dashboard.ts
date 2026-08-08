@@ -1,6 +1,5 @@
 import { Component, computed, inject } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { RouterLink } from '@angular/router';
 import { InstitutionAccountApplicationService } from '../../../../application/service/institution-account-application.service';
 import { InstitutionDashboardApplicationService } from '../../../../application/service/institution-dashboard-application.service';
 import { I18nService } from '../../../i18n/i18n.service';
@@ -23,7 +22,6 @@ const KPI_KEYS = [
 
 @Component({
   selector: 'oei-institution-dashboard',
-  imports: [RouterLink],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })

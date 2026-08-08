@@ -33,14 +33,22 @@ $oei-gold: #e8a530;
 .oei-institution-dashboard__identity {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.25rem;
   margin-bottom: 1.5rem;
 }
 
+// Logo d'entreprise : tuile carrée à coins arrondis (jamais un cercle, réservé aux photos de
+// profil individuelles — voir `domain/model/profile/professional-profile.ts`) mise en évidence
+// avec un liseré et une ombre légère.
 .oei-institution-dashboard__logo {
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 5.5rem;
+  height: 5.5rem;
+  padding: 0.5rem;
   object-fit: contain;
+  background: #ffffff;
+  border: 1px solid rgba(10, 30, 63, 0.12);
+  border-radius: 0.75rem;
+  box-shadow: 0 0.35rem 0.9rem rgba(10, 30, 63, 0.08);
 }
 
 .oei-institution-dashboard__name {

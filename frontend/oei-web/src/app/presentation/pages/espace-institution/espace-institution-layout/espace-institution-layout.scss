@@ -1,0 +1,76 @@
+$oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+
+:host {
+  display: block;
+}
+
+.oei-espace-institution-layout {
+  display: grid;
+  grid-template-columns: 16rem 1fr;
+  align-items: start;
+  gap: 2rem;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 3.5rem;
+}
+
+.oei-espace-institution-layout__menu {
+  position: sticky;
+  top: 5.5rem;
+  padding: 1.25rem 1rem;
+  border: 1px solid rgba(10, 30, 63, 0.1);
+  border-radius: 0.75rem;
+  background: #ffffff;
+  box-shadow: 0 0.5rem 1.5rem rgba(10, 30, 63, 0.08);
+}
+
+.oei-espace-institution-layout__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.oei-espace-institution-layout__link {
+  display: block;
+  padding: 0.65rem 0.75rem;
+  border-left: 3px solid transparent;
+  border-radius: 0.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: $oei-navy;
+  text-decoration: none;
+
+  &:hover {
+    color: $oei-gold;
+    background: rgba(232, 165, 48, 0.08);
+  }
+
+  &--active {
+    border-left-color: $oei-gold;
+    background: rgba(10, 30, 63, 0.06);
+    color: $oei-navy;
+  }
+}
+
+.oei-espace-institution-layout__content {
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .oei-espace-institution-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .oei-espace-institution-layout__menu {
+    position: static;
+  }
+
+  .oei-espace-institution-layout__list {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}

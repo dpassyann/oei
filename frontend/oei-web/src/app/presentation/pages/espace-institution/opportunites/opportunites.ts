@@ -1,6 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { InstitutionOpportunitiesApplicationService } from '../../../../application/service/institution-opportunities-application.service';
 import { InstitutionOpportunityType } from '../../../../domain/model/institution/institution-opportunity';
@@ -17,7 +16,7 @@ const OPPORTUNITY_TYPES: readonly InstitutionOpportunityType[] = [
 
 @Component({
   selector: 'oei-institution-opportunities',
-  imports: [RouterLink, FormsModule],
+  imports: [FormsModule],
   templateUrl: './opportunites.html',
   styleUrl: './opportunites.scss',
 })

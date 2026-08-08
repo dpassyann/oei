@@ -20,6 +20,7 @@ import { InstitutionDashboard } from './presentation/pages/espace-institution/da
 import { InstitutionMembers } from './presentation/pages/espace-institution/membres/membres';
 import { InstitutionPublicationsPage } from './presentation/pages/espace-institution/publications/publications';
 import { InstitutionOpportunitiesPage } from './presentation/pages/espace-institution/opportunites/opportunites';
+import { EspaceInstitutionLayout } from './presentation/pages/espace-institution/espace-institution-layout/espace-institution-layout';
 import { InstitutionPublique } from './presentation/pages/institution-publique/institution-publique';
 import { CmsContentList } from './presentation/pages/cms/cms-content-list/cms-content-list';
 import { CmsContentEditor } from './presentation/pages/cms/cms-content-editor/cms-content-editor';
@@ -63,6 +64,10 @@ export const routes: Routes = [
   {
     path: 'espace-institution',
     canActivate: [institutionAccessGuard],
+    // `EspaceInstitutionLayout` porte le menu latéral persistant (Tableau de bord / Membres /
+    // Publications / Opportunités) + le `<router-outlet>` des sous-pages — avant son introduction,
+    // la seule navigation entre sous-pages passait par le lien du header vers la racine.
+    component: EspaceInstitutionLayout,
     children: [
       { path: '', component: InstitutionDashboard },
       { path: 'membres', component: InstitutionMembers },
