@@ -22,7 +22,8 @@
     "welcome": "Benvenuto/a",
     "viewProfile": "Visualizza il mio profilo",
     "viewInstitutionSpace": "Area istituzione",
-    "logout": "Disconnetti"
+    "logout": "Disconnetti",
+    "viewCms": "Area CMS"
   },
   "brand": {
     "line1": "L'Ordine degli",
@@ -434,7 +435,8 @@
         "AVAILABLE": "Disponibile",
         "OPEN_TO_OPPORTUNITIES": "Aperto a nuove opportunità",
         "NOT_AVAILABLE": "Non disponibile"
-      }
+      },
+      "loadError": "Non è stato possibile caricare il profilo al momento (un problema tecnico del server). Riprova più tardi o contatta l'assistenza se il problema persiste."
     },
     "cv": {
       "title": "Il mio CV",

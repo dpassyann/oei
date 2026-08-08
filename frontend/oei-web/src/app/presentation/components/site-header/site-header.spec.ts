@@ -21,7 +21,7 @@ describe('SiteHeader', () => {
         // in with a plain "not connected" fake, as the guard specs already do.
         {
           provide: KeycloakAuthService,
-          useValue: { isAuthenticated: () => false, logout: () => undefined },
+          useValue: { isAuthenticated: () => false, hasAnyRole: () => false, logout: () => undefined },
         },
       ],
     });
@@ -80,14 +80,18 @@ describe('SiteHeader', () => {
   });
 
   describe('connected state', () => {
-    function configureConnected(): void {
+    function configureConnected(options?: { hasCmsRole?: boolean }): void {
       TestBed.configureTestingModule({
         imports: [SiteHeader],
         providers: [
           provideRouter([]),
           {
             provide: KeycloakAuthService,
-            useValue: { isAuthenticated: () => true, logout: () => undefined },
+            useValue: {
+              isAuthenticated: () => true,
+              hasAnyRole: () => options?.hasCmsRole ?? false,
+              logout: () => undefined,
+            },
           },
           {
             provide: MemberApplicationService,
@@ -141,6 +145,40 @@ describe('SiteHeader', () => {
 
       expect(logoutSpy).toHaveBeenCalled();
       expect(navigateSpy).toHaveBeenCalledWith('/');
+    });
+
+    it('givenMemberOrAdminRole_whenDropdownOpened_thenShowsCmsLink', async () => {
+      configureConnected({ hasCmsRole: true });
+      const fixture = TestBed.createComponent(SiteHeader);
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+      const compiled = fixture.nativeElement as HTMLElement;
+
+      compiled.querySelector<HTMLButtonElement>('.oei-member-menu__trigger')?.click();
+      fixture.detectChanges();
+
+      const cmsLink = Array.from(compiled.querySelectorAll<HTMLAnchorElement>('.oei-member-menu__item')).find(
+        (a) => a.getAttribute('href') === '/cms',
+      );
+      expect(cmsLink).toBeTruthy();
+    });
+
+    it('givenNoMemberOrAdminRole_whenDropdownOpened_thenHidesCmsLink', async () => {
+      configureConnected({ hasCmsRole: false });
+      const fixture = TestBed.createComponent(SiteHeader);
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+      const compiled = fixture.nativeElement as HTMLElement;
+
+      compiled.querySelector<HTMLButtonElement>('.oei-member-menu__trigger')?.click();
+      fixture.detectChanges();
+
+      const cmsLink = Array.from(compiled.querySelectorAll<HTMLAnchorElement>('.oei-member-menu__item')).find(
+        (a) => a.getAttribute('href') === '/cms',
+      );
+      expect(cmsLink).toBeFalsy();
     });
   });
 });

@@ -22,7 +22,8 @@
     "welcome": "Bienvenido/a",
     "viewProfile": "Ver mi perfil",
     "viewInstitutionSpace": "Área de institución",
-    "logout": "Cerrar sesión"
+    "logout": "Cerrar sesión",
+    "viewCms": "Espacio CMS"
   },
   "brand": {
     "line1": "La Orden de los",
@@ -434,7 +435,8 @@
         "AVAILABLE": "Disponible",
         "OPEN_TO_OPPORTUNITIES": "Abierto a oportunidades",
         "NOT_AVAILABLE": "No disponible"
-      }
+      },
+      "loadError": "No se ha podido cargar el perfil por el momento (un problema técnico del servidor). Vuelva a intentarlo más tarde o contacte con soporte si el problema persiste."
     },
     "cv": {
       "title": "Mi currículum",

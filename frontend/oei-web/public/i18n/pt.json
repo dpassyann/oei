@@ -22,7 +22,8 @@
     "welcome": "Bem-vindo(a)",
     "viewProfile": "Ver meu perfil",
     "viewInstitutionSpace": "Área da instituição",
-    "logout": "Sair"
+    "logout": "Sair",
+    "viewCms": "Área CMS"
   },
   "brand": {
     "line1": "A Ordem dos",
@@ -434,7 +435,8 @@
         "AVAILABLE": "Disponível",
         "OPEN_TO_OPPORTUNITIES": "Aberto a oportunidades",
         "NOT_AVAILABLE": "Não disponível"
-      }
+      },
+      "loadError": "Não foi possível carregar o perfil neste momento (um problema técnico do servidor). Tente novamente mais tarde ou contacte o suporte se o problema persistir."
     },
     "cv": {
       "title": "O meu currículo",

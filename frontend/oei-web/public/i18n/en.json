@@ -22,7 +22,8 @@
     "welcome": "Welcome",
     "viewProfile": "View my profile",
     "viewInstitutionSpace": "Institution area",
-    "logout": "Log out"
+    "logout": "Log out",
+    "viewCms": "CMS area"
   },
   "brand": {
     "line1": "The Order of",
@@ -434,7 +435,8 @@
         "AVAILABLE": "Available",
         "OPEN_TO_OPPORTUNITIES": "Open to opportunities",
         "NOT_AVAILABLE": "Not available"
-      }
+      },
+      "loadError": "The profile could not be loaded right now (a server-side technical issue). Please try again later or contact support if this persists."
     },
     "cv": {
       "title": "My CV",

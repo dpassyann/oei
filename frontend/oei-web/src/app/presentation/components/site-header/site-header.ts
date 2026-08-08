@@ -39,6 +39,11 @@ export class SiteHeader {
   // without this component needing to know about that timing itself.
   protected readonly isConnected = computed(() => this.keycloakAuth.isAuthenticated());
 
+  // Mirrors exactly the role check `cms.guard.ts` enforces on `/cms` — shown only so a member/
+  // admin actually has a way to reach the CMS at all (there was previously no link anywhere
+  // in the UI to it, only the guarded route itself, reachable only by typing the URL).
+  protected readonly canAccessCms = computed(() => this.keycloakAuth.hasAnyRole(['member', 'admin']));
+
   protected readonly isDropdownOpen = signal(false);
 
   private readonly memberResource = rxResource({

@@ -7,6 +7,8 @@
 
   @if (!profile() && profileResource.isLoading()) {
     <p class="oei-page__empty">{{ i18n.translate('espaceMembre.profil.loading') }}</p>
+  } @else if (profileLoadFailed()) {
+    <p class="oei-page__empty" role="alert">{{ i18n.translate('espaceMembre.profil.loadError') }}</p>
   } @else if (!profile()) {
     <p class="oei-page__empty">{{ i18n.translate('espaceMembre.profil.empty') }}</p>
   } @else {

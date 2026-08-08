@@ -57,6 +57,11 @@ export class Profil {
   });
 
   protected readonly profile = computed(() => this.profileResource.value());
+  // Distinguishes "genuinely no profile yet" from "the request failed" — without this, both
+  // looked identical (a generic "Aucun profil disponible." message), which made a real fetch
+  // error (e.g. `dataSource: 'api'` pointing at a backend that doesn't implement this endpoint
+  // yet) indistinguishable from a brand-new, not-yet-onboarded account.
+  protected readonly profileLoadFailed = computed(() => this.profileResource.error() !== undefined);
   protected readonly member = computed(() => this.memberResource.value());
   protected readonly membership = computed(() => this.membershipResource.value());
 

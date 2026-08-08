@@ -22,7 +22,8 @@
     "welcome": "Bienvenue",
     "viewProfile": "Voir mon profil",
     "viewInstitutionSpace": "Espace institution",
-    "logout": "Se déconnecter"
+    "logout": "Se déconnecter",
+    "viewCms": "Espace CMS"
   },
   "brand": {
     "line1": "Ordre des",
@@ -434,7 +435,8 @@
         "AVAILABLE": "Disponible",
         "OPEN_TO_OPPORTUNITIES": "Ouvert aux opportunités",
         "NOT_AVAILABLE": "Non disponible"
-      }
+      },
+      "loadError": "Le profil n'a pas pu être chargé pour le moment (problème technique côté serveur). Réessayez plus tard ou contactez le support si le problème persiste."
     },
     "cv": {
       "title": "Mon CV",

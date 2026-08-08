@@ -22,7 +22,8 @@
     "welcome": "Willkommen",
     "viewProfile": "Mein Profil ansehen",
     "viewInstitutionSpace": "Institutionsbereich",
-    "logout": "Abmelden"
+    "logout": "Abmelden",
+    "viewCms": "CMS-Bereich"
   },
   "brand": {
     "line1": "Der Orden der",
@@ -434,7 +435,8 @@
         "AVAILABLE": "Verfügbar",
         "OPEN_TO_OPPORTUNITIES": "Offen für Gelegenheiten",
         "NOT_AVAILABLE": "Nicht verfügbar"
-      }
+      },
+      "loadError": "Das Profil konnte derzeit nicht geladen werden (ein technisches Serverproblem). Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support, falls das Problem weiterhin besteht."
     },
     "cv": {
       "title": "Mein Lebenslauf",
