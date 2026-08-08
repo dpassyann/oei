@@ -11,9 +11,13 @@ $oei-gold: #e8a530;
   padding: 3.5rem 1.5rem;
 }
 
+.oei-page--profil {
+  padding-top: 2.5rem;
+}
+
 .oei-page__title {
-  margin: 0 0 1.5rem;
-  font-size: 2.25rem;
+  margin: 0;
+  font-size: 2rem;
   font-weight: 700;
   color: $oei-navy;
 }
@@ -24,16 +28,74 @@ $oei-gold: #e8a530;
   font-style: italic;
 }
 
-.oei-profil__identity {
+// --- Bandeau d'identité : la "une" du profil-journal --------------------------------------
+
+.oei-profil-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.75rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  background: linear-gradient(135deg, $oei-navy 0%, #142c54 100%);
+  border-radius: 1rem;
+  color: #fff;
+  box-shadow: 0 1rem 2.5rem rgba(10, 30, 63, 0.18);
+}
+
+.oei-profil-banner__photo {
+  flex: 0 0 auto;
+  width: 6.5rem;
+  height: 6.5rem;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid $oei-gold;
+  background: rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  justify-content: center;
 
-  h2 {
-    margin: 0;
-    color: $oei-navy;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
+}
+
+.oei-profil-banner__initials {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: $oei-gold;
+}
+
+.oei-profil-banner__identity {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+
+  .oei-page__title {
+    color: #fff;
+  }
+}
+
+.oei-profil-banner__headline {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.oei-profil-banner__meta {
+  margin: 0.25rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.oei-profil-banner__location::before {
+  content: '📍 ';
 }
 
 .oei-profil__badge {
@@ -41,15 +103,16 @@ $oei-gold: #e8a530;
   padding: 0.15rem 0.6rem;
   font-size: 0.8rem;
   font-weight: 600;
-  color: #fff;
+  color: $oei-navy;
   background: $oei-gold;
   border-radius: 999px;
 }
 
 .oei-profil__completeness {
-  margin: 0 0 0 auto;
+  margin: 0.35rem 0 0;
   font-weight: 600;
-  color: $oei-navy;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .oei-profil__legal {
@@ -66,6 +129,8 @@ $oei-gold: #e8a530;
   font-style: italic;
 }
 
+// --- Corps éditorial ("journal") -----------------------------------------------------------
+
 .oei-profil__view,
 .oei-profil__edit {
   display: flex;
@@ -73,10 +138,105 @@ $oei-gold: #e8a530;
   gap: 0.5rem;
 }
 
+.oei-profil-journal {
+  gap: 2rem;
+}
+
+.oei-profil-journal__lede {
+  margin: 0;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  font-style: italic;
+  color: #333;
+  border-left: 3px solid $oei-gold;
+  padding-left: 1rem;
+}
+
+.oei-profil-journal__chip-groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 1.5rem;
+}
+
+.oei-profil-journal__chip-group h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(10, 30, 63, 0.6);
+}
+
+.oei-profil-journal__languages {
+  gap: 0.25rem;
+}
+
+.oei-profil-journal__section {
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(10, 30, 63, 0.1);
+
+  h2 {
+    margin: 0 0 1.25rem;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: $oei-navy;
+  }
+}
+
+.oei-profil-journal__timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.oei-profil-journal__timeline-item {
+  position: relative;
+  padding-left: 1.5rem;
+  border-left: 2px solid rgba(10, 30, 63, 0.15);
+}
+
+.oei-profil-journal__timeline-marker {
+  position: absolute;
+  left: -0.4rem;
+  top: 0.3rem;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: $oei-gold;
+}
+
+.oei-profil-journal__timeline-body h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-profil-journal__timeline-subtitle {
+  margin: 0.15rem 0 0;
+  font-weight: 600;
+  color: #333;
+}
+
+.oei-profil-journal__timeline-dates {
+  margin: 0.15rem 0 0.5rem;
+  font-size: 0.8rem;
+  color: #777;
+}
+
+.oei-profil-journal__timeline-description {
+  margin: 0;
+  line-height: 1.55;
+  color: #444;
+}
+
 .oei-profil__chips,
 .oei-profil__list {
   list-style: none;
-  margin: 0 0 1rem;
+  margin: 0;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
@@ -142,5 +302,17 @@ button {
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+  }
+}
+
+@media (max-width: 640px) {
+  .oei-profil-banner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .oei-profil-banner__meta {
+    justify-content: center;
   }
 }

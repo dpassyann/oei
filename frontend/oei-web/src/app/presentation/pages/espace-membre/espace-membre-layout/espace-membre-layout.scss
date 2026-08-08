@@ -1,0 +1,87 @@
+:host {
+  display: block;
+}
+
+$oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+
+.oei-espace-membre-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.oei-espace-membre-nav {
+  position: sticky;
+  top: 5.5rem;
+  flex: 0 0 auto;
+  width: 15rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid rgba(10, 30, 63, 0.1);
+  border-radius: 0.75rem;
+  background: #ffffff;
+  box-shadow: 0 0.5rem 1.5rem rgba(10, 30, 63, 0.08);
+}
+
+.oei-espace-membre-nav__title {
+  margin: 0 0 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(10, 30, 63, 0.55);
+}
+
+.oei-espace-membre-nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.oei-espace-membre-nav__link {
+  display: block;
+  padding: 0.5rem 0.6rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: $oei-navy;
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  border-radius: 0.35rem;
+
+  &:hover {
+    background: rgba(10, 30, 63, 0.05);
+  }
+
+  &--active {
+    color: $oei-navy;
+    background: rgba(232, 165, 48, 0.15);
+    border-left-color: $oei-gold;
+  }
+}
+
+.oei-espace-membre-layout__content {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .oei-espace-membre-layout {
+    flex-direction: column;
+  }
+
+  .oei-espace-membre-nav {
+    position: static;
+    width: 100%;
+  }
+
+  .oei-espace-membre-nav__list {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}

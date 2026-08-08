@@ -8,6 +8,11 @@ import { computeCompletenessScore, ProfessionalProfile } from '../../domain/mode
 // are explicitly flagged `isDemoData: true` per the spec requirement on honest demo data.
 const DEMO_PROFILE_WITHOUT_SCORE = {
   memberId: 'demo-member-1',
+  // Reuses the Livre Blanc's demo author photo (`public/assets/livre-blanc/photo-auteur.png`)
+  // rather than adding a new binary asset just for this profile — it is already flagged as
+  // demonstration imagery elsewhere in the repo, so reusing it here stays honest per the
+  // "données de démonstration honnêtes" requirement.
+  photoUrl: '/assets/livre-blanc/photo-auteur.png',
   title: 'Experte en éthique de l’intelligence artificielle',
   summary:
     'Consultante spécialisée dans la gouvernance et l’éthique de l’IA, accompagnant des institutions dans la mise en conformité de leurs systèmes d’IA.',

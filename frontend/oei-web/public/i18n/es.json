@@ -442,14 +442,17 @@
         "title": "Título",
         "summary": "Resumen",
         "location": "Ubicación",
-        "availability": "Disponibilidad"
+        "availability": "Disponibilidad",
+        "photoUrl": "Foto de perfil",
+        "photoUrlHint": "URL de la foto"
       },
       "availability": {
         "AVAILABLE": "Disponible",
         "OPEN_TO_OPPORTUNITIES": "Abierto a oportunidades",
         "NOT_AVAILABLE": "No disponible"
       },
-      "loadError": "No se ha podido cargar el perfil por el momento (un problema técnico del servidor). Vuelva a intentarlo más tarde o contacte con soporte si el problema persiste."
+      "loadError": "No se ha podido cargar el perfil por el momento (un problema técnico del servidor). Vuelva a intentarlo más tarde o contacte con soporte si el problema persiste.",
+      "photoAlt": "Foto de perfil"
     },
     "cv": {
       "title": "Mi currículum",
@@ -627,6 +630,43 @@
       "success": {
         "title": "Pago realizado",
         "body": "¡Gracias! Su cuota para el ciclo en curso ha sido registrada."
+      }
+    },
+    "nav": {
+      "title": "Mi espacio de miembro",
+      "profil": "Perfil",
+      "cv": "CV",
+      "badges": "Insignias",
+      "carte": "Tarjeta digital",
+      "cotisation": "Cuota",
+      "publier": "Enviar un artículo"
+    },
+    "publier": {
+      "title": "Proponer un artículo",
+      "intro": "Redacte su artículo: un moderador lo revisará antes de que aparezca en Actualidad.",
+      "fields": {
+        "title": "Título",
+        "body": "Contenido",
+        "bodyHint": "Texto simple o markdown ligero.",
+        "coverImageUrl": "Imagen de portada (opcional)",
+        "coverImageUrlHint": "URL de la imagen de portada."
+      },
+      "submit": "Enviar para moderación",
+      "submitting": "Enviando…",
+      "submitAnother": "Proponer otro artículo",
+      "error": "El envío ha fallado. Inténtelo de nuevo.",
+      "pending": {
+        "title": "Pendiente de moderación",
+        "body": "Su artículo ha sido enviado. Aparecerá en Actualidad una vez que un moderador lo apruebe."
+      },
+      "mySubmissions": {
+        "title": "Mis propuestas",
+        "empty": "Aún no ha enviado ningún artículo."
+      },
+      "status": {
+        "pending": "Pendiente",
+        "approved": "Publicado",
+        "rejected": "Rechazado"
       }
     }
   },

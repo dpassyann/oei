@@ -36,6 +36,9 @@ const INTERFACE_STRINGS: Record<string, string> = {
   'espaceMembre.profil.fields.summary': 'Résumé',
   'espaceMembre.profil.fields.location': 'Localisation',
   'espaceMembre.profil.fields.availability': 'Disponibilité',
+  'espaceMembre.profil.fields.photoUrl': 'Photo de profil',
+  'espaceMembre.profil.fields.photoUrlHint': 'URL de la photo',
+  'espaceMembre.profil.photoAlt': 'Photo de profil',
   'espaceMembre.profil.availability.AVAILABLE': 'Disponible',
   'espaceMembre.profil.availability.OPEN_TO_OPPORTUNITIES': 'Ouvert aux opportunités',
   'espaceMembre.profil.availability.NOT_AVAILABLE': 'Non disponible',
@@ -155,6 +158,30 @@ describe('Profil', () => {
     expect(compiled.textContent).toContain('80%');
     expect(compiled.querySelector('.oei-profil__legal')?.textContent).toContain('Jane Marie Dupont');
     expect(compiled.querySelector('.oei-profil__view')?.textContent).not.toContain('Jane Marie Dupont');
+  });
+
+  it('givenProfileWithPhoto_whenRendered_thenShowsPhotoImage', async () => {
+    configure(buildProfile({ photoUrl: '/assets/livre-blanc/photo-auteur.png' }));
+    const fixture = TestBed.createComponent(Profil);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    const img = compiled.querySelector('.oei-profil-banner__photo img') as HTMLImageElement | null;
+    expect(img?.src).toContain('/assets/livre-blanc/photo-auteur.png');
+  });
+
+  it('givenProfileWithoutPhoto_whenRendered_thenShowsInitialsFallback', async () => {
+    configure(buildProfile({ photoUrl: undefined }));
+    const fixture = TestBed.createComponent(Profil);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector('.oei-profil-banner__photo img')).toBeFalsy();
+    expect(compiled.querySelector('.oei-profil-banner__initials')?.textContent).toContain('JD');
   });
 
   it('givenDemoExperience_whenRendered_thenShowsDemonstrationTag', async () => {

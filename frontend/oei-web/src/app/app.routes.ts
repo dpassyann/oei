@@ -28,12 +28,14 @@ import { CmsContributions } from './presentation/pages/cms/cms-contributions/cms
 import { cmsGuard } from './presentation/auth/cms.guard';
 import { memberSpaceGuard } from './presentation/auth/member-space.guard';
 import { Onboarding } from './presentation/pages/espace-membre/onboarding/onboarding';
+import { EspaceMembreLayout } from './presentation/pages/espace-membre/espace-membre-layout/espace-membre-layout';
 import { Profil } from './presentation/pages/espace-membre/profil/profil';
 import { CvBuilder } from './presentation/pages/espace-membre/cv-builder/cv-builder';
 import { Badges } from './presentation/pages/espace-membre/badges/badges';
 import { CarteNumerique } from './presentation/pages/espace-membre/carte/carte-numerique';
 import { ProfilPublic } from './presentation/pages/espace-membre/profil-public/profil-public';
 import { Cotisation } from './presentation/pages/espace-membre/cotisation/cotisation';
+import { PublierArticle } from './presentation/pages/espace-membre/publier-article/publier-article';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -92,16 +94,28 @@ export const routes: Routes = [
     path: 'espace-membre',
     canActivate: [memberSpaceGuard],
     children: [
-      { path: '', redirectTo: 'profil', pathMatch: 'full' },
+      // `inscription` (the onboarding wizard) stays a sibling of the `EspaceMembreLayout`
+      // shell below, not a child of it — it's a full-screen, one-time step flow, not a page a
+      // member navigates back and forth to, so the permanent side menu would be noise there.
       { path: 'inscription', component: Onboarding },
-      { path: 'profil', component: Profil },
-      { path: 'cv', component: CvBuilder },
-      { path: 'badges', component: Badges },
-      { path: 'carte', component: CarteNumerique },
-      // Mocked cotisation payment page (adhésion & cotisation plan) — see `home.ts`'s
-      // `onJoinClick` and the account-creation flow's (now Keycloak-native) "Payer maintenant"
-      // choice.
-      { path: 'cotisation', component: Cotisation },
+      {
+        path: '',
+        component: EspaceMembreLayout,
+        children: [
+          { path: '', redirectTo: 'profil', pathMatch: 'full' },
+          { path: 'profil', component: Profil },
+          { path: 'cv', component: CvBuilder },
+          { path: 'badges', component: Badges },
+          { path: 'carte', component: CarteNumerique },
+          // Mocked cotisation payment page (adhésion & cotisation plan) — see `home.ts`'s
+          // `onJoinClick` and the account-creation flow's (now Keycloak-native) "Payer
+          // maintenant" choice.
+          { path: 'cotisation', component: Cotisation },
+          // Member-facing article submission form — feeds the CMS moderation queue built
+          // separately; approved submissions are the only ones that ever reach `/actualites`.
+          { path: 'publier', component: PublierArticle },
+        ],
+      },
     ],
   },
   { path: 'membres/:publicSlug', component: ProfilPublic },

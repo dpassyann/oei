@@ -38,6 +38,11 @@ export interface Skill {
 
 export interface ProfessionalProfile {
   readonly memberId: string;
+  // Set from the onboarding wizard's "Photo" step (`espaceMembre.onboarding.steps.photo`,
+  // `onboarding.ts`'s `photoUrl` draft field) or edited later from the profile page itself.
+  // No real upload pipeline exists yet — this is a plain URL, exactly like the onboarding
+  // step it comes from.
+  readonly photoUrl?: string;
   readonly title?: string;
   readonly summary?: string;
   readonly location?: string;

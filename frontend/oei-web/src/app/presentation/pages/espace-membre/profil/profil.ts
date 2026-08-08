@@ -22,6 +22,10 @@ interface EditableProfileFields {
   summary: string;
   location: string;
   availability: Availability | '';
+  // Plain URL, edited via a text input — no upload pipeline exists yet in this codebase (the
+  // onboarding wizard's "Photo" step, `espaceMembre.onboarding.steps.photo`, is URL-based too),
+  // so the profile page's edit mode follows the same limitation rather than inventing a new one.
+  photoUrl: string;
 }
 
 const AVAILABILITY_OPTIONS: readonly Availability[] = ['AVAILABLE', 'OPEN_TO_OPPORTUNITIES', 'NOT_AVAILABLE'];
@@ -69,7 +73,13 @@ export class Profil {
   protected readonly saving = signal(false);
   protected readonly saveError = signal(false);
 
-  private readonly editModel = signal<EditableProfileFields>({ title: '', summary: '', location: '', availability: '' });
+  private readonly editModel = signal<EditableProfileFields>({
+    title: '',
+    summary: '',
+    location: '',
+    availability: '',
+    photoUrl: '',
+  });
   protected readonly editForm = form(this.editModel, (path) => {
     required(path.title);
   });
@@ -84,6 +94,7 @@ export class Profil {
       summary: current?.summary ?? '',
       location: current?.location ?? '',
       availability: current?.availability ?? '',
+      photoUrl: current?.photoUrl ?? '',
     });
     this.editing.set(true);
     this.saveError.set(false);
@@ -114,6 +125,7 @@ export class Profil {
       summary: edited.summary || undefined,
       location: edited.location || undefined,
       availability: edited.availability || undefined,
+      photoUrl: edited.photoUrl || undefined,
     };
     this.saving.set(true);
     this.saveError.set(false);
@@ -129,6 +141,18 @@ export class Profil {
       },
     });
   }
+
+  // Fallback avatar (initials on a navy disc) shown whenever no `photoUrl` is set — never
+  // renders a broken `<img>` or an empty circle.
+  protected readonly initials = computed(() => {
+    const name = this.member()?.displayName ?? '';
+    return name
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0]?.toUpperCase())
+      .join('');
+  });
 
   protected isDemoExperience(experience: Experience): boolean {
     return experience.isDemoData === true;

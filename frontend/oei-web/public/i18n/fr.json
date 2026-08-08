@@ -442,14 +442,17 @@
         "title": "Titre",
         "summary": "Résumé",
         "location": "Localisation",
-        "availability": "Disponibilité"
+        "availability": "Disponibilité",
+        "photoUrl": "Photo de profil",
+        "photoUrlHint": "URL de la photo"
       },
       "availability": {
         "AVAILABLE": "Disponible",
         "OPEN_TO_OPPORTUNITIES": "Ouvert aux opportunités",
         "NOT_AVAILABLE": "Non disponible"
       },
-      "loadError": "Le profil n'a pas pu être chargé pour le moment (problème technique côté serveur). Réessayez plus tard ou contactez le support si le problème persiste."
+      "loadError": "Le profil n'a pas pu être chargé pour le moment (problème technique côté serveur). Réessayez plus tard ou contactez le support si le problème persiste.",
+      "photoAlt": "Photo de profil"
     },
     "cv": {
       "title": "Mon CV",
@@ -627,6 +630,43 @@
       "success": {
         "title": "Paiement effectué",
         "body": "Merci ! Votre cotisation pour le cycle en cours a été enregistrée."
+      }
+    },
+    "nav": {
+      "title": "Mon espace membre",
+      "profil": "Profil",
+      "cv": "CV",
+      "badges": "Badges",
+      "carte": "Carte numérique",
+      "cotisation": "Cotisation",
+      "publier": "Publier un article"
+    },
+    "publier": {
+      "title": "Proposer un article",
+      "intro": "Rédigez votre article : il sera relu par un modérateur avant d'apparaître dans Actualités.",
+      "fields": {
+        "title": "Titre",
+        "body": "Contenu",
+        "bodyHint": "Texte simple ou markdown léger.",
+        "coverImageUrl": "Image de couverture (optionnel)",
+        "coverImageUrlHint": "URL de l'image de couverture."
+      },
+      "submit": "Soumettre pour modération",
+      "submitting": "Envoi en cours…",
+      "submitAnother": "Proposer un autre article",
+      "error": "L'envoi a échoué. Merci de réessayer.",
+      "pending": {
+        "title": "En attente de modération",
+        "body": "Votre article a bien été transmis. Il sera publié dans Actualités une fois validé par un modérateur."
+      },
+      "mySubmissions": {
+        "title": "Mes propositions",
+        "empty": "Vous n'avez encore soumis aucun article."
+      },
+      "status": {
+        "pending": "En attente",
+        "approved": "Publié",
+        "rejected": "Refusé"
       }
     }
   },

@@ -442,14 +442,17 @@
         "title": "Titel",
         "summary": "Zusammenfassung",
         "location": "Standort",
-        "availability": "Verfügbarkeit"
+        "availability": "Verfügbarkeit",
+        "photoUrl": "Profilfoto",
+        "photoUrlHint": "URL des Fotos"
       },
       "availability": {
         "AVAILABLE": "Verfügbar",
         "OPEN_TO_OPPORTUNITIES": "Offen für Gelegenheiten",
         "NOT_AVAILABLE": "Nicht verfügbar"
       },
-      "loadError": "Das Profil konnte derzeit nicht geladen werden (ein technisches Serverproblem). Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support, falls das Problem weiterhin besteht."
+      "loadError": "Das Profil konnte derzeit nicht geladen werden (ein technisches Serverproblem). Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support, falls das Problem weiterhin besteht.",
+      "photoAlt": "Profilfoto"
     },
     "cv": {
       "title": "Mein Lebenslauf",
@@ -627,6 +630,43 @@
       "success": {
         "title": "Zahlung abgeschlossen",
         "body": "Vielen Dank! Ihr Mitgliedsbeitrag für den laufenden Zyklus wurde erfasst."
+      }
+    },
+    "nav": {
+      "title": "Mein Mitgliederbereich",
+      "profil": "Profil",
+      "cv": "Lebenslauf",
+      "badges": "Abzeichen",
+      "carte": "Digitale Karte",
+      "cotisation": "Mitgliedsbeitrag",
+      "publier": "Artikel einreichen"
+    },
+    "publier": {
+      "title": "Artikel einreichen",
+      "intro": "Verfassen Sie Ihren Artikel: Ein Moderator prüft ihn, bevor er in Aktuelles erscheint.",
+      "fields": {
+        "title": "Titel",
+        "body": "Inhalt",
+        "bodyHint": "Einfacher Text oder leichtes Markdown.",
+        "coverImageUrl": "Titelbild (optional)",
+        "coverImageUrlHint": "URL des Titelbilds."
+      },
+      "submit": "Zur Moderation einreichen",
+      "submitting": "Wird gesendet…",
+      "submitAnother": "Weiteren Artikel einreichen",
+      "error": "Das Senden ist fehlgeschlagen. Bitte versuchen Sie es erneut.",
+      "pending": {
+        "title": "Wartet auf Moderation",
+        "body": "Ihr Artikel wurde eingereicht. Er erscheint in Aktuelles, sobald ein Moderator ihn freigibt."
+      },
+      "mySubmissions": {
+        "title": "Meine Einreichungen",
+        "empty": "Sie haben noch keinen Artikel eingereicht."
+      },
+      "status": {
+        "pending": "Ausstehend",
+        "approved": "Veröffentlicht",
+        "rejected": "Abgelehnt"
       }
     }
   },

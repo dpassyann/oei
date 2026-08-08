@@ -442,14 +442,17 @@
         "title": "Titolo",
         "summary": "Riepilogo",
         "location": "Località",
-        "availability": "Disponibilità"
+        "availability": "Disponibilità",
+        "photoUrl": "Foto del profilo",
+        "photoUrlHint": "URL della foto"
       },
       "availability": {
         "AVAILABLE": "Disponibile",
         "OPEN_TO_OPPORTUNITIES": "Aperto a nuove opportunità",
         "NOT_AVAILABLE": "Non disponibile"
       },
-      "loadError": "Non è stato possibile caricare il profilo al momento (un problema tecnico del server). Riprova più tardi o contatta l'assistenza se il problema persiste."
+      "loadError": "Non è stato possibile caricare il profilo al momento (un problema tecnico del server). Riprova più tardi o contatta l'assistenza se il problema persiste.",
+      "photoAlt": "Foto del profilo"
     },
     "cv": {
       "title": "Il mio CV",
@@ -627,6 +630,43 @@
       "success": {
         "title": "Pagamento completato",
         "body": "Grazie! La tua quota per il ciclo in corso è stata registrata."
+      }
+    },
+    "nav": {
+      "title": "Il mio spazio membro",
+      "profil": "Profilo",
+      "cv": "CV",
+      "badges": "Badge",
+      "carte": "Tessera digitale",
+      "cotisation": "Quota associativa",
+      "publier": "Proponi un articolo"
+    },
+    "publier": {
+      "title": "Proponi un articolo",
+      "intro": "Scrivi il tuo articolo: un moderatore lo esaminerà prima che appaia in Attualità.",
+      "fields": {
+        "title": "Titolo",
+        "body": "Contenuto",
+        "bodyHint": "Testo semplice o markdown leggero.",
+        "coverImageUrl": "Immagine di copertina (opzionale)",
+        "coverImageUrlHint": "URL dell'immagine di copertina."
+      },
+      "submit": "Invia per la moderazione",
+      "submitting": "Invio in corso…",
+      "submitAnother": "Proponi un altro articolo",
+      "error": "L'invio non è riuscito. Riprova.",
+      "pending": {
+        "title": "In attesa di moderazione",
+        "body": "Il tuo articolo è stato inviato. Apparirà in Attualità dopo l'approvazione di un moderatore."
+      },
+      "mySubmissions": {
+        "title": "Le mie proposte",
+        "empty": "Non hai ancora inviato nessun articolo."
+      },
+      "status": {
+        "pending": "In attesa",
+        "approved": "Pubblicato",
+        "rejected": "Rifiutato"
       }
     }
   },

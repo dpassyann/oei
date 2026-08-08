@@ -442,14 +442,17 @@
         "title": "Title",
         "summary": "Summary",
         "location": "Location",
-        "availability": "Availability"
+        "availability": "Availability",
+        "photoUrl": "Profile photo",
+        "photoUrlHint": "Photo URL"
       },
       "availability": {
         "AVAILABLE": "Available",
         "OPEN_TO_OPPORTUNITIES": "Open to opportunities",
         "NOT_AVAILABLE": "Not available"
       },
-      "loadError": "The profile could not be loaded right now (a server-side technical issue). Please try again later or contact support if this persists."
+      "loadError": "The profile could not be loaded right now (a server-side technical issue). Please try again later or contact support if this persists.",
+      "photoAlt": "Profile photo"
     },
     "cv": {
       "title": "My CV",
@@ -627,6 +630,43 @@
       "success": {
         "title": "Payment completed",
         "body": "Thank you! Your cotisation for the current cycle has been recorded."
+      }
+    },
+    "nav": {
+      "title": "My member space",
+      "profil": "Profile",
+      "cv": "CV",
+      "badges": "Badges",
+      "carte": "Digital card",
+      "cotisation": "Membership fee",
+      "publier": "Submit an article"
+    },
+    "publier": {
+      "title": "Submit an article",
+      "intro": "Write your article: a moderator will review it before it appears in News.",
+      "fields": {
+        "title": "Title",
+        "body": "Content",
+        "bodyHint": "Plain text or light markdown.",
+        "coverImageUrl": "Cover image (optional)",
+        "coverImageUrlHint": "Cover image URL."
+      },
+      "submit": "Submit for moderation",
+      "submitting": "Submitting…",
+      "submitAnother": "Submit another article",
+      "error": "Submission failed. Please try again.",
+      "pending": {
+        "title": "Awaiting moderation",
+        "body": "Your article has been submitted. It will appear in News once a moderator approves it."
+      },
+      "mySubmissions": {
+        "title": "My submissions",
+        "empty": "You haven't submitted any article yet."
+      },
+      "status": {
+        "pending": "Pending",
+        "approved": "Published",
+        "rejected": "Rejected"
       }
     }
   },

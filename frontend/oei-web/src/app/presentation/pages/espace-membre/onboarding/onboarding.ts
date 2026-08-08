@@ -286,6 +286,9 @@ export class Onboarding {
 
     const profile: ProfessionalProfile = {
       memberId: DEMO_MEMBER_ID,
+      // Was silently dropped before `ProfessionalProfile.photoUrl` existed — the "Photo" wizard
+      // step (`draft.photoUrl`) collected a value that never reached the saved profile.
+      photoUrl: draft.photoUrl || undefined,
       title: draft.title || undefined,
       summary: draft.summary || undefined,
       location: draft.country || undefined,

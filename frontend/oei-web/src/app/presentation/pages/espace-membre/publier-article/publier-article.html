@@ -1,0 +1,59 @@
+<main class="oei-page">
+  <h1 class="oei-page__title">{{ i18n.translate('espaceMembre.publier.title') }}</h1>
+  <p class="oei-page__intro">{{ i18n.translate('espaceMembre.publier.intro') }}</p>
+
+  @if (submitted()) {
+    <section class="oei-publier__pending-banner" role="status">
+      <h2>{{ i18n.translate('espaceMembre.publier.pending.title') }}</h2>
+      <p>{{ i18n.translate('espaceMembre.publier.pending.body') }}</p>
+      <button type="button" (click)="submitAnother()">
+        {{ i18n.translate('espaceMembre.publier.submitAnother') }}
+      </button>
+    </section>
+  } @else {
+    <form class="oei-publier__form" (submit)="$event.preventDefault(); submit()">
+      @if (submitError()) {
+        <p class="oei-publier__error" role="alert">{{ i18n.translate('espaceMembre.publier.error') }}</p>
+      }
+
+      <label class="oei-publier__field">
+        {{ i18n.translate('espaceMembre.publier.fields.title') }}
+        <input type="text" [formField]="articleForm.title" />
+      </label>
+
+      <label class="oei-publier__field">
+        {{ i18n.translate('espaceMembre.publier.fields.body') }}
+        <span class="oei-publier__field-hint">{{ i18n.translate('espaceMembre.publier.fields.bodyHint') }}</span>
+        <textarea rows="12" [formField]="articleForm.body"></textarea>
+      </label>
+
+      <label class="oei-publier__field">
+        {{ i18n.translate('espaceMembre.publier.fields.coverImageUrl') }}
+        <span class="oei-publier__field-hint">{{ i18n.translate('espaceMembre.publier.fields.coverImageUrlHint') }}</span>
+        <input type="text" [formField]="articleForm.coverImageUrl" />
+      </label>
+
+      <button type="submit" [disabled]="submitting()">
+        {{ submitting() ? i18n.translate('espaceMembre.publier.submitting') : i18n.translate('espaceMembre.publier.submit') }}
+      </button>
+    </form>
+  }
+
+  <section class="oei-publier__history">
+    <h2>{{ i18n.translate('espaceMembre.publier.mySubmissions.title') }}</h2>
+    @if (submissions().length === 0) {
+      <p class="oei-page__empty">{{ i18n.translate('espaceMembre.publier.mySubmissions.empty') }}</p>
+    } @else {
+      <ul class="oei-publier__history-list">
+        @for (submission of submissions(); track submission.id) {
+          <li class="oei-publier__history-item">
+            <span class="oei-publier__history-title">{{ submission.title }}</span>
+            <span class="oei-publier__status oei-publier__status--{{ submission.status }}">
+              {{ i18n.translate('espaceMembre.publier.status.' + submission.status) }}
+            </span>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</main>

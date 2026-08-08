@@ -40,6 +40,9 @@ import { AdminContentApiAdapter } from './infrastructure/adapter/admin-content-a
 import { PUBLIC_CONTENT_PORT } from './domain/port/cms/public-content.port';
 import { PublicContentMockAdapter } from './infrastructure/adapter/public-content-mock.adapter';
 import { PublicContentApiAdapter } from './infrastructure/adapter/public-content-api.adapter';
+import { ARTICLE_SUBMISSION_PORT } from './domain/port/article/article-submission.port';
+import { ArticleSubmissionMockAdapter } from './infrastructure/adapter/article-submission-mock.adapter';
+import { ArticleSubmissionApiAdapter } from './infrastructure/adapter/article-submission-api.adapter';
 import { CONTRIBUTION_PORT } from './domain/port/governance/contribution.port';
 import { ContributionMockAdapter } from './infrastructure/adapter/contribution-mock.adapter';
 import { ContributionApiAdapter } from './infrastructure/adapter/contribution-api.adapter';
@@ -368,5 +371,12 @@ export const appConfig: ApplicationConfig = {
           : inject(MembershipFeeApiAdapter),
     },
     { provide: MARKDOWN_ASSET_PORT, useClass: MarkdownAssetAdapter },
+    {
+      provide: ARTICLE_SUBMISSION_PORT,
+      useFactory: () =>
+        inject(RuntimeConfig).isMock()
+          ? inject(ArticleSubmissionMockAdapter)
+          : inject(ArticleSubmissionApiAdapter),
+    },
   ],
 };

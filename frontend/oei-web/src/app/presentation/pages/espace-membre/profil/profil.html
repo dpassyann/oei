@@ -1,6 +1,4 @@
-<main class="oei-page">
-  <h1 class="oei-page__title">{{ i18n.translate('espaceMembre.profil.title') }}</h1>
-
+<main class="oei-page oei-page--profil">
   @if (membershipAccess.isReadOnly()) {
     <p class="oei-read-only-banner" role="alert">{{ i18n.translate('espaceMembre.cotisation.readOnlyBanner') }}</p>
   }
@@ -12,15 +10,34 @@
   } @else if (!profile()) {
     <p class="oei-page__empty">{{ i18n.translate('espaceMembre.profil.empty') }}</p>
   } @else {
-    <section class="oei-profil__identity">
-      <h2>{{ member()?.displayName }}</h2>
-      @if (membership(); as membershipValue) {
-        <span class="oei-profil__badge">{{ membershipValue.tier }}</span>
-      }
-      <p class="oei-profil__completeness">
-        {{ i18n.translate('espaceMembre.profil.completeness') }} {{ profile()?.completenessScore }}%
-      </p>
-    </section>
+    <!-- Bandeau d'identité : photo, titre, localisation — la "une" du profil-journal. -->
+    <header class="oei-profil-banner">
+      <div class="oei-profil-banner__photo">
+        @if (profile()?.photoUrl; as photoUrl) {
+          <img [src]="photoUrl" [alt]="i18n.translate('espaceMembre.profil.photoAlt')" />
+        } @else {
+          <span class="oei-profil-banner__initials" aria-hidden="true">{{ initials() }}</span>
+        }
+      </div>
+      <div class="oei-profil-banner__identity oei-profil__identity">
+        <h1 class="oei-page__title">{{ member()?.displayName }}</h1>
+        <p class="oei-profil-banner__headline">{{ profile()?.title }}</p>
+        <p class="oei-profil-banner__meta">
+          @if (profile()?.location) {
+            <span class="oei-profil-banner__location">{{ profile()?.location }}</span>
+          }
+          <span class="oei-profil-banner__availability">
+            {{ i18n.translate('espaceMembre.profil.availability.' + (profile()?.availability ?? 'NOT_AVAILABLE')) }}
+          </span>
+          @if (membership(); as membershipValue) {
+            <span class="oei-profil__badge">{{ membershipValue.tier }}</span>
+          }
+        </p>
+        <p class="oei-profil__completeness">
+          {{ i18n.translate('espaceMembre.profil.completeness') }} {{ profile()?.completenessScore }}%
+        </p>
+      </div>
+    </header>
 
     <section class="oei-profil__legal">
       <h3>{{ i18n.translate('espaceMembre.profil.legalIdentity.title') }}</h3>
@@ -29,70 +46,105 @@
     </section>
 
     @if (!editing()) {
-      <section class="oei-profil__view">
-        <p>{{ profile()?.title }}</p>
-        <p>{{ profile()?.summary }}</p>
-        <p>{{ profile()?.location }}</p>
-        <p>{{ i18n.translate('espaceMembre.profil.availability.' + (profile()?.availability ?? 'NOT_AVAILABLE')) }}</p>
+      <section class="oei-profil__view oei-profil-journal">
+        @if (profile()?.summary) {
+          <p class="oei-profil-journal__lede">{{ profile()?.summary }}</p>
+        }
 
-        <h3>{{ i18n.translate('espaceMembre.profil.expertiseAreas') }}</h3>
-        <ul class="oei-profil__chips">
-          @for (item of profile()?.expertiseAreas ?? []; track item) {
-            <li class="oei-profil__chip">{{ item }}</li>
-          }
-        </ul>
-
-        <h3>{{ i18n.translate('espaceMembre.profil.technologies') }}</h3>
-        <ul class="oei-profil__chips">
-          @for (item of profile()?.technologies ?? []; track item) {
-            <li class="oei-profil__chip">{{ item }}</li>
-          }
-        </ul>
-
-        <h3>{{ i18n.translate('espaceMembre.profil.sectors') }}</h3>
-        <ul class="oei-profil__chips">
-          @for (item of profile()?.sectors ?? []; track item) {
-            <li class="oei-profil__chip">{{ item }}</li>
-          }
-        </ul>
-
-        <h3>{{ i18n.translate('espaceMembre.profil.languages') }}</h3>
-        <ul class="oei-profil__list">
-          @for (language of profile()?.languages ?? []; track language.language) {
-            <li>{{ language.language }} — {{ language.level }}</li>
-          }
-        </ul>
-
-        <h3>{{ i18n.translate('espaceMembre.profil.experiences') }}</h3>
-        <ul class="oei-profil__list">
-          @for (experience of profile()?.experiences ?? []; track experience.id) {
-            <li>
-              {{ experience.title }} — {{ experience.organization }} ({{ experience.startDate }})
-              @if (isDemoExperience(experience)) {
-                <span class="oei-profil__demo-tag">{{ i18n.translate('espaceMembre.profil.demoTag') }}</span>
+        <div class="oei-profil-journal__chip-groups">
+          <div class="oei-profil-journal__chip-group">
+            <h3>{{ i18n.translate('espaceMembre.profil.expertiseAreas') }}</h3>
+            <ul class="oei-profil__chips">
+              @for (item of profile()?.expertiseAreas ?? []; track item) {
+                <li class="oei-profil__chip">{{ item }}</li>
               }
-            </li>
-          }
-        </ul>
+            </ul>
+          </div>
 
-        <h3>{{ i18n.translate('espaceMembre.profil.educations') }}</h3>
-        <ul class="oei-profil__list">
-          @for (education of profile()?.educations ?? []; track education.id) {
-            <li>
-              {{ education.program }} — {{ education.institution }} ({{ education.startDate }})
-              @if (isDemoEducation(education)) {
-                <span class="oei-profil__demo-tag">{{ i18n.translate('espaceMembre.profil.demoTag') }}</span>
+          <div class="oei-profil-journal__chip-group">
+            <h3>{{ i18n.translate('espaceMembre.profil.technologies') }}</h3>
+            <ul class="oei-profil__chips">
+              @for (item of profile()?.technologies ?? []; track item) {
+                <li class="oei-profil__chip">{{ item }}</li>
               }
-            </li>
-          }
-        </ul>
+            </ul>
+          </div>
 
-        <h3>{{ i18n.translate('espaceMembre.profil.skills') }}</h3>
-        <ul class="oei-profil__chips">
-          @for (skill of profile()?.skills ?? []; track skill.id) {
-            <li class="oei-profil__chip">{{ skill.name }}</li>
-          }
-        </ul>
+          <div class="oei-profil-journal__chip-group">
+            <h3>{{ i18n.translate('espaceMembre.profil.sectors') }}</h3>
+            <ul class="oei-profil__chips">
+              @for (item of profile()?.sectors ?? []; track item) {
+                <li class="oei-profil__chip">{{ item }}</li>
+              }
+            </ul>
+          </div>
+
+          <div class="oei-profil-journal__chip-group">
+            <h3>{{ i18n.translate('espaceMembre.profil.languages') }}</h3>
+            <ul class="oei-profil__list oei-profil-journal__languages">
+              @for (language of profile()?.languages ?? []; track language.language) {
+                <li>{{ language.language }} — {{ language.level }}</li>
+              }
+            </ul>
+          </div>
+        </div>
+
+        <article class="oei-profil-journal__section">
+          <h2>{{ i18n.translate('espaceMembre.profil.experiences') }}</h2>
+          <ol class="oei-profil-journal__timeline">
+            @for (experience of profile()?.experiences ?? []; track experience.id) {
+              <li class="oei-profil-journal__timeline-item">
+                <div class="oei-profil-journal__timeline-marker" aria-hidden="true"></div>
+                <div class="oei-profil-journal__timeline-body">
+                  <h3>
+                    {{ experience.title }}
+                    @if (isDemoExperience(experience)) {
+                      <span class="oei-profil__demo-tag">{{ i18n.translate('espaceMembre.profil.demoTag') }}</span>
+                    }
+                  </h3>
+                  <p class="oei-profil-journal__timeline-subtitle">{{ experience.organization }}</p>
+                  <p class="oei-profil-journal__timeline-dates">{{ experience.startDate }}</p>
+                  @if (experience.description) {
+                    <p class="oei-profil-journal__timeline-description">{{ experience.description }}</p>
+                  }
+                </div>
+              </li>
+            }
+          </ol>
+        </article>
+
+        <article class="oei-profil-journal__section">
+          <h2>{{ i18n.translate('espaceMembre.profil.educations') }}</h2>
+          <ol class="oei-profil-journal__timeline">
+            @for (education of profile()?.educations ?? []; track education.id) {
+              <li class="oei-profil-journal__timeline-item">
+                <div class="oei-profil-journal__timeline-marker" aria-hidden="true"></div>
+                <div class="oei-profil-journal__timeline-body">
+                  <h3>
+                    {{ education.program }}
+                    @if (isDemoEducation(education)) {
+                      <span class="oei-profil__demo-tag">{{ i18n.translate('espaceMembre.profil.demoTag') }}</span>
+                    }
+                  </h3>
+                  <p class="oei-profil-journal__timeline-subtitle">{{ education.institution }}</p>
+                  <p class="oei-profil-journal__timeline-dates">{{ education.startDate }}</p>
+                  @if (education.description) {
+                    <p class="oei-profil-journal__timeline-description">{{ education.description }}</p>
+                  }
+                </div>
+              </li>
+            }
+          </ol>
+        </article>
+
+        <article class="oei-profil-journal__section">
+          <h2>{{ i18n.translate('espaceMembre.profil.skills') }}</h2>
+          <ul class="oei-profil__chips">
+            @for (skill of profile()?.skills ?? []; track skill.id) {
+              <li class="oei-profil__chip">{{ skill.name }}</li>
+            }
+          </ul>
+        </article>
 
         <button type="button" [disabled]="membershipAccess.isReadOnly()" (click)="startEditing()">
           {{ i18n.translate('espaceMembre.profil.edit') }}
@@ -103,6 +155,10 @@
         @if (saveError()) {
           <p class="oei-profil__error">{{ i18n.translate('espaceMembre.profil.saveError') }}</p>
         }
+        <label class="oei-profil__field">
+          {{ i18n.translate('espaceMembre.profil.fields.photoUrl') }}
+          <input type="text" [formField]="editForm.photoUrl" [placeholder]="i18n.translate('espaceMembre.profil.fields.photoUrlHint')" />
+        </label>
         <label class="oei-profil__field">
           {{ i18n.translate('espaceMembre.profil.fields.title') }}
           <input type="text" [formField]="editForm.title" />

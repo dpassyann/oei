@@ -442,14 +442,17 @@
         "title": "Título",
         "summary": "Resumo",
         "location": "Localização",
-        "availability": "Disponibilidade"
+        "availability": "Disponibilidade",
+        "photoUrl": "Foto de perfil",
+        "photoUrlHint": "URL da foto"
       },
       "availability": {
         "AVAILABLE": "Disponível",
         "OPEN_TO_OPPORTUNITIES": "Aberto a oportunidades",
         "NOT_AVAILABLE": "Não disponível"
       },
-      "loadError": "Não foi possível carregar o perfil neste momento (um problema técnico do servidor). Tente novamente mais tarde ou contacte o suporte se o problema persistir."
+      "loadError": "Não foi possível carregar o perfil neste momento (um problema técnico do servidor). Tente novamente mais tarde ou contacte o suporte se o problema persistir.",
+      "photoAlt": "Foto de perfil"
     },
     "cv": {
       "title": "O meu currículo",
@@ -627,6 +630,43 @@
       "success": {
         "title": "Pagamento concluído",
         "body": "Obrigado! A sua quota para o ciclo em curso foi registada."
+      }
+    },
+    "nav": {
+      "title": "O meu espaço de membro",
+      "profil": "Perfil",
+      "cv": "CV",
+      "badges": "Distintivos",
+      "carte": "Cartão digital",
+      "cotisation": "Quota",
+      "publier": "Submeter um artigo"
+    },
+    "publier": {
+      "title": "Submeter um artigo",
+      "intro": "Escreva o seu artigo: um moderador irá revê-lo antes de aparecer em Notícias.",
+      "fields": {
+        "title": "Título",
+        "body": "Conteúdo",
+        "bodyHint": "Texto simples ou markdown leve.",
+        "coverImageUrl": "Imagem de capa (opcional)",
+        "coverImageUrlHint": "URL da imagem de capa."
+      },
+      "submit": "Submeter para moderação",
+      "submitting": "A enviar…",
+      "submitAnother": "Submeter outro artigo",
+      "error": "O envio falhou. Tente novamente.",
+      "pending": {
+        "title": "Aguarda moderação",
+        "body": "O seu artigo foi submetido. Aparecerá em Notícias assim que for aprovado por um moderador."
+      },
+      "mySubmissions": {
+        "title": "As minhas submissões",
+        "empty": "Ainda não submeteu nenhum artigo."
+      },
+      "status": {
+        "pending": "Pendente",
+        "approved": "Publicado",
+        "rejected": "Rejeitado"
       }
     }
   },
