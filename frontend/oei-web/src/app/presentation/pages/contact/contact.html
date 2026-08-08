@@ -7,4 +7,34 @@
     >.
   </p>
   <p class="oei-page__note">{{ i18n.translate('contact.note') }}</p>
+
+  <section class="oei-contact-block">
+    <h2 class="oei-contact-block__title">{{ i18n.translate('contact.institutional.heading') }}</h2>
+
+    @if (institutionalFallback()) {
+      <p class="oei-fallback-banner">
+        {{ i18n.translate('contact.institutional.fallbackNotice') }}
+      </p>
+    }
+
+    @if (institutionalLoading()) {
+      <p class="oei-page__note">{{ i18n.translate('contact.institutional.loading') }}</p>
+    } @else {
+      <article class="oei-contact-block__body" [innerHTML]="institutionalHtml()"></article>
+    }
+  </section>
+
+  <section class="oei-contact-block">
+    <h2 class="oei-contact-block__title">{{ i18n.translate('contact.contribute.heading') }}</h2>
+
+    @if (contributeFallback()) {
+      <p class="oei-fallback-banner">{{ i18n.translate('contact.contribute.fallbackNotice') }}</p>
+    }
+
+    @if (contributeLoading()) {
+      <p class="oei-page__note">{{ i18n.translate('contact.contribute.loading') }}</p>
+    } @else {
+      <article class="oei-contact-block__body" [innerHTML]="contributeHtml()"></article>
+    }
+  </section>
 </main>

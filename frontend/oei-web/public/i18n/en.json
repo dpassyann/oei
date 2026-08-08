@@ -123,14 +123,10 @@
   },
   "aPropos": {
     "title": "About us",
-    "vision": {
-      "heading": "Vision",
-      "body": "A world where the professionals who design, build and operate the digital systems our societies depend on — healthcare, aviation, energy, finance, public administration — practise their craft with a level of competence, ethics and accountability recognised as commensurate with the stakes they carry."
-    },
-    "mission": {
-      "heading": "Mission",
-      "body": "To defend the public interest by promoting responsible, ethical, secure and sustainable computing, and to progressively secure recognition of the IT expert profession as a high-accountability profession, equipped with a shared code of ethics, a common competency framework, a continuing-education requirement, and credible representation before institutions, universities and businesses."
-    }
+    "loading": "Loading content…",
+    "notFound": "This page's content could not be found right now.",
+    "fallbackNotice": "Translation not available yet — showing the French version in the meantime.",
+    "tableOfContents": "Table of contents"
   },
   "actualites": {
     "title": "News",
@@ -151,7 +147,17 @@
   "contact": {
     "title": "Contact",
     "bodyPrefix": "For any question, write to us at",
-    "note": "A dedicated contact form is planned for a future version of the site."
+    "note": "A dedicated contact form is planned for a future version of the site.",
+    "institutional": {
+      "heading": "Institutional contact",
+      "loading": "Loading…",
+      "fallbackNotice": "Translation not available yet — showing the French version in the meantime."
+    },
+    "contribute": {
+      "heading": "Contribute to the corpus",
+      "loading": "Loading…",
+      "fallbackNotice": "Translation not available yet — showing the French version in the meantime."
+    }
   },
   "deontologie": {
     "title": "Ethics",
@@ -184,6 +190,10 @@
         }
       }
     },
+    "founderIntro": {
+      "loading": "Loading…",
+      "fallbackNotice": "Translation not available yet — showing the French version in the meantime."
+    },
     "foundingStatus": {
       "message": "Movement currently being formed — be among the first founding members.",
       "note": "The online membership form is coming soon. In the meantime, contact us to express your interest in supporting the movement.",
@@ -193,7 +203,10 @@
   },
   "mentionsLegales": {
     "title": "Legal notice",
-    "body": "At this stage, the Order of IT Experts is a movement — a collective initiative with no legal personality of its own. The choice of legal structure (association) and its registration with the competent authority are currently being finalised. This page will be updated as soon as the organisation's legal status is established."
+    "loading": "Loading content…",
+    "notFound": "This page's content could not be found right now.",
+    "fallbackNotice": "Translation not available yet — showing the French version in the meantime.",
+    "tableOfContents": "Table of contents"
   },
   "nosMissions": {
     "title": "Our missions",

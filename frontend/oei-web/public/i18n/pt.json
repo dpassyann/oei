@@ -123,14 +123,10 @@
   },
   "aPropos": {
     "title": "Sobre nós",
-    "vision": {
-      "heading": "Visão",
-      "body": "Um mundo em que os profissionais que concebem, desenvolvem e operam os sistemas digitais dos quais nossas sociedades dependem — saúde, aviação, energia, finanças, administração pública — exercem sua profissão com um nível de competência, ética e responsabilidade reconhecido à altura dos desafios que assumem."
-    },
-    "mission": {
-      "heading": "Missão",
-      "body": "Defender o interesse geral promovendo uma informática responsável, ética, segura e sustentável, e conseguir o reconhecimento progressivo da profissão de especialista em informática como uma profissão de alta responsabilidade, dotada de um código deontológico comum, de um quadro de competências compartilhado, de uma exigência de formação contínua e de uma representação confiável junto a instituições, universidades e empresas."
-    }
+    "loading": "Carregando conteúdo…",
+    "notFound": "O conteúdo desta página não pôde ser encontrado neste momento.",
+    "fallbackNotice": "Tradução ainda não disponível — a versão em francês é exibida enquanto isso.",
+    "tableOfContents": "Sumário"
   },
   "actualites": {
     "title": "Notícias",
@@ -151,7 +147,17 @@
   "contact": {
     "title": "Contato",
     "bodyPrefix": "Para qualquer dúvida, escreva para nós em",
-    "note": "Está previsto um formulário de contato dedicado para uma futura versão do site."
+    "note": "Está previsto um formulário de contato dedicado para uma futura versão do site.",
+    "institutional": {
+      "heading": "Contato institucional",
+      "loading": "Carregando…",
+      "fallbackNotice": "Tradução ainda não disponível — a versão em francês é exibida enquanto isso."
+    },
+    "contribute": {
+      "heading": "Contribuir para o corpus",
+      "loading": "Carregando…",
+      "fallbackNotice": "Tradução ainda não disponível — a versão em francês é exibida enquanto isso."
+    }
   },
   "deontologie": {
     "title": "Deontologia",
@@ -184,6 +190,10 @@
         }
       }
     },
+    "founderIntro": {
+      "loading": "Carregando…",
+      "fallbackNotice": "Tradução ainda não disponível — a versão em francês é exibida enquanto isso."
+    },
     "foundingStatus": {
       "message": "Movimento atualmente em formação — seja um dos primeiros membros fundadores.",
       "note": "O formulário de adesão on-line estará disponível em breve. Enquanto isso, entre em contato conosco para manifestar seu interesse em apoiar o movimento.",
@@ -193,7 +203,10 @@
   },
   "mentionsLegales": {
     "title": "Avisos legais",
-    "body": "Neste estágio, a Ordem dos Especialistas em Informática é um movimento — uma iniciativa coletiva sem personalidade jurídica própria. A escolha da estrutura jurídica (associação) e seu registro junto à autoridade competente estão em fase de finalização. Esta página será atualizada assim que o estatuto legal da organização for constituído."
+    "loading": "Carregando conteúdo…",
+    "notFound": "O conteúdo desta página não pôde ser encontrado neste momento.",
+    "fallbackNotice": "Tradução ainda não disponível — a versão em francês é exibida enquanto isso.",
+    "tableOfContents": "Sumário"
   },
   "nosMissions": {
     "title": "Nossas missões",

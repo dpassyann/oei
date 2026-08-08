@@ -123,14 +123,10 @@
   },
   "aPropos": {
     "title": "Über uns",
-    "vision": {
-      "heading": "Vision",
-      "body": "Eine Welt, in der die Fachleute, die die digitalen Systeme entwerfen, entwickeln und betreiben, von denen unsere Gesellschaften abhängen — Gesundheitswesen, Luftfahrt, Energie, Finanzen, Verwaltung —, ihren Beruf mit einem Maß an Kompetenz, Ethik und Verantwortung ausüben, das den Herausforderungen, die sie tragen, angemessen anerkannt wird."
-    },
-    "mission": {
-      "heading": "Auftrag",
-      "body": "Das Gemeinwohl zu verteidigen, indem eine verantwortungsvolle, ethische, sichere und nachhaltige Informatik gefördert wird, und den Beruf des IT-Experten schrittweise als Beruf mit hoher Verantwortung anerkennen zu lassen — ausgestattet mit einem gemeinsamen Verhaltenskodex, einem gemeinsamen Kompetenzrahmen, einer Weiterbildungspflicht und einer glaubwürdigen Vertretung gegenüber Institutionen, Hochschulen und Unternehmen."
-    }
+    "loading": "Inhalt wird geladen…",
+    "notFound": "Der Inhalt dieser Seite konnte derzeit nicht gefunden werden.",
+    "fallbackNotice": "Übersetzung noch nicht verfügbar — es wird vorübergehend die französische Version angezeigt.",
+    "tableOfContents": "Inhaltsverzeichnis"
   },
   "actualites": {
     "title": "Aktuelles",
@@ -151,7 +147,17 @@
   "contact": {
     "title": "Kontakt",
     "bodyPrefix": "Bei Fragen schreiben Sie uns an",
-    "note": "Ein eigenes Kontaktformular ist für eine zukünftige Version der Website geplant."
+    "note": "Ein eigenes Kontaktformular ist für eine zukünftige Version der Website geplant.",
+    "institutional": {
+      "heading": "Institutioneller Kontakt",
+      "loading": "Wird geladen…",
+      "fallbackNotice": "Übersetzung noch nicht verfügbar — es wird vorübergehend die französische Version angezeigt."
+    },
+    "contribute": {
+      "heading": "Zum Korpus beitragen",
+      "loading": "Wird geladen…",
+      "fallbackNotice": "Übersetzung noch nicht verfügbar — es wird vorübergehend die französische Version angezeigt."
+    }
   },
   "deontologie": {
     "title": "Ethikkodex",
@@ -184,6 +190,10 @@
         }
       }
     },
+    "founderIntro": {
+      "loading": "Wird geladen…",
+      "fallbackNotice": "Übersetzung noch nicht verfügbar — es wird vorübergehend die französische Version angezeigt."
+    },
     "foundingStatus": {
       "message": "Die Bewegung befindet sich derzeit im Aufbau — seien Sie unter den ersten Gründungsmitgliedern.",
       "note": "Das Online-Beitrittsformular folgt in Kürze. Kontaktieren Sie uns in der Zwischenzeit, um Ihr Interesse an der Unterstützung der Bewegung zu bekunden.",
@@ -193,7 +203,10 @@
   },
   "mentionsLegales": {
     "title": "Impressum",
-    "body": "Der Orden der IT-Experten ist derzeit eine Bewegung — eine kollektive Initiative ohne eigene Rechtspersönlichkeit. Die Wahl der Rechtsform (Verein) und ihre Eintragung bei der zuständigen Behörde befinden sich in der Abschlussphase. Diese Seite wird aktualisiert, sobald der rechtliche Status der Organisation feststeht."
+    "loading": "Inhalt wird geladen…",
+    "notFound": "Der Inhalt dieser Seite konnte derzeit nicht gefunden werden.",
+    "fallbackNotice": "Übersetzung noch nicht verfügbar — es wird vorübergehend die französische Version angezeigt.",
+    "tableOfContents": "Inhaltsverzeichnis"
   },
   "nosMissions": {
     "title": "Unsere Aufgaben",

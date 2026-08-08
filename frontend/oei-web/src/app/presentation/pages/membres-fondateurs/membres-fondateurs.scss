@@ -24,6 +24,76 @@ $oei-gold: #e8a530;
   color: #333;
 }
 
+.oei-fallback-banner {
+  margin: 0 0 1.5rem;
+  color: $oei-gold;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.oei-page__loading {
+  margin: 0 0 1.5rem;
+  color: #666;
+  font-style: italic;
+}
+
+// Markdown body — rendered via `MarkdownRenderService`/`[innerHTML]`, so the selectors below
+// target raw HTML tags rather than component-scoped classes for most of it (same convention as
+// `livre-blanc.scss`). Headings start at `h2` since `membres-fondateurs-intro.md` has no `h1`
+// of its own (see `membres-fondateurs.ts`'s comment).
+.oei-founder-intro {
+  margin: 0 0 2rem;
+  line-height: 1.7;
+  color: #222;
+
+  :first-child {
+    margin-top: 0;
+  }
+
+  h2 {
+    margin: 0 0 1rem;
+    font-size: 1.75rem;
+    color: $oei-navy;
+  }
+
+  h3 {
+    margin: 1.5rem 0 0.75rem;
+    font-size: 1.15rem;
+    color: $oei-navy;
+  }
+
+  p {
+    margin: 0 0 1rem;
+  }
+
+  ul,
+  ol {
+    margin: 0 0 1rem;
+    padding-left: 1.5rem;
+  }
+
+  li {
+    margin-bottom: 0.4rem;
+  }
+
+  strong {
+    color: $oei-navy;
+  }
+
+  em {
+    color: $oei-navy;
+  }
+
+  a {
+    color: $oei-navy;
+    text-decoration: underline;
+
+    &:hover {
+      color: $oei-gold;
+    }
+  }
+}
+
 .oei-page__note {
   margin: 0.75rem 0 0;
   color: #666;

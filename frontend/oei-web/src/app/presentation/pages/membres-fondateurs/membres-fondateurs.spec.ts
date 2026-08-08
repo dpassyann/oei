@@ -1,8 +1,32 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { of } from 'rxjs';
 import { MembresFondateurs } from './membres-fondateurs';
+import { MarkdownDocumentApplicationService } from '../../../application/service/markdown-document-application.service';
 import { I18nService } from '../../i18n/i18n.service';
+import { createDocument } from '../../../domain/model/document';
+
+const FOUNDER_INTRO_MARKDOWN = [
+  '## Rejoindre l\'OEI au moment où tout commence',
+  '',
+  'Un mouvement se juge à qui le rejoint avant qu\'il n\'ait fait la preuve de son succès.',
+].join('\n');
+
+function fakeMarkdownDocuments() {
+  return {
+    getMarkdownDocument: () =>
+      of(
+        createDocument({
+          slug: 'membres-fondateurs-intro',
+          lang: 'fr',
+          title: '',
+          body: FOUNDER_INTRO_MARKDOWN,
+          isFallback: false,
+        }),
+      ),
+  };
+}
 
 const INTERFACE_STRINGS: Record<string, string> = {
   'membresFondateurs.title': 'Membres fondateurs',
@@ -38,12 +62,30 @@ describe('MembresFondateurs', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [MembresFondateurs],
-      providers: [provideRouter([]), { provide: I18nService, useValue: FAKE_I18N_SERVICE }],
+      providers: [
+        provideRouter([]),
+        { provide: I18nService, useValue: FAKE_I18N_SERVICE },
+        { provide: MarkdownDocumentApplicationService, useValue: fakeMarkdownDocuments() },
+      ],
     });
   });
 
-  it('givenComponent_whenCreated_thenRendersHeadingAndAllFourFeeTiers', () => {
+  it('givenFounderIntroDocumentLoads_whenCreated_thenRendersItAboveTheFeeTiers', async () => {
     const fixture = TestBed.createComponent(MembresFondateurs);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector('.oei-founder-intro')?.textContent).toContain(
+      "Un mouvement se juge à qui le rejoint",
+    );
+  });
+
+  it('givenComponent_whenCreated_thenRendersHeadingAndAllFourFeeTiers', async () => {
+    const fixture = TestBed.createComponent(MembresFondateurs);
+    fixture.detectChanges();
+    await fixture.whenStable();
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
 

@@ -39,3 +39,75 @@ $oei-gold: #e8a530;
   font-style: italic;
   font-size: 0.9rem;
 }
+
+.oei-fallback-banner {
+  margin: 0 0 1rem;
+  color: $oei-gold;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.oei-contact-block {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(10, 30, 63, 0.1);
+}
+
+.oei-contact-block__title {
+  margin: 0 0 1rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: $oei-navy;
+}
+
+// Markdown body — rendered via `MarkdownRenderService`/`[innerHTML]`, so the selectors below
+// target raw HTML tags rather than component-scoped classes for most of it (same convention as
+// `livre-blanc.scss`). Headings start at `h2`/`h3` since neither source document has its own
+// `h1` (see `contact.ts`'s comment).
+.oei-contact-block__body {
+  line-height: 1.7;
+  color: #222;
+
+  :first-child {
+    margin-top: 0;
+  }
+
+  h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.15rem;
+    color: $oei-navy;
+  }
+
+  h3 {
+    margin: 1.5rem 0 0.5rem;
+    font-size: 1.05rem;
+    color: $oei-navy;
+  }
+
+  p {
+    margin: 0 0 1rem;
+  }
+
+  ul,
+  ol {
+    margin: 0 0 1rem;
+    padding-left: 1.5rem;
+  }
+
+  li {
+    margin-bottom: 0.4rem;
+  }
+
+  strong {
+    color: $oei-navy;
+  }
+
+  a {
+    color: $oei-navy;
+    text-decoration: underline;
+
+    &:hover {
+      color: $oei-gold;
+    }
+  }
+}

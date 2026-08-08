@@ -123,14 +123,10 @@
   },
   "aPropos": {
     "title": "Sobre nosotros",
-    "vision": {
-      "heading": "Visión",
-      "body": "Un mundo en el que los profesionales que diseñan, desarrollan y operan los sistemas digitales de los que dependen nuestras sociedades — sanidad, aviación, energía, finanzas, administración pública — ejercen su oficio con un nivel de competencia, ética y responsabilidad reconocido a la altura de lo que está en juego."
-    },
-    "mission": {
-      "heading": "Misión",
-      "body": "Defender el interés general promoviendo una informática responsable, ética, segura y sostenible, y lograr progresivamente el reconocimiento de la profesión de experto informático como una profesión de alta responsabilidad, dotada de un código deontológico común, un marco de competencias compartido, una exigencia de formación continua y una representación creíble ante instituciones, universidades y empresas."
-    }
+    "loading": "Cargando contenido…",
+    "notFound": "El contenido de esta página no está disponible por el momento.",
+    "fallbackNotice": "Traducción no disponible por el momento — se muestra la versión en francés mientras tanto.",
+    "tableOfContents": "Índice"
   },
   "actualites": {
     "title": "Noticias",
@@ -151,7 +147,17 @@
   "contact": {
     "title": "Contacto",
     "bodyPrefix": "Para cualquier pregunta, escríbanos a",
-    "note": "Está previsto un formulario de contacto específico para una futura versión del sitio."
+    "note": "Está previsto un formulario de contacto específico para una futura versión del sitio.",
+    "institutional": {
+      "heading": "Contacto institucional",
+      "loading": "Cargando…",
+      "fallbackNotice": "Traducción no disponible por el momento — se muestra la versión en francés mientras tanto."
+    },
+    "contribute": {
+      "heading": "Contribuir al corpus",
+      "loading": "Cargando…",
+      "fallbackNotice": "Traducción no disponible por el momento — se muestra la versión en francés mientras tanto."
+    }
   },
   "deontologie": {
     "title": "Deontología",
@@ -184,6 +190,10 @@
         }
       }
     },
+    "founderIntro": {
+      "loading": "Cargando…",
+      "fallbackNotice": "Traducción no disponible por el momento — se muestra la versión en francés mientras tanto."
+    },
     "foundingStatus": {
       "message": "Movimiento actualmente en constitución — sea uno de los primeros miembros fundadores.",
       "note": "El formulario de inscripción en línea llegará pronto. Mientras tanto, contáctenos para manifestar su interés en apoyar el movimiento.",
@@ -193,7 +203,10 @@
   },
   "mentionsLegales": {
     "title": "Aviso legal",
-    "body": "En esta etapa, la Orden de los Expertos Informáticos es un movimiento — una iniciativa colectiva sin personalidad jurídica propia. La elección de la estructura jurídica (asociación) y su registro ante la autoridad competente están en fase de finalización. Esta página se actualizará en cuanto se constituya el estatuto legal de la organización."
+    "loading": "Cargando contenido…",
+    "notFound": "El contenido de esta página no está disponible por el momento.",
+    "fallbackNotice": "Traducción no disponible por el momento — se muestra la versión en francés mientras tanto.",
+    "tableOfContents": "Índice"
   },
   "nosMissions": {
     "title": "Nuestras misiones",

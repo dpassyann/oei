@@ -123,14 +123,10 @@
   },
   "aPropos": {
     "title": "À propos",
-    "vision": {
-      "heading": "Vision",
-      "body": "Un monde où les professionnels qui conçoivent, développent et exploitent les systèmes numériques dont dépendent nos sociétés — santé, aviation, énergie, finance, administration — exercent leur métier avec un niveau de compétence, d'éthique et de responsabilité reconnu à la hauteur des enjeux qu'ils portent."
-    },
-    "mission": {
-      "heading": "Mission",
-      "body": "Défendre l'intérêt général en promouvant une informatique responsable, éthique, sécurisée et durable, et faire reconnaître progressivement la profession d'expert informaticien comme une profession à haute responsabilité, dotée d'un code de déontologie commun, d'un référentiel de compétences partagé, d'une exigence de formation continue et d'une représentation crédible auprès des institutions, universités et entreprises."
-    }
+    "loading": "Chargement du contenu…",
+    "notFound": "Le contenu de cette page est introuvable pour le moment.",
+    "fallbackNotice": "Traduction non disponible pour le moment — version française affichée en attendant.",
+    "tableOfContents": "Sommaire"
   },
   "actualites": {
     "title": "Actualités",
@@ -151,7 +147,17 @@
   "contact": {
     "title": "Contact",
     "bodyPrefix": "Pour toute question, écrivez-nous à",
-    "note": "Un formulaire de contact dédié est prévu dans une prochaine version du site."
+    "note": "Un formulaire de contact dédié est prévu dans une prochaine version du site.",
+    "institutional": {
+      "heading": "Contact institutionnel",
+      "loading": "Chargement…",
+      "fallbackNotice": "Traduction non disponible pour le moment — version française affichée en attendant."
+    },
+    "contribute": {
+      "heading": "Contribuer au corpus",
+      "loading": "Chargement…",
+      "fallbackNotice": "Traduction non disponible pour le moment — version française affichée en attendant."
+    }
   },
   "deontologie": {
     "title": "Déontologie",
@@ -184,6 +190,10 @@
         }
       }
     },
+    "founderIntro": {
+      "loading": "Chargement…",
+      "fallbackNotice": "Traduction non disponible pour le moment — version française affichée en attendant."
+    },
     "foundingStatus": {
       "message": "Mouvement en cours de constitution — soyez parmi les premiers membres fondateurs.",
       "note": "Le formulaire d'adhésion en ligne arrive bientôt. En attendant, contactez-nous pour manifester votre intérêt à soutenir le mouvement.",
@@ -193,7 +203,10 @@
   },
   "mentionsLegales": {
     "title": "Mentions légales",
-    "body": "L'Ordre des Experts Informaticiens est à ce stade un mouvement — une initiative collective sans personnalité juridique propre. Le choix de la structure juridique (association) et son dépôt auprès de l'autorité compétente sont en cours de finalisation. Cette page sera mise à jour dès que le statut légal de l'organisation sera constitué."
+    "loading": "Chargement du contenu…",
+    "notFound": "Le contenu de cette page est introuvable pour le moment.",
+    "fallbackNotice": "Traduction non disponible pour le moment — version française affichée en attendant.",
+    "tableOfContents": "Sommaire"
   },
   "nosMissions": {
     "title": "Nos missions",
