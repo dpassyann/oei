@@ -130,7 +130,8 @@
   },
   "actualites": {
     "title": "Notícias",
-    "empty": "Nenhuma notícia foi publicada ainda. Volte em breve."
+    "empty": "Nenhuma notícia foi publicada ainda. Volte em breve.",
+    "readMore": "Ler mais"
   },
   "certifications": {
     "title": "Certificações",
@@ -725,7 +726,8 @@
       "newContent": "Novo conteúdo",
       "empty": "Nenhum conteúdo corresponde aos filtros.",
       "openContributions": "Contribuições de membros",
-      "open": "Abrir"
+      "open": "Abrir",
+      "openModeration": "Moderação de artigos"
     },
     "editor": {
       "newTitle": "Novo conteúdo",
@@ -794,6 +796,21 @@
     "common": {
       "yes": "Sim",
       "no": "Não"
+    },
+    "moderation": {
+      "title": "Moderação de artigos",
+      "intro": "Artigos submetidos por membros, aguardando aprovação antes da publicação nas notícias.",
+      "empty": "Nenhum artigo aguardando moderação.",
+      "columns": {
+        "title": "Título",
+        "author": "Autor",
+        "submittedAt": "Submetido em"
+      },
+      "approve": "Aprovar",
+      "reject": "Rejeitar",
+      "confirmReject": "Confirmar rejeição",
+      "cancel": "Cancelar",
+      "rejectReasonPlaceholder": "Motivo da rejeição (opcional)"
     }
   },
   "espaceInstitution": {

@@ -1,7 +1,15 @@
 import { firstValueFrom } from 'rxjs';
 import { NewsMockAdapter } from './news-mock.adapter';
+import { resetArticleModerationFixtures } from './article-moderation-mock.adapter';
 
 describe('NewsMockAdapter', () => {
+  // `NewsMockAdapter` merges approved article submissions (see `article-moderation-mock.adapter.ts`)
+  // into the feed; reset that module-level state so this file's expectations (fixed editorial
+  // fixtures only) don't depend on execution order relative to moderation specs sharing the bundle.
+  beforeEach(() => {
+    resetArticleModerationFixtures();
+  });
+
   it('givenFrenchLang_whenGetLatestNews_thenReturnsThreeDemoNewsItems', async () => {
     const adapter = new NewsMockAdapter();
     const news = await firstValueFrom(adapter.getLatestNews(3, 'fr'));

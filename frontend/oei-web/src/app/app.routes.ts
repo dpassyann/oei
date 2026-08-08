@@ -25,6 +25,7 @@ import { InstitutionPublique } from './presentation/pages/institution-publique/i
 import { CmsContentList } from './presentation/pages/cms/cms-content-list/cms-content-list';
 import { CmsContentEditor } from './presentation/pages/cms/cms-content-editor/cms-content-editor';
 import { CmsContributions } from './presentation/pages/cms/cms-contributions/cms-contributions';
+import { CmsModeration } from './presentation/pages/cms/cms-moderation/cms-moderation';
 import { cmsGuard } from './presentation/auth/cms.guard';
 import { memberSpaceGuard } from './presentation/auth/member-space.guard';
 import { Onboarding } from './presentation/pages/espace-membre/onboarding/onboarding';
@@ -84,6 +85,7 @@ export const routes: Routes = [
     children: [
       { path: '', component: CmsContentList },
       { path: 'contributions', component: CmsContributions },
+      { path: 'moderation', component: CmsModeration },
       { path: ':id', component: CmsContentEditor },
     ],
   },

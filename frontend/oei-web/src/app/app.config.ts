@@ -43,6 +43,9 @@ import { PublicContentApiAdapter } from './infrastructure/adapter/public-content
 import { ARTICLE_SUBMISSION_PORT } from './domain/port/article/article-submission.port';
 import { ArticleSubmissionMockAdapter } from './infrastructure/adapter/article-submission-mock.adapter';
 import { ArticleSubmissionApiAdapter } from './infrastructure/adapter/article-submission-api.adapter';
+import { ARTICLE_MODERATION_PORT } from './domain/port/article-moderation.port';
+import { ArticleModerationMockAdapter } from './infrastructure/adapter/article-moderation-mock.adapter';
+import { ArticleModerationApiAdapter } from './infrastructure/adapter/article-moderation-api.adapter';
 import { CONTRIBUTION_PORT } from './domain/port/governance/contribution.port';
 import { ContributionMockAdapter } from './infrastructure/adapter/contribution-mock.adapter';
 import { ContributionApiAdapter } from './infrastructure/adapter/contribution-api.adapter';
@@ -293,6 +296,10 @@ export const appConfig: ApplicationConfig = {
         inject(RuntimeConfig).isMock()
           ? inject(PublicContentMockAdapter)
           : inject(PublicContentApiAdapter),
+    },
+    {
+      provide: ARTICLE_MODERATION_PORT,
+      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(ArticleModerationMockAdapter) : inject(ArticleModerationApiAdapter)),
     },
     {
       provide: CONTRIBUTION_PORT,

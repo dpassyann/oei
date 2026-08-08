@@ -22,3 +22,41 @@ $oei-navy: #0a1e3f;
   color: #666;
   font-style: italic;
 }
+
+.oei-news__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.oei-news__item {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.oei-news__image {
+  width: 8rem;
+  height: 6rem;
+  object-fit: cover;
+  border-radius: 0.25rem;
+  flex-shrink: 0;
+}
+
+.oei-news__item-title {
+  margin: 0 0 0.35rem;
+  font-size: 1.15rem;
+  color: $oei-navy;
+}
+
+.oei-news__excerpt {
+  margin: 0 0 0.35rem;
+  color: #555;
+}
+
+.oei-news__link {
+  font-size: 0.9rem;
+  color: $oei-navy;
+}

@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { NewsPort } from '../../domain/port/news.port';
 import { createNewsItem, NewsItem } from '../../domain/model/news-item';
 import { SupportedLanguage } from '../../domain/model/document';
+import { getApprovedArticleSubmissions } from './article-moderation-mock.adapter';
 
 // Note: ces 3 actualités correspondent à des jalons réels et déjà survenus du projet (le Livre
 // blanc existe sous `public/assets/livre-blanc/`, le site public est en cours de construction,
@@ -162,10 +163,31 @@ const FIXTURES: Record<SupportedLanguage, NewsItem[]> = {
   ],
 };
 
+const FALLBACK_ARTICLE_IMAGE = '/assets/news/appel-contribution.svg';
+
+// Approved member article submissions (see `article-moderation-mock.adapter.ts`'s
+// `getApprovedArticleSubmissions()`) are surfaced through this same `NewsPort.getLatestNews`
+// feed rather than a parallel "published articles" list, so `/actualites` (and the home page's
+// "Actualités" section, which reuses the exact same port) shows editorial news and approved
+// member articles side by side. There is no dedicated article-detail page yet, so `path` points
+// back to `/actualites` itself — revisit once one exists.
+function approvedSubmissionsAsNewsItems(): NewsItem[] {
+  return getApprovedArticleSubmissions().map((submission) =>
+    createNewsItem({
+      title: submission.title,
+      excerpt: submission.body.length > 160 ? `${submission.body.slice(0, 157)}...` : submission.body,
+      imageUrl: submission.coverImageUrl ?? FALLBACK_ARTICLE_IMAGE,
+      path: '/actualites',
+    }),
+  );
+}
+
 @Service()
 export class NewsMockAdapter implements NewsPort {
   getLatestNews(limit: number, lang: string): Observable<NewsItem[]> {
     const news = FIXTURES[lang as SupportedLanguage] ?? FIXTURES['en'];
-    return of(news.slice(0, limit));
+    // Most-recently-approved articles first, ahead of the static editorial fixtures.
+    const combined = [...approvedSubmissionsAsNewsItems().reverse(), ...news];
+    return of(combined.slice(0, limit));
   }
 }

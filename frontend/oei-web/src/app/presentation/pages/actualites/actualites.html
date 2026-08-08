@@ -1,5 +1,20 @@
 <main class="oei-page">
   <h1 class="oei-page__title">{{ i18n.translate('actualites.title') }}</h1>
 
-  <p class="oei-page__empty">{{ i18n.translate('actualites.empty') }}</p>
+  @if (news().length === 0) {
+    <p class="oei-page__empty">{{ i18n.translate('actualites.empty') }}</p>
+  } @else {
+    <ul class="oei-news__list">
+      @for (item of news(); track item.path + item.title) {
+        <li class="oei-news__item">
+          <img class="oei-news__image" [src]="item.imageUrl" [alt]="item.title" />
+          <div class="oei-news__body">
+            <h2 class="oei-news__item-title">{{ item.title }}</h2>
+            <p class="oei-news__excerpt">{{ item.excerpt }}</p>
+            <a class="oei-news__link" [routerLink]="item.path">{{ i18n.translate('actualites.readMore') }}</a>
+          </div>
+        </li>
+      }
+    </ul>
+  }
 </main>

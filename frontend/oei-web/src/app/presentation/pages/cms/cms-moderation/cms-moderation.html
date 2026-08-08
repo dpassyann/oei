@@ -1,0 +1,54 @@
+<main class="oei-cms-moderation">
+  <p><a routerLink="/cms">&larr; {{ i18n.translate('cms.list.title') }}</a></p>
+  <h1>{{ i18n.translate('cms.moderation.title') }}</h1>
+  <p>{{ i18n.translate('cms.moderation.intro') }}</p>
+
+  @if (pending().length === 0) {
+    <p class="oei-cms-moderation__empty">{{ i18n.translate('cms.moderation.empty') }}</p>
+  } @else {
+    <table class="oei-cms-moderation__table">
+      <thead>
+        <tr>
+          <th>{{ i18n.translate('cms.moderation.columns.title') }}</th>
+          <th>{{ i18n.translate('cms.moderation.columns.author') }}</th>
+          <th>{{ i18n.translate('cms.moderation.columns.submittedAt') }}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (submission of pending(); track submission.id) {
+          <tr>
+            <td>{{ submission.title }}</td>
+            <td>{{ submission.authorId }}</td>
+            <td>{{ submission.submittedAt }}</td>
+            <td class="oei-cms-moderation__actions">
+              <button
+                type="button"
+                [disabled]="processingId() === submission.id"
+                (click)="approve(submission)"
+              >
+                {{ i18n.translate('cms.moderation.approve') }}
+              </button>
+              @if (rejectingId() === submission.id) {
+                <input
+                  type="text"
+                  [attr.placeholder]="i18n.translate('cms.moderation.rejectReasonPlaceholder')"
+                  [value]="rejectReason()"
+                  (input)="onRejectReasonChange($any($event.target).value)"
+                />
+                <button type="button" [disabled]="processingId() === submission.id" (click)="reject(submission)">
+                  {{ i18n.translate('cms.moderation.confirmReject') }}
+                </button>
+                <button type="button" (click)="cancelReject()">{{ i18n.translate('cms.moderation.cancel') }}</button>
+              } @else {
+                <button type="button" [disabled]="processingId() === submission.id" (click)="startReject(submission)">
+                  {{ i18n.translate('cms.moderation.reject') }}
+                </button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</main>
