@@ -1,0 +1,30 @@
+---
+title: "Perché un Ordine?"
+status: "contenuto editoriale per la pagina pubblica /a-propos — sezione FAQ / obiezioni"
+source: "coerente con il Libro bianco v3 (nota introduttiva, sezioni 1, 8, 12, 13, sintesi esecutiva)"
+date: "2026-08-06"
+---
+
+# Perché un Ordine?
+
+Queste domande ci vengono poste regolarmente, da interlocutori informati — economisti, giuristi, decisori istituzionali. Sono legittime, e preferiamo rispondervi direttamente piuttosto che eluderle.
+
+### Perché il termine «Ordine» se non si tratta di un ordine legale?
+
+Perché un ordine professionale è istituito per legge, nell'ambito di una professione regolamentata dotata di atti riservati, e nessuna organizzazione privata può autoattribuirselo — lo affermiamo noi stessi, senza reticenze, fin dalla prima pagina del nostro Libro bianco. L'Ordine degli Esperti Informatici è, in questa fase, un movimento fondatore sostenuto da un'associazione. Il termine «Ordine» non è quindi impiegato come titolo giuridico che ci saremmo arrogati, bensì come nome d'uso e come orizzonte: designa ciò che intendiamo costruire — una professione dotata di una deontologia comune, di un quadro di riferimento delle competenze e di un'esigenza di formazione continua — e il vocabolario che permetterà un giorno, se la nostra credibilità lo giustificherà, di avviare una discussione più formale. Preferiamo questo nome assunto e spiegato a una denominazione più neutra che mascherasse la nostra ambizione reale. Per evitare ogni ambiguità giuridica, l'entità legale che porta avanti il movimento sarà registrata sotto un nome istituzionale distinto (ad esempio OEI Foundation), con menzione esplicita del fatto che essa rappresenta il movimento «Ordine degli Esperti Informatici» — una struttura a due livelli che separa chiaramente il nome legale, neutro, dal nome del movimento, portatore della nostra visione.
+
+### Un Ordine professionale non serve soprattutto a limitare l'accesso a una professione?
+
+È il timore più frequente, e lo comprendiamo. Ma inverte l'ordine delle nostre priorità. Il nostro percorso parte dalla protezione del pubblico: quando un sistema informatico controlla un aereo, un ospedale, una banca o una rete elettrica, un errore può avere conseguenze umane ed economiche rilevanti, e la società ha il diritto di attendersi garanzie da parte di chi assume tale responsabilità. È questa protezione che, se efficace, genera fiducia nei sistemi critici; questa fiducia, a sua volta, innalza la qualità generale della pratica professionale. Solo al termine di questo percorso, e unicamente come conseguenza, può giungere un riconoscimento più ampio della professione — mai come punto di partenza. Non cerchiamo né un monopolio né una barriera artificiale: la nostra esigenza riguarda un perimetro ristretto, quello dei sistemi critici, senza erigere rendite di posizione che congelerebbero una professione la cui ricchezza è nata proprio dalla sua apertura.
+
+### Chi può definirsi «esperto informatico»?
+
+Né il solo titolo di studio, né la sola esperienza bastano a determinarlo. Concepiamo l'expertise come una combinazione verificabile di più dimensioni: conoscenze aggiornate, esperienza concreta, realizzazioni dimostrabili, responsabilità assunta nelle decisioni tecniche, giudizio comprovato di fronte a situazioni reali, formazione continua effettiva e impegno deontologico. È per questo che il nostro quadro di riferimento delle competenze prevede una scala graduata — Praticante, Ingegnere, Architetto, Esperto, Esperto senior, Fellow — piuttosto che una soglia binaria. Questa scala non è una gerarchia di prestigio, ma una gradazione di responsabilità e autonomia, che riconosce come un titolo di studio datato senza pratica aggiornata, così come una lunga esperienza priva di rigore e formazione continua, non bastino a garantire la competenza da cui dipende la sicurezza di sistemi critici.
+
+### Perché «internazionale» se non avete ancora uno status legale in tutti i paesi?
+
+Perché il problema che documentiamo non conosce confini. Il paradosso tra oggetti tecnici rigorosamente standardizzati — protocolli, sicurezza, safety critica — e una professione che non lo è quasi da nessuna parte si ritrova, con sfumature locali, nella quasi totalità dei paesi che abbiamo studiato: Francia, Svizzera, Canada, Stati Uniti, Regno Unito, Germania. Nessuno ha dotato l'informatica di un quadro professionale completo paragonabile a quello della medicina o del diritto. La nostra ambizione è quindi, fin dall'origine, aprire una discussione internazionale piuttosto che riprodurre un quadro nazionale isolato che risolverebbe solo una frazione del problema. Ciò non pregiudica in alcun modo uno status legale uniforme, che non possediamo e che non pretendiamo di ottenere con un solo gesto: la nostra strategia consiste nel costruire prima, ovunque sia possibile, un corpus e collaborazioni accademiche e professionali credibili, per poi contribuire, paese per paese e solo dove il quadro giuridico lo consente, alle discussioni su un riconoscimento più formale.
+
+### L'esistenza dell'OEI farà diminuire la criminalità informatica?
+
+Non meccanicamente, e ci guarderemmo bene dal prometterlo. Un Ordine, anche pienamente riconosciuto, non elimina le vulnerabilità del software né gli attori malintenzionati. Ciò a cui miriamo è più modesto e più realistico: elevando il livello di competenza verificabile, formalizzando una deontologia comune, imponendo una formazione continua su ambiti come la cybersicurezza, e rendendo i professionisti responsabili delle proprie scelte tecniche anziché permettere loro di sottrarvisi, contribuiamo a migliorare le pratiche che, queste sì, hanno un effetto dimostrato sulla frequenza e sulla gravità degli incidenti. La sicurezza di un sistema non dipende mai soltanto dalla conformità dei suoi componenti a delle norme: dipende dai giudizi e dall'integrità dei professionisti che li assemblano. È su questo fattore umano, oggi ampiamente trascurato, che riteniamo di poter avere un effetto reale — senza mai rivendicare una causalità diretta e meccanica sulle statistiche globali della criminalità informatica.
