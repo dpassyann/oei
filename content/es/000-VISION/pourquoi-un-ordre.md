@@ -1,0 +1,30 @@
+---
+title: "¿Por qué una Orden?"
+status: "contenido editorial para la página pública /sobre-nosotros — sección FAQ / objeciones"
+source: "coherente con el Libro Blanco v3 (nota preliminar, secciones 1, 8, 12, 13, síntesis ejecutiva)"
+date: "2026-08-06"
+---
+
+# ¿Por qué una Orden?
+
+Estas preguntas nos las plantean con regularidad interlocutores informados —economistas, juristas, responsables institucionales—. Son legítimas, y preferimos responderlas directamente en lugar de eludirlas.
+
+### ¿Por qué la palabra «Orden» si no es una orden legal?
+
+Porque una orden profesional es creada por la ley, en el marco de una profesión reglamentada dotada de actos reservados, y ninguna organización privada puede autoatribuirse ese estatus —lo decimos nosotros mismos, sin rodeos, desde la primera página de nuestro Libro Blanco. La Orden de Expertos en Informática es, en esta etapa, un movimiento fundador apoyado en una asociación. La palabra «Orden» no se emplea, por tanto, como un título jurídico que nos hubiéramos arrogado, sino como un nombre de uso y un horizonte: designa aquello que aspiramos a construir —una profesión dotada de una deontología común, de un referencial de competencias y de una exigencia de formación continua— y el vocabulario que permitirá algún día, si nuestra credibilidad lo justifica, entablar una discusión más formal. Preferimos este nombre asumido y explicado a una denominación más neutra que enmascararía nuestra ambición real. Para evitar toda ambigüedad jurídica, la entidad legal que sostiene el movimiento se registrará bajo un nombre institucional distinto (por ejemplo, OEI Foundation), con la mención explícita de que sostiene el movimiento «Orden de Expertos en Informática» —una estructura de dos niveles que separa claramente el nombre legal, neutro, del nombre del movimiento, portador de nuestra visión.
+
+### ¿No sirve una orden profesional sobre todo para limitar el acceso a una profesión?
+
+Es el temor más frecuente, y lo comprendemos. Pero invierte el orden de nuestras prioridades. Nuestro planteamiento parte de la protección del público: cuando un sistema informático controla un avión, un hospital, un banco o una red eléctrica, un error puede tener consecuencias humanas y económicas mayores, y la sociedad tiene derecho a esperar garantías por parte de quienes asumen esa responsabilidad. Es esa protección la que, si es efectiva, engendra la confianza en los sistemas críticos; esa confianza, a su vez, eleva la calidad general de la práctica profesional. Solo al final de ese camino, y solo como consecuencia, puede llegar un reconocimiento más amplio de la profesión —nunca como punto de partida. No buscamos ni monopolio ni barrera artificial: nuestra exigencia se centra en un perímetro acotado, el de los sistemas críticos, sin erigir rentas de situación que anquilosarían una profesión cuya apertura ha constituido su riqueza.
+
+### ¿Quién puede llamarse «experto informático»?
+
+Ni el diploma por sí solo, ni la experiencia por sí sola bastan para determinarlo. Concebimos la experiencia como una combinación verificable de varias dimensiones: conocimientos actualizados, experiencia concreta, logros demostrables, responsabilidad asumida en las decisiones técnicas, juicio probado ante situaciones reales, formación continua efectiva y compromiso deontológico. Por eso nuestro referencial de competencias contempla una escala graduada —Practicante, Ingeniero, Arquitecto, Experto, Experto senior, Fellow— en lugar de un umbral binario. Esta escala no es una jerarquía de prestigio sino una gradación de responsabilidad y autonomía, que reconoce que un diploma antiguo sin práctica actualizada, al igual que una larga experiencia sin rigor ni formación continua, no bastan para garantizar la competencia de la que depende la seguridad de los sistemas críticos.
+
+### ¿Por qué «internacional» si aún no tienen estatus legal en todos los países?
+
+Porque el problema que documentamos no conoce fronteras. La paradoja entre unos objetos técnicos rigurosamente normalizados —protocolos, seguridad, seguridad crítica— y una profesión que casi no lo está en ninguna parte se encuentra, con matices locales, en la práctica totalidad de los países que hemos estudiado: Francia, Suiza, Canadá, Estados Unidos, Reino Unido, Alemania. Ninguno ha dotado a la informática de un marco profesional completo comparable al de la medicina o el derecho. Nuestra ambición es, por tanto, desde el origen, abrir una discusión internacional en lugar de reproducir un marco nacional aislado que solo resolvería una fracción del problema. Esto no prejuzga en absoluto un estatus legal uniforme, que no tenemos y que no pretendemos obtener de un solo gesto: nuestra estrategia consiste en construir primero, allí donde sea posible, un corpus y alianzas académicas y profesionales creíbles, y luego contribuir, país por país y solo donde el marco jurídico lo permita, a las discusiones sobre un reconocimiento más formal.
+
+### ¿La existencia de la OEI hará disminuir la cibercriminalidad?
+
+No de forma mecánica, y nos guardaríamos de prometerlo. Una Orden, aunque estuviera plenamente reconocida, no elimina las vulnerabilidades de software ni los actores malintencionados. Lo que buscamos es más modesto y más realista: al elevar el nivel de competencia verificable, al formalizar una deontología común, al imponer una formación continua en ámbitos como la ciberseguridad, y al hacer a los profesionales responsables de sus decisiones técnicas en lugar de permitirles eximirse de ellas, contribuimos a mejorar las prácticas que sí tienen un efecto demostrado sobre la frecuencia y la gravedad de los incidentes. La seguridad de un sistema nunca depende solo de la conformidad de sus componentes con normas: depende de los juicios y de la integridad de los profesionales que los ensamblan. Es sobre este factor humano, ampliamente descuidado hoy, sobre el que creemos poder tener un efecto real —sin pretender jamás una causalidad directa y mecánica sobre las estadísticas globales de la cibercriminalidad.
