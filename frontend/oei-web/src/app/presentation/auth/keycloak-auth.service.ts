@@ -1,5 +1,6 @@
 import { inject, Service } from '@angular/core';
-import { OAuthService } from 'angular-oauth2-oidc';
+import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
+import { LoggingService } from '../../infrastructure/logging/logging.service';
 
 /**
  * Additional Keycloak-specific query param appended to the authorization URL to land the user
@@ -66,8 +67,27 @@ function decodeJwtPayload(token: string): Record<string, unknown> | undefined {
 @Service()
 export class KeycloakAuthService {
   private readonly oauthService = inject(OAuthService);
+  private readonly logger = inject(LoggingService);
+
+  constructor() {
+    // `OAuthService.events` emits every lifecycle event, including the auth-failure ones
+    // (`token_error`, `discovery_document_load_error`, `session_error`, ...) — see
+    // `angular-oauth2-oidc`'s `EventType`. Logging only the `*_error`/`*error*` ones here is
+    // the "high-value" hook this task asked for: end-to-end tracing of why a login/refresh
+    // failed, without instrumenting every successful token exchange too. `event.reason`
+    // (an `OAuthErrorEvent`'s underlying error/response) goes through `LoggingService`'s
+    // built-in redaction, so a token accidentally present in it is never logged verbatim.
+    this.oauthService.events?.subscribe((event) => {
+      if (!event.type.toLowerCase().includes('error')) {
+        return;
+      }
+      const reason = event instanceof OAuthErrorEvent ? event.reason : undefined;
+      this.logger.error(`Keycloak auth event failed: ${event.type}`, { eventType: event.type, reason }, 'KeycloakAuthService');
+    });
+  }
 
   login(): void {
+    this.logger.info('Keycloak login flow initiated', { flow: 'login' }, 'KeycloakAuthService');
     this.oauthService.initCodeFlow();
   }
 
@@ -86,6 +106,7 @@ export class KeycloakAuthService {
    * declarative User Profile — see that theme's README for details.
    */
   register(): void {
+    this.logger.info('Keycloak register flow initiated', { flow: 'register' }, 'KeycloakAuthService');
     this.oauthService.initCodeFlow('', REGISTER_QUERY_PARAMS);
   }
 
@@ -99,6 +120,7 @@ export class KeycloakAuthService {
   }
 
   logout(): void {
+    this.logger.info('Keycloak logout initiated', { flow: 'logout' }, 'KeycloakAuthService');
     this.oauthService.logOut();
   }
 

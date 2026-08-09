@@ -5,8 +5,9 @@ import {
   provideZonelessChangeDetection,
 } from '@angular/core';
 import { provideRouter, withInMemoryScrolling, withRouterConfig } from '@angular/router';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { AuthConfig, OAuthService, provideOAuthClient } from 'angular-oauth2-oidc';
+import { httpLoggingInterceptor } from './infrastructure/logging/http-logging.interceptor';
 
 import { routes } from './app.routes';
 import { RuntimeConfig } from './infrastructure/config/runtime-config';
@@ -183,7 +184,10 @@ export const appConfig: ApplicationConfig = {
       // once already on the page is handled separately by `FloatingSideMenu`.
       withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }),
     ),
-    provideHttpClient(withFetch()),
+    // `httpLoggingInterceptor` (see `infrastructure/logging/`) stamps same-origin requests with
+    // `X-Correlation-Id` and logs request/response/error as structured JSON — added last so it
+    // does not change existing HTTP behavior, only observes it.
+    provideHttpClient(withFetch(), withInterceptors([httpLoggingInterceptor])),
     provideOAuthClient(),
     provideAppInitializer(() => inject(RuntimeConfig).load()),
     // Blocking app initializer (runs, like the one above, before the router resolves its first
