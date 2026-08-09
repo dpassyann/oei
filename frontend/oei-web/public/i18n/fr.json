@@ -148,7 +148,20 @@
   "contact": {
     "title": "Contact",
     "bodyPrefix": "Pour toute question, écrivez-nous à",
-    "note": "Un formulaire de contact dédié est prévu dans une prochaine version du site.",
+    "note": "Vous pouvez aussi nous écrire directement via le formulaire ci-dessous.",
+    "form": {
+      "fields": {
+        "name": "Nom",
+        "email": "Email",
+        "subject": "Sujet",
+        "message": "Message"
+      },
+      "submit": "Envoyer",
+      "submitting": "Envoi en cours…",
+      "success": "Votre message a bien été envoyé. Nous vous répondrons dans les meilleurs délais.",
+      "sendAnother": "Envoyer un autre message",
+      "error": "Une erreur est survenue lors de l'envoi. Veuillez réessayer."
+    },
     "institutional": {
       "heading": "Contact institutionnel",
       "loading": "Chargement…",
@@ -162,8 +175,10 @@
   },
   "deontologie": {
     "title": "Déontologie",
-    "body1": "Notre code de déontologie — l'ensemble des règles de conduite professionnelle que s'engagent à respecter les membres agréés — est en cours de rédaction. Il se distingue de la charte, un engagement volontaire moins contraignant destiné à un public plus large (membres associés, entreprises partenaires, universités).",
-    "body2": "Ces deux textes seront publiés dès qu'ils auront été validés par le conseil de gouvernance de l'organisation."
+    "loading": "Chargement du contenu…",
+    "notFound": "Le contenu de cette page est introuvable pour le moment.",
+    "fallbackNotice": "Traduction non disponible pour le moment — version française affichée en attendant.",
+    "tableOfContents": "Sommaire"
   },
   "membresFondateurs": {
     "title": "Membres fondateurs",

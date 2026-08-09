@@ -1,15 +1,25 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { Contact } from './contact';
 import { MarkdownDocumentApplicationService } from '../../../application/service/markdown-document-application.service';
 import { I18nService } from '../../i18n/i18n.service';
 import { createDocument } from '../../../domain/model/document';
+import { CONTACT_PORT } from '../../../domain/port/contact.port';
 
 const INTERFACE_STRINGS: Record<string, string> = {
   'contact.title': 'Contact',
   'contact.bodyPrefix': 'Pour toute question, écrivez-nous à',
-  'contact.note': 'Un formulaire de contact dédié est prévu dans une prochaine version du site.',
+  'contact.note': 'Vous pouvez aussi nous écrire directement via le formulaire ci-dessous.',
+  'contact.form.fields.name': 'Nom',
+  'contact.form.fields.email': 'Email',
+  'contact.form.fields.subject': 'Sujet',
+  'contact.form.fields.message': 'Message',
+  'contact.form.submit': 'Envoyer',
+  'contact.form.submitting': 'Envoi en cours…',
+  'contact.form.success': 'Votre message a bien été envoyé. Nous vous répondrons dans les meilleurs délais.',
+  'contact.form.sendAnother': 'Envoyer un autre message',
+  'contact.form.error': "Une erreur est survenue lors de l'envoi. Veuillez réessayer.",
   'contact.institutional.heading': 'Contact institutionnel',
   'contact.institutional.loading': 'Chargement…',
   'contact.institutional.fallbackNotice':
@@ -52,13 +62,20 @@ function fakeMarkdownDocuments() {
   };
 }
 
+function fakeContactPort(options?: { fails?: boolean }) {
+  return {
+    submit: () => (options?.fails ? throwError(() => new Error('failed')) : of(undefined)),
+  };
+}
+
 describe('Contact', () => {
-  it('givenComponent_whenCreated_thenRendersHeadingMailtoLinkAndFormPlannedNote', () => {
+  it('givenComponent_whenCreated_thenRendersHeadingMailtoLinkAndFormNote', () => {
     TestBed.configureTestingModule({
       imports: [Contact],
       providers: [
         { provide: I18nService, useValue: FAKE_I18N_SERVICE },
         { provide: MarkdownDocumentApplicationService, useValue: fakeMarkdownDocuments() },
+        { provide: CONTACT_PORT, useValue: fakeContactPort() },
       ],
     });
     const fixture = TestBed.createComponent(Contact);
@@ -68,7 +85,73 @@ describe('Contact', () => {
     expect(compiled.querySelector('.oei-page__title')?.textContent).toContain('Contact');
     const link = compiled.querySelector<HTMLAnchorElement>('.oei-page__link');
     expect(link?.getAttribute('href')).toMatch(/^mailto:/);
-    expect(compiled.querySelector('.oei-page__note')?.textContent).toContain('formulaire de contact');
+    expect(compiled.querySelector('.oei-page__note')?.textContent).toContain('formulaire ci-dessous');
+  });
+
+  function fillAndSubmit(compiled: HTMLElement): void {
+    const [nameInput, emailInput] = compiled.querySelectorAll<HTMLInputElement>(
+      '.oei-contact-form__field input',
+    );
+    const messageInput = compiled.querySelector<HTMLTextAreaElement>('.oei-contact-form__field textarea');
+    nameInput.value = 'Ada Lovelace';
+    nameInput.dispatchEvent(new Event('input'));
+    emailInput.value = 'ada@example.com';
+    emailInput.dispatchEvent(new Event('input'));
+    messageInput!.value = 'Bonjour, ceci est un message de test.';
+    messageInput!.dispatchEvent(new Event('input'));
+    compiled.querySelector('form')?.dispatchEvent(new Event('submit', { cancelable: true }));
+  }
+
+  it('givenValidForm_whenSubmitted_thenCallsPortAndShowsSuccess', async () => {
+    const submit = vi.fn().mockReturnValue(of(undefined));
+    TestBed.configureTestingModule({
+      imports: [Contact],
+      providers: [
+        { provide: I18nService, useValue: FAKE_I18N_SERVICE },
+        { provide: MarkdownDocumentApplicationService, useValue: fakeMarkdownDocuments() },
+        { provide: CONTACT_PORT, useValue: { submit } },
+      ],
+    });
+    const fixture = TestBed.createComponent(Contact);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    fillAndSubmit(compiled);
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(submit).toHaveBeenCalledWith(
+      expect.objectContaining({
+        name: 'Ada Lovelace',
+        email: 'ada@example.com',
+        message: 'Bonjour, ceci est un message de test.',
+      }),
+    );
+    expect(compiled.querySelector('.oei-contact-form__success')?.textContent).toContain('bien été envoyé');
+  });
+
+  it('givenPortFails_whenSubmitted_thenShowsError', async () => {
+    TestBed.configureTestingModule({
+      imports: [Contact],
+      providers: [
+        { provide: I18nService, useValue: FAKE_I18N_SERVICE },
+        { provide: MarkdownDocumentApplicationService, useValue: fakeMarkdownDocuments() },
+        { provide: CONTACT_PORT, useValue: fakeContactPort({ fails: true }) },
+      ],
+    });
+    const fixture = TestBed.createComponent(Contact);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    fillAndSubmit(compiled);
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(compiled.querySelector('.oei-contact-form__error')?.textContent).toContain('erreur');
   });
 
   it('givenDocumentsLoad_whenCreated_thenRendersBothInstitutionalAndContributeBlocks', async () => {
@@ -77,6 +160,7 @@ describe('Contact', () => {
       providers: [
         { provide: I18nService, useValue: FAKE_I18N_SERVICE },
         { provide: MarkdownDocumentApplicationService, useValue: fakeMarkdownDocuments() },
+        { provide: CONTACT_PORT, useValue: fakeContactPort() },
       ],
     });
     const fixture = TestBed.createComponent(Contact);

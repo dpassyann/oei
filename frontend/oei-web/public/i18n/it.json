@@ -148,7 +148,20 @@
   "contact": {
     "title": "Contatto",
     "bodyPrefix": "Per qualsiasi domanda, scrivici a",
-    "note": "È prevista l'introduzione di un modulo di contatto dedicato in una prossima versione del sito.",
+    "note": "Puoi anche scriverci direttamente tramite il modulo sottostante.",
+    "form": {
+      "fields": {
+        "name": "Nome",
+        "email": "Email",
+        "subject": "Oggetto",
+        "message": "Messaggio"
+      },
+      "submit": "Invia",
+      "submitting": "Invio in corso…",
+      "success": "Il tuo messaggio è stato inviato. Ti risponderemo il prima possibile.",
+      "sendAnother": "Invia un altro messaggio",
+      "error": "Si è verificato un errore durante l'invio. Riprova."
+    },
     "institutional": {
       "heading": "Contatto istituzionale",
       "loading": "Caricamento…",
@@ -162,8 +175,10 @@
   },
   "deontologie": {
     "title": "Deontologia",
-    "body1": "Il nostro codice deontologico — l'insieme delle regole di condotta professionale che i membri accreditati si impegnano a rispettare — è attualmente in fase di redazione. Si distingue dalla carta, un impegno volontario meno vincolante rivolto a un pubblico più ampio (membri associati, aziende partner, università).",
-    "body2": "Entrambi i testi saranno pubblicati non appena saranno stati approvati dal consiglio di governance dell'organizzazione."
+    "loading": "Caricamento del contenuto…",
+    "notFound": "Il contenuto di questa pagina non è al momento disponibile.",
+    "fallbackNotice": "Traduzione non ancora disponibile — nel frattempo viene mostrata la versione francese.",
+    "tableOfContents": "Indice"
   },
   "membresFondateurs": {
     "title": "Membri fondatori",

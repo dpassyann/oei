@@ -148,7 +148,20 @@
   "contact": {
     "title": "Kontakt",
     "bodyPrefix": "Bei Fragen schreiben Sie uns an",
-    "note": "Ein eigenes Kontaktformular ist für eine zukünftige Version der Website geplant.",
+    "note": "Sie können uns auch direkt über das nachstehende Formular schreiben.",
+    "form": {
+      "fields": {
+        "name": "Name",
+        "email": "E-Mail",
+        "subject": "Betreff",
+        "message": "Nachricht"
+      },
+      "submit": "Senden",
+      "submitting": "Wird gesendet…",
+      "success": "Ihre Nachricht wurde gesendet. Wir werden uns so schnell wie möglich bei Ihnen melden.",
+      "sendAnother": "Weitere Nachricht senden",
+      "error": "Beim Senden ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+    },
     "institutional": {
       "heading": "Institutioneller Kontakt",
       "loading": "Wird geladen…",
@@ -162,8 +175,10 @@
   },
   "deontologie": {
     "title": "Ethikkodex",
-    "body1": "Unser Verhaltenskodex — die Gesamtheit der Berufsverhaltensregeln, zu deren Einhaltung sich akkreditierte Mitglieder verpflichten — befindet sich derzeit in der Ausarbeitung. Er unterscheidet sich von der Charta, einer weniger verbindlichen freiwilligen Selbstverpflichtung, die sich an ein breiteres Publikum richtet (assoziierte Mitglieder, Partnerunternehmen, Hochschulen).",
-    "body2": "Beide Dokumente werden veröffentlicht, sobald sie vom Führungsgremium der Organisation genehmigt wurden."
+    "loading": "Inhalt wird geladen…",
+    "notFound": "Der Inhalt dieser Seite konnte derzeit nicht gefunden werden.",
+    "fallbackNotice": "Übersetzung noch nicht verfügbar — es wird vorübergehend die französische Version angezeigt.",
+    "tableOfContents": "Inhaltsverzeichnis"
   },
   "membresFondateurs": {
     "title": "Gründungsmitglieder",

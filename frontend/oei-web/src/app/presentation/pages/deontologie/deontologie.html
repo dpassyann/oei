@@ -1,10 +1,27 @@
-<main class="oei-page">
-  <h1 class="oei-page__title">{{ i18n.translate('deontologie.title') }}</h1>
+@if (notFound()) {
+  <main class="oei-page">
+    <h1 class="oei-page__title">{{ i18n.translate('deontologie.title') }}</h1>
+    <p class="oei-page__empty">{{ i18n.translate('deontologie.notFound') }}</p>
+  </main>
+} @else {
+  <main class="oei-deontologie-page">
+    <div class="oei-deontologie-page__content">
+      <h1 class="oei-page__title">{{ i18n.translate('deontologie.title') }}</h1>
 
-  <p class="oei-page__body">
-    {{ i18n.translate('deontologie.body1') }}
-  </p>
-  <p class="oei-page__body">
-    {{ i18n.translate('deontologie.body2') }}
-  </p>
-</main>
+      @if (isFallback()) {
+        <p class="oei-fallback-banner">{{ i18n.translate('deontologie.fallbackNotice') }}</p>
+      }
+
+      @if (loading()) {
+        <p class="oei-deontologie-page__loading">{{ i18n.translate('deontologie.loading') }}</p>
+      } @else {
+        <article class="oei-deontologie-page__body" [innerHTML]="codeHtml()"></article>
+      }
+    </div>
+
+    <oei-floating-side-menu
+      [title]="i18n.translate('deontologie.tableOfContents')"
+      [links]="sideMenuLinks()"
+    />
+  </main>
+}

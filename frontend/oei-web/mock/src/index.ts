@@ -10,12 +10,14 @@
  * - Latest news          → GET /api/v1/news/:lang?limit=
  * - Partners             → GET /api/v1/partners/:lang, GET /api/v1/partners/:lang/:id
  * - Lead capture         → POST /api/v1/leads
+ * - Contact form         → POST /api/v1/contact
  *
  * Usage: `pnpm dev` (hot-reload) or `pnpm build && pnpm start`.
  */
 import cors from 'cors';
 import express from 'express';
 import configRouter from './routes/config';
+import contactRouter from './routes/contact';
 import contentRouter from './routes/content';
 import domainsRouter from './routes/domains';
 import leadsRouter from './routes/leads';
@@ -36,6 +38,7 @@ app.use('/api/v1/domains', domainsRouter);
 app.use('/api/v1/news', newsRouter);
 app.use('/api/v1/partners', partnersRouter);
 app.use('/api/v1/leads', leadsRouter);
+app.use('/api/v1/contact', contactRouter);
 
 app.use((req, res) => {
   res.status(404).json({

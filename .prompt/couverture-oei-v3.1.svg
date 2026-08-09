@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="1600" height="2400" viewBox="0 0 1600 2400"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Livre blanc v3.1 — Ordre des Experts Informaticiens</title>
+  <desc id="desc">Couverture institutionnelle bleu nuit, doré et blanc avec logo bouclier et globe.</desc>
+
+  <defs>
+    <style>
+      .sans { font-family: Inter, Montserrat, Arial, Helvetica, sans-serif; }
+      .serif { font-family: "Playfair Display", Georgia, "Times New Roman", serif; }
+      .gold { fill: #e8a530; }
+      .white { fill: #ffffff; }
+      .gold-stroke { stroke: #e8a530; }
+      .white-stroke { stroke: #ffffff; }
+    </style>
+  </defs>
+
+  <!-- Fond -->
+  <rect width="1600" height="2400" fill="#0a1e3f"/>
+
+  <!-- Logo vectoriel -->
+  <g transform="translate(800 400)" fill="none" stroke="#e8a530" stroke-width="10"
+     stroke-linecap="round" stroke-linejoin="round">
+    <!-- Bouclier -->
+    <path d="M0,-250
+             C-95,-175 -210,-150 -280,-145
+             V10
+             C-280,210 -165,345 0,445
+             C165,345 280,210 280,10
+             V-145
+             C210,-150 95,-175 0,-250 Z"/>
+
+    <!-- Globe -->
+    <circle cx="0" cy="40" r="115"/>
+    <ellipse cx="0" cy="40" rx="55" ry="115"/>
+    <path d="M-115,40 H115"/>
+    <path d="M-100,-10 C-45,15 45,15 100,-10"/>
+    <path d="M-100,90 C-45,65 45,65 100,90"/>
+
+    <!-- Circuits -->
+    <path d="M0,-75 V-160"/>
+    <circle cx="0" cy="-182" r="16"/>
+
+    <path d="M-55,-60 L-95,-100 V-145"/>
+    <circle cx="-95" cy="-166" r="16"/>
+
+    <path d="M55,-60 L95,-100 V-145"/>
+    <circle cx="95" cy="-166" r="16"/>
+
+    <path d="M-95,-10 L-155,-50"/>
+    <circle cx="-178" cy="-65" r="16"/>
+
+    <path d="M95,-10 L155,-50"/>
+    <circle cx="178" cy="-65" r="16"/>
+
+    <path d="M-115,40 H-185"/>
+    <circle cx="-208" cy="40" r="16"/>
+
+    <path d="M115,40 H185"/>
+    <circle cx="208" cy="40" r="16"/>
+
+    <path d="M-95,90 L-155,130"/>
+    <circle cx="-178" cy="145" r="16"/>
+
+    <path d="M95,90 L155,130"/>
+    <circle cx="178" cy="145" r="16"/>
+
+    <path d="M-55,140 L-95,180 V225"/>
+    <circle cx="-95" cy="246" r="16"/>
+
+    <path d="M55,140 L95,180 V225"/>
+    <circle cx="95" cy="246" r="16"/>
+
+    <path d="M0,155 V240"/>
+    <circle cx="0" cy="262" r="16"/>
+  </g>
+
+  <!-- Nom de l'organisation -->
+  <text x="800" y="960"
+        text-anchor="middle"
+        class="sans gold"
+        font-size="42"
+        font-weight="600"
+        letter-spacing="7">
+    ORDRE DES EXPERTS INFORMATICIENS
+  </text>
+
+  <!-- Mention mouvement / ambition internationale (v3.1) -->
+  <text x="800" y="1015"
+        text-anchor="middle"
+        class="sans white"
+        font-size="25"
+        font-weight="500"
+        letter-spacing="5">
+    MOUVEMENT FONDATEUR INTERNATIONAL
+  </text>
+
+  <!-- Séparateur -->
+  <g stroke="#e8a530" stroke-width="3" fill="#e8a530">
+    <line x1="500" y1="1075" x2="765" y2="1075"/>
+    <rect x="790" y="1065" width="20" height="20" transform="rotate(45 800 1075)"/>
+    <line x1="835" y1="1075" x2="1100" y2="1075"/>
+  </g>
+
+  <!-- Titre -->
+  <text x="800" y="1320"
+        text-anchor="middle"
+        class="serif white"
+        font-size="152"
+        font-weight="700"
+        letter-spacing="4">
+    LIVRE BLANC
+  </text>
+
+  <!-- Séparateur -->
+  <g stroke="#e8a530" stroke-width="3" fill="#e8a530">
+    <line x1="500" y1="1410" x2="765" y2="1410"/>
+    <rect x="790" y="1400" width="20" height="20" transform="rotate(45 800 1410)"/>
+    <line x1="835" y1="1410" x2="1100" y2="1410"/>
+  </g>
+
+  <!-- Sous-titre -->
+  <text x="800" y="1545"
+        text-anchor="middle"
+        class="sans gold"
+        font-size="42"
+        font-weight="500"
+        letter-spacing="4">
+    <tspan x="800" dy="0">POUR UNE NORMALISATION ÉTHIQUE,</tspan>
+    <tspan x="800" dy="68">RESPONSABLE ET DURABLE DU NUMÉRIQUE</tspan>
+  </text>
+
+  <line x1="755" y1="1775" x2="845" y2="1775" stroke="#e8a530" stroke-width="3"/>
+
+  <!-- Auteur -->
+  <text x="800" y="2070"
+        text-anchor="middle"
+        class="sans white"
+        font-size="48"
+        font-weight="700"
+        letter-spacing="7">
+    YANN DEUNGOUÉ
+  </text>
+
+  <text x="800" y="2140"
+        text-anchor="middle"
+        class="sans gold"
+        font-size="30"
+        font-weight="500"
+        letter-spacing="5">
+    FONDATEUR &amp; AUTEUR
+  </text>
+
+  <line x1="755" y1="2210" x2="845" y2="2210" stroke="#e8a530" stroke-width="3"/>
+
+  <!-- Version (v3.1) -->
+  <text x="800" y="2280"
+        text-anchor="middle"
+        class="sans gold"
+        font-size="22"
+        font-weight="500"
+        letter-spacing="4"
+        opacity="0.85">
+    VERSION 3.1
+  </text>
+</svg>

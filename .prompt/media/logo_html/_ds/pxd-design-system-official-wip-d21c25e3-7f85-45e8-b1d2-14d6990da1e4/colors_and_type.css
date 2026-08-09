@@ -1,0 +1,499 @@
+/* ============================================================
+   PXD — Pictet Experience Design
+   Core color + type tokens extracted from pxd-base / pxd-ng-zorro
+   Source: pxd_coucouc/Pictet Experience Design - Demo_files/styles.*.css
+   ============================================================ */
+
+/* -----------------------------------------------------------
+   FONTS
+
+   PXD ships three proprietary "Lardy" families — ALL wired
+   below from real .woff2 files in fonts/:
+     • LardySerif       — display / quotes (incl. italic)
+     • LardySans        — body, labels (primary UI face)
+     • LardySansCond    — condensed sans for dense data
+   ----------------------------------------------------------- */
+
+
+/* ---- Material Symbols Rounded (icon font, self-hosted) ----
+   Outline (default, FILL 0) and Filled (FILL 1) are separate static
+   families since these .ttf files are not a single variable font.
+   All PXD components force FILL 0 (outline) explicitly in their CSS. */
+@font-face { font-family: 'Material Symbols Rounded'; src: url('fonts/MaterialSymbolsRounded-Thin.ttf') format('truetype'); font-weight: 100; font-style: normal; font-display: block; }
+@font-face { font-family: 'Material Symbols Rounded'; src: url('fonts/MaterialSymbolsRounded-ExtraLight.ttf') format('truetype'); font-weight: 200; font-style: normal; font-display: block; }
+@font-face { font-family: 'Material Symbols Rounded'; src: url('fonts/MaterialSymbolsRounded-Light.ttf') format('truetype'); font-weight: 300; font-style: normal; font-display: block; }
+@font-face { font-family: 'Material Symbols Rounded'; src: url('fonts/MaterialSymbolsRounded-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: block; }
+@font-face { font-family: 'Material Symbols Rounded'; src: url('fonts/MaterialSymbolsRounded-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: block; }
+@font-face { font-family: 'Material Symbols Rounded'; src: url('fonts/MaterialSymbolsRounded-SemiBold.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: block; }
+@font-face { font-family: 'Material Symbols Rounded'; src: url('fonts/MaterialSymbolsRounded-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: block; }
+
+@font-face { font-family: 'Material Symbols Rounded Filled'; src: url('fonts/MaterialSymbolsRounded_Filled-Thin.ttf') format('truetype'); font-weight: 100; font-style: normal; font-display: block; }
+@font-face { font-family: 'Material Symbols Rounded Filled'; src: url('fonts/MaterialSymbolsRounded_Filled-ExtraLight.ttf') format('truetype'); font-weight: 200; font-style: normal; font-display: block; }
+@font-face { font-family: 'Material Symbols Rounded Filled'; src: url('fonts/MaterialSymbolsRounded_Filled-Light.ttf') format('truetype'); font-weight: 300; font-style: normal; font-display: block; }
+@font-face { font-family: 'Material Symbols Rounded Filled'; src: url('fonts/MaterialSymbolsRounded_Filled-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: block; }
+@font-face { font-family: 'Material Symbols Rounded Filled'; src: url('fonts/MaterialSymbolsRounded_Filled-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: block; }
+@font-face { font-family: 'Material Symbols Rounded Filled'; src: url('fonts/MaterialSymbolsRounded_Filled-SemiBold.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: block; }
+@font-face { font-family: 'Material Symbols Rounded Filled'; src: url('fonts/MaterialSymbolsRounded_Filled-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: block; }
+
+/* ---- Family-name aliases ----
+   The Figma token set references these fonts by their literal Figma names
+   ("Lardy Sans", "Lardy Sans Cond", "Lardy Serif" — with spaces), while the
+   type system above uses the no-space names ("LardySans", etc). Register
+   the same files under both names so --typeface-family-* tokens resolve. */
+@font-face { font-family: 'Lardy Sans'; src: url('fonts/LardySans-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Lardy Sans'; src: url('fonts/LardySans-Italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Lardy Sans'; src: url('fonts/LardySans-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Lardy Sans'; src: url('fonts/LardySans-BoldItalic.woff2') format('woff2'); font-weight: 700; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Lardy Serif'; src: url('fonts/LardySerif-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Lardy Serif'; src: url('fonts/LardySerif-Italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Lardy Serif'; src: url('fonts/LardySerif-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Lardy Serif'; src: url('fonts/LardySerif-BoldItalic.woff2') format('woff2'); font-weight: 700; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Lardy Sans Cond'; src: url('fonts/LardySansCond-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Lardy Sans Cond'; src: url('fonts/LardySansCond-Italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Lardy Sans Cond'; src: url('fonts/LardySansCond-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Lardy Sans Cond'; src: url('fonts/LardySansCond-BoldItalic.woff2') format('woff2'); font-weight: 700; font-style: italic; font-display: swap; }
+
+/* ---- LardySans ---- */
+@font-face {
+  font-family: 'LardySans';
+  src: url('fonts/LardySans-Regular.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'LardySans';
+  src: url('fonts/LardySans-Italic.woff2') format('woff2');
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'LardySans';
+  src: url('fonts/LardySans-Bold.woff2') format('woff2');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'LardySans';
+  src: url('fonts/LardySans-BoldItalic.woff2') format('woff2');
+  font-weight: 700; font-style: italic; font-display: swap;
+}
+
+/* ---- LardySerif ---- */
+@font-face {
+  font-family: 'LardySerif';
+  src: url('fonts/LardySerif-Regular.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'LardySerif';
+  src: url('fonts/LardySerif-Italic.woff2') format('woff2');
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'LardySerif';
+  src: url('fonts/LardySerif-Bold.woff2') format('woff2');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'LardySerif';
+  src: url('fonts/LardySerif-BoldItalic.woff2') format('woff2');
+  font-weight: 700; font-style: italic; font-display: swap;
+}
+
+/* ---- LardySansCond ---- */
+@font-face {
+  font-family: 'LardySansCond';
+  src: url('fonts/LardySansCond-Regular.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'LardySansCond';
+  src: url('fonts/LardySansCond-Italic.woff2') format('woff2');
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'LardySansCond';
+  src: url('fonts/LardySansCond-Bold.woff2') format('woff2');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'LardySansCond';
+  src: url('fonts/LardySansCond-BoldItalic.woff2') format('woff2');
+  font-weight: 700; font-style: italic; font-display: swap;
+}
+
+:root {
+  /* ---------- BRAND ---------- */
+  --brand-pictet:               #a04044;   /* historic Pictet brand red */
+  --accent-default:             #804940;   /* oxblood — primary action */
+  --accent-hover-contained:     #8c5950;
+  --accent-light:               #f2edec;
+  --accent-hover-default:       rgb(from #804940 r g b / 5%);
+  --accent-selected:            rgb(from #804940 r g b / 10%);
+
+  /* Full oxblood tint scale (source: kit's Colors_V2 primitives). Named
+     tokens above (accent-default = 700, accent-hover-contained = 600,
+     accent-light = 50) are aliases into this scale — reach for a step
+     directly only when the named alias doesn't fit. */
+  --accent-25:                  #fbf8f7;
+  --accent-50:                  #f2edec;
+  --accent-100:                 #e3dcdb;
+  --accent-200:                 #d3c7c5;
+  --accent-300:                 #bfaca8;
+  --accent-400:                 #ad918c;
+  --accent-500:                 #9b766f;
+  --accent-600:                 #8c5950;
+  --accent-700:                 #804940;
+  --accent-800:                 #5c2e27;
+  --accent-900:                 #421c16;
+
+  /* ---------- NEUTRALS — GREY ---------- */
+  --grey-black:                 #000000;
+  --grey-1000:                  #333333;
+  --grey-900:                   #404040;
+  --grey-800:                   #484848;
+  --grey-700:                   #545454;
+  --grey-default:               #3e3e3e;   /* body text */
+  --grey-600:                   #646464;
+  --grey-500:                   #767676;   /* muted labels */
+  --grey-400:                   #909090;
+  --grey-border-emphasis:       #bebebe;
+  --grey-300:                   #bbbbbb;
+  --grey-border-default:        #dcdcdc;
+  --grey-border-hover:          #cecece;
+  --grey-200:                   #dcdcdc;
+  --grey-100:                   #f7f7f7;
+  --white-default:              #ffffff;
+
+  /* ---------- NEUTRALS — OFFWHITE (warm) ---------- */
+  --offwhite-1000:              #5c5b58;
+  --offwhite-900:               #63625f;
+  --offwhite-800:               #7d7c78;
+  --offwhite-700:               #8c8b87;
+  --offwhite-600:               #a6a59f;
+  --offwhite-500:               #bfbeb8;
+  --offwhite-400:               #c9c8c1;
+  --offwhite-300:               #d9d7d0;
+  --offwhite-heading:           #f0eee6;   /* table header bg */
+  --offwhite-200:               #e8e6df;
+  --offwhite-100:               #f5f3eb;
+  --offwhite-default-zebra:     #faf9f5;   /* app background */
+  --basic-bg-main-default:      #faf9f5;
+
+  /* ---------- CHART SERIES (kit's "colors" Figma collection, 10/10) ---------- */
+  /* Categorical order for multi-series charts (donut slices, bar groups,
+     legends) — pick colors by POSITION in this order, never by hue
+     preference, so the same series always reads the same color across
+     charts. --chart-1 doubles as the brand oxblood on purpose (kit source). */
+  --chart-1:  #804940; /* oxblood — same hue as --accent-default */
+  --chart-2:  #be9d94;
+  --chart-3:  #8396ae;
+  --chart-4:  #37598e;
+  --chart-5:  #b39f79;
+  --chart-6:  #bc5a1d;
+  --chart-7:  #be97a6;
+  --chart-8:  #8d4c82;
+  --chart-9:  #98aa88;
+  --chart-10: #42737b;
+
+  /* ---------- STATUS ---------- */
+  --status-success-light:       #e8f5ee;
+  --status-success-default:     #0c7a43;
+  --status-success-dark:        #206241;
+
+  --status-error-light:         #ffeceb;
+  --status-error-default:       #bf0000;
+  --status-error-dark:          #8c0000;
+  --status-error-bright:        #ff5555;
+
+  --status-warning-light:       #ffebd4;
+  --status-warning-default:     #ff8900;
+  --status-warning-dark:        #914e00;
+
+  --status-info-light:          #e0edff;
+  --status-info-default:        #1a6ae2;
+  --status-info-dark:           #0e3775;
+
+  --status-modified-focus-light:   #f7ebc4;
+  --status-modified-focus-default: #e5bd39;
+
+  /* ---------- TERTIARY CHART PALETTE (12 cats) ---------- */
+  --tertiary-1c-brown:          #804940;
+  --tertiary-2c-seashell:       #e0bbb1;
+  --tertiary-3c-pepper:         #c54840;
+  --tertiary-4c-sky:            #adbaca;
+  --tertiary-5c-ocean:          #37598e;
+  --tertiary-6c-linen:          #ccb58a;
+  --tertiary-7c-orange:         #bc5a1d;
+  --tertiary-8c-sorbet:         #be97a6;
+  --tertiary-9c-purple:         #8d4c82;
+  --tertiary-9c-purple-light:   #f4edf3;
+  --tertiary-9c-purple-bright:  #8d0053;
+  --tertiary-10c-willow:        #98aa88;
+  --tertiary-11c-peacock:       #42737b;
+  --tertiary-12c-oyster:        #b3a69c;
+
+  /* ---------- AVATAR PALETTE ---------- */
+  /* Source: kit's dedicated "Avatar BG Colors" variable collection — for
+     assigning visually-distinct identity colors to letter avatars (e.g.
+     hashed from a person's name). Not a general accent palette; reach for
+     the tertiary chart colors instead for data visualization. All pair
+     with white text/initials. */
+  --avatar-bordeaux:            #a6041f;
+  --avatar-burned-orange:       #cc4a14;
+  --avatar-cipria:              #837272;
+  --avatar-deep-blue:           #002366;
+  --avatar-forest-green:        #00875a;
+  --avatar-magenta:             #db007c;
+  --avatar-olive-green:         #556b2f;
+  --avatar-teal:                #067a7a;
+  --avatar-violet:              #4b0082;
+  --avatar-zaphir-blue:         #0078d7;
+
+  /* "Color on color" avatar backgrounds — pair with dark text/initials
+     instead of white. Never mix with the vivid set above on the same
+     screen (Figma Avatar spec: "Do not combine one style with the other"). */
+  --avatar-soft-confetti:       #fde9f0;
+  --avatar-soft-marine:         #a7d1c6;
+  --avatar-soft-pearl-grey:     #e0dddd;
+  --avatar-soft-blue-steel:     #98bad7;
+  --avatar-soft-muschio:        #a6caa6;
+  --avatar-soft-light-yellow:   #ffffe0;
+  --avatar-soft-low-orange:     #ffdab9;
+  --avatar-soft-cyprus:         #f4a4a4;
+  --avatar-soft-lavender:       #e6e6fa;
+  --avatar-soft-hash:           #f5f5f5;
+
+  /* Matching dark foreground (text/icon-on-pastel) for each "color on color"
+     background above — from the same "Avatar BG Colors" collection (Pastel/FG
+     group). Use with the same-named --avatar-soft-* background; never pair
+     a soft FG with a vivid BG or vice versa. */
+  --avatar-soft-fg-confetti:     #5e0926;
+  --avatar-soft-fg-marine:       #23433b;
+  --avatar-soft-fg-pearl-grey:   #363030;
+  --avatar-soft-fg-blue-steel:   #1d3549;
+  --avatar-soft-fg-muschio:      #264026;
+  --avatar-soft-fg-light-yellow: #666600;
+  --avatar-soft-fg-low-orange:   #663000;
+  --avatar-soft-fg-cyprus:       #5b0b0b;
+  --avatar-soft-fg-lavender:     #111155;
+  --avatar-soft-fg-hash:         #1a1a1a;
+
+  /* ---------- SEMANTIC ALIASES ---------- */
+  --basic-fg-main-default:      var(--grey-default);
+  --basic-fg-main-muted:        var(--grey-500);
+  --basic-fg-main-pictet:       var(--brand-pictet);
+  --basic-fg-accent:            var(--accent-default);
+  --basic-bg-main-white:        var(--white-default);
+  --basic-bg-main-pictet:       var(--brand-pictet);
+  --basic-border-main-default:  var(--grey-border-default);
+  --basic-border-main-accent:   var(--accent-default);
+
+  /* ---------- RADIUS ---------- */
+  --border-radius-2xs:          2px;
+  --border-radius-xs:           4px;
+  --border-radius-sm:           8px;
+  --border-radius-md:           16px;
+  --border-radius-lg:           40px;
+
+  /* ---------- BORDER THICKNESS ---------- */
+  --border-thickness-sm:        1px;
+  --border-thickness-md:        2px;
+  --border-thickness-lg:        4px;
+
+  /* ---------- CONTROLS (checkbox / radio selection) ----------
+     Checkbox and Radio selection now uses --accent-default (oxblood) —
+     matching the primary action color, overriding the kit's original
+     terracotta. This terracotta scale is kept defined (unused by
+     Checkbox/Radio) in case a future surface wants it back. Toggle
+     Switch stays on the status-success green by default; see
+     --accent-default for its optional oxblood tone. */
+  --control-selected-default:   #bc5a1d;
+  --control-selected-hover:     #c9601e;
+  --control-selected-hover-bg:  rgba(188,90,29,0.05);
+
+  /* ---------- ELEVATION ---------- */
+  --box-shadow-sm-tooltip:      0 -1px 3px 0 #0000001a, 0 3px 6px -1px #0000001f;
+  --box-shadow-sm:              0 2px 6px 0 #00000014, 0 0 1px 0 #0000000a;
+  --box-shadow-md:              0 6px 12px 0 #00000014, 0 0 0 1px #0000000a;
+  --box-shadow-lg:              0 8px 16px 0 #00000014, 0 0 0 1px #0000000a;
+  --box-shadow-xl:              0 10px 20px 0 #0000001a, 0 0 0 1px #0000000a;
+  --box-shadow-left-to-right:   6px 0 10px 0 #00000014, 0 0 0 1px #0000000a;
+  --box-shadow-right-to-left:  -6px 0 10px 0 #00000014, 0 0 0 1px #0000000a;
+  --box-shadow-bottom-to-top:   0 -6px 10px 0 #00000014, 0 0 0 1px #0000000a;
+
+  /* ---------- SPACING ---------- */
+  --spacing-2xs:                2px;
+  --spacing-xs:                 4px;
+  --spacing-sm-nudge:           6px;
+  --spacing-sm:                 8px;
+  --spacing-md-nudge:           12px;
+  --spacing-md:                 16px;
+  --spacing-lg:                 24px;
+  --spacing-xl:                 32px;
+  --spacing-2xl:                40px;
+  --spacing-3xl:                48px;
+  --spacing-4xl:                64px;
+
+  /* ---------- TYPE SCALE ---------- */
+  --font-size-display-lg:       76px;
+  --font-size-display-md:       62px;
+  --font-size-display-sm:       48px;
+  --font-size-headline-lg:      40px;
+  --font-size-headline-md:      32px;
+  --font-size-headline-sm:      24px;
+  --font-size-paragraph-lg:     20px;
+  --font-size-paragraph-md:     16px;
+  --font-size-paragraph-sm:     14px;
+  --font-size-label-lg:         16px;
+  --font-size-label-md:         14px;
+  --font-size-label-sm:         12px;
+  --font-size-quote-lg:         20px;
+  --font-size-quote-md:         16px;
+  --font-size-quote-sm:         14px;
+
+  /* ---------- ICON SIZES ---------- */
+  --icon-size-5xl:              64px;
+  --icon-size-4xl:              56px;
+  --icon-size-3xl:              48px;
+  --icon-size-2xl:              40px;
+  --icon-size-xl:               32px;
+  --icon-size-lg:               24px;
+  --icon-size-lg-nudge:         20px;
+  --icon-size-md:               16px;
+  --icon-size-sm:               12px;
+  --icon-size-xs:               8px;
+
+  /* ---------- BREAKPOINTS & GRID ---------- */
+  /* Source: kit's Breakpoint and Responsiveness collection (4 modes). */
+  --breakpoint-desktop:          1920px;
+  --breakpoint-laptop:           1280px;
+  --breakpoint-tablet:           744px;
+  --breakpoint-phone:            375px;
+  --grid-columns-desktop:        12; /* @kind other */
+  --grid-columns-laptop:         12; /* @kind other */
+  --grid-columns-tablet:         8;  /* @kind other */
+  --grid-columns-phone:          4;  /* @kind other */
+  --grid-gutter-desktop:         24px;
+  --grid-gutter-laptop:          20px;
+  --grid-gutter-tablet:          20px;
+  --grid-gutter-phone:           16px;
+  --grid-margin-desktop:         48px;
+  --grid-margin-laptop:          32px;
+  --grid-margin-tablet:          24px;
+  --grid-margin-phone:           16px;
+
+  /* ---------- BASE FONT STACK ---------- */
+  --font-sans:                  LardySans, "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans-cond:             LardySansCond, "Barlow Semi Condensed", sans-serif;
+  --font-serif:                 LardySerif, "Newsreader", "Source Serif Pro", Georgia, serif;
+  --font-mono:                  SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+/* -----------------------------------------------------------
+   BASE STYLES
+   ----------------------------------------------------------- */
+html, body { margin: 0; padding: 0; }
+body {
+  color: var(--grey-default);
+  background-color: var(--basic-bg-main-default);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.4286;
+  font-variant: tabular-nums;
+  font-feature-settings: "tnum";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+::selection { color: #fff; background: var(--accent-default); }
+a { color: var(--accent-default); text-decoration: none; transition: color .3s; }
+a:hover { color: #8c655d; }
+a:active { color: #592d28; }
+
+/* Thin, token-colored OVERLAY scrollbar for real scrolling containers:
+   the scrollbar sits on top of content on scroll, it never reserves gutter
+   width/height and never pushes content over. Pair with the Scrollbar
+   component only for static/decorative mockups.
+   Requires a wrapper with position:relative + overflow:hidden the same size
+   as the visible viewport — .pxd-scroll goes on the INNER scrolling element,
+   which is pushed wider/taller than that viewport by the scrollbar's own
+   thickness so its native gutter lands outside the visible box (classic
+   negative-margin overlay trick), then made transparent on WebKit and thin
+   everywhere else. */
+.pxd-scroll-viewport { position: relative; overflow: hidden; }
+.pxd-scroll {
+  scrollbar-width: thin; scrollbar-color: var(--offwhite-400) transparent;
+  overflow: auto;
+  width: calc(100% + 8px);
+  height: calc(100% + 8px);
+  padding-right: 8px; padding-bottom: 8px;
+  box-sizing: border-box;
+}
+.pxd-scroll::-webkit-scrollbar { width: 8px; height: 8px; background: transparent; }
+.pxd-scroll::-webkit-scrollbar-thumb { background: var(--offwhite-400); border-radius: 999px; }
+.pxd-scroll::-webkit-scrollbar-track { background: transparent; }
+
+/* -----------------------------------------------------------
+   PXD TYPE STYLES
+   Direct port of the .display-* / .headline-* / .paragraph-*
+   / .label-* / .quote-* classes from pxd-base.
+   ----------------------------------------------------------- */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Canonical class names match the pxd-base library exactly (no prefix):
+     display-{sans-serif|serif}-{lg|md|sm}
+     headline-{sans-serif|serif}-{lg|md|sm}
+     paragraph-{normal|condensed}-{regular|bold}-{lg|md|sm}
+     label-{normal|condensed}-{regular|bold}-{lg|md|sm}
+     quote-{lg|md|sm}
+   Each sets only the 4 CSS properties the library exposes — font-family,
+   font-size, font-style, font-weight — plus a line-height from the scale.
+   Legacy `.pxd-*` names are kept as aliases on the same rules so existing
+   screens keep working.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* DISPLAY — LardySerif / LardySans · 400 · normal */
+.display-serif-lg, .pxd-display-serif-lg { font-family: var(--font-serif); font-size: 76px; line-height: 96px; font-weight: 400; font-style: normal; }
+.display-sans-serif-lg, .pxd-display-sans-lg { font-family: var(--font-sans); font-size: 76px; line-height: 96px; font-weight: 400; font-style: normal; }
+.display-serif-md, .pxd-display-serif-md { font-family: var(--font-serif); font-size: 62px; line-height: 80px; font-weight: 400; font-style: normal; }
+.display-sans-serif-md, .pxd-display-sans-md { font-family: var(--font-sans); font-size: 62px; line-height: 80px; font-weight: 400; font-style: normal; }
+.display-serif-sm, .pxd-display-serif-sm { font-family: var(--font-serif); font-size: 48px; line-height: 68px; font-weight: 400; font-style: normal; }
+.display-sans-serif-sm, .pxd-display-sans-sm { font-family: var(--font-sans); font-size: 48px; line-height: 68px; font-weight: 400; font-style: normal; }
+
+/* HEADLINE — LardySerif / LardySans · 400 · normal */
+.headline-serif-lg, .pxd-headline-serif-lg { font-family: var(--font-serif); font-size: 40px; line-height: 56px; font-weight: 400; font-style: normal; }
+.headline-sans-serif-lg, .pxd-headline-sans-lg { font-family: var(--font-sans); font-size: 40px; line-height: 56px; font-weight: 400; font-style: normal; }
+.headline-serif-md, .pxd-headline-serif-md { font-family: var(--font-serif); font-size: 32px; line-height: 48px; font-weight: 400; font-style: normal; }
+.headline-sans-serif-md, .pxd-headline-sans-md { font-family: var(--font-sans); font-size: 32px; line-height: 48px; font-weight: 400; font-style: normal; }
+.headline-serif-sm, .pxd-headline-serif-sm { font-family: var(--font-serif); font-size: 24px; line-height: 32px; font-weight: 400; font-style: normal; }
+.headline-sans-serif-sm, .pxd-headline-sans-sm { font-family: var(--font-sans); font-size: 24px; line-height: 32px; font-weight: 400; font-style: normal; }
+
+/* PARAGRAPH — normal = LardySans · condensed = LardySansCond · normal style */
+.paragraph-normal-regular-lg, .pxd-paragraph-lg      { font-family: var(--font-sans);      font-size: 20px; line-height: 32px; font-weight: 400; font-style: normal; }
+.paragraph-normal-bold-lg, .pxd-paragraph-lg-bold    { font-family: var(--font-sans);      font-size: 20px; line-height: 32px; font-weight: 700; font-style: normal; }
+.paragraph-condensed-regular-lg                      { font-family: var(--font-sans-cond); font-size: 20px; line-height: 32px; font-weight: 400; font-style: normal; }
+.paragraph-condensed-bold-lg                         { font-family: var(--font-sans-cond); font-size: 20px; line-height: 32px; font-weight: 700; font-style: normal; }
+.paragraph-normal-regular-md, .pxd-paragraph-md      { font-family: var(--font-sans);      font-size: 16px; line-height: 24px; font-weight: 400; font-style: normal; }
+.paragraph-normal-bold-md, .pxd-paragraph-md-bold    { font-family: var(--font-sans);      font-size: 16px; line-height: 24px; font-weight: 700; font-style: normal; }
+.paragraph-condensed-regular-md, .pxd-paragraph-cond-md { font-family: var(--font-sans-cond); font-size: 16px; line-height: 24px; font-weight: 400; font-style: normal; }
+.paragraph-condensed-bold-md                         { font-family: var(--font-sans-cond); font-size: 16px; line-height: 24px; font-weight: 700; font-style: normal; }
+.paragraph-normal-regular-sm, .pxd-paragraph-sm      { font-family: var(--font-sans);      font-size: 14px; line-height: 20px; font-weight: 400; font-style: normal; }
+.paragraph-normal-bold-sm, .pxd-paragraph-sm-bold    { font-family: var(--font-sans);      font-size: 14px; line-height: 20px; font-weight: 700; font-style: normal; }
+.paragraph-condensed-regular-sm                      { font-family: var(--font-sans-cond); font-size: 14px; line-height: 20px; font-weight: 400; font-style: normal; }
+.paragraph-condensed-bold-sm                         { font-family: var(--font-sans-cond); font-size: 14px; line-height: 20px; font-weight: 700; font-style: normal; }
+
+/* LABEL — normal = LardySans · condensed = LardySansCond · normal style */
+.label-normal-regular-lg, .pxd-label-lg      { font-family: var(--font-sans);      font-size: 16px; font-weight: 400; font-style: normal; }
+.label-normal-bold-lg, .pxd-label-lg-bold    { font-family: var(--font-sans);      font-size: 16px; font-weight: 700; font-style: normal; }
+.label-condensed-regular-lg                  { font-family: var(--font-sans-cond); font-size: 16px; font-weight: 400; font-style: normal; }
+.label-condensed-bold-lg                     { font-family: var(--font-sans-cond); font-size: 16px; font-weight: 700; font-style: normal; }
+.label-normal-regular-md, .pxd-label-md      { font-family: var(--font-sans);      font-size: 14px; font-weight: 400; font-style: normal; }
+.label-normal-bold-md, .pxd-label-md-bold    { font-family: var(--font-sans);      font-size: 14px; font-weight: 700; font-style: normal; }
+.label-condensed-regular-md                  { font-family: var(--font-sans-cond); font-size: 14px; font-weight: 400; font-style: normal; }
+.label-condensed-bold-md                     { font-family: var(--font-sans-cond); font-size: 14px; font-weight: 700; font-style: normal; }
+.label-normal-regular-sm, .pxd-label-sm      { font-family: var(--font-sans);      font-size: 12px; font-weight: 400; font-style: normal; }
+.label-normal-bold-sm, .pxd-label-sm-bold    { font-family: var(--font-sans);      font-size: 12px; font-weight: 700; font-style: normal; }
+.label-condensed-regular-sm                  { font-family: var(--font-sans-cond); font-size: 12px; font-weight: 400; font-style: normal; }
+.label-condensed-bold-sm                     { font-family: var(--font-sans-cond); font-size: 12px; font-weight: 700; font-style: normal; }
+
+/* QUOTE — LardySerif · italic · 400 */
+.quote-lg, .pxd-quote-lg { font-family: var(--font-serif); font-size: 20px; line-height: 40px; font-style: italic; font-weight: 400; }
+.quote-md, .pxd-quote-md { font-family: var(--font-serif); font-size: 16px; line-height: 32px; font-style: italic; font-weight: 400; }
+.quote-sm, .pxd-quote-sm { font-family: var(--font-serif); font-size: 14px; line-height: 24px; font-style: italic; font-weight: 400; }

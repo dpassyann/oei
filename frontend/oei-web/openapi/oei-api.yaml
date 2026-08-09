@@ -271,6 +271,39 @@ paths:
         "400":
           $ref: "#/components/responses/ValidationError"
 
+  /api/v1/contact:
+    post:
+      tags: [home-legacy]
+      operationId: submitContactMessage
+      summary: >
+        Message envoyé depuis le formulaire de contact public (simulé par le mock,
+        journalisé en mémoire — aucun email réel n'est envoyé avant l'arrivée du backend
+        Spring Boot).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email, message]
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                email:
+                  type: string
+                  format: email
+                subject:
+                  type: string
+                message:
+                  type: string
+                  minLength: 1
+      responses:
+        "204":
+          description: Message reçu
+        "400":
+          $ref: "#/components/responses/ValidationError"
+
   # ---------------------------------------------------------------------------
   # /api/public/v1 — accounts
   # ---------------------------------------------------------------------------

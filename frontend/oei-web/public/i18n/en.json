@@ -148,7 +148,20 @@
   "contact": {
     "title": "Contact",
     "bodyPrefix": "For any question, write to us at",
-    "note": "A dedicated contact form is planned for a future version of the site.",
+    "note": "You can also write to us directly via the form below.",
+    "form": {
+      "fields": {
+        "name": "Name",
+        "email": "Email",
+        "subject": "Subject",
+        "message": "Message"
+      },
+      "submit": "Send",
+      "submitting": "Sending…",
+      "success": "Your message has been sent. We will get back to you as soon as possible.",
+      "sendAnother": "Send another message",
+      "error": "Something went wrong while sending your message. Please try again."
+    },
     "institutional": {
       "heading": "Institutional contact",
       "loading": "Loading…",
@@ -162,8 +175,10 @@
   },
   "deontologie": {
     "title": "Ethics",
-    "body1": "Our code of ethics — the set of professional conduct rules that accredited members commit to upholding — is currently being drafted. It differs from the charter, a less binding voluntary commitment aimed at a wider audience (associate members, partner companies, universities).",
-    "body2": "Both documents will be published as soon as they have been approved by the organisation's governance board."
+    "loading": "Loading content…",
+    "notFound": "This page's content could not be found right now.",
+    "fallbackNotice": "Translation not available yet — showing the French version in the meantime.",
+    "tableOfContents": "Table of contents"
   },
   "membresFondateurs": {
     "title": "Founding members",

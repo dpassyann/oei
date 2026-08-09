@@ -1,0 +1,15 @@
+/* ============================================================
+   PXD — Pictet Experience Design
+   Canonical global stylesheet.
+
+   This is the single file consumers should link. It pulls in the
+   core color + type tokens (and the @font-face declarations + .pxd-*
+   type classes) from colors_and_type.css.
+
+   The other CSS files in this project are scoped to individual UI
+   kits (ui_kits/*/*.css) and are intentionally NOT imported here —
+   link those only inside their own kit.
+   ============================================================ */
+
+@import url("./colors_and_type.css");
+@import url("./components/fig-tokens.css");

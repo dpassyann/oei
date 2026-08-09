@@ -148,7 +148,20 @@
   "contact": {
     "title": "Contato",
     "bodyPrefix": "Para qualquer dúvida, escreva para nós em",
-    "note": "Está previsto um formulário de contato dedicado para uma futura versão do site.",
+    "note": "Você também pode escrever diretamente para nós através do formulário abaixo.",
+    "form": {
+      "fields": {
+        "name": "Nome",
+        "email": "Email",
+        "subject": "Assunto",
+        "message": "Mensagem"
+      },
+      "submit": "Enviar",
+      "submitting": "Enviando…",
+      "success": "Sua mensagem foi enviada. Responderemos o mais breve possível.",
+      "sendAnother": "Enviar outra mensagem",
+      "error": "Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente."
+    },
     "institutional": {
       "heading": "Contato institucional",
       "loading": "Carregando…",
@@ -162,8 +175,10 @@
   },
   "deontologie": {
     "title": "Deontologia",
-    "body1": "Nosso código deontológico — o conjunto de regras de conduta profissional que os membros credenciados se comprometem a respeitar — está atualmente em elaboração. Ele se distingue da carta, um compromisso voluntário menos vinculante destinado a um público mais amplo (membros associados, empresas parceiras, universidades).",
-    "body2": "Ambos os textos serão publicados assim que forem validados pelo conselho de governança da organização."
+    "loading": "Carregando conteúdo…",
+    "notFound": "O conteúdo desta página não pôde ser encontrado neste momento.",
+    "fallbackNotice": "Tradução ainda não disponível — a versão em francês é exibida enquanto isso.",
+    "tableOfContents": "Sumário"
   },
   "membresFondateurs": {
     "title": "Membros fundadores",

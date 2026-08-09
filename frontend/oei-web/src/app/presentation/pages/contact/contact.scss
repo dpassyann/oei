@@ -47,6 +47,76 @@ $oei-gold: #e8a530;
   font-size: 0.9rem;
 }
 
+.oei-contact-form-section {
+  margin-top: 2rem;
+}
+
+.oei-contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 32rem;
+}
+
+.oei-contact-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-weight: 600;
+  color: $oei-navy;
+
+  input,
+  textarea {
+    padding: 0.6rem;
+    border: 1px solid rgba(10, 30, 63, 0.25);
+    border-radius: 0.35rem;
+    font: inherit;
+    font-weight: 400;
+    color: #222;
+  }
+}
+
+.oei-contact-form__error {
+  padding: 0.75rem;
+  color: #7f1d1d;
+  background: #fee2e2;
+  border-radius: 0.5rem;
+}
+
+.oei-contact-form__success {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  color: #065f46;
+  background: #d1fae5;
+  border-radius: 0.5rem;
+}
+
+.oei-contact-form button {
+  padding: 0.5rem 1rem;
+  border: 1px solid $oei-navy;
+  border-radius: 0.35rem;
+  background: $oei-navy;
+  color: #fff;
+  cursor: pointer;
+  align-self: flex-start;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.oei-contact-form__success button {
+  padding: 0.35rem 0.8rem;
+  border: 1px solid #065f46;
+  border-radius: 0.35rem;
+  background: transparent;
+  color: #065f46;
+  cursor: pointer;
+}
+
 .oei-contact-block {
   margin-top: 2.5rem;
   padding-top: 2rem;

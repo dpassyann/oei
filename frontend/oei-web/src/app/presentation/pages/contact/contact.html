@@ -8,6 +8,45 @@
   </p>
   <p class="oei-page__note">{{ i18n.translate('contact.note') }}</p>
 
+  <section class="oei-contact-form-section">
+    @if (submitted()) {
+      <p class="oei-contact-form__success" role="status">
+        {{ i18n.translate('contact.form.success') }}
+        <button type="button" (click)="sendAnother()">{{ i18n.translate('contact.form.sendAnother') }}</button>
+      </p>
+    } @else {
+      <form class="oei-contact-form" (submit)="$event.preventDefault(); submit()">
+        @if (submitError()) {
+          <p class="oei-contact-form__error" role="alert">{{ i18n.translate('contact.form.error') }}</p>
+        }
+
+        <label class="oei-contact-form__field">
+          {{ i18n.translate('contact.form.fields.name') }}
+          <input type="text" [formField]="contactForm.name" />
+        </label>
+
+        <label class="oei-contact-form__field">
+          {{ i18n.translate('contact.form.fields.email') }}
+          <input type="email" [formField]="contactForm.email" />
+        </label>
+
+        <label class="oei-contact-form__field">
+          {{ i18n.translate('contact.form.fields.subject') }}
+          <input type="text" [formField]="contactForm.subject" />
+        </label>
+
+        <label class="oei-contact-form__field">
+          {{ i18n.translate('contact.form.fields.message') }}
+          <textarea rows="6" [formField]="contactForm.message"></textarea>
+        </label>
+
+        <button type="submit" [disabled]="submitting()">
+          {{ submitting() ? i18n.translate('contact.form.submitting') : i18n.translate('contact.form.submit') }}
+        </button>
+      </form>
+    }
+  </section>
+
   <section class="oei-contact-block">
     <h2 class="oei-contact-block__title">{{ i18n.translate('contact.institutional.heading') }}</h2>
 
