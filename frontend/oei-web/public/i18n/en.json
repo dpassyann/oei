@@ -972,12 +972,18 @@
     "lastModified": "Last updated",
     "notFound": "Domain not found.",
     "onThisPage": "On this page",
-    "placeholder": "Content coming soon — this section will be filled in progressively.",
-    "sections": {
-      "apercu": "Overview",
-      "groupe-de-travail": "Working group",
-      "ressources": "Resources",
-      "contenu-cms": "Content"
+    "contentFallbackNotice": "Detailed content not translated yet — showing the English version in the meantime.",
+    "relatedResources": {
+      "title": "Related Resources"
+    },
+    "relatedNews": {
+      "title": "Related News",
+      "readMore": "Read more"
+    },
+    "contribute": {
+      "title": "Contribute to this topic",
+      "body": "Want to suggest an article, a resource, an event or an update on this domain? Get in touch with the OEI.",
+      "cta": "Contribute to this topic"
     }
   },
   "livreBlancPage": {

@@ -972,12 +972,18 @@
     "lastModified": "Dernière mise à jour",
     "notFound": "Domaine introuvable.",
     "onThisPage": "Sur cette page",
-    "placeholder": "Contenu à venir — cette section sera enrichie progressivement.",
-    "sections": {
-      "apercu": "Vue d'ensemble",
-      "groupe-de-travail": "Groupe de travail",
-      "ressources": "Ressources",
-      "contenu-cms": "Contenu"
+    "contentFallbackNotice": "Contenu détaillé non traduit pour le moment — version anglaise affichée en attendant.",
+    "relatedResources": {
+      "title": "Ressources associées"
+    },
+    "relatedNews": {
+      "title": "Actualités associées",
+      "readMore": "Lire la suite"
+    },
+    "contribute": {
+      "title": "Contribuer à cette thématique",
+      "body": "Vous souhaitez proposer un article, une ressource, un événement ou une mise à jour sur ce domaine ? Contactez l'OEI.",
+      "cta": "Contribuer à cette thématique"
     }
   },
   "livreBlancPage": {

@@ -3,33 +3,94 @@
     <div class="oei-domaine-detail__content">
       <a class="oei-page__back" routerLink="/">{{ i18n.translate('domaineDetail.backToHome') }}</a>
       <h1 class="oei-page__title">{{ domain.title }}</h1>
+      @if (domain.subtitle) {
+        <p class="oei-domaine-detail__subtitle">{{ domain.subtitle }}</p>
+      }
       <p class="oei-domaine-detail__last-modified">
         {{ i18n.translate('domaineDetail.lastModified') }} : {{ formattedLastModified() }}
       </p>
+
+      @if (isContentFallback()) {
+        <p class="oei-fallback-banner">
+          {{ i18n.translate('domaineDetail.contentFallbackNotice') }}
+        </p>
+      }
+
       <p class="oei-page__body">{{ domain.description }}</p>
 
-      <section id="apercu" class="oei-domaine-detail__section">
-        <h2>{{ i18n.translate('domaineDetail.sections.apercu') }}</h2>
-        <p class="oei-domaine-detail__placeholder">{{ i18n.translate('domaineDetail.placeholder') }}</p>
-      </section>
+      @for (section of domain.sections; track section.id) {
+        <section [id]="section.id" class="oei-domaine-detail__section">
+          <h2>{{ section.title }}</h2>
+          @for (paragraph of section.paragraphs; track paragraph) {
+            <p class="oei-domaine-detail__paragraph">{{ paragraph }}</p>
+          }
+          @if (section.bullets) {
+            <ul class="oei-domaine-detail__bullets">
+              @for (bullet of section.bullets; track bullet) {
+                <li>{{ bullet }}</li>
+              }
+            </ul>
+          }
+        </section>
+      }
 
-      <section id="groupe-de-travail" class="oei-domaine-detail__section">
-        <h2>{{ i18n.translate('domaineDetail.sections.groupe-de-travail') }}</h2>
-        <p class="oei-domaine-detail__placeholder">{{ i18n.translate('domaineDetail.placeholder') }}</p>
-      </section>
+      @if (domain.relatedResources && domain.relatedResources.length > 0) {
+        <section class="oei-domaine-detail__section oei-domaine-detail__resources">
+          <h2>{{ i18n.translate('domaineDetail.relatedResources.title') }}</h2>
+          <ul class="oei-domaine-detail__resources-list">
+            @for (resource of domain.relatedResources; track resource.title) {
+              <li class="oei-domaine-detail__resource-card">
+                <a class="oei-domaine-detail__resource-link" [routerLink]="resource.path">
+                  <span class="oei-domaine-detail__resource-title">{{ resource.title }}</span>
+                  <span class="oei-domaine-detail__resource-description">{{
+                    resource.description
+                  }}</span>
+                </a>
+              </li>
+            }
+          </ul>
+        </section>
+      }
 
-      <section id="ressources" class="oei-domaine-detail__section">
-        <h2>{{ i18n.translate('domaineDetail.sections.ressources') }}</h2>
-        <p class="oei-domaine-detail__placeholder">{{ i18n.translate('domaineDetail.placeholder') }}</p>
-      </section>
+      @if (domain.relatedNews && domain.relatedNews.length > 0) {
+        <section class="oei-domaine-detail__section oei-domaine-detail__news">
+          <h2>{{ i18n.translate('domaineDetail.relatedNews.title') }}</h2>
+          <ul class="oei-domaine-detail__news-list">
+            @for (item of domain.relatedNews; track item.title) {
+              <li class="oei-domaine-detail__news-card">
+                <img
+                  class="oei-domaine-detail__news-image"
+                  [src]="item.imageUrl"
+                  [alt]="item.title"
+                />
+                <div class="oei-domaine-detail__news-body">
+                  <h3 class="oei-domaine-detail__news-title">{{ item.title }}</h3>
+                  <p class="oei-domaine-detail__news-excerpt">{{ item.excerpt }}</p>
+                  <a class="oei-domaine-detail__news-link" [routerLink]="item.path">{{
+                    i18n.translate('domaineDetail.relatedNews.readMore')
+                  }}</a>
+                </div>
+              </li>
+            }
+          </ul>
+        </section>
+      }
 
-      <section id="contenu-cms" class="oei-domaine-detail__section">
-        <h2>{{ i18n.translate('domaineDetail.sections.contenu-cms') }}</h2>
-        <p class="oei-domaine-detail__placeholder">{{ i18n.translate('domaineDetail.placeholder') }}</p>
+      <section class="oei-domaine-detail__contribute">
+        <h2>{{ i18n.translate('domaineDetail.contribute.title') }}</h2>
+        <p class="oei-domaine-detail__paragraph">
+          {{ i18n.translate('domaineDetail.contribute.body') }}
+        </p>
+        <a class="oei-domaine-detail__contribute-cta" routerLink="/contact">{{
+          i18n.translate('domaineDetail.contribute.cta')
+        }}</a>
       </section>
     </div>
 
-    <oei-floating-side-menu [title]="i18n.translate('domaineDetail.onThisPage')" [links]="sideMenuLinks()" />
+    <oei-floating-side-menu
+      [title]="i18n.translate('domaineDetail.onThisPage')"
+      [links]="sideMenuLinks()"
+    />
   </main>
 } @else if (notFound()) {
   <main class="oei-page">
