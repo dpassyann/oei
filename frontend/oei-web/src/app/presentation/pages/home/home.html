@@ -9,81 +9,11 @@
   </div>
 
   <div class="oei-hero__visual" aria-hidden="true">
-    <div class="oei-hero__globe">
-      <svg class="oei-hero__world-map" viewBox="-150 -150 300 300">
-        <clipPath id="oei-hero-world-clip">
-          <circle cx="0" cy="0" r="148" />
-        </clipPath>
-        <g clip-path="url(#oei-hero-world-clip)">
-          @for (dot of worldMapDots; track dot.x + '-' + dot.y) {
-            <circle [attr.cx]="dot.x" [attr.cy]="dot.y" r="2.4" />
-          }
-        </g>
-      </svg>
-      <svg class="oei-hero__orbits" viewBox="-150 -150 300 300" fill="none">
-        @for (orbit of heroOrbits; track orbit.rotate) {
-          <g [attr.transform]="'rotate(' + orbit.rotate + ')'">
-            <ellipse
-              class="oei-hero__orbit-ring"
-              cx="0"
-              cy="0"
-              [attr.rx]="orbit.rx"
-              [attr.ry]="orbit.ry"
-            />
-            <ellipse
-              class="oei-hero__orbit-glow"
-              [style.animation-duration.s]="orbit.duration"
-              cx="0"
-              cy="0"
-              [attr.rx]="orbit.rx"
-              [attr.ry]="orbit.ry"
-            />
-          </g>
-        }
-      </svg>
-      <svg
-        viewBox="-290 -260 580 715"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="oei-hero__shield"
-      >
-        <path
-          d="M0,-250 C-95,-175 -210,-150 -280,-145 V10 C-280,210 -165,345 0,445 C165,345 280,210 280,10 V-145 C210,-150 95,-175 0,-250 Z"
-        />
-        <circle cx="0" cy="40" r="115" />
-        <ellipse cx="0" cy="40" rx="55" ry="115" />
-        <path d="M-115,40 H115" />
-        <path d="M-100,-10 C-45,15 45,15 100,-10" />
-        <path d="M-100,90 C-45,65 45,65 100,90" />
-        <path d="M0,-75 V-160" />
-        <circle cx="0" cy="-182" r="16" />
-        <path d="M-55,-60 L-95,-100 V-145" />
-        <circle cx="-95" cy="-166" r="16" />
-        <path d="M55,-60 L95,-100 V-145" />
-        <circle cx="95" cy="-166" r="16" />
-        <path d="M-95,-10 L-155,-50" />
-        <circle cx="-178" cy="-65" r="16" />
-        <path d="M95,-10 L155,-50" />
-        <circle cx="178" cy="-65" r="16" />
-        <path d="M-115,40 H-185" />
-        <circle cx="-208" cy="40" r="16" />
-        <path d="M115,40 H185" />
-        <circle cx="208" cy="40" r="16" />
-        <path d="M-95,90 L-155,130" />
-        <circle cx="-178" cy="145" r="16" />
-        <path d="M95,90 L155,130" />
-        <circle cx="178" cy="145" r="16" />
-        <path d="M-55,140 L-95,180 V225" />
-        <circle cx="-95" cy="246" r="16" />
-        <path d="M55,140 L95,180 V225" />
-        <circle cx="95" cy="246" r="16" />
-        <path d="M0,155 V240" />
-        <circle cx="0" cy="262" r="16" />
-      </svg>
-    </div>
+    @defer (on viewport) {
+      <oei-hero-globe />
+    } @placeholder {
+      <div class="oei-hero__visual-placeholder"></div>
+    }
   </div>
 
   <aside class="oei-hero__panel">

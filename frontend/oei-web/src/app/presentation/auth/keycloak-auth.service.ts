@@ -80,7 +80,8 @@ export class KeycloakAuthService {
    * is the documented Keycloak convention (kept working across the classic and declarative
    * User Profile setups; no separate `/registrations` endpoint is required from Keycloak 24+
    * onward, which is what this realm runs — see `infra/docker-compose.yml`,
-   * `quay.io/keycloak/keycloak:25.0`). The custom OEI login theme
+   * `quay.io/keycloak/keycloak:25.0`). The custom
+   * OEI login theme
    * (`keycloak/themes/oei/login/`) carries the extra business fields (country, consent) via the
    * declarative User Profile — see that theme's README for details.
    */

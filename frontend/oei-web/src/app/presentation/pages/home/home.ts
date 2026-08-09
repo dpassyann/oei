@@ -7,6 +7,7 @@ import { PartnerApplicationService } from '../../../application/service/partner-
 import { MembershipFeeApplicationService } from '../../../application/service/membership-fee-application.service';
 import { KeycloakAuthService } from '../../auth/keycloak-auth.service';
 import { I18nService } from '../../i18n/i18n.service';
+import { HeroGlobe } from '../../components/hero-globe/hero-globe';
 
 interface ResourceExcerptLink {
   // `key` is the structural identifier used to build the i18n path
@@ -19,42 +20,9 @@ interface ResourceExcerptLink {
 const NEWS_LIMIT = 3;
 const COMMITMENT_COUNT = 4;
 
-/** Very coarse continent silhouettes as unions of ellipses in (longitude, latitude) space —
- * good enough to read as "a world map" at hero-icon scale, not a navigational projection.
- * Each continent is one or two ellipses roughly bounding its real-world extent. */
-const CONTINENTS: readonly { readonly cx: number; readonly cy: number; readonly rx: number; readonly ry: number }[] = [
-  { cx: -100, cy: 45, rx: 32, ry: 22 }, // North America
-  { cx: -60, cy: -15, rx: 16, ry: 35 }, // South America
-  { cx: 12, cy: 12, rx: 20, ry: 28 }, // Africa
-  { cx: 15, cy: 50, rx: 20, ry: 12 }, // Europe
-  { cx: 90, cy: 45, rx: 55, ry: 25 }, // Asia
-  { cx: 130, cy: -25, rx: 16, ry: 12 }, // Australia
-];
-
-/** Samples a regular longitude/latitude grid and keeps the points that fall inside one of
- * `CONTINENTS`' ellipses, projecting them (equirectangular — flat lon/lat scaling, no need for
- * a real map projection at this scale) onto the same `-150..150` SVG viewBox as
- * `.oei-hero__orbits`. Pure and static: computed once at module load, not per render. */
-function generateWorldMapDots(): readonly { readonly x: number; readonly y: number }[] {
-  const dots: { x: number; y: number }[] = [];
-  for (let lat = 80; lat >= -80; lat -= 8) {
-    for (let lon = -180; lon <= 180; lon += 8) {
-      const isLand = CONTINENTS.some(
-        (c) => ((lon - c.cx) / c.rx) ** 2 + ((lat - c.cy) / c.ry) ** 2 <= 1,
-      );
-      if (isLand) {
-        dots.push({ x: (lon / 180) * 145, y: (-lat / 90) * 145 });
-      }
-    }
-  }
-  return dots;
-}
-
-const WORLD_MAP_DOTS = generateWorldMapDots();
-
 @Component({
   selector: 'oei-home',
-  imports: [RouterLink],
+  imports: [RouterLink, HeroGlobe],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
@@ -99,25 +67,6 @@ export class Home {
     params: () => this.i18n.currentLang(),
     stream: ({ params }) => this.partners.getPartners(params),
   });
-
-  // Purely decorative "rotating interconnected globe" behind the hero shield: three
-  // ellipses at different tilt angles stand in for latitude/meridian lines of a wireframe
-  // globe (the whole `<svg class="oei-hero__orbits">` spins slowly via CSS), each with a
-  // brighter "neon" arc (`.oei-hero__orbit-glow`, animated `stroke-dashoffset`) that appears
-  // to travel around its ring — evoking constant, live interconnection rather than a static
-  // decoration. Static data, not content — no i18n/CMS involvement.
-  protected readonly heroOrbits: readonly {
-    readonly rotate: number;
-    readonly rx: number;
-    readonly ry: number;
-    readonly duration: number;
-  }[] = [
-    { rotate: 0, rx: 130, ry: 60, duration: 7 },
-    { rotate: 60, rx: 130, ry: 60, duration: 9 },
-    { rotate: 120, rx: 90, ry: 130, duration: 11 },
-  ];
-
-  protected readonly worldMapDots = WORLD_MAP_DOTS;
 
   protected readonly title = computed(() => this.contentResource.value()?.title ?? '');
   protected readonly body = computed(() => this.contentResource.value()?.body ?? '');

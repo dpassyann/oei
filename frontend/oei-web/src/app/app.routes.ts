@@ -54,7 +54,7 @@ export const routes: Routes = [
   { path: 'contact', component: Contact },
   { path: 'membres-fondateurs', component: MembresFondateurs },
   // NOTE: there used to be a homemade `/inscription` public account-creation page here. It has
-  // been removed in favour of redirecting straight to Keycloak's native registration screen
+  // been removed in favor of redirecting straight to Keycloak's native registration screen
   // (see `KeycloakAuthService.register()` and `home.ts`'s `onJoinClick`) — the custom OEI login
   // theme (`keycloak/themes/oei/login/`) now carries the business fields (country, consent).
   // Distinct from `/espace-membre/inscription` (`Onboarding`), the detailed professional-profile
