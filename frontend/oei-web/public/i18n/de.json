@@ -13,7 +13,8 @@
     "foundingMembers": "Gründungsmitglieder",
     "legalNotices": "Impressum",
     "sitemap": "Sitemap",
-    "partners": "Partner"
+    "partners": "Partner",
+    "events": "Veranstaltungen"
   },
   "header": {
     "memberArea": "Mitgliederbereich",
@@ -657,7 +658,8 @@
       "badges": "Abzeichen",
       "carte": "Digitale Karte",
       "cotisation": "Mitgliedsbeitrag",
-      "publier": "Artikel einreichen"
+      "publier": "Artikel einreichen",
+      "proposerEvenement": "Veranstaltung vorschlagen"
     },
     "publier": {
       "title": "Artikel einreichen",
@@ -686,6 +688,50 @@
         "pending": "Ausstehend",
         "approved": "Veröffentlicht",
         "rejected": "Abgelehnt"
+      }
+    },
+    "proposerEvenement": {
+      "title": "Veranstaltung vorschlagen",
+      "intro": "Schlagen Sie eine Veranstaltung vor: Sie wird von einem Moderator (unterstützt durch eine automatische Vorprüfung) geprüft, bevor sie im öffentlichen Kalender erscheint.",
+      "fields": {
+        "title": "Titel",
+        "description": "Beschreibung",
+        "type": "Veranstaltungstyp",
+        "startAt": "Beginn",
+        "endAt": "Ende",
+        "timezone": "Zeitzone",
+        "country": "Land",
+        "city": "Stadt",
+        "venue": "Veranstaltungsort",
+        "venueOrOnlineHint": "Geben Sie unten einen Veranstaltungsort oder einen Online-Link an (mindestens eines der beiden).",
+        "onlineUrl": "Online-Link (Videoanruf, Meetup...)",
+        "imageUrl": "Titelbild (optional)",
+        "imageUrlHint": "URL des Titelbilds."
+      },
+      "submit": "Zur Moderation einreichen",
+      "submitting": "Wird gesendet…",
+      "submitAnother": "Weitere Veranstaltung vorschlagen",
+      "error": "Das Senden ist fehlgeschlagen. Bitte Formular prüfen und erneut versuchen.",
+      "pending": {
+        "title": "Ausstehende Moderation",
+        "body": "Ihr Vorschlag wurde übermittelt. Er wird nach Genehmigung durch einen Moderator im Kalender veröffentlicht."
+      },
+      "mine": {
+        "title": "Meine Vorschläge",
+        "empty": "Sie haben noch keine Veranstaltung vorgeschlagen."
+      },
+      "status": {
+        "DRAFT": "Entwurf",
+        "SUBMITTED": "Eingereicht",
+        "AI_PRECHECK": "KI-Vorprüfung läuft",
+        "MODERATOR_REVIEW": "In Moderation",
+        "APPROVED": "Genehmigt",
+        "PUBLISHED": "Veröffentlicht",
+        "CHANGES_REQUESTED": "Änderungen angefordert",
+        "REJECTED": "Abgelehnt",
+        "CANCELLED": "Abgesagt",
+        "ENDED": "Beendet",
+        "ARCHIVED": "Archiviert"
       }
     }
   },
@@ -829,6 +875,25 @@
       "confirmReject": "Ablehnung bestätigen",
       "cancel": "Abbrechen",
       "rejectReasonPlaceholder": "Ablehnungsgrund (optional)"
+    },
+    "eventsModeration": {
+      "title": "Veranstaltungsmoderation",
+      "intro": "Von Mitgliedern eingereichte Veranstaltungsvorschläge, die vor der Veröffentlichung im Kalender genehmigt werden müssen.",
+      "empty": "Kein Vorschlag zur Moderation ausstehend.",
+      "columns": {
+        "title": "Titel",
+        "author": "Autor",
+        "startAt": "Startdatum",
+        "aiPrecheck": "KI-Vorprüfung"
+      },
+      "approve": "Genehmigen",
+      "reject": "Ablehnen",
+      "requestChanges": "Änderungen anfordern",
+      "confirmReject": "Ablehnung bestätigen",
+      "confirmRequestChanges": "Anfrage bestätigen",
+      "cancel": "Abbrechen",
+      "rejectReasonPlaceholder": "Ablehnungsgrund (optional)",
+      "requestChangesReasonPlaceholder": "Geben Sie die erwarteten Änderungen an"
     }
   },
   "espaceInstitution": {
@@ -997,6 +1062,55 @@
       "button": "Vollständiges Weißbuch herunterladen (PDF)",
       "frontCoverAlt": "Umschlag des Weißbuchs des Ordens der Informatikexperten",
       "backCoverAlt": "Rückseite des Weißbuchs des Ordens der Informatikexperten"
+    }
+  },
+  "events": {
+    "list": {
+      "title": "Veranstaltungen",
+      "intro": "Veranstaltungskalender des Ordens der Informatikexperten: Treffen, Kolloquien und Webinare.",
+      "featuredTitle": "Nächste Veranstaltung",
+      "openTitle": "Offene Veranstaltungen",
+      "openEmpty": "Derzeit keine weitere offene Veranstaltung.",
+      "historyTitle": "Verlauf",
+      "historyEmpty": "Noch keine vergangene Veranstaltung.",
+      "speakers": "Referenten"
+    },
+    "detail": {
+      "loading": "Veranstaltung wird geladen…",
+      "notFound": "Diese Veranstaltung existiert nicht mehr oder ist nicht verfügbar.",
+      "online": "Online",
+      "loginToParticipate": "Zum Teilnehmen anmelden",
+      "registered": "Sie nehmen an dieser Veranstaltung teil",
+      "registering": "Anmeldung läuft…",
+      "participate": "Teilnehmen",
+      "scheduleTitle": "Zeitplan",
+      "capacity": "Plätze",
+      "speakersTitle": "Referenten",
+      "locationTitle": "Ort",
+      "feedTitle": "Veranstaltungs-Feed",
+      "feedReadOnly": "Der Feed dieser Veranstaltung ist schreibgeschützt (vor oder nach dem Live-Fenster).",
+      "feedRequiresRegistration": "Nur angemeldete Mitglieder können in diesem Feed posten und kommentieren.",
+      "photoConsent": {
+        "intro": "Bevor Sie ein Foto veröffentlichen, bestätigen Sie bitte, dass Sie mit der Veröffentlichung im Feed dieser Veranstaltung einverstanden sind. Die Anmeldung zur Veranstaltung gilt nicht als Einwilligung zur Veröffentlichung Ihres Bildes.",
+        "accept": "Ich stimme der Veröffentlichung meiner Fotos zu"
+      },
+      "postError": "Veröffentlichung fehlgeschlagen. Bitte erneut versuchen.",
+      "postPlaceholder": "Teilen Sie etwas mit den anderen Teilnehmern…",
+      "photoUrlPlaceholder": "Foto-URL (optional)",
+      "posting": "Wird veröffentlicht…",
+      "post": "Veröffentlichen",
+      "feedEmpty": "Noch keine Beiträge.",
+      "like": "Gefällt mir"
+    },
+    "types": {
+      "meetup": "Meetup",
+      "colloque": "Kolloquium",
+      "conference": "Konferenz",
+      "webinar": "Webinar",
+      "workshop": "Workshop",
+      "assemblee": "Mitgliederversammlung",
+      "ceremonie": "Zeremonie",
+      "networking": "Networking"
     }
   }
 }

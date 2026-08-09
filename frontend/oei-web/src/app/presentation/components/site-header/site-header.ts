@@ -64,6 +64,9 @@ export class SiteHeader {
     { path: '/actualites', labelKey: 'nav.news' },
     { path: '/partenaires', labelKey: 'nav.partners' },
     { path: '/contact', labelKey: 'nav.contact' },
+    // Appended at the end rather than reordered in among the pre-existing links, per this
+    // task's anti-conflict constraint (other agents also touch this array in parallel).
+    { path: '/events', labelKey: 'nav.events' },
   ];
 
   // "Ressources" is a dropdown (not a flat nav link) precisely so that /livre-blanc — one of

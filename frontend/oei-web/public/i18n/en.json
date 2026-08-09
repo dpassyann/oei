@@ -13,7 +13,8 @@
     "foundingMembers": "Founding members",
     "legalNotices": "Legal notices",
     "sitemap": "Sitemap",
-    "partners": "Partners"
+    "partners": "Partners",
+    "events": "Events"
   },
   "header": {
     "memberArea": "Member area",
@@ -657,7 +658,8 @@
       "badges": "Badges",
       "carte": "Digital card",
       "cotisation": "Membership fee",
-      "publier": "Submit an article"
+      "publier": "Submit an article",
+      "proposerEvenement": "Propose an event"
     },
     "publier": {
       "title": "Submit an article",
@@ -686,6 +688,50 @@
         "pending": "Pending",
         "approved": "Published",
         "rejected": "Rejected"
+      }
+    },
+    "proposerEvenement": {
+      "title": "Propose an event",
+      "intro": "Propose an event: it will be reviewed by a moderator (assisted by an automated precheck) before appearing on the public agenda.",
+      "fields": {
+        "title": "Title",
+        "description": "Description",
+        "type": "Event type",
+        "startAt": "Start",
+        "endAt": "End",
+        "timezone": "Timezone",
+        "country": "Country",
+        "city": "City",
+        "venue": "Physical venue",
+        "venueOrOnlineHint": "Fill in a physical venue or an online link below (at least one of the two).",
+        "onlineUrl": "Online link (video call, Meetup...)",
+        "imageUrl": "Cover image (optional)",
+        "imageUrlHint": "Cover image URL."
+      },
+      "submit": "Submit for moderation",
+      "submitting": "Sending…",
+      "submitAnother": "Propose another event",
+      "error": "Sending failed. Please check the form and try again.",
+      "pending": {
+        "title": "Awaiting moderation",
+        "body": "Your proposal has been submitted. It will be published on the agenda once approved by a moderator."
+      },
+      "mine": {
+        "title": "My proposals",
+        "empty": "You have not proposed any event yet."
+      },
+      "status": {
+        "DRAFT": "Draft",
+        "SUBMITTED": "Submitted",
+        "AI_PRECHECK": "AI precheck running",
+        "MODERATOR_REVIEW": "Under moderation",
+        "APPROVED": "Approved",
+        "PUBLISHED": "Published",
+        "CHANGES_REQUESTED": "Changes requested",
+        "REJECTED": "Rejected",
+        "CANCELLED": "Cancelled",
+        "ENDED": "Ended",
+        "ARCHIVED": "Archived"
       }
     }
   },
@@ -829,6 +875,25 @@
       "confirmReject": "Confirm rejection",
       "cancel": "Cancel",
       "rejectReasonPlaceholder": "Rejection reason (optional)"
+    },
+    "eventsModeration": {
+      "title": "Events moderation",
+      "intro": "Event proposals submitted by members, awaiting approval before publication on the agenda.",
+      "empty": "No proposal awaiting moderation.",
+      "columns": {
+        "title": "Title",
+        "author": "Author",
+        "startAt": "Start date",
+        "aiPrecheck": "AI precheck"
+      },
+      "approve": "Approve",
+      "reject": "Reject",
+      "requestChanges": "Request changes",
+      "confirmReject": "Confirm rejection",
+      "confirmRequestChanges": "Confirm request",
+      "cancel": "Cancel",
+      "rejectReasonPlaceholder": "Rejection reason (optional)",
+      "requestChangesReasonPlaceholder": "Specify the expected changes"
     }
   },
   "espaceInstitution": {
@@ -1003,6 +1068,55 @@
       "button": "Download the full White Paper (PDF)",
       "frontCoverAlt": "Cover of the Order of Computer Experts' White Paper",
       "backCoverAlt": "Back cover of the Order of Computer Experts' White Paper"
+    }
+  },
+  "events": {
+    "list": {
+      "title": "Events",
+      "intro": "OEI's event agenda: meetups, colloquia and webinars.",
+      "featuredTitle": "Next event",
+      "openTitle": "Open events",
+      "openEmpty": "No other open event at the moment.",
+      "historyTitle": "History",
+      "historyEmpty": "No past event yet.",
+      "speakers": "Speakers"
+    },
+    "detail": {
+      "loading": "Loading event…",
+      "notFound": "This event does not exist or is no longer available.",
+      "online": "Online",
+      "loginToParticipate": "Log in to attend",
+      "registered": "You are attending this event",
+      "registering": "Registering…",
+      "participate": "Attend",
+      "scheduleTitle": "Schedule",
+      "capacity": "Seats",
+      "speakersTitle": "Speakers",
+      "locationTitle": "Location",
+      "feedTitle": "Event feed",
+      "feedReadOnly": "This event's feed is read-only (before or after the live window).",
+      "feedRequiresRegistration": "Only members registered to this event can post and comment.",
+      "photoConsent": {
+        "intro": "Before posting a photo, please confirm you consent to it being published on this event's feed. Registering to the event does not imply consent to publish your image.",
+        "accept": "I consent to publishing my photos"
+      },
+      "postError": "Posting failed. Please try again.",
+      "postPlaceholder": "Share something with other attendees…",
+      "photoUrlPlaceholder": "Photo URL (optional)",
+      "posting": "Posting…",
+      "post": "Post",
+      "feedEmpty": "No posts yet.",
+      "like": "Like"
+    },
+    "types": {
+      "meetup": "Meetup",
+      "colloque": "Symposium",
+      "conference": "Conference",
+      "webinar": "Webinar",
+      "workshop": "Workshop",
+      "assemblee": "General assembly",
+      "ceremonie": "Ceremony",
+      "networking": "Networking"
     }
   }
 }

@@ -13,7 +13,8 @@
     "foundingMembers": "Membres fondateurs",
     "legalNotices": "Mentions légales",
     "sitemap": "Plan du site",
-    "partners": "Partenaires"
+    "partners": "Partenaires",
+    "events": "Événements"
   },
   "header": {
     "memberArea": "Espace membre",
@@ -657,7 +658,8 @@
       "badges": "Badges",
       "carte": "Carte numérique",
       "cotisation": "Cotisation",
-      "publier": "Publier un article"
+      "publier": "Publier un article",
+      "proposerEvenement": "Proposer un événement"
     },
     "publier": {
       "title": "Proposer un article",
@@ -686,6 +688,50 @@
         "pending": "En attente",
         "approved": "Publié",
         "rejected": "Refusé"
+      }
+    },
+    "proposerEvenement": {
+      "title": "Proposer un événement",
+      "intro": "Proposez un événement : il sera relu par un modérateur (avec l'aide d'un précheck automatique) avant d'apparaître dans l'agenda public.",
+      "fields": {
+        "title": "Titre",
+        "description": "Description",
+        "type": "Type d'événement",
+        "startAt": "Début",
+        "endAt": "Fin",
+        "timezone": "Fuseau horaire",
+        "country": "Pays",
+        "city": "Ville",
+        "venue": "Lieu physique",
+        "venueOrOnlineHint": "Renseignez un lieu physique ou un lien en ligne ci-dessous (au moins l'un des deux).",
+        "onlineUrl": "Lien en ligne (visio, Meetup...)",
+        "imageUrl": "Image de couverture (optionnel)",
+        "imageUrlHint": "URL de l'image de couverture."
+      },
+      "submit": "Soumettre pour modération",
+      "submitting": "Envoi en cours…",
+      "submitAnother": "Proposer un autre événement",
+      "error": "L'envoi a échoué. Merci de vérifier le formulaire et de réessayer.",
+      "pending": {
+        "title": "En attente de modération",
+        "body": "Votre proposition a bien été transmise. Elle sera publiée dans l'agenda une fois validée par un modérateur."
+      },
+      "mine": {
+        "title": "Mes propositions",
+        "empty": "Vous n'avez encore proposé aucun événement."
+      },
+      "status": {
+        "DRAFT": "Brouillon",
+        "SUBMITTED": "Soumis",
+        "AI_PRECHECK": "Précheck IA en cours",
+        "MODERATOR_REVIEW": "En cours de modération",
+        "APPROVED": "Approuvé",
+        "PUBLISHED": "Publié",
+        "CHANGES_REQUESTED": "Modifications demandées",
+        "REJECTED": "Refusé",
+        "CANCELLED": "Annulé",
+        "ENDED": "Terminé",
+        "ARCHIVED": "Archivé"
       }
     }
   },
@@ -829,6 +875,25 @@
       "confirmReject": "Confirmer le rejet",
       "cancel": "Annuler",
       "rejectReasonPlaceholder": "Motif du rejet (optionnel)"
+    },
+    "eventsModeration": {
+      "title": "Modération des événements",
+      "intro": "Propositions d'événements soumises par des membres, en attente d'approbation avant publication dans l'agenda.",
+      "empty": "Aucune proposition en attente de modération.",
+      "columns": {
+        "title": "Titre",
+        "author": "Auteur",
+        "startAt": "Date de début",
+        "aiPrecheck": "Précheck IA"
+      },
+      "approve": "Approuver",
+      "reject": "Rejeter",
+      "requestChanges": "Demander des modifications",
+      "confirmReject": "Confirmer le rejet",
+      "confirmRequestChanges": "Confirmer la demande",
+      "cancel": "Annuler",
+      "rejectReasonPlaceholder": "Motif du rejet (optionnel)",
+      "requestChangesReasonPlaceholder": "Précisez les modifications attendues"
     }
   },
   "espaceInstitution": {
@@ -1003,6 +1068,55 @@
       "button": "Télécharger le Livre Blanc complet (PDF)",
       "frontCoverAlt": "Couverture du Livre Blanc de l'Ordre des Experts Informaticiens",
       "backCoverAlt": "Quatrième de couverture du Livre Blanc de l'Ordre des Experts Informaticiens"
+    }
+  },
+  "events": {
+    "list": {
+      "title": "Événements",
+      "intro": "Agenda des événements de l'Ordre des Experts Informaticiens : rencontres, colloques et webinars.",
+      "featuredTitle": "Prochain événement",
+      "openTitle": "Événements ouverts",
+      "openEmpty": "Aucun autre événement ouvert pour le moment.",
+      "historyTitle": "Historique",
+      "historyEmpty": "Aucun événement passé pour le moment.",
+      "speakers": "Intervenants"
+    },
+    "detail": {
+      "loading": "Chargement de l'événement…",
+      "notFound": "Cet événement n'existe pas ou n'est plus disponible.",
+      "online": "En ligne",
+      "loginToParticipate": "Connectez-vous pour participer",
+      "registered": "Vous participez à cet événement",
+      "registering": "Inscription en cours…",
+      "participate": "Participer",
+      "scheduleTitle": "Horaires",
+      "capacity": "Places",
+      "speakersTitle": "Intervenants",
+      "locationTitle": "Lieu",
+      "feedTitle": "Fil de l'événement",
+      "feedReadOnly": "Le fil de cet événement est en lecture seule (avant ou après la fenêtre live).",
+      "feedRequiresRegistration": "Seuls les membres inscrits à cet événement peuvent publier et commenter.",
+      "photoConsent": {
+        "intro": "Avant de publier une photo, merci de confirmer que vous consentez à sa publication sur le fil de cet événement. L'inscription à l'événement ne vaut pas consentement à la publication de votre image.",
+        "accept": "Je consens à la publication de mes photos"
+      },
+      "postError": "La publication a échoué. Merci de réessayer.",
+      "postPlaceholder": "Partagez un message avec les autres participants…",
+      "photoUrlPlaceholder": "URL de la photo (optionnel)",
+      "posting": "Publication…",
+      "post": "Publier",
+      "feedEmpty": "Aucune publication pour le moment.",
+      "like": "J'aime"
+    },
+    "types": {
+      "meetup": "Meetup",
+      "colloque": "Colloque",
+      "conference": "Conférence",
+      "webinar": "Webinar",
+      "workshop": "Atelier",
+      "assemblee": "Assemblée",
+      "ceremonie": "Cérémonie",
+      "networking": "Networking"
     }
   }
 }

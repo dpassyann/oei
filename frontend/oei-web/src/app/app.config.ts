@@ -134,6 +134,28 @@ import { MembershipFeeApiAdapter } from './infrastructure/adapter/membership-fee
 import { MARKDOWN_ASSET_PORT } from './domain/port/markdown-asset.port';
 import { MarkdownAssetAdapter } from './infrastructure/adapter/markdown-asset.adapter';
 
+// Events & community feed (docs `.prompt/plan/final/03-EVENTS-FEED-MODERATION-V2.md` and
+// `04-EVENTS-COMMUNITY-FEED.md`) — 6 ports/adapters, all mock-only for now (no real backend yet,
+// a future agent will redo the mock in a cleaner DDD shape per that task's brief).
+import { EVENT_PORT } from './domain/port/event/event.port';
+import { EventMockAdapter } from './infrastructure/adapter/event-mock.adapter';
+import { EventApiAdapter } from './infrastructure/adapter/event-api.adapter';
+import { EVENT_REGISTRATION_PORT } from './domain/port/event/event-registration.port';
+import { EventRegistrationMockAdapter } from './infrastructure/adapter/event-registration-mock.adapter';
+import { EventRegistrationApiAdapter } from './infrastructure/adapter/event-registration-api.adapter';
+import { EVENT_FEED_PORT } from './domain/port/event/event-feed.port';
+import { EventFeedMockAdapter } from './infrastructure/adapter/event-feed-mock.adapter';
+import { EventFeedApiAdapter } from './infrastructure/adapter/event-feed-api.adapter';
+import { EVENT_PROPOSAL_PORT } from './domain/port/event/event-proposal.port';
+import { EventProposalMockAdapter } from './infrastructure/adapter/event-proposal-mock.adapter';
+import { EventProposalApiAdapter } from './infrastructure/adapter/event-proposal-api.adapter';
+import { EVENT_PHOTO_CONSENT_PORT } from './domain/port/event/event-photo-consent.port';
+import { EventPhotoConsentMockAdapter } from './infrastructure/adapter/event-photo-consent-mock.adapter';
+import { EventPhotoConsentApiAdapter } from './infrastructure/adapter/event-photo-consent-api.adapter';
+import { EVENT_MODERATION_PORT } from './domain/port/event/event-moderation.port';
+import { EventModerationMockAdapter } from './infrastructure/adapter/event-moderation-mock.adapter';
+import { EventModerationApiAdapter } from './infrastructure/adapter/event-moderation-api.adapter';
+
 // Real Keycloak Authorization Code + PKCE config (realm `oei`, client `oei-frontend` — see
 // `keycloak/realm-export/oei-realm.json`: publicClient, standardFlowEnabled,
 // directAccessGrantsEnabled=false, pkce.code.challenge.method=S256, redirectUris
@@ -399,6 +421,41 @@ export const appConfig: ApplicationConfig = {
         inject(RuntimeConfig).isMock()
           ? inject(ArticleSubmissionMockAdapter)
           : inject(ArticleSubmissionApiAdapter),
+    },
+    {
+      provide: EVENT_PORT,
+      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(EventMockAdapter) : inject(EventApiAdapter)),
+    },
+    {
+      provide: EVENT_REGISTRATION_PORT,
+      useFactory: () =>
+        inject(RuntimeConfig).isMock()
+          ? inject(EventRegistrationMockAdapter)
+          : inject(EventRegistrationApiAdapter),
+    },
+    {
+      provide: EVENT_FEED_PORT,
+      useFactory: () =>
+        inject(RuntimeConfig).isMock() ? inject(EventFeedMockAdapter) : inject(EventFeedApiAdapter),
+    },
+    {
+      provide: EVENT_PROPOSAL_PORT,
+      useFactory: () =>
+        inject(RuntimeConfig).isMock() ? inject(EventProposalMockAdapter) : inject(EventProposalApiAdapter),
+    },
+    {
+      provide: EVENT_PHOTO_CONSENT_PORT,
+      useFactory: () =>
+        inject(RuntimeConfig).isMock()
+          ? inject(EventPhotoConsentMockAdapter)
+          : inject(EventPhotoConsentApiAdapter),
+    },
+    {
+      provide: EVENT_MODERATION_PORT,
+      useFactory: () =>
+        inject(RuntimeConfig).isMock()
+          ? inject(EventModerationMockAdapter)
+          : inject(EventModerationApiAdapter),
     },
   ],
 };

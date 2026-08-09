@@ -13,6 +13,7 @@ const INTERFACE_STRINGS: Record<string, string> = {
   'espaceMembre.nav.carte': 'Carte numérique',
   'espaceMembre.nav.cotisation': 'Cotisation',
   'espaceMembre.nav.publier': 'Publier un article',
+  'espaceMembre.nav.proposerEvenement': 'Proposer un événement',
 };
 
 const FAKE_I18N_SERVICE = {
@@ -44,6 +45,7 @@ describe('EspaceMembreLayout', () => {
       'Carte numérique',
       'Cotisation',
       'Publier un article',
+      'Proposer un événement',
     ]);
     expect(links.map((link) => link.getAttribute('href'))).toEqual([
       '/espace-membre/profil',
@@ -52,6 +54,7 @@ describe('EspaceMembreLayout', () => {
       '/espace-membre/carte',
       '/espace-membre/cotisation',
       '/espace-membre/publier',
+      '/espace-membre/proposer-evenement',
     ]);
   });
 

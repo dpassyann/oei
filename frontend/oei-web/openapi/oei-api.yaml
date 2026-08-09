@@ -99,6 +99,16 @@ tags:
     description: Supervision des membres, certifications et vérifications par l'OEI.
   - name: admin-audit
     description: Journal d'audit global.
+  - name: public-events
+    description: Agenda public des événements OEI (liste, détail par slug).
+  - name: member-events
+    description: >
+      Proposition d'événement par un membre (workflow DRAFT→...→PUBLISHED avec précheck IA
+      simulé), inscription, fil live pendant l'événement (posts/commentaires/likes) et
+      consentement photo — voir `.prompt/plan/final/03-EVENTS-FEED-MODERATION-V2.md` et
+      `04-EVENTS-COMMUNITY-FEED.md`.
+  - name: admin-events
+    description: Modération des propositions d'événement et des commentaires du fil live.
 security: []
 paths:
   # ---------------------------------------------------------------------------
@@ -2453,6 +2463,289 @@ paths:
                 items:
                   $ref: "#/components/schemas/InstitutionAuditLog"
 
+  # ---------------------------------------------------------------------------
+  # Events & community feed (`.prompt/plan/final/03-EVENTS-FEED-MODERATION-V2.md` and
+  # `04-EVENTS-COMMUNITY-FEED.md`) — appended at the end of `paths` so as not to reorder any
+  # pre-existing entry. `member-events`' `feed`/`posts`/`comments`-by-post endpoints are a
+  # minimal, documented extension of the task's literal 9-endpoint list, needed to actually
+  # list/create feed entries; the literal endpoints themselves are still present verbatim.
+  # ---------------------------------------------------------------------------
+  /api/public/v1/events:
+    get:
+      tags: [public-events]
+      operationId: listPublicEvents
+      summary: Agenda public des événements (à la une, ouverts, historique).
+      responses:
+        "200":
+          description: Événements publiés
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Event"
+
+  /api/public/v1/events/{slug}:
+    get:
+      tags: [public-events]
+      operationId: getPublicEventBySlug
+      summary: Détail d'un événement publié.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Événement
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Event"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/member/v1/events/proposals:
+    post:
+      tags: [member-events]
+      operationId: submitEventProposal
+      summary: >
+        Soumet une proposition d'événement (workflow DRAFT→SUBMITTED→AI_PRECHECK→
+        MODERATOR_REVIEW→APPROVED→PUBLISHED ; le précheck IA n'est jamais bloquant ni
+        auto-publiant en V1).
+      security: [{ bearerAuth: [member] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EventProposalDraft"
+      responses:
+        "201":
+          description: Proposition créée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EventProposal"
+    get:
+      tags: [member-events]
+      operationId: listMyEventProposals
+      summary: Propositions d'événement du membre connecté ("mes propositions").
+      security: [{ bearerAuth: [member] }]
+      responses:
+        "200":
+          description: Propositions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/EventProposal"
+
+  /api/member/v1/events/{id}/registrations:
+    post:
+      tags: [member-events]
+      operationId: registerToEvent
+      summary: Inscription (`GOING`) du membre connecté à un événement.
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "201":
+          description: Inscription créée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EventRegistration"
+
+  /api/member/v1/events/{id}/feed:
+    get:
+      tags: [member-events]
+      operationId: listEventFeedPosts
+      summary: Fil live d'un événement (posts), en lecture seule hors fenêtre de l'événement.
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Publications du fil
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/EventPost"
+
+  /api/member/v1/events/{id}/posts:
+    post:
+      tags: [member-events]
+      operationId: createEventPost
+      summary: >
+        Publie un post court (texte + photo optionnelle) sur le fil live — une photo ne peut
+        être jointe qu'après consentement explicite (voir `/photo-consent`).
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EventPostDraft"
+      responses:
+        "201":
+          description: Publication créée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EventPost"
+
+  /api/member/v1/events/{id}/comments:
+    post:
+      tags: [member-events]
+      operationId: addEventComment
+      summary: >
+        Commente un post du fil live — réservé aux membres ayant participé (`GOING`),
+        uniquement dans la fenêtre `commentsOpenAt`/`commentsClosedAt`.
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EventCommentDraft"
+      responses:
+        "201":
+          description: Commentaire créé
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EventComment"
+
+  /api/member/v1/events/{id}/like:
+    post:
+      tags: [member-events]
+      operationId: likeEventPost
+      summary: Like simple et idempotent (un par membre) d'un post du fil live.
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [postId]
+              properties:
+                postId:
+                  type: string
+      responses:
+        "200":
+          description: Post mis à jour
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EventPost"
+
+  /api/member/v1/events/{id}/photo-consent:
+    post:
+      tags: [member-events]
+      operationId: giveEventPhotoConsent
+      summary: >
+        Consentement explicite du membre à la publication de ses photos sur le fil de cet
+        événement — distinct de l'inscription (`/registrations`), qui ne vaut jamais consentement
+        à la publication d'image.
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "201":
+          description: Consentement enregistré
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EventPhotoConsent"
+
+  /api/admin/v1/events/moderation:
+    get:
+      tags: [admin-events]
+      operationId: listEventModerationQueue
+      summary: File d'attente des propositions d'événement en `MODERATOR_REVIEW`.
+      security: [{ bearerAuth: [admin] }]
+      responses:
+        "200":
+          description: Propositions en attente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/EventProposal"
+
+  /api/admin/v1/events/{id}/approve:
+    post:
+      tags: [admin-events]
+      operationId: approveEventProposal
+      summary: Approuve une proposition d'événement (elle devient publiable).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Proposition approuvée
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/admin/v1/comments/{id}/hide:
+    post:
+      tags: [admin-events]
+      operationId: hideEventComment
+      summary: Masque un commentaire du fil live (modération, `HIDDEN`).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Commentaire masqué
+        "404":
+          $ref: "#/components/responses/NotFound"
+
 components:
   securitySchemes:
     bearerAuth:
@@ -4105,3 +4398,289 @@ components:
           type: string
           format: date-time
           nullable: true
+
+    # -------------------------------------------------------------------------
+    # Events & community feed
+    # -------------------------------------------------------------------------
+    EventType:
+      type: string
+      enum: [meetup, colloque, conference, webinar, workshop, assemblee, ceremonie, networking]
+
+    EventStatus:
+      type: string
+      enum:
+        [
+          DRAFT,
+          PUBLISHED,
+          REGISTRATION_OPEN,
+          REGISTRATION_CLOSED,
+          LIVE,
+          ENDED,
+          ARCHIVED,
+          CANCELLED,
+        ]
+
+    EventLocation:
+      type: object
+      required: [country]
+      properties:
+        country:
+          type: string
+        city:
+          type: string
+        venue:
+          type: string
+        onlineUrl:
+          type: string
+          format: uri
+
+    EventSpeaker:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+        role:
+          type: string
+
+    Event:
+      type: object
+      required:
+        [id, slug, title, type, description, location, startAt, endAt, timezone, visibility, status]
+      properties:
+        id:
+          type: string
+        slug:
+          type: string
+        title:
+          type: string
+        type:
+          $ref: "#/components/schemas/EventType"
+        description:
+          type: string
+        imageUrl:
+          type: string
+          format: uri
+        location:
+          $ref: "#/components/schemas/EventLocation"
+        startAt:
+          type: string
+          format: date-time
+        endAt:
+          type: string
+          format: date-time
+        timezone:
+          type: string
+        capacity:
+          type: integer
+        registrationsCount:
+          type: integer
+        visibility:
+          type: string
+          enum: [public, members]
+        organizers:
+          type: array
+          items:
+            type: string
+        languages:
+          type: array
+          items:
+            type: string
+        speakers:
+          type: array
+          items:
+            $ref: "#/components/schemas/EventSpeaker"
+        status:
+          $ref: "#/components/schemas/EventStatus"
+        commentsOpenAt:
+          type: string
+          format: date-time
+          nullable: true
+        commentsClosedAt:
+          type: string
+          format: date-time
+          nullable: true
+        summary:
+          type: string
+          nullable: true
+        galleryImageUrls:
+          type: array
+          items:
+            type: string
+            format: uri
+
+    EventRegistration:
+      type: object
+      required: [id, eventId, memberId, status, registeredAt]
+      properties:
+        id:
+          type: string
+        eventId:
+          type: string
+        memberId:
+          type: string
+        status:
+          type: string
+          enum: [GOING]
+        registeredAt:
+          type: string
+          format: date-time
+
+    EventPostDraft:
+      type: object
+      required: [text]
+      properties:
+        text:
+          type: string
+        photoUrl:
+          type: string
+          format: uri
+
+    EventPost:
+      allOf:
+        - $ref: "#/components/schemas/EventPostDraft"
+        - type: object
+          required: [id, eventId, authorId, authorName, createdAt, likesCount, likedByMe]
+          properties:
+            id:
+              type: string
+            eventId:
+              type: string
+            authorId:
+              type: string
+            authorName:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            likesCount:
+              type: integer
+            likedByMe:
+              type: boolean
+
+    EventCommentDraft:
+      type: object
+      required: [postId, text]
+      properties:
+        postId:
+          type: string
+        text:
+          type: string
+
+    EventCommentStatus:
+      type: string
+      enum: [VISIBLE, FLAGGED, HIDDEN, REMOVED]
+
+    EventComment:
+      allOf:
+        - $ref: "#/components/schemas/EventCommentDraft"
+        - type: object
+          required: [id, eventId, authorId, authorName, createdAt, status]
+          properties:
+            id:
+              type: string
+            eventId:
+              type: string
+            authorId:
+              type: string
+            authorName:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            status:
+              $ref: "#/components/schemas/EventCommentStatus"
+
+    EventPhotoConsent:
+      type: object
+      required: [eventId, memberId, consentedAt]
+      properties:
+        eventId:
+          type: string
+        memberId:
+          type: string
+        consentedAt:
+          type: string
+          format: date-time
+
+    EventProposalStatus:
+      type: string
+      enum:
+        [
+          DRAFT,
+          SUBMITTED,
+          AI_PRECHECK,
+          MODERATOR_REVIEW,
+          APPROVED,
+          PUBLISHED,
+          CHANGES_REQUESTED,
+          REJECTED,
+          CANCELLED,
+          ENDED,
+          ARCHIVED,
+        ]
+
+    EventProposalAiPrecheck:
+      type: object
+      required: [passed, summary, checkedAt]
+      properties:
+        passed:
+          type: boolean
+        summary:
+          type: string
+        checkedAt:
+          type: string
+          format: date-time
+
+    EventProposalDraft:
+      type: object
+      required: [title, description, type, startAt, endAt, timezone, country]
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          $ref: "#/components/schemas/EventType"
+        startAt:
+          type: string
+          format: date-time
+        endAt:
+          type: string
+          format: date-time
+        timezone:
+          type: string
+        country:
+          type: string
+        city:
+          type: string
+        venue:
+          type: string
+        onlineUrl:
+          type: string
+          format: uri
+        imageUrl:
+          type: string
+          format: uri
+
+    EventProposal:
+      allOf:
+        - $ref: "#/components/schemas/EventProposalDraft"
+        - type: object
+          required: [id, authorId, status]
+          properties:
+            id:
+              type: string
+            authorId:
+              type: string
+            status:
+              $ref: "#/components/schemas/EventProposalStatus"
+            submittedAt:
+              type: string
+              format: date-time
+              nullable: true
+            aiPrecheck:
+              $ref: "#/components/schemas/EventProposalAiPrecheck"
+            moderatorNote:
+              type: string
+              nullable: true

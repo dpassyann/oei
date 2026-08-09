@@ -37,6 +37,10 @@ import { CarteNumerique } from './presentation/pages/espace-membre/carte/carte-n
 import { ProfilPublic } from './presentation/pages/espace-membre/profil-public/profil-public';
 import { Cotisation } from './presentation/pages/espace-membre/cotisation/cotisation';
 import { PublierArticle } from './presentation/pages/espace-membre/publier-article/publier-article';
+import { ProposerEvenement } from './presentation/pages/espace-membre/proposer-evenement/proposer-evenement';
+import { EventsList } from './presentation/pages/events/events-list/events-list';
+import { EventDetail } from './presentation/pages/events/event-detail/event-detail';
+import { CmsEventsModeration } from './presentation/pages/cms/cms-events-moderation/cms-events-moderation';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -86,6 +90,10 @@ export const routes: Routes = [
       { path: '', component: CmsContentList },
       { path: 'contributions', component: CmsContributions },
       { path: 'moderation', component: CmsModeration },
+      // Events proposal moderation queue (docs "03-EVENTS-FEED-MODERATION-V2.md") — same
+      // `cmsGuard`, sibling of `/cms/moderation` (articles). Kept before `:id` so it is never
+      // swallowed by the editor's catch-all id route.
+      { path: 'events-moderation', component: CmsEventsModeration },
       { path: ':id', component: CmsContentEditor },
     ],
   },
@@ -116,9 +124,17 @@ export const routes: Routes = [
           // Member-facing article submission form — feeds the CMS moderation queue built
           // separately; approved submissions are the only ones that ever reach `/actualites`.
           { path: 'publier', component: PublierArticle },
+          // Member-facing event proposal form (docs "03-EVENTS-FEED-MODERATION-V2.md") — feeds
+          // the `/cms/events-moderation` queue; approved proposals are the only ones that ever
+          // reach the public `/events` agenda.
+          { path: 'proposer-evenement', component: ProposerEvenement },
         ],
       },
     ],
   },
   { path: 'membres/:publicSlug', component: ProfilPublic },
+  // Public events agenda (docs "04-EVENTS-COMMUNITY-FEED.md"/"03-EVENTS-FEED-MODERATION-V2.md")
+  // — appended at the end so as not to reorder any pre-existing route.
+  { path: 'events', component: EventsList },
+  { path: 'events/:slug', component: EventDetail },
 ];

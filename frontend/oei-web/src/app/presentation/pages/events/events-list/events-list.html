@@ -1,0 +1,75 @@
+<main class="oei-page">
+  <h1 class="oei-page__title">{{ i18n.translate('events.list.title') }}</h1>
+  <p class="oei-page__intro">{{ i18n.translate('events.list.intro') }}</p>
+
+  @if (featuredEvent()) {
+    <section class="oei-events-featured">
+      <h2 class="oei-events__section-title">{{ i18n.translate('events.list.featuredTitle') }}</h2>
+      <a class="oei-events-featured__card" [routerLink]="['/events', featuredEvent()!.slug]">
+        @if (featuredEvent()!.imageUrl) {
+          <img class="oei-events-featured__image" [src]="featuredEvent()!.imageUrl" [alt]="featuredEvent()!.title" />
+        }
+        <div class="oei-events-featured__body">
+          <h3 class="oei-events-featured__title">{{ featuredEvent()!.title }}</h3>
+          <p class="oei-events-featured__meta">
+            {{ featuredEvent()!.startAt | date: 'long' }} · {{ featuredEvent()!.location.city ?? featuredEvent()!.location.country }}
+          </p>
+          <p class="oei-events-featured__description">{{ featuredEvent()!.description }}</p>
+        </div>
+      </a>
+    </section>
+  }
+
+  <section class="oei-events-open">
+    <h2 class="oei-events__section-title">{{ i18n.translate('events.list.openTitle') }}</h2>
+    @if (openEvents().length === 0) {
+      <p class="oei-page__empty">{{ i18n.translate('events.list.openEmpty') }}</p>
+    } @else {
+      <ul class="oei-events__list">
+        @for (event of openEvents(); track event.id) {
+          <li class="oei-events__item">
+            <a class="oei-events__link" [routerLink]="['/events', event.slug]">
+              <span class="oei-events__item-title">{{ event.title }}</span>
+              <span class="oei-events__item-meta">
+                {{ event.startAt | date: 'mediumDate' }} · {{ event.location.city ?? event.location.country }}
+              </span>
+            </a>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+
+  <section class="oei-events-history">
+    <h2 class="oei-events__section-title">{{ i18n.translate('events.list.historyTitle') }}</h2>
+    @if (historyEvents().length === 0) {
+      <p class="oei-page__empty">{{ i18n.translate('events.list.historyEmpty') }}</p>
+    } @else {
+      <ul class="oei-events__history-list">
+        @for (event of historyEvents(); track event.id) {
+          <li class="oei-events__history-item">
+            <a class="oei-events__link" [routerLink]="['/events', event.slug]">
+              @if (event.galleryImageUrls && event.galleryImageUrls.length > 0) {
+                <img class="oei-events__history-image" [src]="event.galleryImageUrls[0]" [alt]="event.title" />
+              }
+              <div class="oei-events__history-body">
+                <span class="oei-events__item-title">{{ event.title }}</span>
+                <span class="oei-events__item-meta">
+                  {{ event.startAt | date: 'mediumDate' }} · {{ event.location.city ?? event.location.country }}
+                </span>
+                @if (event.summary) {
+                  <p class="oei-events__history-summary">{{ event.summary }}</p>
+                }
+                @if (event.speakers && event.speakers.length > 0) {
+                  <p class="oei-events__history-speakers">
+                    {{ i18n.translate('events.list.speakers') }}: {{ speakerNames(event) }}
+                  </p>
+                }
+              </div>
+            </a>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</main>

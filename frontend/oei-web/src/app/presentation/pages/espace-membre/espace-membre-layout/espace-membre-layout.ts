@@ -32,5 +32,8 @@ export class EspaceMembreLayout {
     { path: 'carte', labelKey: 'espaceMembre.nav.carte' },
     { path: 'cotisation', labelKey: 'espaceMembre.nav.cotisation' },
     { path: 'publier', labelKey: 'espaceMembre.nav.publier' },
+    // Appended at the end, per this task's anti-conflict constraint — event proposal form
+    // (docs "03-EVENTS-FEED-MODERATION-V2.md"), same "publier"-style flow as articles.
+    { path: 'proposer-evenement', labelKey: 'espaceMembre.nav.proposerEvenement' },
   ];
 }

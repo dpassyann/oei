@@ -1,0 +1,118 @@
+<main class="oei-page">
+  <h1 class="oei-page__title">{{ i18n.translate('espaceMembre.proposerEvenement.title') }}</h1>
+  <p class="oei-page__intro">{{ i18n.translate('espaceMembre.proposerEvenement.intro') }}</p>
+
+  @if (submitted()) {
+    <section class="oei-proposer-evenement__pending-banner" role="status">
+      <h2>{{ i18n.translate('espaceMembre.proposerEvenement.pending.title') }}</h2>
+      <p>{{ i18n.translate('espaceMembre.proposerEvenement.pending.body') }}</p>
+      <button type="button" (click)="submitAnother()">
+        {{ i18n.translate('espaceMembre.proposerEvenement.submitAnother') }}
+      </button>
+    </section>
+  } @else {
+    <form class="oei-proposer-evenement__form" (submit)="$event.preventDefault(); submit()">
+      @if (submitError()) {
+        <p class="oei-proposer-evenement__error" role="alert">
+          {{ i18n.translate('espaceMembre.proposerEvenement.error') }}
+        </p>
+      }
+
+      <label class="oei-proposer-evenement__field">
+        {{ i18n.translate('espaceMembre.proposerEvenement.fields.title') }}
+        <input type="text" [formField]="proposalForm.title" />
+      </label>
+
+      <label class="oei-proposer-evenement__field">
+        {{ i18n.translate('espaceMembre.proposerEvenement.fields.description') }}
+        <textarea rows="6" [formField]="proposalForm.description"></textarea>
+      </label>
+
+      <label class="oei-proposer-evenement__field">
+        {{ i18n.translate('espaceMembre.proposerEvenement.fields.type') }}
+        <select [formField]="proposalForm.type">
+          @for (type of eventTypes; track type) {
+            <option [value]="type">{{ i18n.translate('events.types.' + type) }}</option>
+          }
+        </select>
+      </label>
+
+      <div class="oei-proposer-evenement__field-row">
+        <label class="oei-proposer-evenement__field">
+          {{ i18n.translate('espaceMembre.proposerEvenement.fields.startAt') }}
+          <input type="datetime-local" [formField]="proposalForm.startAt" />
+        </label>
+        <label class="oei-proposer-evenement__field">
+          {{ i18n.translate('espaceMembre.proposerEvenement.fields.endAt') }}
+          <input type="datetime-local" [formField]="proposalForm.endAt" />
+        </label>
+      </div>
+
+      <label class="oei-proposer-evenement__field">
+        {{ i18n.translate('espaceMembre.proposerEvenement.fields.timezone') }}
+        <input type="text" [formField]="proposalForm.timezone" />
+      </label>
+
+      <div class="oei-proposer-evenement__field-row">
+        <label class="oei-proposer-evenement__field">
+          {{ i18n.translate('espaceMembre.proposerEvenement.fields.country') }}
+          <input type="text" [formField]="proposalForm.country" />
+        </label>
+        <label class="oei-proposer-evenement__field">
+          {{ i18n.translate('espaceMembre.proposerEvenement.fields.city') }}
+          <input type="text" [formField]="proposalForm.city" />
+        </label>
+      </div>
+
+      <label class="oei-proposer-evenement__field">
+        {{ i18n.translate('espaceMembre.proposerEvenement.fields.venue') }}
+        <span class="oei-proposer-evenement__field-hint">
+          {{ i18n.translate('espaceMembre.proposerEvenement.fields.venueOrOnlineHint') }}
+        </span>
+        <input type="text" [formField]="proposalForm.venue" />
+      </label>
+
+      <label class="oei-proposer-evenement__field">
+        {{ i18n.translate('espaceMembre.proposerEvenement.fields.onlineUrl') }}
+        <input type="text" [formField]="proposalForm.onlineUrl" />
+      </label>
+
+      <label class="oei-proposer-evenement__field">
+        {{ i18n.translate('espaceMembre.proposerEvenement.fields.imageUrl') }}
+        <span class="oei-proposer-evenement__field-hint">
+          {{ i18n.translate('espaceMembre.proposerEvenement.fields.imageUrlHint') }}
+        </span>
+        <input type="text" [formField]="proposalForm.imageUrl" />
+      </label>
+
+      <button type="submit" [disabled]="submitting()">
+        {{
+          submitting()
+            ? i18n.translate('espaceMembre.proposerEvenement.submitting')
+            : i18n.translate('espaceMembre.proposerEvenement.submit')
+        }}
+      </button>
+    </form>
+  }
+
+  <section class="oei-proposer-evenement__history">
+    <h2>{{ i18n.translate('espaceMembre.proposerEvenement.mine.title') }}</h2>
+    @if (proposals().length === 0) {
+      <p class="oei-page__empty">{{ i18n.translate('espaceMembre.proposerEvenement.mine.empty') }}</p>
+    } @else {
+      <ul class="oei-proposer-evenement__history-list">
+        @for (proposal of proposals(); track proposal.id) {
+          <li class="oei-proposer-evenement__history-item">
+            <span class="oei-proposer-evenement__history-title">{{ proposal.title }}</span>
+            <span class="oei-proposer-evenement__status oei-proposer-evenement__status--{{ proposal.status }}">
+              {{ i18n.translate('espaceMembre.proposerEvenement.status.' + proposal.status) }}
+            </span>
+            @if (proposal.aiPrecheck) {
+              <p class="oei-proposer-evenement__ai-precheck">{{ proposal.aiPrecheck.summary }}</p>
+            }
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</main>

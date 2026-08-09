@@ -1,0 +1,137 @@
+<main class="oei-page">
+  @if (isLoading()) {
+    <p class="oei-page__empty">{{ i18n.translate('events.detail.loading') }}</p>
+  } @else if (!event()) {
+    <p class="oei-page__empty">{{ i18n.translate('events.detail.notFound') }}</p>
+  } @else {
+    <section class="oei-event-hero">
+      @if (event()!.imageUrl) {
+        <img class="oei-event-hero__image" [src]="event()!.imageUrl" [alt]="event()!.title" />
+      }
+      <h1 class="oei-event-hero__title">{{ event()!.title }}</h1>
+      <p class="oei-event-hero__meta">
+        {{ event()!.startAt | date: 'full' }}
+        @if (event()!.location.venue || event()!.location.city) {
+          · {{ event()!.location.venue ?? event()!.location.city }}, {{ event()!.location.country }}
+        } @else if (event()!.location.onlineUrl) {
+          · {{ i18n.translate('events.detail.online') }}
+        }
+      </p>
+      <p class="oei-event-hero__description">{{ event()!.description }}</p>
+
+      @if (!isConnected()) {
+        <button type="button" class="oei-event-cta oei-event-cta--disabled" disabled>
+          {{ i18n.translate('events.detail.loginToParticipate') }}
+        </button>
+      } @else if (isRegistered()) {
+        <p class="oei-event-cta__confirmed">{{ i18n.translate('events.detail.registered') }}</p>
+      } @else {
+        <button type="button" class="oei-event-cta" [disabled]="registering()" (click)="register()">
+          {{ registering() ? i18n.translate('events.detail.registering') : i18n.translate('events.detail.participate') }}
+        </button>
+      }
+    </section>
+
+    <section class="oei-event-schedule">
+      <h2 class="oei-event__section-title">{{ i18n.translate('events.detail.scheduleTitle') }}</h2>
+      <p>{{ event()!.startAt | date: 'medium' }} — {{ event()!.endAt | date: 'medium' }} ({{ event()!.timezone }})</p>
+      @if (event()!.capacity) {
+        <p class="oei-event-schedule__capacity">
+          {{ i18n.translate('events.detail.capacity') }}: {{ event()!.registrationsCount ?? 0 }} / {{ event()!.capacity }}
+        </p>
+      }
+    </section>
+
+    @if (event()!.speakers && event()!.speakers!.length > 0) {
+      <section class="oei-event-speakers">
+        <h2 class="oei-event__section-title">{{ i18n.translate('events.detail.speakersTitle') }}</h2>
+        <ul class="oei-event-speakers__list">
+          @for (speaker of event()!.speakers; track speaker.name) {
+            <li>
+              <span class="oei-event-speakers__name">{{ speaker.name }}</span>
+              @if (speaker.role) {
+                <span class="oei-event-speakers__role"> — {{ speaker.role }}</span>
+              }
+            </li>
+          }
+        </ul>
+      </section>
+    }
+
+    <section class="oei-event-location">
+      <h2 class="oei-event__section-title">{{ i18n.translate('events.detail.locationTitle') }}</h2>
+      @if (event()!.location.venue) {
+        <p>{{ event()!.location.venue }}</p>
+      }
+      @if (event()!.location.city) {
+        <p>{{ event()!.location.city }}, {{ event()!.location.country }}</p>
+      } @else {
+        <p>{{ event()!.location.country }}</p>
+      }
+      @if (event()!.location.onlineUrl) {
+        <p><a [href]="event()!.location.onlineUrl" target="_blank" rel="noopener">{{ event()!.location.onlineUrl }}</a></p>
+      }
+    </section>
+
+    <section class="oei-event-feed">
+      <h2 class="oei-event__section-title">{{ i18n.translate('events.detail.feedTitle') }}</h2>
+
+      @if (!isFeedOpen()) {
+        <p class="oei-event-feed__readonly-notice">{{ i18n.translate('events.detail.feedReadOnly') }}</p>
+      } @else if (!canParticipateInFeed()) {
+        <p class="oei-event-feed__readonly-notice">{{ i18n.translate('events.detail.feedRequiresRegistration') }}</p>
+      } @else {
+        @if (!hasPhotoConsent()) {
+          <div class="oei-event-feed__consent" role="note">
+            <p>{{ i18n.translate('events.detail.photoConsent.intro') }}</p>
+            <button type="button" (click)="giveConsent()">{{ i18n.translate('events.detail.photoConsent.accept') }}</button>
+          </div>
+        }
+        <form class="oei-event-feed__form" (submit)="$event.preventDefault(); submitPost()">
+          @if (postError()) {
+            <p class="oei-event-feed__error" role="alert">{{ i18n.translate('events.detail.postError') }}</p>
+          }
+          <textarea
+            rows="3"
+            [attr.placeholder]="i18n.translate('events.detail.postPlaceholder')"
+            [formField]="postForm.text"
+          ></textarea>
+          @if (hasPhotoConsent()) {
+            <input type="text" [attr.placeholder]="i18n.translate('events.detail.photoUrlPlaceholder')" [formField]="postForm.photoUrl" />
+          }
+          <button type="submit" [disabled]="postSubmitting()">
+            {{ postSubmitting() ? i18n.translate('events.detail.posting') : i18n.translate('events.detail.post') }}
+          </button>
+        </form>
+      }
+
+      @if (posts().length === 0) {
+        <p class="oei-page__empty">{{ i18n.translate('events.detail.feedEmpty') }}</p>
+      } @else {
+        <ul class="oei-event-feed__list">
+          @for (post of posts(); track post.id) {
+            <li class="oei-event-feed__post">
+              <p class="oei-event-feed__post-author">{{ post.authorName }}</p>
+              <p class="oei-event-feed__post-text">{{ post.text }}</p>
+              @if (post.photoUrl) {
+                <img class="oei-event-feed__post-photo" [src]="post.photoUrl" alt="" />
+              }
+              <div class="oei-event-feed__post-actions">
+                <button
+                  type="button"
+                  class="oei-event-feed__like"
+                  [disabled]="!canParticipateInFeed() || post.likedByMe"
+                  (click)="likePost(post.id)"
+                >
+                  {{ i18n.translate('events.detail.like') }} ({{ post.likesCount }})
+                </button>
+              </div>
+            </li>
+          }
+        </ul>
+      }
+    </section>
+
+    <p class="oei-event-back"><a routerLink="/events">&larr; {{ i18n.translate('events.list.title') }}</a></p>
+  }
+</main>

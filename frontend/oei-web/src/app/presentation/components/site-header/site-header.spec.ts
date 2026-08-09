@@ -27,13 +27,14 @@ describe('SiteHeader', () => {
     });
   });
 
-  it('givenComponent_whenCreated_thenRendersEightNavLinksWithNonEmptyRouterLinks', () => {
+  it('givenComponent_whenCreated_thenRendersNineNavLinksWithNonEmptyRouterLinks', () => {
     const fixture = TestBed.createComponent(SiteHeader);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     const links = compiled.querySelectorAll<HTMLAnchorElement>('.oei-nav__link');
 
-    expect(links.length).toBe(8);
+    // 8 pre-existing links + `/events` (appended at the end, see `SiteHeader.navLinks`'s comment).
+    expect(links.length).toBe(9);
     links.forEach((link) => {
       const href = link.getAttribute('href');
       expect(href).toBeTruthy();
