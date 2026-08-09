@@ -41,6 +41,11 @@ tags:
     description: Inscription et endpoints publics d'amorçage de compte.
   - name: public-content
     description: Contenu CMS et documents normatifs publics (lecture seule).
+  - name: search
+    description: >
+      Recherche globale publique V1 (ressources et actualités uniquement — événements,
+      membres, institutions et graphe hors périmètre, voir plan
+      "actualités dynamiques, recherche globale et ressources").
   - name: public-institutions
     description: Pages publiques institutionnelles.
   - name: public-members
@@ -387,6 +392,47 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ContentVersionPage"
+
+  # ---------------------------------------------------------------------------
+  # /api/public/v1 — global search (V1 scope: resources + news only)
+  # ---------------------------------------------------------------------------
+  /api/public/v1/search:
+    get:
+      tags: [search]
+      operationId: searchPublicContent
+      summary: >
+        Recherche globale V1, limitée aux ressources (`/ressources`) et aux actualités
+        (`GET /api/v1/news/{lang}` — voir `home-legacy`). Événements, membres,
+        institutions et graphe sont hors périmètre. Résultats à grouper par `type`
+        côté client (voir `SearchResult`).
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+            minLength: 1
+        - name: types
+          in: query
+          required: false
+          description: Liste de types séparés par virgule, ex. `RESOURCE,NEWS` (seules valeurs supportées en V1).
+          schema:
+            type: string
+            example: "RESOURCE,NEWS"
+        - name: locale
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Résultats de recherche groupables par type
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SearchResult"
 
   /api/public/v1/badges/catalog:
     get:
@@ -2878,6 +2924,24 @@ components:
           type: string
           format: date
           description: Champ bonus non encore modélisé côté Angular (`NewsItem`).
+
+    SearchResult:
+      type: object
+      required: [type, title, excerpt, path]
+      properties:
+        type:
+          type: string
+          enum: [resource, news]
+        title:
+          type: string
+        excerpt:
+          type: string
+        path:
+          type: string
+          description: Route interne (jamais une URL externe) vers l'élément trouvé.
+        fragment:
+          type: string
+          description: Ancre facultative sur `path` (ex. la section Livre Blanc sur `/ressources`).
 
     Partner:
       type: object

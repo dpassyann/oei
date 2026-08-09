@@ -1112,5 +1112,32 @@
       "ceremonie": "Zeremonie",
       "networking": "Networking"
     }
+  },
+  "resourceCarousel": {
+    "title": "Ressourcen im Überblick",
+    "prevAria": "Vorherige Ressource",
+    "nextAria": "Nächste Ressource",
+    "goToAria": "Zur Ressource wechseln",
+    "versionLabel": "Version",
+    "languageLabel": "Sprache",
+    "fileSizeLabel": "Dateigröße",
+    "unitKb": "KB",
+    "unitMb": "MB",
+    "ctaEmail": "Per E-Mail erhalten",
+    "ctaView": "Ansehen",
+    "type": {
+      "whitePaper": "Whitepaper",
+      "codeOfEthics": "Ethikkodex",
+      "competencyFramework": "Kompetenzrahmen",
+      "positionPaper": "Positionspapier",
+      "report": "Bericht"
+    }
+  },
+  "search": {
+    "placeholder": "Ressourcen und Neuigkeiten durchsuchen…",
+    "closeAria": "Suche schließen",
+    "noResults": "Keine Ergebnisse für diese Suche.",
+    "groupResources": "Ressourcen",
+    "groupNews": "Neuigkeiten"
   }
 }

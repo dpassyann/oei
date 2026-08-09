@@ -96,6 +96,18 @@ $oei-navy: #0a1e3f;
   border: 1px solid #ccc;
   border-radius: 0.25rem;
   min-width: 16rem;
+
+  &--invalid {
+    border-color: #b3261e;
+    outline-color: #b3261e;
+  }
+}
+
+.oei-download-form__file-size {
+  flex-basis: 100%;
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+  color: #555;
 }
 
 .oei-download-form__submit {

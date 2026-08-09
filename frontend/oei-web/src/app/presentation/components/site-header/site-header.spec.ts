@@ -6,6 +6,7 @@ import { SiteHeader } from './site-header';
 import { KeycloakAuthService } from '../../auth/keycloak-auth.service';
 import { MemberApplicationService } from '../../../application/service/member-application.service';
 import { createMember } from '../../../domain/model/identity/member';
+import { SEARCH_PORT } from '../../../domain/port/search.port';
 
 describe('SiteHeader', () => {
   beforeEach(() => {
@@ -56,6 +57,23 @@ describe('SiteHeader', () => {
     expect(items.length).toBe(2);
     expect(items[0].getAttribute('href')).toBe('/ressources');
     expect(items[1].getAttribute('href')).toBe('/livre-blanc');
+  });
+
+  it('givenSearchIconClicked_whenToggled_thenShowsAndHidesGlobalSearch', () => {
+    TestBed.overrideProvider(SEARCH_PORT, { useValue: { search: () => of([]) } });
+    const fixture = TestBed.createComponent(SiteHeader);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector('oei-global-search')).toBeFalsy();
+
+    compiled.querySelector<HTMLButtonElement>('.oei-icon-btn')?.click();
+    fixture.detectChanges();
+    expect(compiled.querySelector('oei-global-search')).toBeTruthy();
+
+    compiled.querySelector<HTMLButtonElement>('.oei-icon-btn')?.click();
+    fixture.detectChanges();
+    expect(compiled.querySelector('oei-global-search')).toBeFalsy();
   });
 
   it('givenComponent_whenCreated_thenRendersLanguageSwitcherAndMemberAreaButton', () => {

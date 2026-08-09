@@ -157,6 +157,12 @@ import { EVENT_MODERATION_PORT } from './domain/port/event/event-moderation.port
 import { EventModerationMockAdapter } from './infrastructure/adapter/event-moderation-mock.adapter';
 import { EventModerationApiAdapter } from './infrastructure/adapter/event-moderation-api.adapter';
 
+// Global search (header search icon, see plan doc 02-DYNAMIC-NEWS-GLOBAL-SEARCH-RESOURCES):
+// V1 scope is resources + news only.
+import { SEARCH_PORT } from './domain/port/search.port';
+import { SearchMockAdapter } from './infrastructure/adapter/search-mock.adapter';
+import { SearchApiAdapter } from './infrastructure/adapter/search-api.adapter';
+
 // Real Keycloak Authorization Code + PKCE config (realm `oei`, client `oei-frontend` — see
 // `keycloak/realm-export/oei-realm.json`: publicClient, standardFlowEnabled,
 // directAccessGrantsEnabled=false, pkce.code.challenge.method=S256, redirectUris
@@ -460,6 +466,11 @@ export const appConfig: ApplicationConfig = {
         inject(RuntimeConfig).isMock()
           ? inject(EventModerationMockAdapter)
           : inject(EventModerationApiAdapter),
+    },
+    {
+      provide: SEARCH_PORT,
+      useFactory: () =>
+        inject(RuntimeConfig).isMock() ? inject(SearchMockAdapter) : inject(SearchApiAdapter),
     },
   ],
 };

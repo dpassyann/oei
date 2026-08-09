@@ -1,0 +1,65 @@
+<div class="oei-global-search" (keydown.escape)="close()">
+  <div class="oei-global-search__field">
+    <svg class="oei-global-search__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.6" />
+      <path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+    </svg>
+    <input
+      #searchInput
+      type="search"
+      class="oei-global-search__input"
+      [attr.aria-label]="i18n.translate('header.searchAria')"
+      [placeholder]="i18n.translate('search.placeholder')"
+      [ngModel]="query()"
+      (ngModelChange)="onQueryChange($event)"
+    />
+    <button
+      type="button"
+      class="oei-global-search__close"
+      (click)="close()"
+      [attr.aria-label]="i18n.translate('search.closeAria')"
+    >
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+      </svg>
+    </button>
+  </div>
+
+  @if (hasSearched()) {
+    <div class="oei-global-search__results" role="listbox">
+      @if (resourceResults().length > 0) {
+        <div class="oei-global-search__group">
+          <h3 class="oei-global-search__group-title">{{ i18n.translate('search.groupResources') }}</h3>
+          <ul class="oei-global-search__list">
+            @for (result of resourceResults(); track result.path + (result.fragment ?? '')) {
+              <li>
+                <button type="button" class="oei-global-search__result" (click)="selectResult(result)">
+                  <span class="oei-global-search__result-title">{{ result.title }}</span>
+                  <span class="oei-global-search__result-excerpt">{{ result.excerpt }}</span>
+                </button>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+      @if (newsResults().length > 0) {
+        <div class="oei-global-search__group">
+          <h3 class="oei-global-search__group-title">{{ i18n.translate('search.groupNews') }}</h3>
+          <ul class="oei-global-search__list">
+            @for (result of newsResults(); track result.path + result.title) {
+              <li>
+                <button type="button" class="oei-global-search__result" (click)="selectResult(result)">
+                  <span class="oei-global-search__result-title">{{ result.title }}</span>
+                  <span class="oei-global-search__result-excerpt">{{ result.excerpt }}</span>
+                </button>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+      @if (resourceResults().length === 0 && newsResults().length === 0) {
+        <p class="oei-global-search__empty">{{ i18n.translate('search.noResults') }}</p>
+      }
+    </div>
+  }
+</div>

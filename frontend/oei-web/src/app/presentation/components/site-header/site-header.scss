@@ -20,6 +20,10 @@ $oei-gold: #e8a530;
   background: $oei-navy;
   color: #ffffff;
   padding: 1rem 2.5rem;
+  // Anchors `oei-global-search`'s full-width dropdown (opened by the search icon in
+  // `.oei-header__actions`) directly under the header, without otherwise touching this
+  // container's layout.
+  position: relative;
 }
 
 .oei-logo {

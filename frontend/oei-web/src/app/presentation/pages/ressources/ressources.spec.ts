@@ -2,6 +2,7 @@ import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
+import { vi } from 'vitest';
 import { Ressources } from './ressources';
 import { LEAD_CAPTURE_PORT, LeadCapturePort } from '../../../domain/port/lead-capture.port';
 import { I18nService } from '../../i18n/i18n.service';
@@ -32,6 +33,9 @@ const INTERFACE_STRINGS: Record<string, string> = {
   'ressources.resourceList.items.livreBlanc.label': 'Livre Blanc',
   'ressources.resourceList.items.positions.label': 'Mentions & Positions',
   'ressources.resourceList.items.rapports.label': 'Rapports & Études',
+  'resourceCarousel.fileSizeLabel': 'Taille du fichier',
+  'resourceCarousel.unitKb': 'Ko',
+  'resourceCarousel.unitMb': 'Mo',
 };
 
 const FAKE_I18N_SERVICE = {
@@ -109,5 +113,50 @@ describe('Ressources', () => {
 
     expect(submit).not.toHaveBeenCalled();
     expect(compiled.textContent).toContain('invalide');
+  });
+
+  it('givenComponent_whenCreated_thenRendersCarouselWithFiveSlides', () => {
+    vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({ matches: false }));
+    configureWithPort({ submit: () => of(undefined) });
+    const fixture = TestBed.createComponent(Ressources);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelectorAll('.oei-resource-carousel__slide').length).toBe(5);
+    vi.unstubAllGlobals();
+  });
+
+  it('givenMalformedEmail_whenBlurred_thenMarksInputInvalidWithAccessibleErrorMessage', () => {
+    vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({ matches: false }));
+    configureWithPort({ submit: () => of(undefined) });
+    const fixture = TestBed.createComponent(Ressources);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    const component = fixture.componentInstance as unknown as RessourcesTestHandle;
+
+    component.email.set('not-an-email');
+    const input = compiled.querySelector<HTMLInputElement>('#download-email');
+    input?.dispatchEvent(new FocusEvent('blur'));
+    fixture.detectChanges();
+
+    expect(input?.classList.contains('oei-download-form__input--invalid')).toBe(true);
+    expect(input?.getAttribute('aria-invalid')).toBe('true');
+    const describedBy = input?.getAttribute('aria-describedby');
+    expect(describedBy).toBe('download-email-error');
+    const errorMessage = compiled.querySelector(`#${describedBy}`);
+    expect(errorMessage?.textContent?.trim().length).toBeGreaterThan(0);
+    vi.unstubAllGlobals();
+  });
+
+  it('givenLivreBlancFileSize_whenRendered_thenDisplaysItNearTheDownloadForm', () => {
+    vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({ matches: false }));
+    configureWithPort({ submit: () => of(undefined) });
+    const fixture = TestBed.createComponent(Ressources);
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    const fileSize = compiled.querySelector('.oei-download-form__file-size');
+    expect(fileSize?.textContent).toMatch(/1[.,]?1\s*Mo/);
+    vi.unstubAllGlobals();
   });
 });

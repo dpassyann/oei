@@ -1,0 +1,103 @@
+<div
+  class="oei-resource-carousel"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()"
+  (focusin)="onFocusIn()"
+  (focusout)="onFocusOut()"
+>
+  <h2 class="oei-resource-carousel__title">{{ i18n.translate('resourceCarousel.title') }}</h2>
+
+  <div class="oei-resource-carousel__viewport">
+    <div class="oei-resource-carousel__track" [style.transform]="'translateX(-' + activeIndex() * 100 + '%)'">
+      @for (item of items(); track item.key) {
+        <div class="oei-resource-carousel__slide">
+          <article class="oei-resource-carousel__card">
+            @if (item.coverImageUrl) {
+              <img class="oei-resource-carousel__cover" [src]="item.coverImageUrl" [attr.alt]="item.coverAlt ?? ''" />
+            } @else {
+              <div class="oei-resource-carousel__cover oei-resource-carousel__cover--placeholder" aria-hidden="true"></div>
+            }
+            <div class="oei-resource-carousel__body">
+              <span class="oei-resource-carousel__type">{{ typeLabel(item.type) }}</span>
+              <h3 class="oei-resource-carousel__item-title">
+                {{ i18n.translate('ressources.resourceList.items.' + item.key + '.label') }}
+              </h3>
+              @if (item.version || item.language || item.fileSizeBytes) {
+                <dl class="oei-resource-carousel__meta">
+                  @if (item.version) {
+                    <div class="oei-resource-carousel__meta-row">
+                      <dt>{{ i18n.translate('resourceCarousel.versionLabel') }}</dt>
+                      <dd>{{ item.version }}</dd>
+                    </div>
+                  }
+                  @if (item.language) {
+                    <div class="oei-resource-carousel__meta-row">
+                      <dt>{{ i18n.translate('resourceCarousel.languageLabel') }}</dt>
+                      <dd>{{ languageLabel(item.language) }}</dd>
+                    </div>
+                  }
+                  @if (item.fileSizeBytes) {
+                    <div class="oei-resource-carousel__meta-row">
+                      <dt>{{ i18n.translate('resourceCarousel.fileSizeLabel') }}</dt>
+                      <dd>{{ fileSizeLabel(item.fileSizeBytes) }}</dd>
+                    </div>
+                  }
+                </dl>
+              }
+              @switch (item.cta) {
+                @case ('email') {
+                  <button type="button" class="oei-resource-carousel__cta" (click)="selectEmailCta(item.key)">
+                    {{ i18n.translate('resourceCarousel.ctaEmail') }}
+                  </button>
+                }
+                @case ('view') {
+                  <a class="oei-resource-carousel__cta" [routerLink]="item.routerLink" [fragment]="item.fragment">
+                    {{ i18n.translate('resourceCarousel.ctaView') }}
+                  </a>
+                }
+                @case ('pending') {
+                  <span class="oei-resource-carousel__badge">{{
+                    i18n.translate('ressources.resourceList.pendingBadge')
+                  }}</span>
+                }
+              }
+            </div>
+          </article>
+        </div>
+      }
+    </div>
+  </div>
+
+  @if (items().length > 1) {
+    <div class="oei-resource-carousel__controls">
+      <button
+        type="button"
+        class="oei-resource-carousel__nav"
+        (click)="previous()"
+        [attr.aria-label]="i18n.translate('resourceCarousel.prevAria')"
+      >
+        ‹
+      </button>
+      <div class="oei-resource-carousel__dots">
+        @for (item of items(); track item.key; let i = $index) {
+          <button
+            type="button"
+            class="oei-resource-carousel__dot"
+            [class.oei-resource-carousel__dot--active]="i === activeIndex()"
+            (click)="goTo(i)"
+            [attr.aria-label]="i18n.translate('resourceCarousel.goToAria') + ' ' + (i + 1)"
+            [attr.aria-current]="i === activeIndex() ? 'true' : null"
+          ></button>
+        }
+      </div>
+      <button
+        type="button"
+        class="oei-resource-carousel__nav"
+        (click)="next()"
+        [attr.aria-label]="i18n.translate('resourceCarousel.nextAria')"
+      >
+        ›
+      </button>
+    </div>
+  }
+</div>

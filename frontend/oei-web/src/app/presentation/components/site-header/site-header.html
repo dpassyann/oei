@@ -92,12 +92,21 @@
   </nav>
 
   <div class="oei-header__actions">
-    <button type="button" class="oei-icon-btn" [attr.aria-label]="i18n.translate('header.searchAria')">
+    <button
+      type="button"
+      class="oei-icon-btn"
+      [attr.aria-label]="i18n.translate('header.searchAria')"
+      [attr.aria-expanded]="isSearchOpen()"
+      (click)="toggleSearch()"
+    >
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.6" />
         <path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
       </svg>
     </button>
+    @if (isSearchOpen()) {
+      <oei-global-search (closed)="closeSearch()" />
+    }
     <oei-language-switcher />
     @if (isConnected()) {
       <div class="oei-member-menu">

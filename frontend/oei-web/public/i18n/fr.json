@@ -1118,5 +1118,32 @@
       "ceremonie": "Cérémonie",
       "networking": "Networking"
     }
+  },
+  "resourceCarousel": {
+    "title": "Ressources en un coup d’œil",
+    "prevAria": "Ressource précédente",
+    "nextAria": "Ressource suivante",
+    "goToAria": "Aller à la ressource",
+    "versionLabel": "Version",
+    "languageLabel": "Langue",
+    "fileSizeLabel": "Taille du fichier",
+    "unitKb": "Ko",
+    "unitMb": "Mo",
+    "ctaEmail": "Recevoir par e-mail",
+    "ctaView": "Consulter",
+    "type": {
+      "whitePaper": "Livre blanc",
+      "codeOfEthics": "Code de déontologie",
+      "competencyFramework": "Référentiel de compétences",
+      "positionPaper": "Prise de position",
+      "report": "Rapport"
+    }
+  },
+  "search": {
+    "placeholder": "Rechercher une ressource ou une actualité…",
+    "closeAria": "Fermer la recherche",
+    "noResults": "Aucun résultat pour cette recherche.",
+    "groupResources": "Ressources",
+    "groupNews": "Actualités"
   }
 }

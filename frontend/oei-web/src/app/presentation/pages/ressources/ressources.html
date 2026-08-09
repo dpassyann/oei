@@ -1,6 +1,12 @@
 <main class="oei-page">
   <h1 class="oei-page__title">{{ i18n.translate('ressources.title') }}</h1>
 
+  <oei-resource-carousel
+    [items]="carouselItems"
+    [externalPause]="emailFieldFocused() || formStatus() === 'submitting'"
+    (emailCtaSelected)="focusDownloadForm()"
+  />
+
   <section id="livre-blanc" class="oei-livre-blanc">
     <h2 class="oei-livre-blanc__title">{{ i18n.translate('ressources.livreBlanc.title') }}</h2>
 
@@ -39,20 +45,29 @@
       <form class="oei-download-form" (ngSubmit)="submitDownloadForm()">
         <label class="oei-download-form__label" for="download-email">{{ i18n.translate('ressources.livreBlanc.emailLabel') }}</label>
         <input
+          #downloadEmailInput
           id="download-email"
           class="oei-download-form__input"
+          [class.oei-download-form__input--invalid]="isEmailInvalid || formStatus() === 'error'"
           type="email"
           name="email"
           required
           [placeholder]="i18n.translate('ressources.livreBlanc.emailPlaceholder')"
           [ngModel]="email()"
           (ngModelChange)="email.set($event)"
+          (focus)="onEmailFocus()"
+          (blur)="onEmailBlur()"
+          [attr.aria-invalid]="isEmailInvalid || formStatus() === 'error' ? 'true' : null"
+          [attr.aria-describedby]="isEmailInvalid || formStatus() === 'error' ? 'download-email-error' : null"
         />
         <button type="submit" class="oei-download-form__submit" [disabled]="formStatus() === 'submitting'">
           {{ i18n.translate('ressources.livreBlanc.submitButton') }}
         </button>
-        @if (formStatus() === 'error') {
-          <p class="oei-download-form__message oei-download-form__message--error">
+        <p class="oei-download-form__file-size">
+          {{ i18n.translate('resourceCarousel.fileSizeLabel') }}: {{ formattedLivreBlancFileSize() }}
+        </p>
+        @if (isEmailInvalid || formStatus() === 'error') {
+          <p id="download-email-error" class="oei-download-form__message oei-download-form__message--error">
             {{ i18n.translate('ressources.livreBlanc.errorMessage') }}
           </p>
         }

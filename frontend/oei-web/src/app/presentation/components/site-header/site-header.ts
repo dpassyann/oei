@@ -12,6 +12,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { KeycloakAuthService } from '../../auth/keycloak-auth.service';
 import { I18nService } from '../../i18n/i18n.service';
 import { LanguageSwitcher } from '../language-switcher/language-switcher';
+import { GlobalSearch } from '../global-search/global-search';
 import { MemberApplicationService } from '../../../application/service/member-application.service';
 
 interface NavLink {
@@ -21,7 +22,7 @@ interface NavLink {
 
 @Component({
   selector: 'oei-site-header',
-  imports: [RouterLink, RouterLinkActive, LanguageSwitcher],
+  imports: [RouterLink, RouterLinkActive, LanguageSwitcher, GlobalSearch],
   templateUrl: './site-header.html',
   styleUrl: './site-header.scss',
 })
@@ -79,6 +80,11 @@ export class SiteHeader {
 
   protected readonly isResourcesMenuOpen = signal(false);
 
+  // Opened by the search icon in `.oei-header__actions` (see `site-header.html`) — the icon
+  // itself is unchanged, only this signal + the conditionally-rendered `<oei-global-search>`
+  // are new (see plan doc 02-DYNAMIC-NEWS-GLOBAL-SEARCH-RESOURCES).
+  protected readonly isSearchOpen = signal(false);
+
   constructor() {
     // The header/footer render on every route (outside <router-outlet>), so
     // this is the one place guaranteed to run once per app load regardless
@@ -119,6 +125,14 @@ export class SiteHeader {
     this.isResourcesMenuOpen.set(false);
   }
 
+  protected toggleSearch(): void {
+    this.isSearchOpen.update((open) => !open);
+  }
+
+  protected closeSearch(): void {
+    this.isSearchOpen.set(false);
+  }
+
   @HostListener('document:click', ['$event.target'])
   protected onDocumentClick(target: EventTarget | null): void {
     if (!(target instanceof Node) || this.elementRef.nativeElement.contains(target)) {
@@ -129,6 +143,9 @@ export class SiteHeader {
     }
     if (this.isResourcesMenuOpen()) {
       this.isResourcesMenuOpen.set(false);
+    }
+    if (this.isSearchOpen()) {
+      this.isSearchOpen.set(false);
     }
   }
 

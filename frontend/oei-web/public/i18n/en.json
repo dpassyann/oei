@@ -1118,5 +1118,32 @@
       "ceremonie": "Ceremony",
       "networking": "Networking"
     }
+  },
+  "resourceCarousel": {
+    "title": "Resources at a glance",
+    "prevAria": "Previous resource",
+    "nextAria": "Next resource",
+    "goToAria": "Go to resource",
+    "versionLabel": "Version",
+    "languageLabel": "Language",
+    "fileSizeLabel": "File size",
+    "unitKb": "KB",
+    "unitMb": "MB",
+    "ctaEmail": "Receive by email",
+    "ctaView": "View",
+    "type": {
+      "whitePaper": "White paper",
+      "codeOfEthics": "Code of ethics",
+      "competencyFramework": "Competency framework",
+      "positionPaper": "Position paper",
+      "report": "Report"
+    }
+  },
+  "search": {
+    "placeholder": "Search resources and news…",
+    "closeAria": "Close search",
+    "noResults": "No results for this search.",
+    "groupResources": "Resources",
+    "groupNews": "News"
   }
 }
