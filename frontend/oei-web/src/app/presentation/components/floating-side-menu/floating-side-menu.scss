@@ -49,6 +49,11 @@ $oei-gold: #e8a530;
     color: $oei-gold;
     border-left-color: $oei-gold;
   }
+
+  &--active {
+    color: $oei-gold;
+    border-left-color: $oei-gold;
+  }
 }
 
 @media (max-width: 900px) {

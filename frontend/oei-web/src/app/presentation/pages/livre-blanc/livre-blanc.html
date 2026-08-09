@@ -10,15 +10,6 @@
 
       <header class="oei-livre-blanc-page__header">
         <h1 class="oei-page__title">{{ i18n.translate('livreBlancPage.title') }}</h1>
-        <a
-          class="oei-livre-blanc-page__download"
-          [href]="pdfHref"
-          target="_blank"
-          rel="noopener"
-          download
-        >
-          {{ i18n.translate('livreBlancPage.downloadPdf') }}
-        </a>
       </header>
 
       @if (isFallback()) {

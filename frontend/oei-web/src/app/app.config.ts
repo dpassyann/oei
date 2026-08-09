@@ -4,7 +4,7 @@ import {
   provideAppInitializer,
   provideZonelessChangeDetection,
 } from '@angular/core';
-import { provideRouter, withRouterConfig } from '@angular/router';
+import { provideRouter, withInMemoryScrolling, withRouterConfig } from '@angular/router';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { AuthConfig, OAuthService, provideOAuthClient } from 'angular-oauth2-oidc';
 
@@ -153,7 +153,14 @@ const OEI_AUTH_CONFIG: AuthConfig = {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZonelessChangeDetection(),
-    provideRouter(routes, withRouterConfig({ paramsInheritanceStrategy: 'always' })),
+    provideRouter(
+      routes,
+      withRouterConfig({ paramsInheritanceStrategy: 'always' }),
+      // Enables direct deep-links (`/deontologie#principe-1`) to land already scrolled to that
+      // section on first load — the smooth-scroll-on-click behaviour for in-page navigation
+      // once already on the page is handled separately by `FloatingSideMenu`.
+      withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }),
+    ),
     provideHttpClient(withFetch()),
     provideOAuthClient(),
     provideAppInitializer(() => inject(RuntimeConfig).load()),

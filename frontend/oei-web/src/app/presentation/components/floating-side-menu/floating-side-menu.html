@@ -7,9 +7,12 @@
       <li>
         <a
           class="oei-floating-side-menu__link"
+          [class.oei-floating-side-menu__link--active]="activeFragment() === link.fragment"
           [fragment]="link.fragment"
           [routerLink]="[]"
           [title]="link.label"
+          [attr.aria-current]="activeFragment() === link.fragment ? 'true' : null"
+          (click)="scrollToSection(link.fragment, $event)"
           >{{ link.label }}</a
         >
       </li>

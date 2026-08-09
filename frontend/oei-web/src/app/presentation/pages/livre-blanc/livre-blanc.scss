@@ -95,10 +95,24 @@ $oei-gold: #e8a530;
     margin-top: 0;
   }
 
-  h1 {
-    margin: 0 0 0.75rem;
-    font-size: 2rem;
-    color: $oei-navy;
+  // The Markdown source's own leading `# Livre Blanc` repeats the page's own
+  // `.oei-page__title` verbatim (see `livre-blanc.ts`'s comment on `bodyMarkdown`) — hidden
+  // rather than stripped from the source, so the anchor IDs / heading structure stay untouched
+  // for the rest of the document.
+  h1:first-of-type {
+    display: none;
+  }
+
+  // The subtitle right under that hidden `h1` (`## Pour une reconnaissance progressive...`)
+  // reads as a subtitle, not a table-of-contents entry — styled accordingly rather than like
+  // every other `h2` section heading.
+  h1:first-of-type + h2 {
+    margin: 0 0 1.5rem;
+    padding-top: 0;
+    border-top: none;
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: rgba(10, 30, 63, 0.7);
   }
 
   h2 {
