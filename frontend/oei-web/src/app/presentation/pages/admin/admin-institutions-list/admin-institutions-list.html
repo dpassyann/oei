@@ -1,0 +1,35 @@
+<section class="oei-admin-institutions">
+  <header class="oei-admin-institutions__header">
+    <h1>{{ i18n.translate('admin.institutions.list.title') }}</h1>
+    <a routerLink="/admin/institutions/new" class="oei-admin-institutions__new">{{ i18n.translate('admin.institutions.list.new') }}</a>
+  </header>
+
+  @if (institutions().length === 0) {
+    <p>{{ i18n.translate('admin.institutions.list.empty') }}</p>
+  } @else {
+    <table class="oei-admin-institutions__table">
+      <thead>
+        <tr>
+          <th>{{ i18n.translate('admin.institutions.list.columns.name') }}</th>
+          <th>{{ i18n.translate('admin.institutions.list.columns.country') }}</th>
+          <th>{{ i18n.translate('admin.institutions.list.columns.status') }}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (institution of institutions(); track institution.id) {
+          <tr>
+            <td>{{ institution.publicName }}</td>
+            <td>{{ institution.country }}</td>
+            <td>
+              <span class="oei-admin-status" [attr.data-status]="institution.status">
+                {{ i18n.translate('admin.institutions.status.' + (institution.status ?? 'ACTIVE')) }}
+              </span>
+            </td>
+            <td><a [routerLink]="['/admin/institutions', institution.id]">{{ i18n.translate('admin.institutions.list.open') }}</a></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</section>

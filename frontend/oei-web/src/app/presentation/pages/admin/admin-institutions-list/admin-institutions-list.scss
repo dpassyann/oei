@@ -1,0 +1,27 @@
+.oei-admin-institutions {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      text-align: left;
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+  }
+}
+
+.oei-admin-status {
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  background: #eee;
+  font-size: 0.8rem;
+}

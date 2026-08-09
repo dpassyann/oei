@@ -14,7 +14,8 @@
     "legalNotices": "Legal notices",
     "sitemap": "Sitemap",
     "partners": "Partners",
-    "events": "Events"
+    "events": "Events",
+    "admin": "Admin"
   },
   "header": {
     "memberArea": "Member area",
@@ -1145,5 +1146,163 @@
     "noResults": "No results for this search.",
     "groupResources": "Resources",
     "groupNews": "News"
+  },
+  "admin": {
+    "shell": {
+      "title": "Admin console"
+    },
+    "nav": {
+      "dashboard": "Dashboard",
+      "articles": "Articles & news",
+      "institutions": "Institutions",
+      "members": "Members",
+      "events": "Events",
+      "resources": "Resources",
+      "menus": "Menus",
+      "translations": "Translations",
+      "emailTemplates": "Email templates",
+      "homeBlocks": "Home blocks",
+      "auditLog": "Audit log"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "intro": "Overview of OEI platform activity (sample figures).",
+      "kpis": {
+        "activeMembers": "Active members",
+        "expiredDues": "Expired dues",
+        "institutions": "Institutions",
+        "pendingPublications": "Pending publications",
+        "events": "Events",
+        "reports": "Reports",
+        "emails": "Emails sent",
+        "errors": "Errors"
+      },
+      "shortcuts": {
+        "cms": "Open CMS",
+        "institutions": "Manage institutions",
+        "partners": "View partners",
+        "resources": "View resources",
+        "auditLog": "View audit log"
+      }
+    },
+    "institutions": {
+      "list": {
+        "title": "Institutions",
+        "new": "Create institution",
+        "empty": "No institutions yet.",
+        "open": "Open",
+        "columns": {
+          "name": "Name",
+          "country": "Country",
+          "status": "Status"
+        }
+      },
+      "status": {
+        "DRAFT": "Draft",
+        "CONTACTED": "Contacted",
+        "DOCUMENTS_PENDING": "Documents pending",
+        "APPROVED": "Approved",
+        "ACTIVE": "Active",
+        "SUSPENDED": "Suspended",
+        "REVOKED": "Revoked",
+        "ARCHIVED": "Archived"
+      },
+      "new": {
+        "title": "Create institution",
+        "fields": {
+          "legalName": "Legal name",
+          "publicName": "Public name",
+          "type": "Type",
+          "country": "Country",
+          "website": "Website",
+          "logoUrl": "Logo (URL)",
+          "description": "Description",
+          "emailDomains": "Email domains",
+          "primaryContactName": "Primary contact",
+          "institutionAdminEmail": "Institution admin email",
+          "partnershipLevel": "Partnership level",
+          "startedAt": "Start date",
+          "endsAt": "End date",
+          "internalNotes": "Internal notes"
+        },
+        "partnershipLevels": {
+          "PROSPECT": "Prospect",
+          "STANDARD": "Standard",
+          "SILVER": "Silver",
+          "GOLD": "Gold",
+          "STRATEGIC": "Strategic"
+        },
+        "addDomain": "Add",
+        "removeDomain": "Remove",
+        "submit": "Create institution",
+        "validationError": "Please fill in at least the legal name, public name, country and institution admin email.",
+        "submitError": "An error occurred while creating the institution."
+      },
+      "detail": {
+        "notFound": "Institution not found.",
+        "actions": {
+          "approve": "Approve",
+          "activate": "Activate",
+          "suspend": "Suspend",
+          "revoke": "Revoke"
+        },
+        "revokeReasonLabel": "Revocation reason (required)",
+        "revokeReasonRequired": "A reason is required to revoke an institution.",
+        "confirmRevoke": "Confirm revocation",
+        "cancel": "Cancel",
+        "actionError": "The action could not be completed."
+      }
+    },
+    "auditLog": {
+      "title": "Audit log",
+      "intro": "History of sensitive actions performed by administrators.",
+      "empty": "No audit entries yet.",
+      "columns": {
+        "date": "Date",
+        "actor": "Administrator",
+        "action": "Action",
+        "entity": "Entity",
+        "reason": "Reason",
+        "correlationId": "Correlation ID"
+      }
+    },
+    "comingSoon": {
+      "menus": {
+        "title": "Menus (coming soon)",
+        "intro": "Menu management will soon be available from this page.",
+        "items": [
+          "Drag-and-drop menu editor",
+          "Multilingual menu management",
+          "Live preview"
+        ]
+      },
+      "translations": {
+        "title": "Translations (coming soon)",
+        "intro": "Centralized translation management will soon be available from this page.",
+        "items": [
+          "Per-language translation editor",
+          "Missing key detection",
+          "Translation file export/import"
+        ]
+      },
+      "emailTemplates": {
+        "title": "Email templates (coming soon)",
+        "intro": "Email template management will soon be available from this page.",
+        "items": [
+          "Email template editor",
+          "Personalization variables",
+          "Multilingual preview"
+        ]
+      },
+      "homeBlocks": {
+        "title": "Home blocks (coming soon)",
+        "intro": "Home page block management will soon be available from this page.",
+        "items": [
+          "Drag-and-drop block editor",
+          "Live preview",
+          "Publication scheduling"
+        ]
+      }
+    }
   }
 }

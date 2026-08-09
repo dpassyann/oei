@@ -1,0 +1,99 @@
+<section class="oei-admin-institution-new">
+  <h1>{{ i18n.translate('admin.institutions.new.title') }}</h1>
+
+  <form class="oei-admin-institution-new__form" (submit)="$event.preventDefault(); submit()">
+    <label>
+      {{ i18n.translate('admin.institutions.new.fields.legalName') }}
+      <input type="text" [ngModel]="draft().legalName" (ngModelChange)="updateDraft({ legalName: $event })" name="legalName" required />
+    </label>
+
+    <label>
+      {{ i18n.translate('admin.institutions.new.fields.publicName') }}
+      <input type="text" [ngModel]="draft().publicName" (ngModelChange)="updateDraft({ publicName: $event })" name="publicName" required />
+    </label>
+
+    <label>
+      {{ i18n.translate('admin.institutions.new.fields.type') }}
+      <input type="text" [ngModel]="draft().type" (ngModelChange)="updateDraft({ type: $event })" name="type" />
+    </label>
+
+    <label>
+      {{ i18n.translate('admin.institutions.new.fields.country') }}
+      <input type="text" [ngModel]="draft().country" (ngModelChange)="updateDraft({ country: $event })" name="country" required />
+    </label>
+
+    <label>
+      {{ i18n.translate('admin.institutions.new.fields.website') }}
+      <input type="url" [ngModel]="draft().website" (ngModelChange)="updateDraft({ website: $event })" name="website" />
+    </label>
+
+    <label>
+      {{ i18n.translate('admin.institutions.new.fields.logoUrl') }}
+      <input type="url" [ngModel]="draft().logoUrl" (ngModelChange)="updateDraft({ logoUrl: $event })" name="logoUrl" />
+    </label>
+
+    <label>
+      {{ i18n.translate('admin.institutions.new.fields.description') }}
+      <textarea [ngModel]="draft().description" (ngModelChange)="updateDraft({ description: $event })" name="description"></textarea>
+    </label>
+
+    <fieldset class="oei-admin-institution-new__domains">
+      <legend>{{ i18n.translate('admin.institutions.new.fields.emailDomains') }}</legend>
+      <ul>
+        @for (domain of emailDomains(); track domain; let i = $index) {
+          <li>
+            {{ domain }}
+            <button type="button" (click)="removeEmailDomain(i)">{{ i18n.translate('admin.institutions.new.removeDomain') }}</button>
+          </li>
+        }
+      </ul>
+      <div class="oei-admin-institution-new__add-domain">
+        <input type="text" [ngModel]="newEmailDomain()" (ngModelChange)="newEmailDomain.set($event)" name="newEmailDomain" />
+        <button type="button" (click)="addEmailDomain()">{{ i18n.translate('admin.institutions.new.addDomain') }}</button>
+      </div>
+    </fieldset>
+
+    <label>
+      {{ i18n.translate('admin.institutions.new.fields.primaryContactName') }}
+      <input type="text" [ngModel]="draft().primaryContactName" (ngModelChange)="updateDraft({ primaryContactName: $event })" name="primaryContactName" />
+    </label>
+
+    <label>
+      {{ i18n.translate('admin.institutions.new.fields.institutionAdminEmail') }}
+      <input type="email" [ngModel]="draft().institutionAdminEmail" (ngModelChange)="updateDraft({ institutionAdminEmail: $event })" name="institutionAdminEmail" required />
+    </label>
+
+    <label>
+      {{ i18n.translate('admin.institutions.new.fields.partnershipLevel') }}
+      <select [ngModel]="draft().partnershipLevel" (ngModelChange)="updateDraft({ partnershipLevel: $event })" name="partnershipLevel">
+        @for (level of partnershipLevels; track level) {
+          <option [value]="level">{{ i18n.translate('admin.institutions.new.partnershipLevels.' + level) }}</option>
+        }
+      </select>
+    </label>
+
+    <label>
+      {{ i18n.translate('admin.institutions.new.fields.startedAt') }}
+      <input type="date" [ngModel]="draft().startedAt" (ngModelChange)="updateDraft({ startedAt: $event })" name="startedAt" />
+    </label>
+
+    <label>
+      {{ i18n.translate('admin.institutions.new.fields.endsAt') }}
+      <input type="date" [ngModel]="draft().endsAt" (ngModelChange)="updateDraft({ endsAt: $event })" name="endsAt" />
+    </label>
+
+    <label>
+      {{ i18n.translate('admin.institutions.new.fields.internalNotes') }}
+      <textarea [ngModel]="draft().internalNotes" (ngModelChange)="updateDraft({ internalNotes: $event })" name="internalNotes"></textarea>
+    </label>
+
+    @if (validationError()) {
+      <p class="oei-admin-institution-new__error">{{ i18n.translate('admin.institutions.new.validationError') }}</p>
+    }
+    @if (submitError()) {
+      <p class="oei-admin-institution-new__error">{{ i18n.translate('admin.institutions.new.submitError') }}</p>
+    }
+
+    <button type="submit" [disabled]="submitting()">{{ i18n.translate('admin.institutions.new.submit') }}</button>
+  </form>
+</section>

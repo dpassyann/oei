@@ -1,0 +1,33 @@
+<section class="oei-admin-audit-log">
+  <h1>{{ i18n.translate('admin.auditLog.title') }}</h1>
+  <p>{{ i18n.translate('admin.auditLog.intro') }}</p>
+
+  @if (entries().length === 0) {
+    <p>{{ i18n.translate('admin.auditLog.empty') }}</p>
+  } @else {
+    <table class="oei-admin-audit-log__table">
+      <thead>
+        <tr>
+          <th>{{ i18n.translate('admin.auditLog.columns.date') }}</th>
+          <th>{{ i18n.translate('admin.auditLog.columns.actor') }}</th>
+          <th>{{ i18n.translate('admin.auditLog.columns.action') }}</th>
+          <th>{{ i18n.translate('admin.auditLog.columns.entity') }}</th>
+          <th>{{ i18n.translate('admin.auditLog.columns.reason') }}</th>
+          <th>{{ i18n.translate('admin.auditLog.columns.correlationId') }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (entry of entries(); track entry.id) {
+          <tr>
+            <td>{{ entry.occurredAt }}</td>
+            <td>{{ entry.actorId }}</td>
+            <td>{{ entry.action }}</td>
+            <td>{{ entry.targetType }} #{{ entry.targetId }}</td>
+            <td>{{ entry.reason ?? '—' }}</td>
+            <td>{{ entry.correlationId }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</section>

@@ -41,6 +41,14 @@ import { ProposerEvenement } from './presentation/pages/espace-membre/proposer-e
 import { EventsList } from './presentation/pages/events/events-list/events-list';
 import { EventDetail } from './presentation/pages/events/event-detail/event-detail';
 import { CmsEventsModeration } from './presentation/pages/cms/cms-events-moderation/cms-events-moderation';
+import { adminGuard } from './presentation/auth/admin.guard';
+import { AdminLayout } from './presentation/pages/admin/admin-layout/admin-layout';
+import { AdminDashboard } from './presentation/pages/admin/admin-dashboard/admin-dashboard';
+import { AdminInstitutionsList } from './presentation/pages/admin/admin-institutions-list/admin-institutions-list';
+import { AdminInstitutionNew } from './presentation/pages/admin/admin-institution-new/admin-institution-new';
+import { AdminInstitutionDetail } from './presentation/pages/admin/admin-institution-detail/admin-institution-detail';
+import { AdminAuditLogPage } from './presentation/pages/admin/admin-audit-log/admin-audit-log';
+import { AdminComingSoon } from './presentation/pages/admin/admin-coming-soon/admin-coming-soon';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -137,4 +145,25 @@ export const routes: Routes = [
   // — appended at the end so as not to reorder any pre-existing route.
   { path: 'events', component: EventsList },
   { path: 'events/:slug', component: EventDetail },
+  // Admin console (task: .prompt/plan/final/03-ADMIN-CONSOLE.md), appended last so this never
+  // reorders any pre-existing route. Guarded by `adminGuard` (any of the 8 admin realm roles —
+  // see `domain/model/admin/admin-role.ts`); `AdminLayout` further filters its sidebar nav per
+  // role via `visibleSections()`. `menus`/`traductions`/`templates-email`/`blocs-home` all share
+  // the same `AdminComingSoon` placeholder component, distinguished by `data.section`.
+  {
+    path: 'admin',
+    canActivate: [adminGuard],
+    component: AdminLayout,
+    children: [
+      { path: '', component: AdminDashboard },
+      { path: 'institutions', component: AdminInstitutionsList },
+      { path: 'institutions/new', component: AdminInstitutionNew },
+      { path: 'institutions/:id', component: AdminInstitutionDetail },
+      { path: 'audit-log', component: AdminAuditLogPage },
+      { path: 'menus', component: AdminComingSoon, data: { section: 'menus' } },
+      { path: 'traductions', component: AdminComingSoon, data: { section: 'translations' } },
+      { path: 'templates-email', component: AdminComingSoon, data: { section: 'emailTemplates' } },
+      { path: 'blocs-home', component: AdminComingSoon, data: { section: 'homeBlocks' } },
+    ],
+  },
 ];

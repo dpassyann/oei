@@ -1,0 +1,21 @@
+<section class="oei-admin-dashboard">
+  <h1>{{ i18n.translate('admin.dashboard.title') }}</h1>
+  <p>{{ i18n.translate('admin.dashboard.intro') }}</p>
+
+  <div class="oei-admin-dashboard__tiles">
+    @for (tile of tiles(); track tile.labelKey) {
+      <article class="oei-admin-dashboard__tile">
+        <span class="oei-admin-dashboard__tile-value">{{ tile.value }}</span>
+        <span class="oei-admin-dashboard__tile-label">{{ i18n.translate(tile.labelKey) }}</span>
+      </article>
+    }
+  </div>
+
+  <nav class="oei-admin-dashboard__shortcuts">
+    <a routerLink="/cms">{{ i18n.translate('admin.dashboard.shortcuts.cms') }}</a>
+    <a routerLink="/admin/institutions">{{ i18n.translate('admin.dashboard.shortcuts.institutions') }}</a>
+    <a routerLink="/partenaires">{{ i18n.translate('admin.dashboard.shortcuts.partners') }}</a>
+    <a routerLink="/ressources">{{ i18n.translate('admin.dashboard.shortcuts.resources') }}</a>
+    <a routerLink="/admin/audit-log">{{ i18n.translate('admin.dashboard.shortcuts.auditLog') }}</a>
+  </nav>
+</section>

@@ -89,6 +89,9 @@
         </ul>
       }
     </div>
+    @if (isAdmin()) {
+      <a routerLink="/admin" routerLinkActive="oei-nav__link--active" class="oei-nav__link">{{ i18n.translate('nav.admin') }}</a>
+    }
   </nav>
 
   <div class="oei-header__actions">

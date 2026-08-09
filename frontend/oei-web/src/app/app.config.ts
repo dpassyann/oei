@@ -163,6 +163,18 @@ import { SEARCH_PORT } from './domain/port/search.port';
 import { SearchMockAdapter } from './infrastructure/adapter/search-mock.adapter';
 import { SearchApiAdapter } from './infrastructure/adapter/search-api.adapter';
 
+// Admin console (.prompt/plan/final/03-ADMIN-CONSOLE.md / 02-PARTNERS-AND-INSTITUTION-ADMIN.md) —
+// 3 ports/adapters appended last so this never reorders any pre-existing provider.
+import { ADMIN_DASHBOARD_PORT } from './domain/port/admin/admin-dashboard.port';
+import { AdminDashboardMockAdapter } from './infrastructure/adapter/admin-dashboard-mock.adapter';
+import { AdminDashboardApiAdapter } from './infrastructure/adapter/admin-dashboard-api.adapter';
+import { ADMIN_AUDIT_LOG_PORT } from './domain/port/admin/admin-audit-log.port';
+import { AdminAuditLogMockAdapter } from './infrastructure/adapter/admin-audit-log-mock.adapter';
+import { AdminAuditLogApiAdapter } from './infrastructure/adapter/admin-audit-log-api.adapter';
+import { ADMIN_INSTITUTIONS_PORT } from './domain/port/admin/admin-institutions.port';
+import { AdminInstitutionsMockAdapter } from './infrastructure/adapter/admin-institutions-mock.adapter';
+import { AdminInstitutionsApiAdapter } from './infrastructure/adapter/admin-institutions-api.adapter';
+
 // Real Keycloak Authorization Code + PKCE config (realm `oei`, client `oei-frontend` — see
 // `keycloak/realm-export/oei-realm.json`: publicClient, standardFlowEnabled,
 // directAccessGrantsEnabled=false, pkce.code.challenge.method=S256, redirectUris
@@ -471,6 +483,18 @@ export const appConfig: ApplicationConfig = {
       provide: SEARCH_PORT,
       useFactory: () =>
         inject(RuntimeConfig).isMock() ? inject(SearchMockAdapter) : inject(SearchApiAdapter),
+    },
+    {
+      provide: ADMIN_DASHBOARD_PORT,
+      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(AdminDashboardMockAdapter) : inject(AdminDashboardApiAdapter)),
+    },
+    {
+      provide: ADMIN_AUDIT_LOG_PORT,
+      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(AdminAuditLogMockAdapter) : inject(AdminAuditLogApiAdapter)),
+    },
+    {
+      provide: ADMIN_INSTITUTIONS_PORT,
+      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(AdminInstitutionsMockAdapter) : inject(AdminInstitutionsApiAdapter)),
     },
   ],
 };

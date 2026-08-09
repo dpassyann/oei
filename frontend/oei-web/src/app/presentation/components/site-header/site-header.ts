@@ -14,6 +14,7 @@ import { I18nService } from '../../i18n/i18n.service';
 import { LanguageSwitcher } from '../language-switcher/language-switcher';
 import { GlobalSearch } from '../global-search/global-search';
 import { MemberApplicationService } from '../../../application/service/member-application.service';
+import { ADMIN_ROLES } from '../../../domain/model/admin/admin-role';
 
 interface NavLink {
   readonly path: string;
@@ -44,6 +45,11 @@ export class SiteHeader {
   // admin actually has a way to reach the CMS at all (there was previously no link anywhere
   // in the UI to it, only the guarded route itself, reachable only by typing the URL).
   protected readonly canAccessCms = computed(() => this.keycloakAuth.hasAnyRole(['member', 'admin']));
+
+  // Task: admin console nav entry, visible only to one of the 8 admin realm roles (see
+  // `domain/model/admin/admin-role.ts`) — added as a separate computed/entry rather than inside
+  // `navLinks` so the existing nav array's order/content is never touched.
+  protected readonly isAdmin = computed(() => this.isConnected() && (this.keycloakAuth.hasAnyRole?.(ADMIN_ROLES) ?? false));
 
   protected readonly isDropdownOpen = signal(false);
 

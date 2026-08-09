@@ -1,0 +1,19 @@
+<div class="oei-admin">
+  <aside class="oei-admin__sidebar">
+    <h2 class="oei-admin__sidebar-title">{{ i18n.translate('admin.shell.title') }}</h2>
+    <nav class="oei-admin__nav">
+      @for (entry of navEntries(); track entry.section) {
+        <a
+          [routerLink]="entry.path"
+          routerLinkActive="oei-admin__nav-link--active"
+          [routerLinkActiveOptions]="{ exact: entry.path === '/admin' }"
+          class="oei-admin__nav-link"
+          >{{ i18n.translate(entry.labelKey) }}</a
+        >
+      }
+    </nav>
+  </aside>
+  <section class="oei-admin__content">
+    <router-outlet />
+  </section>
+</div>

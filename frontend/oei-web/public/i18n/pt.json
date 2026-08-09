@@ -14,7 +14,8 @@
     "legalNotices": "Avisos legais",
     "sitemap": "Mapa do site",
     "partners": "Parceiros",
-    "events": "Eventos"
+    "events": "Eventos",
+    "admin": "Administração"
   },
   "header": {
     "memberArea": "Área de membros",
@@ -1139,5 +1140,163 @@
     "noResults": "Nenhum resultado para esta pesquisa.",
     "groupResources": "Recursos",
     "groupNews": "Notícias"
+  },
+  "admin": {
+    "shell": {
+      "title": "Console de administração"
+    },
+    "nav": {
+      "dashboard": "Painel",
+      "articles": "Artigos e notícias",
+      "institutions": "Instituições",
+      "members": "Membros",
+      "events": "Eventos",
+      "resources": "Recursos",
+      "menus": "Menus",
+      "translations": "Traduções",
+      "emailTemplates": "Modelos de email",
+      "homeBlocks": "Blocos da página inicial",
+      "auditLog": "Registro de auditoria"
+    },
+    "dashboard": {
+      "title": "Painel",
+      "intro": "Visão geral da atividade da plataforma OEI (números de exemplo).",
+      "kpis": {
+        "activeMembers": "Membros ativos",
+        "expiredDues": "Cotas vencidas",
+        "institutions": "Instituições",
+        "pendingPublications": "Publicações a validar",
+        "events": "Eventos",
+        "reports": "Denúncias",
+        "emails": "Emails enviados",
+        "errors": "Erros"
+      },
+      "shortcuts": {
+        "cms": "Abrir o CMS",
+        "institutions": "Gerenciar instituições",
+        "partners": "Ver parceiros",
+        "resources": "Ver recursos",
+        "auditLog": "Ver registro de auditoria"
+      }
+    },
+    "institutions": {
+      "list": {
+        "title": "Instituições",
+        "new": "Criar instituição",
+        "empty": "Ainda não há instituições.",
+        "open": "Abrir",
+        "columns": {
+          "name": "Nome",
+          "country": "País",
+          "status": "Status"
+        }
+      },
+      "status": {
+        "DRAFT": "Rascunho",
+        "CONTACTED": "Contatada",
+        "DOCUMENTS_PENDING": "Documentos pendentes",
+        "APPROVED": "Aprovada",
+        "ACTIVE": "Ativa",
+        "SUSPENDED": "Suspensa",
+        "REVOKED": "Revogada",
+        "ARCHIVED": "Arquivada"
+      },
+      "new": {
+        "title": "Criar instituição",
+        "fields": {
+          "legalName": "Razão social",
+          "publicName": "Nome público",
+          "type": "Tipo",
+          "country": "País",
+          "website": "Site",
+          "logoUrl": "Logo (URL)",
+          "description": "Descrição",
+          "emailDomains": "Domínios de email",
+          "primaryContactName": "Contato principal",
+          "institutionAdminEmail": "Email do admin institucional",
+          "partnershipLevel": "Nível de parceria",
+          "startedAt": "Data de início",
+          "endsAt": "Data de término",
+          "internalNotes": "Notas internas"
+        },
+        "partnershipLevels": {
+          "PROSPECT": "Prospect",
+          "STANDARD": "Padrão",
+          "SILVER": "Prata",
+          "GOLD": "Ouro",
+          "STRATEGIC": "Estratégico"
+        },
+        "addDomain": "Adicionar",
+        "removeDomain": "Remover",
+        "submit": "Criar instituição",
+        "validationError": "Por favor, preencha ao menos a razão social, o nome público, o país e o email do admin institucional.",
+        "submitError": "Ocorreu um erro ao criar a instituição."
+      },
+      "detail": {
+        "notFound": "Instituição não encontrada.",
+        "actions": {
+          "approve": "Aprovar",
+          "activate": "Ativar",
+          "suspend": "Suspender",
+          "revoke": "Revogar"
+        },
+        "revokeReasonLabel": "Motivo da revogação (obrigatório)",
+        "revokeReasonRequired": "É necessário um motivo para revogar uma instituição.",
+        "confirmRevoke": "Confirmar revogação",
+        "cancel": "Cancelar",
+        "actionError": "Não foi possível concluir a ação."
+      }
+    },
+    "auditLog": {
+      "title": "Registro de auditoria",
+      "intro": "Histórico das ações sensíveis realizadas pelos administradores.",
+      "empty": "Ainda não há entradas de auditoria.",
+      "columns": {
+        "date": "Data",
+        "actor": "Administrador",
+        "action": "Ação",
+        "entity": "Entidade",
+        "reason": "Motivo",
+        "correlationId": "ID de correlação"
+      }
+    },
+    "comingSoon": {
+      "menus": {
+        "title": "Menus (em breve)",
+        "intro": "A gestão de menus estará disponível em breve nesta página.",
+        "items": [
+          "Editor de menus por arrastar e soltar",
+          "Gestão de menus multilíngues",
+          "Pré-visualização em tempo real"
+        ]
+      },
+      "translations": {
+        "title": "Traduções (em breve)",
+        "intro": "A gestão centralizada de traduções estará disponível em breve nesta página.",
+        "items": [
+          "Editor de traduções por idioma",
+          "Detecção de chaves ausentes",
+          "Exportação/importação de arquivos de tradução"
+        ]
+      },
+      "emailTemplates": {
+        "title": "Modelos de email (em breve)",
+        "intro": "A gestão de modelos de email estará disponível em breve nesta página.",
+        "items": [
+          "Editor de modelos de email",
+          "Variáveis de personalização",
+          "Pré-visualização multilíngue"
+        ]
+      },
+      "homeBlocks": {
+        "title": "Blocos da página inicial (em breve)",
+        "intro": "A gestão de blocos da página inicial estará disponível em breve nesta página.",
+        "items": [
+          "Editor de blocos por arrastar e soltar",
+          "Pré-visualização em tempo real",
+          "Agendamento de publicação"
+        ]
+      }
+    }
   }
 }

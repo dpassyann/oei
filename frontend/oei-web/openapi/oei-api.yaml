@@ -2314,6 +2314,123 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Institution"
+    post:
+      tags: [admin-institutions]
+      operationId: createAdminInstitution
+      summary: Crée une institution en statut DRAFT (formulaire admin de création).
+      security: [{ bearerAuth: [admin] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InstitutionAdminCreation"
+      responses:
+        "201":
+          description: Institution créée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Institution"
+
+  /api/admin/v1/institutions/{id}/approve:
+    post:
+      tags: [admin-institutions]
+      operationId: approveInstitution
+      summary: Fait passer une institution en statut APPROVED (dossier complet, avant activation).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Institution approuvée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Institution"
+
+  /api/admin/v1/institutions/{id}/activate:
+    post:
+      tags: [admin-institutions]
+      operationId: activateInstitution
+      summary: >
+        Active une institution APPROVED. Déclenche côté backend le provisioning Keycloak
+        (création de l'utilisateur admin institutionnel, email d'activation, rôle institutionnel,
+        association institutionId, changement de mot de passe forcé, audit) — voir
+        .prompt/plan/final/02-PARTNERS-AND-INSTITUTION-ADMIN.md §Provisioning Keycloak. Ce contrat
+        ne décrit que la transition d'état ; l'appel Keycloak Admin API réel n'existe pas encore.
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Institution activée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Institution"
+
+  /api/admin/v1/institutions/{id}/suspend:
+    post:
+      tags: [admin-institutions]
+      operationId: suspendInstitution
+      summary: Suspend une institution ACTIVE (soft delete — jamais de suppression physique).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+      responses:
+        "200":
+          description: Institution suspendue
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Institution"
+
+  /api/admin/v1/institutions/{id}/revoke:
+    post:
+      tags: [admin-institutions]
+      operationId: revokeInstitution
+      summary: Révoque définitivement une institution (soft delete — raison obligatoire).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InstitutionRevocation"
+      responses:
+        "200":
+          description: Institution révoquée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Institution"
 
   /api/admin/v1/institutions/{id}/verify:
     post:
@@ -3707,6 +3824,66 @@ components:
           description: >
             Doit être explicitement vrai pour toute institution fictive utilisée en
             démonstration — jamais présentée comme partenaire officiel sans validation.
+        status:
+          $ref: "#/components/schemas/InstitutionWorkflowStatus"
+
+    InstitutionWorkflowStatus:
+      type: string
+      description: >
+        Statut de cycle de vie administratif de l'institution (voir
+        .prompt/plan/final/02-PARTNERS-AND-INSTITUTION-ADMIN.md §Workflow). Champ additif —
+        les institutions existantes sans ce champ sont traitées comme ACTIVE côté back-office.
+      enum: [DRAFT, CONTACTED, DOCUMENTS_PENDING, APPROVED, ACTIVE, SUSPENDED, REVOKED, ARCHIVED]
+
+    InstitutionAdminCreation:
+      type: object
+      required: [legalName, publicName, country]
+      properties:
+        legalName:
+          type: string
+        publicName:
+          type: string
+        type:
+          type: string
+        country:
+          type: string
+        website:
+          type: string
+          format: uri
+        emailDomains:
+          type: array
+          items:
+            type: string
+        logoUrl:
+          type: string
+          format: uri
+        description:
+          type: string
+        primaryContactName:
+          type: string
+        institutionAdminEmail:
+          type: string
+          format: email
+        partnershipLevel:
+          $ref: "#/components/schemas/PartnershipLevel"
+        startedAt:
+          type: string
+          format: date-time
+        endsAt:
+          type: string
+          format: date-time
+          nullable: true
+        internalNotes:
+          type: string
+
+    InstitutionRevocation:
+      type: object
+      required: [reason]
+      properties:
+        reason:
+          type: string
+          minLength: 1
+          description: Raison obligatoire de révocation (voir InstitutionAuditLog.metadata.reason).
 
     PartnershipLevel:
       type: string

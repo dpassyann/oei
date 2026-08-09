@@ -1,0 +1,35 @@
+.oei-admin-dashboard {
+  &__tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  &__tile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+  }
+
+  &__tile-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+  }
+
+  &__tile-label {
+    font-size: 0.8rem;
+    opacity: 0.75;
+  }
+
+  &__shortcuts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e0e0e0;
+  }
+}

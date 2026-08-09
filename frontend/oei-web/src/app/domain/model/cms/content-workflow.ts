@@ -14,6 +14,12 @@
 // it. A `decision: REJECTED` on `approve` is the terminal rejection (`REJECTED` status). Only the
 // Keycloak `admin` role may drive any transition (no dedicated CMS role was introduced, per ADR
 // 0002 §Décision 2 and this task's brief).
+//
+// NOTE (admin console task, `.prompt/plan/final/03-ADMIN-CONSOLE.md` §Articles): that brief lists
+// `SCHEDULED` and `CHANGES_REQUESTED` among the transitions the moderation UI must support. Both
+// are already modeled here — `schedule()` produces `SCHEDULED` and `approve(..., 'CHANGES_REQUESTED')`
+// sends content back to `DRAFT` — so no extension was needed; the back-office (`CmsContentEditor`)
+// already exercises both via `AdminContentApplicationService`.
 import { ContentWorkflowStatus } from './content.model';
 
 export type KeycloakRole = 'member' | 'admin';

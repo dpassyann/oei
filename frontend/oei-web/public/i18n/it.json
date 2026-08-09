@@ -14,7 +14,8 @@
     "legalNotices": "Note legali",
     "sitemap": "Mappa del sito",
     "partners": "Partner",
-    "events": "Eventi"
+    "events": "Eventi",
+    "admin": "Amministrazione"
   },
   "header": {
     "memberArea": "Area membri",
@@ -1139,5 +1140,163 @@
     "noResults": "Nessun risultato per questa ricerca.",
     "groupResources": "Risorse",
     "groupNews": "Notizie"
+  },
+  "admin": {
+    "shell": {
+      "title": "Console di amministrazione"
+    },
+    "nav": {
+      "dashboard": "Cruscotto",
+      "articles": "Articoli e notizie",
+      "institutions": "Istituzioni",
+      "members": "Membri",
+      "events": "Eventi",
+      "resources": "Risorse",
+      "menus": "Menu",
+      "translations": "Traduzioni",
+      "emailTemplates": "Modelli email",
+      "homeBlocks": "Blocchi home",
+      "auditLog": "Registro di controllo"
+    },
+    "dashboard": {
+      "title": "Cruscotto",
+      "intro": "Panoramica dell'attività della piattaforma OEI (cifre di esempio).",
+      "kpis": {
+        "activeMembers": "Membri attivi",
+        "expiredDues": "Quote scadute",
+        "institutions": "Istituzioni",
+        "pendingPublications": "Pubblicazioni da validare",
+        "events": "Eventi",
+        "reports": "Segnalazioni",
+        "emails": "Email inviate",
+        "errors": "Errori"
+      },
+      "shortcuts": {
+        "cms": "Apri il CMS",
+        "institutions": "Gestisci istituzioni",
+        "partners": "Vedi partner",
+        "resources": "Vedi risorse",
+        "auditLog": "Vedi registro di controllo"
+      }
+    },
+    "institutions": {
+      "list": {
+        "title": "Istituzioni",
+        "new": "Crea istituzione",
+        "empty": "Nessuna istituzione per il momento.",
+        "open": "Apri",
+        "columns": {
+          "name": "Nome",
+          "country": "Paese",
+          "status": "Stato"
+        }
+      },
+      "status": {
+        "DRAFT": "Bozza",
+        "CONTACTED": "Contattata",
+        "DOCUMENTS_PENDING": "Documenti in attesa",
+        "APPROVED": "Approvata",
+        "ACTIVE": "Attiva",
+        "SUSPENDED": "Sospesa",
+        "REVOKED": "Revocata",
+        "ARCHIVED": "Archiviata"
+      },
+      "new": {
+        "title": "Crea istituzione",
+        "fields": {
+          "legalName": "Ragione sociale",
+          "publicName": "Nome pubblico",
+          "type": "Tipo",
+          "country": "Paese",
+          "website": "Sito web",
+          "logoUrl": "Logo (URL)",
+          "description": "Descrizione",
+          "emailDomains": "Domini email",
+          "primaryContactName": "Contatto principale",
+          "institutionAdminEmail": "Email admin istituzionale",
+          "partnershipLevel": "Livello di partenariato",
+          "startedAt": "Data di inizio",
+          "endsAt": "Data di fine",
+          "internalNotes": "Note interne"
+        },
+        "partnershipLevels": {
+          "PROSPECT": "Prospect",
+          "STANDARD": "Standard",
+          "SILVER": "Argento",
+          "GOLD": "Oro",
+          "STRATEGIC": "Strategico"
+        },
+        "addDomain": "Aggiungi",
+        "removeDomain": "Rimuovi",
+        "submit": "Crea istituzione",
+        "validationError": "Si prega di compilare almeno la ragione sociale, il nome pubblico, il paese e l'email admin istituzionale.",
+        "submitError": "Si è verificato un errore durante la creazione dell'istituzione."
+      },
+      "detail": {
+        "notFound": "Istituzione non trovata.",
+        "actions": {
+          "approve": "Approva",
+          "activate": "Attiva",
+          "suspend": "Sospendi",
+          "revoke": "Revoca"
+        },
+        "revokeReasonLabel": "Motivo della revoca (obbligatorio)",
+        "revokeReasonRequired": "È richiesto un motivo per revocare un'istituzione.",
+        "confirmRevoke": "Confermare la revoca",
+        "cancel": "Annulla",
+        "actionError": "Non è stato possibile completare l'azione."
+      }
+    },
+    "auditLog": {
+      "title": "Registro di controllo",
+      "intro": "Cronologia delle azioni sensibili eseguite dagli amministratori.",
+      "empty": "Nessuna voce di controllo per il momento.",
+      "columns": {
+        "date": "Data",
+        "actor": "Amministratore",
+        "action": "Azione",
+        "entity": "Entità",
+        "reason": "Motivo",
+        "correlationId": "ID di correlazione"
+      }
+    },
+    "comingSoon": {
+      "menus": {
+        "title": "Menu (prossimamente)",
+        "intro": "La gestione dei menu sarà presto disponibile da questa pagina.",
+        "items": [
+          "Editor di menu drag-and-drop",
+          "Gestione menu multilingua",
+          "Anteprima in tempo reale"
+        ]
+      },
+      "translations": {
+        "title": "Traduzioni (prossimamente)",
+        "intro": "La gestione centralizzata delle traduzioni sarà presto disponibile da questa pagina.",
+        "items": [
+          "Editor di traduzioni per lingua",
+          "Rilevamento chiavi mancanti",
+          "Esportazione/importazione file di traduzione"
+        ]
+      },
+      "emailTemplates": {
+        "title": "Modelli email (prossimamente)",
+        "intro": "La gestione dei modelli email sarà presto disponibile da questa pagina.",
+        "items": [
+          "Editor di modelli email",
+          "Variabili di personalizzazione",
+          "Anteprima multilingua"
+        ]
+      },
+      "homeBlocks": {
+        "title": "Blocchi home (prossimamente)",
+        "intro": "La gestione dei blocchi della home page sarà presto disponibile da questa pagina.",
+        "items": [
+          "Editor di blocchi drag-and-drop",
+          "Anteprima live",
+          "Pianificazione della pubblicazione"
+        ]
+      }
+    }
   }
 }

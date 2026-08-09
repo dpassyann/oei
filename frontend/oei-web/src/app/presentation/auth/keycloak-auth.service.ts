@@ -119,6 +119,16 @@ export class KeycloakAuthService {
     return roles.some((role) => realmRoles.includes(role));
   }
 
+  /**
+   * Exposes the raw realm roles claim (small, additive accessor — added for the admin console's
+   * sidebar nav, which needs the *full* role list to filter sections via
+   * `domain/model/admin/admin-role.ts`'s `visibleSections()`, rather than a single yes/no check
+   * like `hasAnyRole()`).
+   */
+  getRoles(): readonly string[] {
+    return this.getRealmRoles();
+  }
+
   logout(): void {
     this.logger.info('Keycloak logout initiated', { flow: 'logout' }, 'KeycloakAuthService');
     this.oauthService.logOut();

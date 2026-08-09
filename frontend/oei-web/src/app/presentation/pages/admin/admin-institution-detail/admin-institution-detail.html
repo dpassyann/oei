@@ -1,0 +1,56 @@
+@if (notFound()) {
+  <p>{{ i18n.translate('admin.institutions.detail.notFound') }}</p>
+} @else if (institution(); as institution) {
+  <section class="oei-admin-institution-detail">
+    <header>
+      <h1>{{ institution.publicName }}</h1>
+      <span class="oei-admin-status" [attr.data-status]="institution.status">
+        {{ i18n.translate('admin.institutions.status.' + (institution.status ?? 'ACTIVE')) }}
+      </span>
+    </header>
+
+    <dl class="oei-admin-institution-detail__fields">
+      <dt>{{ i18n.translate('admin.institutions.new.fields.legalName') }}</dt>
+      <dd>{{ institution.legalName }}</dd>
+      <dt>{{ i18n.translate('admin.institutions.new.fields.country') }}</dt>
+      <dd>{{ institution.country }}</dd>
+      <dt>{{ i18n.translate('admin.institutions.new.fields.description') }}</dt>
+      <dd>{{ institution.description }}</dd>
+    </dl>
+
+    <div class="oei-admin-institution-detail__actions">
+      @if (hasAction('approve')) {
+        <button type="button" (click)="approve()">{{ i18n.translate('admin.institutions.detail.actions.approve') }}</button>
+      }
+      @if (hasAction('activate')) {
+        <button type="button" (click)="activate()">{{ i18n.translate('admin.institutions.detail.actions.activate') }}</button>
+      }
+      @if (hasAction('suspend')) {
+        <button type="button" (click)="suspend()">{{ i18n.translate('admin.institutions.detail.actions.suspend') }}</button>
+      }
+      @if (hasAction('revoke')) {
+        <button type="button" (click)="openRevokeForm()">{{ i18n.translate('admin.institutions.detail.actions.revoke') }}</button>
+      }
+    </div>
+
+    @if (showRevokeForm()) {
+      <form class="oei-admin-institution-detail__revoke-form" (submit)="$event.preventDefault(); confirmRevoke()">
+        <label>
+          {{ i18n.translate('admin.institutions.detail.revokeReasonLabel') }}
+          <textarea [ngModel]="revokeReason()" (ngModelChange)="revokeReason.set($event)" name="revokeReason" required></textarea>
+        </label>
+        @if (revokeValidationError()) {
+          <p class="oei-admin-institution-detail__error">{{ i18n.translate('admin.institutions.detail.revokeReasonRequired') }}</p>
+        }
+        <div class="oei-admin-institution-detail__revoke-actions">
+          <button type="submit">{{ i18n.translate('admin.institutions.detail.confirmRevoke') }}</button>
+          <button type="button" (click)="cancelRevoke()">{{ i18n.translate('admin.institutions.detail.cancel') }}</button>
+        </div>
+      </form>
+    }
+
+    @if (actionError()) {
+      <p class="oei-admin-institution-detail__error">{{ i18n.translate('admin.institutions.detail.actionError') }}</p>
+    }
+  </section>
+}
