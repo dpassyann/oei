@@ -513,6 +513,8 @@
       "generatePdf": "Genera PDF",
       "generatingPdf": "Generazione in corso…",
       "downloadPdf": "Scarica PDF",
+      "exportBlocked": "L'esportazione in PDF non è disponibile con il tuo attuale stato di adesione.",
+      "renewalImminentWarning": "La tua quota associativa sta per scadere: ricordati di rinnovarla a breve.",
       "templateGallery": {
         "title": "Galleria dei modelli",
         "intro": "Scegli un modello: l’anteprima qui sotto si aggiorna immediatamente con i tuoi dati reali."
@@ -669,6 +671,7 @@
       },
       "submit": "Invia per la moderazione",
       "submitting": "Invio in corso…",
+      "submitBlocked": "L'invio di articoli non è disponibile con il tuo attuale stato di adesione.",
       "submitAnother": "Proponi un altro articolo",
       "error": "L'invio non è riuscito. Riprova.",
       "pending": {

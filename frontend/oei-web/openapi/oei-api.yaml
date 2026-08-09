@@ -582,6 +582,31 @@ paths:
               schema:
                 $ref: "#/components/schemas/Membership"
 
+  /api/member/v1/entitlements:
+    get:
+      tags: [member-profile]
+      operationId: getMyEntitlements
+      summary: >
+        Droits actifs du membre connecté, dérivés de son `MembershipStatus` (voir
+        `MembershipEntitlementService` côté frontend — recalculés côté backend à chaque
+        webhook PSP qui change le statut, pas de recalcul admin nominal).
+      security: [{ bearerAuth: [member] }]
+      responses:
+        "200":
+          description: Droits actifs
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status, entitlements]
+                properties:
+                  status:
+                    $ref: "#/components/schemas/MembershipStatus"
+                  entitlements:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/MembershipEntitlement"
+
   /api/member/v1/ethical-charter/sign:
     post:
       tags: [member-profile]
@@ -2604,7 +2629,17 @@ components:
 
     MembershipStatus:
       type: string
-      enum: [PENDING, ACTIVE, SUSPENDED, TERMINATED]
+      description: >
+        Statut d'activité du membre (indépendant de `MembershipTier`, qui reste la catégorie
+        permanente d'adhésion — voir `frontend/oei-web/src/app/domain/model/membership/membership.ts`
+        pour la décision de modélisation). `HONORARY`/`FOUNDING` désignent ici le membre
+        honoraire/fondateur exempté à vie de cotisation (droits complets inconditionnels) —
+        distinct du `tier` du même nom, qui reste l'identité permanente du membre même
+        lorsque son `status` est encore `PENDING`/`ACTIVE` (ex. nomination en cours de
+        validation). `GRACE_PERIOD` conserve tous les droits (voir `MembershipEntitlementService`)
+        avec un avertissement UI de renouvellement imminent. `EXPIRED` restreint aux droits de
+        base (profil, CV, lecture publique). `TERMINATED` : fin définitive de l'adhésion.
+      enum: [PENDING, ACTIVE, GRACE_PERIOD, EXPIRED, SUSPENDED, HONORARY, FOUNDING, TERMINATED]
 
     Membership:
       type: object
@@ -2627,6 +2662,26 @@ components:
           type: string
           format: date-time
           nullable: true
+
+    MembershipEntitlement:
+      type: string
+      description: >
+        Droits calculés par `MembershipEntitlementService` (frontend) à partir du
+        `MembershipStatus` — voir doc `01-MEMBERS-DYNAMIC-SPACE.md` §Entitlements.
+      enum:
+        [
+          PROFILE_EDIT,
+          PROFILE_PUBLIC,
+          CV_EDIT,
+          CV_EXPORT_PDF,
+          BUSINESS_CARD_EXPORT,
+          BUSINESS_CARD_ORDER,
+          ARTICLE_SUBMIT,
+          EVENT_POST,
+          MEMBER_DIRECTORY,
+          WALLET_PASS,
+          CERTIFICATION_BADGE,
+        ]
 
     MembershipFeeTier:
       type: string

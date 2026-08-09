@@ -513,6 +513,8 @@
       "generatePdf": "Generate PDF",
       "generatingPdf": "Generating…",
       "downloadPdf": "Download PDF",
+      "exportBlocked": "PDF export is not available with your current membership status.",
+      "renewalImminentWarning": "Your cotisation is due soon — please renew it shortly.",
       "templateGallery": {
         "title": "Template gallery",
         "intro": "Choose a template — the preview below updates instantly with your own data."
@@ -669,6 +671,7 @@
       },
       "submit": "Submit for moderation",
       "submitting": "Submitting…",
+      "submitBlocked": "Article submission is not available with your current membership status.",
       "submitAnother": "Submit another article",
       "error": "Submission failed. Please try again.",
       "pending": {

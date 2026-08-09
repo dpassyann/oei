@@ -6,11 +6,13 @@ import { CvBuilder } from './cv-builder';
 import { CvApplicationService } from '../../../../application/service/cv-application.service';
 import { MemberApplicationService } from '../../../../application/service/member-application.service';
 import { MembershipFeeApplicationService } from '../../../../application/service/membership-fee-application.service';
+import { MembershipApplicationService } from '../../../../application/service/membership-application.service';
 import { I18nService } from '../../../i18n/i18n.service';
 import { Cv, CvSection, CvTranslation } from '../../../../domain/model/cv/cv';
 import { CvTemplate } from '../../../../domain/model/cv/cv-template';
 import { createMember } from '../../../../domain/model/identity/member';
 import { MembershipFeeStatus } from '../../../../domain/model/membership-fee/membership-fee-status';
+import { Membership, MembershipStatus } from '../../../../domain/model/membership/membership';
 
 const PAID_FEE_STATUS: MembershipFeeStatus = {
   memberId: 'demo-member-1',
@@ -29,6 +31,10 @@ const PAID_FEE_STATUS: MembershipFeeStatus = {
 };
 
 const UNPAID_FEE_STATUS: MembershipFeeStatus = { ...PAID_FEE_STATUS, isPaid: false, amountDue: 24.93, monthsRemaining: 6 };
+
+function membershipFixture(status: MembershipStatus = 'ACTIVE'): Membership {
+  return { memberId: 'demo-member-1', tier: 'SILVER', status, startedAt: '2026-01-01T00:00:00Z' };
+}
 
 const INTERFACE_STRINGS: Record<string, string> = {
   'espaceMembre.cv.title': 'Mon CV',
@@ -66,6 +72,8 @@ const INTERFACE_STRINGS: Record<string, string> = {
   'espaceMembre.cv.livePreview.orgLine': 'Ordre des Experts Informaticiens',
   'espaceMembre.cv.livePreview.sealBrand': 'OEI',
   'espaceMembre.cv.livePreview.sealCertifiedLabel': 'CERTIFIÉ',
+  'espaceMembre.cv.exportBlocked': "L'export PDF n'est pas disponible avec votre statut d'adhésion actuel.",
+  'espaceMembre.cv.renewalImminentWarning': 'Votre renouvellement est proche.',
 };
 
 const FAKE_I18N_SERVICE = {
@@ -154,7 +162,11 @@ const FAKE_MEMBER_SERVICE: Pick<MemberApplicationService, 'getCurrentMember'> = 
 };
 
 describe('CvBuilder', () => {
-  function configure(cvServiceOverrides: Partial<CvApplicationService> = {}, feeStatus: MembershipFeeStatus = PAID_FEE_STATUS) {
+  function configure(
+    cvServiceOverrides: Partial<CvApplicationService> = {},
+    feeStatus: MembershipFeeStatus = PAID_FEE_STATUS,
+    membershipStatus: MembershipStatus = 'ACTIVE',
+  ) {
     TestBed.configureTestingModule({
       imports: [CvBuilder],
       providers: [
@@ -162,6 +174,10 @@ describe('CvBuilder', () => {
         { provide: CvApplicationService, useValue: fakeCvService(cvServiceOverrides) },
         { provide: MemberApplicationService, useValue: FAKE_MEMBER_SERVICE },
         { provide: MembershipFeeApplicationService, useValue: { getStatus: () => of(feeStatus) } },
+        {
+          provide: MembershipApplicationService,
+          useValue: { getMembership: () => of(membershipFixture(membershipStatus)) },
+        },
       ],
     });
   }
@@ -297,5 +313,53 @@ describe('CvBuilder', () => {
     component['addSection']();
 
     expect(addSection).not.toHaveBeenCalled();
+  });
+
+  it('givenExpiredMembership_whenRendered_thenDisablesExportButtonAndShowsExplicitMessage', async () => {
+    configure({}, PAID_FEE_STATUS, 'EXPIRED');
+    const fixture = TestBed.createComponent(CvBuilder);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector<HTMLButtonElement>('.oei-cv-builder__generate-button')?.disabled).toBe(true);
+    expect(compiled.querySelector('.oei-cv-builder__export-blocked')).toBeTruthy();
+  });
+
+  it('givenExpiredMembership_whenGeneratePdfCalledDirectly_thenDoesNotRenderJob', async () => {
+    const renderCv = vi.fn().mockReturnValue(
+      of({
+        id: 'job-1',
+        targetType: 'CV' as const,
+        targetId: 'demo-cv-1',
+        status: 'DONE' as const,
+        resultUrl: '/assets/mock/demo-cv-1.pdf',
+        requestedAt: '2026-01-01T00:00:00Z',
+        completedAt: '2026-01-01T00:00:01Z',
+      }),
+    );
+    configure({ renderCv }, PAID_FEE_STATUS, 'EXPIRED');
+    const fixture = TestBed.createComponent(CvBuilder);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+
+    component['generatePdf']();
+
+    expect(renderCv).not.toHaveBeenCalled();
+  });
+
+  it('givenGracePeriodMembership_whenRendered_thenKeepsExportEnabledAndShowsRenewalWarning', async () => {
+    configure({}, PAID_FEE_STATUS, 'GRACE_PERIOD');
+    const fixture = TestBed.createComponent(CvBuilder);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector<HTMLButtonElement>('.oei-cv-builder__generate-button')?.disabled).toBe(false);
+    expect(compiled.querySelector('.oei-cv-builder__renewal-warning')).toBeTruthy();
   });
 });

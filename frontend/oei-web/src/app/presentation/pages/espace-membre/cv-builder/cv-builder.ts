@@ -8,6 +8,7 @@ import { I18nService } from '../../../i18n/i18n.service';
 import { CV_SECTION_TYPES, Cv, CvSectionType, CvTranslationStatus, PdfGenerationJob } from '../../../../domain/model/cv/cv';
 import { CvTemplate } from '../../../../domain/model/cv/cv-template';
 import { MembershipAccessService } from '../../../auth/membership-access.service';
+import { MembershipEntitlementService } from '../../../../application/service/membership-entitlement.service';
 
 // This component's forms are single-purpose and flat (one select + one text input for
 // "add section", one language code + one text input for "add translation"). Signal Forms
@@ -29,14 +30,22 @@ import { MembershipAccessService } from '../../../auth/membership-access.service
   imports: [FormsModule, NgTemplateOutlet],
   templateUrl: './cv-builder.html',
   styleUrl: './cv-builder.scss',
-  // Component-scoped (not root-singleton) — see `MembershipAccessService`'s doc comment.
-  providers: [MembershipAccessService],
+  // Component-scoped (not root-singleton) — see `MembershipAccessService`'s doc comment
+  // (`MembershipEntitlementService` mirrors the same reasoning).
+  providers: [MembershipAccessService, MembershipEntitlementService],
 })
 export class CvBuilder {
   private readonly cvService = inject(CvApplicationService);
   private readonly memberService = inject(MemberApplicationService);
   protected readonly membershipAccess = inject(MembershipAccessService);
+  protected readonly entitlements = inject(MembershipEntitlementService);
   protected readonly i18n = inject(I18nService);
+
+  // Gates the "Générer le PDF" action (doc §Entitlements: `CV_EXPORT_PDF`) — e.g. an
+  // `EXPIRED` membership can still edit its CV but not export it. Independent from
+  // `membershipAccess.isReadOnly()`, which gates *mutating* actions on the current
+  // cotisation cycle's paid/unpaid state, not on the overall membership status.
+  protected readonly canExportPdf = computed(() => this.entitlements.has('CV_EXPORT_PDF'));
 
   private readonly cvsResource = rxResource({
     stream: () => this.cvService.listCvs(),
@@ -197,7 +206,7 @@ export class CvBuilder {
 
   protected generatePdf(): void {
     const cv = this.cv();
-    if (!cv) {
+    if (!cv || !this.canExportPdf()) {
       return;
     }
     this.renderInProgress.set(true);

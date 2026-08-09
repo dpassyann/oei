@@ -162,6 +162,28 @@ $oei-gold: #e8a530;
   margin-bottom: 1rem;
 }
 
+// Explicit blocking message for entitlement-gated actions (doc §Entitlements) — same
+// palette as `.oei-cv-builder__pdf-notice` above but red-tinted, matching
+// `.oei-publier__error`'s "blocked/error" tone rather than the amber "notice" tone.
+.oei-cv-builder__export-blocked {
+  color: #7f1d1d;
+  background: #fee2e2;
+  border-radius: 0.35rem;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.oei-cv-builder__renewal-warning {
+  color: #7a2e00;
+  background: #fff3e0;
+  border: 1px solid #d98c00;
+  border-radius: 0.35rem;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
 .oei-cv-builder__download-link {
   display: inline-block;
   margin-left: 1rem;

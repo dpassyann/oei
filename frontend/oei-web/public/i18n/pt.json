@@ -513,6 +513,8 @@
       "generatePdf": "Gerar PDF",
       "generatingPdf": "A gerar…",
       "downloadPdf": "Transferir PDF",
+      "exportBlocked": "A exportação em PDF não está disponível com o seu estado de adesão atual.",
+      "renewalImminentWarning": "A sua cotização está a chegar ao termo: lembre-se de a renovar em breve.",
       "templateGallery": {
         "title": "Galeria de modelos",
         "intro": "Escolha um modelo — a pré-visualização abaixo é atualizada instantaneamente com os seus próprios dados."
@@ -669,6 +671,7 @@
       },
       "submit": "Submeter para moderação",
       "submitting": "A enviar…",
+      "submitBlocked": "A submissão de artigos não está disponível com o seu estado de adesão atual.",
       "submitAnother": "Submeter outro artigo",
       "error": "O envio falhou. Tente novamente.",
       "pending": {

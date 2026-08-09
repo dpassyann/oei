@@ -513,6 +513,8 @@
       "generatePdf": "PDF erstellen",
       "generatingPdf": "Wird erstellt…",
       "downloadPdf": "PDF herunterladen",
+      "exportBlocked": "Der PDF-Export ist mit Ihrem aktuellen Mitgliedschaftsstatus nicht verfügbar.",
+      "renewalImminentWarning": "Ihr Mitgliedsbeitrag wird bald fällig – bitte erneuern Sie ihn rechtzeitig.",
       "templateGallery": {
         "title": "Vorlagengalerie",
         "intro": "Wählen Sie eine Vorlage — die Vorschau unten passt sich sofort mit Ihren eigenen Daten an."
@@ -669,6 +671,7 @@
       },
       "submit": "Zur Moderation einreichen",
       "submitting": "Wird gesendet…",
+      "submitBlocked": "Das Einreichen von Artikeln ist mit Ihrem aktuellen Mitgliedschaftsstatus nicht verfügbar.",
       "submitAnother": "Weiteren Artikel einreichen",
       "error": "Das Senden ist fehlgeschlagen. Bitte versuchen Sie es erneut.",
       "pending": {

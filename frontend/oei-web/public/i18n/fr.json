@@ -513,6 +513,8 @@
       "generatePdf": "Générer le PDF",
       "generatingPdf": "Génération en cours…",
       "downloadPdf": "Télécharger le PDF",
+      "exportBlocked": "L'export PDF n'est pas disponible avec votre statut d'adhésion actuel.",
+      "renewalImminentWarning": "Votre cotisation arrive à échéance : pensez à la renouveler prochainement.",
       "templateGallery": {
         "title": "Galerie de templates",
         "intro": "Choisissez un template — l’aperçu ci-dessous s’adapte immédiatement à vos données."
@@ -669,6 +671,7 @@
       },
       "submit": "Soumettre pour modération",
       "submitting": "Envoi en cours…",
+      "submitBlocked": "La soumission d'article n'est pas disponible avec votre statut d'adhésion actuel.",
       "submitAnother": "Proposer un autre article",
       "error": "L'envoi a échoué. Merci de réessayer.",
       "pending": {

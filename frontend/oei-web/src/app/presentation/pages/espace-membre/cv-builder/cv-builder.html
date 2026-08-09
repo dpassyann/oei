@@ -5,6 +5,12 @@
     <p class="oei-read-only-banner" role="alert">{{ i18n.translate('espaceMembre.cotisation.readOnlyBanner') }}</p>
   }
 
+  @if (entitlements.renewalImminent()) {
+    <p class="oei-cv-builder__renewal-warning" role="status">
+      {{ i18n.translate('espaceMembre.cv.renewalImminentWarning') }}
+    </p>
+  }
+
   @if (cv(); as currentCv) {
     <p class="oei-page__body oei-cv-builder__template">
       {{ i18n.translate('espaceMembre.cv.templateLabel') }} : {{ templateName() ?? currentCv.templateId }}
@@ -219,7 +225,18 @@
       <h2 class="oei-cv-builder__section-heading">{{ i18n.translate('espaceMembre.cv.generatePdfTitle') }}</h2>
       <p class="oei-cv-builder__pdf-notice">{{ i18n.translate('espaceMembre.cv.pdfDemoNotice') }}</p>
 
-      <button type="button" class="oei-cv-builder__generate-button" [disabled]="renderInProgress()" (click)="generatePdf()">
+      @if (!canExportPdf()) {
+        <p class="oei-cv-builder__export-blocked" role="alert">
+          {{ i18n.translate('espaceMembre.cv.exportBlocked') }}
+        </p>
+      }
+
+      <button
+        type="button"
+        class="oei-cv-builder__generate-button"
+        [disabled]="renderInProgress() || !canExportPdf()"
+        (click)="generatePdf()"
+      >
         {{ renderInProgress() ? i18n.translate('espaceMembre.cv.generatingPdf') : i18n.translate('espaceMembre.cv.generatePdf') }}
       </button>
 

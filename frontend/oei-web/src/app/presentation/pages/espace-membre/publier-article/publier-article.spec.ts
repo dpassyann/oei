@@ -4,8 +4,10 @@ import { of, throwError } from 'rxjs';
 import { describe, expect, it, vi } from 'vitest';
 import { PublierArticle } from './publier-article';
 import { ArticleSubmissionApplicationService } from '../../../../application/service/article-submission-application.service';
+import { MembershipApplicationService } from '../../../../application/service/membership-application.service';
 import { I18nService } from '../../../i18n/i18n.service';
 import { ArticleSubmission } from '../../../../domain/model/article/article-submission';
+import { Membership, MembershipStatus } from '../../../../domain/model/membership/membership';
 
 const INTERFACE_STRINGS: Record<string, string> = {
   'espaceMembre.publier.title': 'Proposer un article',
@@ -26,6 +28,7 @@ const INTERFACE_STRINGS: Record<string, string> = {
   'espaceMembre.publier.status.pending': 'En attente',
   'espaceMembre.publier.status.approved': 'Publié',
   'espaceMembre.publier.status.rejected': 'Refusé',
+  'espaceMembre.publier.submitBlocked': "La soumission d'article n'est pas disponible avec votre statut d'adhésion actuel.",
 };
 
 const FAKE_I18N_SERVICE = {
@@ -47,11 +50,15 @@ function buildSubmission(overrides: Partial<ArticleSubmission> = {}): ArticleSub
   };
 }
 
+function membershipFixture(status: MembershipStatus = 'ACTIVE'): Membership {
+  return { memberId: 'demo-member-1', tier: 'SILVER', status, startedAt: '2026-01-01T00:00:00Z' };
+}
+
 describe('PublierArticle', () => {
   let submitSpy: ReturnType<typeof vi.fn>;
   let listMineSpy: ReturnType<typeof vi.fn>;
 
-  function configure(mine: ArticleSubmission[] = []) {
+  function configure(mine: ArticleSubmission[] = [], membershipStatus: MembershipStatus = 'ACTIVE') {
     submitSpy = vi.fn((draft) => of(buildSubmission(draft)));
     listMineSpy = vi.fn(() => of(mine));
 
@@ -60,6 +67,10 @@ describe('PublierArticle', () => {
       providers: [
         { provide: I18nService, useValue: FAKE_I18N_SERVICE },
         { provide: ArticleSubmissionApplicationService, useValue: { submit: submitSpy, listMine: listMineSpy } },
+        {
+          provide: MembershipApplicationService,
+          useValue: { getMembership: () => of(membershipFixture(membershipStatus)) },
+        },
       ],
     });
   }
@@ -115,6 +126,7 @@ describe('PublierArticle', () => {
       providers: [
         { provide: I18nService, useValue: FAKE_I18N_SERVICE },
         { provide: ArticleSubmissionApplicationService, useValue: { submit: submitSpy, listMine: listMineSpy } },
+        { provide: MembershipApplicationService, useValue: { getMembership: () => of(membershipFixture()) } },
       ],
     });
     const fixture = TestBed.createComponent(PublierArticle);
@@ -144,5 +156,31 @@ describe('PublierArticle', () => {
 
     expect(compiled.textContent).toContain('Article publié');
     expect(compiled.textContent).toContain('Publié');
+  });
+
+  it('givenExpiredMembership_whenRendered_thenDisablesSubmissionAndShowsExplicitMessage', async () => {
+    configure([], 'EXPIRED');
+    const fixture = TestBed.createComponent(PublierArticle);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector('.oei-publier__submit-blocked')).toBeTruthy();
+    expect(compiled.querySelector<HTMLButtonElement>('button[type="submit"]')?.disabled).toBe(true);
+  });
+
+  it('givenExpiredMembership_whenSubmitCalledDirectly_thenDoesNotCallService', async () => {
+    configure([], 'EXPIRED');
+    const fixture = TestBed.createComponent(PublierArticle);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+
+    component['draftModel'].set({ title: 'Titre', body: 'Corps', coverImageUrl: '' });
+    component['submit']();
+
+    expect(submitSpy).not.toHaveBeenCalled();
   });
 });

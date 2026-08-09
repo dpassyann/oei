@@ -513,6 +513,8 @@
       "generatePdf": "Generar PDF",
       "generatingPdf": "Generando…",
       "downloadPdf": "Descargar PDF",
+      "exportBlocked": "La exportación en PDF no está disponible con su estado de afiliación actual.",
+      "renewalImminentWarning": "Su cotización vence próximamente: recuerde renovarla pronto.",
       "templateGallery": {
         "title": "Galería de plantillas",
         "intro": "Elija una plantilla; la vista previa de abajo se actualiza al instante con sus propios datos."
@@ -669,6 +671,7 @@
       },
       "submit": "Enviar para moderación",
       "submitting": "Enviando…",
+      "submitBlocked": "El envío de artículos no está disponible con su estado de afiliación actual.",
       "submitAnother": "Proponer otro artículo",
       "error": "El envío ha fallado. Inténtelo de nuevo.",
       "pending": {

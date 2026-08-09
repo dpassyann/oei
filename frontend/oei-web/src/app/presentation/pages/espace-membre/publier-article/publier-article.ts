@@ -2,6 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { form, FormField, required } from '@angular/forms/signals';
 import { ArticleSubmissionApplicationService } from '../../../../application/service/article-submission-application.service';
+import { MembershipEntitlementService } from '../../../../application/service/membership-entitlement.service';
 import { ArticleSubmission } from '../../../../domain/model/article/article-submission';
 import { I18nService } from '../../../i18n/i18n.service';
 
@@ -24,10 +25,18 @@ const EMPTY_DRAFT: ArticleDraftFields = { title: '', body: '', coverImageUrl: ''
   imports: [FormField],
   templateUrl: './publier-article.html',
   styleUrl: './publier-article.scss',
+  // Component-scoped (not root-singleton) — see `MembershipAccessService`'s doc comment,
+  // which `MembershipEntitlementService` mirrors.
+  providers: [MembershipEntitlementService],
 })
 export class PublierArticle {
   private readonly articleSubmissionApplicationService = inject(ArticleSubmissionApplicationService);
+  protected readonly entitlements = inject(MembershipEntitlementService);
   protected readonly i18n = inject(I18nService);
+
+  // Gates the whole submission form (doc §Entitlements: `ARTICLE_SUBMIT`) — e.g. an
+  // `EXPIRED` membership can no longer submit articles for moderation.
+  protected readonly canSubmitArticle = computed(() => this.entitlements.has('ARTICLE_SUBMIT'));
 
   protected readonly submissionsResource = rxResource({
     stream: () => this.articleSubmissionApplicationService.listMine(),
@@ -45,7 +54,7 @@ export class PublierArticle {
   });
 
   protected submit(): void {
-    if (this.submitting()) {
+    if (this.submitting() || !this.canSubmitArticle()) {
       return;
     }
     const draft = this.draftModel();
