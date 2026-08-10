@@ -105,28 +105,32 @@
       @for (certification of filteredCertifications(); track certification.id) {
         <li class="oei-card">
           <div class="oei-card__header">
-            <h3 class="oei-card__name">{{ certification.name }}</h3>
+            <div class="oei-card__title-block">
+              <h3 class="oei-card__name">{{ certification.name }}</h3>
+              <p class="oei-card__organization">
+                <span class="oei-card__field-label">{{ i18n.translate('certifications.catalog.card.organization') }}</span>
+                {{ certification.issuingOrganization }}
+              </p>
+            </div>
             @if (certification.oeiStatus) {
               <span class="oei-card__badge oei-card__badge--{{ certification.oeiStatus.toLowerCase() }}">
+                <span class="oei-card__badge-dot" aria-hidden="true"></span>
                 {{ i18n.translate('certifications.catalog.oeiStatus.' + certification.oeiStatus) }}
               </span>
             }
           </div>
 
-          <p class="oei-card__organization">
-            <span class="oei-card__field-label">{{ i18n.translate('certifications.catalog.card.organization') }}</span>
-            {{ certification.issuingOrganization }}
-          </p>
+          <div class="oei-card__meta">
+            @if (certification.domain) {
+              <span class="oei-card__domain">{{ certification.domain }}</span>
+            }
 
-          @if (certification.domain) {
-            <p class="oei-card__domain">{{ certification.domain }}</p>
-          }
-
-          @if (levelLabel(certification.level)) {
-            <p class="oei-card__level">
-              {{ i18n.translate('certifications.catalog.card.level') }} {{ levelLabel(certification.level) }}
-            </p>
-          }
+            @if (levelLabel(certification.level)) {
+              <span class="oei-card__level">
+                {{ i18n.translate('certifications.catalog.card.level') }} {{ levelLabel(certification.level) }}
+              </span>
+            }
+          </div>
 
           @if (certification.competencies?.length) {
             <div class="oei-card__competencies">
@@ -139,7 +143,7 @@
             </div>
           }
 
-          <p class="oei-card__expiry">
+          <p class="oei-card__expiry" [class.oei-card__expiry--none]="!certification.validityMonths">
             @if (certification.validityMonths) {
               {{ i18n.translate('certifications.catalog.card.validityMonths') }} {{ certification.validityMonths }}
             } @else {
