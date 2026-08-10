@@ -17,13 +17,17 @@ backend/
     persistence/              infrastructure-persistence — JPA entities, Liquibase, repositories
   application/
     web/                      application-web — REST controllers implementing the generated
-                              OpenAPI server interfaces; packages the contract for the frontend
-    runtime/                  application-runtime — composition root, @SpringBootApplication
+                              OpenAPI server interfaces AND the composition root
+                              (@SpringBootApplication) — see "Composition root" below
 ```
 
-Dependency direction: `application`/`infrastructure` → `domain-shared`. Only
-`application-runtime` depends on `domain-core` (composition root). `domain-core` never
-depends on Spring/JPA — enforced by `DomainArchitectureTest` (ArchUnit) in `domain/core`.
+Dependency direction: `infrastructure` → `domain-shared`. `application-web` is the one
+deliberate exception: it is both the primary HTTP adapter and the composition root, so it
+depends on `domain-core` in addition to `domain-shared` and the infrastructure adapters —
+there is no separate `application/runtime` module (see the spring-boot-ddd-backend skill's
+"Composition root rule": simplicity over strict isolation of the composition root).
+`domain-core` never depends on Spring/JPA — enforced by `DomainArchitectureTest` (ArchUnit)
+in `domain/core`.
 
 ## Building
 
@@ -73,7 +77,7 @@ pnpm add file:../backend/application/web/target/oei-api-contract-0.1.0-SNAPSHOT.
 `infra/docker-compose.yml` exposes Postgres on `localhost:5432` (dev-local only) and
 provisions a dedicated `oei` application database + `oei_app` role via
 `infra/postgres-init/01-create-oei-app-db.sh`, separate from the `keycloak`
-database/role. `application/runtime/src/main/resources/application.yml` connects to it via
+database/role. `application/web/src/main/resources/application.yml` connects to it via
 `OEI_DB_USER`/`OEI_DB_PASSWORD` env vars (defaults are dev-only placeholders, never a real
 secret).
 

@@ -15,10 +15,13 @@
   <packaging>jar</packaging>
   <name>OEI Backend - Application Web</name>
   <description>
-    Primary HTTP adapter. Implements the server interfaces generated from the OEI OpenAPI
-    contract (contract-first), depends only on domain-shared — never on domain-core
-    directly (application-runtime is the composition root that wires use cases). Also
-    packages/publishes the OpenAPI contract as a zip + npm tgz for the Angular frontend.
+    Primary HTTP adapter AND composition root (deliberate choice — no separate
+    application/runtime module, see the spring-boot-ddd-backend skill's "Composition root
+    rule"): implements the server interfaces generated from the OEI OpenAPI contract
+    (contract-first), carries @SpringBootApplication, and is therefore the only module
+    allowed to depend on domain-core in addition to domain-shared and the infrastructure
+    adapters. Also packages/publishes the OpenAPI contract as a zip + npm tgz for the
+    Angular frontend.
   </description>
 
   <properties>
@@ -30,6 +33,18 @@
       <groupId>org.oei</groupId>
       <artifactId>domain-shared</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.oei</groupId>
+      <artifactId>domain-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.oei</groupId>
+      <artifactId>infrastructure-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.oei</groupId>
+      <artifactId>infrastructure-persistence</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -38,6 +53,10 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
 
     <!-- Generated OpenAPI server interfaces/DTOs reference these annotation/type libraries. -->
@@ -61,6 +80,23 @@
 
   <build>
     <plugins>
+
+      <!-- Executable artifact: application-web is the composition root, no separate
+           application/runtime module (see class-level Javadoc on OeiBackendApplication). -->
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <mainClass>org.oei.application.web.OeiBackendApplication</mainClass>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 
       <!-- OpenAPI Generator: server interfaces + DTOs only, contract-first. -->
       <plugin>

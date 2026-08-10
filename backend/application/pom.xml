@@ -17,6 +17,5 @@
 
   <modules>
     <module>web</module>
-    <module>runtime</module>
   </modules>
 </project>
