@@ -7,6 +7,7 @@ import { MemberApplicationService } from '../../../../application/service/member
 import { MembershipApplicationService } from '../../../../application/service/membership-application.service';
 import { ProfessionalProfileApplicationService } from '../../../../application/service/professional-profile-application.service';
 import { MembershipFeeApplicationService } from '../../../../application/service/membership-fee-application.service';
+import { SalaryBenchmarkApplicationService } from '../../../../application/service/salary-benchmark-application.service';
 import { I18nService } from '../../../i18n/i18n.service';
 import { createMember, Member } from '../../../../domain/model/identity/member';
 import { Membership } from '../../../../domain/model/membership/membership';
@@ -142,6 +143,7 @@ describe('Profil', () => {
           },
         },
         { provide: MembershipFeeApplicationService, useValue: { getStatus: () => of(feeStatus) } },
+        { provide: SalaryBenchmarkApplicationService, useValue: { getBenchmark: () => of(undefined) } },
       ],
     });
   }
@@ -182,6 +184,38 @@ describe('Profil', () => {
 
     expect(compiled.querySelector('.oei-profil-banner__photo img')).toBeFalsy();
     expect(compiled.querySelector('.oei-profil-banner__initials')?.textContent).toContain('JD');
+  });
+
+  it('givenCompensationAndBenchmark_whenRendered_thenShowsPrivateNoticeAndBenchmarkRange', async () => {
+    configure(
+      buildProfile({ currentCompensation: { amount: 120000, currency: 'CHF', period: 'YEAR' } }),
+    );
+    TestBed.overrideProvider(SalaryBenchmarkApplicationService, {
+      useValue: { getBenchmark: () => of({ low: 90000, high: 130000, currency: 'CHF', period: 'YEAR', sampleSize: 3 }) },
+    });
+    const fixture = TestBed.createComponent(Profil);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector('.oei-profil__compensation-value')?.textContent).toContain('120000');
+    expect(compiled.querySelector('.oei-profil__private-notice')).toBeTruthy();
+    expect(compiled.querySelector('.oei-profil__compensation-benchmark')?.textContent).toContain('90000');
+    expect(compiled.querySelector('.oei-profil__compensation-benchmark')?.textContent).toContain('130000');
+  });
+
+  it('givenSocialLinks_whenRendered_thenShowsOnlyProvidedLinks', async () => {
+    configure(buildProfile({ socialLinks: { linkedin: 'https://linkedin.com/in/demo', github: undefined } }));
+    const fixture = TestBed.createComponent(Profil);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    const links = compiled.querySelectorAll('.oei-profil__social-links a');
+    expect(links.length).toBe(1);
+    expect(links[0].getAttribute('href')).toBe('https://linkedin.com/in/demo');
   });
 
   it('givenDemoExperience_whenRendered_thenShowsDemonstrationTag', async () => {

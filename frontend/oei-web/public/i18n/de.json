@@ -511,7 +511,24 @@
         "NOT_AVAILABLE": "Nicht verfügbar"
       },
       "loadError": "Das Profil konnte derzeit nicht geladen werden (ein technisches Serverproblem). Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support, falls das Problem weiterhin besteht.",
-      "photoAlt": "Profilfoto"
+      "photoAlt": "Profilfoto",
+      "socialLinks": {
+        "title": "Soziale Netzwerke",
+        "website": "Webseite"
+      },
+      "compensation": {
+        "title": "Aktuelle Vergütung",
+        "privateNotice": "Diese Angabe ist streng privat — sie wird niemals öffentlich angezeigt, weder auf Ihrem öffentlichen Profil, noch auf Ihrem Lebenslauf, noch auf Ihrer digitalen Karte.",
+        "amount": "Betrag",
+        "currency": "Währung",
+        "periodLabel": "Zeitraum",
+        "period": {
+          "YEAR": "pro Jahr",
+          "MONTH": "pro Monat"
+        },
+        "benchmarkPrefix": "Beobachtete Spanne für ein ähnliches Profil:",
+        "sampleSize": "anonymisierte Stichprobe von"
+      }
     },
     "cv": {
       "title": "Mein Lebenslauf",

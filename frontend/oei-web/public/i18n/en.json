@@ -511,7 +511,24 @@
         "NOT_AVAILABLE": "Not available"
       },
       "loadError": "The profile could not be loaded right now (a server-side technical issue). Please try again later or contact support if this persists.",
-      "photoAlt": "Profile photo"
+      "photoAlt": "Profile photo",
+      "socialLinks": {
+        "title": "Social networks",
+        "website": "Website"
+      },
+      "compensation": {
+        "title": "Current compensation",
+        "privateNotice": "This information is strictly private — it is never shown publicly, on your public profile, on your CV, or on your digital card.",
+        "amount": "Amount",
+        "currency": "Currency",
+        "periodLabel": "Period",
+        "period": {
+          "YEAR": "per year",
+          "MONTH": "per month"
+        },
+        "benchmarkPrefix": "Observed range for a similar profile:",
+        "sampleSize": "anonymized sample of"
+      }
     },
     "cv": {
       "title": "My CV",

@@ -146,6 +146,46 @@
           </ul>
         </article>
 
+        @if (profile()?.socialLinks; as social) {
+          <article class="oei-profil-journal__section">
+            <h2>{{ i18n.translate('espaceMembre.profil.socialLinks.title') }}</h2>
+            <ul class="oei-profil__social-links">
+              @if (social.linkedin) {
+                <li><a [href]="social.linkedin" target="_blank" rel="noopener">LinkedIn</a></li>
+              }
+              @if (social.github) {
+                <li><a [href]="social.github" target="_blank" rel="noopener">GitHub</a></li>
+              }
+              @if (social.x) {
+                <li><a [href]="social.x" target="_blank" rel="noopener">X</a></li>
+              }
+              @if (social.website) {
+                <li><a [href]="social.website" target="_blank" rel="noopener">{{ i18n.translate('espaceMembre.profil.socialLinks.website') }}</a></li>
+              }
+              @if (social.youtube) {
+                <li><a [href]="social.youtube" target="_blank" rel="noopener">YouTube</a></li>
+              }
+            </ul>
+          </article>
+        }
+
+        @if (profile()?.currentCompensation; as compensation) {
+          <article class="oei-profil-journal__section oei-profil__compensation">
+            <h2>{{ i18n.translate('espaceMembre.profil.compensation.title') }}</h2>
+            <p class="oei-profil__private-notice">{{ i18n.translate('espaceMembre.profil.compensation.privateNotice') }}</p>
+            <p class="oei-profil__compensation-value">
+              {{ compensation.amount }} {{ compensation.currency }} / {{ i18n.translate('espaceMembre.profil.compensation.period.' + compensation.period) }}
+            </p>
+            @if (benchmark(); as range) {
+              <p class="oei-profil__compensation-benchmark">
+                {{ i18n.translate('espaceMembre.profil.compensation.benchmarkPrefix') }}
+                {{ range.low }}–{{ range.high }} {{ range.currency }} / {{ i18n.translate('espaceMembre.profil.compensation.period.' + range.period) }}
+                ({{ i18n.translate('espaceMembre.profil.compensation.sampleSize') }} {{ range.sampleSize }})
+              </p>
+            }
+          </article>
+        }
+
         <button type="button" [disabled]="membershipAccess.isReadOnly()" (click)="startEditing()">
           {{ i18n.translate('espaceMembre.profil.edit') }}
         </button>
@@ -177,6 +217,52 @@
             <option value="">—</option>
             @for (option of availabilityOptions; track option) {
               <option [value]="option">{{ i18n.translate('espaceMembre.profil.availability.' + option) }}</option>
+            }
+          </select>
+        </label>
+
+        <h3 class="oei-profil__edit-section-title">{{ i18n.translate('espaceMembre.profil.socialLinks.title') }}</h3>
+        <label class="oei-profil__field">
+          LinkedIn
+          <input type="text" [formField]="editForm.linkedin" placeholder="https://linkedin.com/in/…" />
+        </label>
+        <label class="oei-profil__field">
+          GitHub
+          <input type="text" [formField]="editForm.github" placeholder="https://github.com/…" />
+        </label>
+        <label class="oei-profil__field">
+          X
+          <input type="text" [formField]="editForm.x" placeholder="https://x.com/…" />
+        </label>
+        <label class="oei-profil__field">
+          {{ i18n.translate('espaceMembre.profil.socialLinks.website') }}
+          <input type="text" [formField]="editForm.website" placeholder="https://…" />
+        </label>
+        <label class="oei-profil__field">
+          YouTube
+          <input type="text" [formField]="editForm.youtube" placeholder="https://youtube.com/…" />
+        </label>
+
+        <h3 class="oei-profil__edit-section-title">{{ i18n.translate('espaceMembre.profil.compensation.title') }}</h3>
+        <p class="oei-profil__private-notice">{{ i18n.translate('espaceMembre.profil.compensation.privateNotice') }}</p>
+        <label class="oei-profil__field">
+          {{ i18n.translate('espaceMembre.profil.compensation.amount') }}
+          <input type="number" [formField]="editForm.compensationAmount" />
+        </label>
+        <label class="oei-profil__field">
+          {{ i18n.translate('espaceMembre.profil.compensation.currency') }}
+          <input type="text" [formField]="editForm.compensationCurrency" placeholder="CHF" />
+        </label>
+        <label class="oei-profil__field">
+          {{ i18n.translate('espaceMembre.profil.compensation.periodLabel') }}
+          <select
+            [ngModel]="editForm.compensationPeriod().value()"
+            (ngModelChange)="setCompensationPeriod($event)"
+            name="compensationPeriod"
+          >
+            <option value="">—</option>
+            @for (option of compensationPeriods; track option) {
+              <option [value]="option">{{ i18n.translate('espaceMembre.profil.compensation.period.' + option) }}</option>
             }
           </select>
         </label>

@@ -511,7 +511,24 @@
         "NOT_AVAILABLE": "Non disponible"
       },
       "loadError": "Le profil n'a pas pu être chargé pour le moment (problème technique côté serveur). Réessayez plus tard ou contactez le support si le problème persiste.",
-      "photoAlt": "Photo de profil"
+      "photoAlt": "Photo de profil",
+      "socialLinks": {
+        "title": "Réseaux sociaux",
+        "website": "Site web"
+      },
+      "compensation": {
+        "title": "Rémunération actuelle",
+        "privateNotice": "Cette information est strictement privée — elle n'est jamais affichée publiquement, ni sur votre profil public, ni sur votre CV, ni sur votre carte digitale.",
+        "amount": "Montant",
+        "currency": "Devise",
+        "periodLabel": "Période",
+        "period": {
+          "YEAR": "par an",
+          "MONTH": "par mois"
+        },
+        "benchmarkPrefix": "Fourchette observée pour un profil similaire :",
+        "sampleSize": "échantillon anonymisé de"
+      }
     },
     "cv": {
       "title": "Mon CV",

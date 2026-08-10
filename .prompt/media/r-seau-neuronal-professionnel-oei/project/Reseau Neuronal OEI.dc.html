@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;height:100%;background:#071224;overflow:hidden}
+a{color:#3FA9FF}a:hover{color:#E8A530}
+input.oei-search::placeholder{color:rgba(247,243,234,.38)}
+.oei-scroll{scrollbar-width:thin;scrollbar-color:#1F3B63 transparent}
+.oei-scroll::-webkit-scrollbar{width:6px}
+.oei-scroll::-webkit-scrollbar-thumb{background:#1F3B63;border-radius:3px}
+@keyframes oeiSlide{from{transform:translateX(24px);opacity:0}to{transform:none;opacity:1}}
+@keyframes oeiUp{from{transform:translateY(10px);opacity:0}to{transform:none;opacity:1}}
+@keyframes oeiPop{from{transform:translate(-50%,-50%) scale(.2);opacity:0}to{transform:translate(-50%,-50%) scale(1);opacity:1}}
+@keyframes oeiScanY{from{top:-46px}to{top:100%}}
+@keyframes oeiBlink{50%{opacity:0}}
+@keyframes oeiReveal{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+<div style="position:fixed;inset:0;font-family:'Instrument Sans',sans-serif;color:#F7F3EA;overflow:hidden;background:#071224">
+  <canvas ref="{{ setCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas>
+  <div ref="{{ setOrbit }}" style="position:absolute;left:-999px;top:-999px;z-index:6;display:none;pointer-events:none">
+    <sc-for list="{{ orbitIcons }}" as="ic" hint-placeholder-count="0">
+      <div style="position:absolute;left:{{ ic.x }}px;top:{{ ic.y }}px;transform:translate(-50%,-50%);animation:oeiPop .28s cubic-bezier(.2,1.4,.4,1) both;animation-delay:{{ ic.delay }}">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:3px;pointer-events:auto">
+          <button onClick="{{ ic.onClick }}" title="{{ ic.label }}" style="width:38px;height:38px;border-radius:50%;border:1px solid rgba(232,165,48,.7);background:rgba(9,22,44,.92);color:#E8A530;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px" style-hover="background:rgba(232,165,48,.2);border-color:#E8A530">{{ ic.node }}</button>
+          <span style="font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:rgba(247,243,234,.8);text-shadow:0 1px 4px #071224;white-space:nowrap">{{ ic.label }}</span>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="position:absolute;top:20px;left:24px;pointer-events:none">
+    <div style="display:flex;align-items:center;gap:11px">
+      <div style="width:36px;height:36px;border:1.5px solid #E8A530;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:11px;color:#E8A530;letter-spacing:.08em;flex:none">OEI</div>
+      <div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:500;letter-spacing:.14em;text-transform:uppercase">Réseau Neuronal Professionnel</div>
+        <div style="font-size:11px;color:rgba(247,243,234,.5);letter-spacing:.05em;margin-top:1px">Ordre des Experts Informaticiens</div>
+      </div>
+    </div>
+    <div style="margin-top:16px;font-family:'Space Grotesk',sans-serif;font-size:12px;color:#3FA9FF;letter-spacing:.12em;text-transform:uppercase">{{ crumb }}</div>
+  </div>
+
+  <div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);width:410px;z-index:5">
+    <input class="oei-search" value="{{ searchQ }}" onChange="{{ onSearch }}" placeholder="Rechercher un domaine, une certification, un expert…" style="width:100%;box-sizing:border-box;padding:11px 18px;border-radius:99px;border:1px solid rgba(63,169,255,.35);background:rgba(9,22,44,.72);color:#F7F3EA;font-size:13px;outline:none;backdrop-filter:blur(8px);font-family:'Instrument Sans',sans-serif">
+    <sc-if value="{{ hasResults }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:8px;background:rgba(9,22,44,.94);border:1px solid rgba(63,169,255,.25);border-radius:14px;overflow:hidden;backdrop-filter:blur(10px);animation:oeiUp .18s ease">
+        <sc-for list="{{ results }}" as="r" hint-placeholder-count="0">
+          <div onClick="{{ r.onPick }}" style="display:flex;align-items:center;gap:10px;padding:10px 15px;cursor:pointer;border-bottom:1px solid rgba(31,59,99,.35)" style-hover="background:rgba(63,169,255,.12)">
+            <span style="width:8px;height:8px;border-radius:50%;background:{{ r.color }};flex:none"></span>
+            <span style="font-size:13px">{{ r.label }}</span>
+            <span style="margin-left:auto;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(247,243,234,.45)">{{ r.kind }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+  </div>
+
+  <div style="position:absolute;top:20px;right:24px;display:flex;flex-direction:column;align-items:flex-end;gap:8px;z-index:6">
+    <button onClick="{{ toggleFilters }}" style="display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:99px;border:1px solid rgba(63,169,255,.35);background:rgba(9,22,44,.72);color:#F7F3EA;font-size:12px;letter-spacing:.06em;cursor:pointer;backdrop-filter:blur(8px);font-family:'Instrument Sans',sans-serif" style-hover="border-color:#3FA9FF">
+      <span style="width:6px;height:6px;border-radius:50%;background:#3FA9FF"></span>Filtres {{ filterBadge }}
+    </button>
+    <sc-if value="{{ filtersOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="width:264px;padding:16px;border-radius:16px;border:1px solid rgba(63,169,255,.25);background:rgba(9,22,44,.92);backdrop-filter:blur(10px);animation:oeiUp .18s ease">
+        <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(247,243,234,.5);margin-bottom:8px">Pays</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">
+          <sc-for list="{{ countryChips }}" as="ch" hint-placeholder-count="4">
+            <button onClick="{{ ch.toggle }}" style="padding:5px 10px;border-radius:99px;border:1px solid {{ ch.bd }};background:{{ ch.bg }};color:{{ ch.fg }};font-size:11px;cursor:pointer;font-family:'Instrument Sans',sans-serif">{{ ch.label }}</button>
+          </sc-for>
+        </div>
+        <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(247,243,234,.5);margin-bottom:8px">Niveau OEI</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">
+          <sc-for list="{{ levelChips }}" as="ch" hint-placeholder-count="3">
+            <button onClick="{{ ch.toggle }}" style="padding:5px 12px;border-radius:99px;border:1px solid {{ ch.bd }};background:{{ ch.bg }};color:{{ ch.fg }};font-size:11px;cursor:pointer;font-family:'Instrument Sans',sans-serif">{{ ch.label }}</button>
+          </sc-for>
+        </div>
+        <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(247,243,234,.5);margin-bottom:8px">Fournisseur de certification</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">
+          <sc-for list="{{ providerChips }}" as="ch" hint-placeholder-count="4">
+            <button onClick="{{ ch.toggle }}" style="padding:5px 10px;border-radius:99px;border:1px solid {{ ch.bd }};background:{{ ch.bg }};color:{{ ch.fg }};font-size:11px;cursor:pointer;font-family:'Instrument Sans',sans-serif">{{ ch.label }}</button>
+          </sc-for>
+        </div>
+        <button onClick="{{ resetFilters }}" style="width:100%;padding:8px;border-radius:10px;border:1px solid rgba(31,59,99,.8);background:transparent;color:rgba(247,243,234,.6);font-size:11px;cursor:pointer;font-family:'Instrument Sans',sans-serif" style-hover="color:#F7F3EA;border-color:#3FA9FF">Réinitialiser les filtres</button>
+      </div>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{ dossierOn }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;top:76px;right:24px;width:334px;z-index:7;animation:oeiSlide .22s ease">
+      <div style="position:absolute;left:-5px;top:-5px;width:16px;height:16px;border-left:2px solid #E8A530;border-top:2px solid #E8A530;z-index:2"></div>
+      <div style="position:absolute;right:-5px;top:-5px;width:16px;height:16px;border-right:2px solid #E8A530;border-top:2px solid #E8A530;z-index:2"></div>
+      <div style="position:absolute;left:-5px;bottom:-5px;width:16px;height:16px;border-left:2px solid #E8A530;border-bottom:2px solid #E8A530;z-index:2"></div>
+      <div style="position:absolute;right:-5px;bottom:-5px;width:16px;height:16px;border-right:2px solid #E8A530;border-bottom:2px solid #E8A530;z-index:2"></div>
+      <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:3"><div style="position:absolute;left:0;right:0;height:46px;background:linear-gradient(180deg,rgba(63,169,255,0),rgba(63,169,255,.25),rgba(63,169,255,0));animation:oeiScanY 1s ease-out both"></div></div>
+      <div class="oei-scroll" style="position:relative;max-height:calc(100vh - 250px);overflow-y:auto;border-radius:4px;border:1px solid rgba(232,165,48,.55);background:rgba(8,18,38,.94);backdrop-filter:blur(14px)">
+      <sc-if value="{{ selIsExpert }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:18px 20px 20px">
+          <div style="display:flex;justify-content:space-between;align-items:center;font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.14em;color:#E8A530;border-bottom:1px dashed rgba(232,165,48,.4);padding-bottom:8px;margin-bottom:8px"><span>DOSSIER // {{ expId }}</span><span style="animation:oeiBlink 1s steps(1) infinite">▮</span></div>
+          <div style="font-family:ui-monospace,Menlo,monospace;font-size:10px;color:#3FA9FF;letter-spacing:.1em;margin-bottom:14px;animation:oeiReveal .4s .2s both">● IDENTIFICATION VALIDÉE — MEMBRE OEI</div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <div style="width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#1F3B63,#0b1c38);border:1.5px solid #3FA9FF;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;color:#3FA9FF">{{ expInitials }}</div>
+            <button onClick="{{ closePanel }}" style="border:none;background:transparent;color:rgba(247,243,234,.5);font-size:15px;cursor:pointer;padding:2px 6px" style-hover="color:#F7F3EA">✕</button>
+          </div>
+          <div style="margin-top:12px;font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:700">{{ expName }}</div>
+          <div style="font-size:13px;color:rgba(247,243,234,.75);margin-top:2px">{{ expRole }} · {{ expCompany }}</div>
+          <div style="display:flex;gap:8px;margin-top:10px;align-items:center">
+            <span style="font-size:11px;padding:3px 9px;border-radius:99px;border:1px solid rgba(63,169,255,.4);color:#3FA9FF">{{ expCountry }}</span>
+            <span style="font-size:11px;padding:3px 9px;border-radius:99px;border:1px solid rgba(232,165,48,.5);color:#E8A530">Niveau OEI {{ expLevel }}</span>
+          </div>
+          <div style="margin-top:16px">
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:rgba(247,243,234,.55);letter-spacing:.08em;text-transform:uppercase"><span>Score d'expertise</span><span style="color:#E8A530;font-family:'Space Grotesk',sans-serif;font-size:13px">{{ expScore }}</span></div>
+            <div style="height:4px;border-radius:2px;background:#1F3B63;margin-top:6px"><div style="height:100%;border-radius:2px;background:linear-gradient(90deg,#3FA9FF,#E8A530);width:{{ expScorePct }}"></div></div>
+          </div>
+          <div style="margin-top:16px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(247,243,234,.5)">Domaines d'expertise</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">
+            <sc-for list="{{ expTopics }}" as="t" hint-placeholder-count="2">
+              <span style="font-size:11px;padding:4px 10px;border-radius:99px;background:rgba(63,169,255,.12);border:1px solid rgba(63,169,255,.3);color:#cfe6ff">{{ t.label }}</span>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(247,243,234,.5)">Certifications</div>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px">
+            <sc-for list="{{ expCerts }}" as="c" hint-placeholder-count="2">
+              <div style="display:flex;align-items:center;gap:9px;font-size:12px">
+                <span style="width:12px;height:12px;background:linear-gradient(160deg,#E8A530,#b97e1e);clip-path:polygon(25% 5%,75% 5%,98% 50%,75% 95%,25% 95%,2% 50%);flex:none"></span>{{ c.label }}
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(247,243,234,.5)">Badges</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">
+            <sc-for list="{{ expBadges }}" as="b" hint-placeholder-count="2">
+              <span style="font-size:11px;padding:4px 10px;border-radius:99px;background:rgba(232,165,48,.1);border:1px solid rgba(232,165,48,.35);color:#E8A530">{{ b.label }}</span>
+            </sc-for>
+          </div>
+          <button onClick="{{ startJourney }}" style="width:100%;margin-top:18px;padding:11px;border-radius:12px;border:none;background:linear-gradient(120deg,#E8A530,#d18f1c);color:#071224;font-weight:600;font-size:13px;cursor:pointer;font-family:'Instrument Sans',sans-serif" style-hover="filter:brightness(1.1)">Voir le parcours</button>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button onClick="{{ noop }}" style="flex:1;padding:9px;border-radius:12px;border:1px solid rgba(63,169,255,.4);background:transparent;color:#3FA9FF;font-size:12px;cursor:pointer;font-family:'Instrument Sans',sans-serif" style-hover="background:rgba(63,169,255,.1)">Profil OEI</button>
+            <button onClick="{{ noop }}" style="flex:1;padding:9px;border-radius:12px;border:1px solid rgba(63,169,255,.4);background:transparent;color:#3FA9FF;font-size:12px;cursor:pointer;font-family:'Instrument Sans',sans-serif" style-hover="background:rgba(63,169,255,.1)">Suivre</button>
+            <button onClick="{{ noop }}" style="flex:1;padding:9px;border-radius:12px;border:1px solid rgba(63,169,255,.4);background:transparent;color:#3FA9FF;font-size:12px;cursor:pointer;font-family:'Instrument Sans',sans-serif" style-hover="background:rgba(63,169,255,.1)">Contacter</button>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ selIsCert }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:18px 20px 20px">
+          <div style="display:flex;justify-content:space-between;align-items:center;font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.14em;color:#E8A530;border-bottom:1px dashed rgba(232,165,48,.4);padding-bottom:8px;margin-bottom:8px"><span>FICHE // CERTIFICATION</span><span style="animation:oeiBlink 1s steps(1) infinite">▮</span></div>
+          <div style="font-family:ui-monospace,Menlo,monospace;font-size:10px;color:#3FA9FF;letter-spacing:.1em;margin-bottom:14px;animation:oeiReveal .4s .2s both">● RÉFÉRENTIEL OEI — ENREGISTRÉE</div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <div style="width:48px;height:48px;background:linear-gradient(160deg,#E8A530,#b97e1e);clip-path:polygon(25% 5%,75% 5%,98% 50%,75% 95%,25% 95%,2% 50%);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;color:#071224">✓</div>
+            <button onClick="{{ closePanel }}" style="border:none;background:transparent;color:rgba(247,243,234,.5);font-size:15px;cursor:pointer;padding:2px 6px" style-hover="color:#F7F3EA">✕</button>
+          </div>
+          <div style="margin-top:12px;font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700">{{ certName }}</div>
+          <div style="font-size:12px;color:#E8A530;margin-top:3px;letter-spacing:.06em">{{ certProvider }}</div>
+          <div style="font-size:13px;line-height:1.55;color:rgba(247,243,234,.8);margin-top:12px">{{ certDesc }}</div>
+          <div style="margin-top:16px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(247,243,234,.5)">Prérequis</div>
+          <div style="font-size:13px;margin-top:6px;color:rgba(247,243,234,.85)">{{ certPrereq }}</div>
+          <div style="margin-top:14px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(247,243,234,.5)">Compétences validées</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">
+            <sc-for list="{{ certComps }}" as="c" hint-placeholder-count="3">
+              <span style="font-size:11px;padding:4px 10px;border-radius:99px;background:rgba(63,169,255,.12);border:1px solid rgba(63,169,255,.3);color:#cfe6ff">{{ c.label }}</span>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:18px;margin-top:16px">
+            <div><div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(247,243,234,.5)">Validité</div><div style="font-family:'Space Grotesk',sans-serif;font-size:14px;margin-top:3px">{{ certValid }}</div></div>
+            <div><div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(247,243,234,.5)">Experts liés</div><div style="font-family:'Space Grotesk',sans-serif;font-size:14px;margin-top:3px;color:#3FA9FF">{{ certExperts }}</div></div>
+          </div>
+          <a href="#" style="display:block;text-align:center;box-sizing:border-box;width:100%;margin-top:18px;padding:11px;border-radius:4px;background:linear-gradient(120deg,#E8A530,#d18f1c);color:#071224;font-weight:600;font-size:13px;text-decoration:none;font-family:'Instrument Sans',sans-serif" style-hover="filter:brightness(1.1)">Lire la suite →</a>
+        </div>
+      </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ journeyOn }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;padding:10px 12px 10px 20px;border-radius:99px;background:rgba(9,22,44,.92);border:1px solid rgba(232,165,48,.5);backdrop-filter:blur(8px);animation:oeiUp .2s ease;z-index:8">
+      <span style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#E8A530">Parcours</span>
+      <span style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500">{{ journeyName }}</span>
+      <button onClick="{{ jPrev }}" style="width:28px;height:28px;border-radius:50%;border:1px solid rgba(63,169,255,.4);background:transparent;color:#3FA9FF;cursor:pointer;font-size:14px;line-height:1" style-hover="background:rgba(63,169,255,.15)">‹</button>
+      <span style="font-size:12px;color:#3FA9FF;min-width:150px;text-align:center">{{ journeyStep }}/{{ journeyTotal }} · {{ journeyLabel }}</span>
+      <button onClick="{{ jNext }}" style="width:28px;height:28px;border-radius:50%;border:1px solid rgba(63,169,255,.4);background:transparent;color:#3FA9FF;cursor:pointer;font-size:14px;line-height:1" style-hover="background:rgba(63,169,255,.15)">›</button>
+      <button onClick="{{ jClose }}" style="width:28px;height:28px;border-radius:50%;border:1px solid rgba(31,59,99,.8);background:transparent;color:rgba(247,243,234,.6);cursor:pointer;font-size:12px;line-height:1" style-hover="color:#F7F3EA">✕</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ hintOn }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font-size:11px;color:rgba(247,243,234,.4);letter-spacing:.05em;pointer-events:none">Molette : zoomer · Glisser : naviguer · Cliquer un nœud : explorer</div>
+  </sc-if>
+
+  <div style="position:absolute;left:24px;bottom:24px;display:flex;flex-direction:column;gap:7px;padding:14px 16px;border-radius:14px;border:1px solid rgba(31,59,99,.6);background:rgba(9,22,44,.6);backdrop-filter:blur(6px);pointer-events:none">
+    <div style="display:flex;align-items:center;gap:9px;font-size:11px;color:rgba(247,243,234,.75)"><span style="width:12px;height:12px;border-radius:50%;background:radial-gradient(circle,#3FA9FF 30%,rgba(63,169,255,.1));flex:none"></span>Domaine</div>
+    <div style="display:flex;align-items:center;gap:9px;font-size:11px;color:rgba(247,243,234,.75)"><span style="width:8px;height:8px;border-radius:50%;border:1.5px solid #3FA9FF;margin:0 2px;flex:none"></span>Concept</div>
+    <div style="display:flex;align-items:center;gap:9px;font-size:11px;color:rgba(247,243,234,.75)"><span style="width:10px;height:10px;background:#E8A530;clip-path:polygon(25% 5%,75% 5%,98% 50%,75% 95%,25% 95%,2% 50%);margin:0 1px;flex:none"></span>Certification</div>
+    <div style="display:flex;align-items:center;gap:9px;font-size:11px;color:rgba(247,243,234,.75)"><span style="width:8px;height:8px;border-radius:50%;background:#F7F3EA;margin:0 2px;flex:none"></span>Expert</div>
+  </div>
+
+  <div style="position:absolute;right:24px;bottom:24px;display:flex;align-items:flex-end;gap:10px">
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <button onClick="{{ zoomIn }}" style="width:32px;height:32px;border-radius:10px;border:1px solid rgba(63,169,255,.35);background:rgba(9,22,44,.72);color:#F7F3EA;font-size:16px;cursor:pointer;line-height:1" style-hover="border-color:#3FA9FF">+</button>
+      <button onClick="{{ zoomOut }}" style="width:32px;height:32px;border-radius:10px;border:1px solid rgba(63,169,255,.35);background:rgba(9,22,44,.72);color:#F7F3EA;font-size:16px;cursor:pointer;line-height:1" style-hover="border-color:#3FA9FF">−</button>
+      <button onClick="{{ zoomReset }}" style="width:32px;height:32px;border-radius:10px;border:1px solid rgba(63,169,255,.35);background:rgba(9,22,44,.72);color:#F7F3EA;font-size:12px;cursor:pointer;line-height:1" style-hover="border-color:#3FA9FF">⌂</button>
+    </div>
+    <div style="border:1px solid rgba(63,169,255,.3);border-radius:10px;overflow:hidden;background:rgba(9,22,44,.8);backdrop-filter:blur(6px)">
+      <canvas ref="{{ setMini }}" style="display:block;width:190px;height:120px;cursor:pointer"></canvas>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;particules&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Animation&quot;},&quot;vitesse&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0,&quot;max&quot;:2,&quot;step&quot;:0.1,&quot;unit&quot;:&quot;×&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Animation&quot;}}">
+class Component extends DCLogic {
+  state = { sel:null, dossier:false, searchQ:'', results:[], filtersOpen:false, fCountry:[], fLevel:[], fProv:[], journey:null, crumb:'Vue Galaxie' };
+
+  componentDidMount(){
+    this.dead = false;
+    this.build();
+    this.t0 = performance.now();
+    this._loop = (now)=>{ if(this.dead) return; this.draw(now); (this.raf||requestAnimationFrame)(this._loop); };
+    this.kick();
+  }
+  kick(){ if(this._kicked || !this.raf || typeof this._loop!=='function') return; this._kicked=true; this.raf(this._loop); }
+  componentWillUnmount(){ this.dead = true; }
+
+  mkRng(seed){ let a=seed; return ()=>{ a|=0; a=a+0x6D2B79F5|0; let t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+
+  build(){
+    const R = this.mkRng(42);
+    const nodes=[], edges=[], byId={};
+    const add=(n)=>{ nodes.push(n); byId[n.id]=n; return n; };
+    const link=(a,b,kind)=>edges.push({a,b,kind,ph:R()*1,sp:.12+R()*.18});
+
+    const DOMS=[
+      ['ia','Intelligence Artificielle',-80,-520],
+      ['cyber','Cybersécurité',-820,-320],
+      ['cloud','Cloud',660,-320],
+      ['soft','Génie Logiciel',-340,40],
+      ['data','Data',440,160],
+      ['archi','Architecture',-900,240],
+      ['green','Green IT',1000,40],
+      ['crit','Systèmes Critiques',180,440],
+      ['priv','Vie Privée & Conformité',-440,520],
+    ];
+    for(const [id,label,x,y] of DOMS){
+      const sat=[]; for(let i=0;i<14;i++){ const a=R()*6.283, r=18+R()*62; sat.push([Math.cos(a)*r,Math.sin(a)*r,1+R()*2]); }
+      add({id:'d-'+id,kind:'domain',label,x,y,r:26,ph:R()*6,sat});
+    }
+    [['ia','data'],['cloud','archi'],['cyber','priv'],['soft','archi'],['data','cloud'],['ia','cloud'],['soft','crit'],['archi','crit'],['green','cloud'],['priv','data'],['ia','soft'],['cyber','cloud']].forEach(([a,b])=>link('d-'+a,'d-'+b,'dd'));
+
+    const TOPICS={
+      ia:['Machine Learning','Deep Learning','NLP','IA Générative','MLOps','Vision par ordinateur'],
+      cyber:['SOC & Détection','Pentest','Gouvernance SSI','Cryptographie','Identité & Accès','Sécurité Cloud'],
+      cloud:['AWS','Azure','GCP','Kubernetes','FinOps','Platform Engineering'],
+      soft:['Java','Spring Boot','Angular','Microservices','DevOps','Qualité & Tests'],
+      data:['Data Engineering','Data Science','BI & Analytics','Streaming','Data Mesh'],
+      archi:['Architecture SI','Urbanisation','TOGAF & Cadres','Intégration','Résilience'],
+      green:['Éco-conception','Sobriété Numérique','Mesure Carbone','Achats Responsables'],
+      crit:['Temps Réel','Systèmes Financiers','Embarqué','Haute Disponibilité'],
+      priv:['RGPD','Privacy by Design','Audit & Conformité','Éthique du Numérique'],
+    };
+    const topicsByDom={};
+    for(const dk in TOPICS){
+      const d=byId['d-'+dk]; const list=TOPICS[dk]; topicsByDom[dk]=[];
+      list.forEach((label,i)=>{
+        const a=i*2.39996+R()*.5, r=140+((i%2)?70:0)+R()*40;
+        const t=add({id:'t-'+dk+'-'+i,kind:'topic',label,dom:dk,x:d.x+Math.cos(a)*r,y:d.y+Math.sin(a)*r,r:11,ph:R()*6});
+        topicsByDom[dk].push(t);
+        link(d.id,t.id,'dt');
+        if(i>0 && R()<.7) link(topicsByDom[dk][i-1].id,t.id,'tt');
+      });
+    }
+    const tid=(dk,label)=>topicsByDom[dk].find(t=>t.label===label).id;
+    [[tid('soft','Microservices'),tid('archi','Architecture SI')],[tid('cloud','Kubernetes'),tid('soft','DevOps')],[tid('ia','MLOps'),tid('cloud','Platform Engineering')],[tid('data','Streaming'),tid('crit','Temps Réel')],[tid('cyber','Sécurité Cloud'),tid('cloud','AWS')],[tid('priv','RGPD'),tid('data','Data Engineering')]].forEach(([a,b])=>link(a,b,'tt'));
+
+    const CERTS=[
+      ['cloud','AWS',[['AWS Cloud Practitioner','AWS'],['AWS Developer Associate','AWS'],['AWS Solutions Architect','AWS']]],
+      ['cloud','Azure',[['Azure Fundamentals AZ-900','Microsoft'],['Azure Administrator AZ-104','Microsoft']]],
+      ['cloud','Kubernetes',[['CKA — Kubernetes Administrator','Linux Foundation']]],
+      ['cyber','Gouvernance SSI',[['CISSP','ISC²'],['ISO 27001 Lead Implementer','PECB']]],
+      ['cyber','Pentest',[['CEH — Certified Ethical Hacker','EC-Council']]],
+      ['ia','Machine Learning',[['TensorFlow Developer','Google']]],
+      ['ia','IA Générative',[['Azure AI Engineer AI-102','Microsoft']]],
+      ['data','Data Engineering',[['Databricks Data Engineer','Databricks']]],
+      ['archi','TOGAF & Cadres',[['TOGAF 10 Foundation','The Open Group']]],
+      ['soft','Java',[['Oracle Java SE 17 Professional','Oracle']]],
+    ];
+    const certNodes=[]; const providers=new Set();
+    for(const [dk,tLabel,chain] of CERTS){
+      const t=byId[tid(dk,tLabel)]; const d=byId['d-'+dk];
+      const ux=t.x-d.x, uy=t.y-d.y, len=Math.hypot(ux,uy)||1;
+      let prev=null;
+      chain.forEach(([label,provider],i)=>{
+        const c=add({id:'c-'+label.replace(/\W/g,''),kind:'cert',label,provider,dom:dk,topic:t.id,
+          x:t.x+ux/len*(52+i*50)+(-uy/len)*14, y:t.y+uy/len*(52+i*50)+(ux/len)*14, r:9, ph:R()*6,
+          prereq: prev?prev.label:'Aucun prérequis',
+          desc:'Certification '+provider+' attestant la maîtrise opérationnelle du domaine « '+tLabel+' ». Reconnue par l\'OEI dans le référentiel des parcours d\'expertise.',
+          comps:[tLabel,'Bonnes pratiques','Mise en production'], valid:'3 ans'});
+        providers.add(provider);
+        link(prev?prev.id:t.id, c.id, prev?'cc':'tc');
+        prev=c; certNodes.push(c);
+      });
+    }
+
+    const FIRST=['Amadou','Claire','Yuki','Rachid','Ingrid','Sofia','Kwame','Elena','Jean-Marc','Priya','Lucas','Mei','Omar','Anna','David','Fatou','Marc','Linda','Tomás','Aïcha','Nadia','Hugo','Sena','Karim'];
+    const LAST=['Diallo','Fontaine','Tanaka','Benali','Møller','Marchetti','Mensah','Petrova','Lavoie','Sharma','Oliveira','Chen','Haddad','Kowalska','Cohen','Ndiaye','Dubois','Okafor','García','Traoré','Bergström','Marceau','Kouassi','Aziz'];
+    const ROLES=['Architecte Cloud','RSSI','Ingénieure Data','Lead Développeur Java','Experte IA','Ingénieur DevOps','Architecte SI','Consultante Cybersécurité','Data Scientist','Ingénieure Plateforme','Auditeur SSI','CTO'];
+    const COMPANIES=['Nexa Conseil','Atlas Digital','Helvetia Systems','Quantica','Cap Azur','Nordis','Dakar Tech','Ligne Claire','Systémia','Boréal IT'];
+    const COUNTRIES=['France','Suisse','Belgique','Canada','Maroc','Sénégal','Tunisie','Côte d\'Ivoire','Luxembourg','Cameroun'];
+    const BADGES=['Mentor OEI','Conférencier','Publication 2026','Jury de certification','Contributeur Open Source'];
+    const allTopics=nodes.filter(n=>n.kind==='topic');
+    const domKeys=Object.keys(TOPICS);
+    for(let i=0;i<52;i++){
+      const t=allTopics[Math.floor(R()*allTopics.length)];
+      const a=R()*6.283, r=22+R()*22;
+      const name=FIRST[(i*7)%FIRST.length]+' '+LAST[(i*11+3)%LAST.length];
+      const domCerts=certNodes.filter(c=>c.dom===t.dom);
+      const certs=(domCerts.length?domCerts:certNodes).slice(0,1+Math.floor(R()*2)).map(c=>c.label);
+      const jd=[t.dom]; while(jd.length<3){ const k=domKeys[Math.floor(R()*domKeys.length)]; if(!jd.includes(k)) jd.push(k); }
+      const journey=jd.reverse().flatMap(k=>{ const ts=topicsByDom[k]; const n=k===t.dom?2:1+Math.floor(R()*2); const out=[]; for(let j=0;j<n;j++) out.push(ts[Math.floor(R()*ts.length)].id); return out; });
+      if(journey[journey.length-1]!==t.id) journey.push(t.id);
+      const e=add({id:'e-'+i,kind:'expert',label:name,dom:t.dom,topic:t.id,
+        x:t.x+Math.cos(a)*r, y:t.y+Math.sin(a)*r, r:6.5, ph:R()*6,
+        role:ROLES[(i*5)%ROLES.length], company:COMPANIES[(i*3)%COMPANIES.length],
+        country:COUNTRIES[(i*7+2)%COUNTRIES.length], level:['I','II','III'][Math.floor(R()*3)],
+        score:700+Math.floor(R()*290), certs, badges:[BADGES[(i*3)%5],BADGES[(i*3+2)%5]].slice(0,1+(i%2)),
+        journey:[...new Set(journey)]});
+      link(t.id,e.id,'te');
+    }
+    for(const c of certNodes) c.expCount = nodes.filter(n=>n.kind==='expert'&&n.certs.includes(c.label)).length;
+
+    const adj={}; for(const e of edges){ (adj[e.a]=adj[e.a]||new Set()).add(e.b); (adj[e.b]=adj[e.b]||new Set()).add(e.a); }
+    this.nodes=nodes; this.edges=edges; this.byId=byId; this.adj=adj;
+    this.countries=COUNTRIES; this.providers=[...providers];
+    this.stars=[]; for(let i=0;i<260;i++) this.stars.push([(R()-.5)*4200,(R()-.5)*2800,R()*1.4+.3,R()*6.28]);
+    this.cam={x:-60,y:-20,z:.52}; this.camT={x:-60,y:-20,z:.52};
+    this.hits=[]; this.hover=null;
+  }
+
+  setCanvas = (el)=>{
+    if(!el || el===this.cv) return;
+    this.cv=el; this.cx2=el.getContext('2d');
+    const win=el.ownerDocument.defaultView;
+    this.raf=win.requestAnimationFrame.bind(win);
+    this.kick();
+    const resize=()=>{ const r=el.getBoundingClientRect(); const d=window.devicePixelRatio||1; el.width=Math.max(2,r.width*d); el.height=Math.max(2,r.height*d); this.dpr=d; this.W=r.width; this.H=r.height; };
+    resize(); window.addEventListener('resize',resize);
+    let down=null, moved=false;
+    el.addEventListener('pointerdown',(ev)=>{ down={x:ev.clientX,y:ev.clientY,cx:this.camT.x,cy:this.camT.y}; moved=false; el.setPointerCapture(ev.pointerId); });
+    el.addEventListener('pointermove',(ev)=>{
+      const r=el.getBoundingClientRect(); const mx=ev.clientX-r.left, my=ev.clientY-r.top;
+      if(down){ const dx=ev.clientX-down.x, dy=ev.clientY-down.y;
+        if(Math.hypot(dx,dy)>4) moved=true;
+        if(moved){ this.camT.x=down.cx-dx/this.cam.z; this.camT.y=down.cy-dy/this.cam.z; this.cam.x=this.camT.x; this.cam.y=this.camT.y; }
+      } else { this.hover=this.pick(mx,my); }
+      el.style.cursor = down&&moved ? 'grabbing' : (this.hover?'pointer':'grab');
+    });
+    el.addEventListener('pointerup',(ev)=>{
+      if(down && !moved){ const r=el.getBoundingClientRect(); const n=this.pick(ev.clientX-r.left,ev.clientY-r.top); if(n) this.onNode(n); else if(this.state.sel) this.setState({sel:null}); }
+      down=null;
+    });
+    el.addEventListener('wheel',(ev)=>{
+      ev.preventDefault();
+      const r=el.getBoundingClientRect(); const mx=ev.clientX-r.left-this.W/2, my=ev.clientY-r.top-this.H/2;
+      const zT=this.camT.z; const nz=Math.min(15,Math.max(.35, zT*Math.exp(-ev.deltaY*.0013)));
+      const wx=mx/zT+this.camT.x, wy=my/zT+this.camT.y;
+      this.camT={x:wx-mx/nz, y:wy-my/nz, z:nz};
+    },{passive:false});
+  };
+
+  setMini = (el)=>{
+    if(!el || el===this.mini) return;
+    this.mini=el; el.width=380; el.height=240; this.mcx=el.getContext('2d');
+    el.addEventListener('click',(ev)=>{
+      const r=el.getBoundingClientRect();
+      const b=this.miniBounds(); const sx=380/(b.w), sy=240/(b.h);
+      const s=Math.min(sx,sy);
+      const wx=(ev.clientX-r.left)*2/s+b.x, wy=(ev.clientY-r.top)*2/s+b.y;
+      this.camT.x=wx; this.camT.y=wy; if(this.camT.z<1) this.camT.z=1.4;
+    });
+  };
+  miniBounds(){ return {x:-1250,y:-820,w:2500,h:1640}; }
+
+  pick(mx,my){
+    let best=null,bd=1e9;
+    for(const h of this.hits){ const d=Math.hypot(h.sx-mx,h.sy-my); if(d<Math.max(h.sr+6,12) && d<bd){ bd=d; best=h.n; } }
+    return best;
+  }
+
+  flyTo(x,y,z){ this.camT={x,y,z}; }
+
+  lod(z,a,b){ return Math.min(1,Math.max(0,(z-a)/(b-a))); }
+
+  draw(now){
+    const ctx=this.cx2; if(!ctx) return;
+    const vit=this.props.vitesse ?? 1;
+    const t=(now-this.t0)/1000*vit;
+    const cam=this.cam, camT=this.camT;
+    cam.x+=(camT.x-cam.x)*.09; cam.y+=(camT.y-cam.y)*.09; cam.z+=(camT.z-cam.z)*.09;
+    const z=cam.z, W=this.W||800, H=this.H||600;
+    const px=(wx)=>(wx-cam.x)*z+W/2, py=(wy)=>(wy-cam.y)*z+H/2;
+    ctx.setTransform(this.dpr||1,0,0,this.dpr||1,0,0);
+    const g=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.max(W,H)*.75);
+    g.addColorStop(0,'#0a1a34'); g.addColorStop(1,'#071224');
+    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    for(const [sx,sy,sr,sp] of this.stars){
+      const x=(sx-cam.x*.25)*Math.max(z*.4,.3)+W/2, y=(sy-cam.y*.25)*Math.max(z*.4,.3)+H/2;
+      if(x<-5||x>W+5||y<-5||y>H+5) continue;
+      ctx.globalAlpha=.15+.15*Math.sin(t*.7+sp);
+      ctx.fillStyle='#9fc9ef'; ctx.beginPath(); ctx.arc(x,y,sr,0,6.283); ctx.fill();
+    }
+    ctx.globalAlpha=1;
+
+    const aT=this.lod(z,1.3,2.3), aC=this.lod(z,2.2,3.6), aE=this.lod(z,4,6.2);
+    for(const n of this.nodes){ if(n.kind==='domain'){ n._dx=0; n._dy=0; } else { n._dx=2.6*Math.sin(t*.33+n.ph*1.9); n._dy=2.2*Math.cos(t*.29+n.ph*1.3); } }
+    const {fCountry,fLevel,fProv,sel,journey}=this.state;
+    const dim=(n)=>{
+      if(n.kind==='expert') return (fCountry.length&&!fCountry.includes(n.country))||(fLevel.length&&!fLevel.includes(n.level));
+      if(n.kind==='cert') return fProv.length&&!fProv.includes(n.provider);
+      return false;
+    };
+    const hov=this.hover, adj=this.adj;
+    const near=(id)=> hov && (hov.id===id || (adj[hov.id]&&adj[hov.id].has(id)));
+
+    // edges
+    for(const e of this.edges){
+      let a=0, col='63,169,255', w=1;
+      if(e.kind==='dd'){ a=.16*(1-this.lod(z,2.5,6)*.75); w=1.4; }
+      else if(e.kind==='dt'){ a=.22*aT; }
+      else if(e.kind==='tt'){ a=.26*aT; }
+      else if(e.kind==='tc'){ a=.35*aC; col='232,165,48'; }
+      else if(e.kind==='cc'){ a=.45*aC; col='232,165,48'; }
+      else if(e.kind==='te'){ a=.22*aE; col='200,215,235'; w=.8; }
+      if(a<=.01) continue;
+      const A=this.byId[e.a], B=this.byId[e.b];
+      if(near(A.id)&&near(B.id)){ a=Math.min(.95,a*3+.35); w+=.8; }
+      if(dim(A)||dim(B)) a*=.15;
+      const x1=px(A.x+A._dx),y1=py(A.y+A._dy),x2=px(B.x+B._dx),y2=py(B.y+B._dy);
+      if(Math.max(x1,x2)<-60||Math.min(x1,x2)>W+60||Math.max(y1,y2)<-60||Math.min(y1,y2)>H+60) continue;
+      const bw=e.ph>.5?.13:-.13;
+      const mx=(x1+x2)/2-(y2-y1)*bw, my=(y1+y2)/2+(x2-x1)*bw;
+      ctx.strokeStyle='rgba('+col+','+a.toFixed(3)+')'; ctx.lineWidth=w;
+      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.quadraticCurveTo(mx,my,x2,y2); ctx.stroke();
+      if((this.props.particules ?? true) && a>.05){
+        const p=((t*e.sp+e.ph)%1); const q=1-p;
+        const bx=q*q*x1+2*q*p*mx+p*p*x2, by=q*q*y1+2*q*p*my+p*p*y2;
+        ctx.fillStyle='rgba('+col+','+Math.min(.9,a*3)+')';
+        ctx.beginPath(); ctx.arc(bx,by,1.6,0,6.283); ctx.fill();
+      }
+    }
+
+    // journey path
+    if(journey){
+      const steps=journey.steps.map(id=>this.byId[id]);
+      ctx.strokeStyle='rgba(232,165,48,.85)'; ctx.lineWidth=2.5;
+      ctx.setLineDash([10,7]); ctx.lineDashOffset=-t*30;
+      ctx.beginPath();
+      steps.forEach((n,i)=>{ const x=px(n.x+n._dx),y=py(n.y+n._dy); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y); });
+      ctx.stroke(); ctx.setLineDash([]);
+      steps.forEach((n,i)=>{
+        const x=px(n.x+n._dx),y=py(n.y+n._dy);
+        ctx.fillStyle=i<=journey.idx?'#E8A530':'rgba(232,165,48,.35)';
+        ctx.beginPath(); ctx.arc(x,y,i===journey.idx?7:4.5,0,6.283); ctx.fill();
+        if(i===journey.idx){ ctx.strokeStyle='rgba(232,165,48,.7)'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.arc(x,y,12+2*Math.sin(t*3),0,6.283); ctx.stroke(); }
+      });
+    }
+
+    this.hits=[];
+    const hit=(n,sx,sy,sr,al)=>{ if(al>.25) this.hits.push({n,sx,sy,sr}); };
+
+    for(const n of this.nodes){
+      const x=px(n.x+n._dx), y=py(n.y+n._dy);
+      if(x<-160||x>W+160||y<-160||y>H+160) continue;
+      const breath=1+.06*Math.sin(t*.9+n.ph);
+      const isSel=sel===n.id, isHov=hov&&hov.id===n.id, isNear=near(n.id);
+      const dm=dim(n)?.18:1;
+      if(n.kind==='domain'){
+        const gr=90*z*breath;
+        const gg=ctx.createRadialGradient(x,y,0,x,y,gr);
+        gg.addColorStop(0,'rgba(63,169,255,'+(.4*dm)+')'); gg.addColorStop(.4,'rgba(63,169,255,'+(.12*dm)+')'); gg.addColorStop(1,'rgba(63,169,255,0)');
+        ctx.fillStyle=gg; ctx.beginPath(); ctx.arc(x,y,gr,0,6.283); ctx.fill();
+        const satA=(1-aT)*.9*dm;
+        if(satA>.02){ ctx.fillStyle='rgba(159,201,239,'+satA+')';
+          for(const [ox,oy,or] of n.sat){ ctx.beginPath(); ctx.arc(x+ox*z,y+oy*z,Math.max(.8,or*z*.6),0,6.283); ctx.fill(); } }
+        ctx.fillStyle='rgba(212,233,255,'+dm+')';
+        ctx.beginPath(); ctx.arc(x,y,Math.max(5,10*z)*breath,0,6.283); ctx.fill();
+        if(isHov||isSel){ ctx.strokeStyle='#E8A530'; ctx.lineWidth=1.5; ctx.beginPath(); ctx.arc(x,y,Math.max(5,10*z)*breath+6,0,6.283); ctx.stroke(); }
+        const la=Math.max(.25,(1-aT*.75))*dm;
+        ctx.fillStyle='rgba(247,243,234,'+la+')';
+        ctx.font='700 '+Math.min(38,Math.max(13,26*z))+'px "Space Grotesk",sans-serif';
+        ctx.textAlign='center';
+        ctx.fillText(n.label,x,y-Math.max(14,16*z)-10);
+        hit(n,x,y,Math.max(20,20*z),1);
+      } else if(n.kind==='topic'){
+        if(aT<=.02) continue;
+        const al=aT*dm, rr=Math.max(3.5,n.r*z*.55)*breath;
+        ctx.globalAlpha=al;
+        ctx.fillStyle='#0d2242'; ctx.strokeStyle=isNear||isHov||isSel?'#E8A530':'#3FA9FF'; ctx.lineWidth=isHov||isSel?2:1.4;
+        ctx.beginPath(); ctx.arc(x,y,rr,0,6.283); ctx.fill(); ctx.stroke();
+        ctx.fillStyle=isNear||isHov?'#E8A530':'#3FA9FF';
+        ctx.beginPath(); ctx.arc(x,y,rr*.4,0,6.283); ctx.fill();
+        if(aT>.3){ ctx.fillStyle='rgba(247,243,234,'+(.85*al)+')'; ctx.font='500 '+Math.min(17,Math.max(10,4.6*z))+'px "Instrument Sans",sans-serif'; ctx.textAlign='center'; ctx.fillText(n.label,x,y+rr+Math.min(16,Math.max(11,4.4*z))); }
+        ctx.globalAlpha=1;
+        hit(n,x,y,rr,al);
+      } else if(n.kind==='cert'){
+        if(aC<=.02) continue;
+        const al=aC*dm, rr=Math.max(4,n.r*z*.6)*breath;
+        ctx.globalAlpha=al;
+        const gg=ctx.createRadialGradient(x,y,0,x,y,rr*2.6);
+        gg.addColorStop(0,'rgba(232,165,48,'+(.4+.22*Math.sin(t*2.2+n.ph)).toFixed(3)+')'); gg.addColorStop(1,'rgba(232,165,48,0)');
+        ctx.fillStyle=gg; ctx.beginPath(); ctx.arc(x,y,rr*2.6,0,6.283); ctx.fill();
+        ctx.beginPath();
+        for(let i=0;i<6;i++){ const a2=i*Math.PI/3-Math.PI/6; const hx=x+Math.cos(a2)*rr, hy=y+Math.sin(a2)*rr; i?ctx.lineTo(hx,hy):ctx.moveTo(hx,hy); }
+        ctx.closePath();
+        ctx.fillStyle=isSel||isHov?'#f0b649':'#E8A530'; ctx.fill();
+        if(isSel){ ctx.strokeStyle='#F7F3EA'; ctx.lineWidth=1.5; ctx.stroke(); }
+        if(aC>.5){ ctx.fillStyle='rgba(247,243,234,'+(.85*al)+')'; ctx.font='500 '+Math.min(14,Math.max(9,2.6*z))+'px "Instrument Sans",sans-serif'; ctx.textAlign='center'; ctx.fillText(n.label,x,y+rr+Math.min(14,Math.max(10,2.4*z))); }
+        ctx.globalAlpha=1;
+        hit(n,x,y,rr+3,al);
+      } else {
+        if(aE<=.02) continue;
+        const al=aE*dm, rr=Math.max(3,n.r*z*.7)*breath;
+        ctx.globalAlpha=al;
+        ctx.fillStyle='#0d2242'; ctx.strokeStyle=isSel||isHov?'#E8A530':'rgba(247,243,234,.85)'; ctx.lineWidth=isSel?2:1.2;
+        ctx.beginPath(); ctx.arc(x,y,rr,0,6.283); ctx.fill(); ctx.stroke();
+        if(z>6.5){ ctx.fillStyle='#F7F3EA'; ctx.font='600 '+Math.max(7,rr*.75)+'px "Space Grotesk",sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(n.label.split(' ').map(w=>w[0]).join(''),x,y+.5); ctx.textBaseline='alphabetic'; }
+        else { ctx.fillStyle='rgba(247,243,234,.9)'; ctx.beginPath(); ctx.arc(x,y,rr*.35,0,6.283); ctx.fill(); }
+        if(aE>.55){ ctx.fillStyle='rgba(247,243,234,'+(.8*al)+')'; ctx.font='400 '+Math.min(13,Math.max(9,1.7*z))+'px "Instrument Sans",sans-serif'; ctx.textAlign='center'; ctx.fillText(n.label,x,y+rr+Math.min(13,Math.max(9,1.6*z))); }
+        ctx.globalAlpha=1;
+        hit(n,x,y,rr+3,al);
+      }
+    }
+
+    const oe=this.orbitEl;
+    if(oe){
+      const sn=sel?this.byId[sel]:null;
+      if(sn && sn.kind==='expert' && !this.state.dossier && !journey){
+        oe.style.display='block'; oe.style.left=px(sn.x+sn._dx)+'px'; oe.style.top=py(sn.y+sn._dy)+'px';
+      } else oe.style.display='none';
+    }
+
+    // crumb
+    let crumb='Vue Galaxie';
+    if(z>=1.5){
+      let best=null,bd=1e9;
+      for(const n of this.nodes) if(n.kind==='domain'){ const d=Math.hypot(n.x-cam.x,n.y-cam.y); if(d<bd){bd=d;best=n;} }
+      if(best&&bd<600){ crumb='Galaxie › '+best.label; if(z>=6) crumb+=' › Experts'; else if(z>=3.6) crumb+=' › Certifications & Parcours'; }
+    }
+    if(crumb!==this.state.crumb) this.setState({crumb});
+
+    // minimap
+    const m=this.mcx;
+    if(m){
+      m.setTransform(1,0,0,1,0,0); m.clearRect(0,0,380,240);
+      m.fillStyle='rgba(7,18,36,.5)'; m.fillRect(0,0,380,240);
+      const b=this.miniBounds(); const s=Math.min(380/b.w,240/b.h);
+      for(const n of this.nodes){ if(n.kind!=='domain') continue;
+        const x=(n.x-b.x)*s,y=(n.y-b.y)*s;
+        const gg=m.createRadialGradient(x,y,0,x,y,14);
+        gg.addColorStop(0,'rgba(63,169,255,.7)'); gg.addColorStop(1,'rgba(63,169,255,0)');
+        m.fillStyle=gg; m.beginPath(); m.arc(x,y,14,0,6.283); m.fill();
+        m.fillStyle='#cfe6ff'; m.beginPath(); m.arc(x,y,2,0,6.283); m.fill();
+      }
+      const vw=W/z*s, vh=H/z*s, vx=(cam.x-b.x)*s-vw/2, vy=(cam.y-b.y)*s-vh/2;
+      m.strokeStyle='#E8A530'; m.lineWidth=1.5;
+      m.strokeRect(Math.max(1,vx),Math.max(1,vy),Math.min(378,vw),Math.min(238,vh));
+    }
+  }
+
+  onNode(n){
+    if(n.kind==='domain') this.flyTo(n.x,n.y,2.3);
+    else if(n.kind==='topic') this.flyTo(n.x,n.y,Math.max(4.6,this.camT.z));
+    else if(n.kind==='cert'){ this.setState({sel:n.id,dossier:true,journey:null}); this.flyTo(n.x+25,n.y,5.2); }
+    else { this.setState({sel:n.id,dossier:false,journey:null}); this.flyTo(n.x+10,n.y,8.4); }
+  }
+
+  renderVals(){
+    const S=this.state, byId=this.byId||{};
+    const sel=S.sel?byId[S.sel]:null;
+    const noop=()=>{};
+    const q=S.searchQ.trim().toLowerCase();
+    const KINDS={domain:['Domaine','#3FA9FF',1.9],topic:['Concept','#3FA9FF',4.8],cert:['Certification','#E8A530',5.2],expert:['Expert','#F7F3EA',8.4]};
+    const results = q.length<2?[]:(this.nodes||[]).filter(n=>n.label.toLowerCase().includes(q)).slice(0,8).map(n=>({
+      label:n.label, kind:KINDS[n.kind][0], color:KINDS[n.kind][1],
+      onPick:()=>{ this.flyTo(n.x,n.y,KINDS[n.kind][2]); this.setState({searchQ:'',results:[],sel:(n.kind==='cert'||n.kind==='expert')?n.id:null,dossier:n.kind==='cert'}); }
+    }));
+    let orbitIcons=[];
+    if(sel&&sel.kind==='expert'&&!S.dossier){
+      const el=React.createElement;
+      const svg=(kids)=>el('svg',{width:15,height:15,viewBox:'0 0 16 16',fill:'none',stroke:'currentColor',strokeWidth:1.5,strokeLinecap:'round',strokeLinejoin:'round'},kids);
+      const defs=[
+        ['Profil OEI', svg([el('circle',{key:1,cx:8,cy:5.2,r:2.7}),el('path',{key:2,d:'M2.6 13.6c1.3-3.2 9.5-3.2 10.8 0'})]), ()=>this.setState({dossier:true})],
+        ['LinkedIn','in',noop],
+        ['YouTube', svg([el('path',{key:1,d:'M5.8 4.8l5.4 3.2-5.4 3.2z',fill:'currentColor',stroke:'none'})]), noop],
+        ['Contacter', svg([el('rect',{key:1,x:2,y:4,width:12,height:8.5,rx:1}),el('path',{key:2,d:'M2.5 5l5.5 4.2L13.5 5'})]), noop],
+      ];
+      orbitIcons=defs.map(([label,node,onClick],i)=>{ const a=(-160+i*47)*Math.PI/180, R2=62; return {label,node,onClick,x:Math.round(Math.cos(a)*R2),y:Math.round(Math.sin(a)*R2),delay:(i*.05).toFixed(2)+'s'}; });
+    }
+    const chip=(label,arr,key)=>({label,
+      bd:arr.includes(label)?'#3FA9FF':'rgba(31,59,99,.9)',
+      bg:arr.includes(label)?'rgba(63,169,255,.18)':'transparent',
+      fg:arr.includes(label)?'#cfe6ff':'rgba(247,243,234,.65)',
+      toggle:()=>this.setState({[key]:arr.includes(label)?arr.filter(x=>x!==label):[...arr,label]})});
+    const nf=S.fCountry.length+S.fLevel.length+S.fProv.length;
+    const j=S.journey;
+    const vals={
+      setCanvas:this.setCanvas, setMini:this.setMini, noop,
+      crumb:S.crumb, searchQ:S.searchQ,
+      onSearch:(e)=>this.setState({searchQ:e.target.value}),
+      hasResults:results.length>0, results,
+      filtersOpen:S.filtersOpen, toggleFilters:()=>this.setState({filtersOpen:!S.filtersOpen}),
+      filterBadge:nf?'('+nf+')':'',
+      countryChips:(this.countries||[]).map(c=>chip(c,S.fCountry,'fCountry')),
+      levelChips:['I','II','III'].map(c=>chip(c,S.fLevel,'fLevel')),
+      providerChips:(this.providers||[]).map(c=>chip(c,S.fProv,'fProv')),
+      resetFilters:()=>this.setState({fCountry:[],fLevel:[],fProv:[]}),
+      hasSel:!!sel, selIsExpert:!!sel&&sel.kind==='expert', selIsCert:!!sel&&sel.kind==='cert',
+      dossierOn:!!sel&&S.dossier&&(sel.kind==='expert'||sel.kind==='cert'),
+      setOrbit:(el)=>{ this.orbitEl=el; }, orbitIcons,
+      closePanel:()=>{ if(sel&&sel.kind==='expert') this.setState({dossier:false}); else this.setState({sel:null,dossier:false}); },
+      journeyOn:!!j, hintOn:!j,
+      zoomIn:()=>{ this.camT.z=Math.min(15,this.camT.z*1.5); },
+      zoomOut:()=>{ this.camT.z=Math.max(.35,this.camT.z*.66); },
+      zoomReset:()=>{ this.camT={x:-60,y:-20,z:.52}; },
+    };
+    if(sel&&sel.kind==='expert'){
+      Object.assign(vals,{
+        expId:'OEI/EXP-'+String(sel.id.slice(2)).padStart(3,'0'),
+        expName:sel.label, expInitials:sel.label.split(' ').map(w=>w[0]).join(''),
+        expRole:sel.role, expCompany:sel.company, expCountry:sel.country, expLevel:sel.level,
+        expScore:sel.score, expScorePct:Math.round((sel.score-600)/4)+'%',
+        expTopics:[...new Set(sel.journey.slice(-3))].map(id=>({label:byId[id].label})),
+        expCerts:sel.certs.map(c=>({label:c})),
+        expBadges:sel.badges.map(b=>({label:b})),
+        startJourney:()=>{ const steps=sel.journey; this.setState({journey:{steps,idx:0,name:sel.label}}); const n=byId[steps[0]]; this.flyTo(n.x,n.y,3.4); },
+      });
+    }
+    if(sel&&sel.kind==='cert'){
+      Object.assign(vals,{
+        certName:sel.label, certProvider:sel.provider, certDesc:sel.desc, certPrereq:sel.prereq,
+        certComps:sel.comps.map(c=>({label:c})), certValid:sel.valid, certExperts:sel.expCount||0,
+      });
+    }
+    if(j){
+      const n=byId[j.steps[j.idx]];
+      const go=(idx)=>{ const i=Math.min(j.steps.length-1,Math.max(0,idx)); this.setState({journey:{...j,idx:i}}); const nn=byId[j.steps[i]]; this.flyTo(nn.x,nn.y,3.4); };
+      Object.assign(vals,{
+        journeyName:j.name, journeyStep:j.idx+1, journeyTotal:j.steps.length, journeyLabel:n.label,
+        jPrev:()=>go(j.idx-1), jNext:()=>go(j.idx+1), jClose:()=>this.setState({journey:null}),
+      });
+    }
+    return vals;
+  }
+}
+</script>
+</body>
+</html>

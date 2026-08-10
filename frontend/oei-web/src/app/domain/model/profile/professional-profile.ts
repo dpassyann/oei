@@ -36,6 +36,35 @@ export interface Skill {
   readonly verified?: boolean;
 }
 
+// All optional, and every link is a full URL edited as plain text (same "no dedicated
+// upload/OAuth pipeline yet" limitation as `photoUrl`). Unlike `currentCompensation` below,
+// these ARE meant to be shareable — a member can opt to expose them on their public profile
+// via `PublicProfile.visibleFields` (see `public-profile.ts`'s `'socialLinks'` entry).
+export interface SocialLinks {
+  readonly linkedin?: string;
+  readonly github?: string;
+  readonly x?: string;
+  readonly website?: string;
+  readonly youtube?: string;
+}
+
+export type CompensationPeriod = 'YEAR' | 'MONTH';
+
+// Deliberately private, always. This field is NEVER part of `PublicProfile.visibleFields`
+// (see `PUBLIC_PROFILE_VISIBLE_FIELD_KEYS` in `public-profile.ts` — `currentCompensation` is
+// intentionally absent from that list, not just unchecked by default), never rendered on the
+// digital business card / CV / member directory, and never sent to any `/api/public/**`
+// endpoint. Its only purpose is to let the member compare their own situation against the
+// anonymized aggregate range computed by `SalaryBenchmarkService` — the member's own figure is
+// used locally for that comparison and is not itself part of any aggregate exposed to others.
+export interface CurrentCompensation {
+  readonly amount: number;
+  // ISO 4217 currency code (e.g. "CHF", "EUR") — free text input, not a hardcoded list, since
+  // OEI members span many countries.
+  readonly currency: string;
+  readonly period: CompensationPeriod;
+}
+
 export interface ProfessionalProfile {
   readonly memberId: string;
   // Set from the onboarding wizard's "Photo" step (`espaceMembre.onboarding.steps.photo`,
@@ -54,6 +83,8 @@ export interface ProfessionalProfile {
   readonly experiences: readonly Experience[];
   readonly educations: readonly Education[];
   readonly skills: readonly Skill[];
+  readonly socialLinks?: SocialLinks;
+  readonly currentCompensation?: CurrentCompensation;
   readonly completenessScore: number;
 }
 

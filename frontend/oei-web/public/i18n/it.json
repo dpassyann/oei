@@ -511,7 +511,24 @@
         "NOT_AVAILABLE": "Non disponibile"
       },
       "loadError": "Non è stato possibile caricare il profilo al momento (un problema tecnico del server). Riprova più tardi o contatta l'assistenza se il problema persiste.",
-      "photoAlt": "Foto del profilo"
+      "photoAlt": "Foto del profilo",
+      "socialLinks": {
+        "title": "Social network",
+        "website": "Sito web"
+      },
+      "compensation": {
+        "title": "Retribuzione attuale",
+        "privateNotice": "Questa informazione è strettamente privata — non viene mai mostrata pubblicamente, né sul tuo profilo pubblico, né sul tuo CV, né sulla tua carta digitale.",
+        "amount": "Importo",
+        "currency": "Valuta",
+        "periodLabel": "Periodo",
+        "period": {
+          "YEAR": "all'anno",
+          "MONTH": "al mese"
+        },
+        "benchmarkPrefix": "Intervallo osservato per un profilo simile:",
+        "sampleSize": "campione anonimo di"
+      }
     },
     "cv": {
       "title": "Il mio CV",

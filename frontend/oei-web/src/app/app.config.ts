@@ -122,6 +122,9 @@ import { WalletApiAdapter } from './infrastructure/adapter/wallet-api.adapter';
 import { DIGITAL_BUSINESS_CARD_PORT } from './domain/port/wallet/digital-business-card.port';
 import { DigitalBusinessCardMockAdapter } from './infrastructure/adapter/digital-business-card-mock.adapter';
 import { DigitalBusinessCardApiAdapter } from './infrastructure/adapter/digital-business-card-api.adapter';
+import { SALARY_BENCHMARK_PORT } from './domain/port/profile/salary-benchmark.port';
+import { SalaryBenchmarkMockAdapter } from './infrastructure/adapter/salary-benchmark-mock.adapter';
+import { SalaryBenchmarkApiAdapter } from './infrastructure/adapter/salary-benchmark-api.adapter';
 
 // Adhésion & cotisation (free account creation + annual cotisation cycle — see
 // domain/model/membership-fee/ and the home hero "Rejoignez le mouvement" button). Account
@@ -505,6 +508,13 @@ export const appConfig: ApplicationConfig = {
         inject(RuntimeConfig).isMock()
           ? inject(MemberCertificationGoalMockAdapter)
           : inject(MemberCertificationGoalApiAdapter),
+    },
+    {
+      provide: SALARY_BENCHMARK_PORT,
+      useFactory: () =>
+        inject(RuntimeConfig).isMock()
+          ? inject(SalaryBenchmarkMockAdapter)
+          : inject(SalaryBenchmarkApiAdapter),
     },
   ],
 };

@@ -5,7 +5,14 @@ import { form, FormField, required } from '@angular/forms/signals';
 import { MemberApplicationService } from '../../../../application/service/member-application.service';
 import { MembershipApplicationService } from '../../../../application/service/membership-application.service';
 import { ProfessionalProfileApplicationService } from '../../../../application/service/professional-profile-application.service';
-import { Availability, Experience, Education, ProfessionalProfile } from '../../../../domain/model/profile/professional-profile';
+import { SalaryBenchmarkApplicationService } from '../../../../application/service/salary-benchmark-application.service';
+import {
+  Availability,
+  Experience,
+  Education,
+  ProfessionalProfile,
+  CompensationPeriod,
+} from '../../../../domain/model/profile/professional-profile';
 import { I18nService } from '../../../i18n/i18n.service';
 import { MembershipAccessService } from '../../../auth/membership-access.service';
 
@@ -26,9 +33,21 @@ interface EditableProfileFields {
   // onboarding wizard's "Photo" step, `espaceMembre.onboarding.steps.photo`, is URL-based too),
   // so the profile page's edit mode follows the same limitation rather than inventing a new one.
   photoUrl: string;
+  linkedin: string;
+  github: string;
+  x: string;
+  website: string;
+  youtube: string;
+  // Amount kept as a string draft (Signal Forms binds to text inputs) — parsed to a number
+  // only on save, see `save()`. Never sent anywhere public — see `CurrentCompensation`'s
+  // doc comment in the domain model.
+  compensationAmount: string;
+  compensationCurrency: string;
+  compensationPeriod: CompensationPeriod | '';
 }
 
 const AVAILABILITY_OPTIONS: readonly Availability[] = ['AVAILABLE', 'OPEN_TO_OPPORTUNITIES', 'NOT_AVAILABLE'];
+const COMPENSATION_PERIODS: readonly CompensationPeriod[] = ['YEAR', 'MONTH'];
 
 @Component({
   selector: 'oei-profil',
@@ -43,10 +62,12 @@ export class Profil {
   private readonly professionalProfileApplicationService = inject(ProfessionalProfileApplicationService);
   private readonly membershipApplicationService = inject(MembershipApplicationService);
   private readonly memberApplicationService = inject(MemberApplicationService);
+  private readonly salaryBenchmarkApplicationService = inject(SalaryBenchmarkApplicationService);
   protected readonly membershipAccess = inject(MembershipAccessService);
   protected readonly i18n = inject(I18nService);
 
   protected readonly availabilityOptions = AVAILABILITY_OPTIONS;
+  protected readonly compensationPeriods = COMPENSATION_PERIODS;
 
   protected readonly profileResource = rxResource({
     stream: () => this.professionalProfileApplicationService.getProfile(),
@@ -79,6 +100,14 @@ export class Profil {
     location: '',
     availability: '',
     photoUrl: '',
+    linkedin: '',
+    github: '',
+    x: '',
+    website: '',
+    youtube: '',
+    compensationAmount: '',
+    compensationCurrency: '',
+    compensationPeriod: '',
   });
   protected readonly editForm = form(this.editModel, (path) => {
     required(path.title);
@@ -95,6 +124,14 @@ export class Profil {
       location: current?.location ?? '',
       availability: current?.availability ?? '',
       photoUrl: current?.photoUrl ?? '',
+      linkedin: current?.socialLinks?.linkedin ?? '',
+      github: current?.socialLinks?.github ?? '',
+      x: current?.socialLinks?.x ?? '',
+      website: current?.socialLinks?.website ?? '',
+      youtube: current?.socialLinks?.youtube ?? '',
+      compensationAmount: current?.currentCompensation?.amount?.toString() ?? '',
+      compensationCurrency: current?.currentCompensation?.currency ?? '',
+      compensationPeriod: current?.currentCompensation?.period ?? '',
     });
     this.editing.set(true);
     this.saveError.set(false);
@@ -113,12 +150,32 @@ export class Profil {
     this.editModel.update((current) => ({ ...current, availability: value as Availability | '' }));
   }
 
+  // Same reasoning as `setAvailability` — `<select>` isn't a confirmed `[formField]` target.
+  protected setCompensationPeriod(value: string): void {
+    this.editModel.update((current) => ({ ...current, compensationPeriod: value as CompensationPeriod | '' }));
+  }
+
   protected save(): void {
     const current = this.profile();
     if (!current || this.saving()) {
       return;
     }
     const edited = this.editModel();
+    const socialLinks =
+      edited.linkedin || edited.github || edited.x || edited.website || edited.youtube
+        ? {
+            linkedin: edited.linkedin || undefined,
+            github: edited.github || undefined,
+            x: edited.x || undefined,
+            website: edited.website || undefined,
+            youtube: edited.youtube || undefined,
+          }
+        : undefined;
+    const amount = Number(edited.compensationAmount);
+    const currentCompensation =
+      edited.compensationAmount && Number.isFinite(amount) && edited.compensationCurrency && edited.compensationPeriod
+        ? { amount, currency: edited.compensationCurrency, period: edited.compensationPeriod }
+        : undefined;
     const updated: ProfessionalProfile = {
       ...current,
       title: edited.title || undefined,
@@ -126,6 +183,8 @@ export class Profil {
       location: edited.location || undefined,
       availability: edited.availability || undefined,
       photoUrl: edited.photoUrl || undefined,
+      socialLinks,
+      currentCompensation,
     };
     this.saving.set(true);
     this.saveError.set(false);
@@ -153,6 +212,26 @@ export class Profil {
       .map((part) => part[0]?.toUpperCase())
       .join('');
   });
+
+  // Comparison widget: shows the anonymized low/high range for a similar profile (domain +
+  // currency) alongside the member's own (never-displayed-elsewhere) figure — the query only
+  // needs the profile's own expertise areas/currency/period, not the amount itself, since the
+  // benchmark is an aggregate over OTHER demo profiles, not a lookup of this one.
+  private readonly benchmarkResource = rxResource({
+    params: () => {
+      const compensation = this.profile()?.currentCompensation;
+      if (!compensation) {
+        return undefined;
+      }
+      return {
+        expertiseAreas: this.profile()?.expertiseAreas ?? [],
+        currency: compensation.currency,
+        period: compensation.period,
+      };
+    },
+    stream: ({ params }) => this.salaryBenchmarkApplicationService.getBenchmark(params),
+  });
+  protected readonly benchmark = computed(() => this.benchmarkResource.value());
 
   protected isDemoExperience(experience: Experience): boolean {
     return experience.isDemoData === true;

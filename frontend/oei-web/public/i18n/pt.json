@@ -511,7 +511,24 @@
         "NOT_AVAILABLE": "Não disponível"
       },
       "loadError": "Não foi possível carregar o perfil neste momento (um problema técnico do servidor). Tente novamente mais tarde ou contacte o suporte se o problema persistir.",
-      "photoAlt": "Foto de perfil"
+      "photoAlt": "Foto de perfil",
+      "socialLinks": {
+        "title": "Redes sociais",
+        "website": "Site"
+      },
+      "compensation": {
+        "title": "Remuneração atual",
+        "privateNotice": "Esta informação é estritamente privada — nunca é exibida publicamente, nem no seu perfil público, nem no seu CV, nem no seu cartão digital.",
+        "amount": "Valor",
+        "currency": "Moeda",
+        "periodLabel": "Período",
+        "period": {
+          "YEAR": "por ano",
+          "MONTH": "por mês"
+        },
+        "benchmarkPrefix": "Intervalo observado para um perfil semelhante:",
+        "sampleSize": "amostra anônima de"
+      }
     },
     "cv": {
       "title": "O meu currículo",
