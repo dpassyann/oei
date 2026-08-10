@@ -16,8 +16,16 @@ services:
       POSTGRES_USER: ${OEI_USER}
       POSTGRES_PASSWORD: ${OEI_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
+      # Consumed only by infra/postgres-init/01-create-oei-app-db.sh, to provision the
+      # "oei" application database/role below. Keycloak keeps using POSTGRES_DB/OEI_USER
+      # unchanged.
+      OEI_APP_PASSWORD: ${OEI_APP_PASSWORD:-changeme}
+    ports:
+      # dev local uniquement — le backend Spring tourne en dehors de docker-compose.
+      - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
+      - ./postgres-init:/docker-entrypoint-initdb.d
     networks:
       - oei-net
     healthcheck:
