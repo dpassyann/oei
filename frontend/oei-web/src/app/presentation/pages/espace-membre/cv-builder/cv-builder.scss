@@ -108,26 +108,8 @@ $oei-gold: #e8a530;
   border-radius: 999px;
 }
 
-.oei-cv-builder__validate-button,
-.oei-cv-builder__add-section-submit,
-.oei-cv-builder__add-translation-submit,
-.oei-cv-builder__generate-button {
-  background: $oei-navy;
-  color: #fff;
-  border: none;
-  border-radius: 0.35rem;
-  padding: 0.4rem 0.9rem;
-  cursor: pointer;
-
-  &:hover {
-    background: $oei-gold;
-  }
-
-  &:disabled {
-    background: #999;
-    cursor: not-allowed;
-  }
-}
+// Color/border/radius/hover/disabled state now come from the shared `.oei-btn`/`.oei-btn--primary`
+// classes (see `src/styles/_forms.scss`) — nothing page-specific left to override here.
 
 .oei-cv-builder__add-translation {
   display: flex;
@@ -137,19 +119,14 @@ $oei-gold: #e8a530;
   margin-top: 0.5rem;
 }
 
+// Input/select color, border, radius and typography now come from the shared `.oei-field`/
+// `.oei-input`/`.oei-select` classes (see `src/styles/_forms.scss`) — only layout kept here.
 .oei-cv-builder__field {
   display: flex;
   flex-direction: column;
   font-size: 0.85rem;
   color: $oei-navy;
   gap: 0.25rem;
-
-  input,
-  select {
-    padding: 0.35rem 0.5rem;
-    border: 1px solid rgba(10, 30, 63, 0.25);
-    border-radius: 0.35rem;
-  }
 }
 
 .oei-cv-builder__pdf-notice {

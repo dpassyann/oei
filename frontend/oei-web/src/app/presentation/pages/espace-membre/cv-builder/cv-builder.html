@@ -151,7 +151,7 @@
                 @if (isUnvalidated(translation.status)) {
                   <button
                     type="button"
-                    class="oei-cv-builder__validate-button"
+                    class="oei-cv-builder__validate-button oei-btn oei-btn--primary"
                     [disabled]="membershipAccess.isReadOnly()"
                     (click)="validateTranslation(section.id, translation.language)"
                   >
@@ -162,25 +162,27 @@
             }
 
             <form class="oei-cv-builder__add-translation" (submit)="$event.preventDefault(); addTranslation(section.id)">
-              <label class="oei-cv-builder__field">
+              <label class="oei-cv-builder__field oei-field">
                 {{ i18n.translate('espaceMembre.cv.addTranslationLanguageLabel') }}
                 <input
                   type="text"
+                  class="oei-input"
                   [ngModel]="translationLanguageFor(section.id)"
                   (ngModelChange)="setTranslationLanguage(section.id, $event)"
                   name="language-{{ section.id }}"
                 />
               </label>
-              <label class="oei-cv-builder__field">
+              <label class="oei-cv-builder__field oei-field">
                 {{ i18n.translate('espaceMembre.cv.addTranslationContentLabel') }}
                 <input
                   type="text"
+                  class="oei-input"
                   [ngModel]="translationContentFor(section.id)"
                   (ngModelChange)="setTranslationContent(section.id, $event)"
                   name="content-{{ section.id }}"
                 />
               </label>
-              <button type="submit" class="oei-cv-builder__add-translation-submit" [disabled]="membershipAccess.isReadOnly()">
+              <button type="submit" class="oei-cv-builder__add-translation-submit oei-btn oei-btn--primary" [disabled]="membershipAccess.isReadOnly()">
                 {{ i18n.translate('espaceMembre.cv.addTranslationSubmit') }}
               </button>
             </form>
@@ -196,25 +198,26 @@
         <p class="oei-page__empty">{{ i18n.translate('espaceMembre.cv.noAvailableSectionTypes') }}</p>
       } @else {
         <form (submit)="$event.preventDefault(); addSection()">
-          <label class="oei-cv-builder__field">
+          <label class="oei-cv-builder__field oei-field">
             {{ i18n.translate('espaceMembre.cv.addSectionTypeLabel') }}
-            <select [ngModel]="newSectionType()" (ngModelChange)="newSectionType.set($event)" name="newSectionType">
+            <select class="oei-select" [ngModel]="newSectionType()" (ngModelChange)="newSectionType.set($event)" name="newSectionType">
               <option value="" disabled>{{ i18n.translate('espaceMembre.cv.addSectionTypeLabel') }}</option>
               @for (type of availableSectionTypes(); track type) {
                 <option [value]="type">{{ i18n.translate('espaceMembre.cv.sectionTypes.' + type) }}</option>
               }
             </select>
           </label>
-          <label class="oei-cv-builder__field">
+          <label class="oei-cv-builder__field oei-field">
             {{ i18n.translate('espaceMembre.cv.addSectionContentLabel') }}
             <input
               type="text"
+              class="oei-input"
               [ngModel]="newSectionContent()"
               (ngModelChange)="newSectionContent.set($event)"
               name="newSectionContent"
             />
           </label>
-          <button type="submit" class="oei-cv-builder__add-section-submit" [disabled]="membershipAccess.isReadOnly()">
+          <button type="submit" class="oei-cv-builder__add-section-submit oei-btn oei-btn--primary" [disabled]="membershipAccess.isReadOnly()">
             {{ i18n.translate('espaceMembre.cv.addSectionSubmit') }}
           </button>
         </form>
@@ -233,7 +236,7 @@
 
       <button
         type="button"
-        class="oei-cv-builder__generate-button"
+        class="oei-cv-builder__generate-button oei-btn oei-btn--primary"
         [disabled]="renderInProgress() || !canExportPdf()"
         (click)="generatePdf()"
       >
