@@ -186,7 +186,8 @@
         "OBTAINED": "Je possède cette certification",
         "loginPrompt": "Connectez-vous pour suivre vos objectifs de certification."
       }
-    }
+    },
+    "networkLink": "Explorer le réseau neuronal professionnel →"
   },
   "contact": {
     "title": "Contact",
@@ -1365,5 +1366,65 @@
         ]
       }
     }
+  },
+  "network": {
+    "title": "Réseau Neuronal Professionnel",
+    "subtitle": "Ordre des Experts Informaticiens",
+    "searchPlaceholder": "Rechercher un domaine, une certification, un expert…",
+    "crumb": {
+      "galaxy": "Vue Galaxie",
+      "galaxyPrefix": "Galaxie",
+      "certifications": "Certifications & Parcours",
+      "experts": "Experts"
+    },
+    "filters": {
+      "button": "Filtres",
+      "country": "Pays",
+      "level": "Niveau OEI",
+      "provider": "Fournisseur de certification",
+      "reset": "Réinitialiser les filtres"
+    },
+    "dossier": {
+      "expertHeader": "DOSSIER",
+      "identificationValidated": "IDENTIFICATION VALIDÉE — MEMBRE OEI",
+      "levelPrefix": "Niveau OEI",
+      "expertiseScore": "Score d'expertise",
+      "expertiseDomains": "Domaines d'expertise",
+      "certifications": "Certifications",
+      "badges": "Badges",
+      "viewJourney": "Voir le parcours",
+      "profile": "Profil OEI",
+      "follow": "Suivre",
+      "contact": "Contacter",
+      "certHeader": "FICHE // CERTIFICATION",
+      "certRegistered": "RÉFÉRENTIEL OEI — ENREGISTRÉE",
+      "prerequisites": "Prérequis",
+      "validatedSkills": "Compétences validées",
+      "validity": "Validité",
+      "linkedExperts": "Experts liés",
+      "readMore": "Lire la suite"
+    },
+    "journey": {
+      "title": "Parcours"
+    },
+    "hint": "Molette : zoomer · Glisser : naviguer · Cliquer un nœud : explorer",
+    "legend": {
+      "domain": "Domaine",
+      "concept": "Concept",
+      "certification": "Certification",
+      "expert": "Expert"
+    },
+    "orbit": {
+      "profile": "Profil OEI",
+      "linkedin": "LinkedIn",
+      "youtube": "YouTube",
+      "contact": "Contacter"
+    },
+    "zoom": {
+      "in": "Zoomer",
+      "out": "Dézoomer",
+      "reset": "Réinitialiser la vue"
+    },
+    "minimap": "Mini-carte"
   }
 }

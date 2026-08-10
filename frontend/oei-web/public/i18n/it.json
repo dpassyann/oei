@@ -186,7 +186,8 @@
         "OBTAINED": "Possiedo questa certificazione",
         "loginPrompt": "Accedi per seguire i tuoi obiettivi di certificazione."
       }
-    }
+    },
+    "networkLink": "Esplora la rete neurale professionale →"
   },
   "contact": {
     "title": "Contatto",
@@ -1359,5 +1360,65 @@
         ]
       }
     }
+  },
+  "network": {
+    "title": "Rete Neurale Professionale",
+    "subtitle": "Ordine degli Esperti Informatici",
+    "searchPlaceholder": "Cerca un dominio, una certificazione, un esperto…",
+    "crumb": {
+      "galaxy": "Vista Galassia",
+      "galaxyPrefix": "Galassia",
+      "certifications": "Certificazioni e Percorsi",
+      "experts": "Esperti"
+    },
+    "filters": {
+      "button": "Filtri",
+      "country": "Paese",
+      "level": "Livello OEI",
+      "provider": "Fornitore di certificazione",
+      "reset": "Azzera filtri"
+    },
+    "dossier": {
+      "expertHeader": "FASCICOLO",
+      "identificationValidated": "IDENTIFICAZIONE VALIDATA — MEMBRO OEI",
+      "levelPrefix": "Livello OEI",
+      "expertiseScore": "Punteggio di competenza",
+      "expertiseDomains": "Ambiti di competenza",
+      "certifications": "Certificazioni",
+      "badges": "Badge",
+      "viewJourney": "Vedi il percorso",
+      "profile": "Profilo OEI",
+      "follow": "Segui",
+      "contact": "Contatta",
+      "certHeader": "SCHEDA // CERTIFICAZIONE",
+      "certRegistered": "REFERENZIALE OEI — REGISTRATA",
+      "prerequisites": "Prerequisiti",
+      "validatedSkills": "Competenze validate",
+      "validity": "Validità",
+      "linkedExperts": "Esperti collegati",
+      "readMore": "Leggi di più"
+    },
+    "journey": {
+      "title": "Percorso"
+    },
+    "hint": "Rotella: zoom · Trascina: naviga · Clic su un nodo: esplora",
+    "legend": {
+      "domain": "Dominio",
+      "concept": "Concetto",
+      "certification": "Certificazione",
+      "expert": "Esperto"
+    },
+    "orbit": {
+      "profile": "Profilo OEI",
+      "linkedin": "LinkedIn",
+      "youtube": "YouTube",
+      "contact": "Contatta"
+    },
+    "zoom": {
+      "in": "Zoom avanti",
+      "out": "Zoom indietro",
+      "reset": "Ripristina vista"
+    },
+    "minimap": "Minimappa"
   }
 }

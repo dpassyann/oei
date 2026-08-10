@@ -186,7 +186,8 @@
         "OBTAINED": "Possuo esta certificação",
         "loginPrompt": "Inicie sessão para acompanhar os seus objetivos de certificação."
       }
-    }
+    },
+    "networkLink": "Explorar a rede neural profissional →"
   },
   "contact": {
     "title": "Contato",
@@ -1359,5 +1360,65 @@
         ]
       }
     }
+  },
+  "network": {
+    "title": "Rede Neural Profissional",
+    "subtitle": "Ordem dos Especialistas em Informática",
+    "searchPlaceholder": "Pesquisar um domínio, uma certificação, um especialista…",
+    "crumb": {
+      "galaxy": "Vista Galáxia",
+      "galaxyPrefix": "Galáxia",
+      "certifications": "Certificações e Percursos",
+      "experts": "Especialistas"
+    },
+    "filters": {
+      "button": "Filtros",
+      "country": "País",
+      "level": "Nível OEI",
+      "provider": "Fornecedor de certificação",
+      "reset": "Repor filtros"
+    },
+    "dossier": {
+      "expertHeader": "FICHEIRO",
+      "identificationValidated": "IDENTIFICAÇÃO VALIDADA — MEMBRO OEI",
+      "levelPrefix": "Nível OEI",
+      "expertiseScore": "Pontuação de especialização",
+      "expertiseDomains": "Áreas de especialização",
+      "certifications": "Certificações",
+      "badges": "Distintivos",
+      "viewJourney": "Ver o percurso",
+      "profile": "Perfil OEI",
+      "follow": "Seguir",
+      "contact": "Contactar",
+      "certHeader": "FICHA // CERTIFICAÇÃO",
+      "certRegistered": "REFERENCIAL OEI — REGISTADA",
+      "prerequisites": "Pré-requisitos",
+      "validatedSkills": "Competências validadas",
+      "validity": "Validade",
+      "linkedExperts": "Especialistas associados",
+      "readMore": "Ler mais"
+    },
+    "journey": {
+      "title": "Percurso"
+    },
+    "hint": "Roda do rato: zoom · Arrastar: navegar · Clique num nó: explorar",
+    "legend": {
+      "domain": "Domínio",
+      "concept": "Conceito",
+      "certification": "Certificação",
+      "expert": "Especialista"
+    },
+    "orbit": {
+      "profile": "Perfil OEI",
+      "linkedin": "LinkedIn",
+      "youtube": "YouTube",
+      "contact": "Contactar"
+    },
+    "zoom": {
+      "in": "Aumentar zoom",
+      "out": "Diminuir zoom",
+      "reset": "Repor vista"
+    },
+    "minimap": "Minimapa"
   }
 }

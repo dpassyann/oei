@@ -49,6 +49,9 @@ import { AdminInstitutionNew } from './presentation/pages/admin/admin-institutio
 import { AdminInstitutionDetail } from './presentation/pages/admin/admin-institution-detail/admin-institution-detail';
 import { AdminAuditLogPage } from './presentation/pages/admin/admin-audit-log/admin-audit-log';
 import { AdminComingSoon } from './presentation/pages/admin/admin-coming-soon/admin-coming-soon';
+// Professional Neural Network canvas explorer (task: .prompt/plan/final/01-CERTIFICATIONS-AND-
+// NEURAL-NETWORK-INTEGRATION.md) — appended last so this never reorders any pre-existing route.
+import { ReseauNeuronal } from './presentation/pages/reseau-neuronal/reseau-neuronal';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -166,4 +169,5 @@ export const routes: Routes = [
       { path: 'blocs-home', component: AdminComingSoon, data: { section: 'homeBlocks' } },
     ],
   },
+  { path: 'reseau-neuronal', component: ReseauNeuronal },
 ];

@@ -186,7 +186,8 @@
         "OBTAINED": "Poseo esta certificación",
         "loginPrompt": "Inicie sesión para seguir sus objetivos de certificación."
       }
-    }
+    },
+    "networkLink": "Explorar la red neuronal profesional →"
   },
   "contact": {
     "title": "Contacto",
@@ -1359,5 +1360,65 @@
         ]
       }
     }
+  },
+  "network": {
+    "title": "Red Neuronal Profesional",
+    "subtitle": "Orden de los Expertos en Informática",
+    "searchPlaceholder": "Buscar un dominio, una certificación, un experto…",
+    "crumb": {
+      "galaxy": "Vista Galaxia",
+      "galaxyPrefix": "Galaxia",
+      "certifications": "Certificaciones y Trayectorias",
+      "experts": "Expertos"
+    },
+    "filters": {
+      "button": "Filtros",
+      "country": "País",
+      "level": "Nivel OEI",
+      "provider": "Proveedor de certificación",
+      "reset": "Restablecer filtros"
+    },
+    "dossier": {
+      "expertHeader": "EXPEDIENTE",
+      "identificationValidated": "IDENTIFICACIÓN VALIDADA — MIEMBRO OEI",
+      "levelPrefix": "Nivel OEI",
+      "expertiseScore": "Puntuación de experiencia",
+      "expertiseDomains": "Áreas de experiencia",
+      "certifications": "Certificaciones",
+      "badges": "Insignias",
+      "viewJourney": "Ver la trayectoria",
+      "profile": "Perfil OEI",
+      "follow": "Seguir",
+      "contact": "Contactar",
+      "certHeader": "FICHA // CERTIFICACIÓN",
+      "certRegistered": "REFERENCIAL OEI — REGISTRADA",
+      "prerequisites": "Requisitos previos",
+      "validatedSkills": "Competencias validadas",
+      "validity": "Validez",
+      "linkedExperts": "Expertos vinculados",
+      "readMore": "Leer más"
+    },
+    "journey": {
+      "title": "Trayectoria"
+    },
+    "hint": "Rueda: zoom · Arrastrar: navegar · Clic en un nodo: explorar",
+    "legend": {
+      "domain": "Dominio",
+      "concept": "Concepto",
+      "certification": "Certificación",
+      "expert": "Experto"
+    },
+    "orbit": {
+      "profile": "Perfil OEI",
+      "linkedin": "LinkedIn",
+      "youtube": "YouTube",
+      "contact": "Contactar"
+    },
+    "zoom": {
+      "in": "Acercar",
+      "out": "Alejar",
+      "reset": "Restablecer vista"
+    },
+    "minimap": "Minimapa"
   }
 }

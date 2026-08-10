@@ -1,0 +1,819 @@
+// Colors/sizes/timings ported from the design reference (.prompt/media/r-seau-neuronal-
+// professionnel-oei/project/Reseau Neuronal OEI.dc.html). Kept compact (shared variables,
+// grouped selectors) to stay under the anyComponentStyle build budget.
+$blue: #3fa9ff;
+$gold: #e8a530;
+$ink: #f7f3ea;
+$navy: #071224;
+$panel: rgba(9, 22, 44, 0.72);
+$panel-strong: rgba(9, 22, 44, 0.92);
+$border-blue: rgba(63, 169, 255, 0.35);
+$hex-grad: linear-gradient(160deg, #e8a530, #b97e1e);
+$hex-clip: polygon(25% 5%, 75% 5%, 98% 50%, 75% 95%, 25% 95%, 2% 50%);
+$sans: 'Instrument Sans', sans-serif;
+$mono: 'Space Grotesk', sans-serif;
+
+:host {
+  display: block;
+}
+
+// Full-viewport takeover (immersive canvas explorer): sits above the persistent site
+// header/footer while this route is active, same as the design reference.
+.oei-network {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  overflow: hidden;
+  background: $navy;
+  color: $ink;
+  font-family: $sans;
+
+  a {
+    color: $blue;
+    &:hover {
+      color: $gold;
+    }
+  }
+}
+
+.oei-network__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+// Orbit icons (positioned imperatively per frame — see draw()).
+.oei-network__orbit {
+  position: absolute;
+  left: -999px;
+  top: -999px;
+  z-index: 6;
+  pointer-events: none;
+}
+.oei-network__orbit-item {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  @media (prefers-reduced-motion: no-preference) {
+    animation: oeiPop 0.28s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+  }
+}
+.oei-network__orbit-btn-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  pointer-events: auto;
+}
+.oei-network__orbit-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba($gold, 0.7);
+  background: rgba(9, 22, 44, 0.92);
+  color: $gold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+  font: 700 13px $mono;
+  &:hover {
+    background: rgba($gold, 0.2);
+    border-color: $gold;
+  }
+}
+.oei-network__orbit-label {
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba($ink, 0.8);
+  text-shadow: 0 1px 4px $navy;
+  white-space: nowrap;
+}
+
+// Brand + breadcrumb.
+.oei-network__brand {
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  pointer-events: none;
+}
+.oei-network__brand-row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.oei-network__logo {
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid $gold;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 11px $mono;
+  color: $gold;
+  letter-spacing: 0.08em;
+  flex: none;
+}
+.oei-network__title {
+  font: 500 14px $mono;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.oei-network__subtitle {
+  font-size: 11px;
+  color: rgba($ink, 0.5);
+  letter-spacing: 0.05em;
+  margin-top: 1px;
+}
+.oei-network__crumb {
+  margin-top: 16px;
+  font: 12px $mono;
+  color: $blue;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+// Search.
+.oei-network__search {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 410px;
+  z-index: 5;
+}
+.oei-network__search-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 18px;
+  border-radius: 99px;
+  border: 1px solid $border-blue;
+  background: $panel;
+  color: $ink;
+  font: 13px $sans;
+  outline: none;
+  backdrop-filter: blur(8px);
+  &::placeholder {
+    color: rgba($ink, 0.38);
+  }
+}
+.oei-network__search-results,
+.oei-network__filters-panel {
+  margin-top: 8px;
+  background: $panel-strong;
+  border: 1px solid rgba($blue, 0.25);
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+  @media (prefers-reduced-motion: no-preference) {
+    animation: oeiUp 0.18s ease;
+  }
+}
+.oei-network__search-results {
+  overflow: hidden;
+}
+.oei-network__search-result {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(31, 59, 99, 0.35);
+  &:hover {
+    background: rgba($blue, 0.12);
+  }
+}
+.oei-network__search-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: none;
+}
+.oei-network__search-label {
+  font-size: 13px;
+}
+.oei-network__search-kind {
+  margin-left: auto;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba($ink, 0.45);
+}
+
+// Filters.
+.oei-network__filters {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  z-index: 6;
+}
+.oei-network__filters-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 99px;
+  border: 1px solid $border-blue;
+  background: $panel;
+  color: $ink;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  &:hover {
+    border-color: $blue;
+  }
+}
+.oei-network__filters-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: $blue;
+}
+.oei-network__filters-panel {
+  width: 264px;
+  padding: 16px;
+  border-radius: 16px;
+}
+.oei-network__filters-heading {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba($ink, 0.5);
+  margin-bottom: 8px;
+}
+.oei-network__chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.oei-network__chip {
+  padding: 5px 10px;
+  border-radius: 99px;
+  border: 1px solid rgba(31, 59, 99, 0.9);
+  background: transparent;
+  color: rgba($ink, 0.65);
+  font-size: 11px;
+  cursor: pointer;
+  &--active {
+    border-color: $blue;
+    background: rgba($blue, 0.18);
+    color: #cfe6ff;
+  }
+}
+.oei-network__filters-reset {
+  width: 100%;
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(31, 59, 99, 0.8);
+  background: transparent;
+  color: rgba($ink, 0.6);
+  font-size: 11px;
+  cursor: pointer;
+  &:hover {
+    color: $ink;
+    border-color: $blue;
+  }
+}
+
+// Dossier panel.
+.oei-network__dossier {
+  position: absolute;
+  top: 76px;
+  right: 24px;
+  width: 334px;
+  z-index: 7;
+  @media (prefers-reduced-motion: no-preference) {
+    animation: oeiSlide 0.22s ease;
+  }
+}
+.oei-network__dossier-corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  z-index: 2;
+  &--tl {
+    left: -5px;
+    top: -5px;
+    border-left: 2px solid $gold;
+    border-top: 2px solid $gold;
+  }
+  &--tr {
+    right: -5px;
+    top: -5px;
+    border-right: 2px solid $gold;
+    border-top: 2px solid $gold;
+  }
+  &--bl {
+    left: -5px;
+    bottom: -5px;
+    border-left: 2px solid $gold;
+    border-bottom: 2px solid $gold;
+  }
+  &--br {
+    right: -5px;
+    bottom: -5px;
+    border-right: 2px solid $gold;
+    border-bottom: 2px solid $gold;
+  }
+}
+.oei-network__dossier-scan-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 3;
+}
+.oei-network__dossier-scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 46px;
+  background: linear-gradient(180deg, rgba($blue, 0), rgba($blue, 0.25), rgba($blue, 0));
+  @media (prefers-reduced-motion: no-preference) {
+    animation: oeiScanY 1s ease-out both;
+  }
+}
+.oei-network__dossier-body {
+  position: relative;
+  max-height: calc(100vh - 250px);
+  overflow-y: auto;
+  border-radius: 4px;
+  border: 1px solid rgba($gold, 0.55);
+  background: rgba(8, 18, 38, 0.94);
+  backdrop-filter: blur(14px);
+}
+.oei-network__dossier-inner {
+  padding: 18px 20px 20px;
+}
+.oei-network__dossier-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: $gold;
+  border-bottom: 1px dashed rgba($gold, 0.4);
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+.oei-network__dossier-blink {
+  @media (prefers-reduced-motion: no-preference) {
+    animation: oeiBlink 1s steps(1) infinite;
+  }
+}
+.oei-network__dossier-status {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10px;
+  color: $blue;
+  letter-spacing: 0.1em;
+  margin-bottom: 14px;
+  @media (prefers-reduced-motion: no-preference) {
+    animation: oeiReveal 0.4s 0.2s both;
+  }
+}
+.oei-network__dossier-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.oei-network__dossier-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #1f3b63, #0b1c38);
+  border: 1.5px solid $blue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 18px $mono;
+  color: $blue;
+}
+.oei-network__hex-badge {
+  width: 48px;
+  height: 48px;
+  background: $hex-grad;
+  clip-path: $hex-clip;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 16px $mono;
+  color: $navy;
+}
+.oei-network__dossier-close {
+  border: none;
+  background: transparent;
+  color: rgba($ink, 0.5);
+  font-size: 15px;
+  cursor: pointer;
+  padding: 2px 6px;
+  &:hover {
+    color: $ink;
+  }
+}
+.oei-network__dossier-name {
+  margin-top: 12px;
+  font: 700 19px $mono;
+}
+.oei-network__dossier-role {
+  font-size: 13px;
+  color: rgba($ink, 0.75);
+  margin-top: 2px;
+}
+.oei-network__dossier-provider {
+  font-size: 12px;
+  color: $gold;
+  margin-top: 3px;
+  letter-spacing: 0.06em;
+}
+.oei-network__dossier-desc {
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba($ink, 0.8);
+  margin-top: 12px;
+}
+.oei-network__dossier-tags {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  align-items: center;
+}
+.oei-network__tag {
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 99px;
+  &--blue {
+    border: 1px solid rgba($blue, 0.4);
+    color: $blue;
+  }
+  &--gold {
+    border: 1px solid rgba($gold, 0.5);
+    color: $gold;
+  }
+  &--blue-soft {
+    padding: 4px 10px;
+    background: rgba($blue, 0.12);
+    border: 1px solid rgba($blue, 0.3);
+    color: #cfe6ff;
+  }
+  &--gold-soft {
+    padding: 4px 10px;
+    background: rgba($gold, 0.1);
+    border: 1px solid rgba($gold, 0.35);
+    color: $gold;
+  }
+}
+.oei-network__dossier-score {
+  margin-top: 16px;
+}
+.oei-network__dossier-score-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: rgba($ink, 0.55);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.oei-network__dossier-score-value {
+  color: $gold;
+  font: 13px $mono;
+}
+.oei-network__dossier-score-bar {
+  height: 4px;
+  border-radius: 2px;
+  background: #1f3b63;
+  margin-top: 6px;
+}
+.oei-network__dossier-score-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, $blue, $gold);
+}
+.oei-network__dossier-section-title {
+  margin-top: 16px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba($ink, 0.5);
+}
+.oei-network__dossier-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+.oei-network__dossier-cert {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12px;
+}
+.oei-network__hex {
+  width: 12px;
+  height: 12px;
+  background: $hex-grad;
+  clip-path: $hex-clip;
+  flex: none;
+}
+.oei-network__dossier-prereq {
+  font-size: 13px;
+  margin-top: 6px;
+  color: rgba($ink, 0.85);
+}
+.oei-network__dossier-cols {
+  display: flex;
+  gap: 18px;
+  margin-top: 16px;
+}
+.oei-network__dossier-col-label {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba($ink, 0.5);
+}
+.oei-network__dossier-col-value {
+  font: 14px $mono;
+  margin-top: 3px;
+  &--blue {
+    color: $blue;
+  }
+}
+.oei-network__dossier-cta {
+  display: block;
+  text-align: center;
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 18px;
+  padding: 11px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(120deg, $gold, #d18f1c);
+  color: $navy;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: none;
+  &:hover {
+    filter: brightness(1.1);
+  }
+  &--link {
+    border-radius: 4px;
+  }
+}
+.oei-network__dossier-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.oei-network__dossier-action {
+  flex: 1;
+  padding: 9px;
+  border-radius: 12px;
+  border: 1px solid rgba($blue, 0.4);
+  background: transparent;
+  color: $blue;
+  font-size: 12px;
+  cursor: pointer;
+  &:hover {
+    background: rgba($blue, 0.1);
+  }
+}
+
+// Journey nav bar.
+.oei-network__journey {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 12px 10px 20px;
+  border-radius: 99px;
+  background: $panel-strong;
+  border: 1px solid rgba($gold, 0.5);
+  backdrop-filter: blur(8px);
+  z-index: 8;
+  @media (prefers-reduced-motion: no-preference) {
+    animation: oeiUp 0.2s ease;
+  }
+}
+.oei-network__journey-label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $gold;
+}
+.oei-network__journey-name {
+  font: 500 13px $mono;
+}
+.oei-network__journey-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba($blue, 0.4);
+  background: transparent;
+  color: $blue;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  &:hover {
+    background: rgba($blue, 0.15);
+  }
+  &--close {
+    border-color: rgba(31, 59, 99, 0.8);
+    color: rgba($ink, 0.6);
+    font-size: 12px;
+    &:hover {
+      color: $ink;
+      background: transparent;
+    }
+  }
+}
+.oei-network__journey-step {
+  font-size: 12px;
+  color: $blue;
+  min-width: 150px;
+  text-align: center;
+}
+
+.oei-network__hint {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: rgba($ink, 0.4);
+  letter-spacing: 0.05em;
+  pointer-events: none;
+}
+
+// Legend.
+.oei-network__legend {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(31, 59, 99, 0.6);
+  background: rgba(9, 22, 44, 0.6);
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+}
+.oei-network__legend-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 11px;
+  color: rgba($ink, 0.75);
+}
+.oei-network__legend-icon {
+  flex: none;
+  &--domain {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: radial-gradient(circle, $blue 30%, rgba($blue, 0.1));
+  }
+  &--concept {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1.5px solid $blue;
+    margin: 0 2px;
+  }
+  &--cert {
+    width: 10px;
+    height: 10px;
+    background: $gold;
+    clip-path: $hex-clip;
+    margin: 0 1px;
+  }
+  &--expert {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $ink;
+    margin: 0 2px;
+  }
+}
+
+// Zoom controls + minimap.
+.oei-network__bottom-right {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+.oei-network__zoom-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.oei-network__zoom-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  border: 1px solid $border-blue;
+  background: $panel;
+  color: $ink;
+  font-size: 16px;
+  cursor: pointer;
+  line-height: 1;
+  &:hover {
+    border-color: $blue;
+  }
+}
+.oei-network__minimap-frame {
+  border: 1px solid rgba($blue, 0.3);
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(9, 22, 44, 0.8);
+  backdrop-filter: blur(6px);
+}
+.oei-network__minimap {
+  display: block;
+  width: 190px;
+  height: 120px;
+  cursor: pointer;
+}
+
+.oei-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #1f3b63 transparent;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #1f3b63;
+    border-radius: 3px;
+  }
+}
+
+@keyframes oeiSlide {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes oeiUp {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes oeiPop {
+  from {
+    transform: translate(-50%, -50%) scale(0.2);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+@keyframes oeiScanY {
+  from {
+    top: -46px;
+  }
+  to {
+    top: 100%;
+  }
+}
+@keyframes oeiBlink {
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes oeiReveal {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

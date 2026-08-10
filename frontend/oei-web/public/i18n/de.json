@@ -186,7 +186,8 @@
         "OBTAINED": "Ich besitze diese Zertifizierung",
         "loginPrompt": "Melden Sie sich an, um Ihre Zertifizierungsziele zu verfolgen."
       }
-    }
+    },
+    "networkLink": "Professionelles neuronales Netzwerk erkunden →"
   },
   "contact": {
     "title": "Kontakt",
@@ -1359,5 +1360,65 @@
         ]
       }
     }
+  },
+  "network": {
+    "title": "Professionelles Neuronales Netzwerk",
+    "subtitle": "Orden der IT-Experten",
+    "searchPlaceholder": "Domäne, Zertifizierung oder Experten suchen…",
+    "crumb": {
+      "galaxy": "Galaxie-Ansicht",
+      "galaxyPrefix": "Galaxie",
+      "certifications": "Zertifizierungen & Werdegänge",
+      "experts": "Experten"
+    },
+    "filters": {
+      "button": "Filter",
+      "country": "Land",
+      "level": "OEI-Stufe",
+      "provider": "Zertifizierungsanbieter",
+      "reset": "Filter zurücksetzen"
+    },
+    "dossier": {
+      "expertHeader": "AKTE",
+      "identificationValidated": "IDENTIFIKATION BESTÄTIGT — OEI-MITGLIED",
+      "levelPrefix": "OEI-Stufe",
+      "expertiseScore": "Expertise-Score",
+      "expertiseDomains": "Fachgebiete",
+      "certifications": "Zertifizierungen",
+      "badges": "Auszeichnungen",
+      "viewJourney": "Werdegang ansehen",
+      "profile": "OEI-Profil",
+      "follow": "Folgen",
+      "contact": "Kontaktieren",
+      "certHeader": "DATENBLATT // ZERTIFIZIERUNG",
+      "certRegistered": "OEI-REFERENZRAHMEN — REGISTRIERT",
+      "prerequisites": "Voraussetzungen",
+      "validatedSkills": "Validierte Kompetenzen",
+      "validity": "Gültigkeit",
+      "linkedExperts": "Verknüpfte Experten",
+      "readMore": "Weiterlesen"
+    },
+    "journey": {
+      "title": "Werdegang"
+    },
+    "hint": "Mausrad: zoomen · Ziehen: navigieren · Knoten anklicken: erkunden",
+    "legend": {
+      "domain": "Domäne",
+      "concept": "Konzept",
+      "certification": "Zertifizierung",
+      "expert": "Experte"
+    },
+    "orbit": {
+      "profile": "OEI-Profil",
+      "linkedin": "LinkedIn",
+      "youtube": "YouTube",
+      "contact": "Kontaktieren"
+    },
+    "zoom": {
+      "in": "Vergrößern",
+      "out": "Verkleinern",
+      "reset": "Ansicht zurücksetzen"
+    },
+    "minimap": "Übersichtskarte"
   }
 }

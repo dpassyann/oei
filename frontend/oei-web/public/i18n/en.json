@@ -186,7 +186,8 @@
         "OBTAINED": "I hold this certification",
         "loginPrompt": "Log in to track your certification goals."
       }
-    }
+    },
+    "networkLink": "Explore the professional neural network →"
   },
   "contact": {
     "title": "Contact",
@@ -1365,5 +1366,65 @@
         ]
       }
     }
+  },
+  "network": {
+    "title": "Professional Neural Network",
+    "subtitle": "Order of IT Experts",
+    "searchPlaceholder": "Search a domain, certification, or expert…",
+    "crumb": {
+      "galaxy": "Galaxy View",
+      "galaxyPrefix": "Galaxy",
+      "certifications": "Certifications & Journeys",
+      "experts": "Experts"
+    },
+    "filters": {
+      "button": "Filters",
+      "country": "Country",
+      "level": "OEI Level",
+      "provider": "Certification provider",
+      "reset": "Reset filters"
+    },
+    "dossier": {
+      "expertHeader": "FILE",
+      "identificationValidated": "IDENTIFICATION VALIDATED — OEI MEMBER",
+      "levelPrefix": "OEI Level",
+      "expertiseScore": "Expertise score",
+      "expertiseDomains": "Areas of expertise",
+      "certifications": "Certifications",
+      "badges": "Badges",
+      "viewJourney": "View journey",
+      "profile": "OEI Profile",
+      "follow": "Follow",
+      "contact": "Contact",
+      "certHeader": "RECORD // CERTIFICATION",
+      "certRegistered": "OEI REGISTRY — REGISTERED",
+      "prerequisites": "Prerequisites",
+      "validatedSkills": "Validated skills",
+      "validity": "Validity",
+      "linkedExperts": "Linked experts",
+      "readMore": "Read more"
+    },
+    "journey": {
+      "title": "Journey"
+    },
+    "hint": "Scroll: zoom · Drag: pan · Click a node: explore",
+    "legend": {
+      "domain": "Domain",
+      "concept": "Concept",
+      "certification": "Certification",
+      "expert": "Expert"
+    },
+    "orbit": {
+      "profile": "OEI Profile",
+      "linkedin": "LinkedIn",
+      "youtube": "YouTube",
+      "contact": "Contact"
+    },
+    "zoom": {
+      "in": "Zoom in",
+      "out": "Zoom out",
+      "reset": "Reset view"
+    },
+    "minimap": "Minimap"
   }
 }

@@ -208,3 +208,20 @@ $oei-gold: #e8a530;
   font-size: 0.85rem;
   color: #777;
 }
+
+.oei-page__network-link {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.65rem 1.3rem;
+  border-radius: 999px;
+  background: $oei-navy;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+
+  &:hover {
+    background: $oei-gold;
+    color: $oei-navy;
+  }
+}
