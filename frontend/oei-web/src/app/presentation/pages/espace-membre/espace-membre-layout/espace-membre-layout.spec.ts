@@ -1,9 +1,12 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { of } from 'rxjs';
 import { describe, expect, it } from 'vitest';
 import { EspaceMembreLayout } from './espace-membre-layout';
 import { I18nService } from '../../../i18n/i18n.service';
+import { MemberApplicationService } from '../../../../application/service/member-application.service';
+import { ProfessionalProfileApplicationService } from '../../../../application/service/professional-profile-application.service';
 
 const INTERFACE_STRINGS: Record<string, string> = {
   'espaceMembre.nav.title': 'Mon espace',
@@ -27,7 +30,18 @@ describe('EspaceMembreLayout', () => {
   function configure() {
     TestBed.configureTestingModule({
       imports: [EspaceMembreLayout],
-      providers: [{ provide: I18nService, useValue: FAKE_I18N_SERVICE }, provideRouter([])],
+      providers: [
+        { provide: I18nService, useValue: FAKE_I18N_SERVICE },
+        provideRouter([]),
+        {
+          provide: MemberApplicationService,
+          useValue: { getCurrentMember: () => of({ displayName: 'Ada Lovelace' }) },
+        },
+        {
+          provide: ProfessionalProfileApplicationService,
+          useValue: { getProfile: () => of({ title: 'Platform Architect' }) },
+        },
+      ],
     });
   }
 

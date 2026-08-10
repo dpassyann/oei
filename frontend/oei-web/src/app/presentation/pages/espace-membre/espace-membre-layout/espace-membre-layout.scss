@@ -8,26 +8,87 @@ $oei-gold: #e8a530;
 .oei-espace-membre-layout {
   display: flex;
   align-items: flex-start;
-  gap: 2rem;
+  gap: 2.5rem;
   max-width: 72rem;
   margin: 0 auto;
-  padding: 2rem 1.5rem 4rem;
+  padding: 2.5rem 1.5rem 4rem;
 }
 
-.oei-espace-membre-nav {
+.oei-espace-membre-sidebar {
   position: sticky;
   top: 5.5rem;
   flex: 0 0 auto;
-  width: 15rem;
-  padding: 1.25rem 1.5rem;
-  border: 1px solid rgba(10, 30, 63, 0.1);
+  width: 16rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+// Identity card (photo + name + headline), sitting above the nav — same "who am I" summary
+// pattern as a social network's left-hand profile card, airier than the previous bare-text
+// menu (generous padding, no heavy border, soft shadow only).
+.oei-espace-membre-identity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1.75rem 1.25rem;
   border-radius: 0.75rem;
   background: #ffffff;
-  box-shadow: 0 0.5rem 1.5rem rgba(10, 30, 63, 0.08);
+  box-shadow: 0 0.5rem 1.5rem rgba(10, 30, 63, 0.06);
+  text-align: center;
+  text-decoration: none;
+
+  &:hover .oei-espace-membre-identity__name {
+    color: $oei-gold;
+  }
+}
+
+.oei-espace-membre-identity__photo {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $oei-navy;
+  margin-bottom: 0.5rem;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.oei-espace-membre-identity__initials {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.oei-espace-membre-identity__name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: $oei-navy;
+  transition: color 0.15s ease;
+}
+
+.oei-espace-membre-identity__headline {
+  font-size: 0.82rem;
+  color: rgba(10, 30, 63, 0.65);
+}
+
+.oei-espace-membre-nav {
+  padding: 1.5rem 1.5rem;
+  border-radius: 0.75rem;
+  background: #ffffff;
+  box-shadow: 0 0.5rem 1.5rem rgba(10, 30, 63, 0.06);
 }
 
 .oei-espace-membre-nav__title {
-  margin: 0 0 0.75rem;
+  margin: 0 0 1rem;
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.05em;
@@ -41,12 +102,12 @@ $oei-gold: #e8a530;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.5rem;
 }
 
 .oei-espace-membre-nav__link {
   display: block;
-  padding: 0.5rem 0.6rem;
+  padding: 0.55rem 0.7rem;
   font-size: 0.95rem;
   font-weight: 600;
   color: $oei-navy;
@@ -75,7 +136,7 @@ $oei-gold: #e8a530;
     flex-direction: column;
   }
 
-  .oei-espace-membre-nav {
+  .oei-espace-membre-sidebar {
     position: static;
     width: 100%;
   }

@@ -1,19 +1,37 @@
 <div class="oei-espace-membre-layout">
-  <nav class="oei-espace-membre-nav" [attr.aria-label]="i18n.translate('espaceMembre.nav.title')">
-    <p class="oei-espace-membre-nav__title">{{ i18n.translate('espaceMembre.nav.title') }}</p>
-    <ul class="oei-espace-membre-nav__list">
-      @for (link of navLinks; track link.path) {
-        <li>
-          <a
-            class="oei-espace-membre-nav__link"
-            [routerLink]="['/espace-membre', link.path]"
-            routerLinkActive="oei-espace-membre-nav__link--active"
-            >{{ i18n.translate(link.labelKey) }}</a
-          >
-        </li>
+  <div class="oei-espace-membre-sidebar">
+    <a class="oei-espace-membre-identity" routerLink="/espace-membre/profil">
+      <span class="oei-espace-membre-identity__photo">
+        @if (photoUrl(); as url) {
+          <img [src]="url" [alt]="i18n.translate('espaceMembre.profil.photoAlt')" />
+        } @else {
+          <span class="oei-espace-membre-identity__initials" aria-hidden="true">{{ initials() }}</span>
+        }
+      </span>
+      @if (displayName()) {
+        <span class="oei-espace-membre-identity__name">{{ displayName() }}</span>
       }
-    </ul>
-  </nav>
+      @if (headline()) {
+        <span class="oei-espace-membre-identity__headline">{{ headline() }}</span>
+      }
+    </a>
+
+    <nav class="oei-espace-membre-nav" [attr.aria-label]="i18n.translate('espaceMembre.nav.title')">
+      <p class="oei-espace-membre-nav__title">{{ i18n.translate('espaceMembre.nav.title') }}</p>
+      <ul class="oei-espace-membre-nav__list">
+        @for (link of navLinks; track link.path) {
+          <li>
+            <a
+              class="oei-espace-membre-nav__link"
+              [routerLink]="['/espace-membre', link.path]"
+              routerLinkActive="oei-espace-membre-nav__link--active"
+              >{{ i18n.translate(link.labelKey) }}</a
+            >
+          </li>
+        }
+      </ul>
+    </nav>
+  </div>
   <div class="oei-espace-membre-layout__content">
     <router-outlet />
   </div>

@@ -1,6 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { I18nService } from '../../../i18n/i18n.service';
+import { MemberApplicationService } from '../../../../application/service/member-application.service';
+import { ProfessionalProfileApplicationService } from '../../../../application/service/professional-profile-application.service';
 
 interface EspaceMembreNavLink {
   readonly path: string;
@@ -24,6 +27,31 @@ interface EspaceMembreNavLink {
 })
 export class EspaceMembreLayout {
   protected readonly i18n = inject(I18nService);
+  private readonly memberApplicationService = inject(MemberApplicationService);
+  private readonly professionalProfileApplicationService = inject(ProfessionalProfileApplicationService);
+
+  // Small identity card shown above the nav links (photo + name + headline), so this side
+  // column reads as one continuous "who am I / where do I go" block, like a social network's
+  // left-hand profile summary, rather than a bare text menu with no sense of whose space this
+  // is. Kept minimal on purpose — the full profile (photo edit, headline edit, etc.) lives on
+  // `/espace-membre/profil` itself.
+  private readonly memberResource = rxResource({ stream: () => this.memberApplicationService.getCurrentMember() });
+  private readonly profileResource = rxResource({
+    stream: () => this.professionalProfileApplicationService.getProfile(),
+  });
+
+  protected readonly displayName = computed(() => this.memberResource.value()?.displayName ?? '');
+  protected readonly headline = computed(() => this.profileResource.value()?.title ?? '');
+  protected readonly photoUrl = computed(() => this.profileResource.value()?.photoUrl);
+
+  protected readonly initials = computed(() =>
+    this.displayName()
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0]?.toUpperCase())
+      .join(''),
+  );
 
   protected readonly navLinks: readonly EspaceMembreNavLink[] = [
     { path: 'profil', labelKey: 'espaceMembre.nav.profil' },
