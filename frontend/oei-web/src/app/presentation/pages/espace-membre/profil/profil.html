@@ -186,7 +186,7 @@
           </article>
         }
 
-        <button type="button" [disabled]="membershipAccess.isReadOnly()" (click)="startEditing()">
+        <button type="button" class="oei-btn oei-btn--primary" [disabled]="membershipAccess.isReadOnly()" (click)="startEditing()">
           {{ i18n.translate('espaceMembre.profil.edit') }}
         </button>
       </section>
@@ -195,25 +195,25 @@
         @if (saveError()) {
           <p class="oei-profil__error">{{ i18n.translate('espaceMembre.profil.saveError') }}</p>
         }
-        <label class="oei-profil__field">
+        <label class="oei-profil__field oei-field">
           {{ i18n.translate('espaceMembre.profil.fields.photoUrl') }}
-          <input type="text" [formField]="editForm.photoUrl" [placeholder]="i18n.translate('espaceMembre.profil.fields.photoUrlHint')" />
+          <input type="text" class="oei-input" [formField]="editForm.photoUrl" [placeholder]="i18n.translate('espaceMembre.profil.fields.photoUrlHint')" />
         </label>
-        <label class="oei-profil__field">
+        <label class="oei-profil__field oei-field">
           {{ i18n.translate('espaceMembre.profil.fields.title') }}
-          <input type="text" [formField]="editForm.title" />
+          <input type="text" class="oei-input" [formField]="editForm.title" />
         </label>
-        <label class="oei-profil__field">
+        <label class="oei-profil__field oei-field">
           {{ i18n.translate('espaceMembre.profil.fields.summary') }}
-          <textarea [formField]="editForm.summary"></textarea>
+          <textarea class="oei-textarea" [formField]="editForm.summary"></textarea>
         </label>
-        <label class="oei-profil__field">
+        <label class="oei-profil__field oei-field">
           {{ i18n.translate('espaceMembre.profil.fields.location') }}
-          <input type="text" [formField]="editForm.location" />
+          <input type="text" class="oei-input" [formField]="editForm.location" />
         </label>
-        <label class="oei-profil__field">
+        <label class="oei-profil__field oei-field">
           {{ i18n.translate('espaceMembre.profil.fields.availability') }}
-          <select [ngModel]="editForm.availability().value()" (ngModelChange)="setAvailability($event)" name="availability">
+          <select class="oei-select" [ngModel]="editForm.availability().value()" (ngModelChange)="setAvailability($event)" name="availability">
             <option value="">—</option>
             @for (option of availabilityOptions; track option) {
               <option [value]="option">{{ i18n.translate('espaceMembre.profil.availability.' + option) }}</option>
@@ -222,40 +222,41 @@
         </label>
 
         <h3 class="oei-profil__edit-section-title">{{ i18n.translate('espaceMembre.profil.socialLinks.title') }}</h3>
-        <label class="oei-profil__field">
+        <label class="oei-profil__field oei-field">
           LinkedIn
-          <input type="text" [formField]="editForm.linkedin" placeholder="https://linkedin.com/in/…" />
+          <input type="text" class="oei-input" [formField]="editForm.linkedin" placeholder="https://linkedin.com/in/…" />
         </label>
-        <label class="oei-profil__field">
+        <label class="oei-profil__field oei-field">
           GitHub
-          <input type="text" [formField]="editForm.github" placeholder="https://github.com/…" />
+          <input type="text" class="oei-input" [formField]="editForm.github" placeholder="https://github.com/…" />
         </label>
-        <label class="oei-profil__field">
+        <label class="oei-profil__field oei-field">
           X
-          <input type="text" [formField]="editForm.x" placeholder="https://x.com/…" />
+          <input type="text" class="oei-input" [formField]="editForm.x" placeholder="https://x.com/…" />
         </label>
-        <label class="oei-profil__field">
+        <label class="oei-profil__field oei-field">
           {{ i18n.translate('espaceMembre.profil.socialLinks.website') }}
-          <input type="text" [formField]="editForm.website" placeholder="https://…" />
+          <input type="text" class="oei-input" [formField]="editForm.website" placeholder="https://…" />
         </label>
-        <label class="oei-profil__field">
+        <label class="oei-profil__field oei-field">
           YouTube
-          <input type="text" [formField]="editForm.youtube" placeholder="https://youtube.com/…" />
+          <input type="text" class="oei-input" [formField]="editForm.youtube" placeholder="https://youtube.com/…" />
         </label>
 
         <h3 class="oei-profil__edit-section-title">{{ i18n.translate('espaceMembre.profil.compensation.title') }}</h3>
         <p class="oei-profil__private-notice">{{ i18n.translate('espaceMembre.profil.compensation.privateNotice') }}</p>
-        <label class="oei-profil__field">
+        <label class="oei-profil__field oei-field">
           {{ i18n.translate('espaceMembre.profil.compensation.amount') }}
-          <input type="number" [formField]="editForm.compensationAmount" />
+          <input type="number" class="oei-input" [formField]="editForm.compensationAmount" />
         </label>
-        <label class="oei-profil__field">
+        <label class="oei-profil__field oei-field">
           {{ i18n.translate('espaceMembre.profil.compensation.currency') }}
-          <input type="text" [formField]="editForm.compensationCurrency" placeholder="CHF" />
+          <input type="text" class="oei-input" [formField]="editForm.compensationCurrency" placeholder="CHF" />
         </label>
-        <label class="oei-profil__field">
+        <label class="oei-profil__field oei-field">
           {{ i18n.translate('espaceMembre.profil.compensation.periodLabel') }}
           <select
+            class="oei-select"
             [ngModel]="editForm.compensationPeriod().value()"
             (ngModelChange)="setCompensationPeriod($event)"
             name="compensationPeriod"
@@ -268,10 +269,10 @@
         </label>
 
         <div class="oei-profil__edit-actions">
-          <button type="button" [disabled]="saving()" (click)="save()">
+          <button type="button" class="oei-btn oei-btn--primary" [disabled]="saving()" (click)="save()">
             {{ i18n.translate('espaceMembre.profil.save') }}
           </button>
-          <button type="button" [disabled]="saving()" (click)="cancelEditing()">
+          <button type="button" class="oei-btn oei-btn--secondary" [disabled]="saving()" (click)="cancelEditing()">
             {{ i18n.translate('espaceMembre.profil.cancel') }}
           </button>
         </div>

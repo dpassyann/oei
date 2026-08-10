@@ -56,21 +56,13 @@ $oei-gold: #e8a530;
   font-size: 0.9rem;
 }
 
+// Base color/border/typography now come from the shared `.oei-btn.oei-btn--primary` (see
+// `src/styles/_forms.scss`) — this reference CTA is the visual origin of that primary variant.
+// Only page-specific sizing/spacing overrides remain here.
 .oei-cta-join {
-  background: $oei-gold;
-  color: $oei-navy;
-  border: none;
-  border-radius: 0.25rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: filter 0.15s ease;
   margin-top: 0.75rem;
   padding: 0.85rem 1.85rem;
   font-size: 1rem;
-
-  &:hover {
-    filter: brightness(1.08);
-  }
 }
 
 .oei-hero__visual {

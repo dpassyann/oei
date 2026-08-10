@@ -51,28 +51,12 @@ $oei-gold: #e8a530;
   margin-bottom: 2.5rem;
 }
 
+// Color/border/typography for the fields and hints now come from the shared `.oei-field`/
+// `.oei-input`/`.oei-textarea`/`.oei-field__hint` classes (see `src/styles/_forms.scss`).
 .oei-publier__field {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
-  font-weight: 600;
-  color: $oei-navy;
-
-  input,
-  textarea {
-    padding: 0.6rem;
-    border: 1px solid rgba(10, 30, 63, 0.25);
-    border-radius: 0.35rem;
-    font: inherit;
-    font-weight: 400;
-    color: #222;
-  }
-}
-
-.oei-publier__field-hint {
-  font-size: 0.8rem;
-  font-weight: 400;
-  color: #777;
 }
 
 .oei-publier__error {
@@ -96,19 +80,10 @@ $oei-gold: #e8a530;
   display: contents;
 }
 
-button {
-  padding: 0.5rem 1rem;
-  border: 1px solid $oei-navy;
-  border-radius: 0.35rem;
-  background: $oei-navy;
-  color: #fff;
-  cursor: pointer;
+// Button color/border/radius now come from the shared `.oei-btn` classes — kept here only for
+// layout (align-self).
+.oei-btn {
   align-self: flex-start;
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
 }
 
 .oei-publier__history h2 {

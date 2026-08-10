@@ -33,12 +33,12 @@ $oei-navy: #0a1e3f;
   margin-bottom: 2.5rem;
 }
 
+// Color/border/typography for the fields now come from the shared `.oei-field`/`.oei-input`/
+// `.oei-select`/`.oei-textarea` classes (see `src/styles/_forms.scss`).
 .oei-proposer-evenement__field {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
-  font-weight: 600;
-  color: $oei-navy;
 }
 
 .oei-proposer-evenement__field-row {
@@ -48,12 +48,6 @@ $oei-navy: #0a1e3f;
   .oei-proposer-evenement__field {
     flex: 1;
   }
-}
-
-.oei-proposer-evenement__field-hint {
-  font-weight: 400;
-  font-size: 0.8rem;
-  color: #777;
 }
 
 .oei-proposer-evenement__error {

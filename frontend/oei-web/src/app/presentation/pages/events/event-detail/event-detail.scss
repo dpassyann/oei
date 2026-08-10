@@ -186,31 +186,21 @@ $oei-navy: #0a1e3f;
   margin-right: 0.4rem;
 }
 
+// Color/border/typography for the input and button now come from the shared `.oei-input`/
+// `.oei-btn` classes (see `src/styles/_forms.scss`) — this block only keeps the inline layout
+// and a smaller footprint fitting for a comment row.
 .oei-event-feed__comment-form {
   display: flex;
   gap: 0.5rem;
   margin-top: 0.3rem;
 
-  input {
+  .oei-input {
     flex: 1;
     padding: 0.4rem 0.6rem;
-    border: 1px solid rgba(10, 30, 63, 0.2);
-    border-radius: 0.35rem;
-    font: inherit;
   }
 
-  button {
+  .oei-btn {
     padding: 0.4rem 0.75rem;
-    border: none;
-    border-radius: 0.35rem;
-    background: $oei-navy;
-    color: #fff;
-    cursor: pointer;
-
-    &[disabled] {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
   }
 }
 

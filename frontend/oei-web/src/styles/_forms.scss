@@ -1,0 +1,180 @@
+// =============================================================================================
+// OEI shared form & button primitives — SOURCE OF TRUTH for buttons, inputs, selects and
+// textareas across the whole site.
+//
+// Context: every page used to define its own ad hoc `<button>`/`<input>` styling in its own
+// `.scss` (slightly different border-radius, colors, font sizes from one page to the next).
+// This partial centralizes the OEI charte graphique (bleu nuit #0A1E3F, doré #E8A530,
+// ivoire #F7F4EC, blanc #FFFFFF — premium/institutional/clean, subtle transitions) so that any
+// future form only needs to apply these classes instead of re-inventing styling.
+//
+// Usage:
+//   Buttons:  <button class="oei-btn oei-btn--primary">…</button>
+//             <button class="oei-btn oei-btn--secondary">…</button>
+//             <button class="oei-btn oei-btn--text">…</button>
+//   Fields:   <label class="oei-field">
+//               Label text
+//               <input class="oei-input" />
+//             </label>
+//             <select class="oei-select">…</select>
+//             <textarea class="oei-textarea"></textarea>
+//
+// These classes are additive: keep any existing structural/BEM class on the element (used by
+// tests) and add the relevant `.oei-*` class alongside it. Page-level `.scss` files should keep
+// only layout concerns (gap, flex, grid, max-width) and delegate color/border/radius/typography
+// to this file.
+//
+// Error state: reuse `.oei-field--error` / add `aria-invalid="true"` on the control — mirrors
+// the existing red (`#7f1d1d` on `#fee2e2`) error banner pattern already used across pages.
+// =============================================================================================
+
+$oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+$oei-ivoire: #f7f4ec;
+$oei-white: #ffffff;
+
+$oei-border: rgba(10, 30, 63, 0.25);
+$oei-border-light: rgba(10, 30, 63, 0.15);
+$oei-text-muted: #666;
+$oei-error-text: #7f1d1d;
+$oei-error-bg: #fee2e2;
+
+// --- Buttons ---------------------------------------------------------------------------------
+
+.oei-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.5rem;
+  border: 1px solid transparent;
+  border-radius: 0.35rem;
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: filter 0.15s ease, background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+
+  &:disabled,
+  &[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $oei-gold;
+    outline-offset: 2px;
+  }
+}
+
+// Primary: solid gold fill / navy text — matches the home hero's `.oei-cta-join` reference CTA.
+.oei-btn--primary {
+  background: $oei-gold;
+  color: $oei-navy;
+  border-color: $oei-gold;
+
+  &:hover:not(:disabled) {
+    filter: brightness(1.08);
+  }
+}
+
+// Secondary: outlined, transparent background — for lower-emphasis actions (cancel, previous…).
+.oei-btn--secondary {
+  background: transparent;
+  color: $oei-navy;
+  border-color: $oei-navy;
+
+  &:hover:not(:disabled) {
+    background: rgba(10, 30, 63, 0.06);
+  }
+}
+
+// Text: discreet link-styled button — for tertiary actions (e.g. "send another message").
+.oei-btn--text {
+  background: transparent;
+  color: $oei-navy;
+  border-color: transparent;
+  padding: 0.35rem 0.6rem;
+  text-decoration: underline;
+
+  &:hover:not(:disabled) {
+    color: $oei-gold;
+  }
+}
+
+// --- Fields ----------------------------------------------------------------------------------
+
+.oei-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-weight: 600;
+  color: $oei-navy;
+}
+
+.oei-field__hint {
+  font-weight: 400;
+  font-size: 0.8rem;
+  color: #777;
+}
+
+.oei-field--error {
+  .oei-input,
+  .oei-select,
+  .oei-textarea {
+    border-color: $oei-error-text;
+  }
+}
+
+// --- Controls --------------------------------------------------------------------------------
+
+@mixin oei-control {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid $oei-border;
+  border-radius: 0.35rem;
+  background: $oei-white;
+  font: inherit;
+  font-weight: 400;
+  font-size: 0.95rem;
+  color: #222;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  &::placeholder {
+    color: #999;
+  }
+
+  &:focus-visible,
+  &:focus {
+    outline: none;
+    border-color: $oei-gold;
+    box-shadow: 0 0 0 3px rgba(232, 165, 48, 0.2);
+  }
+
+  &:disabled,
+  &[disabled] {
+    background: rgba(10, 30, 63, 0.04);
+    color: $oei-text-muted;
+    cursor: not-allowed;
+  }
+
+  &[aria-invalid='true'] {
+    border-color: $oei-error-text;
+  }
+}
+
+.oei-input,
+.oei-select {
+  @include oei-control;
+}
+
+.oei-textarea {
+  @include oei-control;
+  resize: vertical;
+  min-height: 6rem;
+  line-height: 1.5;
+}
+
+.oei-select {
+  cursor: pointer;
+}

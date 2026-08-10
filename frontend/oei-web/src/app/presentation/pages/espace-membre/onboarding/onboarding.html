@@ -32,7 +32,7 @@
           </label>
           <label class="oei-onboarding__field">
             {{ i18n.translate('espaceMembre.onboarding.compte.email') }}
-            <input
+            <input class="oei-input"
               type="email"
               [ngModel]="draft().email"
               (ngModelChange)="updateDraft({ email: $event })"
@@ -43,7 +43,7 @@
         @case ('langue-pays') {
           <label class="oei-onboarding__field">
             {{ i18n.translate('espaceMembre.onboarding.languePays.langue') }}
-            <select [ngModel]="draft().locale" (ngModelChange)="updateDraft({ locale: $event })" name="locale">
+            <select class="oei-select" [ngModel]="draft().locale" (ngModelChange)="updateDraft({ locale: $event })" name="locale">
               @for (lang of supportedLanguages; track lang) {
                 <option [value]="lang">{{ lang }}</option>
               }
@@ -51,7 +51,7 @@
           </label>
           <label class="oei-onboarding__field">
             {{ i18n.translate('espaceMembre.onboarding.languePays.pays') }}
-            <input
+            <input class="oei-input"
               type="text"
               [ngModel]="draft().country"
               (ngModelChange)="updateDraft({ country: $event })"
@@ -62,7 +62,7 @@
         @case ('identite') {
           <label class="oei-onboarding__field">
             {{ i18n.translate('espaceMembre.onboarding.identite.displayName') }}
-            <input
+            <input class="oei-input"
               type="text"
               [ngModel]="draft().displayName"
               (ngModelChange)="updateDraft({ displayName: $event })"
@@ -73,7 +73,7 @@
         @case ('photo') {
           <label class="oei-onboarding__field">
             {{ i18n.translate('espaceMembre.onboarding.photo.url') }}
-            <input
+            <input class="oei-input"
               type="text"
               [ngModel]="draft().photoUrl"
               (ngModelChange)="updateDraft({ photoUrl: $event })"
@@ -84,26 +84,26 @@
         @case ('titre') {
           <label class="oei-onboarding__field">
             {{ i18n.translate('espaceMembre.onboarding.titre.label') }}
-            <input type="text" [ngModel]="draft().title" (ngModelChange)="updateDraft({ title: $event })" name="title" />
+            <input class="oei-input" type="text" [ngModel]="draft().title" (ngModelChange)="updateDraft({ title: $event })" name="title" />
           </label>
         }
         @case ('resume') {
           <label class="oei-onboarding__field">
             {{ i18n.translate('espaceMembre.onboarding.resume.label') }}
-            <textarea [ngModel]="draft().summary" (ngModelChange)="updateDraft({ summary: $event })" name="summary"></textarea>
+            <textarea class="oei-textarea" [ngModel]="draft().summary" (ngModelChange)="updateDraft({ summary: $event })" name="summary"></textarea>
           </label>
         }
         @case ('expertises') {
           <label class="oei-onboarding__field">
             {{ i18n.translate('espaceMembre.onboarding.expertises.label') }}
-            <input type="text" [ngModel]="expertiseInput()" (ngModelChange)="expertiseInput.set($event)" name="expertiseInput" />
+            <input class="oei-input" type="text" [ngModel]="expertiseInput()" (ngModelChange)="expertiseInput.set($event)" name="expertiseInput" />
           </label>
-          <button type="button" (click)="addExpertise()">{{ i18n.translate('espaceMembre.onboarding.add') }}</button>
+          <button type="button" class="oei-btn oei-btn--secondary" (click)="addExpertise()">{{ i18n.translate('espaceMembre.onboarding.add') }}</button>
           <ul class="oei-onboarding__chips">
             @for (expertise of draft().expertiseAreas; track expertise; let i = $index) {
               <li class="oei-onboarding__chip">
                 {{ expertise }}
-                <button type="button" (click)="removeExpertise(i)">×</button>
+                <button type="button" class="oei-btn oei-btn--text oei-onboarding__remove" (click)="removeExpertise(i)">×</button>
               </li>
             }
           </ul>
@@ -112,7 +112,7 @@
           <div class="oei-onboarding__mini-form">
             <label>
               {{ i18n.translate('espaceMembre.onboarding.experiences.organization') }}
-              <input
+              <input class="oei-input"
                 type="text"
                 [ngModel]="newExperience().organization"
                 (ngModelChange)="newExperience.set({ ...newExperience(), organization: $event })"
@@ -121,7 +121,7 @@
             </label>
             <label>
               {{ i18n.translate('espaceMembre.onboarding.experiences.jobTitle') }}
-              <input
+              <input class="oei-input"
                 type="text"
                 [ngModel]="newExperience().title"
                 (ngModelChange)="newExperience.set({ ...newExperience(), title: $event })"
@@ -130,20 +130,20 @@
             </label>
             <label>
               {{ i18n.translate('espaceMembre.onboarding.experiences.startDate') }}
-              <input
+              <input class="oei-input"
                 type="date"
                 [ngModel]="newExperience().startDate"
                 (ngModelChange)="newExperience.set({ ...newExperience(), startDate: $event })"
                 name="newExperienceStartDate"
               />
             </label>
-            <button type="button" (click)="addExperience()">{{ i18n.translate('espaceMembre.onboarding.add') }}</button>
+            <button type="button" class="oei-btn oei-btn--secondary" (click)="addExperience()">{{ i18n.translate('espaceMembre.onboarding.add') }}</button>
           </div>
           <ul class="oei-onboarding__list">
             @for (experience of draft().experiences; track experience.id) {
               <li>
                 {{ experience.title }} — {{ experience.organization }} ({{ experience.startDate }})
-                <button type="button" (click)="removeExperience(experience.id)">×</button>
+                <button type="button" class="oei-btn oei-btn--text oei-onboarding__remove" (click)="removeExperience(experience.id)">×</button>
               </li>
             }
           </ul>
@@ -152,7 +152,7 @@
           <div class="oei-onboarding__mini-form">
             <label>
               {{ i18n.translate('espaceMembre.onboarding.formations.institution') }}
-              <input
+              <input class="oei-input"
                 type="text"
                 [ngModel]="newEducation().institution"
                 (ngModelChange)="newEducation.set({ ...newEducation(), institution: $event })"
@@ -161,7 +161,7 @@
             </label>
             <label>
               {{ i18n.translate('espaceMembre.onboarding.formations.program') }}
-              <input
+              <input class="oei-input"
                 type="text"
                 [ngModel]="newEducation().program"
                 (ngModelChange)="newEducation.set({ ...newEducation(), program: $event })"
@@ -170,20 +170,20 @@
             </label>
             <label>
               {{ i18n.translate('espaceMembre.onboarding.formations.startDate') }}
-              <input
+              <input class="oei-input"
                 type="date"
                 [ngModel]="newEducation().startDate"
                 (ngModelChange)="newEducation.set({ ...newEducation(), startDate: $event })"
                 name="newEducationStartDate"
               />
             </label>
-            <button type="button" (click)="addEducation()">{{ i18n.translate('espaceMembre.onboarding.add') }}</button>
+            <button type="button" class="oei-btn oei-btn--secondary" (click)="addEducation()">{{ i18n.translate('espaceMembre.onboarding.add') }}</button>
           </div>
           <ul class="oei-onboarding__list">
             @for (education of draft().educations; track education.id) {
               <li>
                 {{ education.program }} — {{ education.institution }} ({{ education.startDate }})
-                <button type="button" (click)="removeEducation(education.id)">×</button>
+                <button type="button" class="oei-btn oei-btn--text oei-onboarding__remove" (click)="removeEducation(education.id)">×</button>
               </li>
             }
           </ul>
@@ -191,19 +191,19 @@
         @case ('certifications') {
           <label class="oei-onboarding__field">
             {{ i18n.translate('espaceMembre.onboarding.certifications.label') }}
-            <input
+            <input class="oei-input"
               type="text"
               [ngModel]="newCertification()"
               (ngModelChange)="newCertification.set($event)"
               name="newCertification"
             />
           </label>
-          <button type="button" (click)="addCertification()">{{ i18n.translate('espaceMembre.onboarding.add') }}</button>
+          <button type="button" class="oei-btn oei-btn--secondary" (click)="addCertification()">{{ i18n.translate('espaceMembre.onboarding.add') }}</button>
           <ul class="oei-onboarding__list">
             @for (certification of draft().certifications; track certification; let i = $index) {
               <li>
                 {{ certification }}
-                <button type="button" (click)="removeCertification(i)">×</button>
+                <button type="button" class="oei-btn oei-btn--text oei-onboarding__remove" (click)="removeCertification(i)">×</button>
               </li>
             }
           </ul>
@@ -212,7 +212,7 @@
           <div class="oei-onboarding__mini-form">
             <label>
               {{ i18n.translate('espaceMembre.onboarding.langues.language') }}
-              <input
+              <input class="oei-input"
                 type="text"
                 [ngModel]="newLanguage().language"
                 (ngModelChange)="newLanguage.set({ ...newLanguage(), language: $event })"
@@ -221,7 +221,7 @@
             </label>
             <label>
               {{ i18n.translate('espaceMembre.onboarding.langues.level') }}
-              <select
+              <select class="oei-select"
                 [ngModel]="newLanguage().level"
                 (ngModelChange)="newLanguage.set({ ...newLanguage(), level: $event })"
                 name="newLanguageLevel"
@@ -231,13 +231,13 @@
                 }
               </select>
             </label>
-            <button type="button" (click)="addLanguage()">{{ i18n.translate('espaceMembre.onboarding.add') }}</button>
+            <button type="button" class="oei-btn oei-btn--secondary" (click)="addLanguage()">{{ i18n.translate('espaceMembre.onboarding.add') }}</button>
           </div>
           <ul class="oei-onboarding__list">
             @for (language of draft().languages; track language.language; let i = $index) {
               <li>
                 {{ language.language }} — {{ language.level }}
-                <button type="button" (click)="removeLanguage(i)">×</button>
+                <button type="button" class="oei-btn oei-btn--text oei-onboarding__remove" (click)="removeLanguage(i)">×</button>
               </li>
             }
           </ul>
@@ -276,15 +276,15 @@
     </form>
 
     <div class="oei-onboarding__nav">
-      <button type="button" [disabled]="isFirstStep()" (click)="goPrevious()">
+      <button type="button" class="oei-btn oei-btn--secondary" [disabled]="isFirstStep()" (click)="goPrevious()">
         {{ i18n.translate('espaceMembre.onboarding.previous') }}
       </button>
       @if (isLastStep()) {
-        <button type="button" [disabled]="submitting()" (click)="submit()">
+        <button type="button" class="oei-btn oei-btn--primary" [disabled]="submitting()" (click)="submit()">
           {{ i18n.translate('espaceMembre.onboarding.finish') }}
         </button>
       } @else {
-        <button type="button" (click)="goNext()">{{ i18n.translate('espaceMembre.onboarding.next') }}</button>
+        <button type="button" class="oei-btn oei-btn--primary" (click)="goNext()">{{ i18n.translate('espaceMembre.onboarding.next') }}</button>
       }
     </div>
   }

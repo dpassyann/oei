@@ -1,3 +1,6 @@
+// Colors/borders/typography for buttons and inputs now come from the shared `.oei-btn`/
+// `.oei-field`/`.oei-input`/`.oei-select`/`.oei-textarea` classes (see
+// `src/styles/_forms.scss`) — this file only keeps layout (gap, max-width).
 .oei-admin-institution-new {
   &__form {
     display: flex;
@@ -5,11 +8,12 @@
     gap: 1rem;
     max-width: 560px;
 
-    label {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
+    .oei-field {
       font-size: 0.85rem;
+    }
+
+    .oei-btn {
+      align-self: flex-start;
     }
   }
 

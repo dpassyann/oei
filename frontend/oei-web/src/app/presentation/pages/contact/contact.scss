@@ -58,22 +58,13 @@ $oei-gold: #e8a530;
   max-width: 32rem;
 }
 
+// Color/border/typography for the fields themselves now come from the shared `.oei-field`/
+// `.oei-input`/`.oei-textarea` classes (see `src/styles/_forms.scss`) — this only kept for the
+// label wrapper layout.
 .oei-contact-form__field {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
-  font-weight: 600;
-  color: $oei-navy;
-
-  input,
-  textarea {
-    padding: 0.6rem;
-    border: 1px solid rgba(10, 30, 63, 0.25);
-    border-radius: 0.35rem;
-    font: inherit;
-    font-weight: 400;
-    color: #222;
-  }
 }
 
 .oei-contact-form__error {
@@ -93,28 +84,18 @@ $oei-gold: #e8a530;
   border-radius: 0.5rem;
 }
 
-.oei-contact-form button {
-  padding: 0.5rem 1rem;
-  border: 1px solid $oei-navy;
-  border-radius: 0.35rem;
-  background: $oei-navy;
-  color: #fff;
-  cursor: pointer;
+// Button color/border/radius now come from the shared `.oei-btn` classes — kept here only for
+// layout (align-self) and, for the success banner's "send another" link, to match its green tone.
+.oei-contact-form .oei-btn {
   align-self: flex-start;
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
 }
 
-.oei-contact-form__success button {
-  padding: 0.35rem 0.8rem;
-  border: 1px solid #065f46;
-  border-radius: 0.35rem;
-  background: transparent;
+.oei-contact-form__success .oei-btn--text {
   color: #065f46;
-  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    color: #043d2c;
+  }
 }
 
 .oei-contact-block {

@@ -1,5 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
+// Shared OEI form/button primitives (.oei-btn, .oei-field, .oei-input, .oei-select,
+// .oei-textarea) — see `src/styles/_forms.scss` for the source of truth.
+@use 'styles/forms';
+
 html,
 body {
   margin: 0;

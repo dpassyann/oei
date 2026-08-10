@@ -62,21 +62,15 @@ $oei-gold: #e8a530;
   border-radius: 0.5rem;
 }
 
+// Color/border/typography for text controls now come from the shared `.oei-input`/`.oei-select`/
+// `.oei-textarea` classes (see `src/styles/_forms.scss`) — checkbox inputs (CGU, charte,
+// visibility toggles) are left unstyled by design, native checkboxes are fine as-is.
 .oei-onboarding__field {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
   font-size: 0.95rem;
   color: #333;
-
-  input,
-  select,
-  textarea {
-    padding: 0.5rem;
-    border: 1px solid rgba(10, 30, 63, 0.25);
-    border-radius: 0.35rem;
-    font: inherit;
-  }
 }
 
 .oei-onboarding__mini-form {
@@ -125,16 +119,10 @@ $oei-gold: #e8a530;
   margin-top: 1.5rem;
 }
 
-button {
-  padding: 0.5rem 1rem;
-  border: 1px solid $oei-navy;
-  border-radius: 0.35rem;
-  background: $oei-navy;
-  color: #fff;
-  cursor: pointer;
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+// Small inline "×" removal buttons attached to chips/list items — a discreet variant of the
+// shared `.oei-btn--text`, sized down since it only ever holds a single glyph.
+.oei-onboarding__remove {
+  padding: 0 0.3rem;
+  font-size: 1rem;
+  text-decoration: none;
 }

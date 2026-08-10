@@ -91,7 +91,7 @@
         @if (!hasPhotoConsent()) {
           <div class="oei-event-feed__consent" role="note">
             <p>{{ i18n.translate('events.detail.photoConsent.intro') }}</p>
-            <button type="button" (click)="giveConsent()">{{ i18n.translate('events.detail.photoConsent.accept') }}</button>
+            <button type="button" class="oei-btn oei-btn--secondary" (click)="giveConsent()">{{ i18n.translate('events.detail.photoConsent.accept') }}</button>
           </div>
         }
         <form class="oei-event-feed__form" (submit)="$event.preventDefault(); submitPost()">
@@ -100,13 +100,14 @@
           }
           <textarea
             rows="3"
+            class="oei-textarea"
             [attr.placeholder]="i18n.translate('events.detail.postPlaceholder')"
             [formField]="postForm.text"
           ></textarea>
           @if (hasPhotoConsent()) {
-            <input type="text" [attr.placeholder]="i18n.translate('events.detail.photoUrlPlaceholder')" [formField]="postForm.photoUrl" />
+            <input type="text" class="oei-input" [attr.placeholder]="i18n.translate('events.detail.photoUrlPlaceholder')" [formField]="postForm.photoUrl" />
           }
-          <button type="submit" [disabled]="postSubmitting()">
+          <button type="submit" class="oei-btn oei-btn--primary" [disabled]="postSubmitting()">
             {{ postSubmitting() ? i18n.translate('events.detail.posting') : i18n.translate('events.detail.post') }}
           </button>
         </form>
@@ -149,11 +150,12 @@
                   >
                     <input
                       type="text"
+                      class="oei-input"
                       [attr.placeholder]="i18n.translate('events.detail.commentPlaceholder')"
                       [value]="commentDraftFor(post.id)"
                       (input)="setCommentDraft(post.id, $any($event.target).value)"
                     />
-                    <button type="submit" [disabled]="commentSubmittingPostId() === post.id">
+                    <button type="submit" class="oei-btn oei-btn--primary" [disabled]="commentSubmittingPostId() === post.id">
                       {{ i18n.translate('events.detail.comment') }}
                     </button>
                   </form>

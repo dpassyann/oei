@@ -6,7 +6,7 @@
     <section class="oei-publier__pending-banner" role="status">
       <h2>{{ i18n.translate('espaceMembre.publier.pending.title') }}</h2>
       <p>{{ i18n.translate('espaceMembre.publier.pending.body') }}</p>
-      <button type="button" (click)="submitAnother()">
+      <button type="button" class="oei-btn oei-btn--secondary" (click)="submitAnother()">
         {{ i18n.translate('espaceMembre.publier.submitAnother') }}
       </button>
     </section>
@@ -23,24 +23,24 @@
       }
 
       <fieldset class="oei-publier__fieldset" [disabled]="!canSubmitArticle()">
-        <label class="oei-publier__field">
+        <label class="oei-publier__field oei-field">
           {{ i18n.translate('espaceMembre.publier.fields.title') }}
-          <input type="text" [formField]="articleForm.title" />
+          <input type="text" class="oei-input" [formField]="articleForm.title" />
         </label>
 
-        <label class="oei-publier__field">
+        <label class="oei-publier__field oei-field">
           {{ i18n.translate('espaceMembre.publier.fields.body') }}
-          <span class="oei-publier__field-hint">{{ i18n.translate('espaceMembre.publier.fields.bodyHint') }}</span>
-          <textarea rows="12" [formField]="articleForm.body"></textarea>
+          <span class="oei-publier__field-hint oei-field__hint">{{ i18n.translate('espaceMembre.publier.fields.bodyHint') }}</span>
+          <textarea rows="12" class="oei-textarea" [formField]="articleForm.body"></textarea>
         </label>
 
-        <label class="oei-publier__field">
+        <label class="oei-publier__field oei-field">
           {{ i18n.translate('espaceMembre.publier.fields.coverImageUrl') }}
-          <span class="oei-publier__field-hint">{{ i18n.translate('espaceMembre.publier.fields.coverImageUrlHint') }}</span>
-          <input type="text" [formField]="articleForm.coverImageUrl" />
+          <span class="oei-publier__field-hint oei-field__hint">{{ i18n.translate('espaceMembre.publier.fields.coverImageUrlHint') }}</span>
+          <input type="text" class="oei-input" [formField]="articleForm.coverImageUrl" />
         </label>
 
-        <button type="submit" [disabled]="submitting() || !canSubmitArticle()">
+        <button type="submit" class="oei-btn oei-btn--primary" [disabled]="submitting() || !canSubmitArticle()">
           {{ submitting() ? i18n.translate('espaceMembre.publier.submitting') : i18n.translate('espaceMembre.publier.submit') }}
         </button>
       </fieldset>

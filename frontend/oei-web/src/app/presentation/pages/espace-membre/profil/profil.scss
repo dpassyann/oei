@@ -263,19 +263,12 @@ $oei-gold: #e8a530;
   border-radius: 0.35rem;
 }
 
+// Color/border/typography for the fields now come from the shared `.oei-field`/`.oei-input`/
+// `.oei-select`/`.oei-textarea` classes (see `src/styles/_forms.scss`).
 .oei-profil__field {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-
-  input,
-  select,
-  textarea {
-    padding: 0.5rem;
-    border: 1px solid rgba(10, 30, 63, 0.25);
-    border-radius: 0.35rem;
-    font: inherit;
-  }
 }
 
 .oei-profil__edit-actions {
@@ -338,19 +331,10 @@ $oei-gold: #e8a530;
   border-radius: 0.5rem;
 }
 
-button {
-  padding: 0.5rem 1rem;
-  border: 1px solid $oei-navy;
-  border-radius: 0.35rem;
-  background: $oei-navy;
-  color: #fff;
-  cursor: pointer;
+// Button color/border/radius now come from the shared `.oei-btn` classes — kept here only for
+// layout (align-self, so the "edit" CTA in view mode doesn't stretch full width).
+.oei-btn {
   align-self: flex-start;
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
 }
 
 @media (max-width: 640px) {

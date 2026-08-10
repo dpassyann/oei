@@ -5,7 +5,7 @@
     @if (isFallback()) {
       <p class="oei-fallback-banner">{{ i18n.translate('home.fallbackNotice') }}</p>
     }
-    <button type="button" class="oei-cta-join" (click)="onJoinClick()">{{ i18n.translate('nav.join') }}</button>
+    <button type="button" class="oei-cta-join oei-btn oei-btn--primary" (click)="onJoinClick()">{{ i18n.translate('nav.join') }}</button>
   </div>
 
   <div class="oei-hero__visual" aria-hidden="true">

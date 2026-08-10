@@ -6,7 +6,7 @@
     <section class="oei-proposer-evenement__pending-banner" role="status">
       <h2>{{ i18n.translate('espaceMembre.proposerEvenement.pending.title') }}</h2>
       <p>{{ i18n.translate('espaceMembre.proposerEvenement.pending.body') }}</p>
-      <button type="button" (click)="submitAnother()">
+      <button type="button" class="oei-btn oei-btn--secondary" (click)="submitAnother()">
         {{ i18n.translate('espaceMembre.proposerEvenement.submitAnother') }}
       </button>
     </section>
@@ -18,19 +18,19 @@
         </p>
       }
 
-      <label class="oei-proposer-evenement__field">
+      <label class="oei-proposer-evenement__field oei-field">
         {{ i18n.translate('espaceMembre.proposerEvenement.fields.title') }}
-        <input type="text" [formField]="proposalForm.title" />
+        <input type="text" class="oei-input" [formField]="proposalForm.title" />
       </label>
 
-      <label class="oei-proposer-evenement__field">
+      <label class="oei-proposer-evenement__field oei-field">
         {{ i18n.translate('espaceMembre.proposerEvenement.fields.description') }}
-        <textarea rows="6" [formField]="proposalForm.description"></textarea>
+        <textarea rows="6" class="oei-textarea" [formField]="proposalForm.description"></textarea>
       </label>
 
-      <label class="oei-proposer-evenement__field">
+      <label class="oei-proposer-evenement__field oei-field">
         {{ i18n.translate('espaceMembre.proposerEvenement.fields.type') }}
-        <select [formField]="proposalForm.type">
+        <select class="oei-select" [formField]="proposalForm.type">
           @for (type of eventTypes; track type) {
             <option [value]="type">{{ i18n.translate('events.types.' + type) }}</option>
           }
@@ -38,54 +38,54 @@
       </label>
 
       <div class="oei-proposer-evenement__field-row">
-        <label class="oei-proposer-evenement__field">
+        <label class="oei-proposer-evenement__field oei-field">
           {{ i18n.translate('espaceMembre.proposerEvenement.fields.startAt') }}
-          <input type="datetime-local" [formField]="proposalForm.startAt" />
+          <input type="datetime-local" class="oei-input" [formField]="proposalForm.startAt" />
         </label>
-        <label class="oei-proposer-evenement__field">
+        <label class="oei-proposer-evenement__field oei-field">
           {{ i18n.translate('espaceMembre.proposerEvenement.fields.endAt') }}
-          <input type="datetime-local" [formField]="proposalForm.endAt" />
+          <input type="datetime-local" class="oei-input" [formField]="proposalForm.endAt" />
         </label>
       </div>
 
-      <label class="oei-proposer-evenement__field">
+      <label class="oei-proposer-evenement__field oei-field">
         {{ i18n.translate('espaceMembre.proposerEvenement.fields.timezone') }}
-        <input type="text" [formField]="proposalForm.timezone" />
+        <input type="text" class="oei-input" [formField]="proposalForm.timezone" />
       </label>
 
       <div class="oei-proposer-evenement__field-row">
-        <label class="oei-proposer-evenement__field">
+        <label class="oei-proposer-evenement__field oei-field">
           {{ i18n.translate('espaceMembre.proposerEvenement.fields.country') }}
-          <input type="text" [formField]="proposalForm.country" />
+          <input type="text" class="oei-input" [formField]="proposalForm.country" />
         </label>
-        <label class="oei-proposer-evenement__field">
+        <label class="oei-proposer-evenement__field oei-field">
           {{ i18n.translate('espaceMembre.proposerEvenement.fields.city') }}
-          <input type="text" [formField]="proposalForm.city" />
+          <input type="text" class="oei-input" [formField]="proposalForm.city" />
         </label>
       </div>
 
-      <label class="oei-proposer-evenement__field">
+      <label class="oei-proposer-evenement__field oei-field">
         {{ i18n.translate('espaceMembre.proposerEvenement.fields.venue') }}
-        <span class="oei-proposer-evenement__field-hint">
+        <span class="oei-proposer-evenement__field-hint oei-field__hint">
           {{ i18n.translate('espaceMembre.proposerEvenement.fields.venueOrOnlineHint') }}
         </span>
-        <input type="text" [formField]="proposalForm.venue" />
+        <input type="text" class="oei-input" [formField]="proposalForm.venue" />
       </label>
 
-      <label class="oei-proposer-evenement__field">
+      <label class="oei-proposer-evenement__field oei-field">
         {{ i18n.translate('espaceMembre.proposerEvenement.fields.onlineUrl') }}
-        <input type="text" [formField]="proposalForm.onlineUrl" />
+        <input type="text" class="oei-input" [formField]="proposalForm.onlineUrl" />
       </label>
 
-      <label class="oei-proposer-evenement__field">
+      <label class="oei-proposer-evenement__field oei-field">
         {{ i18n.translate('espaceMembre.proposerEvenement.fields.imageUrl') }}
-        <span class="oei-proposer-evenement__field-hint">
+        <span class="oei-proposer-evenement__field-hint oei-field__hint">
           {{ i18n.translate('espaceMembre.proposerEvenement.fields.imageUrlHint') }}
         </span>
-        <input type="text" [formField]="proposalForm.imageUrl" />
+        <input type="text" class="oei-input" [formField]="proposalForm.imageUrl" />
       </label>
 
-      <button type="submit" [disabled]="submitting()">
+      <button type="submit" class="oei-btn oei-btn--primary" [disabled]="submitting()">
         {{
           submitting()
             ? i18n.translate('espaceMembre.proposerEvenement.submitting')
