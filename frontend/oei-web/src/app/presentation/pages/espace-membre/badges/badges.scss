@@ -195,6 +195,8 @@ $oei-gold: #e8a530;
   color: $oei-navy;
 }
 
+// Input/select color, border, radius and typography now come from the shared `.oei-field`/
+// `.oei-input`/`.oei-select` classes (see `src/styles/_forms.scss`) — only layout kept here.
 .oei-badges__field {
   display: flex;
   flex-direction: column;
@@ -202,14 +204,6 @@ $oei-gold: #e8a530;
   margin-bottom: 0.9rem;
   font-size: 0.9rem;
   color: #333;
-
-  input,
-  select {
-    padding: 0.4rem 0.5rem;
-    border: 1px solid rgba(10, 30, 63, 0.25);
-    border-radius: 0.3rem;
-    font-size: 0.9rem;
-  }
 }
 
 .oei-badges__field--proof {
@@ -232,20 +226,8 @@ $oei-gold: #e8a530;
   color: #7a5a00;
 }
 
-.oei-badges__declare-submit {
-  padding: 0.5rem 1.25rem;
-  font-weight: 600;
-  color: #fff;
-  background: $oei-navy;
-  border: none;
-  border-radius: 0.3rem;
-  cursor: pointer;
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-}
+// Color/border/radius/disabled state now come from the shared `.oei-btn`/`.oei-btn--primary`
+// classes (see `src/styles/_forms.scss`) — nothing page-specific left to override here.
 
 .oei-badges__declare-success {
   margin-top: 0.75rem;

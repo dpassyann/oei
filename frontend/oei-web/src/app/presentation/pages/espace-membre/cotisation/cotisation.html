@@ -43,13 +43,13 @@
           <p class="oei-cotisation__error" role="alert">{{ i18n.translate('espaceMembre.cotisation.form.error') }}</p>
         }
         <p class="oei-cotisation__mock-notice">{{ i18n.translate('espaceMembre.cotisation.form.mockNotice') }}</p>
-        <label class="oei-cotisation__field">
+        <label class="oei-cotisation__field oei-field">
           {{ i18n.translate('espaceMembre.cotisation.form.cardNumberLabel') }}
-          <input type="text" [ngModel]="cardNumber()" (ngModelChange)="cardNumber.set($event)" name="cardNumber" placeholder="4242 4242 4242 4242" />
+          <input type="text" class="oei-input" [ngModel]="cardNumber()" (ngModelChange)="cardNumber.set($event)" name="cardNumber" placeholder="4242 4242 4242 4242" />
         </label>
 
         <div class="oei-cotisation__actions">
-          <button type="submit" [disabled]="!canPay()">
+          <button type="submit" class="oei-btn oei-btn--primary" [disabled]="!canPay()">
             {{ paymentState() === 'submitting' ? i18n.translate('espaceMembre.cotisation.form.paying') : i18n.translate('espaceMembre.cotisation.form.payButton') }}
           </button>
           <a class="oei-cotisation__skip" routerLink="/espace-membre/profil">{{ i18n.translate('espaceMembre.cotisation.form.skip') }}</a>

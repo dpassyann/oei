@@ -35,6 +35,8 @@
     gap: 1rem;
   }
 
+  // Input color/border/radius now come from the shared `.oei-field`/`.oei-input` classes (see
+  // `src/styles/_forms.scss`) — only layout kept here.
   &__field {
     display: flex;
     flex-direction: column;

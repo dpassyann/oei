@@ -69,19 +69,19 @@
     <form class="oei-badges__declare-form" (submit)="submitDeclaration($event)">
       <h3 class="oei-badges__declare-title">{{ i18n.translate('espaceMembre.badges.declareForm.title') }}</h3>
 
-      <label class="oei-badges__field">
+      <label class="oei-badges__field oei-field">
         <span>{{ i18n.translate('espaceMembre.badges.declareForm.name') }}</span>
-        <input type="text" [formField]="declarationForm.name" />
+        <input type="text" class="oei-input" [formField]="declarationForm.name" />
       </label>
 
-      <label class="oei-badges__field">
+      <label class="oei-badges__field oei-field">
         <span>{{ i18n.translate('espaceMembre.badges.declareForm.issuingOrganization') }}</span>
-        <input type="text" [formField]="declarationForm.issuingOrganization" />
+        <input type="text" class="oei-input" [formField]="declarationForm.issuingOrganization" />
       </label>
 
-      <label class="oei-badges__field">
+      <label class="oei-badges__field oei-field">
         <span>{{ i18n.translate('espaceMembre.badges.declareForm.recognizedCertification') }}</span>
-        <select [formField]="declarationForm.recognizedCertificationId">
+        <select class="oei-select" [formField]="declarationForm.recognizedCertificationId">
           <option value="">{{ i18n.translate('espaceMembre.badges.declareForm.recognizedCertificationNone') }}</option>
           @for (recognized of recognizedCertifications(); track recognized.id) {
             <option [value]="recognized.id">{{ recognized.name }} — {{ recognized.issuingOrganization }}</option>
@@ -89,20 +89,20 @@
         </select>
       </label>
 
-      <label class="oei-badges__field">
+      <label class="oei-badges__field oei-field">
         <span>{{ i18n.translate('espaceMembre.badges.declareForm.issuedAt') }}</span>
-        <input type="date" [formField]="declarationForm.issuedAt" />
+        <input type="date" class="oei-input" [formField]="declarationForm.issuedAt" />
       </label>
 
-      <label class="oei-badges__field oei-badges__field--proof">
+      <label class="oei-badges__field oei-badges__field--proof oei-field">
         <span class="oei-badges__field-required">
           {{ i18n.translate('espaceMembre.badges.declareForm.proofDocumentUrl') }}
         </span>
-        <input type="text" [formField]="declarationForm.proofDocumentUrl" />
+        <input type="text" class="oei-input" [formField]="declarationForm.proofDocumentUrl" />
         <p class="oei-badges__field-note">{{ i18n.translate('espaceMembre.badges.declareForm.proofDocumentNote') }}</p>
       </label>
 
-      <button type="submit" class="oei-badges__declare-submit" [disabled]="declareSubmitting()">
+      <button type="submit" class="oei-badges__declare-submit oei-btn oei-btn--primary" [disabled]="declareSubmitting()">
         {{ i18n.translate('espaceMembre.badges.declareForm.submit') }}
       </button>
 

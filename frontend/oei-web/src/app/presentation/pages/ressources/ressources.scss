@@ -91,16 +91,11 @@ $oei-navy: #0a1e3f;
   color: #333;
 }
 
+// Color/border/radius now come from the shared `.oei-input` class (see `src/styles/_forms.scss`,
+// which already styles the error border via `[aria-invalid='true']`) — only the layout-specific
+// min-width kept here.
 .oei-download-form__input {
-  padding: 0.6rem 0.9rem;
-  border: 1px solid #ccc;
-  border-radius: 0.25rem;
   min-width: 16rem;
-
-  &--invalid {
-    border-color: #b3261e;
-    outline-color: #b3261e;
-  }
 }
 
 .oei-download-form__file-size {
@@ -110,20 +105,8 @@ $oei-navy: #0a1e3f;
   color: #555;
 }
 
-.oei-download-form__submit {
-  padding: 0.6rem 1.2rem;
-  background: $oei-navy;
-  color: #fff;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  font-weight: 600;
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-}
+// Color/border/radius/disabled state now come from the shared `.oei-btn`/`.oei-btn--primary`
+// classes (see `src/styles/_forms.scss`) — nothing page-specific left to override here.
 
 .oei-download-form__message {
   flex-basis: 100%;

@@ -47,7 +47,7 @@
         <input
           #downloadEmailInput
           id="download-email"
-          class="oei-download-form__input"
+          class="oei-download-form__input oei-input"
           [class.oei-download-form__input--invalid]="isEmailInvalid || formStatus() === 'error'"
           type="email"
           name="email"
@@ -60,7 +60,7 @@
           [attr.aria-invalid]="isEmailInvalid || formStatus() === 'error' ? 'true' : null"
           [attr.aria-describedby]="isEmailInvalid || formStatus() === 'error' ? 'download-email-error' : null"
         />
-        <button type="submit" class="oei-download-form__submit" [disabled]="formStatus() === 'submitting'">
+        <button type="submit" class="oei-download-form__submit oei-btn oei-btn--primary" [disabled]="formStatus() === 'submitting'">
           {{ i18n.translate('ressources.livreBlanc.submitButton') }}
         </button>
         <p class="oei-download-form__file-size">
