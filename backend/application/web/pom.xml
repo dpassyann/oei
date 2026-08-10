@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.oei</groupId>
+    <groupId>global.oei</groupId>
     <artifactId>application</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <relativePath>..</relativePath>
@@ -30,19 +30,19 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.oei</groupId>
+      <groupId>global.oei</groupId>
       <artifactId>domain-shared</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.oei</groupId>
+      <groupId>global.oei</groupId>
       <artifactId>domain-core</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.oei</groupId>
+      <groupId>global.oei</groupId>
       <artifactId>infrastructure-security</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.oei</groupId>
+      <groupId>global.oei</groupId>
       <artifactId>infrastructure-persistence</artifactId>
     </dependency>
 
@@ -87,7 +87,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
-          <mainClass>org.oei.application.web.OeiBackendApplication</mainClass>
+          <mainClass>global.oei.application.web.OeiBackendApplication</mainClass>
         </configuration>
         <executions>
           <execution>
@@ -112,9 +112,9 @@
               <inputSpec>${project.basedir}/src/main/resources/openapi/oei-api.yaml</inputSpec>
               <generatorName>spring</generatorName>
               <library>spring-boot</library>
-              <apiPackage>org.oei.application.web</apiPackage>
-              <invokerPackage>org.oei.application.web</invokerPackage>
-              <modelPackage>org.oei.application.web.model</modelPackage>
+              <apiPackage>global.oei.application.web</apiPackage>
+              <invokerPackage>global.oei.application.web</invokerPackage>
+              <modelPackage>global.oei.application.web.model</modelPackage>
               <output>${project.build.directory}/generated-sources</output>
               <modelNameSuffix>DTO</modelNameSuffix>
               <!-- Only the ApiUtil helper (used by the generated default interface methods
