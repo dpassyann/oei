@@ -12,6 +12,9 @@
     margin: 1rem 0;
   }
 
+  // Textarea/button color, border, radius and typography now come from the shared `.oei-field`/
+  // `.oei-textarea`/`.oei-btn` classes (see `src/styles/_forms.scss`) — this wrapper's own border
+  // is kept as it frames the whole inline revoke form, not a single control.
   &__revoke-form {
     display: flex;
     flex-direction: column;

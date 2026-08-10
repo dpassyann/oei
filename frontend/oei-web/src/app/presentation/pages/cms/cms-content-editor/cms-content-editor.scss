@@ -10,6 +10,8 @@
     border-radius: 6px;
   }
 
+  // Textarea color/border/radius now come from the shared `.oei-textarea` class (see
+  // `src/styles/_forms.scss`) — only layout and the markdown-specific monospace font kept here.
   &__body-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -27,7 +29,9 @@
     min-height: 200px;
   }
 
-  &__actions button {
+  // Button color/border/radius now come from the shared `.oei-btn` classes (see
+  // `src/styles/_forms.scss`) — only spacing kept here.
+  &__actions .oei-btn {
     margin-right: 0.5rem;
   }
 }

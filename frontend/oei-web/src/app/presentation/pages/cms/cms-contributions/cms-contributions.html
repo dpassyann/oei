@@ -21,7 +21,7 @@
             <td>{{ contribution.contentId }}</td>
             <td>{{ contribution.authorMemberId }}</td>
             <td>{{ i18n.translate('cms.contributionStatus.' + contribution.status) }}</td>
-            <td><button type="button" (click)="select(contribution)">{{ i18n.translate('cms.list.open') }}</button></td>
+            <td><button type="button" class="oei-btn oei-btn--text" (click)="select(contribution)">{{ i18n.translate('cms.list.open') }}</button></td>
           </tr>
         }
       </tbody>
@@ -50,11 +50,12 @@
       <form (submit)="$event.preventDefault(); submitComment()">
         <input
           type="text"
+          class="oei-input"
           [attr.placeholder]="i18n.translate('cms.contributions.comments.placeholder')"
           [value]="newComment()"
           (input)="onNewCommentChange($any($event.target).value)"
         />
-        <button type="submit">{{ i18n.translate('cms.contributions.comments.submit') }}</button>
+        <button type="submit" class="oei-btn oei-btn--primary">{{ i18n.translate('cms.contributions.comments.submit') }}</button>
       </form>
     </section>
   }
