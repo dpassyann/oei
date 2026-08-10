@@ -1,0 +1,10 @@
+{
+  "name": "@oei/api-contract",
+  "version": "${project.version}",
+  "description": "OEI Platform OpenAPI contract, published as a distributable npm package for the Angular frontend (see backend/application/web/README.md for the consumption mechanism).",
+  "files": [
+    "oei-api.yaml"
+  ],
+  "license": "UNLICENSED",
+  "private": true
+}

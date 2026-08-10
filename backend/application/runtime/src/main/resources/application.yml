@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: oei-backend
+  datasource:
+    # Dev-local Postgres, exposed on the host by infra/docker-compose.yml (see comment
+    # there: "dev local uniquement"). OEI_DB_USER/OEI_DB_PASSWORD default to the
+    # infra/postgres-init/01-create-oei-app-db.sql dev role — never commit a real password.
+    url: jdbc:postgresql://localhost:5432/oei
+    username: ${OEI_DB_USER:oei_app}
+    password: ${OEI_DB_PASSWORD:changeme}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${OEI_OIDC_ISSUER_URI:http://localhost:8081/realms/oei}
+
+oei:
+  security:
+    public-urls:
+      - /actuator/health
+      - /actuator/health/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

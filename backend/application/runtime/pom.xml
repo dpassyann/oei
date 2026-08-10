@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.oei</groupId>
+    <artifactId>application</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <relativePath>..</relativePath>
+  </parent>
+
+  <artifactId>application-runtime</artifactId>
+  <packaging>jar</packaging>
+  <name>OEI Backend - Application Runtime</name>
+  <description>
+    Composition root: the only module allowed to depend on domain-core directly, in
+    addition to domain-shared, application-web and the infrastructure adapters. Owns the
+    executable @SpringBootApplication and wires use cases with their outbound port
+    adapters.
+  </description>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.oei</groupId>
+      <artifactId>domain-shared</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.oei</groupId>
+      <artifactId>domain-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.oei</groupId>
+      <artifactId>application-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.oei</groupId>
+      <artifactId>infrastructure-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.oei</groupId>
+      <artifactId>infrastructure-persistence</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <mainClass>org.oei.application.runtime.OeiBackendApplication</mainClass>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
