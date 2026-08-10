@@ -1440,7 +1440,14 @@
       "out": "Zoom out",
       "reset": "Reset view"
     },
-    "minimap": "Minimap"
+    "minimap": "Minimap",
+    "experts": {
+      "loadMore": "Load more experts"
+    },
+    "fullscreen": {
+      "enter": "Fullscreen",
+      "exit": "Exit fullscreen"
+    }
   },
   "cardPublic": {
     "loading": "Loading card…",

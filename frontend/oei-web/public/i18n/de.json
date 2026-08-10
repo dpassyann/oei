@@ -1434,7 +1434,14 @@
       "out": "Verkleinern",
       "reset": "Ansicht zurücksetzen"
     },
-    "minimap": "Übersichtskarte"
+    "minimap": "Übersichtskarte",
+    "experts": {
+      "loadMore": "Weitere Expertinnen und Experten laden"
+    },
+    "fullscreen": {
+      "enter": "Vollbild",
+      "exit": "Vollbild beenden"
+    }
   },
   "cardPublic": {
     "loading": "Karte wird geladen…",

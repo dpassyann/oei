@@ -1,0 +1,57 @@
+$blue: #3fa9ff;
+$gold: #e8a530;
+$ink: #f7f3ea;
+$hex-clip: polygon(25% 5%, 75% 5%, 98% 50%, 75% 95%, 25% 95%, 2% 50%);
+
+:host {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(31, 59, 99, 0.6);
+  background: rgba(9, 22, 44, 0.6);
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+  z-index: 3;
+}
+.oei-network-legend__row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 11px;
+  color: rgba($ink, 0.75);
+}
+.oei-network-legend__icon {
+  flex: none;
+  &--domain {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: radial-gradient(circle, $blue 30%, rgba($blue, 0.1));
+  }
+  &--concept {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1.5px solid $blue;
+    margin: 0 2px;
+  }
+  &--cert {
+    width: 10px;
+    height: 10px;
+    background: $gold;
+    clip-path: $hex-clip;
+    margin: 0 1px;
+  }
+  &--expert {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $ink;
+    margin: 0 2px;
+  }
+}

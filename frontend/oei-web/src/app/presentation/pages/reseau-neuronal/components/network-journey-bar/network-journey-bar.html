@@ -1,0 +1,6 @@
+<span class="oei-network-journey-bar__label">{{ i18n.translate('network.journey.title') }}</span>
+<span class="oei-network-journey-bar__name">{{ journey().name }}</span>
+<button type="button" class="oei-network-journey-bar__btn" (click)="prev.emit()">‹</button>
+<span class="oei-network-journey-bar__step">{{ journey().idx + 1 }}/{{ journey().steps.length }} · {{ currentLabel() }}</span>
+<button type="button" class="oei-network-journey-bar__btn" (click)="next.emit()">›</button>
+<button type="button" class="oei-network-journey-bar__btn oei-network-journey-bar__btn--close" (click)="close.emit()">✕</button>

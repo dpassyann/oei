@@ -1,0 +1,64 @@
+<canvas #canvas class="oei-network-canvas__surface"></canvas>
+
+<!-- Orbital action icons around a selected expert (positioned imperatively every frame, see
+     `draw()`'s `orbitEl` handling — only the layout of the 4 icons themselves is templated). -->
+<div #orbit class="oei-network-canvas__orbit">
+  @for (icon of orbitIcons(); track icon.key) {
+    <div
+      class="oei-network-canvas__orbit-item"
+      [style.left.px]="icon.x"
+      [style.top.px]="icon.y"
+      [style.animation-delay]="icon.delay"
+    >
+      <div class="oei-network-canvas__orbit-btn-wrap">
+        <button
+          type="button"
+          class="oei-network-canvas__orbit-btn"
+          [attr.title]="i18n.translate(icon.labelKey)"
+          (click)="onOrbitClick(icon.key)"
+        >
+          @switch (icon.key) {
+            @case ('profile') {
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="8" cy="5.2" r="2.7" />
+                <path d="M2.6 13.6c1.3-3.2 9.5-3.2 10.8 0" />
+              </svg>
+            }
+            @case ('linkedin') {
+              <span>in</span>
+            }
+            @case ('youtube') {
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+                <path d="M5.8 4.8l5.4 3.2-5.4 3.2z" fill="currentColor" stroke="none" />
+              </svg>
+            }
+            @case ('contact') {
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="12" height="8.5" rx="1" />
+                <path d="M2.5 5l5.5 4.2L13.5 5" />
+              </svg>
+            }
+          }
+        </button>
+        <span class="oei-network-canvas__orbit-label">{{ i18n.translate(icon.labelKey) }}</span>
+      </div>
+    </div>
+  }
+</div>
+
+@if (expertsHasMore()) {
+  <button type="button" class="oei-network-canvas__load-more" (click)="loadMoreExperts()">
+    {{ i18n.translate('network.experts.loadMore') }}
+  </button>
+}
+
+<div class="oei-network-canvas__bottom-right">
+  <div class="oei-network-canvas__zoom-controls">
+    <button type="button" class="oei-network-canvas__zoom-btn" (click)="zoomIn()" [attr.aria-label]="i18n.translate('network.zoom.in')">+</button>
+    <button type="button" class="oei-network-canvas__zoom-btn" (click)="zoomOut()" [attr.aria-label]="i18n.translate('network.zoom.out')">−</button>
+    <button type="button" class="oei-network-canvas__zoom-btn" (click)="zoomReset()" [attr.aria-label]="i18n.translate('network.zoom.reset')">⌂</button>
+  </div>
+  <div class="oei-network-canvas__minimap-frame">
+    <canvas #minimap class="oei-network-canvas__minimap" [attr.aria-label]="i18n.translate('network.minimap')"></canvas>
+  </div>
+</div>

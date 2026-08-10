@@ -1,0 +1,106 @@
+<div class="oei-network-dossier-panel__corner oei-network-dossier-panel__corner--tl"></div>
+<div class="oei-network-dossier-panel__corner oei-network-dossier-panel__corner--tr"></div>
+<div class="oei-network-dossier-panel__corner oei-network-dossier-panel__corner--bl"></div>
+<div class="oei-network-dossier-panel__corner oei-network-dossier-panel__corner--br"></div>
+<div class="oei-network-dossier-panel__scan-wrap">
+  <div class="oei-network-dossier-panel__scan"></div>
+</div>
+<div class="oei-network-dossier-panel__body oei-scroll">
+  @if (isExpert() && node(); as n) {
+    <div class="oei-network-dossier-panel__inner">
+      <div class="oei-network-dossier-panel__header">
+        <span>{{ i18n.translate('network.dossier.expertHeader') }} // {{ expId() }}</span>
+        <span class="oei-network-dossier-panel__blink">▮</span>
+      </div>
+      <div class="oei-network-dossier-panel__status">
+        ● {{ i18n.translate('network.dossier.identificationValidated') }}
+      </div>
+      <div class="oei-network-dossier-panel__top">
+        <div class="oei-network-dossier-panel__avatar">{{ expInitials() }}</div>
+        <button type="button" class="oei-network-dossier-panel__close" (click)="close.emit()">✕</button>
+      </div>
+      <div class="oei-network-dossier-panel__name">{{ n.label }}</div>
+      <div class="oei-network-dossier-panel__role">{{ n.role }} · {{ n.company }}</div>
+      <div class="oei-network-dossier-panel__tags">
+        <span class="oei-network-dossier-panel__tag oei-network-dossier-panel__tag--blue">{{ n.country }}</span>
+        <span class="oei-network-dossier-panel__tag oei-network-dossier-panel__tag--gold"
+          >{{ i18n.translate('network.dossier.levelPrefix') }} {{ n.level }}</span
+        >
+      </div>
+      <div class="oei-network-dossier-panel__score">
+        <div class="oei-network-dossier-panel__score-row">
+          <span>{{ i18n.translate('network.dossier.expertiseScore') }}</span>
+          <span class="oei-network-dossier-panel__score-value">{{ n.score }}</span>
+        </div>
+        <div class="oei-network-dossier-panel__score-bar">
+          <div class="oei-network-dossier-panel__score-fill" [style.width]="expScorePct()"></div>
+        </div>
+      </div>
+      <div class="oei-network-dossier-panel__section-title">{{ i18n.translate('network.dossier.expertiseDomains') }}</div>
+      <div class="oei-network-dossier-panel__chip-row">
+        @for (topic of topics(); track topic) {
+          <span class="oei-network-dossier-panel__tag oei-network-dossier-panel__tag--blue-soft">{{ topic }}</span>
+        }
+      </div>
+      <div class="oei-network-dossier-panel__section-title">{{ i18n.translate('network.dossier.certifications') }}</div>
+      <div class="oei-network-dossier-panel__list">
+        @for (cert of n.certs; track cert) {
+          <div class="oei-network-dossier-panel__cert">
+            <span class="oei-network-dossier-panel__hex"></span>{{ cert }}
+          </div>
+        }
+      </div>
+      <div class="oei-network-dossier-panel__section-title">{{ i18n.translate('network.dossier.badges') }}</div>
+      <div class="oei-network-dossier-panel__chip-row">
+        @for (badge of n.badges; track badge) {
+          <span class="oei-network-dossier-panel__tag oei-network-dossier-panel__tag--gold-soft">{{ badge }}</span>
+        }
+      </div>
+      <button type="button" class="oei-network-dossier-panel__cta" (click)="startJourney.emit()">
+        {{ i18n.translate('network.dossier.viewJourney') }}
+      </button>
+      <div class="oei-network-dossier-panel__actions">
+        <button type="button" class="oei-network-dossier-panel__action">{{ i18n.translate('network.dossier.profile') }}</button>
+        <button type="button" class="oei-network-dossier-panel__action">{{ i18n.translate('network.dossier.follow') }}</button>
+        <button type="button" class="oei-network-dossier-panel__action">{{ i18n.translate('network.dossier.contact') }}</button>
+      </div>
+    </div>
+  }
+  @if (isCert() && node(); as n) {
+    <div class="oei-network-dossier-panel__inner">
+      <div class="oei-network-dossier-panel__header">
+        <span>{{ i18n.translate('network.dossier.certHeader') }}</span>
+        <span class="oei-network-dossier-panel__blink">▮</span>
+      </div>
+      <div class="oei-network-dossier-panel__status">● {{ i18n.translate('network.dossier.certRegistered') }}</div>
+      <div class="oei-network-dossier-panel__top">
+        <div class="oei-network-dossier-panel__hex-badge">✓</div>
+        <button type="button" class="oei-network-dossier-panel__close" (click)="close.emit()">✕</button>
+      </div>
+      <div class="oei-network-dossier-panel__name">{{ n.label }}</div>
+      <div class="oei-network-dossier-panel__provider">{{ n.provider }}</div>
+      <div class="oei-network-dossier-panel__desc">{{ n.desc }}</div>
+      <div class="oei-network-dossier-panel__section-title">{{ i18n.translate('network.dossier.prerequisites') }}</div>
+      <div class="oei-network-dossier-panel__prereq">{{ n.prereq }}</div>
+      <div class="oei-network-dossier-panel__section-title">{{ i18n.translate('network.dossier.validatedSkills') }}</div>
+      <div class="oei-network-dossier-panel__chip-row">
+        @for (comp of n.comps; track comp) {
+          <span class="oei-network-dossier-panel__tag oei-network-dossier-panel__tag--blue-soft">{{ comp }}</span>
+        }
+      </div>
+      <div class="oei-network-dossier-panel__cols">
+        <div>
+          <div class="oei-network-dossier-panel__col-label">{{ i18n.translate('network.dossier.validity') }}</div>
+          <div class="oei-network-dossier-panel__col-value">{{ n.valid }}</div>
+        </div>
+        <div>
+          <div class="oei-network-dossier-panel__col-label">{{ i18n.translate('network.dossier.linkedExperts') }}</div>
+          <div class="oei-network-dossier-panel__col-value oei-network-dossier-panel__col-value--blue">{{ n.expCount || 0 }}</div>
+        </div>
+      </div>
+      <a href="#" class="oei-network-dossier-panel__cta oei-network-dossier-panel__cta--link" (click)="$event.preventDefault()">
+        {{ i18n.translate('network.dossier.readMore') }} →
+      </a>
+    </div>
+  }
+</div>

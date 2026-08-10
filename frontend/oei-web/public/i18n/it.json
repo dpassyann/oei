@@ -1434,7 +1434,14 @@
       "out": "Zoom indietro",
       "reset": "Ripristina vista"
     },
-    "minimap": "Minimappa"
+    "minimap": "Minimappa",
+    "experts": {
+      "loadMore": "Carica altri esperti"
+    },
+    "fullscreen": {
+      "enter": "Schermo intero",
+      "exit": "Esci da schermo intero"
+    }
   },
   "cardPublic": {
     "loading": "Caricamento della tessera…",

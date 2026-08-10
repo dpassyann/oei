@@ -1,0 +1,74 @@
+$blue: #3fa9ff;
+$gold: #e8a530;
+$ink: #f7f3ea;
+$panel-strong: rgba(9, 22, 44, 0.92);
+$mono: 'Space Grotesk', sans-serif;
+
+:host {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 12px 10px 20px;
+  border-radius: 99px;
+  background: $panel-strong;
+  border: 1px solid rgba($gold, 0.5);
+  backdrop-filter: blur(8px);
+  z-index: 8;
+  @media (prefers-reduced-motion: no-preference) {
+    animation: oeiUp 0.2s ease;
+  }
+}
+.oei-network-journey-bar__label {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $gold;
+}
+.oei-network-journey-bar__name {
+  font: 500 13px $mono;
+  color: $ink;
+}
+.oei-network-journey-bar__btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba($blue, 0.4);
+  background: transparent;
+  color: $blue;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  &:hover {
+    background: rgba($blue, 0.15);
+  }
+  &--close {
+    border-color: rgba(31, 59, 99, 0.8);
+    color: rgba($ink, 0.6);
+    font-size: 12px;
+    &:hover {
+      color: $ink;
+      background: transparent;
+    }
+  }
+}
+.oei-network-journey-bar__step {
+  font-size: 12px;
+  color: $blue;
+  min-width: 150px;
+  text-align: center;
+}
+
+@keyframes oeiUp {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}

@@ -1,0 +1,18 @@
+<input
+  class="oei-network-search-bar__input"
+  type="text"
+  [value]="query()"
+  (input)="onInput($any($event.target).value)"
+  [placeholder]="i18n.translate('network.searchPlaceholder')"
+/>
+@if (hasResults()) {
+  <div class="oei-network-search-bar__results">
+    @for (r of results(); track r.node.id) {
+      <div class="oei-network-search-bar__result" (click)="resultPicked.emit(r)">
+        <span class="oei-network-search-bar__dot" [style.background]="r.color"></span>
+        <span class="oei-network-search-bar__label">{{ r.label }}</span>
+        <span class="oei-network-search-bar__kind">{{ i18n.translate(r.kindLabelKey) }}</span>
+      </div>
+    }
+  </div>
+}

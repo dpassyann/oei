@@ -1,0 +1,53 @@
+<button type="button" class="oei-network-filters__toggle" (click)="toggleOpen.emit()">
+  <span class="oei-network-filters__dot"></span>
+  {{ i18n.translate('network.filters.button') }}
+  @if (filterCount() > 0) {
+    ({{ filterCount() }})
+  }
+</button>
+@if (open()) {
+  <div class="oei-network-filters__panel">
+    <div class="oei-network-filters__heading">{{ i18n.translate('network.filters.country') }}</div>
+    <div class="oei-network-filters__chip-row">
+      @for (chip of countryChips(); track chip.label) {
+        <button
+          type="button"
+          class="oei-network-filters__chip"
+          [class.oei-network-filters__chip--active]="chip.active"
+          (click)="chipToggled.emit({ kind: 'country', label: chip.label })"
+        >
+          {{ chip.label }}
+        </button>
+      }
+    </div>
+    <div class="oei-network-filters__heading">{{ i18n.translate('network.filters.level') }}</div>
+    <div class="oei-network-filters__chip-row">
+      @for (chip of levelChips(); track chip.label) {
+        <button
+          type="button"
+          class="oei-network-filters__chip"
+          [class.oei-network-filters__chip--active]="chip.active"
+          (click)="chipToggled.emit({ kind: 'level', label: chip.label })"
+        >
+          {{ chip.label }}
+        </button>
+      }
+    </div>
+    <div class="oei-network-filters__heading">{{ i18n.translate('network.filters.provider') }}</div>
+    <div class="oei-network-filters__chip-row">
+      @for (chip of providerChips(); track chip.label) {
+        <button
+          type="button"
+          class="oei-network-filters__chip"
+          [class.oei-network-filters__chip--active]="chip.active"
+          (click)="chipToggled.emit({ kind: 'provider', label: chip.label })"
+        >
+          {{ chip.label }}
+        </button>
+      }
+    </div>
+    <button type="button" class="oei-network-filters__reset" (click)="reset.emit()">
+      {{ i18n.translate('network.filters.reset') }}
+    </button>
+  </div>
+}

@@ -181,6 +181,13 @@ import { ADMIN_INSTITUTIONS_PORT } from './domain/port/admin/admin-institutions.
 import { AdminInstitutionsMockAdapter } from './infrastructure/adapter/admin-institutions-mock.adapter';
 import { AdminInstitutionsApiAdapter } from './infrastructure/adapter/admin-institutions-api.adapter';
 
+// Professional Neural Network canvas explorer (`/reseau-neuronal`) — progressive domain →
+// topics/certifications → paginated experts loading, see `NetworkGraphPort`'s doc comment.
+// Appended last, as instructed, to avoid conflicting with other work in progress on this file.
+import { NETWORK_GRAPH_PORT } from './domain/port/network/network-graph.port';
+import { NetworkGraphMockAdapter } from './infrastructure/adapter/network-graph-mock.adapter';
+import { NetworkGraphApiAdapter } from './infrastructure/adapter/network-graph-api.adapter';
+
 // Real Keycloak Authorization Code + PKCE config (realm `oei`, client `oei-frontend` — see
 // `keycloak/realm-export/oei-realm.json`: publicClient, standardFlowEnabled,
 // directAccessGrantsEnabled=false, pkce.code.challenge.method=S256, redirectUris
@@ -515,6 +522,10 @@ export const appConfig: ApplicationConfig = {
         inject(RuntimeConfig).isMock()
           ? inject(SalaryBenchmarkMockAdapter)
           : inject(SalaryBenchmarkApiAdapter),
+    },
+    {
+      provide: NETWORK_GRAPH_PORT,
+      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(NetworkGraphMockAdapter) : inject(NetworkGraphApiAdapter)),
     },
   ],
 };

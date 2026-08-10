@@ -1434,7 +1434,14 @@
       "out": "Alejar",
       "reset": "Restablecer vista"
     },
-    "minimap": "Minimapa"
+    "minimap": "Minimapa",
+    "experts": {
+      "loadMore": "Cargar más expertos"
+    },
+    "fullscreen": {
+      "enter": "Pantalla completa",
+      "exit": "Salir de pantalla completa"
+    }
   },
   "cardPublic": {
     "loading": "Cargando la tarjeta…",

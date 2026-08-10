@@ -1,0 +1,50 @@
+$gold: #e8a530;
+$blue: #3fa9ff;
+$ink: #f7f3ea;
+$mono: 'Space Grotesk', sans-serif;
+
+:host {
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  pointer-events: none;
+  z-index: 3;
+  display: block;
+}
+.oei-network-breadcrumb__row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.oei-network-breadcrumb__logo {
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid $gold;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 11px $mono;
+  color: $gold;
+  letter-spacing: 0.08em;
+  flex: none;
+}
+.oei-network-breadcrumb__title {
+  font: 500 14px $mono;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $ink;
+}
+.oei-network-breadcrumb__subtitle {
+  font-size: 11px;
+  color: rgba($ink, 0.5);
+  letter-spacing: 0.05em;
+  margin-top: 1px;
+}
+.oei-network-breadcrumb__crumb {
+  margin-top: 16px;
+  font: 12px $mono;
+  color: $blue;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}

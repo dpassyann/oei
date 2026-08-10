@@ -1,301 +1,74 @@
-<div class="oei-network">
-  <canvas #canvas class="oei-network__canvas"></canvas>
-
-  <!-- Orbital action icons around a selected expert (positioned imperatively every frame, see
-       `draw()`'s `orbitEl` handling — only the layout of the 4 icons themselves is templated). -->
-  <div #orbit class="oei-network__orbit">
-    @for (icon of orbitIcons(); track icon.key) {
-      <div
-        class="oei-network__orbit-item"
-        [style.left.px]="icon.x"
-        [style.top.px]="icon.y"
-        [style.animation-delay]="icon.delay"
-      >
-        <div class="oei-network__orbit-btn-wrap">
-          <button
-            type="button"
-            class="oei-network__orbit-btn"
-            [attr.title]="i18n.translate(icon.labelKey)"
-            (click)="icon.key === 'profile' ? openExpertProfile() : null"
-          >
-            @switch (icon.key) {
-              @case ('profile') {
-                <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="8" cy="5.2" r="2.7" />
-                  <path d="M2.6 13.6c1.3-3.2 9.5-3.2 10.8 0" />
-                </svg>
-              }
-              @case ('linkedin') {
-                <span>in</span>
-              }
-              @case ('youtube') {
-                <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
-                  <path d="M5.8 4.8l5.4 3.2-5.4 3.2z" fill="currentColor" stroke="none" />
-                </svg>
-              }
-              @case ('contact') {
-                <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="2" y="4" width="12" height="8.5" rx="1" />
-                  <path d="M2.5 5l5.5 4.2L13.5 5" />
-                </svg>
-              }
-            }
-          </button>
-          <span class="oei-network__orbit-label">{{ i18n.translate(icon.labelKey) }}</span>
-        </div>
-      </div>
-    }
-  </div>
-
-  <!-- Logo + breadcrumb -->
-  <div class="oei-network__brand">
-    <div class="oei-network__brand-row">
-      <div class="oei-network__logo">OEI</div>
-      <div>
-        <div class="oei-network__title">{{ i18n.translate('network.title') }}</div>
-        <div class="oei-network__subtitle">{{ i18n.translate('network.subtitle') }}</div>
-      </div>
-    </div>
-    <div class="oei-network__crumb">{{ crumbText() }}</div>
-  </div>
-
-  <!-- Search -->
-  <div class="oei-network__search">
-    <input
-      class="oei-network__search-input"
-      type="text"
-      [value]="searchQuery()"
-      (input)="onSearchInput($any($event.target).value)"
-      [placeholder]="i18n.translate('network.searchPlaceholder')"
+<div
+  class="oei-network-page"
+  [class.oei-network-page--fullscreen]="fullscreen()"
+  (keydown)="onKeydown($event)"
+>
+  <div class="oei-network-page__stage">
+    <oei-network-canvas
+      [fCountry]="fCountry()"
+      [fLevel]="fLevel()"
+      [fProv]="fProv()"
+      [journey]="journey()"
+      (crumbChanged)="onCrumbChanged($event)"
+      (openExpertProfileRequested)="openExpertProfile()"
     />
-    @if (hasResults()) {
-      <div class="oei-network__search-results">
-        @for (r of results(); track r.node.id) {
-          <div class="oei-network__search-result" (click)="pickResult(r)">
-            <span class="oei-network__search-dot" [style.background]="r.color"></span>
-            <span class="oei-network__search-label">{{ r.label }}</span>
-            <span class="oei-network__search-kind">{{ i18n.translate(r.kindLabelKey) }}</span>
-          </div>
-        }
-      </div>
-    }
-  </div>
 
-  <!-- Filters -->
-  <div class="oei-network__filters">
-    <button type="button" class="oei-network__filters-toggle" (click)="toggleFilters()">
-      <span class="oei-network__filters-dot"></span>
-      {{ i18n.translate('network.filters.button') }}
-      @if (filterCount() > 0) {
-        ({{ filterCount() }})
+    <oei-network-breadcrumb [domainLabel]="crumb().domainLabel" [depth]="crumb().depth" />
+
+    <oei-network-search-bar
+      [query]="searchQuery()"
+      [results]="results()"
+      (queryChange)="onSearchInput($event)"
+      (resultPicked)="pickResult($event)"
+    />
+
+    <oei-network-filters
+      [open]="filtersOpen()"
+      [countryChips]="countryChips()"
+      [levelChips]="levelChips()"
+      [providerChips]="providerChips()"
+      (toggleOpen)="toggleFilters()"
+      (chipToggled)="toggleChip($event)"
+      (reset)="resetFilters()"
+    />
+
+    @if (dossierOn()) {
+      <oei-network-dossier-panel
+        [node]="selNode()"
+        [topics]="expTopics()"
+        (close)="closePanel()"
+        (openProfile)="openExpertProfile()"
+        (startJourney)="startJourney()"
+      />
+    }
+
+    @if (journey(); as j) {
+      <oei-network-journey-bar
+        [journey]="j"
+        [currentLabel]="journeyCurrentLabel()"
+        (prev)="journeyGo(-1)"
+        (next)="journeyGo(1)"
+        (close)="journeyClose()"
+      />
+    }
+
+    @if (hintOn()) {
+      <div class="oei-network-page__hint">{{ i18n.translate('network.hint') }}</div>
+    }
+
+    <oei-network-legend />
+
+    <button
+      type="button"
+      class="oei-network-page__fullscreen-toggle"
+      [class.oei-network-page__fullscreen-toggle--exit]="fullscreen()"
+      (click)="toggleFullscreen()"
+    >
+      @if (fullscreen()) {
+        {{ i18n.translate('network.fullscreen.exit') }}
+      } @else {
+        {{ i18n.translate('network.fullscreen.enter') }}
       }
     </button>
-    @if (filtersOpen()) {
-      <div class="oei-network__filters-panel">
-        <div class="oei-network__filters-heading">{{ i18n.translate('network.filters.country') }}</div>
-        <div class="oei-network__chip-row">
-          @for (chip of countryChips(); track chip.label) {
-            <button
-              type="button"
-              class="oei-network__chip"
-              [class.oei-network__chip--active]="chip.active"
-              (click)="toggleChip('country', chip.label)"
-            >
-              {{ chip.label }}
-            </button>
-          }
-        </div>
-        <div class="oei-network__filters-heading">{{ i18n.translate('network.filters.level') }}</div>
-        <div class="oei-network__chip-row">
-          @for (chip of levelChips(); track chip.label) {
-            <button
-              type="button"
-              class="oei-network__chip"
-              [class.oei-network__chip--active]="chip.active"
-              (click)="toggleChip('level', chip.label)"
-            >
-              {{ chip.label }}
-            </button>
-          }
-        </div>
-        <div class="oei-network__filters-heading">{{ i18n.translate('network.filters.provider') }}</div>
-        <div class="oei-network__chip-row">
-          @for (chip of providerChips(); track chip.label) {
-            <button
-              type="button"
-              class="oei-network__chip"
-              [class.oei-network__chip--active]="chip.active"
-              (click)="toggleChip('provider', chip.label)"
-            >
-              {{ chip.label }}
-            </button>
-          }
-        </div>
-        <button type="button" class="oei-network__filters-reset" (click)="resetFilters()">
-          {{ i18n.translate('network.filters.reset') }}
-        </button>
-      </div>
-    }
-  </div>
-
-  <!-- Dossier panel -->
-  @if (dossierOn()) {
-    <div class="oei-network__dossier">
-      <div class="oei-network__dossier-corner oei-network__dossier-corner--tl"></div>
-      <div class="oei-network__dossier-corner oei-network__dossier-corner--tr"></div>
-      <div class="oei-network__dossier-corner oei-network__dossier-corner--bl"></div>
-      <div class="oei-network__dossier-corner oei-network__dossier-corner--br"></div>
-      <div class="oei-network__dossier-scan-wrap">
-        <div class="oei-network__dossier-scan"></div>
-      </div>
-      <div class="oei-network__dossier-body oei-scroll">
-        @if (selIsExpert()) {
-          <div class="oei-network__dossier-inner">
-            <div class="oei-network__dossier-header">
-              <span>{{ i18n.translate('network.dossier.expertHeader') }} // {{ expId() }}</span>
-              <span class="oei-network__dossier-blink">▮</span>
-            </div>
-            <div class="oei-network__dossier-status">
-              ● {{ i18n.translate('network.dossier.identificationValidated') }}
-            </div>
-            <div class="oei-network__dossier-top">
-              <div class="oei-network__dossier-avatar">{{ expInitials() }}</div>
-              <button type="button" class="oei-network__dossier-close" (click)="closePanel()">✕</button>
-            </div>
-            <div class="oei-network__dossier-name">{{ selNode()!.label }}</div>
-            <div class="oei-network__dossier-role">{{ selNode()!.role }} · {{ selNode()!.company }}</div>
-            <div class="oei-network__dossier-tags">
-              <span class="oei-network__tag oei-network__tag--blue">{{ selNode()!.country }}</span>
-              <span class="oei-network__tag oei-network__tag--gold"
-                >{{ i18n.translate('network.dossier.levelPrefix') }} {{ selNode()!.level }}</span
-              >
-            </div>
-            <div class="oei-network__dossier-score">
-              <div class="oei-network__dossier-score-row">
-                <span>{{ i18n.translate('network.dossier.expertiseScore') }}</span>
-                <span class="oei-network__dossier-score-value">{{ selNode()!.score }}</span>
-              </div>
-              <div class="oei-network__dossier-score-bar">
-                <div class="oei-network__dossier-score-fill" [style.width]="expScorePct()"></div>
-              </div>
-            </div>
-            <div class="oei-network__dossier-section-title">{{ i18n.translate('network.dossier.expertiseDomains') }}</div>
-            <div class="oei-network__chip-row">
-              @for (topic of expTopics(); track topic) {
-                <span class="oei-network__tag oei-network__tag--blue-soft">{{ topic }}</span>
-              }
-            </div>
-            <div class="oei-network__dossier-section-title">{{ i18n.translate('network.dossier.certifications') }}</div>
-            <div class="oei-network__dossier-list">
-              @for (cert of selNode()!.certs; track cert) {
-                <div class="oei-network__dossier-cert">
-                  <span class="oei-network__hex"></span>{{ cert }}
-                </div>
-              }
-            </div>
-            <div class="oei-network__dossier-section-title">{{ i18n.translate('network.dossier.badges') }}</div>
-            <div class="oei-network__chip-row">
-              @for (badge of selNode()!.badges; track badge) {
-                <span class="oei-network__tag oei-network__tag--gold-soft">{{ badge }}</span>
-              }
-            </div>
-            <button type="button" class="oei-network__dossier-cta" (click)="startJourney()">
-              {{ i18n.translate('network.dossier.viewJourney') }}
-            </button>
-            <div class="oei-network__dossier-actions">
-              <button type="button" class="oei-network__dossier-action">{{ i18n.translate('network.dossier.profile') }}</button>
-              <button type="button" class="oei-network__dossier-action">{{ i18n.translate('network.dossier.follow') }}</button>
-              <button type="button" class="oei-network__dossier-action">{{ i18n.translate('network.dossier.contact') }}</button>
-            </div>
-          </div>
-        }
-        @if (selIsCert()) {
-          <div class="oei-network__dossier-inner">
-            <div class="oei-network__dossier-header">
-              <span>{{ i18n.translate('network.dossier.certHeader') }}</span>
-              <span class="oei-network__dossier-blink">▮</span>
-            </div>
-            <div class="oei-network__dossier-status">● {{ i18n.translate('network.dossier.certRegistered') }}</div>
-            <div class="oei-network__dossier-top">
-              <div class="oei-network__hex-badge">✓</div>
-              <button type="button" class="oei-network__dossier-close" (click)="closePanel()">✕</button>
-            </div>
-            <div class="oei-network__dossier-name">{{ selNode()!.label }}</div>
-            <div class="oei-network__dossier-provider">{{ selNode()!.provider }}</div>
-            <div class="oei-network__dossier-desc">{{ selNode()!.desc }}</div>
-            <div class="oei-network__dossier-section-title">{{ i18n.translate('network.dossier.prerequisites') }}</div>
-            <div class="oei-network__dossier-prereq">{{ selNode()!.prereq }}</div>
-            <div class="oei-network__dossier-section-title">{{ i18n.translate('network.dossier.validatedSkills') }}</div>
-            <div class="oei-network__chip-row">
-              @for (comp of selNode()!.comps; track comp) {
-                <span class="oei-network__tag oei-network__tag--blue-soft">{{ comp }}</span>
-              }
-            </div>
-            <div class="oei-network__dossier-cols">
-              <div>
-                <div class="oei-network__dossier-col-label">{{ i18n.translate('network.dossier.validity') }}</div>
-                <div class="oei-network__dossier-col-value">{{ selNode()!.valid }}</div>
-              </div>
-              <div>
-                <div class="oei-network__dossier-col-label">{{ i18n.translate('network.dossier.linkedExperts') }}</div>
-                <div class="oei-network__dossier-col-value oei-network__dossier-col-value--blue">{{ selNode()!.expCount || 0 }}</div>
-              </div>
-            </div>
-            <a href="#" class="oei-network__dossier-cta oei-network__dossier-cta--link" (click)="$event.preventDefault()">
-              {{ i18n.translate('network.dossier.readMore') }} →
-            </a>
-          </div>
-        }
-      </div>
-    </div>
-  }
-
-  <!-- Journey nav bar -->
-  @if (journey(); as j) {
-    <div class="oei-network__journey">
-      <span class="oei-network__journey-label">{{ i18n.translate('network.journey.title') }}</span>
-      <span class="oei-network__journey-name">{{ j.name }}</span>
-      <button type="button" class="oei-network__journey-btn" (click)="journeyGo(j.idx - 1)">‹</button>
-      <span class="oei-network__journey-step">{{ j.idx + 1 }}/{{ j.steps.length }} · {{ journeyCurrentLabel() }}</span>
-      <button type="button" class="oei-network__journey-btn" (click)="journeyGo(j.idx + 1)">›</button>
-      <button type="button" class="oei-network__journey-btn oei-network__journey-btn--close" (click)="journeyClose()">✕</button>
-    </div>
-  }
-
-  <!-- Interaction hint -->
-  @if (hintOn()) {
-    <div class="oei-network__hint">{{ i18n.translate('network.hint') }}</div>
-  }
-
-  <!-- Legend -->
-  <div class="oei-network__legend">
-    <div class="oei-network__legend-row">
-      <span class="oei-network__legend-icon oei-network__legend-icon--domain"></span>
-      {{ i18n.translate('network.legend.domain') }}
-    </div>
-    <div class="oei-network__legend-row">
-      <span class="oei-network__legend-icon oei-network__legend-icon--concept"></span>
-      {{ i18n.translate('network.legend.concept') }}
-    </div>
-    <div class="oei-network__legend-row">
-      <span class="oei-network__legend-icon oei-network__legend-icon--cert"></span>
-      {{ i18n.translate('network.legend.certification') }}
-    </div>
-    <div class="oei-network__legend-row">
-      <span class="oei-network__legend-icon oei-network__legend-icon--expert"></span>
-      {{ i18n.translate('network.legend.expert') }}
-    </div>
-  </div>
-
-  <!-- Zoom controls + minimap -->
-  <div class="oei-network__bottom-right">
-    <div class="oei-network__zoom-controls">
-      <button type="button" class="oei-network__zoom-btn" (click)="zoomIn()" [attr.aria-label]="i18n.translate('network.zoom.in')">+</button>
-      <button type="button" class="oei-network__zoom-btn" (click)="zoomOut()" [attr.aria-label]="i18n.translate('network.zoom.out')">−</button>
-      <button type="button" class="oei-network__zoom-btn" (click)="zoomReset()" [attr.aria-label]="i18n.translate('network.zoom.reset')">⌂</button>
-    </div>
-    <div class="oei-network__minimap-frame">
-      <canvas #minimap class="oei-network__minimap" [attr.aria-label]="i18n.translate('network.minimap')"></canvas>
-    </div>
   </div>
 </div>

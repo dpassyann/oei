@@ -1,0 +1,352 @@
+$blue: #3fa9ff;
+$gold: #e8a530;
+$ink: #f7f3ea;
+$navy: #071224;
+$hex-grad: linear-gradient(160deg, #e8a530, #b97e1e);
+$hex-clip: polygon(25% 5%, 75% 5%, 98% 50%, 75% 95%, 25% 95%, 2% 50%);
+$mono: 'Space Grotesk', sans-serif;
+
+:host {
+  position: absolute;
+  top: 76px;
+  right: 24px;
+  width: 334px;
+  z-index: 7;
+  display: block;
+  @media (prefers-reduced-motion: no-preference) {
+    animation: oeiSlide 0.22s ease;
+  }
+}
+.oei-network-dossier-panel__corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  z-index: 2;
+  &--tl {
+    left: -5px;
+    top: -5px;
+    border-left: 2px solid $gold;
+    border-top: 2px solid $gold;
+  }
+  &--tr {
+    right: -5px;
+    top: -5px;
+    border-right: 2px solid $gold;
+    border-top: 2px solid $gold;
+  }
+  &--bl {
+    left: -5px;
+    bottom: -5px;
+    border-left: 2px solid $gold;
+    border-bottom: 2px solid $gold;
+  }
+  &--br {
+    right: -5px;
+    bottom: -5px;
+    border-right: 2px solid $gold;
+    border-bottom: 2px solid $gold;
+  }
+}
+.oei-network-dossier-panel__scan-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 3;
+}
+.oei-network-dossier-panel__scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 46px;
+  background: linear-gradient(180deg, rgba($blue, 0), rgba($blue, 0.25), rgba($blue, 0));
+  @media (prefers-reduced-motion: no-preference) {
+    animation: oeiScanY 1s ease-out both;
+  }
+}
+.oei-network-dossier-panel__body {
+  position: relative;
+  max-height: calc(100vh - 250px);
+  overflow-y: auto;
+  border-radius: 4px;
+  border: 1px solid rgba($gold, 0.55);
+  background: rgba(8, 18, 38, 0.94);
+  backdrop-filter: blur(14px);
+  color: $ink;
+}
+.oei-network-dossier-panel__inner {
+  padding: 18px 20px 20px;
+}
+.oei-network-dossier-panel__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: $gold;
+  border-bottom: 1px dashed rgba($gold, 0.4);
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+.oei-network-dossier-panel__blink {
+  @media (prefers-reduced-motion: no-preference) {
+    animation: oeiBlink 1s steps(1) infinite;
+  }
+}
+.oei-network-dossier-panel__status {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10px;
+  color: $blue;
+  letter-spacing: 0.1em;
+  margin-bottom: 14px;
+  @media (prefers-reduced-motion: no-preference) {
+    animation: oeiReveal 0.4s 0.2s both;
+  }
+}
+.oei-network-dossier-panel__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.oei-network-dossier-panel__avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #1f3b63, #0b1c38);
+  border: 1.5px solid $blue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 18px $mono;
+  color: $blue;
+}
+.oei-network-dossier-panel__hex-badge {
+  width: 48px;
+  height: 48px;
+  background: $hex-grad;
+  clip-path: $hex-clip;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 16px $mono;
+  color: $navy;
+}
+.oei-network-dossier-panel__close {
+  border: none;
+  background: transparent;
+  color: rgba($ink, 0.5);
+  font-size: 15px;
+  cursor: pointer;
+  padding: 2px 6px;
+  &:hover {
+    color: $ink;
+  }
+}
+.oei-network-dossier-panel__name {
+  margin-top: 12px;
+  font: 700 19px $mono;
+}
+.oei-network-dossier-panel__role {
+  font-size: 13px;
+  color: rgba($ink, 0.75);
+  margin-top: 2px;
+}
+.oei-network-dossier-panel__provider {
+  font-size: 12px;
+  color: $gold;
+  margin-top: 3px;
+  letter-spacing: 0.06em;
+}
+.oei-network-dossier-panel__desc {
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba($ink, 0.8);
+  margin-top: 12px;
+}
+.oei-network-dossier-panel__tags {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  align-items: center;
+}
+.oei-network-dossier-panel__tag {
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 99px;
+  &--blue {
+    border: 1px solid rgba($blue, 0.4);
+    color: $blue;
+  }
+  &--gold {
+    border: 1px solid rgba($gold, 0.5);
+    color: $gold;
+  }
+  &--blue-soft {
+    padding: 4px 10px;
+    background: rgba($blue, 0.12);
+    border: 1px solid rgba($blue, 0.3);
+    color: #cfe6ff;
+  }
+  &--gold-soft {
+    padding: 4px 10px;
+    background: rgba($gold, 0.1);
+    border: 1px solid rgba($gold, 0.35);
+    color: $gold;
+  }
+}
+.oei-network-dossier-panel__score {
+  margin-top: 16px;
+}
+.oei-network-dossier-panel__score-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: rgba($ink, 0.55);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.oei-network-dossier-panel__score-value {
+  color: $gold;
+  font: 13px $mono;
+}
+.oei-network-dossier-panel__score-bar {
+  height: 4px;
+  border-radius: 2px;
+  background: #1f3b63;
+  margin-top: 6px;
+}
+.oei-network-dossier-panel__score-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, $blue, $gold);
+}
+.oei-network-dossier-panel__section-title {
+  margin-top: 16px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba($ink, 0.5);
+}
+.oei-network-dossier-panel__chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.oei-network-dossier-panel__list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+.oei-network-dossier-panel__cert {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12px;
+}
+.oei-network-dossier-panel__hex {
+  width: 12px;
+  height: 12px;
+  background: $hex-grad;
+  clip-path: $hex-clip;
+  flex: none;
+}
+.oei-network-dossier-panel__prereq {
+  font-size: 13px;
+  margin-top: 6px;
+  color: rgba($ink, 0.85);
+}
+.oei-network-dossier-panel__cols {
+  display: flex;
+  gap: 18px;
+  margin-top: 16px;
+}
+.oei-network-dossier-panel__col-label {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba($ink, 0.5);
+}
+.oei-network-dossier-panel__col-value {
+  font: 14px $mono;
+  margin-top: 3px;
+  &--blue {
+    color: $blue;
+  }
+}
+.oei-network-dossier-panel__cta {
+  display: block;
+  text-align: center;
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 18px;
+  padding: 11px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(120deg, $gold, #d18f1c);
+  color: $navy;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: none;
+  &:hover {
+    filter: brightness(1.1);
+  }
+  &--link {
+    border-radius: 4px;
+  }
+}
+.oei-network-dossier-panel__actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.oei-network-dossier-panel__action {
+  flex: 1;
+  padding: 9px;
+  border-radius: 12px;
+  border: 1px solid rgba($blue, 0.4);
+  background: transparent;
+  color: $blue;
+  font-size: 12px;
+  cursor: pointer;
+  &:hover {
+    background: rgba($blue, 0.1);
+  }
+}
+
+@keyframes oeiSlide {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes oeiScanY {
+  from {
+    top: -46px;
+  }
+  to {
+    top: 100%;
+  }
+}
+@keyframes oeiBlink {
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes oeiReveal {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

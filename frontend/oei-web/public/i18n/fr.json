@@ -1440,7 +1440,14 @@
       "out": "Dézoomer",
       "reset": "Réinitialiser la vue"
     },
-    "minimap": "Mini-carte"
+    "minimap": "Mini-carte",
+    "experts": {
+      "loadMore": "Charger plus d'experts"
+    },
+    "fullscreen": {
+      "enter": "Plein écran",
+      "exit": "Quitter le plein écran"
+    }
   },
   "cardPublic": {
     "loading": "Chargement de la carte…",

@@ -114,6 +114,14 @@ tags:
       `04-EVENTS-COMMUNITY-FEED.md`.
   - name: admin-events
     description: Modération des propositions d'événement et des commentaires du fil live.
+  - name: public-network
+    description: >
+      Graphe de connaissances du Réseau Neuronal Professionnel (`/reseau-neuronal`) : domaines
+      d'expertise, topics/certifications par domaine, experts par topic. Chargement progressif
+      piloté par le zoom du canvas plutôt qu'un seul appel exhaustif — voir
+      `NetworkGraphPort` (frontend) : `listDomains` (toujours, faible volume),
+      `listTopicsAndCertifications` (par domaine, au zoom), `listExperts` (paginé par topic,
+      `offset`/`limit`, correspondant côté backend à `Pageable`/`Page<T>` Spring Data JPA).
 security: []
 paths:
   # ---------------------------------------------------------------------------
@@ -3009,6 +3017,87 @@ paths:
         "404":
           $ref: "#/components/responses/NotFound"
 
+  # ---------------------------------------------------------------------------
+  # /api/public/v1/network — Réseau Neuronal Professionnel (see `public-network` tag)
+  # ---------------------------------------------------------------------------
+  /api/public/v1/network/domains:
+    get:
+      tags: [public-network]
+      operationId: listNetworkDomains
+      summary: >
+        Les ~9 domaines d'expertise OEI ("vue galaxie"), toujours chargés en entier (faible
+        volume) au chargement de la page.
+      responses:
+        "200":
+          description: Domaines d'expertise
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/NetworkDomain"
+
+  /api/public/v1/network/domains/{domainId}/topics:
+    get:
+      tags: [public-network]
+      operationId: listNetworkTopicsAndCertifications
+      summary: >
+        Topics et certifications d'un domaine, chargés seulement quand l'utilisateur zoome sur
+        ce domaine dans le canvas (voir `NetworkGraphPort.listTopicsAndCertifications`).
+      parameters:
+        - name: domainId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Topics et certifications du domaine
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NetworkTopicsAndCertifications"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/public/v1/network/topics/{topicId}/experts:
+    get:
+      tags: [public-network]
+      operationId: listNetworkExperts
+      summary: >
+        Experts liés à un topic, paginés (`offset`/`limit`) — chargés seulement quand
+        l'utilisateur atteint le niveau de zoom "experts" pour ce topic, une page à la fois
+        (première page puis "charger plus"). Correspond côté backend Spring Boot à
+        `Pageable`/`Page<NetworkExpertEntity>` (`offset`/`limit` → `PageRequest.of(offset /
+        limit, limit)`, `total` → `Page#getTotalElements()`).
+      parameters:
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 12
+      responses:
+        "200":
+          description: Page d'experts du topic
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NetworkExpertPage"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
 components:
   securitySchemes:
     bearerAuth:
@@ -5134,3 +5223,149 @@ components:
             moderatorNote:
               type: string
               nullable: true
+
+    # ---------------------------------------------------------------------------
+    # public-network — Réseau Neuronal Professionnel
+    # ---------------------------------------------------------------------------
+    NetworkDomain:
+      type: object
+      required: [id, label, x, y, neighborDomainIds]
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        x:
+          type: number
+        y:
+          type: number
+        neighborDomainIds:
+          type: array
+          items:
+            type: string
+
+    NetworkTopic:
+      type: object
+      required: [id, domainId, label, x, y, relatedTopicIds]
+      properties:
+        id:
+          type: string
+        domainId:
+          type: string
+        label:
+          type: string
+        x:
+          type: number
+        y:
+          type: number
+        relatedTopicIds:
+          type: array
+          items:
+            type: string
+
+    NetworkCertification:
+      type: object
+      required:
+        [id, topicId, domainId, label, provider, prereqCertificationId, description, validatedSkills, validityPeriod, expertCount, x, y]
+      properties:
+        id:
+          type: string
+        topicId:
+          type: string
+        domainId:
+          type: string
+        label:
+          type: string
+        provider:
+          type: string
+        prereqCertificationId:
+          type: string
+          nullable: true
+        description:
+          type: string
+        validatedSkills:
+          type: array
+          items:
+            type: string
+        validityPeriod:
+          type: string
+        expertCount:
+          type: integer
+        x:
+          type: number
+        y:
+          type: number
+
+    NetworkTopicsAndCertifications:
+      type: object
+      required: [topics, certifications]
+      properties:
+        topics:
+          type: array
+          items:
+            $ref: "#/components/schemas/NetworkTopic"
+        certifications:
+          type: array
+          items:
+            $ref: "#/components/schemas/NetworkCertification"
+
+    NetworkExpertLevel:
+      type: string
+      enum: [I, II, III]
+
+    NetworkExpert:
+      type: object
+      required:
+        [id, topicId, domainId, label, role, company, country, level, score, certificationLabels, badges, journeyTopicIds, x, y]
+      properties:
+        id:
+          type: string
+        topicId:
+          type: string
+        domainId:
+          type: string
+        label:
+          type: string
+        role:
+          type: string
+        company:
+          type: string
+        country:
+          type: string
+        level:
+          $ref: "#/components/schemas/NetworkExpertLevel"
+        score:
+          type: integer
+        certificationLabels:
+          type: array
+          items:
+            type: string
+        badges:
+          type: array
+          items:
+            type: string
+        journeyTopicIds:
+          type: array
+          items:
+            type: string
+        x:
+          type: number
+        y:
+          type: number
+
+    # `offset`/`limit` in, `items`/`total` out — deliberately not the `page`/`pageSize`-based
+    # `PageMetadata` used elsewhere in this contract (see e.g. `InstitutionPublicationPage`):
+    # this is the one truly unbounded, paginated resource of the network graph (every OEI member
+    # with expertise in a topic), and the frontend canvas requests it exactly like it will one
+    # day request a Spring Data JPA `Page<NetworkExpertEntity>` — see the `public-network` tag
+    # description and `listNetworkExperts`'s summary.
+    NetworkExpertPage:
+      type: object
+      required: [items, total]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/NetworkExpert"
+        total:
+          type: integer
