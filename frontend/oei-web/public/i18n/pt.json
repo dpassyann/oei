@@ -145,6 +145,47 @@
       "3": "Especialista",
       "4": "Especialista sênior",
       "5": "Fellow"
+    },
+    "catalog": {
+      "title": "Catálogo de certificações reconhecidas",
+      "intro": "Explore as certificações profissionais reconhecidas pela OEI ou pelos seus parceiros, filtre-as por domínio, nível, organismo, idioma ou estado, e acompanhe os seus próprios objetivos de certificação.",
+      "expertDisclaimer": "Importante: obter uma certificação, mesmo reconhecida pela OEI, nunca concede automaticamente um nível de especialização (de Praticante a Fellow). Esse nível é sempre avaliado separadamente pela governança da OEI.",
+      "searchLabel": "Pesquisar",
+      "searchPlaceholder": "Nome, organismo, competência…",
+      "loading": "A carregar o catálogo…",
+      "empty": "Nenhuma certificação corresponde a estes critérios.",
+      "pendingBadge": "em breve",
+      "filters": {
+        "domain": "Domínio",
+        "level": "Nível",
+        "organization": "Organismo",
+        "language": "Idioma",
+        "oeiStatus": "Estado OEI",
+        "all": "Todos",
+        "reset": "Repor filtros"
+      },
+      "oeiStatus": {
+        "OEI_RECOGNIZED": "Reconhecida pela OEI",
+        "PARTNER_RECOGNIZED": "Reconhecida por um parceiro",
+        "UNDER_REVIEW": "Em avaliação",
+        "NOT_RECOGNIZED": "Não reconhecida"
+      },
+      "card": {
+        "organization": "Organismo oficial:",
+        "level": "Nível de referência:",
+        "competencies": "Competências cobertas:",
+        "validityMonths": "Validade (meses):",
+        "noExpiry": "Nunca expira",
+        "viewPath": "Ver o percurso associado",
+        "catalogReference": "Referência do catálogo:"
+      },
+      "memberCta": {
+        "view": "Ver esta certificação",
+        "PLANNED": "Adicionar aos meus objetivos",
+        "PREPARING": "Em preparação",
+        "OBTAINED": "Possuo esta certificação",
+        "loginPrompt": "Inicie sessão para acompanhar os seus objetivos de certificação."
+      }
     }
   },
   "contact": {

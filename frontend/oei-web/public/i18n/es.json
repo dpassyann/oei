@@ -145,6 +145,47 @@
       "3": "Experto",
       "4": "Experto sénior",
       "5": "Fellow"
+    },
+    "catalog": {
+      "title": "Catálogo de certificaciones reconocidas",
+      "intro": "Explore las certificaciones profesionales reconocidas por la OEI o sus socios, fíltrelas por dominio, nivel, organismo, idioma o estado, y siga sus propios objetivos de certificación.",
+      "expertDisclaimer": "Importante: obtener una certificación, incluso reconocida por la OEI, nunca otorga automáticamente un nivel de experiencia (de Practicante a Fellow). Ese nivel siempre se evalúa por separado mediante la gobernanza de la OEI.",
+      "searchLabel": "Buscar",
+      "searchPlaceholder": "Nombre, organismo, competencia…",
+      "loading": "Cargando el catálogo…",
+      "empty": "Ninguna certificación coincide con estos criterios.",
+      "pendingBadge": "próximamente",
+      "filters": {
+        "domain": "Dominio",
+        "level": "Nivel",
+        "organization": "Organismo",
+        "language": "Idioma",
+        "oeiStatus": "Estado OEI",
+        "all": "Todos",
+        "reset": "Restablecer filtros"
+      },
+      "oeiStatus": {
+        "OEI_RECOGNIZED": "Reconocida por la OEI",
+        "PARTNER_RECOGNIZED": "Reconocida por un socio",
+        "UNDER_REVIEW": "En evaluación",
+        "NOT_RECOGNIZED": "No reconocida"
+      },
+      "card": {
+        "organization": "Organismo oficial:",
+        "level": "Nivel de referencia:",
+        "competencies": "Competencias cubiertas:",
+        "validityMonths": "Validez (meses):",
+        "noExpiry": "Nunca caduca",
+        "viewPath": "Ver el itinerario asociado",
+        "catalogReference": "Referencia del catálogo:"
+      },
+      "memberCta": {
+        "view": "Ver esta certificación",
+        "PLANNED": "Añadir a mis objetivos",
+        "PREPARING": "En preparación",
+        "OBTAINED": "Poseo esta certificación",
+        "loginPrompt": "Inicie sesión para seguir sus objetivos de certificación."
+      }
     }
   },
   "contact": {

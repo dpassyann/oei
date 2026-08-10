@@ -1005,6 +1005,47 @@ paths:
         "404":
           $ref: "#/components/responses/NotFound"
 
+  /api/member/v1/certification-goals:
+    get:
+      tags: [member-certifications]
+      operationId: listMyCertificationGoals
+      summary: >
+        Objectifs de certification du membre connecté (catalogue de certifications reconnues
+        qu'il a marquées DISCOVER/PLANNED/PREPARING/PASSED/OBTAINED/EXPIRED) — voir
+        `/certifications` (page enrichie, CTA "Ajouter à mes objectifs"/"En préparation"/"Je
+        possède cette certification"). N'accorde jamais automatiquement un niveau d'expertise.
+      security: [{ bearerAuth: [member] }]
+      responses:
+        "200":
+          description: Objectifs de certification
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MemberCertificationGoal"
+    post:
+      tags: [member-certifications]
+      operationId: upsertMyCertificationGoal
+      summary: >
+        Crée ou met à jour l'objectif du membre connecté pour une certification reconnue du
+        catalogue (une seule entrée par membre et par certification, upsert par
+        `recognizedCertificationId`).
+      security: [{ bearerAuth: [member] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MemberCertificationGoalUpsert"
+      responses:
+        "200":
+          description: Objectif de certification créé ou mis à jour
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemberCertificationGoal"
+
   # ---------------------------------------------------------------------------
   # /api/member/v1 — badges
   # ---------------------------------------------------------------------------
@@ -3410,10 +3451,79 @@ components:
         autoValidate:
           type: boolean
           default: false
+        domain:
+          type: string
+          description: Domaine d'expertise (donnée de catalogue, ex. "Cybersécurité").
+        level:
+          $ref: "#/components/schemas/CertificationLevel"
+        language:
+          type: string
+          description: Code ISO 639-1 de la langue de l'examen (ex. "en", "fr").
+        oeiStatus:
+          $ref: "#/components/schemas/CertificationOeiStatus"
+        competencies:
+          type: array
+          items:
+            type: string
+        validityMonths:
+          type: integer
+          nullable: true
+          description: Durée de validité en mois une fois obtenue. `null` = n'expire jamais.
+        associatedPathRoute:
+          type: string
+          nullable: true
+          description: >
+            Chemin du parcours associé sur le site, si une page pertinente existe déjà.
+            `null` quand aucune page pertinente n'existe encore (CTA désactivé côté UI).
+
+    CertificationLevel:
+      type: string
+      description: >
+        Échelle des 6 niveaux d'expertise OEI. Une certification ne confère jamais
+        automatiquement le niveau correspondant — ce jugement reste une décision de
+        gouvernance séparée.
+      enum: [PRACTITIONER, ENGINEER, ARCHITECT, EXPERT, SENIOR_EXPERT, FELLOW]
+
+    CertificationOeiStatus:
+      type: string
+      enum: [OEI_RECOGNIZED, PARTNER_RECOGNIZED, UNDER_REVIEW, NOT_RECOGNIZED]
 
     CertificationStatus:
       type: string
       enum: [DECLARED, UNDER_REVIEW, VALIDATED, REJECTED, EXPIRED, REVOKED]
+
+    MemberCertificationGoalStatus:
+      type: string
+      description: >
+        Progression du membre vers une certification du catalogue reconnu. Atteindre
+        OBTAINED ne confère jamais automatiquement un niveau d'expertise OEI.
+      enum: [DISCOVER, PLANNED, PREPARING, PASSED, OBTAINED, EXPIRED]
+
+    MemberCertificationGoalUpsert:
+      type: object
+      required: [recognizedCertificationId, status]
+      properties:
+        recognizedCertificationId:
+          type: string
+        status:
+          $ref: "#/components/schemas/MemberCertificationGoalStatus"
+
+    MemberCertificationGoal:
+      allOf:
+        - $ref: "#/components/schemas/MemberCertificationGoalUpsert"
+        - type: object
+          required: [id, memberId, createdAt, updatedAt]
+          properties:
+            id:
+              type: string
+            memberId:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
 
     CertificationDeclaration:
       type: object

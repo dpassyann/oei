@@ -145,6 +145,47 @@
       "3": "Expert",
       "4": "Senior Expert",
       "5": "Fellow"
+    },
+    "catalog": {
+      "title": "Catalogue of recognized certifications",
+      "intro": "Browse the professional certifications recognized by the OEI or its partners, filter them by domain, level, organization, language or status, and track your own certification goals.",
+      "expertDisclaimer": "Important: obtaining a certification, even one recognized by the OEI, never automatically grants an expertise level (Practitioner through Fellow). That level is always assessed separately by OEI governance.",
+      "searchLabel": "Search",
+      "searchPlaceholder": "Name, organization, competency…",
+      "loading": "Loading the catalogue…",
+      "empty": "No certification matches these criteria.",
+      "pendingBadge": "coming soon",
+      "filters": {
+        "domain": "Domain",
+        "level": "Level",
+        "organization": "Organization",
+        "language": "Language",
+        "oeiStatus": "OEI status",
+        "all": "All",
+        "reset": "Reset filters"
+      },
+      "oeiStatus": {
+        "OEI_RECOGNIZED": "Recognized by the OEI",
+        "PARTNER_RECOGNIZED": "Recognized by a partner",
+        "UNDER_REVIEW": "Under review",
+        "NOT_RECOGNIZED": "Not recognized"
+      },
+      "card": {
+        "organization": "Official organization:",
+        "level": "Reference level:",
+        "competencies": "Competencies covered:",
+        "validityMonths": "Valid for (months):",
+        "noExpiry": "Never expires",
+        "viewPath": "View the associated learning path",
+        "catalogReference": "Catalogue reference:"
+      },
+      "memberCta": {
+        "view": "View this certification",
+        "PLANNED": "Add to my goals",
+        "PREPARING": "In preparation",
+        "OBTAINED": "I hold this certification",
+        "loginPrompt": "Log in to track your certification goals."
+      }
     }
   },
   "contact": {

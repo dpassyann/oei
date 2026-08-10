@@ -41,3 +41,170 @@ $oei-gold: #e8a530;
   font-weight: 600;
   font-size: 0.9rem;
 }
+
+.oei-page__disclaimer {
+  font-style: italic;
+  color: #555;
+  border-left: 3px solid $oei-gold;
+  padding-left: 0.9rem;
+}
+
+.oei-catalog {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1.5rem 3.5rem;
+}
+
+.oei-catalog__title {
+  margin: 0 0 0.75rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-catalog__intro {
+  margin: 0 0 1.5rem;
+  color: #333;
+  line-height: 1.6;
+}
+
+.oei-catalog__toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.oei-catalog__search,
+.oei-catalog__filter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+}
+
+.oei-catalog__label {
+  font-weight: 600;
+  color: $oei-navy;
+}
+
+.oei-catalog__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.oei-catalog__reset {
+  border: 1px solid $oei-navy;
+  background: none;
+  border-radius: 999px;
+  padding: 0.45rem 1rem;
+  cursor: pointer;
+  color: $oei-navy;
+  font-weight: 600;
+}
+
+.oei-catalog__loading,
+.oei-catalog__empty {
+  color: #555;
+}
+
+.oei-catalog__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  gap: 1.5rem;
+}
+
+.oei-card {
+  border: 1px solid #ddd;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  background: #fff;
+}
+
+.oei-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.oei-card__name {
+  margin: 0;
+  font-size: 1.1rem;
+  color: $oei-navy;
+}
+
+.oei-card__badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: #f1f1f1;
+  color: $oei-navy;
+  white-space: nowrap;
+}
+
+.oei-card__field-label {
+  font-weight: 600;
+  margin-right: 0.3rem;
+}
+
+.oei-card__competency-list {
+  margin: 0.3rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.oei-card__path-cta,
+.oei-card__member-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.4rem;
+}
+
+.oei-card__button {
+  border: 1px solid $oei-navy;
+  background: $oei-navy;
+  color: #fff;
+  border-radius: 999px;
+  padding: 0.45rem 1rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.oei-card__button--secondary {
+  background: none;
+  color: $oei-navy;
+}
+
+.oei-card__button--active {
+  background: $oei-gold;
+  border-color: $oei-gold;
+  color: $oei-navy;
+}
+
+.oei-card__pending-badge {
+  font-size: 0.75rem;
+  font-style: italic;
+  color: #777;
+}
+
+.oei-card__login-prompt {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #777;
+}

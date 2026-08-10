@@ -110,6 +110,9 @@ import { CvApiAdapter } from './infrastructure/adapter/cv-api.adapter';
 import { CERTIFICATION_PORT } from './domain/port/certification/certification.port';
 import { CertificationMockAdapter } from './infrastructure/adapter/certification-mock.adapter';
 import { CertificationApiAdapter } from './infrastructure/adapter/certification-api.adapter';
+import { CERTIFICATION_GOAL_PORT } from './domain/port/certification/member-certification-goal.port';
+import { MemberCertificationGoalMockAdapter } from './infrastructure/adapter/member-certification-goal-mock.adapter';
+import { MemberCertificationGoalApiAdapter } from './infrastructure/adapter/member-certification-goal-api.adapter';
 import { BADGE_PORT } from './domain/port/badge/badge.port';
 import { BadgeMockAdapter } from './infrastructure/adapter/badge-mock.adapter';
 import { BadgeApiAdapter } from './infrastructure/adapter/badge-api.adapter';
@@ -495,6 +498,13 @@ export const appConfig: ApplicationConfig = {
     {
       provide: ADMIN_INSTITUTIONS_PORT,
       useFactory: () => (inject(RuntimeConfig).isMock() ? inject(AdminInstitutionsMockAdapter) : inject(AdminInstitutionsApiAdapter)),
+    },
+    {
+      provide: CERTIFICATION_GOAL_PORT,
+      useFactory: () =>
+        inject(RuntimeConfig).isMock()
+          ? inject(MemberCertificationGoalMockAdapter)
+          : inject(MemberCertificationGoalApiAdapter),
     },
   ],
 };

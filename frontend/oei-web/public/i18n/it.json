@@ -145,6 +145,47 @@
       "3": "Esperto",
       "4": "Esperto senior",
       "5": "Fellow"
+    },
+    "catalog": {
+      "title": "Catalogo delle certificazioni riconosciute",
+      "intro": "Esplora le certificazioni professionali riconosciute dall'OEI o dai suoi partner, filtrale per ambito, livello, ente, lingua o stato, e segui i tuoi obiettivi di certificazione.",
+      "expertDisclaimer": "Importante: ottenere una certificazione, anche se riconosciuta dall'OEI, non conferisce mai automaticamente un livello di competenza (da Praticante a Fellow). Tale livello resta sempre valutato separatamente dalla governance dell'OEI.",
+      "searchLabel": "Cerca",
+      "searchPlaceholder": "Nome, ente, competenza…",
+      "loading": "Caricamento del catalogo…",
+      "empty": "Nessuna certificazione corrisponde a questi criteri.",
+      "pendingBadge": "in arrivo",
+      "filters": {
+        "domain": "Ambito",
+        "level": "Livello",
+        "organization": "Ente",
+        "language": "Lingua",
+        "oeiStatus": "Stato OEI",
+        "all": "Tutti",
+        "reset": "Reimposta filtri"
+      },
+      "oeiStatus": {
+        "OEI_RECOGNIZED": "Riconosciuta dall'OEI",
+        "PARTNER_RECOGNIZED": "Riconosciuta da un partner",
+        "UNDER_REVIEW": "In fase di valutazione",
+        "NOT_RECOGNIZED": "Non riconosciuta"
+      },
+      "card": {
+        "organization": "Ente ufficiale:",
+        "level": "Livello di riferimento:",
+        "competencies": "Competenze coperte:",
+        "validityMonths": "Validità (mesi):",
+        "noExpiry": "Non scade mai",
+        "viewPath": "Vedi il percorso associato",
+        "catalogReference": "Riferimento catalogo:"
+      },
+      "memberCta": {
+        "view": "Vedi questa certificazione",
+        "PLANNED": "Aggiungi ai miei obiettivi",
+        "PREPARING": "In preparazione",
+        "OBTAINED": "Possiedo questa certificazione",
+        "loginPrompt": "Accedi per seguire i tuoi obiettivi di certificazione."
+      }
     }
   },
   "contact": {

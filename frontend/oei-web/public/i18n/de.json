@@ -145,6 +145,47 @@
       "3": "Experte",
       "4": "Senior-Experte",
       "5": "Fellow"
+    },
+    "catalog": {
+      "title": "Katalog anerkannter Zertifizierungen",
+      "intro": "Durchsuchen Sie die von der OEI oder ihren Partnern anerkannten Berufszertifizierungen, filtern Sie nach Bereich, Niveau, Organisation, Sprache oder Status und verfolgen Sie Ihre eigenen Zertifizierungsziele.",
+      "expertDisclaimer": "Wichtig: Der Erwerb einer Zertifizierung – selbst wenn sie von der OEI anerkannt ist – verleiht niemals automatisch eine Kompetenzstufe (Praktiker bis Fellow). Diese Stufe wird stets separat durch die OEI-Governance bewertet.",
+      "searchLabel": "Suche",
+      "searchPlaceholder": "Name, Organisation, Kompetenz…",
+      "loading": "Katalog wird geladen…",
+      "empty": "Keine Zertifizierung entspricht diesen Kriterien.",
+      "pendingBadge": "demnächst",
+      "filters": {
+        "domain": "Bereich",
+        "level": "Niveau",
+        "organization": "Organisation",
+        "language": "Sprache",
+        "oeiStatus": "OEI-Status",
+        "all": "Alle",
+        "reset": "Filter zurücksetzen"
+      },
+      "oeiStatus": {
+        "OEI_RECOGNIZED": "Von der OEI anerkannt",
+        "PARTNER_RECOGNIZED": "Von einem Partner anerkannt",
+        "UNDER_REVIEW": "In Prüfung",
+        "NOT_RECOGNIZED": "Nicht anerkannt"
+      },
+      "card": {
+        "organization": "Offizielle Organisation:",
+        "level": "Referenzniveau:",
+        "competencies": "Abgedeckte Kompetenzen:",
+        "validityMonths": "Gültigkeit (Monate):",
+        "noExpiry": "Läuft nie ab",
+        "viewPath": "Zugehörigen Lernpfad anzeigen",
+        "catalogReference": "Katalogreferenz:"
+      },
+      "memberCta": {
+        "view": "Diese Zertifizierung ansehen",
+        "PLANNED": "Zu meinen Zielen hinzufügen",
+        "PREPARING": "In Vorbereitung",
+        "OBTAINED": "Ich besitze diese Zertifizierung",
+        "loginPrompt": "Melden Sie sich an, um Ihre Zertifizierungsziele zu verfolgen."
+      }
     }
   },
   "contact": {

@@ -10,4 +10,177 @@
       <li class="oei-page__level">{{ i18n.translate('certifications.levels.' + i) }}</li>
     }
   </ol>
+
+  <p class="oei-page__body oei-page__disclaimer">
+    {{ i18n.translate('certifications.catalog.expertDisclaimer') }}
+  </p>
 </main>
+
+<section class="oei-catalog">
+  <h2 class="oei-catalog__title">{{ i18n.translate('certifications.catalog.title') }}</h2>
+  <p class="oei-catalog__intro">{{ i18n.translate('certifications.catalog.intro') }}</p>
+
+  <div class="oei-catalog__toolbar">
+    <label class="oei-catalog__search">
+      <span class="oei-catalog__label">{{ i18n.translate('certifications.catalog.searchLabel') }}</span>
+      <input
+        type="search"
+        [ngModel]="filters().query"
+        (ngModelChange)="updateQuery($event)"
+        [placeholder]="i18n.translate('certifications.catalog.searchPlaceholder')"
+      />
+    </label>
+
+    <div class="oei-catalog__filters">
+      <label class="oei-catalog__filter">
+        <span class="oei-catalog__label">{{ i18n.translate('certifications.catalog.filters.domain') }}</span>
+        <select [ngModel]="filters().domain" (ngModelChange)="updateFilter('domain', $event)">
+          <option value="">{{ i18n.translate('certifications.catalog.filters.all') }}</option>
+          @for (domain of domainOptions(); track domain) {
+            <option [value]="domain">{{ domain }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="oei-catalog__filter">
+        <span class="oei-catalog__label">{{ i18n.translate('certifications.catalog.filters.level') }}</span>
+        <select [ngModel]="filters().level" (ngModelChange)="updateFilter('level', $event)">
+          <option value="">{{ i18n.translate('certifications.catalog.filters.all') }}</option>
+          @for (i of levelIndexes; track i) {
+            <option [value]="levelCodeAt(i)">{{ i18n.translate('certifications.levels.' + i) }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="oei-catalog__filter">
+        <span class="oei-catalog__label">{{ i18n.translate('certifications.catalog.filters.organization') }}</span>
+        <select [ngModel]="filters().organization" (ngModelChange)="updateFilter('organization', $event)">
+          <option value="">{{ i18n.translate('certifications.catalog.filters.all') }}</option>
+          @for (organization of organizationOptions(); track organization) {
+            <option [value]="organization">{{ organization }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="oei-catalog__filter">
+        <span class="oei-catalog__label">{{ i18n.translate('certifications.catalog.filters.language') }}</span>
+        <select [ngModel]="filters().language" (ngModelChange)="updateFilter('language', $event)">
+          <option value="">{{ i18n.translate('certifications.catalog.filters.all') }}</option>
+          @for (language of languageOptions(); track language) {
+            <option [value]="language">{{ language }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="oei-catalog__filter">
+        <span class="oei-catalog__label">{{ i18n.translate('certifications.catalog.filters.oeiStatus') }}</span>
+        <select [ngModel]="filters().oeiStatus" (ngModelChange)="updateFilter('oeiStatus', $event)">
+          <option value="">{{ i18n.translate('certifications.catalog.filters.all') }}</option>
+          @for (status of oeiStatusOptions; track status) {
+            <option [value]="status">{{ i18n.translate('certifications.catalog.oeiStatus.' + status) }}</option>
+          }
+        </select>
+      </label>
+
+      <button type="button" class="oei-catalog__reset" (click)="resetFilters()">
+        {{ i18n.translate('certifications.catalog.filters.reset') }}
+      </button>
+    </div>
+  </div>
+
+  @if (isLoading()) {
+    <p class="oei-catalog__loading">{{ i18n.translate('certifications.catalog.loading') }}</p>
+  } @else if (filteredCertifications().length === 0) {
+    <p class="oei-catalog__empty">{{ i18n.translate('certifications.catalog.empty') }}</p>
+  } @else {
+    <ul class="oei-catalog__grid">
+      @for (certification of filteredCertifications(); track certification.id) {
+        <li class="oei-card">
+          <div class="oei-card__header">
+            <h3 class="oei-card__name">{{ certification.name }}</h3>
+            @if (certification.oeiStatus) {
+              <span class="oei-card__badge oei-card__badge--{{ certification.oeiStatus.toLowerCase() }}">
+                {{ i18n.translate('certifications.catalog.oeiStatus.' + certification.oeiStatus) }}
+              </span>
+            }
+          </div>
+
+          <p class="oei-card__organization">
+            <span class="oei-card__field-label">{{ i18n.translate('certifications.catalog.card.organization') }}</span>
+            {{ certification.issuingOrganization }}
+          </p>
+
+          @if (certification.domain) {
+            <p class="oei-card__domain">{{ certification.domain }}</p>
+          }
+
+          @if (levelLabel(certification.level)) {
+            <p class="oei-card__level">
+              {{ i18n.translate('certifications.catalog.card.level') }} {{ levelLabel(certification.level) }}
+            </p>
+          }
+
+          @if (certification.competencies?.length) {
+            <div class="oei-card__competencies">
+              <span class="oei-card__field-label">{{ i18n.translate('certifications.catalog.card.competencies') }}</span>
+              <ul class="oei-card__competency-list">
+                @for (competency of certification.competencies; track competency) {
+                  <li>{{ competency }}</li>
+                }
+              </ul>
+            </div>
+          }
+
+          <p class="oei-card__expiry">
+            @if (certification.validityMonths) {
+              {{ i18n.translate('certifications.catalog.card.validityMonths') }} {{ certification.validityMonths }}
+            } @else {
+              {{ i18n.translate('certifications.catalog.card.noExpiry') }}
+            }
+          </p>
+
+          <div class="oei-card__path-cta">
+            @if (certification.associatedPathRoute) {
+              <a class="oei-card__button" [routerLink]="certification.associatedPathRoute">
+                {{ i18n.translate('certifications.catalog.card.viewPath') }}
+              </a>
+            } @else {
+              <button type="button" class="oei-card__button" disabled>
+                {{ i18n.translate('certifications.catalog.card.viewPath') }}
+              </button>
+              <span class="oei-card__pending-badge">{{ i18n.translate('certifications.catalog.pendingBadge') }}</span>
+            }
+          </div>
+
+          <div class="oei-card__member-ctas">
+            <button type="button" class="oei-card__button oei-card__button--secondary" (click)="toggleExpanded(certification)">
+              {{ i18n.translate('certifications.catalog.memberCta.view') }}
+            </button>
+
+            @if (isConnected()) {
+              @for (status of goalCtaStatuses; track status) {
+                <button
+                  type="button"
+                  class="oei-card__button oei-card__button--secondary"
+                  [class.oei-card__button--active]="myGoalStatus(certification.id) === status"
+                  [disabled]="isPendingUpsert(certification.id)"
+                  (click)="setGoalStatus(certification, status)"
+                >
+                  {{ i18n.translate('certifications.catalog.memberCta.' + status) }}
+                </button>
+              }
+            } @else {
+              <p class="oei-card__login-prompt">{{ i18n.translate('certifications.catalog.memberCta.loginPrompt') }}</p>
+            }
+          </div>
+
+          @if (isExpanded(certification.id) && certification.catalogReference) {
+            <p class="oei-card__reference">
+              {{ i18n.translate('certifications.catalog.card.catalogReference') }} {{ certification.catalogReference }}
+            </p>
+          }
+        </li>
+      }
+    </ul>
+  }
+</section>
