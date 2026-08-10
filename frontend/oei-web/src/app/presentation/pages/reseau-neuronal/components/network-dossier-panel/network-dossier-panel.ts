@@ -9,7 +9,9 @@ import { NetworkNode } from '../../../../../domain/model/network/network-render-
 @Component({
   selector: 'oei-network-dossier-panel',
   templateUrl: './network-dossier-panel.html',
-  styleUrl: './network-dossier-panel.scss',
+  // Split across two files purely to stay under the anyComponentStyle build budget — see
+  // `network-dossier-panel-cta.scss`'s doc comment.
+  styleUrls: ['./network-dossier-panel.scss', './network-dossier-panel-cta.scss'],
 })
 export class NetworkDossierPanel {
   protected readonly i18n = inject(I18nService);
