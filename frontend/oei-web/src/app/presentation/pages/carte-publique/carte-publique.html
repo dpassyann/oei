@@ -1,0 +1,114 @@
+<main class="oei-page">
+  @if (card(); as publicCard) {
+    <p class="oei-carte-publique__demo-notice">{{ i18n.translate('cardPublic.demoNotice') }}</p>
+
+    <section class="oei-carte-publique__card" [style.--tier-color]="publicCard.tier ? tierColor(publicCard.tier) : null">
+      <header class="oei-carte-publique__header">
+        @if (publicCard.displayName) {
+          <h1 class="oei-carte-publique__name">{{ publicCard.displayName }}</h1>
+        }
+        @if (publicCard.title) {
+          <p class="oei-carte-publique__title-line">{{ publicCard.title }}</p>
+        }
+        @if (publicCard.tier) {
+          <span class="oei-carte-publique__tier">{{ tierLabel(publicCard.tier) }}</span>
+        }
+      </header>
+
+      <button
+        type="button"
+        class="oei-carte-publique__qr-area"
+        (click)="openQrModal()"
+        [attr.aria-label]="i18n.translate('cardPublic.qrExpand')"
+      >
+        @if (publicCard.qrCodeUrl) {
+          <img class="oei-carte-publique__qr-image" [src]="publicCard.qrCodeUrl" [alt]="i18n.translate('cardPublic.qrAlt')" />
+        }
+      </button>
+
+      <div class="oei-carte-publique__actions">
+        <a class="oei-carte-publique__action" [routerLink]="['/membres', publicCard.publicSlug]">
+          {{ i18n.translate('cardPublic.viewProfile') }}
+        </a>
+        <a class="oei-carte-publique__action" [routerLink]="['/espace-membre', 'cv']">
+          {{ i18n.translate('cardPublic.viewCv') }}
+        </a>
+        @if (publicCard.vCardUrl) {
+          <a class="oei-carte-publique__action" [href]="publicCard.vCardUrl" download>
+            {{ i18n.translate('cardPublic.downloadVcard') }}
+          </a>
+        }
+        <button type="button" class="oei-carte-publique__action" (click)="share()">
+          {{ i18n.translate('cardPublic.share.action') }}
+        </button>
+      </div>
+
+      @if (shareFeedback() === 'shared') {
+        <p class="oei-carte-publique__share-feedback">{{ i18n.translate('cardPublic.share.shared') }}</p>
+      }
+      @if (shareFeedback() === 'copied') {
+        <p class="oei-carte-publique__share-feedback">{{ i18n.translate('cardPublic.share.copied') }}</p>
+      }
+      @if (shareFeedback() === 'failed') {
+        <p class="oei-carte-publique__share-feedback oei-carte-publique__share-feedback--error">
+          {{ i18n.translate('cardPublic.share.failed') }}
+        </p>
+      }
+
+      @if (publicCard.certifications?.length) {
+        <section class="oei-carte-publique__section">
+          <h2 class="oei-carte-publique__section-title">{{ i18n.translate('cardPublic.certificationsTitle') }}</h2>
+          <ul class="oei-carte-publique__chip-list">
+            @for (certification of publicCard.certifications; track certification) {
+              <li class="oei-carte-publique__chip">{{ certification }}</li>
+            }
+          </ul>
+        </section>
+      }
+
+      @if (publicCard.badges?.length) {
+        <section class="oei-carte-publique__section">
+          <h2 class="oei-carte-publique__section-title">{{ i18n.translate('cardPublic.badgesTitle') }}</h2>
+          <ul class="oei-carte-publique__chip-list">
+            @for (badge of publicCard.badges; track badge.code) {
+              <li class="oei-carte-publique__chip">{{ badge.name }}</li>
+            }
+          </ul>
+        </section>
+      }
+
+      @if (socialLinks().length > 0) {
+        <section class="oei-carte-publique__section">
+          <h2 class="oei-carte-publique__section-title">{{ i18n.translate('cardPublic.socialLinksTitle') }}</h2>
+          <ul class="oei-carte-publique__social-list">
+            @for (social of socialLinks(); track social.name) {
+              <li>
+                <a [href]="social.href" target="_blank" rel="noopener" class="oei-carte-publique__social-link">
+                  {{ social.name }}
+                </a>
+              </li>
+            }
+          </ul>
+        </section>
+      }
+    </section>
+
+    @if (qrModalOpen()) {
+      <div class="oei-carte-publique__qr-modal-backdrop" (click)="closeQrModal()">
+        <div class="oei-carte-publique__qr-modal" (click)="$event.stopPropagation()">
+          @if (publicCard.qrCodeUrl) {
+            <img class="oei-carte-publique__qr-modal-image" [src]="publicCard.qrCodeUrl" [alt]="i18n.translate('cardPublic.qrAlt')" />
+          }
+          <button type="button" class="oei-carte-publique__qr-modal-close" (click)="closeQrModal()">
+            {{ i18n.translate('cardPublic.qrModalClose') }}
+          </button>
+        </div>
+      </div>
+    }
+  } @else if (notFound()) {
+    <h1 class="oei-page__title">{{ i18n.translate('cardPublic.notFoundTitle') }}</h1>
+    <p class="oei-page__empty">{{ i18n.translate('cardPublic.notFound') }}</p>
+  } @else {
+    <p class="oei-page__empty">{{ i18n.translate('cardPublic.loading') }}</p>
+  }
+</main>

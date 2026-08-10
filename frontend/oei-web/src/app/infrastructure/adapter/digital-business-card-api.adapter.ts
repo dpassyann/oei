@@ -1,6 +1,6 @@
 import { Service, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 import { DigitalBusinessCardPort } from '../../domain/port/wallet/digital-business-card.port';
 import { DigitalBusinessCard } from '../../domain/model/wallet/digital-business-card';
 
@@ -9,11 +9,24 @@ import { DigitalBusinessCard } from '../../domain/model/wallet/digital-business-
 // public-site base and is only overridable for that historical family of endpoints).
 const DIGITAL_BUSINESS_CARD_API_BASE = '/api/member/v1';
 
+// Public (unauthenticated) endpoint base for the by-slug lookup — same pragmatic
+// assumption/extension as `PublicProfileApiAdapter.getBySlug` (not part of the confirmed
+// OpenAPI contract, but the public card page needs an unauthenticated-by-slug read).
+const PUBLIC_API_BASE = '/api/public/v1';
+
 @Service()
 export class DigitalBusinessCardApiAdapter implements DigitalBusinessCardPort {
   private readonly http = inject(HttpClient);
 
   generateCard(): Observable<DigitalBusinessCard> {
     return this.http.post<DigitalBusinessCard>(`${DIGITAL_BUSINESS_CARD_API_BASE}/digital-card`, {});
+  }
+
+  // Modeled as an unauthenticated `GET /api/public/v1/members/{slug}/digital-card`, with a
+  // 404 (no published card for that slug) mapped to `null` rather than propagated as an error.
+  getPublicCard(publicSlug: string): Observable<DigitalBusinessCard | null> {
+    return this.http
+      .get<DigitalBusinessCard>(`${PUBLIC_API_BASE}/members/${publicSlug}/digital-card`)
+      .pipe(catchError(() => of(null)));
   }
 }

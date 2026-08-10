@@ -25,6 +25,7 @@ describe('WalletApplicationService', () => {
       issueApplePass: () => of(pass),
       issueGooglePass: () => of(pass),
       revokePass: () => of(pass),
+      verifyPass: () => of(null),
     });
     const passes = await firstValueFrom(service.listPasses());
     expect(passes).toEqual([pass]);
@@ -36,6 +37,7 @@ describe('WalletApplicationService', () => {
       issueApplePass: () => of(pass),
       issueGooglePass: () => of(pass),
       revokePass: () => of(pass),
+      verifyPass: () => of(null),
     });
     const result = await firstValueFrom(service.issueApplePass());
     expect(result).toEqual(pass);
@@ -47,6 +49,7 @@ describe('WalletApplicationService', () => {
       issueApplePass: () => of(pass),
       issueGooglePass: () => of(pass),
       revokePass: () => of(pass),
+      verifyPass: () => of(null),
     });
     const result = await firstValueFrom(service.issueGooglePass());
     expect(result).toEqual(pass);
@@ -62,9 +65,28 @@ describe('WalletApplicationService', () => {
         receivedId = id;
         return of(pass);
       },
+      verifyPass: () => of(null),
     });
     const result = await firstValueFrom(service.revokePass('pass-1'));
     expect(receivedId).toBe('pass-1');
     expect(result).toEqual(pass);
+  });
+
+  it('givenPortReturnsVerification_whenVerifyPass_thenForwardsSerialNumberAndResult', async () => {
+    let receivedSerialNumber: string | undefined;
+    const verification = { valid: true, memberPublicSlug: 'demo-jane-dupont', status: 'ISSUED' as const, tier: 'SILVER' };
+    const service = setup({
+      listPasses: () => of([]),
+      issueApplePass: () => of(pass),
+      issueGooglePass: () => of(pass),
+      revokePass: () => of(pass),
+      verifyPass: (serialNumber) => {
+        receivedSerialNumber = serialNumber;
+        return of(verification);
+      },
+    });
+    const result = await firstValueFrom(service.verifyPass('SERIAL-1'));
+    expect(receivedSerialNumber).toBe('SERIAL-1');
+    expect(result).toEqual(verification);
   });
 });

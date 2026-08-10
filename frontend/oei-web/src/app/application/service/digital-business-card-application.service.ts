@@ -10,4 +10,8 @@ export class DigitalBusinessCardApplicationService {
   generateCard(): Observable<DigitalBusinessCard> {
     return this.port.generateCard();
   }
+
+  getPublicCard(publicSlug: string): Observable<DigitalBusinessCard | null> {
+    return this.port.getPublicCard(publicSlug);
+  }
 }

@@ -18,8 +18,23 @@ describe('DigitalBusinessCardApplicationService', () => {
       vCardUrl: '/card.vcf',
       theme: 'default',
     });
-    const service = setup({ generateCard: () => of(expected) });
+    const service = setup({ generateCard: () => of(expected), getPublicCard: () => of(null) });
     const card = await firstValueFrom(service.generateCard());
+    expect(card).toEqual(expected);
+  });
+
+  it('givenPortReturnsCard_whenGetPublicCard_thenForwardsSlugAndResult', async () => {
+    const expected = createDigitalBusinessCard({ memberId: 'member-1', publicSlug: 'jane-dupont' });
+    let receivedSlug: string | undefined;
+    const service = setup({
+      generateCard: () => of(expected),
+      getPublicCard: (publicSlug) => {
+        receivedSlug = publicSlug;
+        return of(expected);
+      },
+    });
+    const card = await firstValueFrom(service.getPublicCard('jane-dupont'));
+    expect(receivedSlug).toBe('jane-dupont');
     expect(card).toEqual(expected);
   });
 });

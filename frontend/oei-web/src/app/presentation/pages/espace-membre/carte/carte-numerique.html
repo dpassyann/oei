@@ -2,6 +2,25 @@
   <h1 class="oei-page__title">{{ i18n.translate('espaceMembre.carte.title') }}</h1>
   <p class="oei-page__body">{{ i18n.translate('espaceMembre.carte.intro') }}</p>
 
+  <!-- Membership-status banners (doc §Entitlements / §Wallet): GRACE_PERIOD and EXPIRED
+       don't hide anything, they just make the current state unmistakable; SUSPENDED shows a
+       neutral notice without removing any of the member's own data. -->
+  @if (entitlements.renewalImminent()) {
+    <p class="oei-carte-numerique__status-banner oei-carte-numerique__status-banner--grace" role="status">
+      {{ i18n.translate('espaceMembre.carte.status.gracePeriod') }}
+    </p>
+  }
+  @if (entitlements.status() === 'EXPIRED') {
+    <p class="oei-carte-numerique__status-banner oei-carte-numerique__status-banner--expired" role="alert">
+      {{ i18n.translate('espaceMembre.carte.status.expired') }}
+    </p>
+  }
+  @if (entitlements.status() === 'SUSPENDED') {
+    <p class="oei-carte-numerique__status-banner oei-carte-numerique__status-banner--suspended" role="status">
+      {{ i18n.translate('espaceMembre.carte.status.suspended') }}
+    </p>
+  }
+
   @if (!member() || !card()) {
     <p class="oei-page__empty">{{ i18n.translate('espaceMembre.carte.loading') }}</p>
   } @else {
@@ -20,7 +39,12 @@
         }
       </header>
 
-      <div class="oei-carte-numerique__qr-area">
+      <button
+        type="button"
+        class="oei-carte-numerique__qr-area"
+        (click)="openQrModal()"
+        [attr.aria-label]="i18n.translate('espaceMembre.carte.qrExpand')"
+      >
         <!-- Purely decorative static SVG pattern behind the QR image — no scannable data
              is generated client-side, since no QR-rendering library is installed and
              adding one is out of scope for this feature. -->
@@ -36,7 +60,7 @@
             [alt]="i18n.translate('espaceMembre.carte.qrAlt')"
           />
         }
-      </div>
+      </button>
 
       <div class="oei-carte-numerique__actions">
         @if (card()!.vCardUrl) {
@@ -68,6 +92,25 @@
         </p>
       }
     </section>
+
+    <!-- QR full-screen modal (spec §"UX mobile"): tapping the QR on any viewport, but
+         especially on a small screen, shows it large enough to actually be scanned. -->
+    @if (qrModalOpen()) {
+      <div class="oei-carte-numerique__qr-modal-backdrop" (click)="closeQrModal()">
+        <div class="oei-carte-numerique__qr-modal" (click)="$event.stopPropagation()">
+          @if (card()!.qrCodeUrl) {
+            <img
+              class="oei-carte-numerique__qr-modal-image"
+              [src]="card()!.qrCodeUrl"
+              [alt]="i18n.translate('espaceMembre.carte.qrAlt')"
+            />
+          }
+          <button type="button" class="oei-carte-numerique__qr-modal-close" (click)="closeQrModal()">
+            {{ i18n.translate('espaceMembre.carte.qrModalClose') }}
+          </button>
+        </div>
+      </div>
+    }
   }
 
   <!-- Apple Wallet / Google Wallet -->
@@ -77,11 +120,25 @@
       {{ i18n.translate('espaceMembre.carte.wallet.disclaimerIntro') }}
     </p>
 
+    @if (!canIssueWalletPass()) {
+      <p class="oei-carte-numerique__wallet-blocked" role="status">
+        {{ i18n.translate('espaceMembre.carte.wallet.blockedByStatus') }}
+      </p>
+    }
+
     <div class="oei-carte-numerique__wallet-buttons">
-      <button type="button" (click)="issueApple()" [disabled]="issuingProvider() === 'APPLE'">
+      <button
+        type="button"
+        (click)="issueApple()"
+        [disabled]="issuingProvider() === 'APPLE' || !canIssueWalletPass()"
+      >
         {{ i18n.translate('espaceMembre.carte.wallet.addApple') }}
       </button>
-      <button type="button" (click)="issueGoogle()" [disabled]="issuingProvider() === 'GOOGLE'">
+      <button
+        type="button"
+        (click)="issueGoogle()"
+        [disabled]="issuingProvider() === 'GOOGLE' || !canIssueWalletPass()"
+      >
         {{ i18n.translate('espaceMembre.carte.wallet.addGoogle') }}
       </button>
     </div>
@@ -97,6 +154,21 @@
       <p class="oei-carte-numerique__wallet-mock-notice" role="alert">
         {{ i18n.translate('espaceMembre.carte.wallet.mockNotice') }}
       </p>
+
+      <!-- Small visual preview of the just-issued pass ("Wallet Preview" in the spec) — not
+           a pixel-accurate reproduction of Apple/Google's own pass chrome, just enough of a
+           coherent preview to sell the idea. -->
+      @if (justIssuedPass(); as previewPass) {
+        <div
+          class="oei-carte-numerique__wallet-preview"
+          [style.--pass-color]="previewPass.levelColor ?? '#0a1e3f'"
+        >
+          <p class="oei-carte-numerique__wallet-preview-provider">{{ providerLabel(previewPass.provider) }}</p>
+          <p class="oei-carte-numerique__wallet-preview-name">{{ member()?.displayName }}</p>
+          <p class="oei-carte-numerique__wallet-preview-serial">{{ previewPass.serialNumber }}</p>
+          <p class="oei-carte-numerique__wallet-preview-status">{{ passStatusLabel(previewPass.status) }}</p>
+        </div>
+      }
     }
 
     @if (passes().length === 0) {

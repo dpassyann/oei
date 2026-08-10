@@ -68,4 +68,24 @@ describe('WalletApiAdapter', () => {
     expect(pass.mocked).toBe(true);
     httpMock.verify();
   });
+
+  it('givenBackendReturnsVerification_whenVerifyPass_thenGetsPublicVerifyEndpoint', async () => {
+    const { adapter, httpMock } = createAdapter();
+    const result = firstValueFrom(adapter.verifyPass('SERIAL-1'));
+    const req = httpMock.expectOne('/api/public/v1/wallet/passes/SERIAL-1/verify');
+    expect(req.request.method).toBe('GET');
+    req.flush({ valid: true, memberPublicSlug: 'jane-dupont', status: 'ISSUED', tier: 'SILVER' });
+    const verification = await result;
+    expect(verification?.valid).toBe(true);
+    httpMock.verify();
+  });
+
+  it('givenBackend404_whenVerifyPass_thenResolvesToNull', async () => {
+    const { adapter, httpMock } = createAdapter();
+    const result = firstValueFrom(adapter.verifyPass('unknown-token'));
+    const req = httpMock.expectOne('/api/public/v1/wallet/passes/unknown-token/verify');
+    req.flush('not found', { status: 404, statusText: 'Not Found' });
+    expect(await result).toBeNull();
+    httpMock.verify();
+  });
 });

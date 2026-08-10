@@ -643,10 +643,17 @@
       "intro": "O seu cartão de membro digital, pronto a partilhar ou a adicionar à sua carteira digital (wallet).",
       "loading": "A carregar o seu cartão…",
       "qrAlt": "Código QR que remete para o seu perfil público",
+      "qrExpand": "Ampliar o código QR",
+      "qrModalClose": "Fechar",
       "downloadVcard": "Transferir vCard",
       "fullscreen": {
         "enter": "Ecrã inteiro",
         "exit": "Sair do ecrã inteiro"
+      },
+      "status": {
+        "gracePeriod": "Renovação em breve necessária: a sua adesão entrou no período de carência.",
+        "expired": "Adesão expirada: algumas ações premium (renovação da Wallet) estão desativadas.",
+        "suspended": "A sua adesão está atualmente suspensa. Os seus dados continuam visíveis aqui."
       },
       "share": {
         "action": "Partilhar",
@@ -668,6 +675,7 @@
         "disclaimerIntro": "Esta funcionalidade gera um passe de demonstração, sem certificado de emissor real.",
         "addApple": "Adicionar à Apple Wallet",
         "addGoogle": "Adicionar à Google Wallet",
+        "blockedByStatus": "A renovação do passe da Wallet está desativada até a sua adesão ser regularizada.",
         "issueError": "Falha ao adicionar à wallet.",
         "mockNotice": "Passe de demonstração adicionado (simulação) — este não é um documento de identificação oficial.",
         "emptyPasses": "Ainda não adicionou nenhum passe.",
@@ -1420,5 +1428,60 @@
       "reset": "Repor vista"
     },
     "minimap": "Minimapa"
+  },
+  "cardPublic": {
+    "loading": "A carregar o cartão…",
+    "notFoundTitle": "Cartão não encontrado",
+    "notFound": "Este cartão profissional digital não existe ou já não está publicado.",
+    "demoNotice": "Cartão de demonstração — os dados apresentados não correspondem a uma pessoa real.",
+    "viewProfile": "Ver perfil da OEI",
+    "viewCv": "Ver CV",
+    "downloadVcard": "Transferir vCard",
+    "qrAlt": "Código QR que remete para o perfil público",
+    "qrExpand": "Ampliar o código QR",
+    "qrModalClose": "Fechar",
+    "certificationsTitle": "Certificações",
+    "badgesTitle": "Distintivos",
+    "socialLinksTitle": "Links",
+    "share": {
+      "action": "Partilhar este cartão",
+      "title": "Cartão profissional da OEI",
+      "shared": "Cartão partilhado.",
+      "copied": "Link copiado para a área de transferência.",
+      "failed": "Falha ao partilhar."
+    },
+    "tier": {
+      "STANDARD": "Standard",
+      "SILVER": "Prata",
+      "GOLD": "Ouro",
+      "FOUNDING": "Membro fundador",
+      "HONORARY": "Membro honorário",
+      "INSTITUTIONAL_AFFILIATE": "Afiliado institucional"
+    }
+  },
+  "walletVerification": {
+    "loading": "A verificar…",
+    "verifiedTitle": "✓ Membro OEI verificado",
+    "invalidTitle": "Verificação indisponível",
+    "invalidBody": "Este link de verificação é inválido ou expirou.",
+    "memberLabel": "Membro",
+    "statusLabel": "Estado do passe",
+    "tierLabel": "Nível de adesão",
+    "disclaimer": "A OEI é um movimento fundador apoiado por uma associação, não uma ordem profissional em sentido legal. Esta verificação confirma apenas que foi emitido um passe de demonstração para este membro — não é um documento de identificação oficial.",
+    "backToHome": "Voltar ao início",
+    "status": {
+      "MOCKED": "Simulado",
+      "ISSUED": "Emitido",
+      "REVOKED": "Revogado",
+      "RENEWED": "Renovado"
+    },
+    "tier": {
+      "STANDARD": "Standard",
+      "SILVER": "Prata",
+      "GOLD": "Ouro",
+      "FOUNDING": "Membro fundador",
+      "HONORARY": "Membro honorário",
+      "INSTITUTIONAL_AFFILIATE": "Afiliado institucional"
+    }
   }
 }

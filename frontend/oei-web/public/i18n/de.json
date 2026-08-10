@@ -643,10 +643,17 @@
       "intro": "Ihre digitale Mitgliedskarte, bereit zum Teilen oder Hinzufügen zu Ihrer mobilen Wallet.",
       "loading": "Ihre Karte wird geladen…",
       "qrAlt": "QR-Code mit Verknüpfung zu Ihrem öffentlichen Profil",
+      "qrExpand": "QR-Code vergrößern",
+      "qrModalClose": "Schließen",
       "downloadVcard": "vCard herunterladen",
       "fullscreen": {
         "enter": "Vollbild",
         "exit": "Vollbild verlassen"
+      },
+      "status": {
+        "gracePeriod": "Verlängerung bald erforderlich: Ihre Mitgliedschaft befindet sich in der Kulanzfrist.",
+        "expired": "Mitgliedschaft abgelaufen: Einige Premium-Aktionen (Wallet-Erneuerung) sind deaktiviert.",
+        "suspended": "Ihre Mitgliedschaft ist derzeit ausgesetzt. Ihre Daten bleiben hier weiterhin sichtbar."
       },
       "share": {
         "action": "Teilen",
@@ -668,6 +675,7 @@
         "disclaimerIntro": "Diese Funktion erstellt einen Demonstrationspass ohne echtes Ausstellerzertifikat.",
         "addApple": "Zu Apple Wallet hinzufügen",
         "addGoogle": "Zu Google Wallet hinzufügen",
+        "blockedByStatus": "Die Erneuerung des Wallet-Passes ist deaktiviert, bis Ihre Mitgliedschaft aktualisiert wurde.",
         "issueError": "Hinzufügen zur Wallet fehlgeschlagen.",
         "mockNotice": "Demonstrationspass hinzugefügt (Simulation) — dies ist kein offizielles Ausweisdokument.",
         "emptyPasses": "Sie haben noch keine Pässe hinzugefügt.",
@@ -1420,5 +1428,60 @@
       "reset": "Ansicht zurücksetzen"
     },
     "minimap": "Übersichtskarte"
+  },
+  "cardPublic": {
+    "loading": "Karte wird geladen…",
+    "notFoundTitle": "Karte nicht gefunden",
+    "notFound": "Diese digitale Visitenkarte existiert nicht oder ist nicht mehr veröffentlicht.",
+    "demoNotice": "Demonstrationskarte — die angezeigten Daten entsprechen keiner realen Person.",
+    "viewProfile": "OEI-Profil ansehen",
+    "viewCv": "Lebenslauf ansehen",
+    "downloadVcard": "vCard herunterladen",
+    "qrAlt": "QR-Code mit Verknüpfung zum öffentlichen Profil",
+    "qrExpand": "QR-Code vergrößern",
+    "qrModalClose": "Schließen",
+    "certificationsTitle": "Zertifizierungen",
+    "badgesTitle": "Abzeichen",
+    "socialLinksTitle": "Links",
+    "share": {
+      "action": "Diese Karte teilen",
+      "title": "OEI-Berufskarte",
+      "shared": "Karte geteilt.",
+      "copied": "Link in die Zwischenablage kopiert.",
+      "failed": "Teilen fehlgeschlagen."
+    },
+    "tier": {
+      "STANDARD": "Standard",
+      "SILVER": "Silber",
+      "GOLD": "Gold",
+      "FOUNDING": "Gründungsmitglied",
+      "HONORARY": "Ehrenmitglied",
+      "INSTITUTIONAL_AFFILIATE": "Institutioneller Partner"
+    }
+  },
+  "walletVerification": {
+    "loading": "Überprüfung läuft…",
+    "verifiedTitle": "✓ Verifiziertes OEI-Mitglied",
+    "invalidTitle": "Überprüfung nicht möglich",
+    "invalidBody": "Dieser Verifizierungslink ist ungültig oder abgelaufen.",
+    "memberLabel": "Mitglied",
+    "statusLabel": "Passstatus",
+    "tierLabel": "Mitgliedschaftsstufe",
+    "disclaimer": "Die OEI ist eine Gründungsbewegung, getragen von einem Verein, kein Berufsverband im rechtlichen Sinne. Diese Überprüfung bestätigt lediglich, dass für dieses Mitglied ein Demonstrationspass ausgestellt wurde — dies ist kein offizielles Ausweisdokument.",
+    "backToHome": "Zurück zur Startseite",
+    "status": {
+      "MOCKED": "Simuliert",
+      "ISSUED": "Ausgestellt",
+      "REVOKED": "Widerrufen",
+      "RENEWED": "Erneuert"
+    },
+    "tier": {
+      "STANDARD": "Standard",
+      "SILVER": "Silber",
+      "GOLD": "Gold",
+      "FOUNDING": "Gründungsmitglied",
+      "HONORARY": "Ehrenmitglied",
+      "INSTITUTIONAL_AFFILIATE": "Institutioneller Partner"
+    }
   }
 }

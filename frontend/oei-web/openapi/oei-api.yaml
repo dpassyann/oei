@@ -566,6 +566,29 @@ paths:
         "404":
           $ref: "#/components/responses/NotFound"
 
+  /api/public/v1/members/{publicSlug}/digital-card:
+    get:
+      tags: [public-members]
+      operationId: getPublicDigitalCard
+      summary: >
+        Carte professionnelle numérique publique d'un membre (page `/card/{slug}`) — jamais
+        de donnée privée, uniquement ce que le membre a choisi de publier.
+      parameters:
+        - name: publicSlug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Carte numérique publique
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DigitalBusinessCard"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
   /api/public/v1/wallet/passes/{serialNumber}/verify:
     get:
       tags: [public-members]
@@ -3793,6 +3816,46 @@ components:
           format: uri
         theme:
           type: string
+        # Additive public-display fields, populated on the public card
+        # (`getPublicDigitalCard`) — always safe to expose, never private data.
+        displayName:
+          type: string
+        title:
+          type: string
+        tier:
+          $ref: "#/components/schemas/MembershipTier"
+        socialLinks:
+          type: object
+          properties:
+            linkedin:
+              type: string
+              format: uri
+            github:
+              type: string
+              format: uri
+            x:
+              type: string
+              format: uri
+            website:
+              type: string
+              format: uri
+            youtube:
+              type: string
+              format: uri
+        certifications:
+          type: array
+          items:
+            type: string
+        badges:
+          type: array
+          items:
+            type: object
+            required: [code, name]
+            properties:
+              code:
+                type: string
+              name:
+                type: string
 
     WalletPassProvider:
       type: string

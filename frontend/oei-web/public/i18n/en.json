@@ -643,10 +643,17 @@
       "intro": "Your digital membership card, ready to share or add to your mobile wallet.",
       "loading": "Loading your card…",
       "qrAlt": "QR code linking to your public profile",
+      "qrExpand": "Expand QR code",
+      "qrModalClose": "Close",
       "downloadVcard": "Download vCard",
       "fullscreen": {
         "enter": "Full screen",
         "exit": "Exit full screen"
+      },
+      "status": {
+        "gracePeriod": "Renewal needed soon: your membership has entered its grace period.",
+        "expired": "Membership expired: some premium actions (Wallet renewal) are disabled.",
+        "suspended": "Your membership is currently suspended. Your data remains visible here."
       },
       "share": {
         "action": "Share",
@@ -668,6 +675,7 @@
         "disclaimerIntro": "This feature generates a demonstration pass, without a real publisher certificate.",
         "addApple": "Add to Apple Wallet",
         "addGoogle": "Add to Google Wallet",
+        "blockedByStatus": "Wallet pass renewal is disabled until your membership is regularized.",
         "issueError": "Adding to wallet failed.",
         "mockNotice": "Demonstration pass added (simulation) — this is not an official identity document.",
         "emptyPasses": "You have not added any passes yet.",
@@ -1426,5 +1434,60 @@
       "reset": "Reset view"
     },
     "minimap": "Minimap"
+  },
+  "cardPublic": {
+    "loading": "Loading card…",
+    "notFoundTitle": "Card not found",
+    "notFound": "This digital business card does not exist or is no longer published.",
+    "demoNotice": "Demonstration card — the data shown does not correspond to a real person.",
+    "viewProfile": "View OEI profile",
+    "viewCv": "View CV",
+    "downloadVcard": "Download vCard",
+    "qrAlt": "QR code linking to the public profile",
+    "qrExpand": "Expand QR code",
+    "qrModalClose": "Close",
+    "certificationsTitle": "Certifications",
+    "badgesTitle": "Badges",
+    "socialLinksTitle": "Links",
+    "share": {
+      "action": "Share this card",
+      "title": "OEI professional card",
+      "shared": "Card shared.",
+      "copied": "Link copied to clipboard.",
+      "failed": "Sharing failed."
+    },
+    "tier": {
+      "STANDARD": "Standard",
+      "SILVER": "Silver",
+      "GOLD": "Gold",
+      "FOUNDING": "Founding member",
+      "HONORARY": "Honorary",
+      "INSTITUTIONAL_AFFILIATE": "Institutional affiliate"
+    }
+  },
+  "walletVerification": {
+    "loading": "Verifying…",
+    "verifiedTitle": "✓ Verified OEI member",
+    "invalidTitle": "Verification unavailable",
+    "invalidBody": "This verification link is invalid or has expired.",
+    "memberLabel": "Member",
+    "statusLabel": "Pass status",
+    "tierLabel": "Membership tier",
+    "disclaimer": "The OEI is a founding movement backed by an association, not a professional order in the legal sense. This verification only confirms that a demonstration pass was issued for this member — it is not an official identity document.",
+    "backToHome": "Back to home",
+    "status": {
+      "MOCKED": "Simulated",
+      "ISSUED": "Issued",
+      "REVOKED": "Revoked",
+      "RENEWED": "Renewed"
+    },
+    "tier": {
+      "STANDARD": "Standard",
+      "SILVER": "Silver",
+      "GOLD": "Gold",
+      "FOUNDING": "Founding member",
+      "HONORARY": "Honorary",
+      "INSTITUTIONAL_AFFILIATE": "Institutional affiliate"
+    }
   }
 }

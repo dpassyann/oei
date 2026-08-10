@@ -1,0 +1,38 @@
+<main class="oei-page">
+  @if (loading()) {
+    <p class="oei-page__empty">{{ i18n.translate('walletVerification.loading') }}</p>
+  } @else if (verified()) {
+    <section class="oei-verification-membre__result oei-verification-membre__result--verified">
+      <p class="oei-verification-membre__badge" role="status">{{ i18n.translate('walletVerification.verifiedTitle') }}</p>
+
+      <dl class="oei-verification-membre__details">
+        @if (verification()?.memberPublicSlug; as memberSlug) {
+          <div class="oei-verification-membre__row">
+            <dt>{{ i18n.translate('walletVerification.memberLabel') }}</dt>
+            <dd>
+              <a [routerLink]="['/membres', memberSlug]">{{ memberSlug }}</a>
+            </dd>
+          </div>
+        }
+        <div class="oei-verification-membre__row">
+          <dt>{{ i18n.translate('walletVerification.statusLabel') }}</dt>
+          <dd>{{ statusLabel(verification()!.status) }}</dd>
+        </div>
+        @if (verification()?.tier; as tier) {
+          <div class="oei-verification-membre__row">
+            <dt>{{ i18n.translate('walletVerification.tierLabel') }}</dt>
+            <dd>{{ tierLabel(tier) }}</dd>
+          </div>
+        }
+      </dl>
+
+      <p class="oei-verification-membre__disclaimer">{{ i18n.translate('walletVerification.disclaimer') }}</p>
+    </section>
+  } @else if (invalid()) {
+    <section class="oei-verification-membre__result oei-verification-membre__result--invalid" role="alert">
+      <h1 class="oei-page__title">{{ i18n.translate('walletVerification.invalidTitle') }}</h1>
+      <p class="oei-page__body">{{ i18n.translate('walletVerification.invalidBody') }}</p>
+      <a class="oei-verification-membre__back-link" routerLink="/">{{ i18n.translate('walletVerification.backToHome') }}</a>
+    </section>
+  }
+</main>

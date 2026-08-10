@@ -40,4 +40,34 @@ describe('WalletMockAdapter', () => {
     const adapter = new WalletMockAdapter();
     await expect(firstValueFrom(adapter.revokePass('unknown-id'))).rejects.toBeDefined();
   });
+
+  it('givenFixedDemoToken_whenVerifyPass_thenReturnsValidVerification', async () => {
+    const adapter = new WalletMockAdapter();
+    const verification = await firstValueFrom(adapter.verifyPass('MOCK-DEMO-VERIFIED'));
+    expect(verification?.valid).toBe(true);
+    expect(verification?.memberPublicSlug).toBe('demo-jane-dupont');
+  });
+
+  it('givenJustIssuedPass_whenVerifyPassWithItsSerialNumber_thenReturnsValidVerification', async () => {
+    const adapter = new WalletMockAdapter();
+    const issued = await firstValueFrom(adapter.issueApplePass());
+    const verification = await firstValueFrom(adapter.verifyPass(issued.serialNumber));
+    expect(verification?.valid).toBe(true);
+    expect(verification?.status).toBe('MOCKED');
+  });
+
+  it('givenRevokedPass_whenVerifyPass_thenReturnsInvalid', async () => {
+    const adapter = new WalletMockAdapter();
+    const issued = await firstValueFrom(adapter.issueApplePass());
+    await firstValueFrom(adapter.revokePass(issued.id));
+    const verification = await firstValueFrom(adapter.verifyPass(issued.serialNumber));
+    expect(verification?.valid).toBe(false);
+    expect(verification?.status).toBe('REVOKED');
+  });
+
+  it('givenUnknownToken_whenVerifyPass_thenReturnsNull', async () => {
+    const adapter = new WalletMockAdapter();
+    const verification = await firstValueFrom(adapter.verifyPass('unknown-token'));
+    expect(verification).toBeNull();
+  });
 });

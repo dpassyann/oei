@@ -52,6 +52,8 @@ import { AdminComingSoon } from './presentation/pages/admin/admin-coming-soon/ad
 // Professional Neural Network canvas explorer (task: .prompt/plan/final/01-CERTIFICATIONS-AND-
 // NEURAL-NETWORK-INTEGRATION.md) — appended last so this never reorders any pre-existing route.
 import { ReseauNeuronal } from './presentation/pages/reseau-neuronal/reseau-neuronal';
+import { CartePublique } from './presentation/pages/carte-publique/carte-publique';
+import { VerificationMembre } from './presentation/pages/verification-membre/verification-membre';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -170,4 +172,10 @@ export const routes: Routes = [
     ],
   },
   { path: 'reseau-neuronal', component: ReseauNeuronal },
+  // Public digital-card + wallet-pass-verification pages (task `07-WALLET.md`), appended
+  // last so this never reorders any pre-existing route. Both are fully public/unauthenticated
+  // — no guard — and never expose private member data (see `CartePublique`/`VerificationMembre`
+  // doc comments).
+  { path: 'card/:slug', component: CartePublique },
+  { path: 'verify/member/:token', component: VerificationMembre },
 ];

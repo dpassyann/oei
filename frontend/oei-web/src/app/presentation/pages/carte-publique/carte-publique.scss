@@ -1,0 +1,230 @@
+:host {
+  display: block;
+}
+
+$oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+$oei-cream: #f7f4ec;
+
+.oei-page {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem;
+}
+
+.oei-page__title {
+  margin: 0 0 1.5rem;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-page__empty {
+  margin: 0 0 1.5rem;
+  color: #666;
+  font-style: italic;
+}
+
+.oei-carte-publique__demo-notice {
+  margin: 0 0 1.25rem;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #7a5b0a;
+  background: #fdf1d8;
+  border-radius: 0.4rem;
+  text-align: center;
+}
+
+// Premium, Apple/Google-Wallet-inspired card face — same brand palette as the rest of the
+// site (navy / gold / cream, spec §"Palette").
+.oei-carte-publique__card {
+  --tier-color: #{$oei-gold};
+
+  position: relative;
+  padding: 2rem 1.75rem;
+  border-radius: 1.1rem;
+  background: linear-gradient(150deg, $oei-navy 0%, #132a52 60%, $oei-navy 100%);
+  color: $oei-cream;
+  box-shadow: 0 12px 32px rgba(10, 30, 63, 0.35);
+  border: 1px solid rgba(232, 165, 48, 0.4);
+}
+
+.oei-carte-publique__header {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.oei-carte-publique__name {
+  margin: 0 0 0.25rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.oei-carte-publique__title-line {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  color: rgba(247, 244, 236, 0.85);
+}
+
+.oei-carte-publique__tier {
+  display: inline-block;
+  padding: 0.2rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: $oei-navy;
+  background: var(--tier-color);
+  border-radius: 999px;
+}
+
+.oei-carte-publique__qr-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 8rem;
+  height: 8rem;
+  margin: 0 auto 1.5rem;
+  padding: 0.5rem;
+  background: #fff;
+  border-radius: 0.6rem;
+  border: none;
+  cursor: pointer;
+}
+
+.oei-carte-publique__qr-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.oei-carte-publique__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.oei-carte-publique__action {
+  padding: 0.45rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: $oei-navy;
+  background: $oei-gold;
+  border: none;
+  border-radius: 0.3rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.oei-carte-publique__share-feedback {
+  margin: 0 0 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #b9f6ca;
+}
+
+.oei-carte-publique__share-feedback--error {
+  color: #ff8a80;
+}
+
+.oei-carte-publique__section {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(247, 244, 236, 0.2);
+}
+
+.oei-carte-publique__section-title {
+  margin: 0 0 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: $oei-gold;
+}
+
+.oei-carte-publique__chip-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.oei-carte-publique__chip {
+  padding: 0.3rem 0.7rem;
+  font-size: 0.8rem;
+  background: rgba(247, 244, 236, 0.12);
+  border: 1px solid rgba(247, 244, 236, 0.3);
+  border-radius: 999px;
+}
+
+.oei-carte-publique__social-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.oei-carte-publique__social-link {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: $oei-gold;
+  text-decoration: underline;
+}
+
+.oei-carte-publique__qr-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(10, 30, 63, 0.85);
+}
+
+.oei-carte-publique__qr-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 0.75rem;
+  max-width: 90vw;
+}
+
+.oei-carte-publique__qr-modal-image {
+  width: min(80vw, 20rem);
+  height: min(80vw, 20rem);
+  object-fit: contain;
+}
+
+.oei-carte-publique__qr-modal-close {
+  padding: 0.5rem 1.25rem;
+  font-weight: 600;
+  color: #fff;
+  background: $oei-navy;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+
+// Mobile-first (spec §"UX mobile"): the card fills the available width on small viewports.
+@media (max-width: 480px) {
+  .oei-page {
+    padding: 2rem 1rem;
+  }
+
+  .oei-carte-publique__card {
+    padding: 1.5rem 1.1rem;
+    border-radius: 0.75rem;
+  }
+}

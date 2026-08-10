@@ -643,10 +643,17 @@
       "intro": "Votre carte de membre numérique, à partager ou ajouter à votre wallet mobile.",
       "loading": "Chargement de votre carte…",
       "qrAlt": "QR code menant à votre profil public",
+      "qrExpand": "Agrandir le QR code",
+      "qrModalClose": "Fermer",
       "downloadVcard": "Télécharger la vCard",
       "fullscreen": {
         "enter": "Plein écran",
         "exit": "Quitter le plein écran"
+      },
+      "status": {
+        "gracePeriod": "Renouvellement bientôt nécessaire : votre adhésion entre en période de grâce.",
+        "expired": "Adhésion expirée : certaines actions premium (renouvellement Wallet) sont désactivées.",
+        "suspended": "Votre adhésion est actuellement suspendue. Vos données restent visibles ici."
       },
       "share": {
         "action": "Partager",
@@ -668,6 +675,7 @@
         "disclaimerIntro": "Cette fonctionnalité génère un pass de démonstration, sans certificat d'éditeur réel.",
         "addApple": "Ajouter à Apple Wallet",
         "addGoogle": "Ajouter à Google Wallet",
+        "blockedByStatus": "Le renouvellement du pass Wallet est désactivé tant que votre adhésion n'est pas régularisée.",
         "issueError": "L'ajout au wallet a échoué.",
         "mockNotice": "Pass de démonstration ajouté (simulation) — ceci n'est pas une pièce d'identité officielle.",
         "emptyPasses": "Vous n'avez encore ajouté aucun pass.",
@@ -1426,5 +1434,60 @@
       "reset": "Réinitialiser la vue"
     },
     "minimap": "Mini-carte"
+  },
+  "cardPublic": {
+    "loading": "Chargement de la carte…",
+    "notFoundTitle": "Carte introuvable",
+    "notFound": "Cette carte professionnelle numérique n'existe pas ou n'est plus publiée.",
+    "demoNotice": "Carte de démonstration — les données affichées ne correspondent pas à une personne réelle.",
+    "viewProfile": "Voir le profil OEI",
+    "viewCv": "Voir le CV",
+    "downloadVcard": "Télécharger la vCard",
+    "qrAlt": "QR code menant au profil public",
+    "qrExpand": "Agrandir le QR code",
+    "qrModalClose": "Fermer",
+    "certificationsTitle": "Certifications",
+    "badgesTitle": "Badges",
+    "socialLinksTitle": "Liens",
+    "share": {
+      "action": "Partager cette carte",
+      "title": "Carte professionnelle OEI",
+      "shared": "Carte partagée.",
+      "copied": "Lien copié dans le presse-papiers.",
+      "failed": "Le partage a échoué."
+    },
+    "tier": {
+      "STANDARD": "Standard",
+      "SILVER": "Argent",
+      "GOLD": "Or",
+      "FOUNDING": "Membre fondateur",
+      "HONORARY": "Honoraire",
+      "INSTITUTIONAL_AFFILIATE": "Affilié institutionnel"
+    }
+  },
+  "walletVerification": {
+    "loading": "Vérification en cours…",
+    "verifiedTitle": "✓ Membre OEI vérifié",
+    "invalidTitle": "Vérification impossible",
+    "invalidBody": "Ce lien de vérification est invalide ou a expiré.",
+    "memberLabel": "Membre",
+    "statusLabel": "Statut du pass",
+    "tierLabel": "Palier d'adhésion",
+    "disclaimer": "L'OEI est un mouvement fondateur adossé à une association, non un ordre professionnel au sens légal du terme. Cette vérification atteste uniquement qu'un pass de démonstration a été émis pour ce membre — ce n'est pas une pièce d'identité officielle.",
+    "backToHome": "Retour à l'accueil",
+    "status": {
+      "MOCKED": "Simulé",
+      "ISSUED": "Émis",
+      "REVOKED": "Révoqué",
+      "RENEWED": "Renouvelé"
+    },
+    "tier": {
+      "STANDARD": "Standard",
+      "SILVER": "Argent",
+      "GOLD": "Or",
+      "FOUNDING": "Membre fondateur",
+      "HONORARY": "Honoraire",
+      "INSTITUTIONAL_AFFILIATE": "Affilié institutionnel"
+    }
   }
 }

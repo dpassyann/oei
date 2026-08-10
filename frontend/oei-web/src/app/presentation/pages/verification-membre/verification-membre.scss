@@ -1,0 +1,120 @@
+:host {
+  display: block;
+}
+
+$oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+$oei-cream: #f7f4ec;
+
+.oei-page {
+  max-width: 36rem;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem;
+}
+
+.oei-page__title {
+  margin: 0 0 1rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-page__body {
+  margin: 0 0 1.5rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.oei-page__empty {
+  margin: 0 0 1.5rem;
+  color: #666;
+  font-style: italic;
+}
+
+@keyframes oei-verification-pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.oei-verification-membre__result--verified {
+  padding: 2rem 1.75rem;
+  border-radius: 1rem;
+  background: linear-gradient(150deg, $oei-navy 0%, #132a52 60%, $oei-navy 100%);
+  color: $oei-cream;
+  box-shadow: 0 12px 32px rgba(10, 30, 63, 0.35);
+  animation: oei-verification-pop-in 0.4s ease-out;
+}
+
+.oei-verification-membre__badge {
+  margin: 0 0 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-align: center;
+  color: $oei-gold;
+}
+
+.oei-verification-membre__details {
+  margin: 0 0 1.5rem;
+}
+
+.oei-verification-membre__row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(247, 244, 236, 0.2);
+
+  dt {
+    font-weight: 600;
+    opacity: 0.8;
+  }
+
+  dd {
+    margin: 0;
+  }
+
+  a {
+    color: $oei-gold;
+  }
+}
+
+.oei-verification-membre__disclaimer {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: rgba(247, 244, 236, 0.75);
+}
+
+.oei-verification-membre__result--invalid {
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  background: #fbe4e2;
+  border: 2px solid #b3261e;
+  animation: oei-verification-pop-in 0.3s ease-out;
+}
+
+.oei-verification-membre__back-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-weight: 600;
+  color: $oei-navy;
+}
+
+@media (max-width: 480px) {
+  .oei-page {
+    padding: 2rem 1rem;
+  }
+
+  .oei-verification-membre__result--verified {
+    padding: 1.5rem 1.1rem;
+  }
+}

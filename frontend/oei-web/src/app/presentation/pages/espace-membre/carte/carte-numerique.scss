@@ -30,6 +30,31 @@ $oei-gold: #e8a530;
   font-style: italic;
 }
 
+.oei-carte-numerique__status-banner {
+  margin: 0 0 1.25rem;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  border-radius: 0.4rem;
+}
+
+.oei-carte-numerique__status-banner--grace {
+  color: #7a5b0a;
+  background: #fdf1d8;
+  border: 1px solid #e8a530;
+}
+
+.oei-carte-numerique__status-banner--expired {
+  color: #7a1913;
+  background: #fbe4e2;
+  border: 2px solid #b3261e;
+}
+
+.oei-carte-numerique__status-banner--suspended {
+  color: #444;
+  background: #f0f0f0;
+  border: 1px solid #999;
+}
+
 .oei-carte-numerique__card {
   --tier-color: #{$oei-navy};
 
@@ -92,6 +117,50 @@ $oei-gold: #e8a530;
   width: 9rem;
   height: 9rem;
   margin: 0 auto 1.25rem;
+  // A `<button>` (tap-to-expand, see `openQrModal()`) reset back to plain visual container.
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+// Mobile-first full-screen QR modal (spec §"UX mobile").
+.oei-carte-numerique__qr-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(10, 30, 63, 0.85);
+}
+
+.oei-carte-numerique__qr-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 0.75rem;
+  max-width: 90vw;
+}
+
+.oei-carte-numerique__qr-modal-image {
+  width: min(80vw, 20rem);
+  height: min(80vw, 20rem);
+  object-fit: contain;
+}
+
+.oei-carte-numerique__qr-modal-close {
+  padding: 0.5rem 1.25rem;
+  font-weight: 600;
+  color: #fff;
+  background: $oei-navy;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
 }
 
 .oei-carte-numerique__qr-decoration {
@@ -182,6 +251,57 @@ $oei-gold: #e8a530;
   font-weight: 600;
 }
 
+.oei-carte-numerique__wallet-blocked {
+  margin: 0 0 1rem;
+  padding: 0.6rem 0.85rem;
+  color: #7a1913;
+  background: #fbe4e2;
+  border-radius: 0.4rem;
+  font-weight: 600;
+}
+
+// Small, deliberately non-photorealistic preview of the just-issued mocked pass — not an
+// attempt to reproduce Apple/Google's own pass chrome, just a coherent, on-brand preview.
+.oei-carte-numerique__wallet-preview {
+  --pass-color: #{$oei-navy};
+
+  max-width: 20rem;
+  margin: 0 0 1rem;
+  padding: 1rem 1.25rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--pass-color), #000 220%);
+  border-radius: 0.6rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.oei-carte-numerique__wallet-preview-provider {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.85;
+}
+
+.oei-carte-numerique__wallet-preview-name {
+  margin: 0 0 0.25rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.oei-carte-numerique__wallet-preview-serial {
+  margin: 0 0 0.25rem;
+  font-size: 0.75rem;
+  font-family: monospace;
+  opacity: 0.85;
+}
+
+.oei-carte-numerique__wallet-preview-status {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
 // Unmissable: bold, high-contrast, and never just a subtle toast — this is a compliance
 // requirement, not a styling preference.
 .oei-carte-numerique__wallet-mock-notice {
@@ -232,4 +352,22 @@ $oei-gold: #e8a530;
   border: 1px solid #b3261e;
   border-radius: 0.3rem;
   cursor: pointer;
+}
+
+// Mobile-first (spec §"UX mobile"): the card and wallet section fill the available width on
+// small viewports instead of just proportionally shrinking a fixed desktop layout.
+@media (max-width: 480px) {
+  .oei-page {
+    padding: 2rem 1rem;
+  }
+
+  .oei-carte-numerique__card,
+  .oei-carte-numerique__wallet,
+  .oei-carte-numerique__wallet-preview {
+    max-width: none;
+  }
+
+  .oei-carte-numerique__wallet-buttons {
+    flex-direction: column;
+  }
 }

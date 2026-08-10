@@ -5,6 +5,7 @@ import { MembershipApplicationService } from '../../../../application/service/me
 import { ProfessionalProfileApplicationService } from '../../../../application/service/professional-profile-application.service';
 import { DigitalBusinessCardApplicationService } from '../../../../application/service/digital-business-card-application.service';
 import { WalletApplicationService } from '../../../../application/service/wallet-application.service';
+import { MembershipEntitlementService } from '../../../../application/service/membership-entitlement.service';
 import { MembershipTier } from '../../../../domain/model/membership/membership';
 import { WalletPass, WalletPassProvider } from '../../../../domain/model/wallet/wallet-pass';
 import { I18nService } from '../../../i18n/i18n.service';
@@ -25,6 +26,10 @@ const TIER_COLORS: Record<MembershipTier, string> = {
   selector: 'oei-carte-numerique',
   templateUrl: './carte-numerique.html',
   styleUrl: './carte-numerique.scss',
+  // Component-scoped (not root-singleton) — see `MembershipAccessService`'s doc comment
+  // (`MembershipEntitlementService` mirrors the same reasoning, also used this way in
+  // `CvBuilder`/`PublierArticle`).
+  providers: [MembershipEntitlementService],
 })
 export class CarteNumerique {
   private readonly memberApplicationService = inject(MemberApplicationService);
@@ -32,6 +37,7 @@ export class CarteNumerique {
   private readonly professionalProfileApplicationService = inject(ProfessionalProfileApplicationService);
   private readonly digitalBusinessCardApplicationService = inject(DigitalBusinessCardApplicationService);
   private readonly walletApplicationService = inject(WalletApplicationService);
+  protected readonly entitlements = inject(MembershipEntitlementService);
   protected readonly i18n = inject(I18nService);
 
   private readonly memberResource = rxResource({
@@ -63,12 +69,22 @@ export class CarteNumerique {
   protected readonly passes = computed<WalletPass[]>(() => this.passesResource.value() ?? []);
 
   protected readonly isFullScreen = signal(false);
+  // Separate from `isFullScreen` (which enlarges the whole card): this is the "tap the QR to
+  // see it full-screen" modal required for mobile (spec §"UX mobile") — a plain overlay, no
+  // dedicated modal library needed for something this simple.
+  protected readonly qrModalOpen = signal(false);
   protected readonly shareFeedback = signal<'shared' | 'copied' | 'failed' | null>(null);
   protected readonly issuingProvider = signal<WalletPassProvider | null>(null);
   protected readonly issueError = signal(false);
   // Set right after a successful `issueApplePass`/`issueGooglePass` call, so the template
-  // can show the mandatory, unambiguous "this is a demo, not a real pass / ID" notice.
+  // can show the mandatory, unambiguous "this is a demo, not a real pass / ID" notice and a
+  // small visual preview of the just-issued pass.
   protected readonly justIssuedProvider = signal<WalletPassProvider | null>(null);
+  protected readonly justIssuedPass = signal<WalletPass | null>(null);
+
+  // Gates the Apple/Google Wallet issuance CTAs (doc §Entitlements: `WALLET_PASS`) — e.g. an
+  // `EXPIRED` membership can still view/revoke its existing passes but not issue new ones.
+  protected readonly canIssueWalletPass = computed(() => this.entitlements.has('WALLET_PASS'));
 
   protected tierColor(tier: MembershipTier): string {
     return TIER_COLORS[tier];
@@ -90,13 +106,25 @@ export class CarteNumerique {
     this.isFullScreen.update((value) => !value);
   }
 
+  protected openQrModal(): void {
+    this.qrModalOpen.set(true);
+  }
+
+  protected closeQrModal(): void {
+    this.qrModalOpen.set(false);
+  }
+
   protected async share(): Promise<void> {
     const card = this.card();
     const member = this.member();
     if (!card) {
       return;
     }
-    const url = `${card.publicSlug}`;
+    // The public URL is the card's own public page (`/card/{slug}`), not the private
+    // management page the member is currently on — absolute so it's meaningful once shared
+    // outside this browser tab. `window` is guarded for non-browser test/SSR environments.
+    const origin = typeof window !== 'undefined' ? window.location.origin : '';
+    const url = `${origin}/card/${card.publicSlug}`;
     const shareData = {
       title: this.i18n.translate('espaceMembre.carte.share.title'),
       text: member?.displayName ?? '',
@@ -141,10 +169,12 @@ export class CarteNumerique {
     this.issuingProvider.set(provider);
     this.issueError.set(false);
     this.justIssuedProvider.set(null);
+    this.justIssuedPass.set(null);
     issue().subscribe({
-      next: () => {
+      next: (pass) => {
         this.issuingProvider.set(null);
         this.justIssuedProvider.set(provider);
+        this.justIssuedPass.set(pass);
         this.passesResource.reload();
       },
       error: () => {
