@@ -14,7 +14,7 @@
             <span class="oei-institution-publications__workflow-status">{{ i18n.translate('espaceInstitution.publications.workflow.' + publication.status) }}</span>
           </div>
           @if (publication.status === 'DRAFT' || publication.status === 'CHANGES_REQUESTED') {
-            <button type="button" (click)="submit(publication.id)">{{ i18n.translate('espaceInstitution.publications.submitForReview') }}</button>
+            <button type="button" class="oei-btn oei-btn--primary" (click)="submit(publication.id)">{{ i18n.translate('espaceInstitution.publications.submitForReview') }}</button>
           }
         </li>
       }
@@ -24,23 +24,23 @@
   <section class="oei-institution-publications__new">
     <h2>{{ i18n.translate('espaceInstitution.publications.newTitle') }}</h2>
     <form (ngSubmit)="createPublication()">
-      <label>
+      <label class="oei-field">
         {{ i18n.translate('espaceInstitution.publications.typeLabel') }}
-        <select name="type" [(ngModel)]="newType">
+        <select name="type" class="oei-select" [(ngModel)]="newType">
           @for (type of publicationTypes; track type) {
             <option [value]="type">{{ i18n.translate('espaceInstitution.publications.types.' + type) }}</option>
           }
         </select>
       </label>
-      <label>
+      <label class="oei-field">
         {{ i18n.translate('espaceInstitution.publications.titleLabel') }}
-        <input type="text" name="title" required [(ngModel)]="newTitle" />
+        <input type="text" class="oei-input" name="title" required [(ngModel)]="newTitle" />
       </label>
-      <label>
+      <label class="oei-field">
         {{ i18n.translate('espaceInstitution.publications.bodyLabel') }}
-        <textarea name="body" required [(ngModel)]="newBody"></textarea>
+        <textarea name="body" class="oei-textarea" required [(ngModel)]="newBody"></textarea>
       </label>
-      <button type="submit">{{ i18n.translate('espaceInstitution.publications.createSubmit') }}</button>
+      <button type="submit" class="oei-btn oei-btn--primary">{{ i18n.translate('espaceInstitution.publications.createSubmit') }}</button>
     </form>
   </section>
 </main>

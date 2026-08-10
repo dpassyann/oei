@@ -62,17 +62,11 @@ $oei-gold: #e8a530;
   color: $oei-gold;
 }
 
+// Field/input/select color, border, radius and typography now come from the shared `.oei-field`/
+// `.oei-input`/`.oei-select` classes (see `src/styles/_forms.scss`) — only layout kept here.
 .oei-institution-members__invite-form {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   max-width: 24rem;
-
-  label {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    font-size: 0.9rem;
-    color: $oei-navy;
-  }
 }

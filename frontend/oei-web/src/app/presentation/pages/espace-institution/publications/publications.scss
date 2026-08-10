@@ -76,19 +76,14 @@ $oei-gold: #e8a530;
   color: $oei-navy;
 }
 
+// Field/input/select/textarea color, border, radius and typography now come from the shared
+// `.oei-field`/`.oei-input`/`.oei-select`/`.oei-textarea` classes (see `src/styles/_forms.scss`)
+// — only layout kept here.
 .oei-institution-publications__new {
   form {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
     max-width: 28rem;
-  }
-
-  label {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    font-size: 0.9rem;
-    color: $oei-navy;
   }
 }
