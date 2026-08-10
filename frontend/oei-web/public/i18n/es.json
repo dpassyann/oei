@@ -1148,7 +1148,10 @@
       "openEmpty": "Ningún otro evento abierto por el momento.",
       "historyTitle": "Historial",
       "historyEmpty": "Ningún evento pasado por el momento.",
-      "speakers": "Ponentes"
+      "speakers": "Ponentes",
+      "commentPosted": "Su mensaje se ha publicado en el muro de este evento.",
+      "commentClosed": "Los comentarios se abren durante el evento.",
+      "commentRequiresParticipation": "Inscríbase en este evento para poder comentar."
     },
     "detail": {
       "loading": "Cargando evento…",

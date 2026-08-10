@@ -1154,7 +1154,10 @@
       "openEmpty": "Aucun autre événement ouvert pour le moment.",
       "historyTitle": "Historique",
       "historyEmpty": "Aucun événement passé pour le moment.",
-      "speakers": "Intervenants"
+      "speakers": "Intervenants",
+      "commentPosted": "Votre message a été publié sur le fil de cet événement.",
+      "commentClosed": "Les commentaires ouvrent pendant l'événement.",
+      "commentRequiresParticipation": "Inscrivez-vous à cet événement pour pouvoir commenter."
     },
     "detail": {
       "loading": "Chargement de l'événement…",

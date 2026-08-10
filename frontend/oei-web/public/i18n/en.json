@@ -1154,7 +1154,10 @@
       "openEmpty": "No other open event at the moment.",
       "historyTitle": "History",
       "historyEmpty": "No past event yet.",
-      "speakers": "Speakers"
+      "speakers": "Speakers",
+      "commentPosted": "Your message has been posted to this event's feed.",
+      "commentClosed": "Comments open during the event.",
+      "commentRequiresParticipation": "Register for this event to be able to comment."
     },
     "detail": {
       "loading": "Loading event…",

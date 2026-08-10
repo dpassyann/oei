@@ -1148,7 +1148,10 @@
       "openEmpty": "Derzeit keine weitere offene Veranstaltung.",
       "historyTitle": "Verlauf",
       "historyEmpty": "Noch keine vergangene Veranstaltung.",
-      "speakers": "Referenten"
+      "speakers": "Referenten",
+      "commentPosted": "Ihre Nachricht wurde im Feed dieser Veranstaltung veröffentlicht.",
+      "commentClosed": "Kommentare sind während der Veranstaltung möglich.",
+      "commentRequiresParticipation": "Melden Sie sich für diese Veranstaltung an, um kommentieren zu können."
     },
     "detail": {
       "loading": "Veranstaltung wird geladen…",

@@ -1148,7 +1148,10 @@
       "openEmpty": "Nenhum outro evento aberto no momento.",
       "historyTitle": "Histórico",
       "historyEmpty": "Nenhum evento passado por enquanto.",
-      "speakers": "Palestrantes"
+      "speakers": "Palestrantes",
+      "commentPosted": "Sua mensagem foi publicada no feed deste evento.",
+      "commentClosed": "Os comentários abrem durante o evento.",
+      "commentRequiresParticipation": "Inscreva-se neste evento para poder comentar."
     },
     "detail": {
       "loading": "Carregando evento…",

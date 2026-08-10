@@ -3,9 +3,10 @@
 }
 
 $oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
 
 .oei-page {
-  max-width: 60rem;
+  max-width: 42rem;
   margin: 0 auto;
   padding: 3.5rem 1.5rem;
 }
@@ -28,106 +29,127 @@ $oei-navy: #0a1e3f;
   font-style: italic;
 }
 
-.oei-events__section-title {
-  margin: 0 0 1.25rem;
-  font-size: 1.4rem;
-  color: $oei-navy;
-}
-
-.oei-events-featured {
-  margin-bottom: 3rem;
-}
-
-.oei-events-featured__card {
-  display: flex;
-  gap: 1.5rem;
-  text-decoration: none;
-  color: inherit;
-  border: 1px solid #e0e0e0;
-  border-radius: 0.5rem;
-  padding: 1.5rem;
-}
-
-.oei-events-featured__image {
-  width: 12rem;
-  height: 9rem;
-  object-fit: cover;
-  border-radius: 0.35rem;
-  flex-shrink: 0;
-}
-
-.oei-events-featured__title {
-  margin: 0 0 0.5rem;
-  color: $oei-navy;
-}
-
-.oei-events-featured__meta {
-  margin: 0 0 0.75rem;
-  color: #777;
-  font-size: 0.9rem;
-}
-
-.oei-events-open {
-  margin-bottom: 3rem;
-}
-
-.oei-events__list,
-.oei-events__history-list {
+// A single reverse-chronological feed of cards, each behaving like a social-network post
+// (media + text, a "like"-style participate action, a comment composer) — replaces the former
+// featured/open/history agenda sections.
+.oei-events-feed {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
-.oei-events__link {
+.oei-events-feed__card {
+  border: 1px solid #eee;
+  border-radius: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  background: #fff;
+}
+
+.oei-events-feed__link {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
   text-decoration: none;
   color: inherit;
-  border: 1px solid #eee;
-  border-radius: 0.35rem;
-  padding: 1rem 1.25rem;
 }
 
-.oei-events__history-item .oei-events__link {
-  flex-direction: row;
-  gap: 1rem;
-  align-items: flex-start;
-}
-
-.oei-events__history-image {
-  width: 6rem;
-  height: 4.5rem;
+.oei-events-feed__image {
+  width: 100%;
+  max-height: 16rem;
   object-fit: cover;
-  border-radius: 0.35rem;
-  flex-shrink: 0;
+  border-radius: 0.5rem;
 }
 
-.oei-events__history-body {
-  display: flex;
-  flex-direction: column;
-}
-
-.oei-events__item-title {
-  font-weight: 600;
+.oei-events-feed__title {
+  margin: 0;
+  font-size: 1.3rem;
   color: $oei-navy;
 }
 
-.oei-events__item-meta {
+.oei-events-feed__meta {
+  margin: 0;
   font-size: 0.85rem;
   color: #777;
 }
 
-.oei-events__history-summary {
-  margin: 0.35rem 0 0;
-  color: #555;
-  font-size: 0.9rem;
+.oei-events-feed__description {
+  margin: 0;
+  color: #333;
 }
 
-.oei-events__history-speakers {
-  margin: 0.25rem 0 0;
-  color: #777;
+.oei-events-feed__speakers {
+  margin: 0;
   font-size: 0.85rem;
+  color: #777;
+}
+
+// Same pill style as `event-detail.scss`'s `.oei-event-participate-pill` — duplicated rather
+// than shared via a global class, since Angular component styles are view-encapsulated; both
+// files document the same "styled like a like button" intent.
+.oei-events-feed__actions {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+.oei-event-participate-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid rgba(10, 30, 63, 0.2);
+  border-radius: 999px;
+  background: #fff;
+  color: $oei-navy;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+
+  &:hover:not([disabled]) {
+    background: rgba(10, 30, 63, 0.06);
+  }
+
+  &--active {
+    background: rgba(10, 30, 63, 0.1);
+    border-color: $oei-navy;
+  }
+
+  &--disabled,
+  &[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.oei-events-feed__comment {
+  margin-top: 0.75rem;
+}
+
+.oei-events-feed__comment-form {
+  display: flex;
+  gap: 0.5rem;
+
+  .oei-input {
+    flex: 1;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .oei-btn {
+    padding: 0.4rem 0.9rem;
+  }
+}
+
+.oei-events-feed__comment-hint,
+.oei-events-feed__comment-success {
+  margin: 0.4rem 0 0;
+  font-size: 0.8rem;
+  color: #777;
+}
+
+.oei-events-feed__comment-success {
+  color: $oei-gold;
+  font-weight: 600;
 }
