@@ -684,6 +684,13 @@
           "APPLE": "Apple Wallet",
           "GOOGLE": "Google Wallet"
         },
+        "preview": {
+          "memberNumberLabel": "Numero di membro",
+          "statusLabel": "Stato",
+          "validUntilLabel": "Valido fino al",
+          "badgesTitle": "Badge",
+          "certificationsTitle": "Certificazioni"
+        },
         "passStatus": {
           "MOCKED": "Simulato",
           "ISSUED": "Emesso",

@@ -45,21 +45,9 @@
         (click)="openQrModal()"
         [attr.aria-label]="i18n.translate('espaceMembre.carte.qrExpand')"
       >
-        <!-- Purely decorative static SVG pattern behind the QR image — no scannable data
-             is generated client-side, since no QR-rendering library is installed and
-             adding one is out of scope for this feature. -->
-        <svg class="oei-carte-numerique__qr-decoration" viewBox="0 0 100 100" aria-hidden="true">
-          <rect x="2" y="2" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" />
-          <rect x="78" y="2" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" />
-          <rect x="2" y="78" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" />
-        </svg>
-        @if (card()!.qrCodeUrl) {
-          <img
-            class="oei-carte-numerique__qr-image"
-            [src]="card()!.qrCodeUrl"
-            [alt]="i18n.translate('espaceMembre.carte.qrAlt')"
-          />
-        }
+        <!-- Real, scannable QR (see `StyledQr`): navy→gold dot pattern with the OEI shield
+             overlaid at the center, generated client-side from the card's public URL. -->
+        <oei-styled-qr [value]="qrValue()" [size]="144" [ariaLabel]="i18n.translate('espaceMembre.carte.qrAlt')" />
       </button>
 
       <div class="oei-carte-numerique__actions">
@@ -98,13 +86,7 @@
     @if (qrModalOpen()) {
       <div class="oei-carte-numerique__qr-modal-backdrop" (click)="closeQrModal()">
         <div class="oei-carte-numerique__qr-modal" (click)="$event.stopPropagation()">
-          @if (card()!.qrCodeUrl) {
-            <img
-              class="oei-carte-numerique__qr-modal-image"
-              [src]="card()!.qrCodeUrl"
-              [alt]="i18n.translate('espaceMembre.carte.qrAlt')"
-            />
-          }
+          <oei-styled-qr [value]="qrValue()" [size]="220" [ariaLabel]="i18n.translate('espaceMembre.carte.qrAlt')" />
           <button type="button" class="oei-carte-numerique__qr-modal-close" (click)="closeQrModal()">
             {{ i18n.translate('espaceMembre.carte.qrModalClose') }}
           </button>
@@ -155,18 +137,74 @@
         {{ i18n.translate('espaceMembre.carte.wallet.mockNotice') }}
       </p>
 
-      <!-- Small visual preview of the just-issued pass ("Wallet Preview" in the spec) — not
-           a pixel-accurate reproduction of Apple/Google's own pass chrome, just enough of a
-           coherent preview to sell the idea. -->
+      <!-- "Gold mode" preview of the just-issued mocked pass ("Wallet Preview" in the spec) — not
+           a pixel-accurate reproduction of Apple/Google's own pass chrome, but a large, richly
+           detailed, on-brand preview showing every field the pass/card model actually carries
+           (nothing invented: name, tier, member number, QR, validity, badges, certifications —
+           only rendered when present). -->
       @if (justIssuedPass(); as previewPass) {
-        <div
-          class="oei-carte-numerique__wallet-preview"
-          [style.--pass-color]="previewPass.levelColor ?? '#0a1e3f'"
-        >
-          <p class="oei-carte-numerique__wallet-preview-provider">{{ providerLabel(previewPass.provider) }}</p>
-          <p class="oei-carte-numerique__wallet-preview-name">{{ member()?.displayName }}</p>
-          <p class="oei-carte-numerique__wallet-preview-serial">{{ previewPass.serialNumber }}</p>
-          <p class="oei-carte-numerique__wallet-preview-status">{{ passStatusLabel(previewPass.status) }}</p>
+        <div class="oei-carte-numerique__wallet-preview">
+          <div class="oei-carte-numerique__wallet-preview-top">
+            <div class="oei-carte-numerique__wallet-preview-identity">
+              <p class="oei-carte-numerique__wallet-preview-provider">{{ providerLabel(previewPass.provider) }}</p>
+              <p class="oei-carte-numerique__wallet-preview-name">{{ member()?.displayName }}</p>
+              @if (profile()?.title) {
+                <p class="oei-carte-numerique__wallet-preview-title">{{ profile()!.title }}</p>
+              }
+              @if (membership(); as membershipValue) {
+                <span class="oei-carte-numerique__wallet-preview-tier">{{ tierLabel(membershipValue.tier) }}</span>
+              }
+            </div>
+            <oei-styled-qr
+              class="oei-carte-numerique__wallet-preview-qr"
+              [value]="qrValue()"
+              [size]="96"
+              [ariaLabel]="i18n.translate('espaceMembre.carte.qrAlt')"
+            />
+          </div>
+
+          <dl class="oei-carte-numerique__wallet-preview-facts">
+            <div class="oei-carte-numerique__wallet-preview-fact">
+              <dt>{{ i18n.translate('espaceMembre.carte.wallet.preview.memberNumberLabel') }}</dt>
+              <dd>{{ previewPass.serialNumber }}</dd>
+            </div>
+            <div class="oei-carte-numerique__wallet-preview-fact">
+              <dt>{{ i18n.translate('espaceMembre.carte.wallet.preview.statusLabel') }}</dt>
+              <dd>{{ passStatusLabel(previewPass.status) }}</dd>
+            </div>
+            @if (membership()?.endsAt) {
+              <div class="oei-carte-numerique__wallet-preview-fact">
+                <dt>{{ i18n.translate('espaceMembre.carte.wallet.preview.validUntilLabel') }}</dt>
+                <dd>{{ membership()!.endsAt | date: 'longDate' }}</dd>
+              </div>
+            }
+          </dl>
+
+          @if (card()?.badges?.length) {
+            <div class="oei-carte-numerique__wallet-preview-section">
+              <h3 class="oei-carte-numerique__wallet-preview-section-title">
+                {{ i18n.translate('espaceMembre.carte.wallet.preview.badgesTitle') }}
+              </h3>
+              <ul class="oei-carte-numerique__wallet-preview-chip-list">
+                @for (badge of card()!.badges; track badge.code) {
+                  <li class="oei-carte-numerique__wallet-preview-chip">{{ badge.name }}</li>
+                }
+              </ul>
+            </div>
+          }
+
+          @if (card()?.certifications?.length) {
+            <div class="oei-carte-numerique__wallet-preview-section">
+              <h3 class="oei-carte-numerique__wallet-preview-section-title">
+                {{ i18n.translate('espaceMembre.carte.wallet.preview.certificationsTitle') }}
+              </h3>
+              <ul class="oei-carte-numerique__wallet-preview-chip-list">
+                @for (certification of card()!.certifications; track certification) {
+                  <li class="oei-carte-numerique__wallet-preview-chip">{{ certification }}</li>
+                }
+              </ul>
+            </div>
+          }
         </div>
       }
     }

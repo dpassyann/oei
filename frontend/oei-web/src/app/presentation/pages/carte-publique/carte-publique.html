@@ -21,9 +21,7 @@
         (click)="openQrModal()"
         [attr.aria-label]="i18n.translate('cardPublic.qrExpand')"
       >
-        @if (publicCard.qrCodeUrl) {
-          <img class="oei-carte-publique__qr-image" [src]="publicCard.qrCodeUrl" [alt]="i18n.translate('cardPublic.qrAlt')" />
-        }
+        <oei-styled-qr [value]="qrValue()" [size]="128" [ariaLabel]="i18n.translate('cardPublic.qrAlt')" />
       </button>
 
       <div class="oei-carte-publique__actions">
@@ -96,9 +94,7 @@
     @if (qrModalOpen()) {
       <div class="oei-carte-publique__qr-modal-backdrop" (click)="closeQrModal()">
         <div class="oei-carte-publique__qr-modal" (click)="$event.stopPropagation()">
-          @if (publicCard.qrCodeUrl) {
-            <img class="oei-carte-publique__qr-modal-image" [src]="publicCard.qrCodeUrl" [alt]="i18n.translate('cardPublic.qrAlt')" />
-          }
+          <oei-styled-qr [value]="qrValue()" [size]="220" [ariaLabel]="i18n.translate('cardPublic.qrAlt')" />
           <button type="button" class="oei-carte-publique__qr-modal-close" (click)="closeQrModal()">
             {{ i18n.translate('cardPublic.qrModalClose') }}
           </button>

@@ -1,0 +1,19 @@
+<div class="oei-styled-qr" [style.width.px]="size()" [style.height.px]="size()">
+  <canvas #canvas class="oei-styled-qr__canvas" role="img" [attr.aria-label]="ariaLabel()"></canvas>
+  <div class="oei-styled-qr__logo" [style.width.px]="logoDiameter()" [style.height.px]="logoDiameter()" aria-hidden="true">
+    @if (photoUrl()) {
+      <img class="oei-styled-qr__logo-photo" [src]="photoUrl()" alt="" />
+    } @else {
+      <svg class="oei-styled-qr__logo-shield" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M12 2 3 5v6c0 5.2 3.8 9.4 9 11 5.2-1.6 9-5.8 9-11V5l-9-3Z"
+          stroke="currentColor"
+          stroke-width="1.4"
+          stroke-linejoin="round"
+        />
+        <circle cx="12" cy="11" r="3" stroke="currentColor" stroke-width="1.2" />
+        <path d="M12 8v6M9 11h6" stroke="currentColor" stroke-width="0.8" />
+      </svg>
+    }
+  </div>
+</div>

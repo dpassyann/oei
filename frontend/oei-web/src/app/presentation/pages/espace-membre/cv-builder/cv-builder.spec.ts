@@ -257,7 +257,12 @@ describe('CvBuilder', () => {
 
     expect(compiled.querySelector('.oei-cv-preview__watermark')).not.toBeNull();
     expect(compiled.querySelector('.oei-cv-preview__seal')).not.toBeNull();
-    expect(compiled.querySelector('.oei-cv-preview__seal-text')?.textContent).toContain('OEI');
+    // Circular ring text (SVG `textPath`) replaces the old flat seal text — still carries the
+    // same institutional wording (org name + "certified" label), just laid out around the seal.
+    expect(compiled.querySelector('.oei-cv-preview__seal-ring-text')?.textContent).toContain(
+      'Ordre des Experts Informaticiens',
+    );
+    expect(compiled.querySelector('.oei-cv-preview__seal-ring-text')?.textContent).toContain('CERTIFIÉ');
   });
 
   it('givenTemplateThumbnailClicked_whenSelected_thenUpdatesLivePreviewAndPersistsChoice', async () => {

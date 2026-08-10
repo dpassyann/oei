@@ -5,6 +5,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { map } from 'rxjs';
 import { DigitalBusinessCardApplicationService } from '../../../application/service/digital-business-card-application.service';
 import { MembershipTier } from '../../../domain/model/membership/membership';
+import { StyledQr } from '../../components/styled-qr/styled-qr';
 import { I18nService } from '../../i18n/i18n.service';
 
 // Cosmetic only, same values as `CarteNumerique`'s `TIER_COLORS` — kept as a small local
@@ -33,7 +34,7 @@ interface SocialLinkEntry {
 // error) when the slug has no published card, so "not found" is a value state.
 @Component({
   selector: 'oei-carte-publique',
-  imports: [RouterLink],
+  imports: [RouterLink, StyledQr],
   templateUrl: './carte-publique.html',
   styleUrl: './carte-publique.scss',
 })
@@ -58,6 +59,10 @@ export class CartePublique {
 
   protected readonly qrModalOpen = signal(false);
   protected readonly shareFeedback = signal<'shared' | 'copied' | 'failed' | null>(null);
+
+  // Real, scannable value for the styled QR (see `StyledQr`): this page's own canonical URL —
+  // the same page a scan should land back on.
+  protected readonly qrValue = computed(() => (typeof window !== 'undefined' ? window.location.href : ''));
 
   protected readonly socialLinks = computed<readonly SocialLinkEntry[]>(() => {
     const links = this.card()?.socialLinks;

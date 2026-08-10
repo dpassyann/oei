@@ -689,6 +689,13 @@
           "ISSUED": "Émis",
           "REVOKED": "Révoqué",
           "RENEWED": "Renouvelé"
+        },
+        "preview": {
+          "memberNumberLabel": "N° de membre",
+          "statusLabel": "Statut",
+          "validUntilLabel": "Valide jusqu'au",
+          "badgesTitle": "Badges",
+          "certificationsTitle": "Certifications"
         }
       }
     },

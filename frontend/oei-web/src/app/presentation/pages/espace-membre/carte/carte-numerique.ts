@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { MemberApplicationService } from '../../../../application/service/member-application.service';
@@ -8,6 +9,7 @@ import { WalletApplicationService } from '../../../../application/service/wallet
 import { MembershipEntitlementService } from '../../../../application/service/membership-entitlement.service';
 import { MembershipTier } from '../../../../domain/model/membership/membership';
 import { WalletPass, WalletPassProvider } from '../../../../domain/model/wallet/wallet-pass';
+import { StyledQr } from '../../../components/styled-qr/styled-qr';
 import { I18nService } from '../../../i18n/i18n.service';
 
 // Cosmetic only — mirrors the tier badge coloring used elsewhere for mocked wallet passes
@@ -24,6 +26,7 @@ const TIER_COLORS: Record<MembershipTier, string> = {
 
 @Component({
   selector: 'oei-carte-numerique',
+  imports: [StyledQr, DatePipe],
   templateUrl: './carte-numerique.html',
   styleUrl: './carte-numerique.scss',
   // Component-scoped (not root-singleton) — see `MembershipAccessService`'s doc comment
@@ -85,6 +88,40 @@ export class CarteNumerique {
   // Gates the Apple/Google Wallet issuance CTAs (doc §Entitlements: `WALLET_PASS`) — e.g. an
   // `EXPIRED` membership can still view/revoke its existing passes but not issue new ones.
   protected readonly canIssueWalletPass = computed(() => this.entitlements.has('WALLET_PASS'));
+
+  // The value actually encoded in the styled QR (see `StyledQr`): the card's own public page
+  // (`/card/{slug}`), same URL as `share()` puts on the clipboard — a real, scannable link,
+  // not a decorative placeholder.
+  protected readonly qrValue = computed(() => {
+    const card = this.card();
+    if (!card) {
+      return '';
+    }
+    const origin = typeof window !== 'undefined' ? window.location.origin : '';
+    return `${origin}/card/${card.publicSlug}`;
+  });
+
+  constructor() {
+    this.loadPreviewFonts();
+  }
+
+  // 'Space Grotesk'/'Instrument Sans' aren't loaded globally on the site; only needed here for
+  // the "gold mode" Wallet preview's premium typography. Guarded by element id so navigating
+  // back and forth never duplicates the `<link>` tags.
+  private loadPreviewFonts(): void {
+    if (typeof document === 'undefined' || document.getElementById('oei-wallet-preview-fonts')) {
+      return;
+    }
+    const preconnect = document.createElement('link');
+    preconnect.rel = 'preconnect';
+    preconnect.href = 'https://fonts.googleapis.com';
+    const stylesheet = document.createElement('link');
+    stylesheet.id = 'oei-wallet-preview-fonts';
+    stylesheet.rel = 'stylesheet';
+    stylesheet.href =
+      'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Instrument+Sans:wght@400;500;600&display=swap';
+    document.head.append(preconnect, stylesheet);
+  }
 
   protected tierColor(tier: MembershipTier): string {
     return TIER_COLORS[tier];

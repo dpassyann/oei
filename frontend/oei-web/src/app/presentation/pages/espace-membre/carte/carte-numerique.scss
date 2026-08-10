@@ -147,12 +147,6 @@ $oei-gold: #e8a530;
   max-width: 90vw;
 }
 
-.oei-carte-numerique__qr-modal-image {
-  width: min(80vw, 20rem);
-  height: min(80vw, 20rem);
-  object-fit: contain;
-}
-
 .oei-carte-numerique__qr-modal-close {
   padding: 0.5rem 1.25rem;
   font-weight: 600;
@@ -161,21 +155,6 @@ $oei-gold: #e8a530;
   border: none;
   border-radius: 0.3rem;
   cursor: pointer;
-}
-
-.oei-carte-numerique__qr-decoration {
-  position: absolute;
-  inset: 0;
-  color: var(--tier-color);
-  opacity: 0.5;
-}
-
-.oei-carte-numerique__qr-image {
-  position: relative;
-  width: 7rem;
-  height: 7rem;
-  object-fit: contain;
-  background: #fff;
 }
 
 .oei-carte-numerique__actions {
@@ -260,46 +239,132 @@ $oei-gold: #e8a530;
   font-weight: 600;
 }
 
-// Small, deliberately non-photorealistic preview of the just-issued mocked pass — not an
-// attempt to reproduce Apple/Google's own pass chrome, just a coherent, on-brand preview.
+// "Gold mode" preview of the just-issued mocked pass — deliberately large and richly detailed
+// (not an attempt to reproduce Apple/Google's own pass chrome): dark-navy panel, gold border/
+// accents, ivoire text, 'Space Grotesk' for the identity/labels and 'Instrument Sans' for body
+// text (loaded by `loadPreviewFonts()`), same premium register as the rest of the OEI charter's
+// gold accents elsewhere on the site.
 .oei-carte-numerique__wallet-preview {
-  --pass-color: #{$oei-navy};
+  max-width: 34rem;
+  margin: 0 0 1.5rem;
+  padding: 1.75rem 2rem;
+  color: #f7f4ec;
+  background: radial-gradient(circle at 15% -10%, rgba(232, 165, 48, 0.16), transparent 55%), linear-gradient(160deg, #0a1e3f, #050d1e);
+  border: 1px solid rgba(232, 165, 48, 0.6);
+  border-radius: 1rem;
+  box-shadow:
+    0 0 0 1px rgba(232, 165, 48, 0.15) inset,
+    0 12px 32px rgba(0, 0, 0, 0.35);
+  font-family: 'Instrument Sans', sans-serif;
+}
 
-  max-width: 20rem;
-  margin: 0 0 1rem;
-  padding: 1rem 1.25rem;
-  color: #fff;
-  background: linear-gradient(135deg, var(--pass-color), #000 220%);
-  border-radius: 0.6rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+.oei-carte-numerique__wallet-preview-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px dashed rgba(232, 165, 48, 0.4);
 }
 
 .oei-carte-numerique__wallet-preview-provider {
-  margin: 0 0 0.5rem;
-  font-size: 0.75rem;
+  margin: 0 0 0.6rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  opacity: 0.85;
+  letter-spacing: 0.12em;
+  color: $oei-gold;
 }
 
 .oei-carte-numerique__wallet-preview-name {
-  margin: 0 0 0.25rem;
-  font-size: 1.1rem;
+  margin: 0 0 0.2rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
   font-weight: 700;
 }
 
-.oei-carte-numerique__wallet-preview-serial {
-  margin: 0 0 0.25rem;
-  font-size: 0.75rem;
-  font-family: monospace;
-  opacity: 0.85;
+.oei-carte-numerique__wallet-preview-title {
+  margin: 0 0 0.6rem;
+  font-size: 0.9rem;
+  color: rgba(247, 244, 236, 0.75);
 }
 
-.oei-carte-numerique__wallet-preview-status {
+.oei-carte-numerique__wallet-preview-tier {
+  display: inline-block;
+  padding: 0.2rem 0.7rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #0a1e3f;
+  background: linear-gradient(120deg, $oei-gold, #d18f1c);
+  border-radius: 999px;
+}
+
+.oei-carte-numerique__wallet-preview-qr {
+  flex: none;
+}
+
+.oei-carte-numerique__wallet-preview-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem 2rem;
+  margin: 0 0 1.25rem;
+}
+
+.oei-carte-numerique__wallet-preview-fact {
+  dt {
+    margin: 0 0 0.2rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(247, 244, 236, 0.55);
+  }
+
+  dd {
+    margin: 0;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem;
+    color: $oei-gold;
+  }
+}
+
+.oei-carte-numerique__wallet-preview-section {
+  margin-bottom: 1rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.oei-carte-numerique__wallet-preview-section-title {
+  margin: 0 0 0.5rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(247, 244, 236, 0.55);
+}
+
+.oei-carte-numerique__wallet-preview-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.oei-carte-numerique__wallet-preview-chip {
+  padding: 0.3rem 0.75rem;
   font-size: 0.8rem;
-  font-weight: 600;
+  color: #f7f4ec;
+  background: rgba(232, 165, 48, 0.12);
+  border: 1px solid rgba(232, 165, 48, 0.45);
+  border-radius: 999px;
 }
 
 // Unmissable: bold, high-contrast, and never just a subtle toast — this is a compliance
@@ -368,6 +433,10 @@ $oei-gold: #e8a530;
   }
 
   .oei-carte-numerique__wallet-buttons {
+    flex-direction: column;
+  }
+
+  .oei-carte-numerique__wallet-preview-top {
     flex-direction: column;
   }
 }

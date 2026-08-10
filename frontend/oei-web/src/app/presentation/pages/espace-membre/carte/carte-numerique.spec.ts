@@ -153,8 +153,10 @@ describe('CarteNumerique', () => {
     expect(compiled.textContent).toContain('Jane Dupont');
     expect(compiled.textContent).toContain('Experte en cybersécurité');
     expect(compiled.textContent).toContain('Argent');
-    const img = compiled.querySelector<HTMLImageElement>('.oei-carte-numerique__qr-image');
-    expect(img?.getAttribute('src')).toBe('/assets/mock/demo-jane-dupont-qr.svg');
+    // A real, scannable QR is now generated client-side by `StyledQr` (canvas-rendered) rather
+    // than an `<img>` pointing at the mock's static SVG placeholder.
+    const styledQrCanvas = compiled.querySelector('.oei-carte-numerique__qr-area oei-styled-qr canvas');
+    expect(styledQrCanvas).not.toBeNull();
     const vcard = compiled.querySelector<HTMLAnchorElement>('.oei-carte-numerique__action[download]');
     expect(vcard?.getAttribute('href')).toBe('/assets/mock/demo-jane-dupont.vcf');
   });

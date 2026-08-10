@@ -213,13 +213,26 @@ $oei-gold: #e8a530;
 .oei-cv-preview {
   position: relative;
   overflow: hidden;
-  background: #fdfcf8;
-  border: 1px solid rgba(10, 30, 63, 0.15);
+  // Subtle ivoire/parchment gradient — a wink at old notarized documents, kept as a plain CSS
+  // gradient (no bitmap texture) so it stays sober rather than a full "medieval parchment"
+  // pastiche.
+  background: linear-gradient(165deg, #fbf9f3 0%, #f3efe2 55%, #f7f4ec 100%);
+  border: 1px solid rgba(10, 30, 63, 0.35);
   border-radius: 0.25rem;
   padding: 2rem 2.25rem;
   min-height: 20rem;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: 'Georgia', 'Iowan Old Style', 'Palatino Linotype', Palatino, serif;
   box-shadow: 0 4px 16px rgba(10, 30, 63, 0.12);
+
+  // Double filet: the CSS border above is the outer line, this inset box-shadow draws the
+  // second, thinner rule just inside it — the classic "official document" double border.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0.45rem;
+    border: 1px solid rgba(10, 30, 63, 0.22);
+    pointer-events: none;
+  }
 
   &--thumb {
     width: 12rem;
@@ -227,12 +240,16 @@ $oei-gold: #e8a530;
     padding: 0.6rem 0.7rem;
     font-size: 0.32rem;
     pointer-events: none;
+
+    &::before {
+      inset: 0.22rem;
+    }
   }
 
   // "Modern" template: navy header band + gold seal accents, vs. the "Classic"
   // template's cream paper + navy seal — a deliberately distinct look per template.
   &--modern {
-    background: #f3f6fb;
+    background: linear-gradient(165deg, #f3f6fb 0%, #eaf0f8 55%, #f3f6fb 100%);
 
     .oei-cv-preview__header {
       background: $oei-navy;
@@ -245,14 +262,103 @@ $oei-gold: #e8a530;
       color: rgba(255, 255, 255, 0.75);
     }
 
-    .oei-cv-preview__seal-outer {
+    .oei-cv-preview__seal-outer,
+    .oei-cv-preview__seal-outer-inner,
+    .oei-cv-preview__seal-inner,
+    .oei-cv-preview__seal-mark,
+    .oei-cv-preview__seal-mark-line {
       stroke: $oei-gold;
     }
 
-    .oei-cv-preview__seal-inner {
-      stroke: $oei-gold;
+    .oei-cv-preview__seal-ring-text {
+      fill: $oei-gold;
     }
   }
+}
+
+// Engraved corner flourishes (double-line brackets) at the four corners of the document,
+// echoing the double-filet border above.
+.oei-cv-preview__corner {
+  position: absolute;
+  width: 1.1rem;
+  height: 1.1rem;
+  z-index: 2;
+  pointer-events: none;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    background: $oei-navy;
+    opacity: 0.55;
+  }
+
+  &::before {
+    width: 100%;
+    height: 1px;
+  }
+
+  &::after {
+    width: 1px;
+    height: 100%;
+  }
+
+  &--tl {
+    top: 0.7rem;
+    left: 0.7rem;
+    &::before {
+      top: 0;
+      left: 0;
+    }
+    &::after {
+      top: 0;
+      left: 0;
+    }
+  }
+
+  &--tr {
+    top: 0.7rem;
+    right: 0.7rem;
+    &::before {
+      top: 0;
+      right: 0;
+    }
+    &::after {
+      top: 0;
+      right: 0;
+    }
+  }
+
+  &--bl {
+    bottom: 0.7rem;
+    left: 0.7rem;
+    &::before {
+      bottom: 0;
+      left: 0;
+    }
+    &::after {
+      bottom: 0;
+      left: 0;
+    }
+  }
+
+  &--br {
+    bottom: 0.7rem;
+    right: 0.7rem;
+    &::before {
+      bottom: 0;
+      right: 0;
+    }
+    &::after {
+      bottom: 0;
+      right: 0;
+    }
+  }
+}
+
+.oei-cv-preview--thumb .oei-cv-preview__corner {
+  width: 0.55rem;
+  height: 0.55rem;
 }
 
 // Discreet OEI watermark behind the CV content — same mark as the site header logo,
@@ -273,14 +379,16 @@ $oei-gold: #e8a530;
   }
 }
 
-// Diploma-style seal: a real graphical medallion (double circle border + institutional
-// small-caps typography), not just a text badge — evokes an official certificate/diploma.
+// Notary/diploma-style seal: a real graphical medallion (triple circle border + circular ring
+// text set on an SVG `textPath` + the OEI shield+globe mark at the center) — evokes an
+// official stamp, not just a text badge. Everything here is vector (SVG paths/text), never a
+// bitmap image.
 .oei-cv-preview__seal {
   position: absolute;
   top: 1rem;
   right: 1.25rem;
-  width: 4.5rem;
-  height: 4.5rem;
+  width: 5.5rem;
+  height: 5.5rem;
   color: $oei-navy;
 
   svg {
@@ -290,25 +398,41 @@ $oei-gold: #e8a530;
 }
 
 .oei-cv-preview__seal-outer,
+.oei-cv-preview__seal-outer-inner,
 .oei-cv-preview__seal-inner {
   fill: none;
   stroke: currentColor;
-  stroke-width: 2;
 }
 
-.oei-cv-preview__seal-text {
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 1.15rem;
-  font-weight: 700;
-  fill: currentColor;
+.oei-cv-preview__seal-outer {
+  stroke-width: 1.6;
+}
+
+.oei-cv-preview__seal-outer-inner {
+  stroke-width: 0.6;
+}
+
+.oei-cv-preview__seal-inner {
+  stroke-width: 1;
+}
+
+// Circular ring of small-caps institutional text running along the seal's inner circle.
+.oei-cv-preview__seal-ring-text {
+  font-family: 'Georgia', 'Iowan Old Style', 'Palatino Linotype', Palatino, serif;
+  font-size: 5.6px;
+  font-variant: small-caps;
   letter-spacing: 0.05em;
+  fill: currentColor;
 }
 
-.oei-cv-preview__seal-subtext {
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 0.5rem;
-  letter-spacing: 0.15em;
-  fill: currentColor;
+.oei-cv-preview__seal-mark {
+  fill: rgba(10, 30, 63, 0.06);
+  stroke: currentColor;
+}
+
+.oei-cv-preview__seal-mark-line {
+  fill: none;
+  stroke: currentColor;
 }
 
 .oei-cv-preview__header {
