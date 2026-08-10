@@ -28,7 +28,10 @@ $oei-gold: #e8a530;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 2.5rem;
-  align-items: start;
+  // No `align-items: start` here: the side menu's sticky positioning needs its grid cell
+  // stretched to the full row height (the default `stretch`) to have room to stick throughout
+  // the whole scroll — with `start`, its cell (and thus its containing block) was only as tall
+  // as the menu's own content, so it stopped sticking once the page scrolled past that point.
   max-width: 64rem;
   margin: 0 auto;
   padding: 3.5rem 1.5rem;

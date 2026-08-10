@@ -28,7 +28,8 @@ $oei-gold: #e8a530;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 2.5rem;
-  align-items: start;
+  // No `align-items: start` — see `a-propos.scss`'s comment: the side menu's sticky
+  // positioning needs the default `stretch` to have room to stick throughout the scroll.
   max-width: 64rem;
   margin: 0 auto;
   padding: 3.5rem 1.5rem;
