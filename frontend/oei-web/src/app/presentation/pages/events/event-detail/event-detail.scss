@@ -40,24 +40,36 @@ $oei-navy: #0a1e3f;
   color: #444;
 }
 
-.oei-event-cta {
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 0.35rem;
-  background: $oei-navy;
-  color: #fff;
-  cursor: pointer;
-}
-
-.oei-event-cta--disabled,
-.oei-event-cta[disabled] {
-  background: #ccc;
-  cursor: not-allowed;
-}
-
-.oei-event-cta__confirmed {
-  color: #1a7a3c;
+// Styled like `.oei-event-feed__like` below (a subtle pill under the content, not a large CTA
+// button) — toggles between "Participer" and "Ne plus participer" per the design feedback that
+// this should read like a "like" action, not a separate confirmation flow.
+.oei-event-participate-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid rgba(10, 30, 63, 0.2);
+  border-radius: 999px;
+  background: #fff;
+  color: $oei-navy;
   font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+
+  &:hover:not([disabled]) {
+    background: rgba(10, 30, 63, 0.06);
+  }
+
+  &--active {
+    background: rgba(10, 30, 63, 0.1);
+    border-color: $oei-navy;
+  }
+
+  &--disabled,
+  &[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 }
 
 .oei-event__section-title {
@@ -124,6 +136,82 @@ $oei-navy: #0a1e3f;
   max-width: 100%;
   border-radius: 0.35rem;
   margin-bottom: 0.5rem;
+}
+
+.oei-event-feed__like {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.75rem;
+  border: 1px solid rgba(10, 30, 63, 0.2);
+  border-radius: 999px;
+  background: #fff;
+  color: $oei-navy;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover:not([disabled]) {
+    background: rgba(10, 30, 63, 0.06);
+  }
+
+  &--active {
+    background: rgba(10, 30, 63, 0.1);
+    border-color: $oei-navy;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+  }
+}
+
+// Comments render directly under each post — always visible, not behind a click — mirroring a
+// LinkedIn-style feed per the design feedback.
+.oei-event-feed__comments {
+  margin-top: 0.6rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.oei-event-feed__comment {
+  font-size: 0.85rem;
+  color: #333;
+}
+
+.oei-event-feed__comment-author {
+  font-weight: 600;
+  color: $oei-navy;
+  margin-right: 0.4rem;
+}
+
+.oei-event-feed__comment-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
+
+  input {
+    flex: 1;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid rgba(10, 30, 63, 0.2);
+    border-radius: 0.35rem;
+    font: inherit;
+  }
+
+  button {
+    padding: 0.4rem 0.75rem;
+    border: none;
+    border-radius: 0.35rem;
+    background: $oei-navy;
+    color: #fff;
+    cursor: pointer;
+
+    &[disabled] {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
 }
 
 .oei-event-back {

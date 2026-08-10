@@ -16,6 +16,10 @@ export class EventRegistrationApiAdapter implements EventRegistrationPort {
       .pipe(map((registration) => createEventRegistration(registration)));
   }
 
+  unregister(eventId: string): Observable<void> {
+    return this.http.delete<void>(`${EVENT_MEMBER_API_BASE}/events/${eventId}/registrations/me`);
+  }
+
   getMyRegistration(eventId: string): Observable<EventRegistration | undefined> {
     return this.http.get<EventRegistration>(`${EVENT_MEMBER_API_BASE}/events/${eventId}/registrations/me`).pipe(
       map((registration) => createEventRegistration(registration)),

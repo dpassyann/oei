@@ -50,12 +50,15 @@ describe('EventDetail', () => {
               .fn()
               .mockReturnValue(of(options.registered ? { id: 'reg-1', eventId: 'event-1' } : undefined)),
             register: vi.fn().mockReturnValue(of({ id: 'reg-1', eventId: 'event-1' })),
+            unregister: vi.fn().mockReturnValue(of(undefined)),
           },
         },
         {
           provide: EventFeedApplicationService,
           useValue: {
             listPosts: vi.fn().mockReturnValue(of([])),
+            listComments: vi.fn().mockReturnValue(of([])),
+            addComment: vi.fn(),
             isFeedOpen: () => false,
             isCommentsOpen: () => false,
             createPost: vi.fn(),
@@ -81,7 +84,7 @@ describe('EventDetail', () => {
     await fixture.whenStable();
     fixture.detectChanges();
 
-    const button = (fixture.nativeElement as HTMLElement).querySelector('.oei-event-cta--disabled');
+    const button = (fixture.nativeElement as HTMLElement).querySelector('.oei-event-participate-pill--disabled');
     expect(button).not.toBeNull();
     expect(button?.textContent).toContain('events.detail.loginToParticipate');
   });
@@ -97,14 +100,15 @@ describe('EventDetail', () => {
     expect(text).toContain('events.detail.participate');
   });
 
-  it('givenConnectedAndRegistered_whenRendered_thenShowsConfirmation', async () => {
+  it('givenConnectedAndRegistered_whenRendered_thenShowsUnregisterToggle', async () => {
     configure({ connected: true, registered: true });
     const fixture = TestBed.createComponent(EventDetail);
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();
 
-    const text = (fixture.nativeElement as HTMLElement).textContent ?? '';
-    expect(text).toContain('events.detail.registered');
+    const button = (fixture.nativeElement as HTMLElement).querySelector('.oei-event-participate-pill--active');
+    expect(button).not.toBeNull();
+    expect(button?.textContent).toContain('events.detail.unregister');
   });
 });

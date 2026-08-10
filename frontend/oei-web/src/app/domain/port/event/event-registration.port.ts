@@ -7,6 +7,7 @@ import { EventRegistration } from '../../model/event/event-registration';
 // dedicated `/registrations/me` endpoint in the V1 contract).
 export interface EventRegistrationPort {
   register(eventId: string): Observable<EventRegistration>;
+  unregister(eventId: string): Observable<void>;
   getMyRegistration(eventId: string): Observable<EventRegistration | undefined>;
 }
 

@@ -1090,6 +1090,7 @@
       "registered": "You are attending this event",
       "registering": "Registering…",
       "participate": "Attend",
+      "unregister": "Cancel attendance",
       "scheduleTitle": "Schedule",
       "capacity": "Seats",
       "speakersTitle": "Speakers",
@@ -1107,7 +1108,9 @@
       "posting": "Posting…",
       "post": "Post",
       "feedEmpty": "No posts yet.",
-      "like": "Like"
+      "like": "Like",
+      "comment": "Comment",
+      "commentPlaceholder": "Add a comment…"
     },
     "types": {
       "meetup": "Meetup",

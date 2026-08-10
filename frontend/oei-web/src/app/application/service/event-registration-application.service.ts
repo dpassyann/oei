@@ -11,6 +11,10 @@ export class EventRegistrationApplicationService {
     return this.port.register(eventId);
   }
 
+  unregister(eventId: string): Observable<void> {
+    return this.port.unregister(eventId);
+  }
+
   getMyRegistration(eventId: string): Observable<EventRegistration | undefined> {
     return this.port.getMyRegistration(eventId);
   }

@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -9,6 +9,7 @@ import { EventFeedApplicationService } from '../../../../application/service/eve
 import { EventPhotoConsentApplicationService } from '../../../../application/service/event-photo-consent-application.service';
 import { KeycloakAuthService } from '../../../auth/keycloak-auth.service';
 import { I18nService } from '../../../i18n/i18n.service';
+import { EventComment } from '../../../../domain/model/event/event-comment';
 
 interface FeedPostDraftFields {
   text: string;
@@ -54,6 +55,7 @@ export class EventDetail {
   protected readonly isRegistered = computed(() => this.registrationResource.hasValue() && !!this.registrationResource.value());
 
   protected readonly registering = signal(false);
+  protected readonly unregistering = signal(false);
 
   private readonly feedPostsResource = rxResource({
     params: () => this.event()?.id,
@@ -89,6 +91,63 @@ export class EventDetail {
     required(path.text);
   });
 
+  // Comments render inline under each post (LinkedIn-style), not behind a click — so every
+  // post's comments are fetched as soon as it appears in the feed, keyed by post id.
+  protected readonly commentsByPost = signal<Record<string, EventComment[]>>({});
+  protected readonly commentDraftByPost = signal<Record<string, string>>({});
+  protected readonly commentSubmittingPostId = signal<string | null>(null);
+  private readonly loadedCommentPostIds = new Set<string>();
+
+  constructor() {
+    effect(() => {
+      const event = this.event();
+      if (!event) {
+        return;
+      }
+      for (const post of this.posts()) {
+        if (this.loadedCommentPostIds.has(post.id)) {
+          continue;
+        }
+        this.loadedCommentPostIds.add(post.id);
+        this.feedService.listComments(event.id, post.id).subscribe((comments) => {
+          this.commentsByPost.update((current) => ({ ...current, [post.id]: comments }));
+        });
+      }
+    });
+  }
+
+  protected commentsFor(postId: string): EventComment[] {
+    return this.commentsByPost()[postId] ?? [];
+  }
+
+  protected commentDraftFor(postId: string): string {
+    return this.commentDraftByPost()[postId] ?? '';
+  }
+
+  protected setCommentDraft(postId: string, text: string): void {
+    this.commentDraftByPost.update((current) => ({ ...current, [postId]: text }));
+  }
+
+  protected submitComment(postId: string): void {
+    const event = this.event();
+    const text = this.commentDraftFor(postId).trim();
+    if (!event || !text || this.commentSubmittingPostId()) {
+      return;
+    }
+    this.commentSubmittingPostId.set(postId);
+    this.feedService.addComment(event.id, { postId, text }).subscribe({
+      next: (comment) => {
+        this.commentSubmittingPostId.set(null);
+        this.setCommentDraft(postId, '');
+        this.commentsByPost.update((current) => ({
+          ...current,
+          [postId]: [...(current[postId] ?? []), comment],
+        }));
+      },
+      error: () => this.commentSubmittingPostId.set(null),
+    });
+  }
+
   protected register(): void {
     const event = this.event();
     if (!event || this.registering()) {
@@ -101,6 +160,24 @@ export class EventDetail {
         this.registrationResource.reload();
       },
       error: () => this.registering.set(false),
+    });
+  }
+
+  // Mirrors `register()`, per the design feedback that "Participer" behaves like a "like"
+  // toggle: clicking it again while registered withdraws the registration instead of opening a
+  // separate confirmation flow.
+  protected unregister(): void {
+    const event = this.event();
+    if (!event || this.unregistering()) {
+      return;
+    }
+    this.unregistering.set(true);
+    this.registrationService.unregister(event.id).subscribe({
+      next: () => {
+        this.unregistering.set(false);
+        this.registrationResource.reload();
+      },
+      error: () => this.unregistering.set(false),
     });
   }
 

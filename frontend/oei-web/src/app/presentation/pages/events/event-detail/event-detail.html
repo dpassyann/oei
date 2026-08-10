@@ -20,13 +20,20 @@
       <p class="oei-event-hero__description">{{ event()!.description }}</p>
 
       @if (!isConnected()) {
-        <button type="button" class="oei-event-cta oei-event-cta--disabled" disabled>
+        <button type="button" class="oei-event-participate-pill oei-event-participate-pill--disabled" disabled>
           {{ i18n.translate('events.detail.loginToParticipate') }}
         </button>
       } @else if (isRegistered()) {
-        <p class="oei-event-cta__confirmed">{{ i18n.translate('events.detail.registered') }}</p>
+        <button
+          type="button"
+          class="oei-event-participate-pill oei-event-participate-pill--active"
+          [disabled]="unregistering()"
+          (click)="unregister()"
+        >
+          {{ unregistering() ? i18n.translate('events.detail.registering') : i18n.translate('events.detail.unregister') }}
+        </button>
       } @else {
-        <button type="button" class="oei-event-cta" [disabled]="registering()" (click)="register()">
+        <button type="button" class="oei-event-participate-pill" [disabled]="registering()" (click)="register()">
           {{ registering() ? i18n.translate('events.detail.registering') : i18n.translate('events.detail.participate') }}
         </button>
       }
@@ -120,11 +127,37 @@
                 <button
                   type="button"
                   class="oei-event-feed__like"
+                  [class.oei-event-feed__like--active]="post.likedByMe"
                   [disabled]="!canParticipateInFeed() || post.likedByMe"
                   (click)="likePost(post.id)"
                 >
                   {{ i18n.translate('events.detail.like') }} ({{ post.likesCount }})
                 </button>
+              </div>
+
+              <div class="oei-event-feed__comments">
+                @for (comment of commentsFor(post.id); track comment.id) {
+                  <div class="oei-event-feed__comment">
+                    <span class="oei-event-feed__comment-author">{{ comment.authorName }}</span>
+                    <span class="oei-event-feed__comment-text">{{ comment.text }}</span>
+                  </div>
+                }
+                @if (canParticipateInFeed()) {
+                  <form
+                    class="oei-event-feed__comment-form"
+                    (submit)="$event.preventDefault(); submitComment(post.id)"
+                  >
+                    <input
+                      type="text"
+                      [attr.placeholder]="i18n.translate('events.detail.commentPlaceholder')"
+                      [value]="commentDraftFor(post.id)"
+                      (input)="setCommentDraft(post.id, $any($event.target).value)"
+                    />
+                    <button type="submit" [disabled]="commentSubmittingPostId() === post.id">
+                      {{ i18n.translate('events.detail.comment') }}
+                    </button>
+                  </form>
+                }
               </div>
             </li>
           }

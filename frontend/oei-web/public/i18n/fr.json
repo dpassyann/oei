@@ -1090,6 +1090,7 @@
       "registered": "Vous participez à cet événement",
       "registering": "Inscription en cours…",
       "participate": "Participer",
+      "unregister": "Ne plus participer",
       "scheduleTitle": "Horaires",
       "capacity": "Places",
       "speakersTitle": "Intervenants",
@@ -1107,7 +1108,9 @@
       "posting": "Publication…",
       "post": "Publier",
       "feedEmpty": "Aucune publication pour le moment.",
-      "like": "J'aime"
+      "like": "J'aime",
+      "comment": "Commenter",
+      "commentPlaceholder": "Ajouter un commentaire…"
     },
     "types": {
       "meetup": "Meetup",

@@ -2726,6 +2726,42 @@ paths:
               schema:
                 $ref: "#/components/schemas/EventRegistration"
 
+  /api/member/v1/events/{id}/registrations/me:
+    get:
+      tags: [member-events]
+      operationId: getMyEventRegistration
+      summary: Inscription du membre connecté à cet événement, si elle existe.
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Inscription trouvée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EventRegistration"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      tags: [member-events]
+      operationId: unregisterFromEvent
+      summary: Désinscription (`GOING` -> supprimée) du membre connecté de cet événement.
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Désinscription effectuée
+
   /api/member/v1/events/{id}/feed:
     get:
       tags: [member-events]

@@ -31,6 +31,16 @@ export class EventRegistrationMockAdapter implements EventRegistrationPort {
     return of(registration);
   }
 
+  unregister(eventId: string): Observable<void> {
+    const index = this.registrations.findIndex(
+      (registration) => registration.eventId === eventId && registration.memberId === DEMO_MEMBER_ID,
+    );
+    if (index !== -1) {
+      this.registrations.splice(index, 1);
+    }
+    return of(undefined);
+  }
+
   getMyRegistration(eventId: string): Observable<EventRegistration | undefined> {
     return of(
       this.registrations.find(
