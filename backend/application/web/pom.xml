@@ -15,13 +15,15 @@
   <packaging>jar</packaging>
   <name>OEI Backend - Application Web</name>
   <description>
-    Primary HTTP adapter AND composition root (deliberate choice — no separate
-    application/runtime module, see the spring-boot-ddd-backend skill's "Composition root
-    rule"): implements the server interfaces generated from the OEI OpenAPI contract
-    (contract-first), carries @SpringBootApplication, and is therefore the only module
-    allowed to depend on domain-core in addition to domain-shared and the infrastructure
-    adapters. Also packages/publishes the OpenAPI contract as a zip + npm tgz for the
-    Angular frontend.
+    Primary HTTP adapter. Implements the server interfaces generated from the OEI OpenAPI
+    contract (contract-first) as explicit-Bean *Resource classes. Depends only on
+    domain-shared (for port/use-case interfaces) and infrastructure (which transitively
+    provides domain-core-backed beans via its wiring configuration) — never directly on
+    domain-core; see infrastructure-wiring's OeiWiringConfiguration, the sole class in the
+    project outside domain-core allowed to reference concrete domain-core types. Also
+    carries the executable @SpringBootApplication (composition root: no separate
+    application/runtime module) and packages/publishes the OpenAPI contract as a zip + npm
+    tgz for the Angular frontend.
   </description>
 
   <properties>
@@ -35,15 +37,7 @@
     </dependency>
     <dependency>
       <groupId>global.oei</groupId>
-      <artifactId>domain-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>global.oei</groupId>
-      <artifactId>infrastructure-security</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>global.oei</groupId>
-      <artifactId>infrastructure-persistence</artifactId>
+      <artifactId>infrastructure-wiring</artifactId>
     </dependency>
 
     <dependency>
@@ -59,16 +53,24 @@
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
 
-    <!-- Generated OpenAPI server interfaces/DTOs reference these annotation/type libraries. -->
+    <!-- Generated OpenAPI server interfaces/DTOs reference these annotation/type libraries.
+         Versions managed centrally in the root pom's dependencyManagement. -->
     <dependency>
       <groupId>io.swagger.core.v3</groupId>
       <artifactId>swagger-annotations-jakarta</artifactId>
-      <version>2.2.52</version>
     </dependency>
     <dependency>
       <groupId>org.openapitools</groupId>
       <artifactId>jackson-databind-nullable</artifactId>
-      <version>0.2.11</version>
+    </dependency>
+
+    <!-- Lombok: @RequiredArgsConstructor for constructor injection in *Service/*Resource
+         classes (never in domain-shared/domain-core, kept framework-agnostic). Version
+         managed by the inherited spring-boot-starter-parent BOM. -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
@@ -82,12 +84,15 @@
     <plugins>
 
       <!-- Executable artifact: application-web is the composition root, no separate
-           application/runtime module (see class-level Javadoc on OeiBackendApplication). -->
+           application/runtime module (see class-level Javadoc on OeiBackendApplication).
+           classifier "exec" keeps the original thin JAR as the default artifact so
+           downstream modules (test/architecture) can compile against it. -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
           <mainClass>global.oei.application.web.OeiBackendApplication</mainClass>
+          <classifier>exec</classifier>
         </configuration>
         <executions>
           <execution>

@@ -1,37 +1,39 @@
 package global.oei.application.web;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.persistence.autoconfigure.EntityScan;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.Import;
 
-import global.oei.domain.core.identity.GetMyIdentityUseCase;
-import global.oei.domain.shared.security.SecurityContextPort;
+import global.oei.application.web.config.WebResourcesConfiguration;
+import global.oei.infrastructure.wiring.OeiWiringConfiguration;
 
 /**
- * Executable composition root of the OEI backend.
+ * Executable entry point of the OEI backend.
  *
- * <p>Deliberate architecture choice (see the spring-boot-ddd-backend skill's "Composition
- * root rule"): {@code application-web} is the primary HTTP adapter <em>and</em> the
- * composition root — there is no separate {@code application/runtime} module. This module
- * is therefore the only one allowed to depend on {@code domain-core} (use case
- * implementations) in addition to {@code domain-shared}; it wires use cases with
- * infrastructure adapters as beans here.</p>
+ * <p>Deliberately composed from {@link SpringBootConfiguration} + {@link EnableAutoConfiguration}
+ * instead of the {@code @SpringBootApplication} meta-annotation, specifically to avoid the
+ * implicit {@code @ComponentScan} that {@code @SpringBootApplication} carries — this project
+ * wires every bean explicitly (predictability + AOT/native-image friendliness; see the
+ * spring-boot-ddd-backend skill's "Explicit wiring" rule). All application configuration is
+ * pulled in via explicit {@link Import}:</p>
+ * <ul>
+ *   <li>{@link OeiWiringConfiguration} (in {@code infrastructure-wiring}) — the composition
+ *       root that exposes {@code domain-core} use cases as {@code domain-shared}
+ *       interfaces, and wires the JPA/security infrastructure adapters;</li>
+ *   <li>{@link WebResourcesConfiguration} — this module's own {@code *Resource}/
+ *       {@code *Adapter}/{@code service.*Service} wiring.</li>
+ * </ul>
+ * {@code @EnableAutoConfiguration} still loads Spring Boot auto-configuration classes (e.g.
+ * {@code OeiSecurityAutoConfiguration}) via their {@code AutoConfiguration.imports} file —
+ * that is a Spring Boot core mechanism, not classpath component scanning.
  */
-@SpringBootApplication
-@ComponentScan(basePackages = "global.oei")
-@EntityScan(basePackages = "global.oei.infrastructure.persistence")
-@EnableJpaRepositories(basePackages = "global.oei.infrastructure.persistence")
+@SpringBootConfiguration
+@EnableAutoConfiguration
+@Import({OeiWiringConfiguration.class, WebResourcesConfiguration.class})
 public class OeiBackendApplication {
 
     public static void main(final String[] args) {
         SpringApplication.run(OeiBackendApplication.class, args);
-    }
-
-    @Bean
-    public GetMyIdentityUseCase getMyIdentityUseCase(final SecurityContextPort securityContextPort) {
-        return new GetMyIdentityUseCase(securityContextPort);
     }
 }

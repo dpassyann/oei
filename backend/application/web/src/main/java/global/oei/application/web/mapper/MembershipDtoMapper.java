@@ -1,4 +1,4 @@
-package global.oei.application.web.membership;
+package global.oei.application.web.mapper;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -15,12 +15,12 @@ import org.openapitools.jackson.nullable.JsonNullable;
  * {@link MembershipDTO} at the HTTP boundary — small enough (six fields) that MapStruct
  * would only add ceremony (see contracts-and-clients skill reference).
  */
-final class MembershipDtoMapper {
+public final class MembershipDtoMapper {
 
     private MembershipDtoMapper() {
     }
 
-    static MembershipDTO toDto(final Membership membership) {
+    public static MembershipDTO toDto(final Membership membership) {
         final MembershipDTO dto = new MembershipDTO(
                 membership.memberId().value().toString(),
                 MembershipTierDTO.valueOf(membership.tier().name()),
