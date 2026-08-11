@@ -4,6 +4,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import global.oei.domain.shared.security.AuthenticatedIdentity;
+import global.oei.domain.shared.security.GetMyIdentityUseCase;
 import global.oei.domain.shared.security.SecurityContextPort;
 
 /**
@@ -14,18 +15,15 @@ import global.oei.domain.shared.security.SecurityContextPort;
  * will build on the same {@link SecurityContextPort} to resolve the acting
  * {@code MemberId} rather than duplicating this lookup.</p>
  */
-public class GetMyIdentityUseCase {
+public class GetMyIdentityService implements GetMyIdentityUseCase {
 
     private final SecurityContextPort securityContextPort;
 
-    public GetMyIdentityUseCase(final SecurityContextPort securityContextPort) {
+    public GetMyIdentityService(final SecurityContextPort securityContextPort) {
         this.securityContextPort = Objects.requireNonNull(securityContextPort, "securityContextPort must not be null");
     }
 
-    /**
-     * @return the current caller's identity, or {@link Optional#empty()} when there is
-     *         no authenticated caller (e.g. a public endpoint or a batch context).
-     */
+    @Override
     public Optional<AuthenticatedIdentity> execute() {
         return securityContextPort.currentIdentity();
     }
