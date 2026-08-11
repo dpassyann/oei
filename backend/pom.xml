@@ -27,6 +27,9 @@
     <module>domain</module>
     <module>infrastructure</module>
     <module>application</module>
+    <!-- Cross-module ArchUnit suite: depends (test scope) on every reactor artifact below,
+         so it must build last. Not deployed (see its own pom for maven.deploy.skip). -->
+    <module>test/architecture</module>
   </modules>
 
   <properties>
@@ -34,13 +37,24 @@
     <maven.compiler.release>25</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <!-- Non Spring-Boot-managed plugin/library versions, centralized here -->
+    <!--
+      Every non-Spring-Boot-managed third-party plugin/library version is centralized here.
+      Child modules reference these properties (or the dependencyManagement entries below)
+      only — never a hardcoded version. Lombok, JUnit, Mockito, and AssertJ versions come
+      from the inherited spring-boot-starter-parent BOM and are deliberately NOT
+      re-pinned here (the project inherits spring-boot-starter-parent directly, no
+      intermediate custom parent, precisely so that BOM stays the single source of truth
+      for Spring-Boot-managed dependencies).
+    -->
     <archunit.version>1.5.0</archunit.version>
     <openapi-generator.version>7.24.0</openapi-generator.version>
     <maven-assembly-plugin.version>3.8.0</maven-assembly-plugin.version>
     <build-helper-maven-plugin.version>3.6.1</build-helper-maven-plugin.version>
     <frontend-maven-plugin.version>2.0.2</frontend-maven-plugin.version>
     <maven-enforcer-plugin.version>3.6.3</maven-enforcer-plugin.version>
+    <jacoco-maven-plugin.version>0.8.15</jacoco-maven-plugin.version>
+    <swagger-annotations-jakarta.version>2.2.52</swagger-annotations-jakarta.version>
+    <jackson-databind-nullable.version>0.2.11</jackson-databind-nullable.version>
     <node.version>v22.14.0</node.version>
     <pnpm.version>10.33.0</pnpm.version>
   </properties>
@@ -70,6 +84,11 @@
       </dependency>
       <dependency>
         <groupId>global.oei</groupId>
+        <artifactId>infrastructure-wiring</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>global.oei</groupId>
         <artifactId>application-web</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -80,10 +99,44 @@
         <version>${archunit.version}</version>
         <scope>test</scope>
       </dependency>
+      <dependency>
+        <groupId>io.swagger.core.v3</groupId>
+        <artifactId>swagger-annotations-jakarta</artifactId>
+        <version>${swagger-annotations-jakarta.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.openapitools</groupId>
+        <artifactId>jackson-databind-nullable</artifactId>
+        <version>${jackson-databind-nullable.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
   <build>
+    <plugins>
+      <!--
+        Explicit annotationProcessorPaths for Lombok: relying on javac's automatic
+        classpath discovery of annotation processors is fragile across compiler/toolchain
+        configurations, so every module compiles with Lombok's processor declared
+        explicitly here (inherited by all children; a no-op for modules that do not
+        declare the lombok dependency itself, since annotationProcessorPaths only pulls in
+        the processor jar, not a compile-time dependency).
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+    </plugins>
+
     <pluginManagement>
       <plugins>
         <plugin>
@@ -106,14 +159,16 @@
           <artifactId>frontend-maven-plugin</artifactId>
           <version>${frontend-maven-plugin.version}</version>
         </plugin>
-        <!--
-          TODO(architecture): Maven Enforcer rules for module dependency direction
-          (e.g. banning domain -> infrastructure/application, or domain -> Spring)
-          are not wired yet. ArchUnit (see domain/core) covers the same intent at
-          the bytecode level in the meantime. Add an enforcer "banned dependencies"
-          / custom rule execution here when the module graph grows and this needs
-          a faster/earlier (dependency-graph-time) guard.
-        -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>${maven-enforcer-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>${jacoco-maven-plugin.version}</version>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>

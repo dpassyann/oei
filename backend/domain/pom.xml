@@ -19,4 +19,66 @@
     <module>shared</module>
     <module>core</module>
   </modules>
+
+  <build>
+    <plugins>
+      <!--
+        Maven-level guard for "domain stays framework-agnostic", inherited by domain-shared
+        and domain-core: fails as early as `mvn validate`/`compile`, not just at test time.
+        ArchUnit's DomainArchitectureTest (domain/core) covers the same intent at the
+        bytecode level and is kept as a complementary, more precise check (it can also catch
+        direct Spring/JPA source references even if a dependency is somehow on the classpath
+        without being a declared Maven dependency).
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>enforce-no-spring-in-domain</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <bannedDependencies>
+                  <searchTransitive>true</searchTransitive>
+                  <excludes>
+                    <exclude>org.springframework</exclude>
+                    <exclude>org.springframework.boot</exclude>
+                    <exclude>org.springframework.data</exclude>
+                    <exclude>org.springframework.security</exclude>
+                    <exclude>jakarta.persistence</exclude>
+                  </excludes>
+                </bannedDependencies>
+              </rules>
+              <fail>true</fail>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- JaCoCo: domain modules target 100% line/branch coverage (skill's coverage gate). -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>jacoco-prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>jacoco-report</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

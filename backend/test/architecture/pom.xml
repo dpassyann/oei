@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>global.oei</groupId>
+    <artifactId>oei-backend</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <relativePath>../..</relativePath>
+  </parent>
+
+  <artifactId>test-architecture</artifactId>
+  <packaging>jar</packaging>
+  <name>OEI Backend - Cross-Module Architecture Tests</name>
+  <description>
+    Reactor-wide ArchUnit suite: depends (test scope) on every other reactor artifact and
+    audits dependency-direction and naming rules across module boundaries (e.g. "no class
+    in application-web imports domain-core", "*Resource/*Adapter naming", "no *Impl/impl
+    package"). Complements the single-module DomainArchitectureTest in domain/core, which
+    only sees domain-shared + domain-core. Builds last in the reactor by necessity. Never
+    deployed/published (see maven.deploy.skip below).
+  </description>
+
+  <properties>
+    <maven.deploy.skip>true</maven.deploy.skip>
+    <maven.install.skip>true</maven.install.skip>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>global.oei</groupId>
+      <artifactId>domain-shared</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>global.oei</groupId>
+      <artifactId>domain-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>global.oei</groupId>
+      <artifactId>infrastructure-security</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>global.oei</groupId>
+      <artifactId>infrastructure-persistence</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>global.oei</groupId>
+      <artifactId>infrastructure-wiring</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>global.oei</groupId>
+      <artifactId>application-web</artifactId>
+      <!-- Compiles against the plain "exec"-classified... no: the DEFAULT (unclassified)
+           artifact, kept as the plain thin JAR by spring-boot-maven-plugin's
+           <classifier>exec</classifier> config in application-web/pom.xml. -->
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.tngtech.archunit</groupId>
+      <artifactId>archunit-junit5</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>
