@@ -46,6 +46,14 @@
       <scope>runtime</scope>
     </dependency>
 
+    <!-- Lombok: @RequiredArgsConstructor for constructor injection (never in domain-shared
+         itself). Version managed by the inherited spring-boot-starter-parent BOM. -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>

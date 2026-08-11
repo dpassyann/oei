@@ -18,5 +18,6 @@
   <modules>
     <module>security</module>
     <module>persistence</module>
+    <module>wiring</module>
   </modules>
 </project>

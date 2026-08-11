@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>global.oei</groupId>
+    <artifactId>infrastructure</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <relativePath>..</relativePath>
+  </parent>
+
+  <artifactId>infrastructure-wiring</artifactId>
+  <packaging>jar</packaging>
+  <name>OEI Backend - Infrastructure Wiring</name>
+  <description>
+    The composition root of the OEI backend. OeiWiringConfiguration is the sole class in
+    the project (outside domain-core itself) allowed to import concrete domain-core types:
+    it instantiates domain-core use-case/service implementations and exposes them as
+    @Bean-typed domain-shared interfaces, using outbound port adapters provided by
+    infrastructure-security and infrastructure-persistence. application-web (and any future
+    primary adapter) depends on this module instead of depending on domain-core directly,
+    and stays 100% interface-first with respect to the domain.
+  </description>
+
+  <dependencies>
+    <dependency>
+      <groupId>global.oei</groupId>
+      <artifactId>domain-shared</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>global.oei</groupId>
+      <artifactId>domain-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>global.oei</groupId>
+      <artifactId>infrastructure-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>global.oei</groupId>
+      <artifactId>infrastructure-persistence</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-autoconfigure</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>

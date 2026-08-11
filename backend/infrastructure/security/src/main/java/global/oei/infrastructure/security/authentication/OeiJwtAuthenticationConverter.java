@@ -2,7 +2,6 @@ package global.oei.infrastructure.security.authentication;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -13,6 +12,8 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 import global.oei.infrastructure.security.properties.OeiSecurityProperties;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Converts a validated Keycloak {@link Jwt} into a {@link JwtAuthenticationToken}, mapping
@@ -24,13 +25,11 @@ import global.oei.infrastructure.security.properties.OeiSecurityProperties;
  * see {@code docs/architecture/keycloak-roles.md}. No PUID/tenant decoding is needed, unlike
  * the IAP starter this module takes inspiration from.</p>
  */
+@RequiredArgsConstructor
 public class OeiJwtAuthenticationConverter implements Converter<Jwt, AbstractAuthenticationToken> {
 
+    @NonNull
     private final OeiSecurityProperties properties;
-
-    public OeiJwtAuthenticationConverter(final OeiSecurityProperties properties) {
-        this.properties = Objects.requireNonNull(properties, "properties must not be null");
-    }
 
     @Override
     public AbstractAuthenticationToken convert(final Jwt jwt) {
