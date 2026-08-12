@@ -8,14 +8,54 @@
     <groupId>global.oei</groupId>
     <artifactId>oei-backend</artifactId>
     <version>0.1.0-SNAPSHOT</version>
-    <relativePath>..</relativePath>
+    <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>application</artifactId>
   <packaging>pom</packaging>
   <name>OEI Backend - Application</name>
+  <description>
+    Compilation-time firewall against domain-core for every primary adapter module: any
+    dependency here toward infrastructure-wiring (or another infrastructure module a
+    primary adapter consumes directly) excludes domain-core from its transitive closure,
+    while domain-core is reintroduced separately at scope=runtime. This guarantees no
+    class in application-web (or any future application/* module) can import a concrete
+    domain-core type at compile time — not even by IDE autocomplete mistake — while still
+    letting Spring load/instantiate domain-core classes at runtime (OeiWiringConfiguration,
+    in infrastructure-wiring, is the one place that constructs them). See the pattern this
+    reproduces: the IAP platform's application/pom.xml (com.pictet.iap).
+  </description>
 
   <modules>
     <module>web</module>
   </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>global.oei</groupId>
+        <artifactId>infrastructure-wiring</artifactId>
+        <version>${project.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>global.oei</groupId>
+            <artifactId>domain-core</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+
+      <dependency>
+        <groupId>global.oei</groupId>
+        <artifactId>domain-core</artifactId>
+        <version>${project.version}</version>
+        <scope>runtime</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>global.oei</groupId>
+        <artifactId>domain-shared</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 </project>

@@ -8,7 +8,7 @@
     <groupId>global.oei</groupId>
     <artifactId>application</artifactId>
     <version>0.1.0-SNAPSHOT</version>
-    <relativePath>..</relativePath>
+    <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>application-web</artifactId>
@@ -38,6 +38,17 @@
     <dependency>
       <groupId>global.oei</groupId>
       <artifactId>infrastructure-wiring</artifactId>
+    </dependency>
+    <!-- domain-core is excluded from infrastructure-wiring's transitive closure (see
+         application/pom.xml dependencyManagement) and reintroduced here at scope=runtime
+         only: no class in this module may import a concrete domain-core type at compile
+         time, but the classes must still be on the runtime classpath for
+         OeiWiringConfiguration (infrastructure-wiring) to instantiate them when Spring
+         actually starts. Scope comes from the parent's dependencyManagement — do not
+         redeclare it here. -->
+    <dependency>
+      <groupId>global.oei</groupId>
+      <artifactId>domain-core</artifactId>
     </dependency>
 
     <dependency>
