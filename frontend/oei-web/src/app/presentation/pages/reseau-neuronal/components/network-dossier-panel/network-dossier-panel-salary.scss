@@ -1,0 +1,27 @@
+// Anonymized salary transparency section — split into its own stylesheet (rather than appended
+// to `network-dossier-panel.scss`) purely to stay clear of the anyComponentStyle build budget,
+// same reasoning as `network-dossier-panel-cta.scss`'s doc comment: that file was already close
+// to the 6kB warning threshold before this feature existed.
+$gold: #e8a530;
+$ink: #f7f3ea;
+$mono: 'Space Grotesk', sans-serif;
+
+.oei-network-dossier-panel__salary {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.oei-network-dossier-panel__salary-country {
+  max-width: 200px;
+}
+.oei-network-dossier-panel__salary-range {
+  font-size: 13px;
+  color: $gold;
+  font: 13px $mono;
+}
+.oei-network-dossier-panel__salary-empty {
+  font-size: 12px;
+  color: rgba($ink, 0.55);
+  font-style: italic;
+}

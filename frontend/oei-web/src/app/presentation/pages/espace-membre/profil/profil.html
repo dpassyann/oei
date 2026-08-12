@@ -175,6 +175,9 @@
             <p class="oei-profil__private-notice">{{ i18n.translate('espaceMembre.profil.compensation.privateNotice') }}</p>
             <p class="oei-profil__compensation-value">
               {{ compensation.amount }} {{ compensation.currency }} / {{ i18n.translate('espaceMembre.profil.compensation.period.' + compensation.period) }}
+              @if (compensation.country) {
+                · {{ compensation.country }}
+              }
             </p>
             @if (benchmark(); as range) {
               <p class="oei-profil__compensation-benchmark">
@@ -252,6 +255,10 @@
         <label class="oei-profil__field oei-field">
           {{ i18n.translate('espaceMembre.profil.compensation.currency') }}
           <input type="text" class="oei-input" [formField]="editForm.compensationCurrency" placeholder="CHF" />
+        </label>
+        <label class="oei-profil__field oei-field">
+          {{ i18n.translate('espaceMembre.profil.compensation.country') }}
+          <input type="text" class="oei-input" [formField]="editForm.compensationCountry" placeholder="Suisse" />
         </label>
         <label class="oei-profil__field oei-field">
           {{ i18n.translate('espaceMembre.profil.compensation.periodLabel') }}

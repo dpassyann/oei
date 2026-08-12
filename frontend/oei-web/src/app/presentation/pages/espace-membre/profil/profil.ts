@@ -44,6 +44,10 @@ interface EditableProfileFields {
   compensationAmount: string;
   compensationCurrency: string;
   compensationPeriod: CompensationPeriod | '';
+  // Free text, same format as `NetworkExpert.country`/`CurrentCompensation.country` — used for
+  // the anonymized per-country aggregation on the Professional Neural Network's salary
+  // transparency feature (see that model's doc comment), never displayed individually.
+  compensationCountry: string;
 }
 
 const AVAILABILITY_OPTIONS: readonly Availability[] = ['AVAILABLE', 'OPEN_TO_OPPORTUNITIES', 'NOT_AVAILABLE'];
@@ -108,6 +112,7 @@ export class Profil {
     compensationAmount: '',
     compensationCurrency: '',
     compensationPeriod: '',
+    compensationCountry: '',
   });
   protected readonly editForm = form(this.editModel, (path) => {
     required(path.title);
@@ -132,6 +137,7 @@ export class Profil {
       compensationAmount: current?.currentCompensation?.amount?.toString() ?? '',
       compensationCurrency: current?.currentCompensation?.currency ?? '',
       compensationPeriod: current?.currentCompensation?.period ?? '',
+      compensationCountry: current?.currentCompensation?.country ?? '',
     });
     this.editing.set(true);
     this.saveError.set(false);
@@ -174,7 +180,12 @@ export class Profil {
     const amount = Number(edited.compensationAmount);
     const currentCompensation =
       edited.compensationAmount && Number.isFinite(amount) && edited.compensationCurrency && edited.compensationPeriod
-        ? { amount, currency: edited.compensationCurrency, period: edited.compensationPeriod }
+        ? {
+            amount,
+            currency: edited.compensationCurrency,
+            period: edited.compensationPeriod,
+            country: edited.compensationCountry || undefined,
+          }
         : undefined;
     const updated: ProfessionalProfile = {
       ...current,

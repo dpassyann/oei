@@ -101,6 +101,69 @@
       <a href="#" class="oei-network-dossier-panel__cta oei-network-dossier-panel__cta--link" (click)="$event.preventDefault()">
         {{ i18n.translate('network.dossier.readMore') }} →
       </a>
+      <ng-container *ngTemplateOutlet="salarySection"></ng-container>
+    </div>
+  }
+  @if (isDomain() && node(); as n) {
+    <div class="oei-network-dossier-panel__inner">
+      <div class="oei-network-dossier-panel__header">
+        <span>{{ i18n.translate('network.dossier.domainHeader') }}</span>
+        <span class="oei-network-dossier-panel__blink">▮</span>
+      </div>
+      <div class="oei-network-dossier-panel__status">● {{ i18n.translate('network.dossier.domainRegistered') }}</div>
+      <div class="oei-network-dossier-panel__top">
+        <div class="oei-network-dossier-panel__hex-badge">◆</div>
+        <button type="button" class="oei-network-dossier-panel__close" (click)="close.emit()">✕</button>
+      </div>
+      <div class="oei-network-dossier-panel__name">{{ n.label }}</div>
+      <ng-container *ngTemplateOutlet="salarySection"></ng-container>
+    </div>
+  }
+  @if (isTopic() && node(); as n) {
+    <div class="oei-network-dossier-panel__inner">
+      <div class="oei-network-dossier-panel__header">
+        <span>{{ i18n.translate('network.dossier.topicHeader') }}</span>
+        <span class="oei-network-dossier-panel__blink">▮</span>
+      </div>
+      <div class="oei-network-dossier-panel__status">● {{ i18n.translate('network.dossier.topicRegistered') }}</div>
+      <div class="oei-network-dossier-panel__top">
+        <div class="oei-network-dossier-panel__hex-badge">◆</div>
+        <button type="button" class="oei-network-dossier-panel__close" (click)="close.emit()">✕</button>
+      </div>
+      <div class="oei-network-dossier-panel__name">{{ n.label }}</div>
+      <ng-container *ngTemplateOutlet="salarySection"></ng-container>
     </div>
   }
 </div>
+
+<!-- Anonymized salary transparency — shared by the certification/domain/topic blocks above (not
+     the expert block: an individual member is never the subject of this aggregate, see
+     `NetworkSalaryNodeType`'s doc comment). -->
+<ng-template #salarySection>
+  <div class="oei-network-dossier-panel__section-title">{{ i18n.translate('network.dossier.salaryTitle') }}</div>
+  <div class="oei-network-dossier-panel__salary">
+    @if (salaryCountryOptions.length) {
+      <select
+        class="oei-select oei-network-dossier-panel__salary-country"
+        [ngModel]="selectedCountry() ?? ''"
+        (ngModelChange)="onSalaryCountryChange($event)"
+        name="salaryCountry"
+        [attr.aria-label]="i18n.translate('network.dossier.salaryCountryLabel')"
+      >
+        <option value="">{{ i18n.translate('network.dossier.salaryCountryAll') }}</option>
+        @for (country of salaryCountryOptions; track country) {
+          <option [value]="country">{{ country }}</option>
+        }
+      </select>
+    }
+    @if (salaryInsight(); as insight) {
+      <p class="oei-network-dossier-panel__salary-range">
+        {{ i18n.translate('network.dossier.salaryRangePrefix') }}
+        {{ insight.low }}–{{ insight.high }} {{ insight.currency }} / {{ i18n.translate('network.dossier.period.' + insight.period) }}
+        ({{ i18n.translate('network.dossier.salarySampleSize') }} {{ insight.sampleSize }})
+      </p>
+    } @else {
+      <p class="oei-network-dossier-panel__salary-empty">{{ i18n.translate('network.dossier.salaryInsufficientData') }}</p>
+    }
+  </div>
+</ng-template>

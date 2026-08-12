@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { SalaryBenchmarkPort } from '../../domain/port/profile/salary-benchmark.port';
 import { SalaryBenchmarkQuery, SalaryBenchmarkRange } from '../../domain/model/profile/salary-benchmark';
 import { CompensationPeriod } from '../../domain/model/profile/professional-profile';
+import { MIN_ANONYMIZED_SAMPLE_SIZE } from '../../domain/model/shared/anonymization';
 
 // Demonstration-only anonymized sample, deliberately small and clearly fictional (no real
 // member compensation data exists yet — see `CurrentCompensation`'s doc comment). Each entry
@@ -44,10 +45,15 @@ export class SalaryBenchmarkMockAdapter implements SalaryBenchmarkPort {
     }
     const matches = DEMO_SAMPLES.filter((sample) => query.expertiseAreas.includes(sample.domain));
     const pool = matches.length > 0 ? matches : DEMO_SAMPLES;
-    const values = pool.map((sample) => toPeriod(sample.annualChf, query.period));
-    if (values.length === 0) {
+    // Anonymization gate — shared with `NetworkGraphPort.getSalaryInsight`'s mock, see
+    // `MIN_ANONYMIZED_SAMPLE_SIZE`'s doc comment. A pool that ends up too small (e.g. a niche
+    // domain with only a couple of matching demo samples) never becomes a range, however
+    // tempting it would be to still show "something" — that's exactly the case this threshold
+    // exists to catch.
+    if (pool.length < MIN_ANONYMIZED_SAMPLE_SIZE) {
       return of(undefined);
     }
+    const values = pool.map((sample) => toPeriod(sample.annualChf, query.period));
     return of({
       low: Math.min(...values),
       high: Math.max(...values),

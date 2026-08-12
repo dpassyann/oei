@@ -54,15 +54,29 @@ export type CompensationPeriod = 'YEAR' | 'MONTH';
 // (see `PUBLIC_PROFILE_VISIBLE_FIELD_KEYS` in `public-profile.ts` — `currentCompensation` is
 // intentionally absent from that list, not just unchecked by default), never rendered on the
 // digital business card / CV / member directory, and never sent to any `/api/public/**`
-// endpoint. Its only purpose is to let the member compare their own situation against the
-// anonymized aggregate range computed by `SalaryBenchmarkService` — the member's own figure is
-// used locally for that comparison and is not itself part of any aggregate exposed to others.
+// endpoint. Its purpose is twofold, both aggregate-only uses of the member's own figure, never
+// a direct exposure of it:
+// - let the member compare their own situation against the anonymized aggregate range computed
+//   by `SalaryBenchmarkService` (matched on `expertiseAreas` + `currency` + `period`);
+// - feed the Professional Neural Network's anonymized salary transparency feature
+//   (`NetworkSalaryInsight`, see `domain/model/network/network-salary-insight.model.ts`), which
+//   aggregates declarations by graph node (domain/topic/certification) and, additionally, by
+//   `country` below — again only ever surfaced as a computed range once at least
+//   `MIN_ANONYMIZED_SAMPLE_SIZE` members contributed to that specific node (+country) pool, never
+//   as an individual figure.
 export interface CurrentCompensation {
   readonly amount: number;
   // ISO 4217 currency code (e.g. "CHF", "EUR") — free text input, not a hardcoded list, since
   // OEI members span many countries.
   readonly currency: string;
   readonly period: CompensationPeriod;
+  // Free-text country label, same format as `NetworkExpert.country` (e.g. "Suisse", "France") —
+  // kept consistent with that field rather than an ISO code since the rest of this codebase's
+  // country data (network graph demo experts, member directory) is plain localized country
+  // names, not codes. Optional: a member can decline to state a country, in which case their
+  // declaration only contributes to the country-agnostic (global) aggregate, never to a
+  // per-country one.
+  readonly country?: string;
 }
 
 export interface ProfessionalProfile {

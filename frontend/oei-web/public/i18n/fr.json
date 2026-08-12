@@ -528,7 +528,8 @@
           "MONTH": "par mois"
         },
         "benchmarkPrefix": "Fourchette observée pour un profil similaire :",
-        "sampleSize": "échantillon anonymisé de"
+        "sampleSize": "échantillon anonymisé de",
+        "country": "Pays"
       }
     },
     "cv": {
@@ -1420,7 +1421,21 @@
       "validatedSkills": "Compétences validées",
       "validity": "Validité",
       "linkedExperts": "Experts liés",
-      "readMore": "Lire la suite"
+      "readMore": "Lire la suite",
+      "salaryTitle": "Transparence salariale (anonymisée)",
+      "salaryCountryLabel": "Filtrer par pays",
+      "salaryCountryAll": "Tous pays",
+      "salaryRangePrefix": "Fourchette anonymisée :",
+      "salarySampleSize": "échantillon anonymisé de",
+      "salaryInsufficientData": "Pas assez de données anonymisées pour ce nœud.",
+      "period": {
+        "YEAR": "par an",
+        "MONTH": "par mois"
+      },
+      "domainHeader": "FICHE // DOMAINE",
+      "domainRegistered": "RÉFÉRENTIEL OEI — DOMAINE D'EXPERTISE",
+      "topicHeader": "FICHE // TOPIC",
+      "topicRegistered": "RÉFÉRENTIEL OEI — TOPIC"
     },
     "journey": {
       "title": "Parcours"

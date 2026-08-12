@@ -528,7 +528,8 @@
           "MONTH": "per month"
         },
         "benchmarkPrefix": "Observed range for a similar profile:",
-        "sampleSize": "anonymized sample of"
+        "sampleSize": "anonymized sample of",
+        "country": "Country"
       }
     },
     "cv": {
@@ -1420,7 +1421,21 @@
       "validatedSkills": "Validated skills",
       "validity": "Validity",
       "linkedExperts": "Linked experts",
-      "readMore": "Read more"
+      "readMore": "Read more",
+      "salaryTitle": "Salary transparency (anonymized)",
+      "salaryCountryLabel": "Filter by country",
+      "salaryCountryAll": "All countries",
+      "salaryRangePrefix": "Anonymized range:",
+      "salarySampleSize": "anonymized sample of",
+      "salaryInsufficientData": "Not enough anonymized data for this node.",
+      "period": {
+        "YEAR": "per year",
+        "MONTH": "per month"
+      },
+      "domainHeader": "FILE // DOMAIN",
+      "domainRegistered": "OEI REGISTRY — EXPERTISE DOMAIN",
+      "topicHeader": "FILE // TOPIC",
+      "topicRegistered": "OEI REGISTRY — TOPIC"
     },
     "journey": {
       "title": "Journey"

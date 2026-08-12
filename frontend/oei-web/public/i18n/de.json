@@ -528,7 +528,8 @@
           "MONTH": "pro Monat"
         },
         "benchmarkPrefix": "Beobachtete Spanne für ein ähnliches Profil:",
-        "sampleSize": "anonymisierte Stichprobe von"
+        "sampleSize": "anonymisierte Stichprobe von",
+        "country": "Land"
       }
     },
     "cv": {
@@ -1414,7 +1415,21 @@
       "validatedSkills": "Validierte Kompetenzen",
       "validity": "Gültigkeit",
       "linkedExperts": "Verknüpfte Experten",
-      "readMore": "Weiterlesen"
+      "readMore": "Weiterlesen",
+      "salaryTitle": "Gehaltstransparenz (anonymisiert)",
+      "salaryCountryLabel": "Nach Land filtern",
+      "salaryCountryAll": "Alle Länder",
+      "salaryRangePrefix": "Anonymisierte Spanne:",
+      "salarySampleSize": "anonymisierte Stichprobe von",
+      "salaryInsufficientData": "Nicht genügend anonymisierte Daten für diesen Knoten.",
+      "period": {
+        "YEAR": "pro Jahr",
+        "MONTH": "pro Monat"
+      },
+      "domainHeader": "AKTE // DOMÄNE",
+      "domainRegistered": "OEI-VERZEICHNIS — EXPERTENDOMÄNE",
+      "topicHeader": "AKTE // THEMA",
+      "topicRegistered": "OEI-VERZEICHNIS — THEMA"
     },
     "journey": {
       "title": "Werdegang"

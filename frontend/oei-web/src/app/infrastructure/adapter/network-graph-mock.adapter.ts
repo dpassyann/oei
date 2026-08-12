@@ -10,6 +10,13 @@ import { NetworkDomain } from '../../domain/model/network/network-domain.model';
 import { NetworkTopic } from '../../domain/model/network/network-topic.model';
 import { NetworkCertification } from '../../domain/model/network/network-certification.model';
 import { NetworkExpert } from '../../domain/model/network/network-expert.model';
+import {
+  NETWORK_SALARY_INSIGHT_CANDIDATE_COUNTRIES,
+  NetworkSalaryInsight,
+  NetworkSalaryNodeType,
+} from '../../domain/model/network/network-salary-insight.model';
+import { CompensationPeriod } from '../../domain/model/profile/professional-profile';
+import { MIN_ANONYMIZED_SAMPLE_SIZE } from '../../domain/model/shared/anonymization';
 
 // Demonstration dataset — same 9 OEI expertise domains, ~54 topics, 10 real-world
 // certification chains and 52 fictitious member experts as the design reference
@@ -293,12 +300,93 @@ function buildDemoDataset(): DemoDataset {
   };
 }
 
+// ---------------------------------------------------------------------------------------------
+// Salary transparency demo data (`NetworkGraphPort.getSalaryInsight`)
+// ---------------------------------------------------------------------------------------------
+// Real member `CurrentCompensation` declarations don't exist yet (see that model's doc
+// comment), so — same spirit as `SalaryBenchmarkMockAdapter`'s `DEMO_SAMPLES` — this generates a
+// small, deterministic, clearly fictional anonymized pool per domain/topic/certification node,
+// split by the two `NETWORK_SALARY_INSIGHT_CANDIDATE_COUNTRIES`. As real declarations start
+// accumulating, this is meant to be replaced by a real backend aggregation behind
+// `NetworkGraphApiAdapter.getSalaryInsight`, computing the same shape from actual anonymized
+// data — never individual figures.
+
+const SALARY_INSIGHT_CURRENCY = 'CHF';
+const SALARY_INSIGHT_PERIOD: CompensationPeriod = 'YEAR';
+
+interface SalaryCountryPool {
+  readonly country: string;
+  readonly low: number;
+  readonly high: number;
+  readonly sampleSize: number;
+}
+
+interface SalaryInsightEntry {
+  readonly currency: string;
+  readonly period: CompensationPeriod;
+  readonly pools: readonly SalaryCountryPool[];
+}
+
+/** Builds one deterministic salary insight entry per domain/topic/certification node, keyed by
+ *  node id. Each entry's pools are deliberately shaped so the *first* candidate country always
+ *  reaches `MIN_ANONYMIZED_SAMPLE_SIZE` and the *second* never does — every node in the demo
+ *  dataset exercises both the "range shown" and "not enough data" cases (per country; the
+ *  country-agnostic aggregate always clears the threshold via the first country alone), without
+ *  needing to special-case any particular node id in tests or in the UI. */
+function buildSalaryInsightDataset(dataset: DemoDataset): ReadonlyMap<string, SalaryInsightEntry> {
+  const ids: readonly string[] = [
+    ...dataset.domains.map((d) => d.id),
+    ...[...dataset.topicsByDomain.values()].flat().map((t) => t.id),
+    ...[...dataset.certificationsByDomain.values()].flat().map((c) => c.id),
+  ];
+  const entries = new Map<string, SalaryInsightEntry>();
+  ids.forEach((id, i) => {
+    // Seeded per node index (not per node id string) — simpler than hashing the id and just as
+    // deterministic/reproducible, consistent with `buildDemoDataset`'s single-seed-42 approach.
+    const R = mkRng(1000 + i);
+    const base = 70000 + Math.floor(R() * 90000);
+    const pools: SalaryCountryPool[] = NETWORK_SALARY_INSIGHT_CANDIDATE_COUNTRIES.map((country, countryIndex) => {
+      const spread = 8000 + Math.floor(R() * 20000);
+      const sampleSize =
+        countryIndex === 0
+          ? MIN_ANONYMIZED_SAMPLE_SIZE + Math.floor(R() * 9)
+          : Math.floor(R() * MIN_ANONYMIZED_SAMPLE_SIZE);
+      return { country, low: base - spread, high: base + spread + Math.floor(R() * 15000), sampleSize };
+    });
+    entries.set(id, { currency: SALARY_INSIGHT_CURRENCY, period: SALARY_INSIGHT_PERIOD, pools });
+  });
+  return entries;
+}
+
+/** Resolves one entry's pools (optionally narrowed to one country) into the value the port
+ *  exposes — `undefined` whenever the resulting pool has fewer than `MIN_ANONYMIZED_SAMPLE_SIZE`
+ *  contributors, per `NetworkGraphPort.getSalaryInsight`'s doc comment. */
+function resolveSalaryInsight(entry: SalaryInsightEntry | undefined, country?: string): NetworkSalaryInsight | undefined {
+  if (!entry) {
+    return undefined;
+  }
+  const pools = country ? entry.pools.filter((pool) => pool.country === country) : entry.pools;
+  const sampleSize = pools.reduce((sum, pool) => sum + pool.sampleSize, 0);
+  if (pools.length === 0 || sampleSize < MIN_ANONYMIZED_SAMPLE_SIZE) {
+    return undefined;
+  }
+  return {
+    low: Math.min(...pools.map((pool) => pool.low)),
+    high: Math.max(...pools.map((pool) => pool.high)),
+    currency: entry.currency,
+    period: entry.period,
+    sampleSize,
+    country,
+  };
+}
+
 @Service()
 export class NetworkGraphMockAdapter implements NetworkGraphPort {
   // Computed once per adapter instance (Angular services are singletons app-wide), then served
   // per-domain/per-topic slices below — mirrors a real backend that would already have this
   // normalized in a database, filtered/paginated on read rather than regenerated per request.
   private readonly dataset: DemoDataset = buildDemoDataset();
+  private readonly salaryInsightByNodeId: ReadonlyMap<string, SalaryInsightEntry> = buildSalaryInsightDataset(this.dataset);
 
   listDomains(): Observable<readonly NetworkDomain[]> {
     return of(this.dataset.domains);
@@ -316,5 +404,13 @@ export class NetworkGraphMockAdapter implements NetworkGraphPort {
     const all = this.dataset.expertsByTopic.get(topicId) ?? [];
     const items = all.slice(page.offset, page.offset + page.limit);
     return of({ items, total: all.length });
+  }
+
+  getSalaryInsight(nodeType: NetworkSalaryNodeType, nodeId: string, country?: string): Observable<NetworkSalaryInsight | undefined> {
+    // Node ids already carry a unique `d-`/`t-`/`c-` prefix, so `nodeType` isn't needed to
+    // disambiguate here — kept as a parameter only for parity with the port's contract, which a
+    // real backend would use to route to the right aggregation table.
+    void nodeType;
+    return of(resolveSalaryInsight(this.salaryInsightByNodeId.get(nodeId), country));
   }
 }

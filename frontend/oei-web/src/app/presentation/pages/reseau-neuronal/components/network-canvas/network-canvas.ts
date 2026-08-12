@@ -409,9 +409,17 @@ export class NetworkCanvas {
     if (n.kind === 'domain') {
       this.flyTo(n.x, n.y, 2.3);
       this.ensureDomainDetailLoaded(n.id);
+      // Domain/topic nodes now also open the dossier panel (in addition to the zoom-in they
+      // already triggered) so the panel can show their anonymized salary insight — see
+      // `NetworkGraphPort.getSalaryInsight`'s doc comment on why domain/topic are in scope for
+      // that feature even though they never were for the dossier before.
+      this.selId.set(n.id);
+      this.dossierOpen.set(true);
     } else if (n.kind === 'topic') {
       this.flyTo(n.x, n.y, Math.max(4.6, this.camT.z));
       this.ensureExpertsLoaded(n.id);
+      this.selId.set(n.id);
+      this.dossierOpen.set(true);
     } else if (n.kind === 'cert') {
       this.selId.set(n.id);
       this.dossierOpen.set(true);

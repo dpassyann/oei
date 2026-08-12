@@ -86,7 +86,10 @@ export class ReseauNeuronal {
   protected readonly dossierOn = computed(() => {
     const c = this.canvas();
     const n = this.selNode();
-    return !!n && !!c?.dossierOpen() && (n.kind === 'expert' || n.kind === 'cert');
+    // All four node kinds can now open the dossier panel — domain/topic/certification also
+    // carry the anonymized salary insight section (see `NetworkGraphPort.getSalaryInsight`),
+    // not just certification as before.
+    return !!n && !!c?.dossierOpen();
   });
 
   protected readonly expTopics = computed<readonly string[]>(() => {

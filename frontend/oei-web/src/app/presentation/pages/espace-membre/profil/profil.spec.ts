@@ -205,6 +205,44 @@ describe('Profil', () => {
     expect(compiled.querySelector('.oei-profil__compensation-benchmark')?.textContent).toContain('130000');
   });
 
+  it('givenCompensationWithCountry_whenRendered_thenShowsCountry', async () => {
+    configure(buildProfile({ currentCompensation: { amount: 120000, currency: 'CHF', period: 'YEAR', country: 'Suisse' } }));
+    const fixture = TestBed.createComponent(Profil);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector('.oei-profil__compensation-value')?.textContent).toContain('Suisse');
+  });
+
+  it('givenEditModeWithCompensationCountry_whenSaved_thenUpdateProfileReceivesCountry', async () => {
+    configure(buildProfile());
+    const fixture = TestBed.createComponent(Profil);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+
+    component['startEditing']();
+    fixture.detectChanges();
+    component['editModel'].update((current) => ({
+      ...current,
+      compensationAmount: '95000',
+      compensationCurrency: 'CHF',
+      compensationPeriod: 'YEAR',
+      compensationCountry: 'France',
+    }));
+
+    component['save']();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(updateProfileSpy).toHaveBeenCalled();
+    const updated = updateProfileSpy.mock.calls[0][0] as { currentCompensation?: { country?: string } };
+    expect(updated.currentCompensation?.country).toBe('France');
+  });
+
   it('givenSocialLinks_whenRendered_thenShowsOnlyProvidedLinks', async () => {
     configure(buildProfile({ socialLinks: { linkedin: 'https://linkedin.com/in/demo', github: undefined } }));
     const fixture = TestBed.createComponent(Profil);

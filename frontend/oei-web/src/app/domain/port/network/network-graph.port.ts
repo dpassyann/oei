@@ -4,6 +4,7 @@ import { NetworkDomain } from '../../model/network/network-domain.model';
 import { NetworkTopic } from '../../model/network/network-topic.model';
 import { NetworkCertification } from '../../model/network/network-certification.model';
 import { NetworkExpert } from '../../model/network/network-expert.model';
+import { NetworkSalaryInsight, NetworkSalaryNodeType } from '../../model/network/network-salary-insight.model';
 
 export interface NetworkTopicsAndCertifications {
   readonly topics: readonly NetworkTopic[];
@@ -52,6 +53,21 @@ export interface NetworkGraphPort {
   listTopicsAndCertifications(domainId: string): Observable<NetworkTopicsAndCertifications>;
 
   listExperts(topicId: string, page: OffsetPage): Observable<PagedResult<NetworkExpert>>;
+
+  /**
+   * Anonymized salary transparency for one graph node (domain/topic/certification), optionally
+   * narrowed to one `country` (same free-text format as `NetworkExpert.country`). Resolves to
+   * `undefined` — a value state, not an error, same convention as `PublicProfilePort.getBySlug`
+   * and `SalaryBenchmarkPort.getBenchmark` — whenever the anonymized pool of member
+   * `CurrentCompensation` declarations attached to that node (and country, if given) has fewer
+   * than `MIN_ANONYMIZED_SAMPLE_SIZE` contributors. Never resolves to a range built from an
+   * individual figure.
+   */
+  getSalaryInsight(
+    nodeType: NetworkSalaryNodeType,
+    nodeId: string,
+    country?: string,
+  ): Observable<NetworkSalaryInsight | undefined>;
 }
 
 export const NETWORK_GRAPH_PORT = new InjectionToken<NetworkGraphPort>('NetworkGraphPort');
