@@ -1,26 +1,30 @@
 package global.oei.application.web.resource.member.mapper;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.Instant;
-
 import global.oei.application.web.model.MembershipDTO;
 import global.oei.application.web.model.MembershipStatusDTO;
 import global.oei.application.web.model.MembershipTierDTO;
 import global.oei.domain.shared.membership.Membership;
+import lombok.experimental.UtilityClass;
 import org.openapitools.jackson.nullable.JsonNullable;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 /**
  * Explicit hand-written mapping between the domain {@link Membership} and the generated
  * {@link MembershipDTO} at the HTTP boundary — small enough (six fields) that MapStruct
  * would only add ceremony (see contracts-and-clients skill reference).
+ *
+ * <p>{@code @UtilityClass} (rather than {@code @NoArgsConstructor(access = PRIVATE)}) is
+ * the idiomatic Lombok pattern for a static-methods-only helper: it makes the class
+ * {@code final}, adds the private no-args constructor, and makes every member static
+ * automatically — no need to repeat {@code static} on each method.</p>
  */
-public final class MembershipDtoMapper {
+@UtilityClass
+public class MembershipDtoMapper {
 
-    private MembershipDtoMapper() {
-    }
-
-    public static MembershipDTO toDto(final Membership membership) {
+    public MembershipDTO toDto(final Membership membership) {
         final MembershipDTO dto = new MembershipDTO(
                 membership.memberId().value().toString(),
                 MembershipTierDTO.valueOf(membership.tier().name()),
@@ -31,7 +35,7 @@ public final class MembershipDtoMapper {
         return dto;
     }
 
-    private static LocalDateTime toLocalDateTime(final Instant instant) {
+    private LocalDateTime toLocalDateTime(final Instant instant) {
         return instant == null ? null : LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
     }
 }

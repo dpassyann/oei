@@ -32,7 +32,7 @@ public class OeiJwtAuthenticationConverter implements Converter<Jwt, AbstractAut
     private final OeiSecurityProperties properties;
 
     @Override
-    public AbstractAuthenticationToken convert(final Jwt jwt) {
+    public AbstractAuthenticationToken convert(final @org.jspecify.annotations.NonNull Jwt jwt) {
         final Collection<SimpleGrantedAuthority> authorities = extractRoles(jwt).stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .toList();
