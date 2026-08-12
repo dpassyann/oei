@@ -9,13 +9,20 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-import global.oei.infrastructure.persistence.audit.BaseAudit;
+import global.oei.infrastructure.persistence.config.audit.BaseAudit;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * JPA persistence model for a member. Intentionally separate from the domain
  * {@code global.oei.domain.shared.member.Member} record — see {@code MemberPersistenceAdapter}
  * for the mapping at the boundary.
  */
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Entity
 @Table(name = "member")
 public class MemberEntity extends BaseAudit {
@@ -42,53 +49,4 @@ public class MemberEntity extends BaseAudit {
 
     @Column(name = "registered_at", nullable = false)
     private Instant registeredAt;
-
-    protected MemberEntity() {
-        // required by JPA
-    }
-
-    public MemberEntity(
-            final UUID id,
-            final String publicSlug,
-            final String displayName,
-            final String legalName,
-            final String locale,
-            final String country,
-            final Instant registeredAt) {
-        this.id = id;
-        this.publicSlug = publicSlug;
-        this.displayName = displayName;
-        this.legalName = legalName;
-        this.locale = locale;
-        this.country = country;
-        this.registeredAt = registeredAt;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public String getPublicSlug() {
-        return publicSlug;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public String getLegalName() {
-        return legalName;
-    }
-
-    public String getLocale() {
-        return locale;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public Instant getRegisteredAt() {
-        return registeredAt;
-    }
 }

@@ -5,7 +5,7 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Import;
 
-import global.oei.application.web.config.WebResourcesConfiguration;
+import global.oei.application.web.config.web.WebResourcesConfiguration;
 import global.oei.infrastructure.wiring.OeiWiringConfiguration;
 
 /**

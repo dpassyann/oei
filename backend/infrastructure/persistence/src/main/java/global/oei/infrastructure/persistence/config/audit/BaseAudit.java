@@ -1,4 +1,4 @@
-package global.oei.infrastructure.persistence.audit;
+package global.oei.infrastructure.persistence.config.audit;
 
 import java.time.Instant;
 
@@ -12,6 +12,8 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import lombok.Getter;
+
 /**
  * Technical (JPA) audit trail shared by all persistence entities: creation/last-modification
  * timestamps and actors. Populated automatically by Spring Data JPA auditing
@@ -20,7 +22,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  * <p>This is a purely technical audit — it is not a substitute for a business audit log
  * (e.g. {@code InstitutionAuditLog} from the OpenAPI contract) where the business itself
  * requires an immutable historical record.</p>
+ *
+ * <p>No {@code @Setter}: these fields are populated by {@link AuditingEntityListener} via
+ * field access, never through application code.</p>
  */
+@Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseAudit {
@@ -40,20 +46,4 @@ public abstract class BaseAudit {
     @LastModifiedBy
     @Column(name = "last_modified_by")
     private String lastModifiedBy;
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public Instant getLastModifiedAt() {
-        return lastModifiedAt;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
 }

@@ -1,4 +1,4 @@
-package global.oei.application.web.adapter;
+package global.oei.application.web.resource.member.adapter;
 
 import global.oei.domain.shared.membership.Membership;
 

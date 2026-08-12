@@ -60,15 +60,17 @@ class CrossModuleArchitectureTest {
 
     /**
      * Convention scoped to primary-adapter modules (e.g. {@code application-web}'s
-     * {@code adapter} package): a {@code *Adapter}-suffixed type declared there is always
-     * an interface — the concrete implementation lives in a sibling {@code service}
-     * package (e.g. {@code MembershipAdapter} interface / {@code MembershipService} impl).
-     * This does NOT apply to secondary/infrastructure adapters (e.g.
-     * {@code MembershipPersistenceAdapter}), which are legitimately concrete classes
-     * implementing an outbound port in the hexagonal sense.
+     * {@code resource.<domain>.adapter} packages — domain-first packaging, see the
+     * spring-boot-ddd-backend skill's "Domain-first packaging" rule): a
+     * {@code *Adapter}-suffixed type declared there is always an interface — the concrete
+     * implementation lives in the sibling {@code resource.<domain>.service} package (e.g.
+     * {@code MembershipAdapter} interface / {@code MembershipService} impl). This does NOT
+     * apply to secondary/infrastructure adapters (e.g. {@code MembershipPersistenceAdapter}),
+     * which are legitimately concrete classes implementing an outbound port in the
+     * hexagonal sense.
      */
     @ArchTest
     static final ArchRule primary_adapter_package_types_must_be_interfaces =
-            classes().that().resideInAPackage("global.oei..application.web.adapter..")
+            classes().that().resideInAPackage("global.oei..application.web.resource..adapter..")
                     .should().beInterfaces();
 }

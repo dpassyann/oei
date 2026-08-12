@@ -11,7 +11,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-import global.oei.infrastructure.persistence.audit.BaseAudit;
+import global.oei.infrastructure.persistence.config.audit.BaseAudit;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * JPA persistence model for a membership. Intentionally separate from the domain
@@ -21,6 +25,9 @@ import global.oei.infrastructure.persistence.audit.BaseAudit;
  * <p>{@code tier}/{@code status} are persisted as {@code STRING} enums rather than ordinal
  * to stay stable across enum reordering.</p>
  */
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Entity
 @Table(name = "membership")
 public class MembershipEntity extends BaseAudit {
@@ -49,53 +56,4 @@ public class MembershipEntity extends BaseAudit {
 
     @Column(name = "ends_at")
     private Instant endsAt;
-
-    protected MembershipEntity() {
-        // required by JPA
-    }
-
-    public MembershipEntity(
-            final UUID id,
-            final UUID memberId,
-            final String tier,
-            final String status,
-            final Instant startedAt,
-            final Instant renewedAt,
-            final Instant endsAt) {
-        this.id = id;
-        this.memberId = memberId;
-        this.tier = tier;
-        this.status = status;
-        this.startedAt = startedAt;
-        this.renewedAt = renewedAt;
-        this.endsAt = endsAt;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public UUID getMemberId() {
-        return memberId;
-    }
-
-    public String getTier() {
-        return tier;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public Instant getStartedAt() {
-        return startedAt;
-    }
-
-    public Instant getRenewedAt() {
-        return renewedAt;
-    }
-
-    public Instant getEndsAt() {
-        return endsAt;
-    }
 }

@@ -1,12 +1,12 @@
-package global.oei.application.web.resource;
+package global.oei.application.web.resource.member;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import global.oei.application.web.MemberProfileApi;
-import global.oei.application.web.adapter.MembershipAdapter;
-import global.oei.application.web.mapper.MembershipDtoMapper;
 import global.oei.application.web.model.MembershipDTO;
+import global.oei.application.web.resource.member.adapter.MembershipAdapter;
+import global.oei.application.web.resource.member.mapper.MembershipDtoMapper;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -19,7 +19,10 @@ import lombok.RequiredArgsConstructor;
  * <p>Convention: a {@code *Resource} (never {@code *Controller}) injects only a
  * {@code *Adapter} interface (never a {@code domain-shared} port/use case directly) — see
  * {@link MembershipAdapter}. Registered as an explicit {@code @Bean} in
- * {@code WebResourcesConfiguration}, not discovered via component scanning.</p>
+ * {@code WebResourcesConfiguration}, not discovered via component scanning. Lives at the
+ * root of the {@code resource.member} bounded-context package (domain-first packaging: the
+ * domain is the first-level package, {@code adapter}/{@code service}/{@code mapper} are
+ * technical subpackages nested inside it).</p>
  */
 @RestController
 @RequiredArgsConstructor

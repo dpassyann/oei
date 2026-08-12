@@ -10,7 +10,7 @@ import global.oei.domain.core.identity.GetMyIdentityService;
 import global.oei.domain.shared.membership.MembershipLookupPort;
 import global.oei.domain.shared.security.GetMyIdentityUseCase;
 import global.oei.domain.shared.security.SecurityContextPort;
-import global.oei.infrastructure.persistence.config.PersistenceAuditingConfiguration;
+import global.oei.infrastructure.persistence.config.audit.PersistenceAuditingConfiguration;
 import global.oei.infrastructure.persistence.membership.MembershipPersistenceAdapter;
 import global.oei.infrastructure.persistence.membership.MembershipRepository;
 

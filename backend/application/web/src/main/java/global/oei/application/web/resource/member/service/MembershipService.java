@@ -1,9 +1,9 @@
-package global.oei.application.web.service;
+package global.oei.application.web.resource.member.service;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-import global.oei.application.web.adapter.MembershipAdapter;
+import global.oei.application.web.resource.member.adapter.MembershipAdapter;
 import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.membership.Membership;
 import global.oei.domain.shared.membership.MembershipLookupPort;

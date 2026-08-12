@@ -1,4 +1,4 @@
-package global.oei.infrastructure.persistence.config;
+package global.oei.infrastructure.persistence.config.audit;
 
 import java.util.Optional;
 

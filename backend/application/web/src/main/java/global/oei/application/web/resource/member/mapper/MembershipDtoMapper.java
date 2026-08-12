@@ -1,4 +1,4 @@
-package global.oei.application.web.mapper;
+package global.oei.application.web.resource.member.mapper;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
