@@ -2,7 +2,7 @@
 
 First Spring Boot backend of the OEI (Ordre des Experts Informaticiens) platform.
 Maven multi-module DDD + Hexagonal architecture, contract-first OpenAPI, JPA persistence
-separated from the domain, explicit Spring wiring (no classpath component scanning),
+separated from the domain, explicit cross-module/domain wiring, domain-first packaging,
 Maven Enforcer + ArchUnit boundary enforcement.
 
 ## Modules
@@ -38,40 +38,56 @@ outside `domain-core` itself, allowed to import concrete `domain-core` types**. 
 (`SpringSecurityContextAdapter`, `MembershipPersistenceAdapter`).
 
 `application-web` depends on `domain-shared` + `infrastructure-wiring` — **never on
-`domain-core` directly**. There is no separate `application/runtime` module: `application-web`
-carries its own executable entry point (`OeiBackendApplication`), and its own
-Resource/Adapter/Service wiring for the HTTP layer.
+`domain-core` at compile time** (`domain-core` is excluded from `infrastructure-wiring`'s
+transitive closure and reintroduced at `scope=runtime` only, see `application/pom.xml`'s
+`dependencyManagement`; verified with `mvn dependency:tree -pl application/web`). There is
+no separate `application/runtime` module: `application-web` carries its own executable
+entry point (`OeiBackendApplication`), and its own Resource/Adapter/Service classes for the
+HTTP layer.
 
-## No classpath component scanning
+## Wiring: explicit across modules, ordinary Spring within a module
 
-Every Spring bean in this project is wired explicitly (predictability + AOT/native-image
-friendliness):
-
-- `OeiBackendApplication` composes `@SpringBootConfiguration` + `@EnableAutoConfiguration`
-  + explicit `@Import(OeiWiringConfiguration.class, WebResourcesConfiguration.class)`
-  instead of `@SpringBootApplication` (which carries an implicit `@ComponentScan`).
-- `*Resource`, `*Adapter` implementations (`service.*Service`), and infrastructure adapters
-  are registered as explicit `@Bean` methods in a `@Configuration(proxyBeanMethods = false)`
-  class local to their module (`WebResourcesConfiguration`, `OeiWiringConfiguration`) —
-  never discovered via `@Component` + scanning.
-- The only exceptions are `@EnableJpaRepositories`/`@EntityScan` on `OeiWiringConfiguration`
-  (structural requirements of Spring Data JPA, narrowly scoped to
-  `global.oei.infrastructure.persistence`) and Spring Boot's own
+- **Cross-module/domain wiring is always explicit.** `OeiWiringConfiguration` (in
+  `infrastructure-wiring`) is the only class in the project, outside `domain-core` itself,
+  allowed to import concrete `domain-core` types. `OeiBackendApplication` pulls it in via an
+  explicit `@Import(OeiWiringConfiguration.class)` — never via component scanning.
+- **Within `application-web`, its own `resource.<domain>` classes use ordinary Spring
+  stereotypes.** `MembershipResource` (`@RestController`) and `MembershipService`
+  (`@Service`) — both with Lombok `@RequiredArgsConstructor` — are discovered by
+  `OeiBackendApplication`'s normal `@SpringBootApplication` component scan. This is safe by
+  construction: that scan is rooted at `global.oei.application.web` and structurally cannot
+  reach `domain-core`/`infrastructure-*`, which live in different package trees and Maven
+  modules entirely. There is deliberately **no** hand-written `@Bean` method anywhere for a
+  module's own `*Resource`/`*Adapter`/`service.*Service` classes — an earlier iteration of
+  this project did that (`WebResourcesConfiguration`) and it was corrected as unnecessary
+  boilerplate.
+- A module's `config.<concern>` packages (`config/security`, `config/web`, `config/audit`,
+  ...) are reserved for genuine technical configuration (CORS, HTTP caching, allowed verbs,
+  content negotiation, Jackson customization, `AuditorAware`, ...) — never for wiring a
+  module's own domain/resource beans. `application-web` currently has none: no real
+  technical configuration is needed yet for this minimal slice.
+- The only exceptions to "no component scanning" are `@EnableJpaRepositories`/`@EntityScan`
+  on `OeiWiringConfiguration` (structural requirements of Spring Data JPA, narrowly scoped
+  to `global.oei.infrastructure.persistence`) and Spring Boot's own
   `AutoConfiguration.imports`-based auto-configuration loading (e.g.
   `OeiSecurityAutoConfiguration`), neither of which is classpath component scanning.
 
-## Resource / Adapter / Service naming
+## Domain-first packaging, Resource / Adapter / Service naming
 
+- Packages are organized by domain/bounded context first, technical layer second: e.g.
+  `application.web.resource.member.{adapter,service,mapper}`, never a flat `adapter`/
+  `service`/`mapper` package mixing every domain at the module root.
 - REST controllers are suffixed `Resource`, never `Controller` (`MembershipResource`).
-- A `*Resource` injects a same-module `*Adapter` interface
-  (`application.web.adapter.MembershipAdapter`), never a `domain-shared` port/use case
-  directly.
+- A `*Resource` injects a same-domain-package `*Adapter` interface
+  (`application.web.resource.member.adapter.MembershipAdapter`), never a `domain-shared`
+  port/use case directly.
 - The concrete implementation of a `*Adapter` lives in the sibling `service` package
-  (`application.web.service.MembershipService`) — never a `*Impl`/`impl` package, which is
-  banned project-wide (enforced by `test-architecture`).
+  (`application.web.resource.member.service.MembershipService`) — never a `*Impl`/`impl`
+  package, which is banned project-wide (enforced by `test-architecture`).
 - Constructor injection outside the domain uses Lombok `@RequiredArgsConstructor` (with
-  `@NonNull` where a null-check used to be hand-written). Lombok is deliberately **not**
-  used in `domain-shared`/`domain-core`.
+  `@NonNull` where a null-check used to be hand-written) and `@UtilityClass` for
+  static-methods-only helpers (`MembershipDtoMapper`). Lombok is deliberately **not** used
+  in `domain-shared`/`domain-core`.
 
 ## Building
 

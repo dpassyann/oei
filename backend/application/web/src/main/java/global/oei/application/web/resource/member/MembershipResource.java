@@ -18,11 +18,13 @@ import lombok.RequiredArgsConstructor;
  *
  * <p>Convention: a {@code *Resource} (never {@code *Controller}) injects only a
  * {@code *Adapter} interface (never a {@code domain-shared} port/use case directly) — see
- * {@link MembershipAdapter}. Registered as an explicit {@code @Bean} in
- * {@code WebResourcesConfiguration}, not discovered via component scanning. Lives at the
- * root of the {@code resource.member} bounded-context package (domain-first packaging: the
- * domain is the first-level package, {@code adapter}/{@code service}/{@code mapper} are
- * technical subpackages nested inside it).</p>
+ * {@link MembershipAdapter}. {@code @RestController} + Lombok {@code @RequiredArgsConstructor}:
+ * discovered by {@code OeiBackendApplication}'s own {@code @SpringBootApplication} component
+ * scan (scoped to this module's package tree — see the spring-boot-ddd-backend skill's
+ * "Explicit wiring — scoped to cross-module/domain boundaries only" rule), never registered
+ * via a handwritten {@code @Bean} method. Lives at the root of the {@code resource.member}
+ * bounded-context package (domain-first packaging: the domain is the first-level package,
+ * {@code adapter}/{@code service}/{@code mapper} are technical subpackages nested inside it).</p>
  */
 @RestController
 @RequiredArgsConstructor
