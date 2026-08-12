@@ -1,10 +1,12 @@
 package global.oei.infrastructure.security.context;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
@@ -31,7 +33,7 @@ public class SpringSecurityContextAdapter implements SecurityContextPort {
 
         final Jwt jwt = jwtAuthentication.getToken();
         final Set<String> roles = jwtAuthentication.getAuthorities().stream()
-                .map(authority -> authority.getAuthority())
+                .map(GrantedAuthority::getAuthority).filter(Objects::nonNull)
                 .map(authority -> authority.startsWith("ROLE_") ? authority.substring("ROLE_".length()) : authority)
                 .collect(Collectors.toUnmodifiableSet());
 
