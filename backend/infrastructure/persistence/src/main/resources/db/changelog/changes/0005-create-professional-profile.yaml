@@ -1,0 +1,47 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0005-create-professional-profile
+      author: oei-backend
+      comment: >
+        Stored as a single jsonb blob (profile_json) -- the profile is a deliberate "big
+        object", always read/replaced wholesale (ADR 0002), not exploded into child tables
+        for languages/experiences/educations/skills. See
+        global.oei.infrastructure.persistence.profile.ProfessionalProfileEntity's Javadoc.
+      changes:
+        - createTable:
+            tableName: professional_profile
+            columns:
+              - column:
+                  name: member_id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    foreignKeyName: fk_professional_profile_member
+                    references: member(id)
+              - column:
+                  name: profile_json
+                  type: jsonb
+                  constraints:
+                    nullable: false
+              - column:
+                  name: completeness_score
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_by
+                  type: varchar(255)
+              - column:
+                  name: last_modified_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_modified_by
+                  type: varchar(255)

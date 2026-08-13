@@ -8,8 +8,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import global.oei.domain.core.identity.GetMyIdentityService;
 import global.oei.domain.core.network.GetSalaryInsightService;
+import global.oei.domain.core.profile.GetMyProfileService;
+import global.oei.domain.core.profile.UpdateMyProfileService;
 import global.oei.domain.shared.membership.MembershipLookupPort;
 import global.oei.domain.shared.network.GetSalaryInsightUseCase;
+import global.oei.domain.shared.profile.GetMyProfileUseCase;
+import global.oei.domain.shared.profile.ProfileLookupPort;
+import global.oei.domain.shared.profile.UpdateMyProfileUseCase;
 import global.oei.domain.shared.security.GetMyIdentityUseCase;
 import global.oei.domain.shared.security.SecurityContextPort;
 import global.oei.infrastructure.persistence.compensation.CompensationDeclarationRepository;
@@ -17,6 +22,8 @@ import global.oei.infrastructure.persistence.compensation.SalaryInsightPersisten
 import global.oei.infrastructure.persistence.config.audit.PersistenceAuditingConfiguration;
 import global.oei.infrastructure.persistence.membership.MembershipPersistenceAdapter;
 import global.oei.infrastructure.persistence.membership.MembershipRepository;
+import global.oei.infrastructure.persistence.profile.ProfessionalProfilePersistenceAdapter;
+import global.oei.infrastructure.persistence.profile.ProfessionalProfileRepository;
 
 /**
  * Composition root of the OEI backend.
@@ -62,5 +69,20 @@ public class OeiWiringConfiguration {
     @Bean
     public GetSalaryInsightUseCase getSalaryInsightUseCase(final CompensationDeclarationRepository repository) {
         return new GetSalaryInsightService(new SalaryInsightPersistenceAdapter(repository));
+    }
+
+    @Bean
+    public ProfileLookupPort profileLookupPort(final ProfessionalProfileRepository repository) {
+        return new ProfessionalProfilePersistenceAdapter(repository);
+    }
+
+    @Bean
+    public GetMyProfileUseCase getMyProfileUseCase(final ProfileLookupPort profileLookupPort) {
+        return new GetMyProfileService(profileLookupPort);
+    }
+
+    @Bean
+    public UpdateMyProfileUseCase updateMyProfileUseCase(final ProfileLookupPort profileLookupPort) {
+        return new UpdateMyProfileService(profileLookupPort);
     }
 }

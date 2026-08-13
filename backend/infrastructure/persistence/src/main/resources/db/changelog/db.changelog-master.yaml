@@ -11,3 +11,6 @@ databaseChangeLog:
   - include:
       file: db/changelog/changes/0004-demo-members-and-compensation.yaml
       relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0005-create-professional-profile.yaml
+      relativeToChangelogFile: false

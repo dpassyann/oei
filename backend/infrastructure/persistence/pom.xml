@@ -46,6 +46,18 @@
       <scope>runtime</scope>
     </dependency>
 
+    <!-- Used only to (de)serialize ProfessionalProfile (a plain domain-shared record, no
+         Jackson annotations needed) to/from the professional_profile.profile_json jsonb
+         column, see ProfessionalProfilePersistenceAdapter. Not a REST/HTTP concern. -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+    </dependency>
+
     <!-- Lombok: @RequiredArgsConstructor for constructor injection (never in domain-shared
          itself). Version managed by the inherited spring-boot-starter-parent BOM. -->
     <dependency>
