@@ -1,0 +1,106 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0013-create-certification
+      author: oei-backend
+      comment: >
+        certification.recognized_certification_id is an opaque, unvalidated reference for
+        now -- no recognized_certification catalog table modeled yet (TODO, see
+        Certification's Javadoc).
+      changes:
+        - createTable:
+            tableName: certification
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: member_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_certification_member
+                    references: member(id)
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: issuing_organization
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: recognized_certification_id
+                  type: varchar(60)
+              - column:
+                  name: issued_at
+                  type: date
+              - column:
+                  name: expires_at
+                  type: date
+              - column:
+                  name: proof_document_url
+                  type: varchar(500)
+              - column:
+                  name: status
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: validated_by
+                  type: varchar(255)
+              - column:
+                  name: validated_at
+                  type: timestamptz
+        - createTable:
+            tableName: member_certification_goal
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: member_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_member_certification_goal_member
+                    references: member(id)
+              - column:
+                  name: recognized_certification_id
+                  type: varchar(60)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_by
+                  type: varchar(255)
+              - column:
+                  name: last_modified_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_modified_by
+                  type: varchar(255)
+        - addUniqueConstraint:
+            tableName: member_certification_goal
+            columnNames: member_id, recognized_certification_id
+            constraintName: uq_member_certification_goal_member_cert

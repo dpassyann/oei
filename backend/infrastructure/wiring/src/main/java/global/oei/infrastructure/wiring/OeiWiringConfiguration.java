@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import global.oei.domain.core.certification.DeclareCertificationService;
 import global.oei.domain.core.charter.SignEthicalCharterService;
 import global.oei.domain.core.identity.GetMyIdentityService;
 import global.oei.domain.core.network.GetSalaryInsightService;
@@ -13,6 +14,9 @@ import global.oei.domain.core.profile.GetMyProfileService;
 import global.oei.domain.core.profile.UpdateMyProfileService;
 import global.oei.domain.shared.badge.BadgeAwardPort;
 import global.oei.domain.shared.badge.BadgeCatalogPort;
+import global.oei.domain.shared.certification.CertificationGoalPort;
+import global.oei.domain.shared.certification.CertificationPort;
+import global.oei.domain.shared.certification.DeclareCertificationUseCase;
 import global.oei.domain.shared.charter.EthicalCharterSignaturePort;
 import global.oei.domain.shared.charter.SignEthicalCharterUseCase;
 import global.oei.domain.shared.membership.MembershipLookupPort;
@@ -26,6 +30,10 @@ import global.oei.domain.shared.security.SecurityContextPort;
 import global.oei.infrastructure.persistence.badge.BadgeAwardRepository;
 import global.oei.infrastructure.persistence.badge.BadgePersistenceAdapter;
 import global.oei.infrastructure.persistence.badge.BadgeRepository;
+import global.oei.infrastructure.persistence.certification.CertificationGoalPersistenceAdapter;
+import global.oei.infrastructure.persistence.certification.CertificationPersistenceAdapter;
+import global.oei.infrastructure.persistence.certification.CertificationRepository;
+import global.oei.infrastructure.persistence.certification.MemberCertificationGoalRepository;
 import global.oei.infrastructure.persistence.charter.EthicalCharterSignaturePersistenceAdapter;
 import global.oei.infrastructure.persistence.charter.EthicalCharterSignatureRepository;
 import global.oei.infrastructure.persistence.compensation.CompensationDeclarationRepository;
@@ -133,5 +141,20 @@ public class OeiWiringConfiguration {
     @Bean
     public BadgeAwardPort badgeAwardPort(final BadgePersistenceAdapter badgePersistenceAdapter) {
         return badgePersistenceAdapter;
+    }
+
+    @Bean
+    public CertificationPort certificationPort(final CertificationRepository repository) {
+        return new CertificationPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public DeclareCertificationUseCase declareCertificationUseCase(final CertificationPort certificationPort) {
+        return new DeclareCertificationService(certificationPort);
+    }
+
+    @Bean
+    public CertificationGoalPort certificationGoalPort(final MemberCertificationGoalRepository repository) {
+        return new CertificationGoalPersistenceAdapter(repository);
     }
 }
