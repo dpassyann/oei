@@ -29,3 +29,9 @@ databaseChangeLog:
   - include:
       file: db/changelog/changes/0010-demo-network-certifications.yaml
       relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0011-create-badge.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0012-demo-badges.yaml
+      relativeToChangelogFile: false

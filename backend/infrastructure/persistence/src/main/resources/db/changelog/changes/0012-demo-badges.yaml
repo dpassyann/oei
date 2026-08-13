@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0012-demo-badges
+      author: oei-backend
+      comment: >
+        5 badges (same taxonomy as network-graph-mock.adapter.ts's BADGES constant), each
+        awarded to 4 of the 0004 demo members.
+      changes:
+        - sqlFile:
+            path: db/changelog/changes/0012-demo-badges.sql
+            relativeToChangelogFile: false
+            splitStatements: true
+            stripComments: true

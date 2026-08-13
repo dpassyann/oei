@@ -1,0 +1,80 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0011-create-badge
+      author: oei-backend
+      comment: badge is reference/catalog data; badge_award is the member-specific award record.
+      changes:
+        - createTable:
+            tableName: badge
+            columns:
+              - column:
+                  name: id
+                  type: varchar(40)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: code
+                  type: varchar(60)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: text
+              - column:
+                  name: icon_url
+                  type: varchar(500)
+              - column:
+                  name: category
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: badge_award
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: badge_id
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_badge_award_badge
+                    references: badge(id)
+              - column:
+                  name: member_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_badge_award_member
+                    references: member(id)
+              - column:
+                  name: awarded_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: source
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: awarded_by
+                  type: varchar(255)
+              - column:
+                  name: revoked
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
