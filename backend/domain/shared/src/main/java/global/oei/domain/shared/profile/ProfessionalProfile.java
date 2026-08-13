@@ -45,6 +45,30 @@ public record ProfessionalProfile(
     }
 
     /**
+     * @return a new instance with {@link #memberId()} replaced; every other field is
+     *         unchanged. Used at the HTTP boundary to overwrite whatever {@code memberId} a
+     *         PUT request body carried with the authenticated caller's own identity — a
+     *         member can only ever update their own profile.
+     */
+    public ProfessionalProfile withMemberId(final MemberId memberId) {
+        return new ProfessionalProfile(
+                memberId,
+                title,
+                summary,
+                location,
+                availability,
+                expertiseAreas,
+                technologies,
+                sectors,
+                languages,
+                experiences,
+                educations,
+                skills,
+                currentCompensation,
+                completenessScore);
+    }
+
+    /**
      * Recomputes {@link #completenessScore()} from the fields this profile currently holds,
      * mirroring the frontend's completeness rubric (title/summary/location/availability,
      * >=1 language, >=1 experience, >=1 education, >=3 skills, non-empty expertise areas —
