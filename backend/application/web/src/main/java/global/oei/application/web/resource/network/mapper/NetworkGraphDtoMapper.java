@@ -3,12 +3,14 @@ package global.oei.application.web.resource.network.mapper;
 import java.math.BigDecimal;
 import java.util.List;
 
+import global.oei.application.web.model.NetworkCertificationDTO;
 import global.oei.application.web.model.NetworkDomainDTO;
 import global.oei.application.web.model.NetworkExpertDTO;
 import global.oei.application.web.model.NetworkExpertLevelDTO;
 import global.oei.application.web.model.NetworkExpertPageDTO;
 import global.oei.application.web.model.NetworkTopicDTO;
 import global.oei.application.web.model.NetworkTopicsAndCertificationsDTO;
+import global.oei.domain.shared.network.NetworkCertification;
 import global.oei.domain.shared.network.NetworkDomain;
 import global.oei.domain.shared.network.NetworkExpert;
 import global.oei.domain.shared.network.NetworkExpertPage;
@@ -18,8 +20,7 @@ import lombok.experimental.UtilityClass;
 
 /**
  * Explicit hand-written mapping between the domain network graph types and their generated
- * DTOs. Certifications always map to an empty list for now (see
- * {@code NetworkGraphPersistenceAdapter}'s TODO — no certification data modeled yet).
+ * DTOs.
  */
 @UtilityClass
 public class NetworkGraphDtoMapper {
@@ -37,7 +38,10 @@ public class NetworkGraphDtoMapper {
         final List<NetworkTopicDTO> topics = topicsAndCertifications.topics().stream()
                 .map(NetworkGraphDtoMapper::toDto)
                 .toList();
-        return new NetworkTopicsAndCertificationsDTO(topics, List.of());
+        final List<NetworkCertificationDTO> certifications = topicsAndCertifications.certifications().stream()
+                .map(NetworkGraphDtoMapper::toDto)
+                .toList();
+        return new NetworkTopicsAndCertificationsDTO(topics, certifications);
     }
 
     public NetworkExpertPageDTO toDto(final NetworkExpertPage page) {
@@ -53,6 +57,22 @@ public class NetworkGraphDtoMapper {
                 BigDecimal.valueOf(topic.x()),
                 BigDecimal.valueOf(topic.y()),
                 topic.relatedTopicIds());
+    }
+
+    private NetworkCertificationDTO toDto(final NetworkCertification certification) {
+        return new NetworkCertificationDTO(
+                certification.id(),
+                certification.topicId(),
+                certification.domainId(),
+                certification.label(),
+                certification.provider(),
+                certification.prereqCertificationId(),
+                certification.description(),
+                certification.validatedSkills(),
+                certification.validityPeriod(),
+                certification.expertCount(),
+                BigDecimal.valueOf(certification.x()),
+                BigDecimal.valueOf(certification.y()));
     }
 
     private NetworkExpertDTO toDto(final NetworkExpert expert) {

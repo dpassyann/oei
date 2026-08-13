@@ -1,0 +1,69 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0009-create-network-certification
+      author: oei-backend
+      comment: >
+        Completes the network_certification TODO left by 0007/0008:
+        listNetworkTopicsAndCertifications now returns real certification chains instead of
+        an always-empty list.
+      changes:
+        - createTable:
+            tableName: network_certification
+            columns:
+              - column:
+                  name: id
+                  type: varchar(60)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: topic_id
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_network_certification_topic
+                    references: network_topic(id)
+              - column:
+                  name: domain_id
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_network_certification_domain
+                    references: network_domain(id)
+              - column:
+                  name: label
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: provider
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: prereq_certification_id
+                  type: varchar(60)
+              - column:
+                  name: description
+                  type: text
+              - column:
+                  name: validated_skills
+                  type: text
+              - column:
+                  name: validity_period
+                  type: varchar(100)
+              - column:
+                  name: expert_count
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: x
+                  type: double precision
+                  constraints:
+                    nullable: false
+              - column:
+                  name: y
+                  type: double precision
+                  constraints:
+                    nullable: false

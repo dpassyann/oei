@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0010-demo-network-certifications
+      author: oei-backend
+      comment: >
+        14 real certifications across 10 chains, same taxonomy as
+        network-graph-mock.adapter.ts's CERTS constant (AWS/Azure/Kubernetes, CISSP/ISO 27001,
+        CEH, TensorFlow, Azure AI Engineer, Databricks, TOGAF, Oracle Java).
+      changes:
+        - sqlFile:
+            path: db/changelog/changes/0010-demo-network-certifications.sql
+            relativeToChangelogFile: false
+            splitStatements: true
+            stripComments: true

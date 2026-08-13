@@ -29,6 +29,7 @@ import global.oei.infrastructure.persistence.config.audit.PersistenceAuditingCon
 import global.oei.infrastructure.persistence.member.MemberRepository;
 import global.oei.infrastructure.persistence.membership.MembershipPersistenceAdapter;
 import global.oei.infrastructure.persistence.membership.MembershipRepository;
+import global.oei.infrastructure.persistence.network.NetworkCertificationRepository;
 import global.oei.infrastructure.persistence.network.NetworkDomainRepository;
 import global.oei.infrastructure.persistence.network.NetworkExpertRepository;
 import global.oei.infrastructure.persistence.network.NetworkGraphPersistenceAdapter;
@@ -106,8 +107,10 @@ public class OeiWiringConfiguration {
     public NetworkGraphPort networkGraphPort(
             final NetworkDomainRepository domainRepository,
             final NetworkTopicRepository topicRepository,
+            final NetworkCertificationRepository certificationRepository,
             final NetworkExpertRepository expertRepository,
             final MemberRepository memberRepository) {
-        return new NetworkGraphPersistenceAdapter(domainRepository, topicRepository, expertRepository, memberRepository);
+        return new NetworkGraphPersistenceAdapter(
+                domainRepository, topicRepository, certificationRepository, expertRepository, memberRepository);
     }
 }

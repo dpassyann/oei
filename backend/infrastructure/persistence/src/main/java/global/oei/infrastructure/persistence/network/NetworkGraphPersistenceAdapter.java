@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
+import global.oei.domain.shared.network.NetworkCertification;
 import global.oei.domain.shared.network.NetworkDomain;
 import global.oei.domain.shared.network.NetworkExpert;
 import global.oei.domain.shared.network.NetworkExpertLevel;
@@ -20,10 +21,9 @@ import global.oei.infrastructure.persistence.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Implements {@link NetworkGraphPort}. Certifications always resolve empty for now (TODO:
- * no {@code network_certification} table/entity yet, out of scope for this iteration).
- * {@link NetworkExpert} joins back to {@link MemberRepository} for {@code label}/
- * {@code country} rather than duplicating them — see {@link NetworkExpertEntity}'s Javadoc.
+ * Implements {@link NetworkGraphPort}. {@link NetworkExpert} joins back to
+ * {@link MemberRepository} for {@code label}/{@code country} rather than duplicating them —
+ * see {@link NetworkExpertEntity}'s Javadoc.
  */
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -31,6 +31,7 @@ public class NetworkGraphPersistenceAdapter implements NetworkGraphPort {
 
     private final NetworkDomainRepository domainRepository;
     private final NetworkTopicRepository topicRepository;
+    private final NetworkCertificationRepository certificationRepository;
     private final NetworkExpertRepository expertRepository;
     private final MemberRepository memberRepository;
 
@@ -46,7 +47,10 @@ public class NetworkGraphPersistenceAdapter implements NetworkGraphPort {
         }
         final List<NetworkTopic> topics =
                 topicRepository.findByDomainId(domainId).stream().map(NetworkGraphPersistenceAdapter::toDomain).toList();
-        return Optional.of(new NetworkTopicsAndCertifications(topics, List.of()));
+        final List<NetworkCertification> certifications = certificationRepository.findByDomainId(domainId).stream()
+                .map(NetworkGraphPersistenceAdapter::toDomain)
+                .toList();
+        return Optional.of(new NetworkTopicsAndCertifications(topics, certifications));
     }
 
     @Override
@@ -68,6 +72,22 @@ public class NetworkGraphPersistenceAdapter implements NetworkGraphPort {
         return new NetworkTopic(
                 entity.getId(), entity.getDomainId(), entity.getLabel(), entity.getX(), entity.getY(),
                 splitCsv(entity.getRelatedTopicIds()));
+    }
+
+    private static NetworkCertification toDomain(final NetworkCertificationEntity entity) {
+        return new NetworkCertification(
+                entity.getId(),
+                entity.getTopicId(),
+                entity.getDomainId(),
+                entity.getLabel(),
+                entity.getProvider(),
+                entity.getPrereqCertificationId(),
+                entity.getDescription(),
+                splitCsv(entity.getValidatedSkills()),
+                entity.getValidityPeriod(),
+                entity.getExpertCount(),
+                entity.getX(),
+                entity.getY());
     }
 
     private NetworkExpert toDomain(final NetworkExpertEntity entity) {
