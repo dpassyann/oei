@@ -6,7 +6,7 @@ source: "livre-blanc-complet.md, sección 12 (Alianzas previstas)"
 
 ## A quién se dirige esta página
 
-Esta página se dirige a los interlocutores institucionales de la Orden de Expertos en Informática (OEI): universidades y escuelas, empresas —en particular las que diseñan o explotan sistemas críticos y sus responsables de seguridad de los sistemas de información—, instituciones y poderes públicos, así como a los periodistas que deseen interrogarnos sobre el movimiento. Recordamos, aquí como en otros lugares, nuestro estatus real: la OEI es un movimiento fundador respaldado por una asociación, no una orden profesional legalmente constituida. Ninguno de nuestros intercambios con estos interlocutores compromete a una u otra parte más allá de una elección libre e informada.
+Esta página se dirige a los interlocutores institucionales de la Orden Internacional de Expertos en Informática (OEI): universidades y escuelas, empresas —en particular las que diseñan o explotan sistemas críticos y sus responsables de seguridad de los sistemas de información—, instituciones y poderes públicos, así como a los periodistas que deseen interrogarnos sobre el movimiento. Recordamos, aquí como en otros lugares, nuestro estatus real: la OEI es un movimiento fundador respaldado por una asociación, no una orden profesional legalmente constituida. Ninguno de nuestros intercambios con estos interlocutores compromete a una u otra parte más allá de una elección libre e informada.
 
 ### Universidades y escuelas
 

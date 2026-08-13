@@ -5,11 +5,11 @@ source: "cohérent avec le Livre blanc v3.1 et la charte fondatrice de l'OEI"
 date: "2026-08-09"
 ---
 
-# Berufsordnung des Ordre des Experts Informaticiens
+# Berufsordnung der Internationalen Vereinigung für Informatik-Expertise
 
 ## Präambel
 
-Diese Berufsordnung legt die beruflichen Verhaltensregeln fest, zu deren Einhaltung sich die zugelassenen Mitglieder des Ordre des Experts Informaticiens (OEI) verpflichten. Sie übersetzt die im Rahmen unserer [Vision und Mission](/a-propos) definierte Aufgabe der OEI in die tägliche Berufspraxis: den Schutz der Öffentlichkeit, die Anerkennung fachlicher Kompetenz und die Erhöhung des Verantwortungsniveaus im Berufsstand der Informatikexpertinnen und -experten.
+Diese Berufsordnung legt die beruflichen Verhaltensregeln fest, zu deren Einhaltung sich die zugelassenen Mitglieder der Internationalen Vereinigung für Informatik-Expertise (OEI) verpflichten. Sie übersetzt die im Rahmen unserer [Vision und Mission](/a-propos) definierte Aufgabe der OEI in die tägliche Berufspraxis: den Schutz der Öffentlichkeit, die Anerkennung fachlicher Kompetenz und die Erhöhung des Verantwortungsniveaus im Berufsstand der Informatikexpertinnen und -experten.
 
 Sie unterscheidet sich von der **Selbstverpflichtungscharta**, einem weniger verbindlichen, freiwilligen Beitrittstext, der sich an ein breiteres Publikum richtet (assoziierte Mitglieder, Partnerunternehmen, akademische Einrichtungen), das den Beruf nicht individuell ausübt. Die vorliegende Berufsordnung gilt hingegen für jedes Mitglied, das im Rahmen der beruflichen Ausübung der Informatik zugelassen ist.
 

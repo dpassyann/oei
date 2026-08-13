@@ -1,18 +1,18 @@
 ---
 title: "Weißbuch — Für eine schrittweise Anerkennung des IT-Berufs"
-version: "v3.1"
-status: "Konsolidierungsversion 3.1 — enthält eine operationelle Definition des IT-Experten, eine Klarstellung der zweistufigen Struktur (juristische Einheit / Bewegung) und des internationalen Anspruchs, eine explizite Zielhierarchie sowie Nuancen zur Kausalität (Cyberkriminalität, schwere Ausfälle) und zur Besonderheit des Berufs, im Anschluss an ein externes Lektorat"
-date: "2026-08-06"
+version: "v4"
+status: "Version 4 — wendet den neuen, degenderisierten offiziellen Namen der Organisation an, Internationale Vereinigung für Informatik-Expertise (OEI), zugunsten des Namens der Disziplin statt einer genderten Person; bewahrt darüber hinaus die Klarstellungen der Version 3.1"
+date: "2026-08-13"
 ---
 
 # Weißbuch
 ## Für eine schrittweise Anerkennung des IT-Berufs
 
-*Ordre des Experts Informaticiens (OEI) — Internationale Gründungsbewegung — Version 3.1*
+*Internationale Vereinigung für Informatik-Expertise (OEI) — Internationale Gründungsbewegung — Version 4*
 
 ---
 
-> **Vorbemerkung zum Status der Organisation.** Der Ordre des Experts Informaticiens (OEI) ist zum jetzigen Zeitpunkt eine *Gründungsbewegung*, getragen von einem *Verein*. Er ist kein Berufsorden im rechtlichen Sinne: Ein Berufsorden wird durch Gesetz geschaffen, im Rahmen eines reglementierten Berufs mit vorbehaltenen Tätigkeiten. Keine private Organisation kann sich diesen Status selbst zuschreiben. Das Wort „Orden“ wird hier als Gebrauchsname und als Horizont verwendet, nicht als erworbener Rechtstitel. Diese Klarstellung, die unserem Glossar und unserer Satzung entspricht, wird in diesem Dokument überall dort wiederholt, wo sie notwendig ist — nicht aus rhetorischer Vorsicht, sondern weil sie im Kern unserer intellektuellen Ehrlichkeit steht.
+> **Vorbemerkung zum Status der Organisation.** Die Internationale Vereinigung für Informatik-Expertise (OEI) ist zum jetzigen Zeitpunkt eine *Gründungsbewegung*, getragen von einem *Verein*. Er ist kein Berufsorden im rechtlichen Sinne: Ein Berufsorden wird durch Gesetz geschaffen, im Rahmen eines reglementierten Berufs mit vorbehaltenen Tätigkeiten. Keine private Organisation kann sich diesen Status selbst zuschreiben. Das Wort „Orden“ wird hier als Gebrauchsname und als Horizont verwendet, nicht als erworbener Rechtstitel. Diese Klarstellung, die unserem Glossar und unserer Satzung entspricht, wird in diesem Dokument überall dort wiederholt, wo sie notwendig ist — nicht aus rhetorischer Vorsicht, sondern weil sie im Kern unserer intellektuellen Ehrlichkeit steht.
 
 ---
 
@@ -32,7 +32,7 @@ Dieses Weißbuch liefert nicht alle Antworten. Es ist vor allem eine Einladung z
 
 Yann Deungoué
 Softwarearchitekt
-Gründer der Initiative Ordre des Experts Informaticiens (OEI)
+Gründer der Initiative Internationale Vereinigung für Informatik-Expertise (OEI)
 
 ---
 
@@ -40,7 +40,7 @@ Gründer der Initiative Ordre des Experts Informaticiens (OEI)
 
 Yann Deungoué ist Ingenieur und Softwarearchitekt. Im Laufe seiner Laufbahn — als Entwickler, Architekt und dann technischer Verantwortlicher — hat er Finanzsysteme, kritische Plattformen und internationale Projekte entworfen, aufgebaut und weiterentwickelt, in Umgebungen, in denen Zuverlässigkeit, Sicherheit und Konformität von Software keine Optionen, sondern erstrangige Anforderungen sind. Aus dieser praktischen Erfahrung, im Kontakt mit Systemen, deren Ausfall Tausende von Menschen betreffen kann, entstand die Überzeugung, die diesem Weißbuch zugrunde liegt: Wenn Software zur Infrastruktur wird, verändert sich die Natur des Berufs derjenigen, die sie bauen, und erfordert eine Verantwortung, die ihren Auswirkungen entspricht.
 
-Mit Sitz in der Schweiz und tätig im Finanzsektor, hat er die Initiative Ordre des Experts Informaticiens (OEI) gegründet, um auf internationaler Ebene eine Diskussion über die schrittweise Anerkennung und Strukturierung des IT-Berufs zu eröffnen. Er vertritt dabei einen maßvollen, nicht alarmistischen Ansatz, der auf kritische Systeme ausgerichtet ist und darauf bedacht ist, die Offenheit, Kreativität und Einbeziehung von Talenten aus allen Bereichen zu bewahren, die den Reichtum der Disziplin ausgemacht haben.
+Mit Sitz in der Schweiz und tätig im Finanzsektor, hat er die Initiative Internationale Vereinigung für Informatik-Expertise (OEI) gegründet, um auf internationaler Ebene eine Diskussion über die schrittweise Anerkennung und Strukturierung des IT-Berufs zu eröffnen. Er vertritt dabei einen maßvollen, nicht alarmistischen Ansatz, der auf kritische Systeme ausgerichtet ist und darauf bedacht ist, die Offenheit, Kreativität und Einbeziehung von Talenten aus allen Bereichen zu bewahren, die den Reichtum der Disziplin ausgemacht haben.
 
 *Eine ausführlichere biografische Notiz, versehen mit einem Porträt des Autors, wird vor dem Druck der endgültigen Version ergänzt.*
 
@@ -64,7 +64,7 @@ Wir beanspruchen nicht, eine schlüsselfertige Lösung anzubieten oder einen ein
 
 ## Über den OEI
 
-*Der Ordre des Experts Informaticiens (OEI) ist eine Gründungsbewegung, getragen von einem Verein, und kein Berufsorden im rechtlichen Sinne des Begriffs (siehe Vorbemerkung). Sein Daseinszweck lässt sich in einer Vision, einer Mission und einem Wertekanon zusammenfassen.*
+*Die Internationale Vereinigung für Informatik-Expertise (OEI) ist eine Gründungsbewegung, getragen von einem Verein, und kein Berufsorden im rechtlichen Sinne des Begriffs (siehe Vorbemerkung). Sein Daseinszweck lässt sich in einer Vision, einer Mission und einem Wertekanon zusammenfassen.*
 
 ### Vision
 
@@ -91,7 +91,7 @@ Unser Leitspruch — **„Kompetenz. Ethik. Verantwortung.“** — fasst den Ge
 
 ### Name, Struktur und internationaler Anspruch
 
-Der Ordre des Experts Informaticiens (OEI) ist der Name der *Bewegung*: derjenigen, die die in diesem Weißbuch dargelegte Vision trägt und die Gründungsmitglieder versammelt. Er darf nicht mit dem Namen der *juristischen Einheit* verwechselt werden, die ihn beherbergt. Um jede Verwechslung mit rechtlich konstituierten Berufsorden zu vermeiden — eine Frage, die uns mehrere Lektoren zu Recht gestellt haben —, wird der Trägerverein unter einem eigenständigen institutionellen Namen eingetragen, in der Form **OEI Foundation** oder **Internationales Institut für IT-Verantwortung**, mit dem ausdrücklichen Hinweis „Träger der Bewegung Ordre des Experts Informaticiens“. Diese zweistufige Struktur erlaubt es der juristischen Einheit, neutral und unzweideutig zu bleiben, während die Bewegung den Namen behält, der ihre Vision und ihr symbolisches Gedächtnis trägt. Der endgültige Rechtsname wird mit Unterstützung eines Rechtsbeistands festgelegt, vor jeder Markenanmeldung; bis dahin verwendet dieses Weißbuch durchgängig die vollständige Formel *Ordre des Experts Informaticiens — Internationale Gründungsbewegung*.
+Die Internationale Vereinigung für Informatik-Expertise (OEI) ist der Name der *Bewegung*: derjenigen, die die in diesem Weißbuch dargelegte Vision trägt und die Gründungsmitglieder versammelt. Er darf nicht mit dem Namen der *juristischen Einheit* verwechselt werden, die ihn beherbergt. Um jede Verwechslung mit rechtlich konstituierten Berufsorden zu vermeiden — eine Frage, die uns mehrere Lektoren zu Recht gestellt haben —, wird der Trägerverein unter einem eigenständigen institutionellen Namen eingetragen, in der Form **OEI Foundation** oder **Internationales Institut für IT-Verantwortung**, mit dem ausdrücklichen Hinweis „Träger der Bewegung Internationale Vereinigung für Informatik-Expertise“. Diese zweistufige Struktur erlaubt es der juristischen Einheit, neutral und unzweideutig zu bleiben, während die Bewegung den Namen behält, der ihre Vision und ihr symbolisches Gedächtnis trägt. Der endgültige Rechtsname wird mit Unterstützung eines Rechtsbeistands festgelegt, vor jeder Markenanmeldung; bis dahin verwendet dieses Weißbuch durchgängig die vollständige Formel *Internationale Vereinigung für Informatik-Expertise — Internationale Gründungsbewegung*.
 
 Dieselbe Anforderung an Klarheit gilt für unseren geografischen Anspruch. Der OEI ist von Anfang an als eine *internationale* Initiative konzipiert: Dieses Weißbuch ruft ausdrücklich dazu auf, „eine internationale Diskussion darüber zu eröffnen, wie unser Beruf seine Rolle vollständig übernehmen kann“. Doch ein internationaler Anspruch hebt die rechtliche Realität nicht auf: Der Gesellschaftssitz, der rechtliche Name des Vereins und seine territorialen Vertretungen müssen im Zuge seiner Entwicklung Land für Land unterschieden — und aufeinander abgestimmt — werden, unter Beachtung der jeweiligen lokalen Rechtsrahmen (siehe auch Anhang A). Das Kürzel OEI bleibt unverändert; es ist der institutionelle Rahmen darum, der sich schrittweise präzisieren wird.
 
@@ -400,7 +400,7 @@ Dieses Dokument ist eine Version 3 und wird noch lange ein Werk in Arbeit bleibe
 
 *Freiwillige Verpflichtung, in der ersten Person formuliert, die jede Person unterschreibt, die dem OEI als Gründungsmitglied beitritt. Diese Charta hat keinen einklagbaren rechtlichen Wert; sie ist eine moralische Verpflichtung und eine gemeinsame Absichtserklärung.*
 
-Mit meinem Beitritt zum Ordre des Experts Informaticiens als Gründungsmitglied verpflichte ich mich:
+Mit meinem Beitritt zur Internationalen Vereinigung für Informatik-Expertise als Gründungsmitglied verpflichte ich mich:
 
 - **Der Mission** der Bewegung zu dienen: zu einer schrittweisen, gezielten und ehrlichen Anerkennung des IT-Berufs beizutragen, zum Nutzen der Gesellschaft ebenso wie der Fachleute.
 - **Die Wahrheit über unseren Status zu respektieren**: den OEI niemals als rechtlich konstituierten Berufsorden darzustellen und, wann immer nötig, daran zu erinnern, dass es sich um eine von einem Verein getragene Gründungsbewegung handelt.

@@ -1,18 +1,18 @@
 ---
 title: "Libro Bianco — Per un riconoscimento progressivo della professione informatica"
-version: "v3.1"
-status: "versione 3.1 di consolidamento — integra una definizione operativa dell'esperto informatico, una chiarificazione della struttura a due livelli (entità legale / movimento) e dell'ambizione internazionale, una gerarchia esplicita delle finalità, e sfumature sulla causalità (criminalità informatica, guasti maggiori) e sulla singolarità della professione, a seguito di una rilettura esterna"
-date: "2026-08-06"
+version: "v4"
+status: "versione 4 — applica il nuovo nome ufficiale degenerizzato dell'organizzazione, Ordine Internazionale degli Esperti di Informatica (OEI), a favore del nome della disciplina piuttosto che di una persona genderizzata; conserva peraltro le precisazioni della versione 3.1"
+date: "2026-08-13"
 ---
 
 # Libro Bianco
 ## Per un riconoscimento progressivo della professione informatica
 
-*Ordine degli Esperti Informatici (OEI) — Movimento fondatore internazionale — Versione 3.1*
+*Ordine Internazionale degli Esperti di Informatica (OEI) — Movimento fondatore internazionale — Versione 4*
 
 ---
 
-> **Nota preliminare sullo statuto dell'organizzazione.** L'Ordine degli Esperti Informatici (OEI) è, in questa fase, un *movimento fondatore* sostenuto da un'*associazione*. Non è un ordine professionale in senso legale: un ordine professionale è istituito dalla legge, nell'ambito di una professione regolamentata dotata di atti riservati. Nessuna organizzazione privata può autoattribuirsi tale statuto. La parola « Ordine » è impiegata qui come nome d'uso e come orizzonte, non come titolo giuridico acquisito. Questa precisazione, conforme al nostro glossario e ai nostri statuti, viene ripetuta nel presente documento ovunque sia necessaria, non per prudenza retorica, ma perché è al centro della nostra onestà intellettuale.
+> **Nota preliminare sullo statuto dell'organizzazione.** L'Ordine Internazionale degli Esperti di Informatica (OEI) è, in questa fase, un *movimento fondatore* sostenuto da un'*associazione*. Non è un ordine professionale in senso legale: un ordine professionale è istituito dalla legge, nell'ambito di una professione regolamentata dotata di atti riservati. Nessuna organizzazione privata può autoattribuirsi tale statuto. La parola « Ordine » è impiegata qui come nome d'uso e come orizzonte, non come titolo giuridico acquisito. Questa precisazione, conforme al nostro glossario e ai nostri statuti, viene ripetuta nel presente documento ovunque sia necessaria, non per prudenza retorica, ma perché è al centro della nostra onestà intellettuale.
 
 ---
 
@@ -32,7 +32,7 @@ Questo Libro Bianco non fornisce tutte le risposte. Costituisce anzitutto un inv
 
 Yann Deungoué
 Architetto software
-Fondatore dell'iniziativa Ordine degli Esperti Informatici (OEI)
+Fondatore dell'iniziativa Ordine Internazionale degli Esperti di Informatica (OEI)
 
 ---
 
@@ -40,7 +40,7 @@ Fondatore dell'iniziativa Ordine degli Esperti Informatici (OEI)
 
 Yann Deungoué è ingegnere e architetto software. Nel corso del suo percorso — come sviluppatore, architetto, poi responsabile tecnico —, ha progettato, costruito e fatto evolvere sistemi finanziari, piattaforme critiche e progetti internazionali, in contesti in cui l'affidabilità, la sicurezza e la conformità dei software non sono opzioni ma requisiti di primaria importanza. È da questa pratica sul campo, a contatto con sistemi la cui difettosità può colpire migliaia di persone, che è nata la convinzione all'origine di questo Libro bianco: quando il software diventa un'infrastruttura, il mestiere di chi lo costruisce cambia natura e richiede una responsabilità commisurata ai suoi effetti.
 
-Stabilito in Svizzera ed esercitante nel settore finanziario, ha fondato l'iniziativa Ordine degli Esperti Informatici (OEI) al fine di aprire, su scala internazionale, una discussione sul riconoscimento progressivo e sulla strutturazione della professione informatica. Difende a tal fine un approccio misurato e non allarmistico, mirato ai sistemi critici e attento a preservare l'apertura, la creatività e l'inclusione di talenti provenienti da ogni orizzonte che hanno fatto la ricchezza della disciplina.
+Stabilito in Svizzera ed esercitante nel settore finanziario, ha fondato l'iniziativa Ordine Internazionale degli Esperti di Informatica (OEI) al fine di aprire, su scala internazionale, una discussione sul riconoscimento progressivo e sulla strutturazione della professione informatica. Difende a tal fine un approccio misurato e non allarmistico, mirato ai sistemi critici e attento a preservare l'apertura, la creatività e l'inclusione di talenti provenienti da ogni orizzonte che hanno fatto la ricchezza della disciplina.
 
 *Una nota biografica più completa, accompagnata da un ritratto dell'autore, sarà integrata prima della stampa della versione definitiva.*
 
@@ -64,7 +64,7 @@ Non pretendiamo di offrire una soluzione chiavi in mano, né di imporre un quadr
 
 ## Sull'OEI
 
-*L'Ordine degli Esperti Informatici (OEI) è un movimento fondatore, sostenuto da un'associazione, e non un ordine professionale in senso legale (vedi la nota preliminare). La sua ragion d'essere si riassume in una visione, una missione e un insieme di valori.*
+*L'Ordine Internazionale degli Esperti di Informatica (OEI) è un movimento fondatore, sostenuto da un'associazione, e non un ordine professionale in senso legale (vedi la nota preliminare). La sua ragion d'essere si riassume in una visione, una missione e un insieme di valori.*
 
 ### Visione
 
@@ -91,7 +91,7 @@ Il nostro motto — **« Competenza. Etica. Responsabilità. »** — riassume l
 
 ### Nome, struttura e ambizione internazionale
 
-L'Ordine degli Esperti Informatici (OEI) è il nome del *movimento*: quello che porta la visione esposta in questo Libro bianco e raduna i membri fondatori. Non va confuso con il nome dell'*entità giuridica* che lo ospita. Per evitare qualsiasi ambiguità con gli ordini professionali legalmente costituiti — una questione che diversi revisori ci hanno giustamente posto —, l'associazione promotrice sarà registrata sotto un nome istituzionale distinto, nella forma **OEI Foundation** o **Istituto internazionale della responsabilità informatica**, con la menzione esplicita « promotore del movimento Ordine degli Esperti Informatici ». Questa struttura a due livelli permette all'entità legale di restare neutra e priva di ambiguità, mentre il movimento conserva il nome che ne porta la visione e la memoria simbolica. Il nome legale definitivo sarà stabilito con il supporto di una consulenza legale, prima di qualsiasi deposito di marchio; fino ad allora, questo Libro bianco impiega sistematicamente la formula completa *Ordine degli Esperti Informatici — Movimento fondatore internazionale*.
+L'Ordine Internazionale degli Esperti di Informatica (OEI) è il nome del *movimento*: quello che porta la visione esposta in questo Libro bianco e raduna i membri fondatori. Non va confuso con il nome dell'*entità giuridica* che lo ospita. Per evitare qualsiasi ambiguità con gli ordini professionali legalmente costituiti — una questione che diversi revisori ci hanno giustamente posto —, l'associazione promotrice sarà registrata sotto un nome istituzionale distinto, nella forma **OEI Foundation** o **Istituto internazionale della responsabilità informatica**, con la menzione esplicita « promotore del movimento Ordine Internazionale degli Esperti di Informatica ». Questa struttura a due livelli permette all'entità legale di restare neutra e priva di ambiguità, mentre il movimento conserva il nome che ne porta la visione e la memoria simbolica. Il nome legale definitivo sarà stabilito con il supporto di una consulenza legale, prima di qualsiasi deposito di marchio; fino ad allora, questo Libro bianco impiega sistematicamente la formula completa *Ordine Internazionale degli Esperti di Informatica — Movimento fondatore internazionale*.
 
 Questa stessa esigenza di chiarezza si applica alla nostra ambizione geografica. L'OEI è concepito, sin dall'origine, come un'iniziativa *internazionale*: questo Libro bianco invita esplicitamente ad « aprire una discussione internazionale sul modo in cui la nostra professione può prendere pienamente possesso del proprio ruolo ». Ma un'ambizione internazionale non cancella la realtà giuridica: la sede legale, il nome legale dell'associazione e le sue rappresentanze territoriali dovranno, man mano che si sviluppa, essere distinti — e articolati — paese per paese, nel rispetto dei quadri giuridici locali (vedi anche l'Allegato A). La sigla OEI resta invariata; è il quadro istituzionale che la circonda a definirsi progressivamente.
 
@@ -400,7 +400,7 @@ Questo documento è una versione 3, e resterà a lungo un'opera in corso per sce
 
 *Impegno volontario, espresso in prima persona, che sottoscrive chiunque si unisca all'OEI in qualità di membro fondatore. Questa carta non ha valore legale opponibile; è un impegno morale e una dichiarazione di intenti condivisa.*
 
-Unendomi all'Ordine degli Esperti Informatici in qualità di membro fondatore, mi impegno a:
+Unendomi all'Ordine Internazionale degli Esperti di Informatica in qualità di membro fondatore, mi impegno a:
 
 - **Servire la missione** del movimento: contribuire a un riconoscimento progressivo, mirato e onesto della professione informatica, a beneficio della società quanto dei professionisti.
 - **Rispettare la verità sul nostro statuto**: non presentare mai l'OEI come un ordine professionale legalmente costituito, e ricordare, ogni volta che sia necessario, che si tratta di un movimento fondatore sostenuto da un'associazione.

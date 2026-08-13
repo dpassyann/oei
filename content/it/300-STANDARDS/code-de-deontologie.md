@@ -5,11 +5,11 @@ source: "cohérent avec le Livre blanc v3.1 et la charte fondatrice de l'OEI"
 date: "2026-08-09"
 ---
 
-# Codice deontologico dell'Ordine degli Esperti Informatici
+# Codice deontologico dell'Ordine Internazionale degli Esperti di Informatica
 
 ## Preambolo
 
-Il presente codice deontologico enuncia le regole di condotta professionale che i membri accreditati dell'Ordine degli Esperti Informatici (OEI) si impegnano a rispettare. Traduce, nella pratica quotidiana della professione, la missione dell'OEI definita nella nostra [visione e missione](/a-propos): proteggere il pubblico, far riconoscere la competenza ed elevare il livello di responsabilità della professione di esperto informatico.
+Il presente codice deontologico enuncia le regole di condotta professionale che i membri accreditati dell'Ordine Internazionale degli Esperti di Informatica (OEI) si impegnano a rispettare. Traduce, nella pratica quotidiana della professione, la missione dell'OEI definita nella nostra [visione e missione](/a-propos): proteggere il pubblico, far riconoscere la competenza ed elevare il livello di responsabilità della professione di esperto informatico.
 
 Si distingue dalla **carta d'impegno**, un testo di adesione volontaria meno vincolante, aperto a un pubblico più ampio (membri associati, aziende partner, istituzioni accademiche) che non esercitano individualmente la professione. Il presente codice si applica invece a ogni membro accreditato nell'esercizio professionale dell'informatica.
 

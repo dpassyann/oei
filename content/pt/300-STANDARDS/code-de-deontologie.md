@@ -5,11 +5,11 @@ source: "cohérent avec le Livre blanc v3.1 et la charte fondatrice de l'OEI"
 date: "2026-08-09"
 ---
 
-# Código deontológico da Ordem dos Especialistas em Informática
+# Código deontológico da Ordem Internacional dos Especialistas em Informática
 
 ## Preâmbulo
 
-Este código deontológico estabelece as regras de conduta profissional que os membros credenciados da Ordem dos Especialistas em Informática (OEI) se comprometem a respeitar. Traduz, na prática quotidiana da profissão, a missão da OEI definida na nossa [visão e missão](/a-propos): proteger o público, fazer reconhecer a competência e elevar o nível de responsabilidade da profissão de especialista em informática.
+Este código deontológico estabelece as regras de conduta profissional que os membros credenciados da Ordem Internacional dos Especialistas em Informática (OEI) se comprometem a respeitar. Traduz, na prática quotidiana da profissão, a missão da OEI definida na nossa [visão e missão](/a-propos): proteger o público, fazer reconhecer a competência e elevar o nível de responsabilidade da profissão de especialista em informática.
 
 Distingue-se da **carta de compromisso**, um texto de adesão voluntária menos vinculativo, aberto a um público mais amplo (membros associados, empresas parceiras, instituições académicas) que não exercem individualmente a profissão. O presente código aplica-se, esse sim, a todo membro credenciado no exercício profissional da informática.
 

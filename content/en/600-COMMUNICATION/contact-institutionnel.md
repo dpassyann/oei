@@ -6,7 +6,7 @@ source: "livre-blanc-complet.md, section 12 (Targeted partnerships)"
 
 ## Who this page is for
 
-This page is addressed to the institutional interlocutors of the Order of Computer Experts (OEI): universities and schools, companies — particularly those that design or operate critical systems and their information security officers —, institutions and public authorities, as well as journalists wishing to ask us about the movement. We reiterate, here as elsewhere, our actual status: the OEI is a founding movement resting on an association, not a legally constituted professional order. None of our exchanges with these interlocutors binds either party beyond a free and informed choice.
+This page is addressed to the institutional interlocutors of the International Order of Information Technology Experts (OEI): universities and schools, companies — particularly those that design or operate critical systems and their information security officers —, institutions and public authorities, as well as journalists wishing to ask us about the movement. We reiterate, here as elsewhere, our actual status: the OEI is a founding movement resting on an association, not a legally constituted professional order. None of our exchanges with these interlocutors binds either party beyond a free and informed choice.
 
 ### Universities and schools
 

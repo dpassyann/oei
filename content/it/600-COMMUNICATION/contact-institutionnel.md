@@ -6,7 +6,7 @@ source: "livre-blanc-complet.md, section 12 (Partenariats visés)"
 
 ## A chi si rivolge questa pagina
 
-Questa pagina si rivolge agli interlocutori istituzionali dell'Ordine degli Esperti Informatici (OEI): università e scuole, imprese — in particolare quelle che progettano o gestiscono sistemi critici e i loro responsabili della sicurezza dei sistemi informativi —, istituzioni e pubbliche autorità, nonché ai giornalisti che desiderano interrogarci sul movimento. Ricordiamo, qui come altrove, il nostro statuto reale: l'OEI è un movimento fondatore appoggiato a un'associazione, non un ordine professionale legalmente costituito. Nessuno dei nostri scambi con questi interlocutori impegna l'una o l'altra parte al di là di una scelta libera e consapevole.
+Questa pagina si rivolge agli interlocutori istituzionali dell'Ordine Internazionale degli Esperti di Informatica (OEI): università e scuole, imprese — in particolare quelle che progettano o gestiscono sistemi critici e i loro responsabili della sicurezza dei sistemi informativi —, istituzioni e pubbliche autorità, nonché ai giornalisti che desiderano interrogarci sul movimento. Ricordiamo, qui come altrove, il nostro statuto reale: l'OEI è un movimento fondatore appoggiato a un'associazione, non un ordine professionale legalmente costituito. Nessuno dei nostri scambi con questi interlocutori impegna l'una o l'altra parte al di là di una scelta libera e consapevole.
 
 ### Università e scuole
 

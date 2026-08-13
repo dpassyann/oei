@@ -5,9 +5,9 @@ source: "consistent with the White Paper v3, section 'About the OEI'"
 date: "2026-08-06"
 ---
 
-# Vision and mission of the Order of Computer Experts
+# Vision and mission of the International Order of Information Technology Experts
 
-The Order of Computer Experts (OEI) is a founding movement, backed by an association, not a professional order in the legal sense of the term. Its purpose is expressed through a vision, a mission and a set of values that guide all of our work.
+The International Order of Information Technology Experts (OEI) is a founding movement, backed by an association, not a professional order in the legal sense of the term. Its purpose is expressed through a vision, a mission and a set of values that guide all of our work.
 
 ## Vision
 
@@ -54,4 +54,4 @@ We stand for a profession that welcomes talent from all backgrounds, that is tra
 
 We are not a professional order in the legal sense of the term. A professional order is created by law, within the framework of a regulated profession with reserved acts, and no private organisation can claim that status for itself. We do not have the power to create reserved acts or to condition access to the computing profession.
 
-The Order of Computer Experts is, at this stage, an international founding movement, resting on an association. The word "Order" is used as a working name and as a horizon, not as an acquired legal title: the legal entity that will carry the movement will be registered under a distinct, neutral institutional name (for example, OEI Foundation), with an explicit statement that it carries the "Order of Computer Experts" movement. This separation between the legal name and the movement's name is not a trick: it allows the legal entity to remain unambiguous while leaving the movement the name that carries its vision. We are building a body of work — vision, mission, values, code of ethics, competency framework — whose legitimacy will be built through the quality of the work and the voluntary support of professionals, universities and companies. If this body of work reaches sufficient credibility, it may one day, in countries where the legal framework allows it, serve as the basis for a more formal discussion. Should it come, this recognition will be the consequence of our seriousness — never its precondition.
+The International Order of Information Technology Experts is, at this stage, an international founding movement, resting on an association. The word "Order" is used as a working name and as a horizon, not as an acquired legal title: the legal entity that will carry the movement will be registered under a distinct, neutral institutional name (for example, OEI Foundation), with an explicit statement that it carries the "International Order of Information Technology Experts" movement. This separation between the legal name and the movement's name is not a trick: it allows the legal entity to remain unambiguous while leaving the movement the name that carries its vision. We are building a body of work — vision, mission, values, code of ethics, competency framework — whose legitimacy will be built through the quality of the work and the voluntary support of professionals, universities and companies. If this body of work reaches sufficient credibility, it may one day, in countries where the legal framework allows it, serve as the basis for a more formal discussion. Should it come, this recognition will be the consequence of our seriousness — never its precondition.

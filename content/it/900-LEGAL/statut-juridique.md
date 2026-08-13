@@ -6,7 +6,7 @@ status: "prima bozza — da far rivedere da un consulente legale prima della cos
 
 # Statuto giuridico reale dell'OEI
 
-Questa pagina ha l'unico scopo di dichiarare, con precisione e senza ambiguità, ciò che l'Ordine degli Esperti Informatici (OEI) è oggi sul piano legale — e ciò che non è. Si rivolge in particolare a coloro che hanno bisogno di verificarlo: giuristi, giornalisti, autorità di regolamentazione, partner istituzionali.
+Questa pagina ha l'unico scopo di dichiarare, con precisione e senza ambiguità, ciò che l'Ordine Internazionale degli Esperti di Informatica (OEI) è oggi sul piano legale — e ciò che non è. Si rivolge in particolare a coloro che hanno bisogno di verificarlo: giuristi, giornalisti, autorità di regolamentazione, partner istituzionali.
 
 ## Ciò che l'OEI è oggi
 
@@ -16,7 +16,7 @@ L'OEI non è **un ordine professionale in senso legale**. La distinzione merita 
 
 ## La struttura a due livelli
 
-Il movimento « Ordine degli Esperti Informatici » sarà sostenuto da un'entità legale distinta e neutra — ipotizzata sotto una denominazione quale OEI Foundation o Istituto internazionale della responsabilità informatica — piuttosto che da un'entità che porterebbe essa stessa la parola « Ordine » nella propria ragione sociale. Questa separazione non è un artificio destinato a confondere le acque; è l'esatto contrario. Mira a evitare qualsiasi confusione tra il nome d'uso del movimento, a vocazione internazionale e federatrice, e il nome legale della struttura che ne assume la responsabilità giuridica, la quale deve restare identificabile senza equivoci come un'associazione e non come un ordine costituito. Si tratta di una chiarificazione volontaria, decisa ancor prima di qualsiasi contestazione esterna, e non di una risposta a una contestazione.
+Il movimento « Ordine Internazionale degli Esperti di Informatica » sarà sostenuto da un'entità legale distinta e neutra — ipotizzata sotto una denominazione quale OEI Foundation o Istituto internazionale della responsabilità informatica — piuttosto che da un'entità che porterebbe essa stessa la parola « Ordine » nella propria ragione sociale. Questa separazione non è un artificio destinato a confondere le acque; è l'esatto contrario. Mira a evitare qualsiasi confusione tra il nome d'uso del movimento, a vocazione internazionale e federatrice, e il nome legale della struttura che ne assume la responsabilità giuridica, la quale deve restare identificabile senza equivoci come un'associazione e non come un ordine costituito. Si tratta di una chiarificazione volontaria, decisa ancor prima di qualsiasi contestazione esterna, e non di una risposta a una contestazione.
 
 ## Ambizione internazionale e realtà giuridica
 

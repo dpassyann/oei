@@ -6,7 +6,7 @@ source: "livre-blanc-complet.md, secção 9 (Governação proposta) e Carta do m
 
 ## Juntar-se à OEI no momento em que tudo começa
 
-Um movimento julga-se por quem a ele adere antes de ter provado o seu sucesso. É esse o sentido do estatuto de *membro fundador*: designa, no sentido preciso da nossa governação, as pessoas presentes **antes do primeiro reconhecimento público alargado** da Ordem dos Especialistas em Informática. Não é o estatuto mais prestigiado no papel, nem o mais exigente — é o mais precoce. Precede os *membros agregados*, que um dia responderão a critérios de competência e deontologia assim que o nosso quadro de certificação estiver operacional; os *membros associados*, que apoiam a missão sem visar a agregação; e os *membros honorários*, convidados a título honorífico. O membro fundador, esse, chega quando ainda só existem a visão, o Livro Branco e um trabalho por construir.
+Um movimento julga-se por quem a ele adere antes de ter provado o seu sucesso. É esse o sentido do estatuto de *membro fundador*: designa, no sentido preciso da nossa governação, as pessoas presentes **antes do primeiro reconhecimento público alargado** da Ordem Internacional dos Especialistas em Informática. Não é o estatuto mais prestigiado no papel, nem o mais exigente — é o mais precoce. Precede os *membros agregados*, que um dia responderão a critérios de competência e deontologia assim que o nosso quadro de certificação estiver operacional; os *membros associados*, que apoiam a missão sem visar a agregação; e os *membros honorários*, convidados a título honorífico. O membro fundador, esse, chega quando ainda só existem a visão, o Livro Branco e um trabalho por construir.
 
 ### Porque é que aderir agora tem valor
 

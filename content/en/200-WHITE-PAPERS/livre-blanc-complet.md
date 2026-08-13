@@ -1,18 +1,18 @@
 ---
 title: "White Paper — Towards progressive recognition of the computing profession"
-version: "v3.1"
-status: "v3.1 consolidation version — incorporates an operational definition of the computer expert, a clarification of the two-tier structure (legal entity / movement) and of the international ambition, an explicit hierarchy of purposes, and nuances on causality (cybercrime, major outages) and on the singularity of the profession, following an external review"
-date: "2026-08-06"
+version: "v4"
+status: "version 4 — applies the organisation's new degenderized official name, International Order of Information Technology Experts (OEI), in place of the discipline's former person-based name, replacing the name of a gendered person with the name of the discipline; otherwise retains the clarifications introduced in version 3.1"
+date: "2026-08-13"
 ---
 
 # White Paper
 ## Towards progressive recognition of the computing profession
 
-*Order of Computer Experts (OEI) — International Founding Movement — Version 3.1*
+*International Order of Information Technology Experts (OEI) — International Founding Movement — Version 4*
 
 ---
 
-> **Preliminary note on the organisation's status.** The Order of Computer Experts (OEI) is, at this stage, a *founding movement* resting on an *association*. It is not a professional order in the legal sense of the term: a professional order is created by law, within the framework of a regulated profession with reserved acts. No private organisation can claim that status for itself. The word "Order" is used here as a working name and as a horizon, not as an acquired legal title. This clarification, consistent with our glossary and our bylaws, is repeated throughout this document wherever necessary — not as rhetorical caution, but because it lies at the heart of our intellectual honesty.
+> **Preliminary note on the organisation's status.** The International Order of Information Technology Experts (OEI) is, at this stage, a *founding movement* resting on an *association*. It is not a professional order in the legal sense of the term: a professional order is created by law, within the framework of a regulated profession with reserved acts. No private organisation can claim that status for itself. The word "Order" is used here as a working name and as a horizon, not as an acquired legal title. This clarification, consistent with our glossary and our bylaws, is repeated throughout this document wherever necessary — not as rhetorical caution, but because it lies at the heart of our intellectual honesty.
 
 ---
 
@@ -32,7 +32,7 @@ This White Paper does not provide all the answers. It is above all an invitation
 
 Yann Deungoué
 Software Architect
-Founder of the Order of Computer Experts (OEI) initiative
+Founder of the International Order of Information Technology Experts (OEI) initiative
 
 ---
 
@@ -40,7 +40,7 @@ Founder of the Order of Computer Experts (OEI) initiative
 
 Yann Deungoué is a software engineer and architect. Over the course of his career — as a developer, then architect, then technical lead — he has designed, built and evolved financial systems, critical platforms and international projects, in environments where the reliability, security and compliance of software are not options but first-order requirements. It is from this hands-on practice, in contact with systems whose failure can affect thousands of people, that the conviction behind this White Paper was born: when software becomes infrastructure, the profession of those who build it changes in nature and calls for a responsibility commensurate with its effects.
 
-Based in Switzerland and working in the financial sector, he founded the Order of Computer Experts (OEI) initiative to open, at an international scale, a discussion on the progressive recognition and structuring of the computing profession. To that end, he advocates a measured, non-alarmist approach, focused on critical systems and mindful of preserving the openness, creativity and inclusion of talent from all backgrounds that have made the discipline what it is.
+Based in Switzerland and working in the financial sector, he founded the International Order of Information Technology Experts (OEI) initiative to open, at an international scale, a discussion on the progressive recognition and structuring of the computing profession. To that end, he advocates a measured, non-alarmist approach, focused on critical systems and mindful of preserving the openness, creativity and inclusion of talent from all backgrounds that have made the discipline what it is.
 
 *A fuller biographical note, together with a portrait of the author, will be added before the final version goes to print.*
 
@@ -64,7 +64,7 @@ We do not claim to offer a turnkey solution, nor to impose a uniform framework o
 
 ## About the OEI
 
-*The Order of Computer Experts (OEI) is a founding movement, resting on an association, and not a professional order in the legal sense of the term (see the preliminary note). Its purpose can be summed up in a vision, a mission and a set of values.*
+*The International Order of Information Technology Experts (OEI) is a founding movement, resting on an association, and not a professional order in the legal sense of the term (see the preliminary note). Its purpose can be summed up in a vision, a mission and a set of values.*
 
 ### Vision
 
@@ -91,7 +91,7 @@ Our motto — **"Competence. Ethics. Responsibility."** — sums up the spirit o
 
 ### Name, structure and international ambition
 
-The Order of Computer Experts (OEI) is the name of the *movement*: the one that carries the vision set out in this White Paper and brings together its founding members. It must not be confused with the name of the *legal entity* that hosts it. To avoid any ambiguity with legally constituted professional orders — a question several reviewers rightly raised with us — the association carrying the movement will be registered under a distinct institutional name, of the form **OEI Foundation** or **International Institute for Computing Accountability**, with the explicit statement "carrying the Order of Computer Experts movement." This two-tier structure allows the legal entity to remain neutral and unambiguous, while the movement retains the name that carries its vision and symbolic memory. The final legal name will be settled with the support of legal counsel, before any trademark filing; until then, this White Paper systematically uses the full formula *Order of Computer Experts — International Founding Movement*.
+The International Order of Information Technology Experts (OEI) is the name of the *movement*: the one that carries the vision set out in this White Paper and brings together its founding members. It must not be confused with the name of the *legal entity* that hosts it. To avoid any ambiguity with legally constituted professional orders — a question several reviewers rightly raised with us — the association carrying the movement will be registered under a distinct institutional name, of the form **OEI Foundation** or **International Institute for Computing Accountability**, with the explicit statement "carrying the International Order of Information Technology Experts movement." This two-tier structure allows the legal entity to remain neutral and unambiguous, while the movement retains the name that carries its vision and symbolic memory. The final legal name will be settled with the support of legal counsel, before any trademark filing; until then, this White Paper systematically uses the full formula *International Order of Information Technology Experts — International Founding Movement*.
 
 This same demand for clarity applies to our geographic ambition. The OEI is designed, from the outset, as an *international* initiative: this White Paper explicitly calls for "opening an international discussion on how our profession can fully take ownership of its role." But an international ambition does not erase legal reality: the registered office, the association's legal name and its territorial representations will, as it develops, need to be distinguished — and coordinated — country by country, in keeping with local legal frameworks (see also Annex A). The OEI acronym remains unchanged; it is the institutional framework around it that will progressively take shape.
 
@@ -400,7 +400,7 @@ This document is a version 3, and it will remain a work in progress for a long t
 
 *A voluntary commitment, expressed in the first person, subscribed to by anyone joining the OEI as a founding member. This charter has no enforceable legal value; it is a moral commitment and a shared declaration of intent.*
 
-By joining the Order of Computer Experts as a founding member, I commit to:
+By joining the International Order of Information Technology Experts as a founding member, I commit to:
 
 - **Serving the mission** of the movement: contributing to a progressive, targeted and honest recognition of the computing profession, for the benefit of society as much as of professionals.
 - **Respecting the truth about our status**: never presenting the OEI as a legally constituted professional order, and recalling, whenever necessary, that it is a founding movement resting on an association.

@@ -5,11 +5,11 @@ source: "cohérent avec le Livre blanc v3.1 et la charte fondatrice de l'OEI"
 date: "2026-08-09"
 ---
 
-# Code of Ethics of the Order of Computer Science Experts
+# Code of Ethics of the International Order of Information Technology Experts
 
 ## Preamble
 
-This Code of Ethics sets out the rules of professional conduct that accredited members of the Order of Computer Science Experts (OEI) commit to upholding. It translates, into the daily practice of the profession, the OEI's mission as defined in our [vision and mission](/a-propos): to protect the public, to secure recognition for competence, and to raise the level of accountability within the computer science profession.
+This Code of Ethics sets out the rules of professional conduct that accredited members of the International Order of Information Technology Experts (OEI) commit to upholding. It translates, into the daily practice of the profession, the OEI's mission as defined in our [vision and mission](/a-propos): to protect the public, to secure recognition for competence, and to raise the level of accountability within the computer science profession.
 
 It is distinct from the **Charter of Commitment**, a less binding, voluntary text open to a wider audience (associate members, partner companies, academic institutions) who do not practise the profession individually. The present Code, by contrast, applies to every member accredited for the professional practice of computer science.
 

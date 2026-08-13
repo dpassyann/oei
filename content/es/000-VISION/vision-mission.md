@@ -5,9 +5,9 @@ source: "coherente con el Libro Blanco v3, sección «Sobre la OEI»"
 date: "2026-08-06"
 ---
 
-# Visión y misión de la Orden de Expertos en Informática
+# Visión y misión de la Orden Internacional de Expertos en Informática
 
-La Orden de Expertos en Informática (OEI) es un movimiento fundador, respaldado por una asociación, y no una orden profesional en el sentido legal del término. Su razón de ser se resume en una visión, una misión y un conjunto de valores, que orientan cada uno de nuestros trabajos.
+La Orden Internacional de Expertos en Informática (OEI) es un movimiento fundador, respaldado por una asociación, y no una orden profesional en el sentido legal del término. Su razón de ser se resume en una visión, una misión y un conjunto de valores, que orientan cada uno de nuestros trabajos.
 
 ## Visión
 
@@ -54,4 +54,4 @@ Defendemos una profesión acogedora con los talentos de todos los orígenes, tra
 
 No somos una orden profesional en el sentido legal del término. Una orden profesional es creada por la ley, en el marco de una profesión reglamentada dotada de actos reservados, y ninguna organización privada puede autoatribuirse ese estatus. No tenemos el poder de crear actos reservados ni de condicionar el acceso a la profesión informática.
 
-La Orden de Expertos en Informática es, en esta etapa, un movimiento fundador internacional, apoyado en una asociación. La palabra «Orden» se emplea como nombre de uso y como horizonte, no como título jurídico adquirido: la entidad legal que sostendrá el movimiento se registrará bajo un nombre institucional distinto y neutro (por ejemplo, OEI Foundation), con mención explícita de que sostiene el movimiento «Orden de Expertos en Informática». Esta separación entre nombre legal y nombre de movimiento no es un artificio: permite que la entidad legal permanezca sin ambigüedad, dejando al movimiento el nombre que porta su visión. Construimos un corpus —visión, misión, valores, código deontológico, referencial de competencias— cuya legitimidad se edificará por la calidad de los trabajos y la adhesión voluntaria de los profesionales, las universidades y las empresas. Si este corpus alcanza una credibilidad suficiente, podrá, algún día, en los países donde el marco jurídico lo permita, servir de base para una discusión más formal. Ese reconocimiento, si llega, será la consecuencia de nuestra seriedad —nunca su condición previa.
+La Orden Internacional de Expertos en Informática es, en esta etapa, un movimiento fundador internacional, apoyado en una asociación. La palabra «Orden» se emplea como nombre de uso y como horizonte, no como título jurídico adquirido: la entidad legal que sostendrá el movimiento se registrará bajo un nombre institucional distinto y neutro (por ejemplo, OEI Foundation), con mención explícita de que sostiene el movimiento «Orden Internacional de Expertos en Informática». Esta separación entre nombre legal y nombre de movimiento no es un artificio: permite que la entidad legal permanezca sin ambigüedad, dejando al movimiento el nombre que porta su visión. Construimos un corpus —visión, misión, valores, código deontológico, referencial de competencias— cuya legitimidad se edificará por la calidad de los trabajos y la adhesión voluntaria de los profesionales, las universidades y las empresas. Si este corpus alcanza una credibilidad suficiente, podrá, algún día, en los países donde el marco jurídico lo permita, servir de base para una discusión más formal. Ese reconocimiento, si llega, será la consecuencia de nuestra seriedad —nunca su condición previa.

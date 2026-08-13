@@ -6,7 +6,7 @@ source: "livre-blanc-complet.md, secção 12 (Parcerias visadas)"
 
 ## A quem se destina esta página
 
-Esta página destina-se aos interlocutores institucionais da Ordem dos Especialistas em Informática (OEI): universidades e escolas, empresas — em particular as que concebem ou exploram sistemas críticos e os seus responsáveis pela segurança dos sistemas de informação —, instituições e poderes públicos, bem como aos jornalistas que desejem interrogar-nos sobre o movimento. Recordamos, aqui como noutros lugares, o nosso estatuto real: a OEI é um movimento fundador apoiado numa associação, não uma ordem profissional legalmente constituída. Nenhuma das nossas trocas com estes interlocutores vincula qualquer das partes para além de uma escolha livre e esclarecida.
+Esta página destina-se aos interlocutores institucionais da Ordem Internacional dos Especialistas em Informática (OEI): universidades e escolas, empresas — em particular as que concebem ou exploram sistemas críticos e os seus responsáveis pela segurança dos sistemas de informação —, instituições e poderes públicos, bem como aos jornalistas que desejem interrogar-nos sobre o movimento. Recordamos, aqui como noutros lugares, o nosso estatuto real: a OEI é um movimento fundador apoiado numa associação, não uma ordem profissional legalmente constituída. Nenhuma das nossas trocas com estes interlocutores vincula qualquer das partes para além de uma escolha livre e esclarecida.
 
 ### Universidades e escolas
 

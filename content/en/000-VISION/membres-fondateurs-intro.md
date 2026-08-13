@@ -6,7 +6,7 @@ source: "livre-blanc-complet.md, section 9 (Proposed governance) and the Foundin
 
 ## Joining the OEI at the moment it all begins
 
-A movement is judged by who joins it before it has proven its success. That is the meaning of *founding member* status: it designates, in the precise sense of our governance, the people present **before the first broad public recognition** of the Order of Computer Experts. It is neither the most prestigious status on paper, nor the most demanding one — it is the earliest. It precedes *accredited members*, who will one day meet competence and ethics criteria once our certification framework is operational; *associate members*, who support the mission without seeking accreditation; and *honorary members*, invited as a mark of honour. The founding member, by contrast, arrives when there is still only the vision, the White Paper, and work yet to be built.
+A movement is judged by who joins it before it has proven its success. That is the meaning of *founding member* status: it designates, in the precise sense of our governance, the people present **before the first broad public recognition** of the International Order of Information Technology Experts. It is neither the most prestigious status on paper, nor the most demanding one — it is the earliest. It precedes *accredited members*, who will one day meet competence and ethics criteria once our certification framework is operational; *associate members*, who support the mission without seeking accreditation; and *honorary members*, invited as a mark of honour. The founding member, by contrast, arrives when there is still only the vision, the White Paper, and work yet to be built.
 
 ### Why joining now has value
 

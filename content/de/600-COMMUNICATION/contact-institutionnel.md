@@ -6,7 +6,7 @@ source: "livre-blanc-complet.md, Abschnitt 12 (Angestrebte Partnerschaften)"
 
 ## An wen sich diese Seite richtet
 
-Diese Seite richtet sich an die institutionellen Gesprächspartner des Ordre des Experts Informaticiens (OEI): Universitäten und Hochschulen, Unternehmen — insbesondere solche, die kritische Systeme entwerfen oder betreiben, und deren Verantwortliche für die Sicherheit von Informationssystemen —, Institutionen und öffentliche Behörden sowie Journalisten, die uns zur Bewegung befragen möchten. Wir erinnern hier wie andernorts an unseren tatsächlichen Status: Der OEI ist eine von einem Verein getragene Gründungsbewegung, kein rechtlich konstituierter Berufsorden. Keiner unserer Austausche mit diesen Gesprächspartnern verpflichtet die eine oder andere Seite über eine freie und informierte Entscheidung hinaus.
+Diese Seite richtet sich an die institutionellen Gesprächspartner der Internationalen Vereinigung für Informatik-Expertise (OEI): Universitäten und Hochschulen, Unternehmen — insbesondere solche, die kritische Systeme entwerfen oder betreiben, und deren Verantwortliche für die Sicherheit von Informationssystemen —, Institutionen und öffentliche Behörden sowie Journalisten, die uns zur Bewegung befragen möchten. Wir erinnern hier wie andernorts an unseren tatsächlichen Status: Der OEI ist eine von einem Verein getragene Gründungsbewegung, kein rechtlich konstituierter Berufsorden. Keiner unserer Austausche mit diesen Gesprächspartnern verpflichtet die eine oder andere Seite über eine freie und informierte Entscheidung hinaus.
 
 ### Universitäten und Hochschulen
 

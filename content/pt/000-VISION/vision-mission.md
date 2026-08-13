@@ -5,9 +5,9 @@ source: "coerente com o Livro Branco v3, secção «Sobre a OEI»"
 date: "2026-08-06"
 ---
 
-# Visão e missão da Ordem dos Especialistas em Informática
+# Visão e missão da Ordem Internacional dos Especialistas em Informática
 
-A Ordem dos Especialistas em Informática (OEI) é um movimento fundador, apoiado numa associação, e não uma ordem profissional no sentido legal do termo. A sua razão de ser resume-se numa visão, numa missão e num conjunto de valores, que orientam cada um dos nossos trabalhos.
+A Ordem Internacional dos Especialistas em Informática (OEI) é um movimento fundador, apoiado numa associação, e não uma ordem profissional no sentido legal do termo. A sua razão de ser resume-se numa visão, numa missão e num conjunto de valores, que orientam cada um dos nossos trabalhos.
 
 ## Visão
 
@@ -54,4 +54,4 @@ Defendemos uma profissão acolhedora aos talentos de todas as origens, transpare
 
 Não somos uma ordem profissional no sentido legal do termo. Uma ordem profissional é criada pela lei, no quadro de uma profissão regulamentada dotada de atos reservados, e nenhuma organização privada pode autoatribuir-se esse estatuto. Não temos o poder de criar atos reservados nem de condicionar o acesso à profissão informática.
 
-A Ordem dos Especialistas em Informática é, nesta fase, um movimento fundador internacional, apoiado numa associação. A palavra «Ordem» é utilizada como designação de uso e como horizonte, não como título jurídico adquirido: a entidade legal que representará o movimento será registada sob um nome institucional distinto e neutro (por exemplo, OEI Foundation), com menção explícita de que representa o movimento «Ordem dos Especialistas em Informática». Esta separação entre nome legal e nome do movimento não é um artifício: permite que a entidade legal permaneça sem ambiguidade, deixando ao movimento o nome que traduz a sua visão. Construímos um corpus — visão, missão, valores, código deontológico, referencial de competências — cuja legitimidade se construirá pela qualidade dos trabalhos e pela adesão voluntária dos profissionais, das universidades e das empresas. Se este corpus atingir uma credibilidade suficiente, poderá, um dia, nos países onde o quadro jurídico o permita, servir de base a uma discussão mais formal. Esse reconhecimento, se vier, será a consequência do nosso rigor — nunca a sua condição prévia.
+A Ordem Internacional dos Especialistas em Informática é, nesta fase, um movimento fundador internacional, apoiado numa associação. A palavra «Ordem» é utilizada como designação de uso e como horizonte, não como título jurídico adquirido: a entidade legal que representará o movimento será registada sob um nome institucional distinto e neutro (por exemplo, OEI Foundation), com menção explícita de que representa o movimento «Ordem Internacional dos Especialistas em Informática». Esta separação entre nome legal e nome do movimento não é um artifício: permite que a entidade legal permaneça sem ambiguidade, deixando ao movimento o nome que traduz a sua visão. Construímos um corpus — visão, missão, valores, código deontológico, referencial de competências — cuja legitimidade se construirá pela qualidade dos trabalhos e pela adesão voluntária dos profissionais, das universidades e das empresas. Se este corpus atingir uma credibilidade suficiente, poderá, um dia, nos países onde o quadro jurídico o permita, servir de base a uma discussão mais formal. Esse reconhecimento, se vier, será a consequência do nosso rigor — nunca a sua condição prévia.

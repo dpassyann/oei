@@ -5,11 +5,11 @@ source: "cohérent avec le Livre blanc v3.1 et la charte fondatrice de l'OEI"
 date: "2026-08-09"
 ---
 
-# Code de déontologie de l'Ordre des Experts Informaticiens
+# Code de déontologie de l'Ordre International des Experts de l'Informatique
 
 ## Préambule
 
-Ce code de déontologie énonce les règles de conduite professionnelle que s'engagent à respecter les membres agréés de l'Ordre des Experts Informaticiens (OEI). Il traduit, dans la pratique quotidienne du métier, la mission de l'OEI définie dans notre [vision et notre mission](/a-propos) : protéger le public, faire reconnaître la compétence et élever le niveau de responsabilité de la profession d'expert informaticien.
+Ce code de déontologie énonce les règles de conduite professionnelle que s'engagent à respecter les membres agréés de l'Ordre International des Experts de l'Informatique (OEI). Il traduit, dans la pratique quotidienne du métier, la mission de l'OEI définie dans notre [vision et notre mission](/a-propos) : protéger le public, faire reconnaître la compétence et élever le niveau de responsabilité de la profession d'expert informaticien.
 
 Il se distingue de la **charte d'engagement**, un texte d'adhésion volontaire moins contraignant, ouvert à un public plus large (membres associés, entreprises partenaires, établissements académiques) qui ne relèvent pas de l'exercice individuel du métier. Le présent code s'applique, lui, à tout membre agréé au titre de la pratique professionnelle de l'informatique.
 

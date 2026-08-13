@@ -6,7 +6,7 @@ status: "first draft — to be reviewed by legal counsel before the entity is de
 
 # The OEI's actual legal status
 
-This page has the sole purpose of stating, precisely and unambiguously, what the Order of Computer Experts (OEI) is today from a legal standpoint — and what it is not. It is addressed in particular to those who need to verify this: lawyers, journalists, regulators, institutional partners.
+This page has the sole purpose of stating, precisely and unambiguously, what the International Order of Information Technology Experts (OEI) is today from a legal standpoint — and what it is not. It is addressed in particular to those who need to verify this: lawyers, journalists, regulators, institutional partners.
 
 ## What the OEI is today
 
@@ -16,7 +16,7 @@ The OEI is **not** a professional order in the legal sense of the term. The dist
 
 ## The two-tier structure
 
-The "Order of Computer Experts" movement will be carried by a distinct, neutral legal entity — envisaged under a name such as OEI Foundation or International Institute for Computing Accountability — rather than by an entity that would itself carry the word "Order" in its corporate name. This separation is not a device meant to blur the lines; it is the opposite. It aims to avoid any confusion between the movement's working name, which is international and unifying in ambition, and the legal name of the structure that bears its legal responsibility, which must remain unambiguously identifiable as an association and not as a constituted order. This is a deliberate clarification, decided before any outside challenge, not a response to one.
+The "International Order of Information Technology Experts" movement will be carried by a distinct, neutral legal entity — envisaged under a name such as OEI Foundation or International Institute for Computing Accountability — rather than by an entity that would itself carry the word "Order" in its corporate name. This separation is not a device meant to blur the lines; it is the opposite. It aims to avoid any confusion between the movement's working name, which is international and unifying in ambition, and the legal name of the structure that bears its legal responsibility, which must remain unambiguously identifiable as an association and not as a constituted order. This is a deliberate clarification, decided before any outside challenge, not a response to one.
 
 ## International ambition and legal reality
 

@@ -6,7 +6,7 @@ status: "erster Entwurf — vor endgültiger Gründung der Einheit durch rechtli
 
 # Tatsächlicher Rechtsstatus des OEI
 
-Diese Seite hat den alleinigen Zweck, präzise und unmissverständlich darzulegen, was der Ordre des Experts Informaticiens (OEI) heute rechtlich ist — und was er nicht ist. Sie richtet sich insbesondere an diejenigen, die dies überprüfen müssen: Juristen, Journalisten, Regulierungsbehörden, institutionelle Partner.
+Diese Seite hat den alleinigen Zweck, präzise und unmissverständlich darzulegen, was die Internationale Vereinigung für Informatik-Expertise (OEI) heute rechtlich ist — und was sie nicht ist. Sie richtet sich insbesondere an diejenigen, die dies überprüfen müssen: Juristen, Journalisten, Regulierungsbehörden, institutionelle Partner.
 
 ## Was der OEI heute ist
 
@@ -16,7 +16,7 @@ Der OEI ist **kein** Berufsorden im rechtlichen Sinne des Begriffs. Diese Unters
 
 ## Die zweistufige Struktur
 
-Die Bewegung „Ordre des Experts Informaticiens“ wird von einer eigenständigen, neutralen juristischen Einheit getragen — in Erwägung gezogen unter einer Bezeichnung wie OEI Foundation oder Internationales Institut für IT-Verantwortung — statt von einer Einheit, die selbst das Wort „Orden“ in ihrer Firmierung trüge. Diese Trennung ist kein Kunstgriff, der die Spuren verwischen soll; es ist das Gegenteil. Sie soll jede Verwechslung zwischen dem international ausgerichteten, vereinenden Gebrauchsnamen der Bewegung und dem rechtlichen Namen der Struktur vermeiden, die die rechtliche Verantwortung dafür trägt und die unzweideutig als Verein und nicht als konstituierter Orden erkennbar bleiben muss. Es handelt sich um eine bewusste Klarstellung, die noch vor jeder äußeren Anfechtung getroffen wurde, und nicht um eine Reaktion auf einen Einwand.
+Die Bewegung „Internationale Vereinigung für Informatik-Expertise“ wird von einer eigenständigen, neutralen juristischen Einheit getragen — in Erwägung gezogen unter einer Bezeichnung wie OEI Foundation oder Internationales Institut für IT-Verantwortung — statt von einer Einheit, die selbst das Wort „Orden“ in ihrer Firmierung trüge. Diese Trennung ist kein Kunstgriff, der die Spuren verwischen soll; es ist das Gegenteil. Sie soll jede Verwechslung zwischen dem international ausgerichteten, vereinenden Gebrauchsnamen der Bewegung und dem rechtlichen Namen der Struktur vermeiden, die die rechtliche Verantwortung dafür trägt und die unzweideutig als Verein und nicht als konstituierter Orden erkennbar bleiben muss. Es handelt sich um eine bewusste Klarstellung, die noch vor jeder äußeren Anfechtung getroffen wurde, und nicht um eine Reaktion auf einen Einwand.
 
 ## Internationaler Anspruch und rechtliche Realität
 

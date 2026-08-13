@@ -6,7 +6,7 @@ status: "primer borrador — pendiente de revisión por un asesor jurídico ante
 
 # Estatuto jurídico real de la OEI
 
-Esta página tiene como único objeto decir, con precisión y sin ambigüedad, qué es hoy la Orden de Expertos en Informática (OEI) en el plano legal —y qué no es. Se dirige en particular a quienes necesitan verificarlo: juristas, periodistas, reguladores, socios institucionales.
+Esta página tiene como único objeto decir, con precisión y sin ambigüedad, qué es hoy la Orden Internacional de Expertos en Informática (OEI) en el plano legal —y qué no es. Se dirige en particular a quienes necesitan verificarlo: juristas, periodistas, reguladores, socios institucionales.
 
 ## Lo que la OEI es hoy
 
@@ -16,7 +16,7 @@ La OEI **no** es una orden profesional en el sentido legal del término. La dist
 
 ## La estructura de dos niveles
 
-El movimiento «Orden de Expertos en Informática» será sostenido por una entidad legal distinta y neutra —contemplada bajo una denominación como OEI Foundation o Instituto Internacional de la Responsabilidad Informática— en lugar de por una entidad que llevara ella misma la palabra «Orden» en su razón social. Esta separación no es un artificio destinado a confundir; es lo contrario. Busca evitar toda confusión entre el nombre de uso del movimiento, de vocación internacional y federadora, y el nombre legal de la estructura que asume su responsabilidad jurídica, la cual debe seguir siendo identificable sin ambigüedad como una asociación y no como una orden constituida. Es una clarificación voluntaria, decidida incluso antes de cualquier cuestionamiento externo, y no una respuesta a una impugnación.
+El movimiento «Orden Internacional de Expertos en Informática» será sostenido por una entidad legal distinta y neutra —contemplada bajo una denominación como OEI Foundation o Instituto Internacional de la Responsabilidad Informática— en lugar de por una entidad que llevara ella misma la palabra «Orden» en su razón social. Esta separación no es un artificio destinado a confundir; es lo contrario. Busca evitar toda confusión entre el nombre de uso del movimiento, de vocación internacional y federadora, y el nombre legal de la estructura que asume su responsabilidad jurídica, la cual debe seguir siendo identificable sin ambigüedad como una asociación y no como una orden constituida. Es una clarificación voluntaria, decidida incluso antes de cualquier cuestionamiento externo, y no una respuesta a una impugnación.
 
 ## Ambición internacional y realidad jurídica
 

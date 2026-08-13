@@ -1,18 +1,18 @@
 ---
 title: "Livro Branco — Por um reconhecimento progressivo da profissão informática"
-version: "v3"
-status: "terceira redação — acrescento de uma secção Sobre o autor, uma secção Sobre a OEI (visão, missão, valores) e uma bibliografia de referência"
-date: "2026-08-01"
+version: "v4"
+status: "quarta redação — aplica o novo nome oficial degenerizado da organização, Ordem Internacional dos Especialistas em Informática (OEI), em benefício do nome da disciplina em vez de uma pessoa genderizada; mantém, quanto ao resto, o conteúdo já estabelecido na versão 3"
+date: "2026-08-13"
 ---
 
 # Livro Branco
 ## Por um reconhecimento progressivo da profissão informática
 
-*Ordem dos Especialistas em Informática (OEI) — Movimento fundador — Versão 3*
+*Ordem Internacional dos Especialistas em Informática (OEI) — Movimento fundador internacional — Versão 4*
 
 ---
 
-> **Nota preliminar sobre o estatuto da organização.** A Ordem dos Especialistas em Informática (OEI) é, nesta fase, um *movimento fundador* apoiado numa *associação*. Não é uma ordem profissional no sentido legal do termo: uma ordem profissional é criada pela lei, no quadro de uma profissão regulamentada dotada de atos reservados. Nenhuma organização privada pode autoatribuir-se este estatuto. A palavra «Ordem» é aqui empregue como designação de uso e como horizonte, não como título jurídico adquirido. Esta precisão, conforme ao nosso glossário e aos nossos estatutos, é repetida no presente documento sempre que necessário, não por prudência retórica, mas porque está no cerne da nossa honestidade intelectual.
+> **Nota preliminar sobre o estatuto da organização.** A Ordem Internacional dos Especialistas em Informática (OEI) é, nesta fase, um *movimento fundador* apoiado numa *associação*. Não é uma ordem profissional no sentido legal do termo: uma ordem profissional é criada pela lei, no quadro de uma profissão regulamentada dotada de atos reservados. Nenhuma organização privada pode autoatribuir-se este estatuto. A palavra «Ordem» é aqui empregue como designação de uso e como horizonte, não como título jurídico adquirido. Esta precisão, conforme ao nosso glossário e aos nossos estatutos, é repetida no presente documento sempre que necessário, não por prudência retórica, mas porque está no cerne da nossa honestidade intelectual.
 
 ---
 
@@ -32,7 +32,7 @@ Este Livro Branco não traz todas as respostas. Constitui, acima de tudo, um con
 
 Yann Deungoué
 Arquiteto de software
-Fundador da iniciativa Ordem dos Especialistas em Informática (OEI)
+Fundador da iniciativa Ordem Internacional dos Especialistas em Informática (OEI)
 
 ---
 
@@ -40,7 +40,7 @@ Fundador da iniciativa Ordem dos Especialistas em Informática (OEI)
 
 Yann Deungoué é engenheiro e arquiteto de software. Ao longo do seu percurso — como programador, arquiteto e, depois, responsável técnico —, concebeu, construiu e fez evoluir sistemas financeiros, plataformas críticas e projetos internacionais, em ambientes onde a fiabilidade, a segurança e a conformidade do software não são opções, mas exigências de primeira ordem. É desta prática de terreno, em contacto com sistemas cuja falha pode afetar milhares de pessoas, que nasceu a convicção na origem deste Livro Branco: quando o software se torna infraestrutura, a profissão de quem o constrói muda de natureza e exige uma responsabilidade à medida dos seus efeitos.
 
-Estabelecido na Suíça e exercendo no setor financeiro, fundou a iniciativa Ordem dos Especialistas em Informática (OEI) para abrir, à escala internacional, uma discussão sobre o reconhecimento progressivo e a estruturação da profissão informática. Defende para isso uma abordagem ponderada e não alarmista, centrada nos sistemas críticos e atenta a preservar a abertura, a criatividade e a inclusão de talentos vindos de todos os horizontes que fizeram a riqueza da disciplina.
+Estabelecido na Suíça e exercendo no setor financeiro, fundou a iniciativa Ordem Internacional dos Especialistas em Informática (OEI) para abrir, à escala internacional, uma discussão sobre o reconhecimento progressivo e a estruturação da profissão informática. Defende para isso uma abordagem ponderada e não alarmista, centrada nos sistemas críticos e atenta a preservar a abertura, a criatividade e a inclusão de talentos vindos de todos os horizontes que fizeram a riqueza da disciplina.
 
 *Uma nota biográfica mais completa, acompanhada de um retrato do autor, será integrada antes da impressão da versão definitiva.*
 
@@ -64,7 +64,7 @@ Não pretendemos apresentar uma solução chave na mão, nem impor um quadro uni
 
 ## Sobre a OEI
 
-*A Ordem dos Especialistas em Informática (OEI) é um movimento fundador, apoiado numa associação, e não uma ordem profissional no sentido legal do termo (ver a nota preliminar). A sua razão de ser resume-se numa visão, numa missão e num conjunto de valores.*
+*A Ordem Internacional dos Especialistas em Informática (OEI) é um movimento fundador, apoiado numa associação, e não uma ordem profissional no sentido legal do termo (ver a nota preliminar). A sua razão de ser resume-se numa visão, numa missão e num conjunto de valores.*
 
 ### Visão
 
@@ -348,7 +348,7 @@ A nossa proposta é focada: não regulamentar de modo uniforme todas as profiss�
 
 A quem duvide da utilidade desta abordagem, recordamos os casos de escola evocados neste documento: não são acidentes isolados, mas os sintomas de um ponto cego coletivo, o de uma profissão cujos efeitos no mundo mudaram de escala sem que a sua estruturação acompanhasse. A quem receie um fechamento da profissão, respondemos que a própria história da informática — a sua abertura, a sua criatividade, a sua inclusão de talentos vindos de todos os horizontes — é um património que pretendemos preservar, e que a nossa exigência incide apenas sobre um perímetro preciso, ali onde o custo social da ausência de qualquer garantia se tornou manifesto.
 
-Este documento é uma versão 3, e permanecerá durante muito tempo uma obra em curso, por escolha metodológica: queremos que seja criticado, corrigido, enriquecido antes de ser tido como definitivo. Apelamos, portanto, à contribuição de académicos, responsáveis pela segurança dos sistemas de informação, juristas do digital, engenheiros e praticantes no terreno. Quer esteja em desacordo com o nosso diagnóstico, reservado quanto às nossas propostas, ou pronto a contribuir, a sua voz é-nos útil. Competência, ética, responsabilidade: estas três palavras não são um slogan, mas um programa de trabalho. Este projeto não é um culminar — é um começo, e pertence tanto a si como a nós.
+Este documento é uma versão 4, e permanecerá durante muito tempo uma obra em curso, por escolha metodológica: queremos que seja criticado, corrigido, enriquecido antes de ser tido como definitivo. Apelamos, portanto, à contribuição de académicos, responsáveis pela segurança dos sistemas de informação, juristas do digital, engenheiros e praticantes no terreno. Quer esteja em desacordo com o nosso diagnóstico, reservado quanto às nossas propostas, ou pronto a contribuir, a sua voz é-nos útil. Competência, ética, responsabilidade: estas três palavras não são um slogan, mas um programa de trabalho. Este projeto não é um culminar — é um começo, e pertence tanto a si como a nós.
 
 ---
 
@@ -373,7 +373,7 @@ Este documento é uma versão 3, e permanecerá durante muito tempo uma obra em 
 
 *Compromisso voluntário, expresso na primeira pessoa, que subscreve qualquer pessoa que se junte à OEI na qualidade de membro fundador. Esta carta não tem valor legal oponível; é um compromisso moral e uma declaração de intenção partilhada.*
 
-Ao juntar-me à Ordem dos Especialistas em Informática na qualidade de membro fundador, comprometo-me a:
+Ao juntar-me à Ordem Internacional dos Especialistas em Informática na qualidade de membro fundador, comprometo-me a:
 
 - **Servir a missão** do movimento: contribuir para um reconhecimento progressivo, focado e honesto da profissão informática, em benefício tanto da sociedade como dos profissionais.
 - **Respeitar a verdade sobre o nosso estatuto**: nunca apresentar a OEI como uma ordem profissional legalmente constituída, e recordar, sempre que necessário, que se trata de um movimento fundador apoiado numa associação.
