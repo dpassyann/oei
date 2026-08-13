@@ -1,29 +1,32 @@
 package global.oei.application.web.resource.member;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import global.oei.application.web.MemberProfileApi;
+import global.oei.application.web.model.EthicalCharterSignatureDTO;
 import global.oei.application.web.model.GetMyEntitlements200ResponseDTO;
 import global.oei.application.web.model.MembershipDTO;
 import global.oei.application.web.model.ProfessionalProfileDTO;
+import global.oei.application.web.model.SignEthicalCharterRequestDTO;
+import global.oei.application.web.resource.member.adapter.CharterAdapter;
 import global.oei.application.web.resource.member.adapter.MembershipAdapter;
 import global.oei.application.web.resource.member.adapter.ProfileAdapter;
+import global.oei.application.web.resource.member.mapper.CharterDtoMapper;
 import global.oei.application.web.resource.member.mapper.MembershipDtoMapper;
 import global.oei.application.web.resource.member.mapper.ProfileDtoMapper;
 import global.oei.domain.shared.member.MemberId;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Implements the "member" domain's operations of {@link MemberProfileApi}: membership,
- * entitlements, and professional profile. A single {@code @RestController} bean is required
- * per generated API interface (every method's {@code @RequestMapping} is inherited from the
- * interface, so two beans implementing the same interface would double-register every
- * route) — membership/entitlements/profile share this one class even though they use
- * separate {@code *Adapter}/{@code service.*Service} pairs internally.
- *
- * <p>Only these four operations are implemented so far; {@code signEthicalCharter} falls
- * back to the generator's default {@code 501 Not Implemented} behavior until implemented.</p>
+ * Implements every "member" domain operation of {@link MemberProfileApi}: membership,
+ * entitlements, professional profile, and ethical charter signing. A single
+ * {@code @RestController} bean is required per generated API interface (every method's
+ * {@code @RequestMapping} is inherited from the interface, so two beans implementing the
+ * same interface would double-register every route) — all four operations share this one
+ * class even though they use separate {@code *Adapter}/{@code service.*Service} pairs
+ * internally.
  *
  * <p>{@code @RestController} + Lombok {@code @RequiredArgsConstructor}: discovered by
  * {@code OeiBackendApplication}'s own {@code @SpringBootApplication} component scan (scoped
@@ -37,6 +40,7 @@ public class MemberProfileResource implements MemberProfileApi {
 
     private final MembershipAdapter membershipAdapter;
     private final ProfileAdapter profileAdapter;
+    private final CharterAdapter charterAdapter;
 
     @Override
     public ResponseEntity<MembershipDTO> getMyMembership() {
@@ -59,5 +63,12 @@ public class MemberProfileResource implements MemberProfileApi {
         // overriding whatever this request body carried (see ProfessionalProfile#withMemberId).
         final var submitted = ProfileDtoMapper.toDomain(MemberId.newId(), professionalProfileDTO);
         return ResponseEntity.ok(ProfileDtoMapper.toDto(profileAdapter.updateMyProfile(submitted)));
+    }
+
+    @Override
+    public ResponseEntity<EthicalCharterSignatureDTO> signEthicalCharter(
+            final SignEthicalCharterRequestDTO signEthicalCharterRequestDTO) {
+        final var signature = charterAdapter.signEthicalCharter(signEthicalCharterRequestDTO.getVersion());
+        return ResponseEntity.status(HttpStatus.CREATED).body(CharterDtoMapper.toDto(signature));
     }
 }

@@ -6,10 +6,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import global.oei.domain.core.charter.SignEthicalCharterService;
 import global.oei.domain.core.identity.GetMyIdentityService;
 import global.oei.domain.core.network.GetSalaryInsightService;
 import global.oei.domain.core.profile.GetMyProfileService;
 import global.oei.domain.core.profile.UpdateMyProfileService;
+import global.oei.domain.shared.charter.EthicalCharterSignaturePort;
+import global.oei.domain.shared.charter.SignEthicalCharterUseCase;
 import global.oei.domain.shared.membership.MembershipLookupPort;
 import global.oei.domain.shared.network.GetSalaryInsightUseCase;
 import global.oei.domain.shared.profile.GetMyProfileUseCase;
@@ -17,6 +20,8 @@ import global.oei.domain.shared.profile.ProfileLookupPort;
 import global.oei.domain.shared.profile.UpdateMyProfileUseCase;
 import global.oei.domain.shared.security.GetMyIdentityUseCase;
 import global.oei.domain.shared.security.SecurityContextPort;
+import global.oei.infrastructure.persistence.charter.EthicalCharterSignaturePersistenceAdapter;
+import global.oei.infrastructure.persistence.charter.EthicalCharterSignatureRepository;
 import global.oei.infrastructure.persistence.compensation.CompensationDeclarationRepository;
 import global.oei.infrastructure.persistence.compensation.SalaryInsightPersistenceAdapter;
 import global.oei.infrastructure.persistence.config.audit.PersistenceAuditingConfiguration;
@@ -84,5 +89,10 @@ public class OeiWiringConfiguration {
     @Bean
     public UpdateMyProfileUseCase updateMyProfileUseCase(final ProfileLookupPort profileLookupPort) {
         return new UpdateMyProfileService(profileLookupPort);
+    }
+
+    @Bean
+    public SignEthicalCharterUseCase signEthicalCharterUseCase(final EthicalCharterSignatureRepository repository) {
+        return new SignEthicalCharterService(new EthicalCharterSignaturePersistenceAdapter(repository));
     }
 }

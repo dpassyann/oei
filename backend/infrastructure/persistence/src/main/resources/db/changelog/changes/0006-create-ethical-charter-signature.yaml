@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0006-create-ethical-charter-signature
+      author: oei-backend
+      comment: Append-only -- a member may sign successive charter versions over time.
+      changes:
+        - createTable:
+            tableName: ethical_charter_signature
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: member_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_ethical_charter_signature_member
+                    references: member(id)
+              - column:
+                  name: version
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: signed_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
