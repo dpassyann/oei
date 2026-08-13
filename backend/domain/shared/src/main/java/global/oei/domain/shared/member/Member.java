@@ -16,6 +16,8 @@ import java.util.Objects;
  * @param legalName   legal name, used for official documents (CV, certificates)
  * @param locale      preferred locale (e.g. {@code "fr"}, {@code "en"})
  * @param country     ISO country code of residence
+ * @param accountType {@link AccountType#REAL} or {@link AccountType#DEMO} (public showcase
+ *                    seed data, disableable later without deletion)
  * @param createdAt   registration timestamp
  */
 public record Member(
@@ -25,6 +27,7 @@ public record Member(
         String legalName,
         String locale,
         String country,
+        AccountType accountType,
         Instant createdAt) {
 
     public Member {
@@ -34,7 +37,15 @@ public record Member(
         requireNonBlank(legalName, "legalName");
         requireNonBlank(locale, "locale");
         requireNonBlank(country, "country");
+        Objects.requireNonNull(accountType, "accountType must not be null");
         Objects.requireNonNull(createdAt, "createdAt must not be null");
+    }
+
+    /**
+     * Whether this member is public-showcase demo data rather than a real registrant.
+     */
+    public boolean isDemoAccount() {
+        return accountType == AccountType.DEMO;
     }
 
     private static void requireNonBlank(final String value, final String fieldName) {

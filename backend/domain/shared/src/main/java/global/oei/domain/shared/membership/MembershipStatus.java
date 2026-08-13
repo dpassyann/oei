@@ -1,24 +1,72 @@
 package global.oei.domain.shared.membership;
 
+import java.util.EnumSet;
+import java.util.Set;
+
+import static global.oei.domain.shared.membership.MembershipEntitlement.CV_EDIT;
+import static global.oei.domain.shared.membership.MembershipEntitlement.MEMBER_DIRECTORY;
+import static global.oei.domain.shared.membership.MembershipEntitlement.PROFILE_EDIT;
+import static global.oei.domain.shared.membership.MembershipEntitlement.PROFILE_PUBLIC;
+
 /**
  * Lifecycle status of a {@link Membership}, mirrored one-to-one on the OEI OpenAPI
  * contract ({@code MembershipStatus} schema) — see ADR 0002. These values are already
  * frozen across the contract and the Angular frontend; do not reorder/rename.
  *
  * <p>Follows the enum-strategy style: each status knows, as a closed business decision,
- * whether it currently grants membership entitlements (see
- * {@code MembershipEntitlementService} on the frontend, which derives entitlements from
- * this exact status).</p>
+ * whether it currently grants membership entitlements, and the exact set of entitlements it
+ * grants — mirrors the frontend's {@code computeMembershipEntitlements}
+ * (membership-entitlement.ts) so the two never disagree.</p>
  */
 public enum MembershipStatus {
-    PENDING(false),
-    ACTIVE(true),
-    GRACE_PERIOD(true),
-    EXPIRED(false),
-    SUSPENDED(false),
-    HONORARY(true),
-    FOUNDING(true),
-    TERMINATED(false);
+    PENDING(false) {
+        @Override
+        public Set<MembershipEntitlement> entitlements() {
+            return EnumSet.of(PROFILE_EDIT, CV_EDIT);
+        }
+    },
+    ACTIVE(true) {
+        @Override
+        public Set<MembershipEntitlement> entitlements() {
+            return EnumSet.allOf(MembershipEntitlement.class);
+        }
+    },
+    GRACE_PERIOD(true) {
+        @Override
+        public Set<MembershipEntitlement> entitlements() {
+            return EnumSet.allOf(MembershipEntitlement.class);
+        }
+    },
+    EXPIRED(false) {
+        @Override
+        public Set<MembershipEntitlement> entitlements() {
+            return EnumSet.of(PROFILE_EDIT, PROFILE_PUBLIC, CV_EDIT, MEMBER_DIRECTORY);
+        }
+    },
+    SUSPENDED(false) {
+        @Override
+        public Set<MembershipEntitlement> entitlements() {
+            return EnumSet.of(PROFILE_EDIT, CV_EDIT);
+        }
+    },
+    HONORARY(true) {
+        @Override
+        public Set<MembershipEntitlement> entitlements() {
+            return EnumSet.allOf(MembershipEntitlement.class);
+        }
+    },
+    FOUNDING(true) {
+        @Override
+        public Set<MembershipEntitlement> entitlements() {
+            return EnumSet.allOf(MembershipEntitlement.class);
+        }
+    },
+    TERMINATED(false) {
+        @Override
+        public Set<MembershipEntitlement> entitlements() {
+            return EnumSet.noneOf(MembershipEntitlement.class);
+        }
+    };
 
     private final boolean grantsEntitlements;
 
@@ -33,4 +81,11 @@ public enum MembershipStatus {
     public boolean grantsEntitlements() {
         return grantsEntitlements;
     }
+
+    /**
+     * The exact set of {@link MembershipEntitlement} granted by this status. See the
+     * frontend's {@code computeMembershipEntitlements} (membership-entitlement.ts) for the
+     * rationale behind each status's set — kept in sync deliberately.
+     */
+    public abstract Set<MembershipEntitlement> entitlements();
 }
