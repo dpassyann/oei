@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -46,6 +48,10 @@ public class MemberEntity extends BaseAudit {
 
     @Column(name = "country", nullable = false)
     private String country;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "account_type", nullable = false, length = 10)
+    private String accountType;
 
     @Column(name = "registered_at", nullable = false)
     private Instant registeredAt;

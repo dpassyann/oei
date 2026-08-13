@@ -7,9 +7,13 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import global.oei.domain.core.identity.GetMyIdentityService;
+import global.oei.domain.core.network.GetSalaryInsightService;
 import global.oei.domain.shared.membership.MembershipLookupPort;
+import global.oei.domain.shared.network.GetSalaryInsightUseCase;
 import global.oei.domain.shared.security.GetMyIdentityUseCase;
 import global.oei.domain.shared.security.SecurityContextPort;
+import global.oei.infrastructure.persistence.compensation.CompensationDeclarationRepository;
+import global.oei.infrastructure.persistence.compensation.SalaryInsightPersistenceAdapter;
 import global.oei.infrastructure.persistence.config.audit.PersistenceAuditingConfiguration;
 import global.oei.infrastructure.persistence.membership.MembershipPersistenceAdapter;
 import global.oei.infrastructure.persistence.membership.MembershipRepository;
@@ -53,5 +57,10 @@ public class OeiWiringConfiguration {
     @Bean
     public MembershipLookupPort membershipLookupPort(final MembershipRepository membershipRepository) {
         return new MembershipPersistenceAdapter(membershipRepository);
+    }
+
+    @Bean
+    public GetSalaryInsightUseCase getSalaryInsightUseCase(final CompensationDeclarationRepository repository) {
+        return new GetSalaryInsightService(new SalaryInsightPersistenceAdapter(repository));
     }
 }

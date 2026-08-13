@@ -1,0 +1,80 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0003-create-compensation-declaration
+      author: oei-backend
+      comment: >
+        Never exposed individually -- only ever read back through anonymized aggregates
+        (see global.oei.domain.shared.network.SalaryInsightPort /
+        GetSalaryInsightUseCase.MIN_ANONYMIZED_SAMPLE_SIZE = 5).
+      changes:
+        - createTable:
+            tableName: compensation_declaration
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: member_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_compensation_declaration_member
+                    references: member(id)
+              - column:
+                  name: node_type
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: node_id
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: country
+                  type: varchar(100)
+              - column:
+                  name: amount
+                  type: numeric(12,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: currency
+                  type: varchar(3)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: period
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_by
+                  type: varchar(255)
+              - column:
+                  name: last_modified_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_modified_by
+                  type: varchar(255)
+        - createIndex:
+            indexName: idx_compensation_declaration_node
+            tableName: compensation_declaration
+            columns:
+              - column:
+                  name: node_type
+              - column:
+                  name: node_id
+              - column:
+                  name: country

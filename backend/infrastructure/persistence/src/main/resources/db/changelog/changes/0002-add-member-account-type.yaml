@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0002-add-member-account-type
+      author: oei-backend
+      comment: >
+        REAL|DEMO flag so a public-showcase demo account can be disabled later without
+        deleting it (see global.oei.domain.shared.member.AccountType).
+      changes:
+        - addColumn:
+            tableName: member
+            columns:
+              - column:
+                  name: account_type
+                  type: varchar(10)
+                  defaultValue: REAL
+                  constraints:
+                    nullable: false

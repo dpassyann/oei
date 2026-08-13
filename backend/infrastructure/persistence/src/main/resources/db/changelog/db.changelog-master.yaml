@@ -2,3 +2,12 @@ databaseChangeLog:
   - include:
       file: db/changelog/changes/0001-create-member-and-membership.yaml
       relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0002-add-member-account-type.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0003-create-compensation-declaration.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0004-demo-members-and-compensation.yaml
+      relativeToChangelogFile: false

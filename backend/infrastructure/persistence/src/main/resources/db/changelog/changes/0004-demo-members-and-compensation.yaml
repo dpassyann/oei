@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0004-demo-members-and-compensation
+      author: oei-backend
+      comment: >
+        50 demo members (account_type=DEMO) with ACTIVE memberships across 5 countries and 6
+        tiers, plus compensation declarations concentrated on a handful of (domain, country)
+        combinations so some cross the anonymization threshold (MIN_ANONYMIZED_SAMPLE_SIZE=5)
+        and some deliberately stay below it, to exercise both the "insight available" and
+        "not enough data" cases of GET /api/public/v1/network/domains/{id}/salary-insight.
+      changes:
+        - sqlFile:
+            path: db/changelog/changes/0004-demo-members-and-compensation.sql
+            relativeToChangelogFile: false
+            splitStatements: true
+            stripComments: true
