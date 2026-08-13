@@ -4,17 +4,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import global.oei.application.web.MemberProfileApi;
+import global.oei.application.web.model.GetMyEntitlements200ResponseDTO;
 import global.oei.application.web.model.MembershipDTO;
 import global.oei.application.web.resource.member.adapter.MembershipAdapter;
 import global.oei.application.web.resource.member.mapper.MembershipDtoMapper;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Implements {@code GET /api/member/v1/membership}.
+ * Implements {@code GET /api/member/v1/membership} and {@code GET /api/member/v1/entitlements}.
  *
- * <p>Only this operation is implemented at this bootstrap stage; every other operation in
- * {@link MemberProfileApi} (and the other ~30 generated API interfaces) falls back to the
- * generator's default {@code 501 Not Implemented} behavior until implemented.</p>
+ * <p>Only these two operations are implemented so far; every other operation in
+ * {@link MemberProfileApi} (getMyProfile/updateMyProfile/signEthicalCharter) and the other
+ * generated API interfaces falls back to the generator's default {@code 501 Not Implemented}
+ * behavior until implemented.</p>
  *
  * <p>Convention: a {@code *Resource} (never {@code *Controller}) injects only a
  * {@code *Adapter} interface (never a {@code domain-shared} port/use case directly) — see
@@ -35,5 +37,10 @@ public class MembershipResource implements MemberProfileApi {
     @Override
     public ResponseEntity<MembershipDTO> getMyMembership() {
         return ResponseEntity.ok(MembershipDtoMapper.toDto(membershipAdapter.getMyMembership()));
+    }
+
+    @Override
+    public ResponseEntity<GetMyEntitlements200ResponseDTO> getMyEntitlements() {
+        return ResponseEntity.ok(MembershipDtoMapper.toEntitlementsDto(membershipAdapter.getMyMembership()));
     }
 }

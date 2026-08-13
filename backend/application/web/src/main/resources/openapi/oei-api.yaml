@@ -3098,6 +3098,86 @@ paths:
         "404":
           $ref: "#/components/responses/NotFound"
 
+  /api/public/v1/network/domains/{domainId}/salary-insight:
+    get:
+      tags: [public-network]
+      operationId: getNetworkDomainSalaryInsight
+      summary: >
+        Fourchette salariale anonymisée agrégée sur ce domaine (voir schéma SalaryInsight),
+        optionnellement filtrée par pays. Absent (204) si moins de 5 déclarations agrégées.
+      parameters:
+        - name: domainId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: country
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Fourchette salariale anonymisée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SalaryInsight"
+        "204":
+          description: Pas assez de déclarations agrégées pour ce nœud (seuil d'anonymisation non atteint)
+
+  /api/public/v1/network/topics/{topicId}/salary-insight:
+    get:
+      tags: [public-network]
+      operationId: getNetworkTopicSalaryInsight
+      summary: Fourchette salariale anonymisée agrégée sur ce topic (mêmes règles que le domaine).
+      parameters:
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: country
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Fourchette salariale anonymisée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SalaryInsight"
+        "204":
+          description: Pas assez de déclarations agrégées pour ce nœud (seuil d'anonymisation non atteint)
+
+  /api/public/v1/network/certifications/{certificationId}/salary-insight:
+    get:
+      tags: [public-network]
+      operationId: getNetworkCertificationSalaryInsight
+      summary: Fourchette salariale anonymisée agrégée sur cette certification (mêmes règles).
+      parameters:
+        - name: certificationId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: country
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Fourchette salariale anonymisée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SalaryInsight"
+        "204":
+          description: Pas assez de déclarations agrégées pour ce nœud (seuil d'anonymisation non atteint)
+
 components:
   securitySchemes:
     bearerAuth:
@@ -3547,6 +3627,58 @@ components:
           type: integer
           minimum: 0
           maximum: 100
+        currentCompensation:
+          $ref: "#/components/schemas/CurrentCompensation"
+
+    # Deliberately private, always -- never part of PublicProfile/DigitalBusinessCard/Cv
+    # schemas, never exposed by any /api/public/** endpoint. Only ever used (aggregate-only,
+    # anonymized, see SalaryInsight/MIN_ANONYMIZED_SAMPLE_SIZE=5) to feed the member's own
+    # salary benchmark and the public-network salary-insight endpoints. Mirrors the frontend
+    # CurrentCompensation model (professional-profile.ts).
+    CurrentCompensation:
+      type: object
+      required: [amount, currency, period]
+      properties:
+        amount:
+          type: number
+        currency:
+          type: string
+          description: ISO 4217 currency code (e.g. "CHF", "EUR"), free text.
+        period:
+          $ref: "#/components/schemas/CompensationPeriod"
+        country:
+          type: string
+          description: >
+            Free-text country label (e.g. "Suisse", "France"), same format as
+            NetworkExpert.country. Optional -- a member can decline to state a country, in
+            which case the declaration only contributes to the country-agnostic aggregate.
+
+    CompensationPeriod:
+      type: string
+      enum: [YEAR, MONTH]
+
+    # public-network -- anonymized salary transparency (see the public-network tag and the
+    # listNetworkDomainSalaryInsight/listNetworkTopicSalaryInsight/
+    # listNetworkCertificationSalaryInsight operations). Never resolves from fewer than
+    # MIN_ANONYMIZED_SAMPLE_SIZE=5 CurrentCompensation declarations aggregated on one node
+    # (mirrors frontend anonymization.ts) -- absent (204/empty) rather than a "low-confidence"
+    # range.
+    SalaryInsight:
+      type: object
+      required: [low, high, currency, period, sampleSize]
+      properties:
+        low:
+          type: number
+        high:
+          type: number
+        currency:
+          type: string
+        period:
+          $ref: "#/components/schemas/CompensationPeriod"
+        sampleSize:
+          type: integer
+        country:
+          type: string
 
     RecognizedCertification:
       type: object
