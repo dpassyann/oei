@@ -1,0 +1,146 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0007-create-network-graph
+      author: oei-backend
+      comment: >
+        Professional Neural Network graph tables (domains -> topics -> experts). No
+        network_certification table yet (TODO, out of scope for this iteration --
+        listNetworkTopicsAndCertifications always resolves an empty certifications list).
+        network_expert deliberately has no FK-duplicated label/country: it references
+        member_id and the persistence adapter joins back to member for those fields.
+      changes:
+        - createTable:
+            tableName: network_domain
+            columns:
+              - column:
+                  name: id
+                  type: varchar(40)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: label
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: x
+                  type: double precision
+                  constraints:
+                    nullable: false
+              - column:
+                  name: y
+                  type: double precision
+                  constraints:
+                    nullable: false
+              - column:
+                  name: neighbor_domain_ids
+                  type: text
+        - createTable:
+            tableName: network_topic
+            columns:
+              - column:
+                  name: id
+                  type: varchar(40)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: domain_id
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_network_topic_domain
+                    references: network_domain(id)
+              - column:
+                  name: label
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: x
+                  type: double precision
+                  constraints:
+                    nullable: false
+              - column:
+                  name: y
+                  type: double precision
+                  constraints:
+                    nullable: false
+              - column:
+                  name: related_topic_ids
+                  type: text
+        - createTable:
+            tableName: network_expert
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: member_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_network_expert_member
+                    references: member(id)
+              - column:
+                  name: topic_id
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_network_expert_topic
+                    references: network_topic(id)
+              - column:
+                  name: domain_id
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: company
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: level
+                  type: varchar(5)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: score
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: certification_labels
+                  type: text
+              - column:
+                  name: badges
+                  type: text
+              - column:
+                  name: journey_topic_ids
+                  type: text
+              - column:
+                  name: x
+                  type: double precision
+                  constraints:
+                    nullable: false
+              - column:
+                  name: y
+                  type: double precision
+                  constraints:
+                    nullable: false
+        - createIndex:
+            indexName: idx_network_expert_topic
+            tableName: network_expert
+            columns:
+              - column:
+                  name: topic_id

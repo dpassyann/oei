@@ -17,3 +17,9 @@ databaseChangeLog:
   - include:
       file: db/changelog/changes/0006-create-ethical-charter-signature.yaml
       relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0007-create-network-graph.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0008-demo-network-graph.yaml
+      relativeToChangelogFile: false

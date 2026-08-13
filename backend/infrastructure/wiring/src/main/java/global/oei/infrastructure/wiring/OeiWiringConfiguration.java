@@ -15,6 +15,7 @@ import global.oei.domain.shared.charter.EthicalCharterSignaturePort;
 import global.oei.domain.shared.charter.SignEthicalCharterUseCase;
 import global.oei.domain.shared.membership.MembershipLookupPort;
 import global.oei.domain.shared.network.GetSalaryInsightUseCase;
+import global.oei.domain.shared.network.NetworkGraphPort;
 import global.oei.domain.shared.profile.GetMyProfileUseCase;
 import global.oei.domain.shared.profile.ProfileLookupPort;
 import global.oei.domain.shared.profile.UpdateMyProfileUseCase;
@@ -25,8 +26,13 @@ import global.oei.infrastructure.persistence.charter.EthicalCharterSignatureRepo
 import global.oei.infrastructure.persistence.compensation.CompensationDeclarationRepository;
 import global.oei.infrastructure.persistence.compensation.SalaryInsightPersistenceAdapter;
 import global.oei.infrastructure.persistence.config.audit.PersistenceAuditingConfiguration;
+import global.oei.infrastructure.persistence.member.MemberRepository;
 import global.oei.infrastructure.persistence.membership.MembershipPersistenceAdapter;
 import global.oei.infrastructure.persistence.membership.MembershipRepository;
+import global.oei.infrastructure.persistence.network.NetworkDomainRepository;
+import global.oei.infrastructure.persistence.network.NetworkExpertRepository;
+import global.oei.infrastructure.persistence.network.NetworkGraphPersistenceAdapter;
+import global.oei.infrastructure.persistence.network.NetworkTopicRepository;
 import global.oei.infrastructure.persistence.profile.ProfessionalProfilePersistenceAdapter;
 import global.oei.infrastructure.persistence.profile.ProfessionalProfileRepository;
 
@@ -94,5 +100,14 @@ public class OeiWiringConfiguration {
     @Bean
     public SignEthicalCharterUseCase signEthicalCharterUseCase(final EthicalCharterSignatureRepository repository) {
         return new SignEthicalCharterService(new EthicalCharterSignaturePersistenceAdapter(repository));
+    }
+
+    @Bean
+    public NetworkGraphPort networkGraphPort(
+            final NetworkDomainRepository domainRepository,
+            final NetworkTopicRepository topicRepository,
+            final NetworkExpertRepository expertRepository,
+            final MemberRepository memberRepository) {
+        return new NetworkGraphPersistenceAdapter(domainRepository, topicRepository, expertRepository, memberRepository);
     }
 }

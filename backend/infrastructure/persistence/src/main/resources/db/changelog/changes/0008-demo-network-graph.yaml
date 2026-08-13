@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0008-demo-network-graph
+      author: oei-backend
+      comment: >
+        9 domains + 18 topics (2 per domain, same taxonomy as network-graph-mock.adapter.ts's
+        DOMS/DOMAIN_LINKS -- TODO: expand topics to full parity, and add certifications, in a
+        later iteration) + 50 network_expert rows reusing the 0004 demo members directly.
+      changes:
+        - sqlFile:
+            path: db/changelog/changes/0008-demo-network-graph.sql
+            relativeToChangelogFile: false
+            splitStatements: true
+            stripComments: true
