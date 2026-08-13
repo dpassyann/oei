@@ -57,7 +57,7 @@ const FIXTURES: Record<SupportedLanguage, NewsItem[]> = {
     createNewsItem({
       title: 'Launch of the OEI public website',
       excerpt:
-        'The Observatoire des Experts de l'Informatique website goes live, presenting the mission, action domains and the member area.',
+        "The Observatoire des Experts de l'Informatique website goes live, presenting the mission, action domains and the member area.",
       imageUrl: '/assets/news/lancement-site.svg',
       path: '/a-propos',
     }),
@@ -80,7 +80,7 @@ const FIXTURES: Record<SupportedLanguage, NewsItem[]> = {
     createNewsItem({
       title: 'Start der öffentlichen Website des OEI',
       excerpt:
-        'Die Website des Observatoire des Experts de l'Informatique geht online und stellt die Mission, die Handlungsfelder und den Mitgliederbereich vor.',
+        "Die Website des Observatoire des Experts de l'Informatique geht online und stellt die Mission, die Handlungsfelder und den Mitgliederbereich vor.",
       imageUrl: '/assets/news/lancement-site.svg',
       path: '/a-propos',
     }),
@@ -103,7 +103,7 @@ const FIXTURES: Record<SupportedLanguage, NewsItem[]> = {
     createNewsItem({
       title: 'Lanzamiento del sitio público del OEI',
       excerpt:
-        'El sitio del Observatoire des Experts de l'Informatique entra en línea, presentando la misión, los ámbitos de acción y el espacio de miembros.',
+        "El sitio del Observatoire des Experts de l'Informatique entra en línea, presentando la misión, los ámbitos de acción y el espacio de miembros.",
       imageUrl: '/assets/news/lancement-site.svg',
       path: '/a-propos',
     }),
@@ -149,7 +149,7 @@ const FIXTURES: Record<SupportedLanguage, NewsItem[]> = {
     createNewsItem({
       title: 'Lançamento do site público do OEI',
       excerpt:
-        'O site do Observatoire des Experts de l'Informatique entra no ar, apresentando a missão, os domínios de ação e a área de membros.',
+        "O site do Observatoire des Experts de l'Informatique entra no ar, apresentando a missão, os domínios de ação e a área de membros.",
       imageUrl: '/assets/news/lancement-site.svg',
       path: '/a-propos',
     }),

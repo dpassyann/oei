@@ -46,7 +46,7 @@ const INSTITUTIONAL_MARKDOWN = [
 const CONTRIBUTE_MARKDOWN = [
   '## Un Livre blanc pensé pour être corrigé',
   '',
-  'Le Livre blanc de l\'OEI est aujourd\'hui dans sa version 3.1.',
+  'Le Livre blanc de l\'OEI est aujourd\'hui dans sa version 4.',
 ].join('\n');
 
 function fakeMarkdownDocuments() {
@@ -174,6 +174,6 @@ describe('Contact', () => {
     expect(blocks[0].textContent).toContain('Contact institutionnel');
     expect(blocks[0].textContent).toContain("interlocuteurs institutionnels de l'OEI");
     expect(blocks[1].textContent).toContain('Contribuer au corpus');
-    expect(blocks[1].textContent).toContain('version 3.1');
+    expect(blocks[1].textContent).toContain('version 4');
   });
 });

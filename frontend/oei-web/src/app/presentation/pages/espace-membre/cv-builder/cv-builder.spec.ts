@@ -69,7 +69,7 @@ const INTERFACE_STRINGS: Record<string, string> = {
   'espaceMembre.cv.templateGallery.intro': 'Choisissez un template.',
   'espaceMembre.cv.livePreview.title': 'Aperçu en direct',
   'espaceMembre.cv.livePreview.intro': 'Cet aperçu utilise vos données réelles.',
-  'espaceMembre.cv.livePreview.orgLine': 'Ordre International des Experts de l'Informatique',
+  'espaceMembre.cv.livePreview.orgLine': "Ordre International des Experts de l'Informatique",
   'espaceMembre.cv.livePreview.sealBrand': 'OEI',
   'espaceMembre.cv.livePreview.sealCertifiedLabel': 'CERTIFIÉ',
   'espaceMembre.cv.exportBlocked': "L'export PDF n'est pas disponible avec votre statut d'adhésion actuel.",
@@ -260,7 +260,7 @@ describe('CvBuilder', () => {
     // Circular ring text (SVG `textPath`) replaces the old flat seal text — still carries the
     // same institutional wording (org name + "certified" label), just laid out around the seal.
     expect(compiled.querySelector('.oei-cv-preview__seal-ring-text')?.textContent).toContain(
-      'Ordre International des Experts de l'Informatique',
+      "Ordre International des Experts de l'Informatique",
     );
     expect(compiled.querySelector('.oei-cv-preview__seal-ring-text')?.textContent).toContain('CERTIFIÉ');
   });

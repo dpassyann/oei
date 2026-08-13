@@ -11,14 +11,14 @@ import { NEWSLETTER_SUBSCRIPTION_PORT, NewsletterSubscriptionPort } from '../../
 // on the rendered wording without depending on network I/O (same pattern as `home.spec.ts`).
 const INTERFACE_STRINGS: Record<string, string> = {
   'footer.quote': '« Le numérique est notre bien commun. Les experts informaticiens en sont les gardiens. »',
-  'footer.quoteAuthor': '— Ordre International des Experts de l'Informatique',
+  'footer.quoteAuthor': "— Ordre International des Experts de l'Informatique",
   'footer.newsletterHeading': 'Restez informé',
   'footer.newsletterCopy': 'Inscrivez-vous à notre newsletter pour recevoir nos actualités.',
   'footer.emailPlaceholder': 'Votre email',
   'footer.subscribe': "S'inscrire",
   'footer.followUs': 'Suivez-nous',
   'footer.becomeFoundingMember': 'Devenir membre fondateur',
-  'footer.orgName': 'Ordre International des Experts de l'Informatique',
+  'footer.orgName': "Ordre International des Experts de l'Informatique",
   'footer.newsletter.interestsLabel': "Centres d'intérêt",
   'footer.newsletter.interests.cybersecurity': 'Cybersécurité',
   'footer.newsletter.interests.ai': 'Intelligence artificielle',
