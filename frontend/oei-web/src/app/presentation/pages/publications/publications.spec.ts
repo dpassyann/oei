@@ -8,7 +8,7 @@ import { createPublication, Publication } from '../../../domain/model/publicatio
 
 const INTERFACE_STRINGS: Record<string, string> = {
   'publications.title': 'Publications',
-  'publications.intro': "Retrouvez ici les publications de l'Ordre des Experts Informaticiens.",
+  'publications.intro': "Retrouvez ici les publications de l'Ordre International des Experts de l'Informatique.",
   'publications.empty': "Aucune publication n'a été mise en ligne pour le moment. Revenez bientôt.",
   'publications.readMore': 'Lire la suite',
   'publications.categories.article': 'Article',

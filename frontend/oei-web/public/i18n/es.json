@@ -28,19 +28,19 @@
     "viewCms": "Espacio CMS"
   },
   "brand": {
-    "line1": "La Orden de los",
+    "line1": "La Orden Internacional de",
     "line2": "Expertos en Informática"
   },
   "footer": {
     "quote": "«La tecnología digital es nuestro bien común. Los expertos en informática son sus guardianes.»",
-    "quoteAuthor": "— Orden de los Expertos en Informática",
+    "quoteAuthor": "— Orden Internacional de Expertos en Informática",
     "newsletterHeading": "Mantente informado",
     "newsletterCopy": "Suscríbete a nuestro boletín para recibir nuestras noticias.",
     "emailPlaceholder": "Tu email",
     "subscribe": "Suscribirse",
     "followUs": "Síguenos",
     "becomeFoundingMember": "Conviértete en miembro fundador",
-    "orgName": "Orden de los Expertos en Informática",
+    "orgName": "Orden Internacional de Expertos en Informática",
     "newsletter": {
       "interestsLabel": "Áreas de interés",
       "interests": {
@@ -51,7 +51,7 @@
         "governance": "Gobernanza digital",
         "events": "Eventos"
       },
-      "consentLabel": "Acepto recibir el boletín de la Orden de Expertos en Informática y he leído la política de privacidad.",
+      "consentLabel": "Acepto recibir el boletín de la Orden Internacional de Expertos en Informática y he leído la política de privacidad.",
       "successMessage": "¡Gracias! Se ha enviado un correo de confirmación — haga clic en el enlace para confirmar su suscripción.",
       "errors": {
         "invalidEmail": "Dirección de correo electrónico no válida.",
@@ -62,7 +62,7 @@
   },
   "home": {
     "hero": {
-      "panelTitle": "La Orden de los Expertos en Informática",
+      "panelTitle": "La Orden Internacional de Expertos en Informática",
       "panelBody": "Un movimiento internacional para reconocer, estructurar y elevar la profesión informática.",
       "checklist": [
         "Proteger al público y a los profesionales",
@@ -226,7 +226,7 @@
   },
   "membresFondateurs": {
     "title": "Miembros fundadores",
-    "intro": "La Orden de los Expertos Informáticos no es un libro que comprar — es un movimiento que apoyar. Convertirse en miembro fundador significa participar en la construcción de una organización profesional independiente para los expertos digitales, desde sus primeros pasos.",
+    "intro": "La Orden Internacional de Expertos en Informática no es un libro que comprar — es un movimiento que apoyar. Convertirse en miembro fundador significa participar en la construcción de una organización profesional independiente para los expertos digitales, desde sus primeros pasos.",
     "feeTiers": {
       "title": "Cuotas",
       "categoryHeader": "Categoría",
@@ -303,8 +303,8 @@
     "title": "Recursos",
     "livreBlanc": {
       "title": "Libro Blanco",
-      "frontCoverAlt": "Portada del Libro Blanco de la Orden de los Expertos Informáticos",
-      "backCoverAlt": "Contraportada del Libro Blanco de la Orden de los Expertos Informáticos",
+      "frontCoverAlt": "Portada del Libro Blanco de la Orden Internacional de Expertos en Informática",
+      "backCoverAlt": "Contraportada del Libro Blanco de la Orden Internacional de Expertos en Informática",
       "successPrefix": "Gracias — aquí tiene su ejemplar:",
       "downloadLinkText": "descargar el Libro Blanco (PDF)",
       "emailLabel": "Dirección de correo electrónico",
@@ -336,7 +336,7 @@
   },
   "publications": {
     "title": "Publicaciones",
-    "intro": "Encuentre aquí las publicaciones de la Orden de Expertos en Informática: artículos, comunicados, libros blancos, informes, eventos, consultas y convocatorias de contribución.",
+    "intro": "Encuentre aquí las publicaciones de la Orden Internacional de Expertos en Informática: artículos, comunicados, libros blancos, informes, eventos, consultas y convocatorias de contribución.",
     "empty": "Todavía no se ha publicado ninguna publicación. Vuelva pronto.",
     "readMore": "Leer más",
     "categories": {
@@ -351,7 +351,7 @@
   },
   "partenaires": {
     "title": "Socios",
-    "intro": "Las instituciones académicas, empresas, instituciones, asociaciones y medios que apoyan el movimiento de la Orden de Expertos en Informática.",
+    "intro": "Las instituciones académicas, empresas, instituciones, asociaciones y medios que apoyan el movimiento de la Orden Internacional de Expertos en Informática.",
     "empty": "Aún no se ha validado ningún socio.",
     "backToList": "Volver a la lista de socios",
     "visitWebsite": "Visitar el sitio web",
@@ -584,7 +584,7 @@
       "livePreview": {
         "title": "Vista previa en vivo",
         "intro": "Esta vista previa utiliza sus datos reales con la marca de agua y el sello de la OEI, al estilo de un diploma oficial.",
-        "orgLine": "Orden de los Expertos Informáticos",
+        "orgLine": "Orden Internacional de Expertos en Informática",
         "sealBrand": "OEI",
         "sealCertifiedLabel": "CERTIFICADO"
       }
@@ -1136,14 +1136,14 @@
       "title": "¿Quieres seguir leyendo?",
       "body": "Esta página muestra la síntesis ejecutiva del Libro Blanco. Las 14 secciones completas —análisis detallado, modelos internacionales, gobernanza, marco de certificación, hoja de ruta— están disponibles en el PDF completo.",
       "button": "Descargar el Libro Blanco completo (PDF)",
-      "frontCoverAlt": "Portada del Libro Blanco de la Orden de Expertos Informáticos",
-      "backCoverAlt": "Contraportada del Libro Blanco de la Orden de Expertos Informáticos"
+      "frontCoverAlt": "Portada del Libro Blanco de la Orden Internacional de Expertos en Informática",
+      "backCoverAlt": "Contraportada del Libro Blanco de la Orden Internacional de Expertos en Informática"
     }
   },
   "events": {
     "list": {
       "title": "Eventos",
-      "intro": "Agenda de eventos de la Orden de Expertos Informáticos: encuentros, coloquios y webinars.",
+      "intro": "Agenda de eventos de la Orden Internacional de Expertos en Informática: encuentros, coloquios y webinars.",
       "featuredTitle": "Próximo evento",
       "openTitle": "Eventos abiertos",
       "openEmpty": "Ningún otro evento abierto por el momento.",
@@ -1382,7 +1382,7 @@
   },
   "network": {
     "title": "Red Neuronal Profesional",
-    "subtitle": "Orden de los Expertos en Informática",
+    "subtitle": "Orden Internacional de Expertos en Informática",
     "searchPlaceholder": "Buscar un dominio, una certificación, un experto…",
     "crumb": {
       "galaxy": "Vista Galaxia",

@@ -27,7 +27,7 @@ const INTERFACE_STRINGS: Record<string, string> = {
   'nav.join': 'Rejoignez le mouvement',
   'home.hero.ctaWhitePaper': 'Lire le Livre Blanc',
   'home.hero.ctaMission': 'Découvrir notre mission',
-  'home.hero.panelTitle': "L'Ordre des Experts Informaticiens",
+  'home.hero.panelTitle': "L'Ordre International des Experts de l'Informatique",
   'home.hero.panelBody': 'Un mouvement international pour reconnaître, structurer et élever la profession informatique.',
   'home.commitments.0.title': "Défendre l'intérêt général",
   'home.commitments.0.description': "Placer l'éthique et la sécurité au cœur des usages numériques.",

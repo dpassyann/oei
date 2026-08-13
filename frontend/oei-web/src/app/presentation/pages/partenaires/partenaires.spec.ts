@@ -9,7 +9,7 @@ import { createPartner, Partner } from '../../../domain/model/partner';
 
 const INTERFACE_STRINGS: Record<string, string> = {
   'partenaires.title': 'Partenaires',
-  'partenaires.intro': "Les organisations qui soutiennent le mouvement de l'Ordre des Experts Informaticiens.",
+  'partenaires.intro': "Les organisations qui soutiennent le mouvement de l'Ordre International des Experts de l'Informatique.",
   'partenaires.empty': 'Aucun partenaire n’a encore été validé.',
 };
 

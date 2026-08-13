@@ -28,19 +28,19 @@
     "viewCms": "Area CMS"
   },
   "brand": {
-    "line1": "L'Ordine degli",
-    "line2": "Esperti Informatici"
+    "line1": "L'Ordine Internazionale degli",
+    "line2": "Esperti di Informatica"
   },
   "footer": {
     "quote": "«Il digitale è il nostro bene comune. Gli esperti informatici ne sono i custodi.»",
-    "quoteAuthor": "— Ordine degli Esperti Informatici",
+    "quoteAuthor": "— Ordine Internazionale degli Esperti di Informatica",
     "newsletterHeading": "Resta informato",
     "newsletterCopy": "Iscriviti alla nostra newsletter per ricevere le nostre notizie.",
     "emailPlaceholder": "La tua email",
     "subscribe": "Iscriviti",
     "followUs": "Seguici",
     "becomeFoundingMember": "Diventa membro fondatore",
-    "orgName": "Ordine degli Esperti Informatici",
+    "orgName": "Ordine Internazionale degli Esperti di Informatica",
     "newsletter": {
       "interestsLabel": "Aree di interesse",
       "interests": {
@@ -51,7 +51,7 @@
         "governance": "Governance digitale",
         "events": "Eventi"
       },
-      "consentLabel": "Accetto di ricevere la newsletter dell'Ordine degli Esperti Informatici e ho preso visione dell'informativa sulla privacy.",
+      "consentLabel": "Accetto di ricevere la newsletter dell'Ordine Internazionale degli Esperti di Informatica e ho preso visione dell'informativa sulla privacy.",
       "successMessage": "Grazie! Ti abbiamo inviato un'email di conferma — clicca sul link per confermare l'iscrizione.",
       "errors": {
         "invalidEmail": "Indirizzo email non valido.",
@@ -62,7 +62,7 @@
   },
   "home": {
     "hero": {
-      "panelTitle": "L'Ordine degli Esperti Informatici",
+      "panelTitle": "L'Ordine Internazionale degli Esperti di Informatica",
       "panelBody": "Un movimento internazionale per riconoscere, strutturare ed elevare la professione informatica.",
       "checklist": [
         "Proteggere il pubblico e i professionisti",
@@ -226,7 +226,7 @@
   },
   "membresFondateurs": {
     "title": "Membri fondatori",
-    "intro": "L'Ordine degli Esperti Informatici non è un libro da acquistare — è un movimento da sostenere. Diventare membro fondatore significa partecipare alla costruzione di un'organizzazione professionale indipendente per gli esperti digitali, fin dai suoi primissimi passi.",
+    "intro": "L'Ordine Internazionale degli Esperti di Informatica non è un libro da acquistare — è un movimento da sostenere. Diventare membro fondatore significa partecipare alla costruzione di un'organizzazione professionale indipendente per gli esperti digitali, fin dai suoi primissimi passi.",
     "feeTiers": {
       "title": "Quote associative",
       "categoryHeader": "Categoria",
@@ -303,8 +303,8 @@
     "title": "Risorse",
     "livreBlanc": {
       "title": "Libro Bianco",
-      "frontCoverAlt": "Copertina del Libro Bianco dell'Ordine degli Esperti Informatici",
-      "backCoverAlt": "Retro di copertina del Libro Bianco dell'Ordine degli Esperti Informatici",
+      "frontCoverAlt": "Copertina del Libro Bianco dell'Ordine Internazionale degli Esperti di Informatica",
+      "backCoverAlt": "Retro di copertina del Libro Bianco dell'Ordine Internazionale degli Esperti di Informatica",
       "successPrefix": "Grazie — ecco la tua copia:",
       "downloadLinkText": "scarica il Libro Bianco (PDF)",
       "emailLabel": "Indirizzo e-mail",
@@ -336,7 +336,7 @@
   },
   "publications": {
     "title": "Pubblicazioni",
-    "intro": "Qui trovi le pubblicazioni dell’Ordine degli Esperti Informatici: articoli, comunicati, libri bianchi, rapporti, eventi, consultazioni e inviti a contribuire.",
+    "intro": "Qui trovi le pubblicazioni dell’Ordine Internazionale degli Esperti di Informatica: articoli, comunicati, libri bianchi, rapporti, eventi, consultazioni e inviti a contribuire.",
     "empty": "Nessuna pubblicazione è stata ancora pubblicata. Torna presto.",
     "readMore": "Continua a leggere",
     "categories": {
@@ -351,7 +351,7 @@
   },
   "partenaires": {
     "title": "Partner",
-    "intro": "Le istituzioni accademiche, le aziende, le istituzioni, le associazioni e i media che sostengono il movimento dell'Ordine degli Esperti Informatici.",
+    "intro": "Le istituzioni accademiche, le aziende, le istituzioni, le associazioni e i media che sostengono il movimento dell'Ordine Internazionale degli Esperti di Informatica.",
     "empty": "Nessun partner è stato ancora convalidato.",
     "backToList": "Torna all'elenco dei partner",
     "visitWebsite": "Visita il sito",
@@ -584,7 +584,7 @@
       "livePreview": {
         "title": "Anteprima dal vivo",
         "intro": "Questa anteprima utilizza i tuoi dati reali con la filigrana e il sigillo dell’OEI, in stile diploma ufficiale.",
-        "orgLine": "Ordine degli Esperti Informatici",
+        "orgLine": "Ordine Internazionale degli Esperti di Informatica",
         "sealBrand": "OEI",
         "sealCertifiedLabel": "CERTIFICATO"
       }
@@ -1136,14 +1136,14 @@
       "title": "Vuoi continuare a leggere?",
       "body": "Questa pagina mostra la sintesi esecutiva del Libro Bianco. Tutte le 14 sezioni complete — analisi dettagliata, modelli internazionali, governance, quadro di certificazione, roadmap — sono disponibili nel PDF completo.",
       "button": "Scarica il Libro Bianco completo (PDF)",
-      "frontCoverAlt": "Copertina del Libro Bianco dell'Ordine degli Esperti Informatici",
-      "backCoverAlt": "Retrocopertina del Libro Bianco dell'Ordine degli Esperti Informatici"
+      "frontCoverAlt": "Copertina del Libro Bianco dell'Ordine Internazionale degli Esperti di Informatica",
+      "backCoverAlt": "Retrocopertina del Libro Bianco dell'Ordine Internazionale degli Esperti di Informatica"
     }
   },
   "events": {
     "list": {
       "title": "Eventi",
-      "intro": "Agenda degli eventi dell'Ordine degli Esperti Informatici: incontri, colloqui e webinar.",
+      "intro": "Agenda degli eventi dell'Ordine Internazionale degli Esperti di Informatica: incontri, colloqui e webinar.",
       "featuredTitle": "Prossimo evento",
       "openTitle": "Eventi aperti",
       "openEmpty": "Nessun altro evento aperto al momento.",
@@ -1382,7 +1382,7 @@
   },
   "network": {
     "title": "Rete Neurale Professionale",
-    "subtitle": "Ordine degli Esperti Informatici",
+    "subtitle": "Ordine Internazionale degli Esperti di Informatica",
     "searchPlaceholder": "Cerca un dominio, una certificazione, un esperto…",
     "crumb": {
       "galaxy": "Vista Galassia",

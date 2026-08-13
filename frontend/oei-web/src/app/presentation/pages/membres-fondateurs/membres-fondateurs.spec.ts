@@ -31,7 +31,7 @@ function fakeMarkdownDocuments() {
 const INTERFACE_STRINGS: Record<string, string> = {
   'membresFondateurs.title': 'Membres fondateurs',
   'membresFondateurs.intro':
-    "L'Ordre des Experts Informaticiens n'est pas un livre à acheter — c'est un mouvement à soutenir.",
+    "L'Ordre International des Experts de l'Informatique n'est pas un livre à acheter — c'est un mouvement à soutenir.",
   'membresFondateurs.feeTiers.title': 'Cotisations',
   'membresFondateurs.feeTiers.categoryHeader': 'Catégorie',
   'membresFondateurs.feeTiers.annualFeeHeader': 'Cotisation annuelle',

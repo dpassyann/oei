@@ -18,8 +18,8 @@ interface RessourcesTestHandle {
 const INTERFACE_STRINGS: Record<string, string> = {
   'ressources.title': 'Ressources',
   'ressources.livreBlanc.title': 'Livre Blanc',
-  'ressources.livreBlanc.frontCoverAlt': "Couverture du Livre Blanc de l'Ordre des Experts Informaticiens",
-  'ressources.livreBlanc.backCoverAlt': "Quatrième de couverture du Livre Blanc de l'Ordre des Experts Informaticiens",
+  'ressources.livreBlanc.frontCoverAlt': "Couverture du Livre Blanc de l'Ordre International des Experts de l'Informatique",
+  'ressources.livreBlanc.backCoverAlt': "Quatrième de couverture du Livre Blanc de l'Ordre International des Experts de l'Informatique",
   'ressources.livreBlanc.successPrefix': 'Merci — voici votre exemplaire :',
   'ressources.livreBlanc.downloadLinkText': 'télécharger le Livre Blanc (PDF)',
   'ressources.livreBlanc.emailLabel': 'Adresse e-mail',

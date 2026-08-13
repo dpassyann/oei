@@ -2,7 +2,7 @@
 <svg xmlns="http://www.w3.org/2000/svg"
      width="1600" height="2400" viewBox="0 0 1600 2400"
      role="img" aria-labelledby="title desc">
-  <title id="title">Livre blanc v3.1 — Ordre des Experts Informaticiens</title>
+  <title id="title">Livre blanc v4 — Ordre International des Experts de l'Informatique</title>
   <desc id="desc">Couverture institutionnelle bleu nuit, doré et blanc avec logo bouclier et globe.</desc>
 
   <defs>
@@ -77,13 +77,14 @@
   </g>
 
   <!-- Nom de l'organisation -->
-  <text x="800" y="960"
+  <text x="800" y="915"
         text-anchor="middle"
         class="sans gold"
-        font-size="42"
+        font-size="34"
         font-weight="600"
-        letter-spacing="7">
-    ORDRE DES EXPERTS INFORMATICIENS
+        letter-spacing="4">
+    <tspan x="800" dy="0">ORDRE INTERNATIONAL DES EXPERTS</tspan>
+    <tspan x="800" dy="48">DE L'INFORMATIQUE</tspan>
   </text>
 
   <!-- Mention mouvement / ambition internationale (v3.1) -->
@@ -154,7 +155,7 @@
 
   <line x1="755" y1="2210" x2="845" y2="2210" stroke="#e8a530" stroke-width="3"/>
 
-  <!-- Version (v3.1) -->
+  <!-- Version (v4) -->
   <text x="800" y="2280"
         text-anchor="middle"
         class="sans gold"
@@ -162,6 +163,6 @@
         font-weight="500"
         letter-spacing="4"
         opacity="0.85">
-    VERSION 3.1
+    VERSION 4
   </text>
 </svg>

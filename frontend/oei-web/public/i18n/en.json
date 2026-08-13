@@ -28,19 +28,19 @@
     "viewCms": "CMS area"
   },
   "brand": {
-    "line1": "The Order of",
-    "line2": "IT Experts"
+    "line1": "The International Order of",
+    "line2": "Information Technology Experts"
   },
   "footer": {
     "quote": "\"Digital technology is our common good. IT experts are its guardians.\"",
-    "quoteAuthor": "— Order of IT Experts",
+    "quoteAuthor": "— International Order of Information Technology Experts",
     "newsletterHeading": "Stay informed",
     "newsletterCopy": "Sign up for our newsletter to receive our news.",
     "emailPlaceholder": "Your email",
     "subscribe": "Subscribe",
     "followUs": "Follow us",
     "becomeFoundingMember": "Become a founding member",
-    "orgName": "Order of IT Experts",
+    "orgName": "International Order of Information Technology Experts",
     "newsletter": {
       "interestsLabel": "Areas of interest",
       "interests": {
@@ -51,7 +51,7 @@
         "governance": "Digital governance",
         "events": "Events"
       },
-      "consentLabel": "I agree to receive the Order of IT Experts' newsletter and I have read the privacy policy.",
+      "consentLabel": "I agree to receive the International Order of Information Technology Experts' newsletter and I have read the privacy policy.",
       "successMessage": "Thank you! A confirmation email has been sent — click the link inside to confirm your subscription.",
       "errors": {
         "invalidEmail": "Invalid email address.",
@@ -62,7 +62,7 @@
   },
   "home": {
     "hero": {
-      "panelTitle": "The Order of IT Experts",
+      "panelTitle": "The International Order of Information Technology Experts",
       "panelBody": "An international movement to recognize, structure and elevate the IT profession.",
       "checklist": [
         "Protecting the public and professionals",
@@ -226,7 +226,7 @@
   },
   "membresFondateurs": {
     "title": "Founding members",
-    "intro": "The Order of IT Experts is not a book to buy — it is a movement to support. Becoming a founding member means taking part in building an independent professional organisation for digital experts, right from its very first steps.",
+    "intro": "The International Order of Information Technology Experts is not a book to buy — it is a movement to support. Becoming a founding member means taking part in building an independent professional organisation for digital experts, right from its very first steps.",
     "feeTiers": {
       "title": "Membership fees",
       "categoryHeader": "Category",
@@ -303,8 +303,8 @@
     "title": "Resources",
     "livreBlanc": {
       "title": "White Paper",
-      "frontCoverAlt": "Cover of the Order of IT Experts' White Paper",
-      "backCoverAlt": "Back cover of the Order of IT Experts' White Paper",
+      "frontCoverAlt": "Cover of the International Order of Information Technology Experts' White Paper",
+      "backCoverAlt": "Back cover of the International Order of Information Technology Experts' White Paper",
       "successPrefix": "Thank you — here is your copy:",
       "downloadLinkText": "download the White Paper (PDF)",
       "emailLabel": "Email address",
@@ -336,7 +336,7 @@
   },
   "publications": {
     "title": "Publications",
-    "intro": "Find the Order of IT Experts' publications here: articles, press releases, white papers, reports, events, consultations and calls for contribution.",
+    "intro": "Find the International Order of Information Technology Experts' publications here: articles, press releases, white papers, reports, events, consultations and calls for contribution.",
     "empty": "No publication has been posted yet. Check back soon.",
     "readMore": "Read more",
     "categories": {
@@ -351,7 +351,7 @@
   },
   "partenaires": {
     "title": "Partners",
-    "intro": "The academic institutions, businesses, institutions, associations and media supporting the Order of IT Experts movement.",
+    "intro": "The academic institutions, businesses, institutions, associations and media supporting the International Order of Information Technology Experts movement.",
     "empty": "No partner has been validated yet.",
     "backToList": "Back to the partner list",
     "visitWebsite": "Visit the website",
@@ -584,7 +584,7 @@
       "livePreview": {
         "title": "Live preview",
         "intro": "This preview uses your real data with the OEI watermark and seal, in the style of an official diploma.",
-        "orgLine": "Order of IT Experts",
+        "orgLine": "International Order of Information Technology Experts",
         "sealBrand": "OEI",
         "sealCertifiedLabel": "CERTIFIED"
       }
@@ -1142,8 +1142,8 @@
       "title": "Want to keep reading?",
       "body": "This page shows the White Paper's executive summary. All 14 full sections — detailed analysis, international models, governance, certification framework, roadmap — are available in the complete PDF.",
       "button": "Download the full White Paper (PDF)",
-      "frontCoverAlt": "Cover of the Order of Computer Experts' White Paper",
-      "backCoverAlt": "Back cover of the Order of Computer Experts' White Paper"
+      "frontCoverAlt": "Cover of the International Order of Information Technology Experts' White Paper",
+      "backCoverAlt": "Back cover of the International Order of Information Technology Experts' White Paper"
     }
   },
   "events": {
@@ -1388,7 +1388,7 @@
   },
   "network": {
     "title": "Professional Neural Network",
-    "subtitle": "Order of IT Experts",
+    "subtitle": "International Order of Information Technology Experts",
     "searchPlaceholder": "Search a domain, certification, or expert…",
     "crumb": {
       "galaxy": "Galaxy View",

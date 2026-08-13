@@ -28,19 +28,19 @@
     "viewCms": "CMS-Bereich"
   },
   "brand": {
-    "line1": "Der Orden der",
-    "line2": "IT-Experten"
+    "line1": "Die Internationale",
+    "line2": "Vereinigung für Informatik-Expertise"
   },
   "footer": {
     "quote": "„Digitale Technik ist unser Gemeingut. IT-Experten sind ihre Hüter.“",
-    "quoteAuthor": "— Orden der IT-Experten",
+    "quoteAuthor": "— Internationale Vereinigung für Informatik-Expertise",
     "newsletterHeading": "Bleiben Sie informiert",
     "newsletterCopy": "Abonnieren Sie unseren Newsletter, um unsere Neuigkeiten zu erhalten.",
     "emailPlaceholder": "Ihre E-Mail",
     "subscribe": "Abonnieren",
     "followUs": "Folgen Sie uns",
     "becomeFoundingMember": "Gründungsmitglied werden",
-    "orgName": "Orden der IT-Experten",
+    "orgName": "Internationale Vereinigung für Informatik-Expertise",
     "newsletter": {
       "interestsLabel": "Interessengebiete",
       "interests": {
@@ -51,7 +51,7 @@
         "governance": "Digitale Governance",
         "events": "Veranstaltungen"
       },
-      "consentLabel": "Ich stimme zu, den Newsletter des Ordens der IT-Experten zu erhalten, und habe die Datenschutzerklärung zur Kenntnis genommen.",
+      "consentLabel": "Ich stimme zu, den Newsletter der Internationalen Vereinigung für Informatik-Expertise zu erhalten, und habe die Datenschutzerklärung zur Kenntnis genommen.",
       "successMessage": "Danke! Eine Bestätigungs-E-Mail wurde gesendet — klicken Sie auf den enthaltenen Link, um Ihre Anmeldung zu bestätigen.",
       "errors": {
         "invalidEmail": "Ungültige E-Mail-Adresse.",
@@ -62,7 +62,7 @@
   },
   "home": {
     "hero": {
-      "panelTitle": "Der Orden der IT-Experten",
+      "panelTitle": "Die Internationale Vereinigung für Informatik-Expertise",
       "panelBody": "Eine internationale Bewegung zur Anerkennung, Strukturierung und Aufwertung des IT-Berufs.",
       "checklist": [
         "Schutz der Öffentlichkeit und der Fachleute",
@@ -226,7 +226,7 @@
   },
   "membresFondateurs": {
     "title": "Gründungsmitglieder",
-    "intro": "Der Orden der IT-Experten ist kein Buch, das man kauft — er ist eine Bewegung, die man unterstützt. Gründungsmitglied zu werden bedeutet, von den allerersten Schritten an am Aufbau einer unabhängigen Berufsorganisation für digitale Experten mitzuwirken.",
+    "intro": "Die Internationale Vereinigung für Informatik-Expertise ist kein Buch, das man kauft — sie ist eine Bewegung, die man unterstützt. Gründungsmitglied zu werden bedeutet, von den allerersten Schritten an am Aufbau einer unabhängigen Berufsorganisation für digitale Experten mitzuwirken.",
     "feeTiers": {
       "title": "Mitgliedsbeiträge",
       "categoryHeader": "Kategorie",
@@ -303,8 +303,8 @@
     "title": "Ressourcen",
     "livreBlanc": {
       "title": "Weißbuch",
-      "frontCoverAlt": "Titelseite des Weißbuchs des Ordens der IT-Experten",
-      "backCoverAlt": "Rückseite des Weißbuchs des Ordens der IT-Experten",
+      "frontCoverAlt": "Titelseite des Weißbuchs der Internationalen Vereinigung für Informatik-Expertise",
+      "backCoverAlt": "Rückseite des Weißbuchs der Internationalen Vereinigung für Informatik-Expertise",
       "successPrefix": "Vielen Dank — hier ist Ihr Exemplar:",
       "downloadLinkText": "Weißbuch herunterladen (PDF)",
       "emailLabel": "E-Mail-Adresse",
@@ -336,7 +336,7 @@
   },
   "publications": {
     "title": "Publikationen",
-    "intro": "Hier finden Sie die Publikationen des Ordens der IT-Experten: Artikel, Pressemitteilungen, Weißbücher, Berichte, Veranstaltungen, Konsultationen und Aufrufe zur Mitwirkung.",
+    "intro": "Hier finden Sie die Publikationen der Internationalen Vereinigung für Informatik-Expertise: Artikel, Pressemitteilungen, Weißbücher, Berichte, Veranstaltungen, Konsultationen und Aufrufe zur Mitwirkung.",
     "empty": "Es wurde noch keine Publikation veröffentlicht. Schauen Sie bald wieder vorbei.",
     "readMore": "Weiterlesen",
     "categories": {
@@ -351,7 +351,7 @@
   },
   "partenaires": {
     "title": "Partner",
-    "intro": "Die akademischen Einrichtungen, Unternehmen, Institutionen, Verbände und Medien, die die Bewegung des Ordens der IT-Experten unterstützen.",
+    "intro": "Die akademischen Einrichtungen, Unternehmen, Institutionen, Verbände und Medien, die die Bewegung der Internationalen Vereinigung für Informatik-Expertise unterstützen.",
     "empty": "Es wurde noch kein Partner bestätigt.",
     "backToList": "Zurück zur Partnerliste",
     "visitWebsite": "Webseite besuchen",
@@ -584,7 +584,7 @@
       "livePreview": {
         "title": "Live-Vorschau",
         "intro": "Diese Vorschau verwendet Ihre echten Daten mit dem OEI-Wasserzeichen und -Siegel, im Stil eines offiziellen Diploms.",
-        "orgLine": "Orden der IT-Experten",
+        "orgLine": "Internationale Vereinigung für Informatik-Expertise",
         "sealBrand": "OEI",
         "sealCertifiedLabel": "ZERTIFIZIERT"
       }
@@ -1136,14 +1136,14 @@
       "title": "Mehr lesen?",
       "body": "Diese Seite zeigt die Kurzfassung des Weißbuchs. Alle 14 vollständigen Abschnitte — detaillierte Analyse, internationale Modelle, Governance, Zertifizierungsrahmen, Roadmap — finden Sie im vollständigen PDF.",
       "button": "Vollständiges Weißbuch herunterladen (PDF)",
-      "frontCoverAlt": "Umschlag des Weißbuchs des Ordens der Informatikexperten",
-      "backCoverAlt": "Rückseite des Weißbuchs des Ordens der Informatikexperten"
+      "frontCoverAlt": "Umschlag des Weißbuchs der Internationalen Vereinigung für Informatik-Expertise",
+      "backCoverAlt": "Rückseite des Weißbuchs der Internationalen Vereinigung für Informatik-Expertise"
     }
   },
   "events": {
     "list": {
       "title": "Veranstaltungen",
-      "intro": "Veranstaltungskalender des Ordens der Informatikexperten: Treffen, Kolloquien und Webinare.",
+      "intro": "Veranstaltungskalender der Internationalen Vereinigung für Informatik-Expertise: Treffen, Kolloquien und Webinare.",
       "featuredTitle": "Nächste Veranstaltung",
       "openTitle": "Offene Veranstaltungen",
       "openEmpty": "Derzeit keine weitere offene Veranstaltung.",
@@ -1382,7 +1382,7 @@
   },
   "network": {
     "title": "Professionelles Neuronales Netzwerk",
-    "subtitle": "Orden der IT-Experten",
+    "subtitle": "Internationale Vereinigung für Informatik-Expertise",
     "searchPlaceholder": "Domäne, Zertifizierung oder Experten suchen…",
     "crumb": {
       "galaxy": "Galaxie-Ansicht",

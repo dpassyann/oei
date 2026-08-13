@@ -114,7 +114,8 @@
     <tspan x="410" dy="28">d’entreprise, il œuvre pour élever les standards de la</tspan>
     <tspan x="410" dy="28">profession informatique.</tspan>
 
-    <tspan x="410" dy="45">Fondateur de l’initiative Ordre des Experts Informaticiens (OEI),</tspan>
+    <tspan x="410" dy="45">Fondateur de l’initiative Ordre International des Experts de</tspan>
+    <tspan x="410" dy="28">l’Informatique (OEI),</tspan>
     <tspan x="410" dy="28">il porte ce projet avec l’ambition de structurer la profession</tspan>
     <tspan x="410" dy="28">informatique à la hauteur de sa responsabilité réelle dans les</tspan>
     <tspan x="410" dy="28">systèmes critiques qui structurent nos sociétés.</tspan>
@@ -128,9 +129,9 @@
     <path d="M-29 20 H29 M-25 8 C-10 14 10 14 25 8 M-25 32 C-10 26 10 26 25 32"/>
   </g>
   <line x1="228" y1="1450" x2="228" y2="1564" stroke="#E8A530" stroke-width="2"/>
-  <text x="250" y="1492" class="sans gold" font-size="21" letter-spacing="2">
-    <tspan x="250" dy="0">ORDRE DES EXPERTS</tspan>
-    <tspan x="250" dy="32">INFORMATICIENS</tspan>
+  <text x="250" y="1478" class="sans gold" font-size="15" letter-spacing="1.2">
+    <tspan x="250" dy="0">ORDRE INTERNATIONAL DES</tspan>
+    <tspan x="250" dy="22">EXPERTS DE L'INFORMATIQUE</tspan>
   </text>
 
   <!-- Zone ISBN / code-barres -->

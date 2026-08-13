@@ -28,19 +28,19 @@
     "viewCms": "Área CMS"
   },
   "brand": {
-    "line1": "A Ordem dos",
+    "line1": "A Ordem Internacional dos",
     "line2": "Especialistas em Informática"
   },
   "footer": {
     "quote": "«O digital é o nosso bem comum. Os especialistas em informática são os seus guardiões.»",
-    "quoteAuthor": "— Ordem dos Especialistas em Informática",
+    "quoteAuthor": "— Ordem Internacional dos Especialistas em Informática",
     "newsletterHeading": "Fique informado",
     "newsletterCopy": "Assine a nossa newsletter para receber as nossas notícias.",
     "emailPlaceholder": "O seu email",
     "subscribe": "Inscrever-se",
     "followUs": "Siga-nos",
     "becomeFoundingMember": "Torne-se membro fundador",
-    "orgName": "Ordem dos Especialistas em Informática",
+    "orgName": "Ordem Internacional dos Especialistas em Informática",
     "newsletter": {
       "interestsLabel": "Áreas de interesse",
       "interests": {
@@ -51,7 +51,7 @@
         "governance": "Governação digital",
         "events": "Eventos"
       },
-      "consentLabel": "Aceito receber a newsletter da Ordem dos Peritos Informáticos e tomei conhecimento da política de privacidade.",
+      "consentLabel": "Aceito receber a newsletter da Ordem Internacional dos Especialistas em Informática e tomei conhecimento da política de privacidade.",
       "successMessage": "Obrigado! Foi enviado um email de confirmação — clique no link para confirmar a sua subscrição.",
       "errors": {
         "invalidEmail": "Endereço de email inválido.",
@@ -62,7 +62,7 @@
   },
   "home": {
     "hero": {
-      "panelTitle": "A Ordem dos Especialistas em Informática",
+      "panelTitle": "A Ordem Internacional dos Especialistas em Informática",
       "panelBody": "Um movimento internacional para reconhecer, estruturar e elevar a profissão de TI.",
       "checklist": [
         "Proteger o público e os profissionais",
@@ -226,7 +226,7 @@
   },
   "membresFondateurs": {
     "title": "Membros fundadores",
-    "intro": "A Ordem dos Especialistas em Informática não é um livro para comprar — é um movimento para apoiar. Tornar-se membro fundador significa participar da construção de uma organização profissional independente para os especialistas digitais, desde os seus primeiros passos.",
+    "intro": "A Ordem Internacional dos Especialistas em Informática não é um livro para comprar — é um movimento para apoiar. Tornar-se membro fundador significa participar da construção de uma organização profissional independente para os especialistas digitais, desde os seus primeiros passos.",
     "feeTiers": {
       "title": "Contribuições",
       "categoryHeader": "Categoria",
@@ -303,8 +303,8 @@
     "title": "Recursos",
     "livreBlanc": {
       "title": "Livro Branco",
-      "frontCoverAlt": "Capa do Livro Branco da Ordem dos Especialistas em Informática",
-      "backCoverAlt": "Contracapa do Livro Branco da Ordem dos Especialistas em Informática",
+      "frontCoverAlt": "Capa do Livro Branco da Ordem Internacional dos Especialistas em Informática",
+      "backCoverAlt": "Contracapa do Livro Branco da Ordem Internacional dos Especialistas em Informática",
       "successPrefix": "Obrigado — aqui está o seu exemplar:",
       "downloadLinkText": "baixar o Livro Branco (PDF)",
       "emailLabel": "Endereço de email",
@@ -336,7 +336,7 @@
   },
   "publications": {
     "title": "Publicações",
-    "intro": "Encontre aqui as publicações da Ordem dos Peritos Informáticos: artigos, comunicados, livros brancos, relatórios, eventos, consultas e chamadas de contribuição.",
+    "intro": "Encontre aqui as publicações da Ordem Internacional dos Especialistas em Informática: artigos, comunicados, livros brancos, relatórios, eventos, consultas e chamadas de contribuição.",
     "empty": "Ainda não foi publicada nenhuma publicação. Volte em breve.",
     "readMore": "Ler mais",
     "categories": {
@@ -351,7 +351,7 @@
   },
   "partenaires": {
     "title": "Parceiros",
-    "intro": "As instituições académicas, empresas, instituições, associações e meios de comunicação que apoiam o movimento da Ordem dos Peritos Informáticos.",
+    "intro": "As instituições académicas, empresas, instituições, associações e meios de comunicação que apoiam o movimento da Ordem Internacional dos Especialistas em Informática.",
     "empty": "Ainda não foi validado nenhum parceiro.",
     "backToList": "Voltar à lista de parceiros",
     "visitWebsite": "Visitar o site",
@@ -584,7 +584,7 @@
       "livePreview": {
         "title": "Pré-visualização em tempo real",
         "intro": "Esta pré-visualização utiliza os seus dados reais com a marca d’água e o selo da OEI, no estilo de um diploma oficial.",
-        "orgLine": "Ordem dos Peritos Informáticos",
+        "orgLine": "Ordem Internacional dos Especialistas em Informática",
         "sealBrand": "OEI",
         "sealCertifiedLabel": "CERTIFICADO"
       }
@@ -1136,14 +1136,14 @@
       "title": "Quer continuar a ler?",
       "body": "Esta página apresenta a síntese executiva do Livro Branco. As 14 secções completas — análise detalhada, modelos internacionais, governança, quadro de certificação, roteiro — estão disponíveis no PDF completo.",
       "button": "Descarregar o Livro Branco completo (PDF)",
-      "frontCoverAlt": "Capa do Livro Branco da Ordem dos Especialistas Informáticos",
-      "backCoverAlt": "Contracapa do Livro Branco da Ordem dos Especialistas Informáticos"
+      "frontCoverAlt": "Capa do Livro Branco da Ordem Internacional dos Especialistas em Informática",
+      "backCoverAlt": "Contracapa do Livro Branco da Ordem Internacional dos Especialistas em Informática"
     }
   },
   "events": {
     "list": {
       "title": "Eventos",
-      "intro": "Agenda de eventos da Ordem dos Especialistas em Informática: encontros, colóquios e webinars.",
+      "intro": "Agenda de eventos da Ordem Internacional dos Especialistas em Informática: encontros, colóquios e webinars.",
       "featuredTitle": "Próximo evento",
       "openTitle": "Eventos abertos",
       "openEmpty": "Nenhum outro evento aberto no momento.",
@@ -1382,7 +1382,7 @@
   },
   "network": {
     "title": "Rede Neural Profissional",
-    "subtitle": "Ordem dos Especialistas em Informática",
+    "subtitle": "Ordem Internacional dos Especialistas em Informática",
     "searchPlaceholder": "Pesquisar um domínio, uma certificação, um especialista…",
     "crumb": {
       "galaxy": "Vista Galáxia",

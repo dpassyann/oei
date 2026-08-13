@@ -28,7 +28,7 @@ function buildSeedEvents(): Event[] {
       capacity: 150,
       registrationsCount: 42,
       visibility: 'public',
-      organizers: ["Ordre des Experts Informaticiens"],
+      organizers: ["Ordre International des Experts de l'Informatique"],
       languages: ['fr', 'en'],
       speakers: [
         { name: 'Dr. Amina Traoré', role: "Présidente, comité d'éthique OEI" },
@@ -80,7 +80,7 @@ function buildSeedEvents(): Event[] {
       title: '[Démonstration] Assemblée générale annuelle 2025',
       type: 'assemblee',
       description:
-        "Bilan annuel de démonstration de l'Ordre des Experts Informaticiens : rapport moral, " +
+        "Bilan annuel de démonstration de l'Ordre International des Experts de l'Informatique : rapport moral, " +
         'rapport financier et élection du bureau.',
       location: { country: 'FR', city: 'Paris', venue: "Siège de l'OEI, 3 avenue de la Recherche" },
       startAt: days(-95),
@@ -110,7 +110,7 @@ function buildSeedEvents(): Event[] {
       timezone: 'Europe/Zurich',
       registrationsCount: 130,
       visibility: 'public',
-      organizers: ["Ordre des Experts Informaticiens"],
+      organizers: ["Ordre International des Experts de l'Informatique"],
       languages: ['fr', 'en', 'de'],
       status: 'ARCHIVED',
       summary:

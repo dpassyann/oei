@@ -1,4 +1,4 @@
-# OEI — Ordre des Experts Informaticiens
+# OEI — Ordre International des Experts de l'Informatique
 
 > **Mouvement fondateur**, pas un ordre professionnel légalement constitué. Vise à faire reconnaître
 > progressivement la profession informatique comme une profession à haute responsabilité, dotée d'un
