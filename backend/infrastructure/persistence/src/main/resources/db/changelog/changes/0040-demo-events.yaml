@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0040-demo-events
+      author: oei-backend
+      comment: >
+        Same 2 events as the frontend's event-mock.adapter.ts seed data, plus
+        registrations/a live-feed post/comment/a pending proposal, reusing real 0004 demo
+        members.
+      changes:
+        - sqlFile:
+            path: db/changelog/changes/0040-demo-events.sql
+            relativeToChangelogFile: false
+            splitStatements: true
+            stripComments: true

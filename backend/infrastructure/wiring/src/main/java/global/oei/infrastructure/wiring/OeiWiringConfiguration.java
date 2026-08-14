@@ -11,6 +11,8 @@ import global.oei.domain.core.charter.SignEthicalCharterService;
 import global.oei.domain.core.content.CreateContentService;
 import global.oei.domain.core.content.CreateContentVersionService;
 import global.oei.domain.core.cv.CreateCvService;
+import global.oei.domain.core.event.RegisterToEventService;
+import global.oei.domain.core.event.SubmitEventProposalService;
 import global.oei.domain.core.cv.RenderCvService;
 import global.oei.domain.core.identity.GetMyIdentityService;
 import global.oei.domain.core.institution.CreateInstitutionBadgeProposalService;
@@ -39,6 +41,14 @@ import global.oei.domain.shared.content.ContentVersionPort;
 import global.oei.domain.shared.content.CreateContentUseCase;
 import global.oei.domain.shared.content.CreateContentVersionUseCase;
 import global.oei.domain.shared.cv.CreateCvUseCase;
+import global.oei.domain.shared.event.EventCommentPort;
+import global.oei.domain.shared.event.EventPhotoConsentPort;
+import global.oei.domain.shared.event.EventPort;
+import global.oei.domain.shared.event.EventPostPort;
+import global.oei.domain.shared.event.EventProposalPort;
+import global.oei.domain.shared.event.EventRegistrationPort;
+import global.oei.domain.shared.event.RegisterToEventUseCase;
+import global.oei.domain.shared.event.SubmitEventProposalUseCase;
 import global.oei.domain.shared.cv.CvPort;
 import global.oei.domain.shared.cv.CvTemplateCatalogPort;
 import global.oei.domain.shared.cv.PdfGenerationJobPort;
@@ -97,6 +107,18 @@ import global.oei.infrastructure.persistence.cv.CvPersistenceAdapter;
 import global.oei.infrastructure.persistence.cv.CvRepository;
 import global.oei.infrastructure.persistence.cv.CvTemplateCatalogPersistenceAdapter;
 import global.oei.infrastructure.persistence.cv.CvTemplateRepository;
+import global.oei.infrastructure.persistence.event.EventCommentPersistenceAdapter;
+import global.oei.infrastructure.persistence.event.EventCommentRepository;
+import global.oei.infrastructure.persistence.event.EventPersistenceAdapter;
+import global.oei.infrastructure.persistence.event.EventPhotoConsentPersistenceAdapter;
+import global.oei.infrastructure.persistence.event.EventPhotoConsentRepository;
+import global.oei.infrastructure.persistence.event.EventPostPersistenceAdapter;
+import global.oei.infrastructure.persistence.event.EventPostRepository;
+import global.oei.infrastructure.persistence.event.EventProposalPersistenceAdapter;
+import global.oei.infrastructure.persistence.event.EventProposalRepository;
+import global.oei.infrastructure.persistence.event.EventRegistrationPersistenceAdapter;
+import global.oei.infrastructure.persistence.event.EventRegistrationRepository;
+import global.oei.infrastructure.persistence.event.EventRepository;
 import global.oei.infrastructure.persistence.institution.EmploymentAffiliationPersistenceAdapter;
 import global.oei.infrastructure.persistence.institution.EmploymentAffiliationRepository;
 import global.oei.infrastructure.persistence.institution.InstitutionAuditLogPersistenceAdapter;
@@ -407,5 +429,45 @@ public class OeiWiringConfiguration {
     @Bean
     public ContentPublicationPort contentPublicationPort(final ContentPublicationRepository repository) {
         return new ContentPublicationPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public EventPort eventPort(final EventRepository repository) {
+        return new EventPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public EventRegistrationPort eventRegistrationPort(final EventRegistrationRepository repository) {
+        return new EventRegistrationPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public RegisterToEventUseCase registerToEventUseCase(final EventRegistrationPort port) {
+        return new RegisterToEventService(port);
+    }
+
+    @Bean
+    public EventPostPort eventPostPort(final EventPostRepository repository) {
+        return new EventPostPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public EventCommentPort eventCommentPort(final EventCommentRepository repository) {
+        return new EventCommentPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public EventPhotoConsentPort eventPhotoConsentPort(final EventPhotoConsentRepository repository) {
+        return new EventPhotoConsentPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public EventProposalPort eventProposalPort(final EventProposalRepository repository) {
+        return new EventProposalPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public SubmitEventProposalUseCase submitEventProposalUseCase(final EventProposalPort port) {
+        return new SubmitEventProposalService(port);
     }
 }

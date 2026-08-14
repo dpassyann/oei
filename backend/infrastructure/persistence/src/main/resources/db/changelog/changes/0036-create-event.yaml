@@ -1,0 +1,112 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0036-create-event
+      author: oei-backend
+      comment: >
+        location_*/organizers_json/languages_json/speakers_json/gallery_image_urls_json are
+        flattened/JSON rather than child tables -- small, always read/replaced with the event
+        as a whole (same "big object" rationale as ProfessionalProfile/Cv).
+      changes:
+        - createTable:
+            tableName: event
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: slug
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: title
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: image_url
+                  type: varchar(500)
+              - column:
+                  name: location_country
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: location_city
+                  type: varchar(255)
+              - column:
+                  name: location_venue
+                  type: varchar(500)
+              - column:
+                  name: location_online_url
+                  type: varchar(500)
+              - column:
+                  name: start_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: end_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: timezone
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: capacity
+                  type: integer
+              - column:
+                  name: registrations_count
+                  type: integer
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: visibility
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: organizers_json
+                  type: jsonb
+              - column:
+                  name: languages_json
+                  type: jsonb
+              - column:
+                  name: speakers_json
+                  type: jsonb
+              - column:
+                  name: status
+                  type: varchar(25)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: comments_open_at
+                  type: timestamptz
+              - column:
+                  name: comments_closed_at
+                  type: timestamptz
+              - column:
+                  name: summary
+                  type: text
+              - column:
+                  name: gallery_image_urls_json
+                  type: jsonb

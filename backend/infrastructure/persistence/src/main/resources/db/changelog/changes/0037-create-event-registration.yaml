@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0037-create-event-registration
+      author: oei-backend
+      changes:
+        - createTable:
+            tableName: event_registration
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: event_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_event_registration_event
+                    references: event(id)
+              - column:
+                  name: member_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_event_registration_member
+                    references: member(id)
+              - column:
+                  name: registered_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+        - addUniqueConstraint:
+            tableName: event_registration
+            columnNames: event_id, member_id
+            constraintName: uq_event_registration_event_member

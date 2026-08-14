@@ -1,0 +1,103 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0039-create-event-photo-consent-and-proposal
+      author: oei-backend
+      changes:
+        - createTable:
+            tableName: event_photo_consent
+            columns:
+              - column:
+                  name: event_id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    foreignKeyName: fk_event_photo_consent_event
+                    references: event(id)
+              - column:
+                  name: member_id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    foreignKeyName: fk_event_photo_consent_member
+                    references: member(id)
+              - column:
+                  name: consented_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: event_proposal
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: author_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_event_proposal_member
+                    references: member(id)
+              - column:
+                  name: title
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: text
+              - column:
+                  name: type
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: start_at
+                  type: timestamptz
+              - column:
+                  name: end_at
+                  type: timestamptz
+              - column:
+                  name: timezone
+                  type: varchar(50)
+              - column:
+                  name: country
+                  type: varchar(10)
+              - column:
+                  name: city
+                  type: varchar(255)
+              - column:
+                  name: venue
+                  type: varchar(500)
+              - column:
+                  name: online_url
+                  type: varchar(500)
+              - column:
+                  name: image_url
+                  type: varchar(500)
+              - column:
+                  name: status
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: submitted_at
+                  type: timestamptz
+              - column:
+                  name: ai_precheck_passed
+                  type: boolean
+              - column:
+                  name: ai_precheck_summary
+                  type: text
+              - column:
+                  name: ai_precheck_checked_at
+                  type: timestamptz
+              - column:
+                  name: moderator_note
+                  type: text
