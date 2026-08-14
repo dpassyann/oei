@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import global.oei.domain.core.certification.DeclareCertificationService;
 import global.oei.domain.core.charter.SignEthicalCharterService;
+import global.oei.domain.core.content.CreateContentService;
+import global.oei.domain.core.content.CreateContentVersionService;
 import global.oei.domain.core.cv.CreateCvService;
 import global.oei.domain.core.cv.RenderCvService;
 import global.oei.domain.core.identity.GetMyIdentityService;
@@ -28,6 +30,14 @@ import global.oei.domain.shared.certification.CertificationPort;
 import global.oei.domain.shared.certification.DeclareCertificationUseCase;
 import global.oei.domain.shared.charter.EthicalCharterSignaturePort;
 import global.oei.domain.shared.charter.SignEthicalCharterUseCase;
+import global.oei.domain.shared.content.ContentApprovalPort;
+import global.oei.domain.shared.content.ContentContributionPort;
+import global.oei.domain.shared.content.ContentPort;
+import global.oei.domain.shared.content.ContentPublicationPort;
+import global.oei.domain.shared.content.ContentTranslationPort;
+import global.oei.domain.shared.content.ContentVersionPort;
+import global.oei.domain.shared.content.CreateContentUseCase;
+import global.oei.domain.shared.content.CreateContentVersionUseCase;
 import global.oei.domain.shared.cv.CreateCvUseCase;
 import global.oei.domain.shared.cv.CvPort;
 import global.oei.domain.shared.cv.CvTemplateCatalogPort;
@@ -71,6 +81,18 @@ import global.oei.infrastructure.persistence.charter.EthicalCharterSignatureRepo
 import global.oei.infrastructure.persistence.compensation.CompensationDeclarationRepository;
 import global.oei.infrastructure.persistence.compensation.SalaryInsightPersistenceAdapter;
 import global.oei.infrastructure.persistence.config.audit.PersistenceAuditingConfiguration;
+import global.oei.infrastructure.persistence.content.ContentApprovalPersistenceAdapter;
+import global.oei.infrastructure.persistence.content.ContentApprovalRepository;
+import global.oei.infrastructure.persistence.content.ContentContributionPersistenceAdapter;
+import global.oei.infrastructure.persistence.content.ContentContributionRepository;
+import global.oei.infrastructure.persistence.content.ContentPersistenceAdapter;
+import global.oei.infrastructure.persistence.content.ContentPublicationPersistenceAdapter;
+import global.oei.infrastructure.persistence.content.ContentPublicationRepository;
+import global.oei.infrastructure.persistence.content.ContentRepository;
+import global.oei.infrastructure.persistence.content.ContentTranslationPersistenceAdapter;
+import global.oei.infrastructure.persistence.content.ContentTranslationRepository;
+import global.oei.infrastructure.persistence.content.ContentVersionPersistenceAdapter;
+import global.oei.infrastructure.persistence.content.ContentVersionRepository;
 import global.oei.infrastructure.persistence.cv.CvPersistenceAdapter;
 import global.oei.infrastructure.persistence.cv.CvRepository;
 import global.oei.infrastructure.persistence.cv.CvTemplateCatalogPersistenceAdapter;
@@ -345,5 +367,45 @@ public class OeiWiringConfiguration {
                 employmentAffiliationRepository, certificationRepository, badgeAwardRepository,
                 ethicalCharterSignatureRepository, professionalProfileRepository, institutionPublicationRepository,
                 institutionOpportunityRepository, institutionInvitationRepository);
+    }
+
+    @Bean
+    public ContentPort contentPort(final ContentRepository repository, final ContentVersionRepository versionRepository) {
+        return new ContentPersistenceAdapter(repository, versionRepository);
+    }
+
+    @Bean
+    public CreateContentUseCase createContentUseCase(final ContentPort contentPort) {
+        return new CreateContentService(contentPort);
+    }
+
+    @Bean
+    public ContentVersionPort contentVersionPort(final ContentVersionRepository repository) {
+        return new ContentVersionPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public CreateContentVersionUseCase createContentVersionUseCase(final ContentPort contentPort, final ContentVersionPort contentVersionPort) {
+        return new CreateContentVersionService(contentPort, contentVersionPort);
+    }
+
+    @Bean
+    public ContentApprovalPort contentApprovalPort(final ContentApprovalRepository repository) {
+        return new ContentApprovalPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public ContentTranslationPort contentTranslationPort(final ContentTranslationRepository repository) {
+        return new ContentTranslationPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public ContentContributionPort contentContributionPort(final ContentContributionRepository repository) {
+        return new ContentContributionPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public ContentPublicationPort contentPublicationPort(final ContentPublicationRepository repository) {
+        return new ContentPublicationPersistenceAdapter(repository);
     }
 }

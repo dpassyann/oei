@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0033-create-content-translation
+      author: oei-backend
+      changes:
+        - createTable:
+            tableName: content_translation
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: content_version_id
+                  type: uuid
+                  foreignKeyName: fk_content_translation_content_version
+                  references: content_version(id)
+              - column:
+                  name: language
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: translator_id
+                  type: varchar(255)
+              - column:
+                  name: validated_by
+                  type: varchar(255)
+              - column:
+                  name: validated_at
+                  type: timestamptz

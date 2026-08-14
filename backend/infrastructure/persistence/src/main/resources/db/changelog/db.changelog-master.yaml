@@ -86,3 +86,21 @@ databaseChangeLog:
   - include:
       file: db/changelog/changes/0029-demo-institution-workspace-data.yaml
       relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0030-create-content.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0031-create-content-version.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0032-create-content-approval.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0033-create-content-translation.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0034-create-content-contribution.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0035-create-content-publication.yaml
+      relativeToChangelogFile: false

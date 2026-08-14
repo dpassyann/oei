@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0035-create-content-publication
+      author: oei-backend
+      changes:
+        - createTable:
+            tableName: content_publication
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: content_version_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_content_publication_content_version
+                    references: content_version(id)
+              - column:
+                  name: published_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: published_by
+                  type: varchar(255)
+              - column:
+                  name: channel
+                  type: varchar(50)

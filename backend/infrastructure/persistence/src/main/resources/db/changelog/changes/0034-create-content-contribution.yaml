@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0034-create-content-contribution
+      author: oei-backend
+      comment: >
+        Read-only in this iteration (listAdminContentContributions only) -- the
+        member-facing write path (createContribution, tag member-contributions) is not
+        implemented yet, documented TODO. Legitimately empty until that slice lands.
+      changes:
+        - createTable:
+            tableName: content_contribution
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: content_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_content_contribution_content
+                    references: content(id)
+              - column:
+                  name: patch
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: author_member_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_content_contribution_member
+                    references: member(id)
+              - column:
+                  name: status
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false

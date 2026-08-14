@@ -1,0 +1,45 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0032-create-content-approval
+      author: oei-backend
+      changes:
+        - createTable:
+            tableName: content_approval
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: content_version_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_content_approval_content_version
+                    references: content_version(id)
+              - column:
+                  name: role
+                  type: varchar(15)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: decision
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: comment
+                  type: text
+              - column:
+                  name: approver_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: decided_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false

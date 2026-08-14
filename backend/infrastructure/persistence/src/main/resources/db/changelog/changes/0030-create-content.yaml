@@ -1,0 +1,57 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0030-create-content
+      author: oei-backend
+      comment: >
+        tags_json stores the tags list as JSON (small, flexible list). governance_* columns
+        are flattened from ContentGovernance rather than a child table -- it is a plain
+        2-field value object, always read/replaced together with its parent.
+      changes:
+        - createTable:
+            tableName: content
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: type
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: slug
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: source_type
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: tags_json
+                  type: jsonb
+              - column:
+                  name: governance_approval_required
+                  type: boolean
+              - column:
+                  name: governance_decision_id
+                  type: varchar(100)
+              - column:
+                  name: current_version_id
+                  type: uuid
+              - column:
+                  name: status
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
