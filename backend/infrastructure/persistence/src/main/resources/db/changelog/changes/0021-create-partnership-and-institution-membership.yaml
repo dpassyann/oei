@@ -1,0 +1,68 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0021-create-partnership-and-institution-membership
+      author: oei-backend
+      changes:
+        - createTable:
+            tableName: partnership
+            columns:
+              - column:
+                  name: institution_id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    foreignKeyName: fk_partnership_institution
+                    references: institution(id)
+              - column:
+                  name: level
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: verified
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: started_at
+                  type: timestamptz
+              - column:
+                  name: ends_at
+                  type: timestamptz
+              - column:
+                  name: agreement_document_url
+                  type: varchar(500)
+        - createTable:
+            tableName: institution_membership
+            columns:
+              - column:
+                  name: member_id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    foreignKeyName: fk_institution_membership_member
+                    references: member(id)
+              - column:
+                  name: institution_id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    foreignKeyName: fk_institution_membership_institution
+                    references: institution(id)
+              - column:
+                  name: role
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: granted_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: granted_by
+                  type: varchar(255)

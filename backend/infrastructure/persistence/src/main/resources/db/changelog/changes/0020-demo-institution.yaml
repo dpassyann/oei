@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0020-demo-institution
+      author: oei-backend
+      comment: Same demo institution as the frontend's institution-demo-data.ts DEMO_INSTITUTION.
+      changes:
+        - sqlFile:
+            path: db/changelog/changes/0020-demo-institution.sql
+            relativeToChangelogFile: false
+            splitStatements: true
+            stripComments: true

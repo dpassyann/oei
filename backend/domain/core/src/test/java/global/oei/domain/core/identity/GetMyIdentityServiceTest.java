@@ -19,7 +19,7 @@ class GetMyIdentityServiceTest {
     void execute_returnsIdentityFromPort() {
         final SecurityContextPort port = mock(SecurityContextPort.class);
         final AuthenticatedIdentity identity =
-                new AuthenticatedIdentity("sub-1", "jane@oei.org", "Jane Doe", Set.of("member"));
+                new AuthenticatedIdentity("sub-1", "jane@oei.org", "Jane Doe", Set.of("member"), null);
         when(port.currentIdentity()).thenReturn(Optional.of(identity));
 
         final GetMyIdentityUseCase useCase = new GetMyIdentityService(port);

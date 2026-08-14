@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0022-demo-partnership-and-institution-membership
+      author: oei-backend
+      comment: >
+        Reuses real 0004 demo members (Alice Nguyen/Baptiste Dupont/Camille Moreau) as the
+        demo institution's team -- no synthetic identity duplication.
+      changes:
+        - sqlFile:
+            path: db/changelog/changes/0022-demo-partnership-and-institution-membership.sql
+            relativeToChangelogFile: false
+            splitStatements: true
+            stripComments: true

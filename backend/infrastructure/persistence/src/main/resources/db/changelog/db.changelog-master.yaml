@@ -53,3 +53,36 @@ databaseChangeLog:
   - include:
       file: db/changelog/changes/0018-create-pdf-generation-job.yaml
       relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0019-create-institution.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0020-demo-institution.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0021-create-partnership-and-institution-membership.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0022-demo-partnership-and-institution-membership.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0023-create-institution-invitation.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0024-create-employment-affiliation.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0025-create-institution-publication.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0026-create-institution-opportunity.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0027-create-institution-badge-proposal.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0028-create-institution-audit-log.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0029-demo-institution-workspace-data.yaml
+      relativeToChangelogFile: false

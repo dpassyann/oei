@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface CertificationRepository extends JpaRepository<CertificationEntity, UUID> {
 
     List<CertificationEntity> findByMemberId(UUID memberId);
+
+    long countByMemberIdIn(List<UUID> memberIds);
 }

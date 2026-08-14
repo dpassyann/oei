@@ -1,0 +1,90 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0019-create-institution
+      author: oei-backend
+      comment: >
+        sectors_json stores the sectors list as JSON (small, flexible list, same rationale
+        as other "list of strings" fields in this codebase) rather than a join table.
+      changes:
+        - createTable:
+            tableName: institution
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: legal_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: public_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: logo_url
+                  type: varchar(500)
+              - column:
+                  name: country
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sectors_json
+                  type: jsonb
+              - column:
+                  name: description
+                  type: text
+              - column:
+                  name: public_slug
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: is_demo_data
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: institution_domain
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: institution_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_institution_domain_institution
+                    references: institution(id)
+              - column:
+                  name: domain
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: verified
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: verified_at
+                  type: timestamptz

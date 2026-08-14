@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0023-create-institution-invitation
+      author: oei-backend
+      changes:
+        - createTable:
+            tableName: institution_invitation
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: institution_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_institution_invitation_institution
+                    references: institution(id)
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: invited_by
+                  type: varchar(255)
+              - column:
+                  name: invited_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: expires_at
+                  type: timestamptz

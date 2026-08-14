@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0029-demo-institution-workspace-data
+      author: oei-backend
+      comment: >
+        Same shapes as institution-demo-data.ts (invitations/affiliations/publications/
+        opportunities/badge-proposals/audit-log), reusing real 0004 demo members.
+      changes:
+        - sqlFile:
+            path: db/changelog/changes/0029-demo-institution-workspace-data.sql
+            relativeToChangelogFile: false
+            splitStatements: true
+            stripComments: true

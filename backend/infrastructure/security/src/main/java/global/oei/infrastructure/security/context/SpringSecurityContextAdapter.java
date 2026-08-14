@@ -41,6 +41,7 @@ public class SpringSecurityContextAdapter implements SecurityContextPort {
                 jwt.getSubject(),
                 jwt.getClaimAsString("email"),
                 jwt.getClaimAsString("name"),
-                roles));
+                roles,
+                jwt.getClaimAsString("institutionId")));
     }
 }

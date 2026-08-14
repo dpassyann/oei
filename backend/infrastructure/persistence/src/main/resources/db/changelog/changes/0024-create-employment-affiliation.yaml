@@ -1,0 +1,59 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0024-create-employment-affiliation
+      author: oei-backend
+      comment: >
+        Single aggregate backing both the member-facing EmploymentAffiliation and
+        institution-facing MemberInstitutionAffiliation contract schemas (two lexicons for the
+        same lifecycle, see global.oei.domain.shared.institution.EmploymentAffiliationStatus's
+        Javadoc).
+      changes:
+        - createTable:
+            tableName: employment_affiliation
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: member_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_employment_affiliation_member
+                    references: member(id)
+              - column:
+                  name: institution_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_employment_affiliation_institution
+                    references: institution(id)
+              - column:
+                  name: verification_method
+                  type: varchar(25)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: requested_at
+                  type: timestamptz
+              - column:
+                  name: started_at
+                  type: timestamptz
+              - column:
+                  name: ended_at
+                  type: timestamptz
+              - column:
+                  name: decided_at
+                  type: timestamptz
+              - column:
+                  name: decided_by
+                  type: varchar(255)

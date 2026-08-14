@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0028-create-institution-audit-log
+      author: oei-backend
+      comment: >
+        Business audit trail (invitations, affiliation decisions, publications...), read by
+        both listInstitutionAuditLog (institution_id-scoped) and listAdminAuditLog (unscoped,
+        institution_id nullable for globally-scoped admin actions).
+      changes:
+        - createTable:
+            tableName: institution_audit_log
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: institution_id
+                  type: uuid
+                  foreignKeyName: fk_institution_audit_log_institution
+                  references: institution(id)
+              - column:
+                  name: actor_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: action
+                  type: varchar(60)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: target_type
+                  type: varchar(60)
+              - column:
+                  name: target_id
+                  type: varchar(100)
+              - column:
+                  name: occurred_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: metadata_json
+                  type: jsonb

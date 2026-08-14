@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0027-create-institution-badge-proposal
+      author: oei-backend
+      changes:
+        - createTable:
+            tableName: institution_badge_proposal
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: institution_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_institution_badge_proposal_institution
+                    references: institution(id)
+              - column:
+                  name: member_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_institution_badge_proposal_member
+                    references: member(id)
+              - column:
+                  name: proposed_badge_code
+                  type: varchar(60)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: justification
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(20)
+                  constraints:
+                    nullable: false

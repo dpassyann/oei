@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0025-create-institution-publication
+      author: oei-backend
+      changes:
+        - createTable:
+            tableName: institution_publication
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: institution_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_institution_publication_institution
+                    references: institution(id)
+              - column:
+                  name: type
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: body
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: author_member_id
+                  type: uuid
+              - column:
+                  name: submitted_at
+                  type: timestamptz
+              - column:
+                  name: published_at
+                  type: timestamptz

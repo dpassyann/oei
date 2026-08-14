@@ -11,6 +11,11 @@ import global.oei.domain.core.charter.SignEthicalCharterService;
 import global.oei.domain.core.cv.CreateCvService;
 import global.oei.domain.core.cv.RenderCvService;
 import global.oei.domain.core.identity.GetMyIdentityService;
+import global.oei.domain.core.institution.CreateInstitutionBadgeProposalService;
+import global.oei.domain.core.institution.CreateInstitutionInvitationService;
+import global.oei.domain.core.institution.CreateInstitutionOpportunityService;
+import global.oei.domain.core.institution.CreateInstitutionPublicationService;
+import global.oei.domain.core.institution.RequestEmploymentAffiliationService;
 import global.oei.domain.core.network.GetSalaryInsightService;
 import global.oei.domain.core.profile.GetMyProfileService;
 import global.oei.domain.core.profile.UpdateMyProfileService;
@@ -27,6 +32,21 @@ import global.oei.domain.shared.cv.CvPort;
 import global.oei.domain.shared.cv.CvTemplateCatalogPort;
 import global.oei.domain.shared.cv.PdfGenerationJobPort;
 import global.oei.domain.shared.cv.RenderCvUseCase;
+import global.oei.domain.shared.institution.CreateInstitutionBadgeProposalUseCase;
+import global.oei.domain.shared.institution.CreateInstitutionInvitationUseCase;
+import global.oei.domain.shared.institution.CreateInstitutionOpportunityUseCase;
+import global.oei.domain.shared.institution.CreateInstitutionPublicationUseCase;
+import global.oei.domain.shared.institution.EmploymentAffiliationPort;
+import global.oei.domain.shared.institution.InstitutionAuditLogPort;
+import global.oei.domain.shared.institution.InstitutionBadgeProposalPort;
+import global.oei.domain.shared.institution.InstitutionDashboardPort;
+import global.oei.domain.shared.institution.InstitutionInvitationPort;
+import global.oei.domain.shared.institution.InstitutionMembershipPort;
+import global.oei.domain.shared.institution.InstitutionOpportunityPort;
+import global.oei.domain.shared.institution.InstitutionPort;
+import global.oei.domain.shared.institution.InstitutionPublicationPort;
+import global.oei.domain.shared.institution.PartnershipPort;
+import global.oei.domain.shared.institution.RequestEmploymentAffiliationUseCase;
 import global.oei.domain.shared.membership.MembershipLookupPort;
 import global.oei.domain.shared.network.GetSalaryInsightUseCase;
 import global.oei.domain.shared.network.NetworkGraphPort;
@@ -53,6 +73,26 @@ import global.oei.infrastructure.persistence.cv.CvPersistenceAdapter;
 import global.oei.infrastructure.persistence.cv.CvRepository;
 import global.oei.infrastructure.persistence.cv.CvTemplateCatalogPersistenceAdapter;
 import global.oei.infrastructure.persistence.cv.CvTemplateRepository;
+import global.oei.infrastructure.persistence.institution.EmploymentAffiliationPersistenceAdapter;
+import global.oei.infrastructure.persistence.institution.EmploymentAffiliationRepository;
+import global.oei.infrastructure.persistence.institution.InstitutionAuditLogPersistenceAdapter;
+import global.oei.infrastructure.persistence.institution.InstitutionAuditLogRepository;
+import global.oei.infrastructure.persistence.institution.InstitutionBadgeProposalPersistenceAdapter;
+import global.oei.infrastructure.persistence.institution.InstitutionBadgeProposalRepository;
+import global.oei.infrastructure.persistence.institution.InstitutionDashboardPersistenceAdapter;
+import global.oei.infrastructure.persistence.institution.InstitutionDomainRepository;
+import global.oei.infrastructure.persistence.institution.InstitutionInvitationPersistenceAdapter;
+import global.oei.infrastructure.persistence.institution.InstitutionInvitationRepository;
+import global.oei.infrastructure.persistence.institution.InstitutionMembershipPersistenceAdapter;
+import global.oei.infrastructure.persistence.institution.InstitutionMembershipRepository;
+import global.oei.infrastructure.persistence.institution.InstitutionOpportunityPersistenceAdapter;
+import global.oei.infrastructure.persistence.institution.InstitutionOpportunityRepository;
+import global.oei.infrastructure.persistence.institution.InstitutionPersistenceAdapter;
+import global.oei.infrastructure.persistence.institution.InstitutionPublicationPersistenceAdapter;
+import global.oei.infrastructure.persistence.institution.InstitutionPublicationRepository;
+import global.oei.infrastructure.persistence.institution.InstitutionRepository;
+import global.oei.infrastructure.persistence.institution.PartnershipPersistenceAdapter;
+import global.oei.infrastructure.persistence.institution.PartnershipRepository;
 import global.oei.infrastructure.persistence.member.MemberRepository;
 import global.oei.infrastructure.persistence.membership.MembershipPersistenceAdapter;
 import global.oei.infrastructure.persistence.membership.MembershipRepository;
@@ -212,5 +252,91 @@ public class OeiWiringConfiguration {
     @Bean
     public RenderCvUseCase renderCvUseCase(final PdfGenerationJobPort pdfGenerationJobPort) {
         return new RenderCvService(pdfGenerationJobPort);
+    }
+
+    @Bean
+    public InstitutionPort institutionPort(final InstitutionRepository repository, final InstitutionDomainRepository domainRepository) {
+        return new InstitutionPersistenceAdapter(repository, domainRepository);
+    }
+
+    @Bean
+    public PartnershipPort partnershipPort(final PartnershipRepository repository) {
+        return new PartnershipPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public InstitutionMembershipPort institutionMembershipPort(final InstitutionMembershipRepository repository) {
+        return new InstitutionMembershipPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public InstitutionInvitationPort institutionInvitationPort(final InstitutionInvitationRepository repository) {
+        return new InstitutionInvitationPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public CreateInstitutionInvitationUseCase createInstitutionInvitationUseCase(final InstitutionInvitationPort port) {
+        return new CreateInstitutionInvitationService(port);
+    }
+
+    @Bean
+    public EmploymentAffiliationPort employmentAffiliationPort(final EmploymentAffiliationRepository repository) {
+        return new EmploymentAffiliationPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public RequestEmploymentAffiliationUseCase requestEmploymentAffiliationUseCase(final EmploymentAffiliationPort port) {
+        return new RequestEmploymentAffiliationService(port);
+    }
+
+    @Bean
+    public InstitutionPublicationPort institutionPublicationPort(final InstitutionPublicationRepository repository) {
+        return new InstitutionPublicationPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public CreateInstitutionPublicationUseCase createInstitutionPublicationUseCase(final InstitutionPublicationPort port) {
+        return new CreateInstitutionPublicationService(port);
+    }
+
+    @Bean
+    public InstitutionOpportunityPort institutionOpportunityPort(final InstitutionOpportunityRepository repository) {
+        return new InstitutionOpportunityPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public CreateInstitutionOpportunityUseCase createInstitutionOpportunityUseCase(final InstitutionOpportunityPort port) {
+        return new CreateInstitutionOpportunityService(port);
+    }
+
+    @Bean
+    public InstitutionBadgeProposalPort institutionBadgeProposalPort(final InstitutionBadgeProposalRepository repository) {
+        return new InstitutionBadgeProposalPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public CreateInstitutionBadgeProposalUseCase createInstitutionBadgeProposalUseCase(final InstitutionBadgeProposalPort port) {
+        return new CreateInstitutionBadgeProposalService(port);
+    }
+
+    @Bean
+    public InstitutionAuditLogPort institutionAuditLogPort(final InstitutionAuditLogRepository repository) {
+        return new InstitutionAuditLogPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public InstitutionDashboardPort institutionDashboardPort(
+            final EmploymentAffiliationRepository employmentAffiliationRepository,
+            final CertificationRepository certificationRepository,
+            final BadgeAwardRepository badgeAwardRepository,
+            final EthicalCharterSignatureRepository ethicalCharterSignatureRepository,
+            final ProfessionalProfileRepository professionalProfileRepository,
+            final InstitutionPublicationRepository institutionPublicationRepository,
+            final InstitutionOpportunityRepository institutionOpportunityRepository,
+            final InstitutionInvitationRepository institutionInvitationRepository) {
+        return new InstitutionDashboardPersistenceAdapter(
+                employmentAffiliationRepository, certificationRepository, badgeAwardRepository,
+                ethicalCharterSignatureRepository, professionalProfileRepository, institutionPublicationRepository,
+                institutionOpportunityRepository, institutionInvitationRepository);
     }
 }

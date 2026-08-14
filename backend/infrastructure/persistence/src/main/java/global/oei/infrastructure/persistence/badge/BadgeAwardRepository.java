@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface BadgeAwardRepository extends JpaRepository<BadgeAwardEntity, UUID> {
 
     List<BadgeAwardEntity> findByMemberId(UUID memberId);
+
+    long countByMemberIdIn(List<UUID> memberIds);
 }
