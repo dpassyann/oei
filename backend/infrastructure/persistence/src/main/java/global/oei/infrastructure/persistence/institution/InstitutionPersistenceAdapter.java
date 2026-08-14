@@ -37,6 +37,22 @@ public class InstitutionPersistenceAdapter implements InstitutionPort {
     }
 
     @Override
+    public List<Institution> findAll() {
+        return repository.findAll().stream()
+                .map(entity -> toDomain(entity, domainRepository.findByInstitutionId(entity.getId())))
+                .toList();
+    }
+
+    @Override
+    @Transactional
+    public InstitutionDomain addDomain(final InstitutionId institutionId, final InstitutionDomain domain) {
+        final InstitutionDomainEntity entity =
+                new InstitutionDomainEntity(UUID.fromString(domain.id()), institutionId.value(), domain.domain(), domain.verified(), domain.verifiedAt());
+        domainRepository.save(entity);
+        return domain;
+    }
+
+    @Override
     @Transactional
     public Institution save(final Institution institution) {
         final InstitutionEntity entity = new InstitutionEntity(

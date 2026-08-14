@@ -15,6 +15,8 @@ import global.oei.domain.shared.institution.CreateInstitutionBadgeProposalUseCas
 import global.oei.domain.shared.institution.CreateInstitutionInvitationUseCase;
 import global.oei.domain.shared.institution.CreateInstitutionOpportunityUseCase;
 import global.oei.domain.shared.institution.CreateInstitutionPublicationUseCase;
+import global.oei.domain.shared.institution.CreateInstitutionUseCase;
+import global.oei.domain.shared.institution.PartnershipLevel;
 import global.oei.domain.shared.institution.EmploymentAffiliation;
 import global.oei.domain.shared.institution.EmploymentAffiliationPort;
 import global.oei.domain.shared.institution.EmploymentAffiliationStatus;
@@ -71,6 +73,7 @@ public class InstitutionService implements InstitutionAdapter {
     private final CreateInstitutionBadgeProposalUseCase createInstitutionBadgeProposalUseCase;
     private final InstitutionAuditLogPort institutionAuditLogPort;
     private final InstitutionDashboardPort institutionDashboardPort;
+    private final CreateInstitutionUseCase createInstitutionUseCase;
 
     // --- account ---
 
@@ -307,6 +310,86 @@ public class InstitutionService implements InstitutionAdapter {
                 .orElseGet(List::of);
     }
 
+    // --- admin governance ---
+
+    @Override
+    public List<Institution> listAllInstitutions() {
+        return institutionPort.findAll();
+    }
+
+    @Override
+    public Institution createInstitution(
+            final String legalName, final String publicName, final String country, final String logoUrl, final String description,
+            final List<String> emailDomains) {
+        return createInstitutionUseCase.execute(legalName, publicName, country, logoUrl, description, emailDomains);
+    }
+
+    @Override
+    public Optional<Institution> approveInstitution(final String id) {
+        return institutionPort.findById(InstitutionId.of(id)).map(institution -> {
+            final Institution approved = institutionPort.save(institution.approve());
+            auditForInstitution(id, "INSTITUTION_APPROVED", "Institution", id, Map.of());
+            return approved;
+        });
+    }
+
+    @Override
+    public Optional<Institution> activateInstitution(final String id) {
+        return institutionPort.findById(InstitutionId.of(id)).map(institution -> {
+            final Institution activated = institutionPort.save(institution.activate());
+            auditForInstitution(id, "INSTITUTION_ACTIVATED", "Institution", id, Map.of());
+            return activated;
+        });
+    }
+
+    @Override
+    public Optional<Institution> suspendInstitution(final String id) {
+        return institutionPort.findById(InstitutionId.of(id)).map(institution -> {
+            final Institution suspended = institutionPort.save(institution.suspend());
+            auditForInstitution(id, "INSTITUTION_SUSPENDED", "Institution", id, Map.of());
+            return suspended;
+        });
+    }
+
+    @Override
+    public Optional<Institution> revokeInstitution(final String id, final String reason) {
+        return institutionPort.findById(InstitutionId.of(id)).map(institution -> {
+            final Institution revoked = institutionPort.save(institution.revoke());
+            auditForInstitution(id, "INSTITUTION_REVOKED", "Institution", id, Map.of("reason", reason));
+            return revoked;
+        });
+    }
+
+    @Override
+    public Optional<Institution> verifyInstitution(final String id) {
+        return institutionPort.findById(InstitutionId.of(id)).map(institution -> {
+            final InstitutionId institutionId = institution.id();
+            final Partnership existing = partnershipPort.findByInstitutionId(institutionId)
+                    .orElseGet(() -> new Partnership(institutionId, PartnershipLevel.PROSPECT, false, Instant.now(), null, null));
+            partnershipPort.save(new Partnership(
+                    institutionId, existing.level(), true, existing.startedAt(), existing.endsAt(), existing.agreementDocumentUrl()));
+            auditForInstitution(id, "INSTITUTION_VERIFIED", "Institution", id, Map.of());
+            return institution;
+        });
+    }
+
+    @Override
+    public Optional<Partnership> updatePartnership(
+            final String id, final PartnershipLevel level, final boolean verified, final Instant startedAt, final Instant endsAt,
+            final String agreementDocumentUrl) {
+        return institutionPort.findById(InstitutionId.of(id)).map(institution -> {
+            final Partnership saved =
+                    partnershipPort.save(new Partnership(institution.id(), level, verified, startedAt, endsAt, agreementDocumentUrl));
+            auditForInstitution(id, "PARTNERSHIP_UPDATED", "Partnership", id, Map.of("level", level.name()));
+            return saved;
+        });
+    }
+
+    @Override
+    public List<InstitutionAuditLog> listAllAuditLog() {
+        return institutionAuditLogPort.findAll();
+    }
+
     // --- helpers ---
 
     private Optional<InstitutionInvitation> findOwnInvitation(final String id) {
@@ -329,10 +412,23 @@ public class InstitutionService implements InstitutionAdapter {
         return institutionOpportunityPort.findById(id).filter(opportunity -> opportunity.institutionId().equals(institutionId));
     }
 
+    /** Institution-scoped audit entry (institution-side actions: resolves "my institution" from the caller's own claim). */
     private void audit(final String action, final String targetType, final String targetId, final Map<String, Object> metadata) {
+        auditForInstitution(currentInstitutionId().toString(), action, targetType, targetId, metadata);
+    }
+
+    /**
+     * Admin-side audit entry: {@code institutionId} is the TARGET institution (an admin
+     * caller does not carry an {@code institutionId} claim of their own), {@code actorId} is
+     * the caller's raw subject (an admin may not be a {@code Member} at all, so it is never
+     * wrapped as a {@link MemberId}).
+     */
+    private void auditForInstitution(
+            final String institutionId, final String action, final String targetType, final String targetId,
+            final Map<String, Object> metadata) {
         institutionAuditLogPort.append(new InstitutionAuditLog(
-                UUID.randomUUID().toString(), currentInstitutionId().toString(), currentMemberId().toString(), action, targetType,
-                targetId, Instant.now(), metadata));
+                UUID.randomUUID().toString(), institutionId, currentIdentity().subject(), action, targetType, targetId, Instant.now(),
+                metadata));
     }
 
     private InstitutionId currentInstitutionId() {

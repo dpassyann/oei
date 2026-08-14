@@ -103,4 +103,32 @@ public interface InstitutionAdapter {
     List<InstitutionPublication> listPublicInstitutionPublications(String publicSlug);
 
     List<InstitutionOpportunity> listPublicInstitutionOpportunities(String publicSlug);
+
+    // --- admin governance (/api/admin/v1/institutions, /api/admin/v1/audit-log) ---
+
+    List<Institution> listAllInstitutions();
+
+    Institution createInstitution(
+            String legalName, String publicName, String country, String logoUrl, String description, List<String> emailDomains);
+
+    Optional<Institution> approveInstitution(String id);
+
+    Optional<Institution> activateInstitution(String id);
+
+    Optional<Institution> suspendInstitution(String id);
+
+    Optional<Institution> revokeInstitution(String id, String reason);
+
+    /**
+     * Marks the institution's {@link Partnership} as verified (documents/convention
+     * checked) — see {@code Partnership#verified()}. Creates a {@code PROSPECT} partnership
+     * record first if none exists yet.
+     */
+    Optional<Institution> verifyInstitution(String id);
+
+    Optional<Partnership> updatePartnership(
+            String id, global.oei.domain.shared.institution.PartnershipLevel level, boolean verified, Instant startedAt, Instant endsAt,
+            String agreementDocumentUrl);
+
+    List<InstitutionAuditLog> listAllAuditLog();
 }

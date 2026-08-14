@@ -15,6 +15,7 @@ import global.oei.domain.core.institution.CreateInstitutionBadgeProposalService;
 import global.oei.domain.core.institution.CreateInstitutionInvitationService;
 import global.oei.domain.core.institution.CreateInstitutionOpportunityService;
 import global.oei.domain.core.institution.CreateInstitutionPublicationService;
+import global.oei.domain.core.institution.CreateInstitutionService;
 import global.oei.domain.core.institution.RequestEmploymentAffiliationService;
 import global.oei.domain.core.network.GetSalaryInsightService;
 import global.oei.domain.core.profile.GetMyProfileService;
@@ -36,6 +37,7 @@ import global.oei.domain.shared.institution.CreateInstitutionBadgeProposalUseCas
 import global.oei.domain.shared.institution.CreateInstitutionInvitationUseCase;
 import global.oei.domain.shared.institution.CreateInstitutionOpportunityUseCase;
 import global.oei.domain.shared.institution.CreateInstitutionPublicationUseCase;
+import global.oei.domain.shared.institution.CreateInstitutionUseCase;
 import global.oei.domain.shared.institution.EmploymentAffiliationPort;
 import global.oei.domain.shared.institution.InstitutionAuditLogPort;
 import global.oei.domain.shared.institution.InstitutionBadgeProposalPort;
@@ -257,6 +259,11 @@ public class OeiWiringConfiguration {
     @Bean
     public InstitutionPort institutionPort(final InstitutionRepository repository, final InstitutionDomainRepository domainRepository) {
         return new InstitutionPersistenceAdapter(repository, domainRepository);
+    }
+
+    @Bean
+    public CreateInstitutionUseCase createInstitutionUseCase(final InstitutionPort institutionPort) {
+        return new CreateInstitutionService(institutionPort);
     }
 
     @Bean

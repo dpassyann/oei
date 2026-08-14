@@ -62,4 +62,58 @@ public record Institution(
                 id, legalName, publicName, logoUrl, country, sectors, description, emailDomains, publicSlug,
                 isDemoData, newStatus);
     }
+
+    /**
+     * @return a new instance moved to {@link InstitutionWorkflowStatus#APPROVED}, or throws if
+     *         already {@link InstitutionWorkflowStatus#ACTIVE}, {@link InstitutionWorkflowStatus#SUSPENDED},
+     *         {@link InstitutionWorkflowStatus#REVOKED} or {@link InstitutionWorkflowStatus#ARCHIVED}
+     */
+    public Institution approve() {
+        requireNotIn(InstitutionWorkflowStatus.ACTIVE, InstitutionWorkflowStatus.SUSPENDED, InstitutionWorkflowStatus.REVOKED,
+                InstitutionWorkflowStatus.ARCHIVED);
+        return withStatus(InstitutionWorkflowStatus.APPROVED);
+    }
+
+    /**
+     * @return a new instance moved to {@link InstitutionWorkflowStatus#ACTIVE}; requires
+     *         {@link InstitutionWorkflowStatus#APPROVED}. See the {@code activateInstitution}
+     *         operation's own contract summary: this only represents the state transition —
+     *         no real Keycloak provisioning call exists yet in this iteration.
+     */
+    public Institution activate() {
+        require(InstitutionWorkflowStatus.APPROVED);
+        return withStatus(InstitutionWorkflowStatus.ACTIVE);
+    }
+
+    /**
+     * @return a new instance moved to {@link InstitutionWorkflowStatus#SUSPENDED}; requires
+     *         {@link InstitutionWorkflowStatus#ACTIVE} (soft delete, never physical removal)
+     */
+    public Institution suspend() {
+        require(InstitutionWorkflowStatus.ACTIVE);
+        return withStatus(InstitutionWorkflowStatus.SUSPENDED);
+    }
+
+    /**
+     * @return a new instance moved to {@link InstitutionWorkflowStatus#REVOKED}, or throws if
+     *         already {@link InstitutionWorkflowStatus#REVOKED} (soft delete, never physical removal)
+     */
+    public Institution revoke() {
+        requireNotIn(InstitutionWorkflowStatus.REVOKED);
+        return withStatus(InstitutionWorkflowStatus.REVOKED);
+    }
+
+    private void require(final InstitutionWorkflowStatus expected) {
+        if (status != expected) {
+            throw new IllegalStateException("expected status " + expected + " but was " + status);
+        }
+    }
+
+    private void requireNotIn(final InstitutionWorkflowStatus... forbidden) {
+        for (final InstitutionWorkflowStatus candidate : forbidden) {
+            if (status == candidate) {
+                throw new IllegalStateException("status must not be " + candidate);
+            }
+        }
+    }
 }
