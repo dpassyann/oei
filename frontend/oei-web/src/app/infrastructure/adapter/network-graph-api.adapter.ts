@@ -1,6 +1,6 @@
 import { Service, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import {
   NetworkGraphPort,
   NetworkTopicsAndCertifications,
@@ -12,6 +12,15 @@ import { NetworkExpert } from '../../domain/model/network/network-expert.model';
 import { NetworkSalaryInsight, NetworkSalaryNodeType } from '../../domain/model/network/network-salary-insight.model';
 
 const NETWORK_API_BASE = '/api/public/v1/network';
+
+// Path segment for each `NetworkSalaryNodeType`, matching the three distinct
+// `getNetwork{Domain,Topic,Certification}SalaryInsight` operations in the OpenAPI contract — the
+// backend does not expose a single generic `/salary-insight?nodeType=&nodeId=` endpoint.
+const SALARY_INSIGHT_PATH_SEGMENT: Record<NetworkSalaryNodeType, string> = {
+  domain: 'domains',
+  topic: 'topics',
+  certification: 'certifications',
+};
 
 @Service()
 export class NetworkGraphApiAdapter implements NetworkGraphPort {
@@ -31,19 +40,25 @@ export class NetworkGraphApiAdapter implements NetworkGraphPort {
     });
   }
 
-  // No real backend endpoint exists yet for this feature (see the port's doc comment on the
-  // anonymization threshold) — written exactly as the rest of this adapter's methods, assuming
-  // a real backend to call, and falling back to the `undefined` value state (rather than
-  // propagating an error) on any failure, same convention as `SalaryBenchmarkApiAdapter`.
+  // The backend resolves to HTTP 204 (empty body) rather than 200 whenever the anonymized pool
+  // of `CurrentCompensation` declarations attached to this node (and country, if given) is below
+  // `MIN_ANONYMIZED_SAMPLE_SIZE` — Angular's `HttpClient` parses that empty 204 body as `null`,
+  // which is mapped here to the `undefined` value state (not an error). Any genuine transport/
+  // server error (404 unknown node included) also falls back to `undefined`, same convention as
+  // the rest of this port.
   getSalaryInsight(
     nodeType: NetworkSalaryNodeType,
     nodeId: string,
     country?: string,
   ): Observable<NetworkSalaryInsight | undefined> {
+    const pathSegment = SALARY_INSIGHT_PATH_SEGMENT[nodeType];
     return this.http
-      .get<NetworkSalaryInsight | undefined>(`${NETWORK_API_BASE}/salary-insight`, {
-        params: country ? { nodeType, nodeId, country } : { nodeType, nodeId },
+      .get<NetworkSalaryInsight | null>(`${NETWORK_API_BASE}/${pathSegment}/${nodeId}/salary-insight`, {
+        params: country ? { country } : {},
       })
-      .pipe(catchError(() => of(undefined)));
+      .pipe(
+        map((insight) => insight ?? undefined),
+        catchError(() => of(undefined)),
+      );
   }
 }

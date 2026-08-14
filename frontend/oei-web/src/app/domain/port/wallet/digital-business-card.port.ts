@@ -4,10 +4,9 @@ import { DigitalBusinessCard } from '../../model/wallet/digital-business-card';
 
 export interface DigitalBusinessCardPort {
   generateCard(): Observable<DigitalBusinessCard>;
-  // Not part of the original OpenAPI `/api/member/v1/**` contract (which only exposes the
-  // authenticated member's own card): the public card page at `/card/{slug}` needs an
-  // unauthenticated-by-slug lookup, mirroring `PublicProfilePort.getBySlug`'s documented
-  // pragmatic-addition pattern. Returns `null` when the slug has no published card.
+  // Matches the confirmed OpenAPI `GET /api/public/v1/members/{publicSlug}/digital-card`
+  // (`getPublicDigitalCard`) contract, used by the public card page at `/card/{slug}`.
+  // Returns `null` when the slug has no published card (404).
   getPublicCard(publicSlug: string): Observable<DigitalBusinessCard | null>;
 }
 

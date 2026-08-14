@@ -3,17 +3,11 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { firstValueFrom, Observable } from 'rxjs';
 import { AdminContentApiAdapter } from './admin-content-api.adapter';
-import { RuntimeConfig } from '../config/runtime-config';
 
 describe('AdminContentApiAdapter', () => {
   function createAdapter(): { adapter: AdminContentApiAdapter; httpMock: HttpTestingController } {
     TestBed.configureTestingModule({
-      providers: [
-        AdminContentApiAdapter,
-        provideHttpClient(),
-        provideHttpClientTesting(),
-        { provide: RuntimeConfig, useValue: { apiBaseUrl: () => '/api/v1' } },
-      ],
+      providers: [AdminContentApiAdapter, provideHttpClient(), provideHttpClientTesting()],
     });
     return { adapter: TestBed.inject(AdminContentApiAdapter), httpMock: TestBed.inject(HttpTestingController) };
   }
@@ -24,7 +18,7 @@ describe('AdminContentApiAdapter', () => {
     const result = firstValueFrom(adapter.list({ type: 'ARTICLE', status: 'DRAFT', lang: 'fr', tag: 't', q: 'x' }));
     const req = httpMock.expectOne(
       (r) =>
-        r.url === '/api/v1/admin/v1/content' &&
+        r.url === '/api/admin/v1/content' &&
         r.params.get('type') === 'ARTICLE' &&
         r.params.get('status') === 'DRAFT' &&
         r.params.get('lang') === 'fr' &&
@@ -41,7 +35,7 @@ describe('AdminContentApiAdapter', () => {
     const { adapter, httpMock } = createAdapter();
 
     const result = firstValueFrom(adapter.getById('c1'));
-    httpMock.expectOne('/api/v1/admin/v1/content/c1').flush({ id: 'c1' });
+    httpMock.expectOne('/api/admin/v1/content/c1').flush({ id: 'c1' });
 
     expect((await result).id).toBe('c1');
     httpMock.verify();
@@ -51,7 +45,7 @@ describe('AdminContentApiAdapter', () => {
     const { adapter, httpMock } = createAdapter();
 
     const result = firstValueFrom(adapter.create({ type: 'ARTICLE', slug: 's', sourceType: 'CMS', title: 'T' }));
-    const req = httpMock.expectOne('/api/v1/admin/v1/content');
+    const req = httpMock.expectOne('/api/admin/v1/content');
     expect(req.request.method).toBe('POST');
     req.flush({ id: 'c1' });
 
@@ -63,7 +57,7 @@ describe('AdminContentApiAdapter', () => {
     const { adapter, httpMock } = createAdapter();
 
     const result = firstValueFrom(adapter.createVersion('c1', { language: 'fr', title: 'T', body: 'B' }));
-    const req = httpMock.expectOne('/api/v1/admin/v1/content/c1');
+    const req = httpMock.expectOne('/api/admin/v1/content/c1');
     expect(req.request.method).toBe('PUT');
     req.flush({ id: 'v1' });
 
@@ -75,13 +69,13 @@ describe('AdminContentApiAdapter', () => {
     readonly call: (adapter: AdminContentApiAdapter) => Observable<unknown>;
     readonly url: string;
   }[] = [
-    { call: (a) => a.submit('c1'), url: '/api/v1/admin/v1/content/c1/submit' },
-    { call: (a) => a.approve('c1', { role: 'LEGAL', decision: 'APPROVED' }), url: '/api/v1/admin/v1/content/c1/approve' },
-    { call: (a) => a.reject('c1', 'nope'), url: '/api/v1/admin/v1/content/c1/reject' },
-    { call: (a) => a.requestTranslation('c1'), url: '/api/v1/admin/v1/content/c1/translations/request' },
-    { call: (a) => a.schedule('c1'), url: '/api/v1/admin/v1/content/c1/schedule' },
-    { call: (a) => a.publish('c1'), url: '/api/v1/admin/v1/content/c1/publish' },
-    { call: (a) => a.archive('c1'), url: '/api/v1/admin/v1/content/c1/archive' },
+    { call: (a) => a.submit('c1'), url: '/api/admin/v1/content/c1/submit' },
+    { call: (a) => a.approve('c1', { role: 'LEGAL', decision: 'APPROVED' }), url: '/api/admin/v1/content/c1/approve' },
+    { call: (a) => a.reject('c1', 'nope'), url: '/api/admin/v1/content/c1/reject' },
+    { call: (a) => a.requestTranslation('c1'), url: '/api/admin/v1/content/c1/translations/request' },
+    { call: (a) => a.schedule('c1'), url: '/api/admin/v1/content/c1/schedule' },
+    { call: (a) => a.publish('c1'), url: '/api/admin/v1/content/c1/publish' },
+    { call: (a) => a.archive('c1'), url: '/api/admin/v1/content/c1/archive' },
   ];
 
   for (const { call, url } of actionCases) {
@@ -102,7 +96,7 @@ describe('AdminContentApiAdapter', () => {
     const { adapter, httpMock } = createAdapter();
 
     const result = firstValueFrom(adapter.addTranslation('c1', { language: 'en' }));
-    httpMock.expectOne('/api/v1/admin/v1/content/c1/translations').flush({ id: 't1' });
+    httpMock.expectOne('/api/admin/v1/content/c1/translations').flush({ id: 't1' });
 
     expect((await result).id).toBe('t1');
     httpMock.verify();
@@ -112,7 +106,7 @@ describe('AdminContentApiAdapter', () => {
     const { adapter, httpMock } = createAdapter();
 
     const result = firstValueFrom(adapter.validateTranslation('c1', 'en'));
-    httpMock.expectOne('/api/v1/admin/v1/content/c1/translations/en/validate').flush({ id: 't1' });
+    httpMock.expectOne('/api/admin/v1/content/c1/translations/en/validate').flush({ id: 't1' });
 
     expect((await result).id).toBe('t1');
     httpMock.verify();

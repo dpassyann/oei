@@ -62,7 +62,9 @@ describe('MembershipApiAdapter', () => {
     const result = firstValueFrom(adapter.requestEmploymentAffiliation('institution-1', 'INSTITUTION_VALIDATION'));
     const req = httpMock.expectOne('/api/member/v1/employment-affiliations');
     expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual({ institutionId: 'institution-1', verificationMethod: 'INSTITUTION_VALIDATION' });
+    // The OpenAPI requestBody only declares `institutionId` — `verificationMethod` is not
+    // part of the wire contract (decided/enforced server-side).
+    expect(req.request.body).toEqual({ institutionId: 'institution-1' });
     req.flush({
       id: 'affiliation-1',
       memberId: 'member-1',

@@ -31,13 +31,16 @@ export class MembershipApiAdapter implements MembershipPort {
     return this.http.get<EmploymentAffiliation[]>(`${MEMBERSHIP_API_BASE}/employment-affiliations`);
   }
 
+  // The OpenAPI `requestEmploymentAffiliation` requestBody only declares `institutionId`
+  // (the verification method is decided/enforced server-side, not accepted as client
+  // input) — `verificationMethod` stays a port parameter for the caller/UI's own display
+  // logic (e.g. which CTA the member picked) but is intentionally not sent in the body.
   requestEmploymentAffiliation(
     institutionId: string,
-    verificationMethod: AffiliationVerificationMethod,
+    _verificationMethod: AffiliationVerificationMethod,
   ): Observable<EmploymentAffiliation> {
     return this.http.post<EmploymentAffiliation>(`${MEMBERSHIP_API_BASE}/employment-affiliations`, {
       institutionId,
-      verificationMethod,
     });
   }
 

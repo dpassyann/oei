@@ -12,5 +12,5 @@ Entités attendues (voir modèle minimal du doc 03) : `Institution`,
 
 L'isolation multi-tenant (une institution ne voit que ses membres) est un
 principe de domaine central de ce contexte — voir
-`docs/architecture/keycloak-roles.md` §"Multi-tenant : rôles vs. groupes" pour la
+`../../../../../../../../../.docs/architecture/keycloak-roles.md` §"Multi-tenant : rôles vs. groupes" pour la
 façon dont Keycloak porte cette intention côté identité.

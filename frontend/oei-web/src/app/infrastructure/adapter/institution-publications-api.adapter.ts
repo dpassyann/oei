@@ -3,30 +3,33 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { InstitutionPublicationsPort } from '../../domain/port/institution/institution-publications.port';
 import { InstitutionPublication, InstitutionPublicationCreation } from '../../domain/model/institution/institution-publication';
-import { RuntimeConfig } from '../config/runtime-config';
+
+// Endpoints under `/api/institution/v1/**` are role-versioned per ADR 0002 and use a literal
+// prefix rather than `RuntimeConfig.apiBaseUrl()` (which defaults to the legacy `/api/v1`
+// public-site base and is only overridable for that historical family of endpoints).
+const INSTITUTION_API_BASE = '/api/institution/v1';
 
 @Service()
 export class InstitutionPublicationsApiAdapter implements InstitutionPublicationsPort {
   private readonly http = inject(HttpClient);
-  private readonly runtimeConfig = inject(RuntimeConfig);
 
   listPublications(): Observable<InstitutionPublication[]> {
-    return this.http.get<InstitutionPublication[]>(`${this.runtimeConfig.apiBaseUrl()}/institution/v1/publications`);
+    return this.http.get<InstitutionPublication[]>(`${INSTITUTION_API_BASE}/publications`);
   }
 
   getPublication(id: string): Observable<InstitutionPublication> {
-    return this.http.get<InstitutionPublication>(`${this.runtimeConfig.apiBaseUrl()}/institution/v1/publications/${id}`);
+    return this.http.get<InstitutionPublication>(`${INSTITUTION_API_BASE}/publications/${id}`);
   }
 
   createPublication(creation: InstitutionPublicationCreation): Observable<InstitutionPublication> {
-    return this.http.post<InstitutionPublication>(`${this.runtimeConfig.apiBaseUrl()}/institution/v1/publications`, creation);
+    return this.http.post<InstitutionPublication>(`${INSTITUTION_API_BASE}/publications`, creation);
   }
 
   updatePublication(id: string, creation: InstitutionPublicationCreation): Observable<InstitutionPublication> {
-    return this.http.put<InstitutionPublication>(`${this.runtimeConfig.apiBaseUrl()}/institution/v1/publications/${id}`, creation);
+    return this.http.put<InstitutionPublication>(`${INSTITUTION_API_BASE}/publications/${id}`, creation);
   }
 
   submitPublication(id: string): Observable<InstitutionPublication> {
-    return this.http.post<InstitutionPublication>(`${this.runtimeConfig.apiBaseUrl()}/institution/v1/publications/${id}/submit`, {});
+    return this.http.post<InstitutionPublication>(`${INSTITUTION_API_BASE}/publications/${id}/submit`, {});
   }
 }

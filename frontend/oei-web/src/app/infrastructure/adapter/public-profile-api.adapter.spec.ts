@@ -45,7 +45,7 @@ describe('PublicProfileApiAdapter', () => {
   it('givenBackendReturnsProfile_whenGetBySlug_thenCallsPublicMembersEndpoint', async () => {
     const { adapter, httpMock } = createAdapter();
     const result = firstValueFrom(adapter.getBySlug('jane-dupont'));
-    const req = httpMock.expectOne('/api/public/v1/members/jane-dupont/public-profile');
+    const req = httpMock.expectOne('/api/public/v1/members/jane-dupont');
     expect(req.request.method).toBe('GET');
     req.flush(profile);
     expect((await result)?.publicSlug).toBe('jane-dupont');
@@ -55,7 +55,7 @@ describe('PublicProfileApiAdapter', () => {
   it('given404_whenGetBySlug_thenReturnsNull', async () => {
     const { adapter, httpMock } = createAdapter();
     const result = firstValueFrom(adapter.getBySlug('unknown-slug'));
-    const req = httpMock.expectOne('/api/public/v1/members/unknown-slug/public-profile');
+    const req = httpMock.expectOne('/api/public/v1/members/unknown-slug');
     req.flush('Not found', { status: 404, statusText: 'Not Found' });
     expect(await result).toBeNull();
     httpMock.verify();

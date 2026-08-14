@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable, of } from 'rxjs';
 import { AdminAuditLogCreation, AdminAuditLogPort } from '../../domain/port/admin/admin-audit-log.port';
 import { AdminAuditLogEntry, createAdminAuditLogEntry } from '../../domain/model/admin/admin-audit-log';
-import { RuntimeConfig } from '../config/runtime-config';
 
 interface InstitutionAuditLogDto {
   readonly id: string;
@@ -38,13 +37,18 @@ function fromDto(dto: InstitutionAuditLogDto): AdminAuditLogEntry {
 // Matches `GET /api/admin/v1/audit-log` (`listAdminAuditLog`), which returns `InstitutionAuditLog`
 // items — `before`/`after`/`reason`/`correlationId` travel inside that schema's free-form
 // `metadata` object (see `openapi/oei-api.yaml`'s additive extension of `InstitutionAuditLog`).
+//
+// Endpoints under `/api/admin/v1/**` are role-versioned per ADR 0002 and use a literal prefix
+// rather than `RuntimeConfig.apiBaseUrl()` (which defaults to the legacy `/api/v1` public-site
+// base and is only overridable for that historical `home-legacy` family of endpoints).
+const ADMIN_AUDIT_LOG_API_BASE = '/api/admin/v1/audit-log';
+
 @Service()
 export class AdminAuditLogApiAdapter implements AdminAuditLogPort {
   private readonly http = inject(HttpClient);
-  private readonly runtimeConfig = inject(RuntimeConfig);
 
   private get baseUrl(): string {
-    return `${this.runtimeConfig.apiBaseUrl()}/admin/v1/audit-log`;
+    return ADMIN_AUDIT_LOG_API_BASE;
   }
 
   list(): Observable<AdminAuditLogEntry[]> {

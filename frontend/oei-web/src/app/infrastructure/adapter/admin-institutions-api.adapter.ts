@@ -3,16 +3,24 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AdminInstitutionCreationInput, AdminInstitutionsPort } from '../../domain/port/admin/admin-institutions.port';
 import { Institution } from '../../domain/model/institution/institution';
-import { RuntimeConfig } from '../config/runtime-config';
 
-// Matches `/api/admin/v1/institutions/**` in `openapi/oei-api.yaml`.
+// Matches `/api/admin/v1/institutions/**` in `openapi/oei-api.yaml`. Note: `getById` calls a plain
+// `GET /api/admin/v1/institutions/{id}` which has no dedicated operation in the contract today
+// (only `GET /institutions` (list), `POST /institutions` (create) and the `{id}/approve`,
+// `{id}/activate`, `{id}/suspend`, `{id}/revoke` transitions are defined) — kept as-is pending a
+// contract addition, per this audit's scope (fix drifted paths/fields, not invent endpoints).
+//
+// Endpoints under `/api/admin/v1/**` are role-versioned per ADR 0002 and use a literal prefix
+// rather than `RuntimeConfig.apiBaseUrl()` (which defaults to the legacy `/api/v1` public-site
+// base and is only overridable for that historical `home-legacy` family of endpoints).
+const ADMIN_INSTITUTIONS_API_BASE = '/api/admin/v1/institutions';
+
 @Service()
 export class AdminInstitutionsApiAdapter implements AdminInstitutionsPort {
   private readonly http = inject(HttpClient);
-  private readonly runtimeConfig = inject(RuntimeConfig);
 
   private get baseUrl(): string {
-    return `${this.runtimeConfig.apiBaseUrl()}/admin/v1/institutions`;
+    return ADMIN_INSTITUTIONS_API_BASE;
   }
 
   list(): Observable<Institution[]> {

@@ -17,17 +17,20 @@ import {
   ContentTranslation,
   ContentVersion,
 } from '../../domain/model/cms/content.model';
-import { RuntimeConfig } from '../config/runtime-config';
-
 // See `src/app/infrastructure/adapter/README.md` for why `HttpClient` (Observable) is used here
 // (not `fetch()`/Promise). Endpoints match `/api/admin/v1/content/**` in `openapi/oei-api.yaml`.
+//
+// Endpoints under `/api/admin/v1/**` are role-versioned per ADR 0002 and use a literal prefix
+// rather than `RuntimeConfig.apiBaseUrl()` (which defaults to the legacy `/api/v1` public-site
+// base and is only overridable for that historical `home-legacy` family of endpoints).
+const ADMIN_CONTENT_API_BASE = '/api/admin/v1/content';
+
 @Service()
 export class AdminContentApiAdapter implements AdminContentPort {
   private readonly http = inject(HttpClient);
-  private readonly runtimeConfig = inject(RuntimeConfig);
 
   private get baseUrl(): string {
-    return `${this.runtimeConfig.apiBaseUrl()}/admin/v1/content`;
+    return ADMIN_CONTENT_API_BASE;
   }
 
   list(criteria?: AdminContentSearchCriteria): Observable<Content[]> {

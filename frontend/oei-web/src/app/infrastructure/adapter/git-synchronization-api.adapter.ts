@@ -3,19 +3,22 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { GitSynchronizationPort } from '../../domain/port/governance/git-synchronization.port';
 import { GitSyncedFile, GitSynchronization } from '../../domain/model/governance/content-contribution.model';
-import { RuntimeConfig } from '../config/runtime-config';
 
-// Matches `/api/admin/v1/git/synchronize(s)` in `openapi/oei-api.yaml`. `listSyncedFiles` has no
-// dedicated OpenAPI operation (the contract only exposes synchronization *runs*, not raw file
-// listings) — modeled here as a sub-resource of the synchronize endpoint, consistent with ADR
-// 0002's "extend rather than invent a parallel convention" guidance.
+// Matches `/api/admin/v1/git/synchronize(s)` and `GET .../synchronizations/latest/files`
+// (`listLatestGitSyncedFiles`) in `openapi/oei-api.yaml` — all four operations are defined by the
+// contract, including the synced-files listing.
+//
+// Endpoints under `/api/admin/v1/**` are role-versioned per ADR 0002 and use a literal prefix
+// rather than `RuntimeConfig.apiBaseUrl()` (which defaults to the legacy `/api/v1` public-site
+// base and is only overridable for that historical `home-legacy` family of endpoints).
+const GIT_SYNCHRONIZATION_API_BASE = '/api/admin/v1/git';
+
 @Service()
 export class GitSynchronizationApiAdapter implements GitSynchronizationPort {
   private readonly http = inject(HttpClient);
-  private readonly runtimeConfig = inject(RuntimeConfig);
 
   private get baseUrl(): string {
-    return `${this.runtimeConfig.apiBaseUrl()}/admin/v1/git`;
+    return GIT_SYNCHRONIZATION_API_BASE;
   }
 
   trigger(): Observable<GitSynchronization> {

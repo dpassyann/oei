@@ -5,11 +5,9 @@ import { PublicProfile, PublicProfilePublication } from '../../model/profile/pub
 export interface PublicProfilePort {
   getMyPublicProfile(): Observable<PublicProfile>;
   publish(publication: PublicProfilePublication): Observable<PublicProfile>;
-  // Not part of the OpenAPI `/api/member/v1/**` contract (which only exposes the
-  // authenticated member's own public profile): the public page at `/membres/{slug}`
-  // needs an unauthenticated-by-slug lookup. Modeled here as a pragmatic addition for
-  // the demo; a real backend would likely expose this under `/api/public/v1/members/{slug}`.
-  // Returns `null` when the slug does not resolve to a published profile.
+  // Matches the confirmed OpenAPI `GET /api/public/v1/members/{publicSlug}`
+  // (`getPublicMemberProfile`) contract, used by the public page at `/membres/{slug}`.
+  // Returns `null` when the slug does not resolve to a published profile (404).
   getBySlug(publicSlug: string): Observable<PublicProfile | null>;
 }
 

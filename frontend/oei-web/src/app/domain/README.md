@@ -50,6 +50,6 @@ sous-dossier.
 
 Aucun modèle, port, service ou adapter concret n'a été écrit dans ces
 sous-dossiers — pas de composants Angular, pas d'adapters mock fonctionnels. Voir
-`docs/adr/0002-v2-foundations.md` pour le détail des décisions structurantes et le
+`../../../../../../../.docs/adr/0002-v2-foundations.md` pour le détail des décisions structurantes et le
 contrat OpenAPI (`openapi/oei-api.yaml`) pour la forme des données que ces modèles
 devront refléter.

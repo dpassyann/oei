@@ -6,18 +6,21 @@ import {
   InstitutionBadgeProposalsPort,
 } from '../../domain/port/institution/institution-badge-proposals.port';
 import { InstitutionBadgeProposal } from '../../domain/model/institution/institution-badge-proposal';
-import { RuntimeConfig } from '../config/runtime-config';
+
+// Endpoints under `/api/institution/v1/**` are role-versioned per ADR 0002 and use a literal
+// prefix rather than `RuntimeConfig.apiBaseUrl()` (which defaults to the legacy `/api/v1`
+// public-site base and is only overridable for that historical family of endpoints).
+const INSTITUTION_API_BASE = '/api/institution/v1';
 
 @Service()
 export class InstitutionBadgeProposalsApiAdapter implements InstitutionBadgeProposalsPort {
   private readonly http = inject(HttpClient);
-  private readonly runtimeConfig = inject(RuntimeConfig);
 
   listBadgeProposals(): Observable<InstitutionBadgeProposal[]> {
-    return this.http.get<InstitutionBadgeProposal[]>(`${this.runtimeConfig.apiBaseUrl()}/institution/v1/badge-proposals`);
+    return this.http.get<InstitutionBadgeProposal[]>(`${INSTITUTION_API_BASE}/badge-proposals`);
   }
 
   createBadgeProposal(creation: InstitutionBadgeProposalCreation): Observable<InstitutionBadgeProposal> {
-    return this.http.post<InstitutionBadgeProposal>(`${this.runtimeConfig.apiBaseUrl()}/institution/v1/badge-proposals`, creation);
+    return this.http.post<InstitutionBadgeProposal>(`${INSTITUTION_API_BASE}/badge-proposals`, creation);
   }
 }

@@ -31,7 +31,11 @@ export class CvApiAdapter implements CvPort {
   }
 
   updateCv(id: string, cv: Cv): Observable<Cv> {
-    return this.http.put<Cv>(`${CV_API_BASE}/cv/${id}`, cv);
+    // The OpenAPI `updateCv` requestBody is `CvCreation` (`templateId`/`sourceLanguage`
+    // only), not the full `Cv` resource — the port keeps the wider `Cv` signature for
+    // caller convenience, so the DTO is narrowed here at the adapter boundary.
+    const request: CvCreation = { templateId: cv.templateId, sourceLanguage: cv.sourceLanguage };
+    return this.http.put<Cv>(`${CV_API_BASE}/cv/${id}`, request);
   }
 
   addSection(cvId: string, section: Omit<CvSection, 'id' | 'cvId' | 'translations'>): Observable<CvSection> {
@@ -47,7 +51,17 @@ export class CvApiAdapter implements CvPort {
     sectionId: string,
     translation: Pick<CvTranslation, 'language' | 'content'>,
   ): Observable<CvTranslation> {
-    return this.http.post<CvTranslation>(`${CV_API_BASE}/cv/${cvId}/sections/${sectionId}/translations`, translation);
+    // The OpenAPI `requestCvSectionTranslation` requestBody is the full `CvTranslation`
+    // schema, which requires `status` — the port only takes `language`/`content` (the only
+    // fields a manual submission from this UI actually decides), so `status` is filled in
+    // here at the adapter boundary. A manually-submitted translation is always
+    // `PENDING_VALIDATION` (never auto-`VALIDATED`, never `MACHINE_GENERATED` — that value
+    // is reserved for automatic/machine translation, not modeled by this port yet).
+    const request: Pick<CvTranslation, 'language' | 'content' | 'status'> = {
+      ...translation,
+      status: 'PENDING_VALIDATION',
+    };
+    return this.http.post<CvTranslation>(`${CV_API_BASE}/cv/${cvId}/sections/${sectionId}/translations`, request);
   }
 
   validateTranslation(cvId: string, sectionId: string, language: string): Observable<CvTranslation> {

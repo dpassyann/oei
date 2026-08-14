@@ -8,4 +8,4 @@ la règle "Gold via employeur partenaire" — un email de domaine seul ne suffit
 voir doc 02 §"Gold via employeur partenaire").
 
 Le rôle Keycloak `member-*` associé est documenté dans
-`docs/architecture/keycloak-roles.md`.
+`../../../../../../../.docs/architecture/keycloak-roles.md`.

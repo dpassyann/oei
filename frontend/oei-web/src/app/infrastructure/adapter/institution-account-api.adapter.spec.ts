@@ -3,18 +3,12 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { firstValueFrom } from 'rxjs';
 import { InstitutionAccountApiAdapter } from './institution-account-api.adapter';
-import { RuntimeConfig } from '../config/runtime-config';
 import { DEMO_INSTITUTION, DEMO_PARTNERSHIP } from './institution-demo-data';
 
 describe('InstitutionAccountApiAdapter', () => {
   function createAdapter(): { adapter: InstitutionAccountApiAdapter; httpMock: HttpTestingController } {
     TestBed.configureTestingModule({
-      providers: [
-        InstitutionAccountApiAdapter,
-        provideHttpClient(),
-        provideHttpClientTesting(),
-        { provide: RuntimeConfig, useValue: { apiBaseUrl: () => '/api' } },
-      ],
+      providers: [InstitutionAccountApiAdapter, provideHttpClient(), provideHttpClientTesting()],
     });
     return { adapter: TestBed.inject(InstitutionAccountApiAdapter), httpMock: TestBed.inject(HttpTestingController) };
   }

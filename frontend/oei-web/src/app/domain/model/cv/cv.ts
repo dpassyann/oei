@@ -79,7 +79,8 @@ export interface CvRenderRequest {
   readonly includeBadges: readonly string[];
 }
 
-export type PdfGenerationJobStatus = 'PENDING' | 'PROCESSING' | 'DONE' | 'FAILED';
+// Matches the OpenAPI `PdfGenerationJobStatus` enum exactly (`QUEUED`, not `PENDING`).
+export type PdfGenerationJobStatus = 'QUEUED' | 'PROCESSING' | 'DONE' | 'FAILED';
 
 export interface PdfGenerationJob {
   readonly id: string;

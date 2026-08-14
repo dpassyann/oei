@@ -3,18 +3,12 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { firstValueFrom } from 'rxjs';
 import { InstitutionAuditLogApiAdapter } from './institution-audit-log-api.adapter';
-import { RuntimeConfig } from '../config/runtime-config';
 import { DEMO_AUDIT_LOG } from './institution-demo-data';
 
 describe('InstitutionAuditLogApiAdapter', () => {
   it('whenListAuditLog_thenCallsAuditLogEndpoint', async () => {
     TestBed.configureTestingModule({
-      providers: [
-        InstitutionAuditLogApiAdapter,
-        provideHttpClient(),
-        provideHttpClientTesting(),
-        { provide: RuntimeConfig, useValue: { apiBaseUrl: () => '/api' } },
-      ],
+      providers: [InstitutionAuditLogApiAdapter, provideHttpClient(), provideHttpClientTesting()],
     });
     const adapter = TestBed.inject(InstitutionAuditLogApiAdapter);
     const httpMock = TestBed.inject(HttpTestingController);

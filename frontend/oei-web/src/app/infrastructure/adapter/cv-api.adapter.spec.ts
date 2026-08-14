@@ -67,7 +67,7 @@ describe('CvApiAdapter', () => {
     const result = firstValueFrom(adapter.updateCv('cv-1', cv));
     const req = httpMock.expectOne('/api/member/v1/cv/cv-1');
     expect(req.request.method).toBe('PUT');
-    expect(req.request.body).toEqual(cv);
+    expect(req.request.body).toEqual({ templateId: 'tpl-classic', sourceLanguage: 'fr' });
     req.flush(cv);
     expect((await result).status).toBe('READY');
     httpMock.verify();
@@ -102,7 +102,7 @@ describe('CvApiAdapter', () => {
     const result = firstValueFrom(adapter.addTranslation('cv-1', 'section-1', translation));
     const req = httpMock.expectOne('/api/member/v1/cv/cv-1/sections/section-1/translations');
     expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual(translation);
+    expect(req.request.body).toEqual({ ...translation, status: 'PENDING_VALIDATION' });
     req.flush({
       id: 'translation-1',
       sectionId: 'section-1',
@@ -144,10 +144,10 @@ describe('CvApiAdapter', () => {
       id: 'job-1',
       targetType: 'CV',
       targetId: 'cv-1',
-      status: 'PENDING',
+      status: 'QUEUED',
       requestedAt: '2026-01-01T00:00:00Z',
     });
-    expect((await result).status).toBe('PENDING');
+    expect((await result).status).toBe('QUEUED');
     httpMock.verify();
   });
 });
