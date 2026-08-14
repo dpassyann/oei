@@ -1,0 +1,61 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0014-create-wallet-pass
+      author: oei-backend
+      comment: >
+        Every row is mocked=true in this iteration (see WalletPass's Javadoc) -- no real
+        signed .pkpass is generated.
+      changes:
+        - createTable:
+            tableName: wallet_pass
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: member_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_wallet_pass_member
+                    references: member(id)
+              - column:
+                  name: provider
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: serial_number
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: verification_url
+                  type: varchar(500)
+              - column:
+                  name: level_color
+                  type: varchar(20)
+              - column:
+                  name: issued_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: revoked_at
+                  type: timestamptz
+              - column:
+                  name: mocked
+                  type: boolean
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false

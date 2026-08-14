@@ -12,6 +12,7 @@ import global.oei.domain.core.identity.GetMyIdentityService;
 import global.oei.domain.core.network.GetSalaryInsightService;
 import global.oei.domain.core.profile.GetMyProfileService;
 import global.oei.domain.core.profile.UpdateMyProfileService;
+import global.oei.domain.core.wallet.CreateWalletPassService;
 import global.oei.domain.shared.badge.BadgeAwardPort;
 import global.oei.domain.shared.badge.BadgeCatalogPort;
 import global.oei.domain.shared.certification.CertificationGoalPort;
@@ -27,6 +28,8 @@ import global.oei.domain.shared.profile.ProfileLookupPort;
 import global.oei.domain.shared.profile.UpdateMyProfileUseCase;
 import global.oei.domain.shared.security.GetMyIdentityUseCase;
 import global.oei.domain.shared.security.SecurityContextPort;
+import global.oei.domain.shared.wallet.CreateWalletPassUseCase;
+import global.oei.domain.shared.wallet.WalletPassPort;
 import global.oei.infrastructure.persistence.badge.BadgeAwardRepository;
 import global.oei.infrastructure.persistence.badge.BadgePersistenceAdapter;
 import global.oei.infrastructure.persistence.badge.BadgeRepository;
@@ -49,6 +52,8 @@ import global.oei.infrastructure.persistence.network.NetworkGraphPersistenceAdap
 import global.oei.infrastructure.persistence.network.NetworkTopicRepository;
 import global.oei.infrastructure.persistence.profile.ProfessionalProfilePersistenceAdapter;
 import global.oei.infrastructure.persistence.profile.ProfessionalProfileRepository;
+import global.oei.infrastructure.persistence.wallet.WalletPassPersistenceAdapter;
+import global.oei.infrastructure.persistence.wallet.WalletPassRepository;
 
 /**
  * Composition root of the OEI backend.
@@ -156,5 +161,18 @@ public class OeiWiringConfiguration {
     @Bean
     public CertificationGoalPort certificationGoalPort(final MemberCertificationGoalRepository repository) {
         return new CertificationGoalPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public WalletPassPort walletPassPort(
+            final WalletPassRepository walletPassRepository,
+            final MemberRepository memberRepository,
+            final MembershipRepository membershipRepository) {
+        return new WalletPassPersistenceAdapter(walletPassRepository, memberRepository, membershipRepository);
+    }
+
+    @Bean
+    public CreateWalletPassUseCase createWalletPassUseCase(final WalletPassPort walletPassPort) {
+        return new CreateWalletPassService(walletPassPort);
     }
 }
