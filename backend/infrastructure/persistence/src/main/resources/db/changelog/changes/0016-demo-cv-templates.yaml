@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0016-demo-cv-templates
+      author: oei-backend
+      comment: >
+        Same 2 templates as the frontend's cv-mock.adapter.ts DEMO_TEMPLATES constant
+        (tpl-classic/tpl-modern), so demo data stays coherent front/back.
+      changes:
+        - sqlFile:
+            path: db/changelog/changes/0016-demo-cv-templates.sql
+            relativeToChangelogFile: false
+            splitStatements: true
+            stripComments: true

@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import global.oei.domain.core.certification.DeclareCertificationService;
 import global.oei.domain.core.charter.SignEthicalCharterService;
+import global.oei.domain.core.cv.CreateCvService;
+import global.oei.domain.core.cv.RenderCvService;
 import global.oei.domain.core.identity.GetMyIdentityService;
 import global.oei.domain.core.network.GetSalaryInsightService;
 import global.oei.domain.core.profile.GetMyProfileService;
@@ -20,6 +22,11 @@ import global.oei.domain.shared.certification.CertificationPort;
 import global.oei.domain.shared.certification.DeclareCertificationUseCase;
 import global.oei.domain.shared.charter.EthicalCharterSignaturePort;
 import global.oei.domain.shared.charter.SignEthicalCharterUseCase;
+import global.oei.domain.shared.cv.CreateCvUseCase;
+import global.oei.domain.shared.cv.CvPort;
+import global.oei.domain.shared.cv.CvTemplateCatalogPort;
+import global.oei.domain.shared.cv.PdfGenerationJobPort;
+import global.oei.domain.shared.cv.RenderCvUseCase;
 import global.oei.domain.shared.membership.MembershipLookupPort;
 import global.oei.domain.shared.network.GetSalaryInsightUseCase;
 import global.oei.domain.shared.network.NetworkGraphPort;
@@ -42,6 +49,10 @@ import global.oei.infrastructure.persistence.charter.EthicalCharterSignatureRepo
 import global.oei.infrastructure.persistence.compensation.CompensationDeclarationRepository;
 import global.oei.infrastructure.persistence.compensation.SalaryInsightPersistenceAdapter;
 import global.oei.infrastructure.persistence.config.audit.PersistenceAuditingConfiguration;
+import global.oei.infrastructure.persistence.cv.CvPersistenceAdapter;
+import global.oei.infrastructure.persistence.cv.CvRepository;
+import global.oei.infrastructure.persistence.cv.CvTemplateCatalogPersistenceAdapter;
+import global.oei.infrastructure.persistence.cv.CvTemplateRepository;
 import global.oei.infrastructure.persistence.member.MemberRepository;
 import global.oei.infrastructure.persistence.membership.MembershipPersistenceAdapter;
 import global.oei.infrastructure.persistence.membership.MembershipRepository;
@@ -50,6 +61,8 @@ import global.oei.infrastructure.persistence.network.NetworkDomainRepository;
 import global.oei.infrastructure.persistence.network.NetworkExpertRepository;
 import global.oei.infrastructure.persistence.network.NetworkGraphPersistenceAdapter;
 import global.oei.infrastructure.persistence.network.NetworkTopicRepository;
+import global.oei.infrastructure.persistence.pdf.PdfGenerationJobPersistenceAdapter;
+import global.oei.infrastructure.persistence.pdf.PdfGenerationJobRepository;
 import global.oei.infrastructure.persistence.profile.ProfessionalProfilePersistenceAdapter;
 import global.oei.infrastructure.persistence.profile.ProfessionalProfileRepository;
 import global.oei.infrastructure.persistence.wallet.WalletPassPersistenceAdapter;
@@ -174,5 +187,30 @@ public class OeiWiringConfiguration {
     @Bean
     public CreateWalletPassUseCase createWalletPassUseCase(final WalletPassPort walletPassPort) {
         return new CreateWalletPassService(walletPassPort);
+    }
+
+    @Bean
+    public CvPort cvPort(final CvRepository repository) {
+        return new CvPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public CreateCvUseCase createCvUseCase(final CvPort cvPort) {
+        return new CreateCvService(cvPort);
+    }
+
+    @Bean
+    public CvTemplateCatalogPort cvTemplateCatalogPort(final CvTemplateRepository repository) {
+        return new CvTemplateCatalogPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public PdfGenerationJobPort pdfGenerationJobPort(final PdfGenerationJobRepository repository) {
+        return new PdfGenerationJobPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public RenderCvUseCase renderCvUseCase(final PdfGenerationJobPort pdfGenerationJobPort) {
+        return new RenderCvService(pdfGenerationJobPort);
     }
 }

@@ -1,0 +1,54 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0017-create-cv
+      author: oei-backend
+      comment: >
+        Stored as a single jsonb blob (cv_json) -- a CV is a deliberate "big object",
+        sections/translations included, always read/replaced wholesale (ADR 0002), same
+        strategy as professional_profile. See
+        global.oei.infrastructure.persistence.cv.CvEntity's Javadoc. A member may have
+        several CVs, unlike the single-per-member professional_profile.
+      changes:
+        - createTable:
+            tableName: cv
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: member_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_cv_member
+                    references: member(id)
+              - column:
+                  name: status
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cv_json
+                  type: jsonb
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_by
+                  type: varchar(255)
+              - column:
+                  name: last_modified_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_modified_by
+                  type: varchar(255)

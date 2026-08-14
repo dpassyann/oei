@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0018-create-pdf-generation-job
+      author: oei-backend
+      comment: >
+        Every row is mocked in this iteration (status always persisted as DONE with a
+        placeholder result_url) -- see
+        global.oei.domain.core.cv.RenderCvService's Javadoc; no real HTML/CSS-to-PDF
+        rendering engine is wired yet, same posture as wallet_pass.mocked.
+      changes:
+        - createTable:
+            tableName: pdf_generation_job
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: target_type
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: target_id
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(12)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: result_url
+                  type: varchar(500)
+              - column:
+                  name: requested_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: completed_at
+                  type: timestamptz

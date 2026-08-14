@@ -41,3 +41,15 @@ databaseChangeLog:
   - include:
       file: db/changelog/changes/0014-create-wallet-pass.yaml
       relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0015-create-cv-template.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0016-demo-cv-templates.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0017-create-cv.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0018-create-pdf-generation-job.yaml
+      relativeToChangelogFile: false

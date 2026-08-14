@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0015-create-cv-template
+      author: oei-backend
+      comment: cv_template is reference/catalog data (layout/typography), seeded by demo data only.
+      changes:
+        - createTable:
+            tableName: cv_template
+            columns:
+              - column:
+                  name: id
+                  type: varchar(40)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: code
+                  type: varchar(60)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: preview_url
+                  type: varchar(500)
