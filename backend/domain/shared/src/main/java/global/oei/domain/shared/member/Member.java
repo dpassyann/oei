@@ -17,7 +17,10 @@ import java.util.Objects;
  * @param locale      preferred locale (e.g. {@code "fr"}, {@code "en"})
  * @param country     ISO country code of residence
  * @param accountType {@link AccountType#REAL} or {@link AccountType#DEMO} (public showcase
- *                    seed data, disableable later without deletion)
+ *                    seed data — {@code DEMO} members have no Keycloak account of their
+ *                    own, are never authenticated callers, and are kept in the database
+ *                    permanently as durable demonstration data, never deleted or disabled;
+ *                    see {@link AccountType}'s Javadoc)
  * @param createdAt   registration timestamp
  */
 public record Member(
