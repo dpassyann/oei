@@ -10,6 +10,9 @@ import global.oei.domain.shared.institution.InstitutionBadgeProposalStatus;
 import global.oei.domain.shared.institution.InstitutionId;
 import global.oei.domain.shared.member.MemberId;
 
+/**
+ * Default {@code CreateInstitutionBadgeProposalUseCase} implementation.
+ */
 public class CreateInstitutionBadgeProposalService implements CreateInstitutionBadgeProposalUseCase {
 
     private final InstitutionBadgeProposalPort institutionBadgeProposalPort;

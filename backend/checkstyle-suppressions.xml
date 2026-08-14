@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+        "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+        "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+
+<!--
+  Restricts MissingJavadocType to domain-shared/domain-core, per the project owner's
+  instruction: the domain is this project's most important code, so it alone carries a
+  mandatory-Javadoc rule. infrastructure/application-web/test modules are exempted from
+  that one check (they still get every other rule in checkstyle.xml).
+-->
+<suppressions>
+    <suppress checks="MissingJavadocType" files="[\\/]infrastructure[\\/]"/>
+    <suppress checks="MissingJavadocType" files="[\\/]application[\\/]"/>
+    <suppress checks="MissingJavadocType" files="[\\/]test[\\/]"/>
+</suppressions>

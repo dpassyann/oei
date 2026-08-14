@@ -2,6 +2,9 @@ package global.oei.domain.shared.badge;
 
 import java.util.Objects;
 
+/**
+ * A catalog entry describing an awardable recognition badge.
+ */
 public record Badge(String id, String code, String name, String description, String iconUrl, BadgeCategory category) {
 
     public Badge {

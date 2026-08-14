@@ -8,7 +8,6 @@ import java.util.UUID;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import global.oei.domain.shared.content.ContentVersion;
 import global.oei.domain.shared.content.ContentVersionPort;
 import global.oei.domain.shared.content.ContentWorkflowStatus;

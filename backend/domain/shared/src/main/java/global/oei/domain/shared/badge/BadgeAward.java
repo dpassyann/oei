@@ -5,6 +5,9 @@ import java.util.Objects;
 
 import global.oei.domain.shared.member.MemberId;
 
+/**
+ * Records that a member was awarded a {@link Badge}.
+ */
 public record BadgeAward(
         String id,
         String badgeId,

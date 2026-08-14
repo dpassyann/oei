@@ -3,6 +3,9 @@ package global.oei.domain.shared.institution;
 import java.time.Instant;
 import java.util.Objects;
 
+/**
+ * An institution's invitation for an employee to join its team space.
+ */
 public record InstitutionInvitation(
         String id,
         InstitutionId institutionId,

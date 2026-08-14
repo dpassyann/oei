@@ -11,6 +11,9 @@ import global.oei.domain.shared.institution.InstitutionPublicationType;
 import global.oei.domain.shared.institution.PublicationWorkflowStatus;
 import global.oei.domain.shared.member.MemberId;
 
+/**
+ * Default {@code CreateInstitutionPublicationUseCase} implementation.
+ */
 public class CreateInstitutionPublicationService implements CreateInstitutionPublicationUseCase {
 
     private final InstitutionPublicationPort institutionPublicationPort;

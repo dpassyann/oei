@@ -4,6 +4,9 @@ import java.time.Instant;
 
 import global.oei.domain.shared.member.MemberId;
 
+/**
+ * Inbound port: submit a new {@link EventProposal} straight to moderator review.
+ */
 public interface SubmitEventProposalUseCase {
 
     EventProposal execute(

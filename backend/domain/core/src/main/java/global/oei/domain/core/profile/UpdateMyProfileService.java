@@ -6,6 +6,9 @@ import global.oei.domain.shared.profile.ProfessionalProfile;
 import global.oei.domain.shared.profile.ProfileLookupPort;
 import global.oei.domain.shared.profile.UpdateMyProfileUseCase;
 
+/**
+ * Default {@code UpdateMyProfileUseCase} implementation.
+ */
 public class UpdateMyProfileService implements UpdateMyProfileUseCase {
 
     private final ProfileLookupPort profileLookupPort;

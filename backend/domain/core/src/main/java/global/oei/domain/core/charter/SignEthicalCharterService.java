@@ -9,6 +9,9 @@ import global.oei.domain.shared.charter.EthicalCharterSignaturePort;
 import global.oei.domain.shared.charter.SignEthicalCharterUseCase;
 import global.oei.domain.shared.member.MemberId;
 
+/**
+ * Default {@code SignEthicalCharterUseCase} implementation.
+ */
 public class SignEthicalCharterService implements SignEthicalCharterUseCase {
 
     private final EthicalCharterSignaturePort signaturePort;

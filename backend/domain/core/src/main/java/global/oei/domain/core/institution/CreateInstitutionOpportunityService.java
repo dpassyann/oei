@@ -11,6 +11,9 @@ import global.oei.domain.shared.institution.InstitutionOpportunityPort;
 import global.oei.domain.shared.institution.InstitutionOpportunityStatus;
 import global.oei.domain.shared.institution.InstitutionOpportunityType;
 
+/**
+ * Default {@code CreateInstitutionOpportunityUseCase} implementation.
+ */
 public class CreateInstitutionOpportunityService implements CreateInstitutionOpportunityUseCase {
 
     private final InstitutionOpportunityPort institutionOpportunityPort;

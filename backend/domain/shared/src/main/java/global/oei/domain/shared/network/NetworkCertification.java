@@ -3,6 +3,9 @@ package global.oei.domain.shared.network;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * A recognized certification node in the professional network graph.
+ */
 public record NetworkCertification(
         String id,
         String topicId,

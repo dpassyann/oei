@@ -9,6 +9,9 @@ import global.oei.domain.shared.profile.GetMyProfileUseCase;
 import global.oei.domain.shared.profile.ProfessionalProfile;
 import global.oei.domain.shared.profile.ProfileLookupPort;
 
+/**
+ * Default {@code GetMyProfileUseCase} implementation.
+ */
 public class GetMyProfileService implements GetMyProfileUseCase {
 
     private final ProfileLookupPort profileLookupPort;

@@ -4,6 +4,9 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * An OEI event (meetup, colloquium, webinar, ...) published to the agenda.
+ */
 public record Event(
         String id,
         String slug,

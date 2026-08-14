@@ -3,6 +3,9 @@ package global.oei.domain.shared.institution;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Outbound port for {@link InstitutionOpportunity}.
+ */
 public interface InstitutionOpportunityPort {
 
     List<InstitutionOpportunity> findByInstitutionId(InstitutionId institutionId);

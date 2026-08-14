@@ -1,5 +1,8 @@
 package global.oei.domain.shared.event;
 
+/**
+ * Lifecycle of an {@link Event}.
+ */
 public enum EventStatus {
     DRAFT,
     PUBLISHED,

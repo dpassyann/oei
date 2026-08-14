@@ -7,7 +7,6 @@ import java.util.UUID;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import global.oei.domain.shared.event.EventPost;
 import global.oei.domain.shared.event.EventPostPort;
 import global.oei.domain.shared.member.MemberId;

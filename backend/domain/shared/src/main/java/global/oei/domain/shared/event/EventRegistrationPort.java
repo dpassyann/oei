@@ -4,6 +4,9 @@ import java.util.Optional;
 
 import global.oei.domain.shared.member.MemberId;
 
+/**
+ * Outbound port for {@link EventRegistration}.
+ */
 public interface EventRegistrationPort {
 
     EventRegistration save(EventRegistration registration);

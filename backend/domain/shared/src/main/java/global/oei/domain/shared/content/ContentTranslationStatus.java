@@ -1,5 +1,8 @@
 package global.oei.domain.shared.content;
 
+/**
+ * Lifecycle of a {@link ContentTranslation}.
+ */
 public enum ContentTranslationStatus {
     PENDING,
     MACHINE_GENERATED,

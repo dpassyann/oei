@@ -2,6 +2,9 @@ package global.oei.domain.shared.network;
 
 import java.util.List;
 
+/**
+ * A network topic together with the recognized certifications attached to it.
+ */
 public record NetworkTopicsAndCertifications(List<NetworkTopic> topics, List<NetworkCertification> certifications) {
 
     public NetworkTopicsAndCertifications {

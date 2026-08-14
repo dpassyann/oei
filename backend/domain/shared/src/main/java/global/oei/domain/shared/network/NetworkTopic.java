@@ -3,6 +3,9 @@ package global.oei.domain.shared.network;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * A topic node in the professional network graph.
+ */
 public record NetworkTopic(
         String id, String domainId, String label, double x, double y, List<String> relatedTopicIds) {
 

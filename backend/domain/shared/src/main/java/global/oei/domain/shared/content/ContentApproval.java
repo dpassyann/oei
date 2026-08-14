@@ -3,6 +3,9 @@ package global.oei.domain.shared.content;
 import java.time.Instant;
 import java.util.Objects;
 
+/**
+ * A recorded legal/governance review decision on a {@link ContentVersion}.
+ */
 public record ContentApproval(
         String id,
         String contentVersionId,

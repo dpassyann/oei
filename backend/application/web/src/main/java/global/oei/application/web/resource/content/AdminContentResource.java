@@ -14,7 +14,6 @@ import global.oei.application.web.model.ContentCreationDTO;
 import global.oei.application.web.model.ContentDTO;
 import global.oei.application.web.model.ContentPageDTO;
 import global.oei.application.web.model.ContentPublicationDTO;
-import global.oei.application.web.model.ContentSourceTypeDTO;
 import global.oei.application.web.model.ContentTranslationDTO;
 import global.oei.application.web.model.ContentTypeDTO;
 import global.oei.application.web.model.ContentVersionCreationDTO;

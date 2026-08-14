@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import global.oei.application.web.resource.cv.adapter.CvAdapter;
-import global.oei.domain.shared.cv.Cv;
 import global.oei.domain.shared.cv.CreateCvUseCase;
+import global.oei.domain.shared.cv.Cv;
 import global.oei.domain.shared.cv.CvPort;
 import global.oei.domain.shared.cv.CvSection;
 import global.oei.domain.shared.cv.CvSectionType;

@@ -10,6 +10,9 @@ import global.oei.domain.shared.certification.CertificationStatus;
 import global.oei.domain.shared.certification.DeclareCertificationUseCase;
 import global.oei.domain.shared.member.MemberId;
 
+/**
+ * Default {@code DeclareCertificationUseCase} implementation.
+ */
 public class DeclareCertificationService implements DeclareCertificationUseCase {
 
     private final CertificationPort certificationPort;

@@ -5,6 +5,9 @@ import java.util.Objects;
 
 import global.oei.domain.shared.member.MemberId;
 
+/**
+ * A publication authored by an institution.
+ */
 public record InstitutionPublication(
         String id,
         InstitutionId institutionId,

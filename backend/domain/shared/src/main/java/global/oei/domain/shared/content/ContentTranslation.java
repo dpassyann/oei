@@ -3,6 +3,9 @@ package global.oei.domain.shared.content;
 import java.time.Instant;
 import java.util.Objects;
 
+/**
+ * A translation of a {@link ContentVersion} into another language.
+ */
 public record ContentTranslation(
         String id,
         String contentVersionId,

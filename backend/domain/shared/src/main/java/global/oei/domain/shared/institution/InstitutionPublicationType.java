@@ -1,5 +1,8 @@
 package global.oei.domain.shared.institution;
 
+/**
+ * Kind of an {@link InstitutionPublication}.
+ */
 public enum InstitutionPublicationType {
     OPINION,
     EXPERIENCE_REPORT,

@@ -1,5 +1,8 @@
 package global.oei.domain.shared.content;
 
+/**
+ * Kind of a {@link Content} item (page, article, normative document, ...).
+ */
 public enum ContentType {
     PAGE,
     ARTICLE,

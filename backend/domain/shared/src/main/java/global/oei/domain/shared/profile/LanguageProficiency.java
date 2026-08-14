@@ -2,6 +2,9 @@ package global.oei.domain.shared.profile;
 
 import java.util.Objects;
 
+/**
+ * A spoken/written language proficiency listed on a {@link ProfessionalProfile}.
+ */
 public record LanguageProficiency(String language, LanguageLevel level) {
 
     public LanguageProficiency {

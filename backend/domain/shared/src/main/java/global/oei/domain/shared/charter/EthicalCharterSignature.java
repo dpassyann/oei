@@ -6,6 +6,9 @@ import java.util.UUID;
 
 import global.oei.domain.shared.member.MemberId;
 
+/**
+ * Records that a member signed a given version of the OEI ethical charter.
+ */
 public record EthicalCharterSignature(UUID id, MemberId memberId, String version, Instant signedAt) {
 
     public EthicalCharterSignature {

@@ -4,6 +4,9 @@ import java.util.List;
 
 import global.oei.domain.shared.member.MemberId;
 
+/**
+ * Outbound port for {@link MemberCertificationGoal}.
+ */
 public interface CertificationGoalPort {
 
     List<MemberCertificationGoal> findByMemberId(MemberId memberId);

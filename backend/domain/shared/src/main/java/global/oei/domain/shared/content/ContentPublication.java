@@ -3,6 +3,9 @@ package global.oei.domain.shared.content;
 import java.time.Instant;
 import java.util.Objects;
 
+/**
+ * Records that a {@link ContentVersion} was published.
+ */
 public record ContentPublication(String id, String contentVersionId, Instant publishedAt, String publishedBy, String channel) {
 
     public ContentPublication {

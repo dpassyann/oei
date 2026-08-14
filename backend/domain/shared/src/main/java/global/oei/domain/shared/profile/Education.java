@@ -3,6 +3,9 @@ package global.oei.domain.shared.profile;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * An education entry listed on a {@link ProfessionalProfile}.
+ */
 public record Education(
         String id, String institution, String program, LocalDate startDate, LocalDate endDate, String description) {
 

@@ -5,6 +5,9 @@ import java.util.Objects;
 
 import global.oei.domain.shared.member.MemberId;
 
+/**
+ * A certification a member intends to pursue.
+ */
 public record MemberCertificationGoal(
         String id,
         MemberId memberId,

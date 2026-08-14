@@ -5,6 +5,9 @@ import java.util.Optional;
 
 import global.oei.domain.shared.member.MemberId;
 
+/**
+ * Outbound port for {@link EventProposal}.
+ */
 public interface EventProposalPort {
 
     EventProposal save(EventProposal proposal);

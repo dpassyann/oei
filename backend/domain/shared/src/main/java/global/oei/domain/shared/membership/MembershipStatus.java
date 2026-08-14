@@ -1,12 +1,12 @@
 package global.oei.domain.shared.membership;
 
-import java.util.EnumSet;
-import java.util.Set;
-
 import static global.oei.domain.shared.membership.MembershipEntitlement.CV_EDIT;
 import static global.oei.domain.shared.membership.MembershipEntitlement.MEMBER_DIRECTORY;
 import static global.oei.domain.shared.membership.MembershipEntitlement.PROFILE_EDIT;
 import static global.oei.domain.shared.membership.MembershipEntitlement.PROFILE_PUBLIC;
+
+import java.util.EnumSet;
+import java.util.Set;
 
 /**
  * Lifecycle status of a {@link Membership}, mirrored one-to-one on the OEI OpenAPI

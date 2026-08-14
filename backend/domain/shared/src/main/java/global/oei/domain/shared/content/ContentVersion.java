@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * One versioned draft of a {@link Content}'s body — never overwritten in place, see {@link Content}'s Javadoc.
+ */
 public record ContentVersion(
         String id,
         String contentId,

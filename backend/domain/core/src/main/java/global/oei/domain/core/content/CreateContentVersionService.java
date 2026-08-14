@@ -14,6 +14,9 @@ import global.oei.domain.shared.content.ContentVersionPort;
 import global.oei.domain.shared.content.ContentWorkflowStatus;
 import global.oei.domain.shared.content.CreateContentVersionUseCase;
 
+/**
+ * Default {@code CreateContentVersionUseCase} implementation.
+ */
 public class CreateContentVersionService implements CreateContentVersionUseCase {
 
     private final ContentPort contentPort;

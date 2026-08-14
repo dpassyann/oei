@@ -4,6 +4,9 @@ import java.util.Optional;
 
 import global.oei.domain.shared.member.MemberId;
 
+/**
+ * Outbound port for {@link EventPhotoConsent}.
+ */
 public interface EventPhotoConsentPort {
 
     EventPhotoConsent save(EventPhotoConsent consent);

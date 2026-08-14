@@ -1,5 +1,10 @@
 package global.oei.application.web.resource.member.mapper;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.List;
+
 import global.oei.application.web.model.GetMyEntitlements200ResponseDTO;
 import global.oei.application.web.model.MembershipDTO;
 import global.oei.application.web.model.MembershipEntitlementDTO;
@@ -9,11 +14,6 @@ import global.oei.domain.shared.membership.Membership;
 import global.oei.domain.shared.membership.MembershipEntitlement;
 import lombok.experimental.UtilityClass;
 import org.openapitools.jackson.nullable.JsonNullable;
-
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.List;
 
 /**
  * Explicit hand-written mapping between the domain {@link Membership} and the generated

@@ -5,6 +5,9 @@ import java.util.Objects;
 
 import global.oei.domain.shared.member.MemberId;
 
+/**
+ * A comment on an {@link EventPost}, restricted to members who attended the event.
+ */
 public record EventComment(
         String id,
         String eventId,

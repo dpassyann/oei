@@ -1,5 +1,8 @@
 package global.oei.domain.shared.institution;
 
+/**
+ * Lifecycle of an {@link InstitutionBadgeProposal}.
+ */
 public enum InstitutionBadgeProposalStatus {
     PENDING,
     ACCEPTED_BY_MEMBER,

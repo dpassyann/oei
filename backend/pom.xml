@@ -47,6 +47,8 @@
       for Spring-Boot-managed dependencies).
     -->
     <archunit.version>1.5.0</archunit.version>
+    <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
+    <checkstyle.version>10.21.4</checkstyle.version>
     <openapi-generator.version>7.24.0</openapi-generator.version>
     <maven-assembly-plugin.version>3.8.0</maven-assembly-plugin.version>
     <build-helper-maven-plugin.version>3.6.1</build-helper-maven-plugin.version>
@@ -135,6 +137,28 @@
           </annotationProcessorPaths>
         </configuration>
       </plugin>
+
+      <!--
+        Checkstyle runs in every module at the `validate` phase (before compilation), so a
+        style/import/Javadoc violation blocks the build as early as possible. Ruleset lives
+        at the reactor root (checkstyle.xml/checkstyle-suppressions.xml) and is referenced
+        via ${maven.multiModuleProjectDirectory} so it resolves identically no matter which
+        module directory `mvn` is invoked from (see the .mvn/ directory anchoring that
+        property). failOnViolation=true: any violation fails the build, not just a warning.
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>checkstyle-validate</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
 
     <pluginManagement>
@@ -143,6 +167,28 @@
           <groupId>org.openapitools</groupId>
           <artifactId>openapi-generator-maven-plugin</artifactId>
           <version>${openapi-generator.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>${maven-checkstyle-plugin.version}</version>
+          <configuration>
+            <configLocation>${maven.multiModuleProjectDirectory}/checkstyle.xml</configLocation>
+            <suppressionsLocation>${maven.multiModuleProjectDirectory}/checkstyle-suppressions.xml</suppressionsLocation>
+            <propertyExpansion>config_loc=${maven.multiModuleProjectDirectory}</propertyExpansion>
+            <includeTestSourceDirectory>false</includeTestSourceDirectory>
+            <consoleOutput>true</consoleOutput>
+            <failOnViolation>true</failOnViolation>
+            <violationSeverity>warning</violationSeverity>
+            <linkXRef>false</linkXRef>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>com.puppycrawl.tools</groupId>
+              <artifactId>checkstyle</artifactId>
+              <version>${checkstyle.version}</version>
+            </dependency>
+          </dependencies>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>

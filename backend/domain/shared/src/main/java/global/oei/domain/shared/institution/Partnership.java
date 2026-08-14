@@ -3,6 +3,9 @@ package global.oei.domain.shared.institution;
 import java.time.Instant;
 import java.util.Objects;
 
+/**
+ * An institution's partnership level and verification status with the OEI.
+ */
 public record Partnership(
         InstitutionId institutionId,
         PartnershipLevel level,
