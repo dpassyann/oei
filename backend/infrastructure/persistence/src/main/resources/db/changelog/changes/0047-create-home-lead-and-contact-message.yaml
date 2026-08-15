@@ -1,0 +1,70 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0047-create-home-lead
+      author: oei-backend
+      comment: >
+        Emails captured from the public "receive the white paper" form -- simulated (no real
+        mailing list/CRM integration yet) but genuinely persisted, see submitLead's OpenAPI
+        summary and Lead's Javadoc.
+      changes:
+        - createTable:
+            tableName: home_lead
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: submitted_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 0047-create-home-contact-message
+      author: oei-backend
+      comment: >
+        Messages submitted from the public contact form -- no real email is sent yet, see
+        submitContactMessage's OpenAPI summary and ContactMessage's Javadoc.
+      changes:
+        - createTable:
+            tableName: home_contact_message
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: subject
+                  type: varchar(255)
+              - column:
+                  name: message
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: submitted_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false

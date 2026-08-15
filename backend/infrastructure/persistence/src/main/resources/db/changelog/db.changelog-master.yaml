@@ -134,3 +134,21 @@ databaseChangeLog:
   - include:
       file: db/changelog/changes/0045-create-content-comment.yaml
       relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0046-create-home-reference-content.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0047-create-home-lead-and-contact-message.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0048-demo-home-content.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0049-create-media-asset.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0050-create-book-compilation.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0051-create-git-synchronization.yaml
+      relativeToChangelogFile: false

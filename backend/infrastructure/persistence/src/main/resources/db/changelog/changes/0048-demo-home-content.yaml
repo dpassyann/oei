@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0048-demo-home-content
+      author: oei-backend
+      comment: >
+        Seed data for the public home page (stats at 0, demo domains/news/partners in fr/en) --
+        never deleted/disabled by any later migration.
+      changes:
+        - sqlFile:
+            path: db/changelog/changes/0048-demo-home-content.sql
+            relativeToChangelogFile: false
+            splitStatements: true
+            stripComments: true

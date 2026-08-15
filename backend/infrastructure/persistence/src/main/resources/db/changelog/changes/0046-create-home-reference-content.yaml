@@ -1,0 +1,176 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0046-create-home-stat
+      author: oei-backend
+      comment: >
+        Public home page statistics -- every value stays at 0 until real membership/activity
+        data exists to compute it (see the getHomeStats operation's OpenAPI summary).
+      changes:
+        - createTable:
+            tableName: home_stat
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: lang
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: label
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: value
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: display_order
+                  type: integer
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 0046-create-home-domain-area
+      author: oei-backend
+      comment: The OEI's 8 public domains of action, shown on the home page.
+      changes:
+        - createTable:
+            tableName: home_domain_area
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: lang
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: icon
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: display_order
+                  type: integer
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 0046-create-home-news-item
+      author: oei-backend
+      comment: >
+        Legacy/unversioned public news items (home-legacy tag) -- kept as its own small model
+        rather than the CMS Content model, see HomeNewsItem's Javadoc.
+      changes:
+        - createTable:
+            tableName: home_news_item
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: lang
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: excerpt
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: image_url
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: path
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: category
+                  type: varchar(40)
+              - column:
+                  name: published_at
+                  type: date
+
+  - changeSet:
+      id: 0046-create-home-partner
+      author: oei-backend
+      comment: >
+        Public home page partners -- demonstration data until a real partnership is confirmed
+        (see the getPartners operation's OpenAPI summary).
+      changes:
+        - createTable:
+            tableName: home_partner
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: lang
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: logo_url
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: website_url
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: category
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
