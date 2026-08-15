@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0044-demo-verification-requests
+      author: oei-backend
+      comment: >
+        A few demo verification requests (various statuses) reusing real 0004 demo members --
+        never deleted/disabled by any later migration.
+      changes:
+        - sqlFile:
+            path: db/changelog/changes/0044-demo-verification-requests.sql
+            relativeToChangelogFile: false
+            splitStatements: true
+            stripComments: true

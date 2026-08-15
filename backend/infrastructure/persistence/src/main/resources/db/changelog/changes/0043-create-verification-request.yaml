@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0043-create-verification-request
+      author: oei-backend
+      comment: >
+        Member verification requests (identity/profile/certification). Reviewed by admin
+        staff (approve/reject, out of this slice's scope).
+      changes:
+        - createTable:
+            tableName: verification_request
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: member_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_verification_request_member
+                    references: member(id)
+              - column:
+                  name: type
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: reference_id
+                  type: varchar(255)
+              - column:
+                  name: status
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: submitted_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: reviewed_at
+                  type: timestamptz
+              - column:
+                  name: reviewer_id
+                  type: uuid

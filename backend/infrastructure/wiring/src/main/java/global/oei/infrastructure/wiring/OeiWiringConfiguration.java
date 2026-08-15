@@ -27,6 +27,7 @@ import global.oei.domain.core.profile.GetMyProfileService;
 import global.oei.domain.core.profile.UpdateMyProfileService;
 import global.oei.domain.core.publicprofile.GenerateDigitalBusinessCardService;
 import global.oei.domain.core.publicprofile.PublishPublicProfileService;
+import global.oei.domain.core.verification.CreateVerificationRequestService;
 import global.oei.domain.core.wallet.CreateWalletPassService;
 import global.oei.domain.shared.badge.BadgeAwardPort;
 import global.oei.domain.shared.badge.BadgeCatalogPort;
@@ -84,6 +85,8 @@ import global.oei.domain.shared.publicprofile.PublicProfilePort;
 import global.oei.domain.shared.publicprofile.PublishPublicProfileUseCase;
 import global.oei.domain.shared.security.GetMyIdentityUseCase;
 import global.oei.domain.shared.security.SecurityContextPort;
+import global.oei.domain.shared.verification.CreateVerificationRequestUseCase;
+import global.oei.domain.shared.verification.VerificationRequestPort;
 import global.oei.domain.shared.wallet.CreateWalletPassUseCase;
 import global.oei.domain.shared.wallet.WalletPassPort;
 import global.oei.infrastructure.persistence.badge.BadgeAwardRepository;
@@ -162,6 +165,8 @@ import global.oei.infrastructure.persistence.profile.ProfessionalProfilePersiste
 import global.oei.infrastructure.persistence.profile.ProfessionalProfileRepository;
 import global.oei.infrastructure.persistence.publicprofile.PublicProfilePersistenceAdapter;
 import global.oei.infrastructure.persistence.publicprofile.PublicProfileRepository;
+import global.oei.infrastructure.persistence.verification.VerificationRequestPersistenceAdapter;
+import global.oei.infrastructure.persistence.verification.VerificationRequestRepository;
 import global.oei.infrastructure.persistence.wallet.WalletPassPersistenceAdapter;
 import global.oei.infrastructure.persistence.wallet.WalletPassRepository;
 
@@ -505,5 +510,15 @@ public class OeiWiringConfiguration {
     @Bean
     public GenerateDigitalBusinessCardUseCase generateDigitalBusinessCardUseCase() {
         return new GenerateDigitalBusinessCardService();
+    }
+
+    @Bean
+    public VerificationRequestPort verificationRequestPort(final VerificationRequestRepository repository) {
+        return new VerificationRequestPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public CreateVerificationRequestUseCase createVerificationRequestUseCase(final VerificationRequestPort port) {
+        return new CreateVerificationRequestService(port);
     }
 }

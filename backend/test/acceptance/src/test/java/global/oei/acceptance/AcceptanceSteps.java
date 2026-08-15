@@ -221,6 +221,28 @@ public class AcceptanceSteps {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
     }
 
+    // --- verification requests ---
+
+    @Quand("je soumets une demande de vérification de type {string}")
+    public void submitVerificationRequest(final String type) {
+        response = post("/api/member/v1/verification-requests", """
+                {"type":"%s"}""".formatted(type));
+    }
+
+    @Alors("la demande de vérification est enregistrée avec le statut {string}")
+    public void assertsVerificationRequestStatus(final String status) {
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        assertThat(response.getBody()).contains("\"status\":\"" + status + "\"");
+    }
+
+    @Alors("je retrouve cette demande dans la liste de mes demandes de vérification")
+    public void assertsVerificationRequestInList() {
+        final ResponseEntity<String> list = get("/api/member/v1/verification-requests");
+        assertThat(list.getStatusCode()).isEqualTo(HttpStatus.OK);
+        final String id = extractJsonStringField(response.getBody(), "id");
+        assertThat(list.getBody()).contains(id);
+    }
+
     // --- HTTP helpers ---
 
     private ResponseEntity<String> get(final String path) {
