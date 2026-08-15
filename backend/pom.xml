@@ -168,27 +168,6 @@
         </configuration>
       </plugin>
 
-      <!--
-        Checkstyle runs in every module at the `validate` phase (before compilation), so a
-        style/import/Javadoc violation blocks the build as early as possible. Ruleset lives
-        at the reactor root (checkstyle.xml/checkstyle-suppressions.xml) and is referenced
-        via ${maven.multiModuleProjectDirectory} so it resolves identically no matter which
-        module directory `mvn` is invoked from (see the .mvn/ directory anchoring that
-        property). failOnViolation=true: any violation fails the build, not just a warning.
-      -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>checkstyle-validate</id>
-            <phase>validate</phase>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
     </plugins>
 
     <pluginManagement>
@@ -257,4 +236,40 @@
       </plugins>
     </pluginManagement>
   </build>
+
+  <profiles>
+    <!--
+      Checkstyle only runs in modules that actually have Java source to lint. Binding the
+      execution unconditionally in <build><plugins> would also run it (and create a target/
+      directory full of nothing but Checkstyle's own bookkeeping files) in every packaging=pom
+      aggregator module (domain/, infrastructure/, application/ themselves have no
+      src/main/java, only <modules> listings) — same problem/same fix as
+      iap-apps-platform's root pom (activation on <exists>src/main/java</exists>).
+    -->
+    <profile>
+      <id>checkstyle</id>
+      <activation>
+        <file>
+          <exists>src/main/java</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>checkstyle-validate</id>
+                <phase>validate</phase>
+                <goals>
+                  <goal>check</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
