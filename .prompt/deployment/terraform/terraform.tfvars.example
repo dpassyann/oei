@@ -1,0 +1,45 @@
+# Copy this file to terraform.tfvars and fill in the values below.
+# terraform.tfvars is operator-specific and MUST NOT be committed to git
+# (it typically contains an SSH public key and an admin email address).
+
+# Already decided, do not change (see deploiement-aws.md):
+domain_name = "theitorder.global"
+
+# Leave empty ("") to auto-lookup the hosted zone by domain_name. Set this
+# only if the account has several zones sharing the same name.
+route53_zone_id = ""
+
+# --- Values you MUST customize -------------------------------------------
+
+# Restrict SSH to your own IP address (or your office/VPN egress IP), never
+# 0.0.0.0/0. Find your current public IP with: curl -s https://checkip.amazonaws.com
+ssh_allowed_cidr = "203.0.113.10/32"
+
+# Content of the SSH public key to import, e.g.:
+#   ssh-keygen -t ed25519 -f ./oei-prod-key -C "oei-prod"
+#   ssh_public_key = file("./oei-prod-key.pub")
+ssh_public_key = "ssh-ed25519 AAAA...replace-with-your-real-public-key... oei-prod"
+
+# Real, monitored mailbox for AWS Budgets / CloudWatch alerts.
+budget_alert_email = "ops@theitorder.global"
+
+# Monthly cost alert threshold in USD. deploiement-aws.md (§15) estimates the
+# whole stack at ~55-70 USD/month and recommends 80 as the alert threshold.
+monthly_budget_amount_usd = 80
+
+# --- Optional overrides (sane defaults already match deploiement-aws.md) --
+
+# aws_region                = "eu-west-3"
+# ssh_key_pair_name          = "oei-prod-key"
+# instance_type              = "t4g.large"
+# root_volume_size_gb        = 30
+# s3_public_bucket_name      = "oei-public"
+# s3_membership_bucket_name  = "oei-membership"
+# s3_backups_bucket_name     = "oei-backups"
+# s3_web_static_bucket_name  = "oei-web-static"
+# ssm_parameter_prefix       = "/oei/prod"
+# common_tags = {
+#   Project     = "OEI"
+#   Environment = "production"
+#   ManagedBy   = "terraform"
+# }
