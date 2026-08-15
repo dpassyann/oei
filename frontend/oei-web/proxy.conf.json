@@ -3,5 +3,9 @@
     "target": "http://localhost:4300",
     "pathRewrite": { "^/config": "/config.json" },
     "changeOrigin": true
+  },
+  "/api": {
+    "target": "http://localhost:8080",
+    "changeOrigin": true
   }
 }
