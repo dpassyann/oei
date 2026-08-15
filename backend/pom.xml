@@ -30,6 +30,10 @@
     <!-- Cross-module ArchUnit suite: depends (test scope) on every reactor artifact below,
          so it must build last. Not deployed (see its own pom for maven.deploy.skip). -->
     <module>test/architecture</module>
+    <!-- Cucumber acceptance suite: boots the real application (test scope on
+         application-web) against a real Testcontainers Postgres. Builds last for the same
+         reason as test/architecture. Not deployed (see its own pom). -->
+    <module>test/acceptance</module>
   </modules>
 
   <properties>
@@ -47,6 +51,7 @@
       for Spring-Boot-managed dependencies).
     -->
     <archunit.version>1.5.0</archunit.version>
+    <cucumber.version>7.31.0</cucumber.version>
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
     <checkstyle.version>10.21.4</checkstyle.version>
     <openapi-generator.version>7.24.0</openapi-generator.version>
@@ -127,6 +132,15 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+
+      <!-- Cucumber BOM: acceptance-only, see test/acceptance. -->
+      <dependency>
+        <groupId>io.cucumber</groupId>
+        <artifactId>cucumber-bom</artifactId>
+        <version>${cucumber.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -192,6 +206,15 @@
             <configLocation>${maven.multiModuleProjectDirectory}/checkstyle.xml</configLocation>
             <suppressionsLocation>${maven.multiModuleProjectDirectory}/checkstyle-suppressions.xml</suppressionsLocation>
             <propertyExpansion>config_loc=${maven.multiModuleProjectDirectory}</propertyExpansion>
+            <!-- Explicit, not the project.compileSourceRoots default: application-web adds
+                 target/generated-sources (contract-first OpenAPI codegen output, never
+                 hand-edited, not subject to this project's own style rules) as a compile
+                 source root once its generate-sources phase runs. Pinning this to the real
+                 hand-written source directory guarantees Checkstyle never scans generated
+                 code, regardless of phase-ordering/incremental-build timing. -->
+            <sourceDirectories>
+              <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
+            </sourceDirectories>
             <includeTestSourceDirectory>false</includeTestSourceDirectory>
             <consoleOutput>true</consoleOutput>
             <failOnViolation>true</failOnViolation>
