@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0041-create-membership-fee-payment
+      author: oei-backend
+      comment: >
+        Membership fee payments (mocked -- no real payment processor, see
+        PayMembershipFeeService).
+      changes:
+        - createTable:
+            tableName: membership_fee_payment
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: member_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_membership_fee_payment_member
+                    references: member(id)
+              - column:
+                  name: cycle_year
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: tier
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount
+                  type: numeric(10,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: paid_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false

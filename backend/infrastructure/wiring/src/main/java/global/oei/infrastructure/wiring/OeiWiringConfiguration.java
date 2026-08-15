@@ -21,6 +21,7 @@ import global.oei.domain.core.institution.CreateInstitutionOpportunityService;
 import global.oei.domain.core.institution.CreateInstitutionPublicationService;
 import global.oei.domain.core.institution.CreateInstitutionService;
 import global.oei.domain.core.institution.RequestEmploymentAffiliationService;
+import global.oei.domain.core.membershipfee.PayMembershipFeeService;
 import global.oei.domain.core.network.GetSalaryInsightService;
 import global.oei.domain.core.profile.GetMyProfileService;
 import global.oei.domain.core.profile.UpdateMyProfileService;
@@ -69,6 +70,8 @@ import global.oei.domain.shared.institution.InstitutionPublicationPort;
 import global.oei.domain.shared.institution.PartnershipPort;
 import global.oei.domain.shared.institution.RequestEmploymentAffiliationUseCase;
 import global.oei.domain.shared.membership.MembershipLookupPort;
+import global.oei.domain.shared.membershipfee.MembershipFeeAccountPort;
+import global.oei.domain.shared.membershipfee.PayMembershipFeeUseCase;
 import global.oei.domain.shared.network.GetSalaryInsightUseCase;
 import global.oei.domain.shared.network.NetworkGraphPort;
 import global.oei.domain.shared.profile.GetMyProfileUseCase;
@@ -141,6 +144,8 @@ import global.oei.infrastructure.persistence.institution.PartnershipRepository;
 import global.oei.infrastructure.persistence.member.MemberRepository;
 import global.oei.infrastructure.persistence.membership.MembershipPersistenceAdapter;
 import global.oei.infrastructure.persistence.membership.MembershipRepository;
+import global.oei.infrastructure.persistence.membershipfee.MembershipFeePaymentPersistenceAdapter;
+import global.oei.infrastructure.persistence.membershipfee.MembershipFeePaymentRepository;
 import global.oei.infrastructure.persistence.network.NetworkCertificationRepository;
 import global.oei.infrastructure.persistence.network.NetworkDomainRepository;
 import global.oei.infrastructure.persistence.network.NetworkExpertRepository;
@@ -468,5 +473,15 @@ public class OeiWiringConfiguration {
     @Bean
     public SubmitEventProposalUseCase submitEventProposalUseCase(final EventProposalPort port) {
         return new SubmitEventProposalService(port);
+    }
+
+    @Bean
+    public MembershipFeeAccountPort membershipFeeAccountPort(final MembershipFeePaymentRepository repository) {
+        return new MembershipFeePaymentPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public PayMembershipFeeUseCase payMembershipFeeUseCase(final MembershipFeeAccountPort port) {
+        return new PayMembershipFeeService(port);
     }
 }
