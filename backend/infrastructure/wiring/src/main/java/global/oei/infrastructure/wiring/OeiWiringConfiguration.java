@@ -25,6 +25,8 @@ import global.oei.domain.core.membershipfee.PayMembershipFeeService;
 import global.oei.domain.core.network.GetSalaryInsightService;
 import global.oei.domain.core.profile.GetMyProfileService;
 import global.oei.domain.core.profile.UpdateMyProfileService;
+import global.oei.domain.core.publicprofile.GenerateDigitalBusinessCardService;
+import global.oei.domain.core.publicprofile.PublishPublicProfileService;
 import global.oei.domain.core.wallet.CreateWalletPassService;
 import global.oei.domain.shared.badge.BadgeAwardPort;
 import global.oei.domain.shared.badge.BadgeCatalogPort;
@@ -77,6 +79,9 @@ import global.oei.domain.shared.network.NetworkGraphPort;
 import global.oei.domain.shared.profile.GetMyProfileUseCase;
 import global.oei.domain.shared.profile.ProfileLookupPort;
 import global.oei.domain.shared.profile.UpdateMyProfileUseCase;
+import global.oei.domain.shared.publicprofile.GenerateDigitalBusinessCardUseCase;
+import global.oei.domain.shared.publicprofile.PublicProfilePort;
+import global.oei.domain.shared.publicprofile.PublishPublicProfileUseCase;
 import global.oei.domain.shared.security.GetMyIdentityUseCase;
 import global.oei.domain.shared.security.SecurityContextPort;
 import global.oei.domain.shared.wallet.CreateWalletPassUseCase;
@@ -155,6 +160,8 @@ import global.oei.infrastructure.persistence.pdf.PdfGenerationJobPersistenceAdap
 import global.oei.infrastructure.persistence.pdf.PdfGenerationJobRepository;
 import global.oei.infrastructure.persistence.profile.ProfessionalProfilePersistenceAdapter;
 import global.oei.infrastructure.persistence.profile.ProfessionalProfileRepository;
+import global.oei.infrastructure.persistence.publicprofile.PublicProfilePersistenceAdapter;
+import global.oei.infrastructure.persistence.publicprofile.PublicProfileRepository;
 import global.oei.infrastructure.persistence.wallet.WalletPassPersistenceAdapter;
 import global.oei.infrastructure.persistence.wallet.WalletPassRepository;
 
@@ -483,5 +490,20 @@ public class OeiWiringConfiguration {
     @Bean
     public PayMembershipFeeUseCase payMembershipFeeUseCase(final MembershipFeeAccountPort port) {
         return new PayMembershipFeeService(port);
+    }
+
+    @Bean
+    public PublicProfilePort publicProfilePort(final PublicProfileRepository repository, final MemberRepository memberRepository) {
+        return new PublicProfilePersistenceAdapter(repository, memberRepository);
+    }
+
+    @Bean
+    public PublishPublicProfileUseCase publishPublicProfileUseCase(final PublicProfilePort publicProfilePort) {
+        return new PublishPublicProfileService(publicProfilePort);
+    }
+
+    @Bean
+    public GenerateDigitalBusinessCardUseCase generateDigitalBusinessCardUseCase() {
+        return new GenerateDigitalBusinessCardService();
     }
 }

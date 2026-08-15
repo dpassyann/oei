@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0042-create-public-profile
+      author: oei-backend
+      comment: >
+        Public profile publication settings. Rows only exist once a member has published at
+        least once -- see PublicProfilePersistenceAdapter for the synthesized default returned
+        before that.
+      changes:
+        - createTable:
+            tableName: public_profile
+            columns:
+              - column:
+                  name: member_id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    foreignKeyName: fk_public_profile_member
+                    references: member(id)
+              - column:
+                  name: public_slug
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: visible_fields
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: seo_description
+                  type: text
+              - column:
+                  name: published_at
+                  type: timestamptz
+              - column:
+                  name: views_count
+                  type: int
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
