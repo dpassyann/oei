@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0050-create-book-compilation
+      author: oei-backend
+      comment: A compilation of several CMS contents into a book (table of contents, optional cover/ISBN).
+      changes:
+        - createTable:
+            tableName: book_compilation
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: content_ids_json
+                  type: jsonb
+              - column:
+                  name: cover_asset_id
+                  type: uuid
+              - column:
+                  name: isbn
+                  type: varchar(30)
+              - column:
+                  name: table_of_contents_json
+                  type: jsonb
+              - column:
+                  name: version
+                  type: varchar(20)
+                  constraints:
+                    nullable: false

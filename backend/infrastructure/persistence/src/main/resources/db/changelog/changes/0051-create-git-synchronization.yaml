@@ -1,0 +1,82 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0051-create-git-synchronization
+      author: oei-backend
+      comment: >
+        Mocked, read-only Git synchronization runs -- no real Git client is wired yet, see
+        GitSynchronization's Javadoc.
+      changes:
+        - createTable:
+            tableName: git_synchronization
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: started_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: finished_at
+                  type: timestamptz
+              - column:
+                  name: status
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: commits_processed
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: errors_json
+                  type: jsonb
+
+  - changeSet:
+      id: 0051-create-git-synced-file
+      author: oei-backend
+      comment: Markdown files (with front matter) fetched by a git_synchronization run.
+      changes:
+        - createTable:
+            tableName: git_synced_file
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: synchronization_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_git_synced_file_synchronization
+                    references: git_synchronization(id)
+              - column:
+                  name: path
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: git_ref
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: commit_sha
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: raw_content
+                  type: text
+                  constraints:
+                    nullable: false

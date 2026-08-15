@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0049-create-media-asset
+      author: oei-backend
+      comment: >
+        Media library metadata. Real, persisted rows -- only the actual file bytes/object
+        storage backend is mocked, see MediaAsset's Javadoc.
+      changes:
+        - createTable:
+            tableName: media_asset
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: filename
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: url
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: mime_type
+                  type: varchar(120)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: size_bytes
+                  type: bigint
+              - column:
+                  name: uploaded_by
+                  type: varchar(255)
+              - column:
+                  name: uploaded_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: scan_status
+                  type: varchar(12)
+                  defaultValue: PENDING
+                  constraints:
+                    nullable: false
