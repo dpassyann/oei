@@ -17,12 +17,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import global.oei.application.web.resource.certification.adapter.CertificationAdapter;
 import global.oei.domain.shared.certification.Certification;
 import global.oei.domain.shared.certification.CertificationStatus;
 import global.oei.domain.shared.member.MemberId;
+import tools.jackson.databind.ObjectMapper;
 
 /**
  * Standalone {@code MockMvc} test for {@link CertificationResource} — see

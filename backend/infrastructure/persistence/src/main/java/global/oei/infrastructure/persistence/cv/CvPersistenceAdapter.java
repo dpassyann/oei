@@ -6,25 +6,25 @@ import java.util.UUID;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import global.oei.domain.shared.cv.Cv;
 import global.oei.domain.shared.cv.CvPort;
 import global.oei.domain.shared.member.MemberId;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import tools.jackson.databind.ObjectMapper;
 
 /**
  * Implements {@link CvPort} by (de)serializing the whole {@link Cv} record as JSON into
  * {@link CvEntity#getCvJson()} — see that entity's Javadoc for why. {@code Cv} (and its
  * nested {@code CvSection}/{@code CvTranslation}) need no Jackson annotations: records are
- * natively supported by {@code jackson-databind}.
+ * natively supported by {@code jackson-databind}. Jackson 3's {@code jackson-databind}
+ * supports {@code java.time} types natively, so no separate date/time module is registered.
  */
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class CvPersistenceAdapter implements CvPort {
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().registerModule(new JavaTimeModule());
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     private final CvRepository repository;
 

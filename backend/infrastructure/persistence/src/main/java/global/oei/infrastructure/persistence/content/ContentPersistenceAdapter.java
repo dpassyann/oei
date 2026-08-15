@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import global.oei.domain.shared.content.Content;
 import global.oei.domain.shared.content.ContentGovernance;
 import global.oei.domain.shared.content.ContentPort;
@@ -15,6 +14,7 @@ import global.oei.domain.shared.content.ContentType;
 import global.oei.domain.shared.content.ContentWorkflowStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import tools.jackson.databind.ObjectMapper;
 
 /**
  * See {@link ContentPort}'s Javadoc: {@link #search} filters {@link #findAll()} in memory,

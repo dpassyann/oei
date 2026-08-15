@@ -55,16 +55,15 @@
       <scope>runtime</scope>
     </dependency>
 
-    <!-- Used only to (de)serialize ProfessionalProfile (a plain domain-shared record, no
-         Jackson annotations needed) to/from the professional_profile.profile_json jsonb
-         column, see ProfessionalProfilePersistenceAdapter. Not a REST/HTTP concern. -->
+    <!-- Used only to (de)serialize ProfessionalProfile/Cv (plain domain-shared records, no
+         Jackson annotations needed) to/from their respective *_json jsonb columns, see
+         ProfessionalProfilePersistenceAdapter/CvPersistenceAdapter. Not a REST/HTTP concern.
+         Jackson 3 rebranded databind under the "tools.jackson" groupId/package (version
+         managed by the Spring Boot 4.1 BOM); java.time support is now built directly into
+         jackson-databind, so no separate jsr310 module dependency is needed anymore. -->
     <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
+      <groupId>tools.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-jsr310</artifactId>
     </dependency>
 
     <!-- Lombok: @RequiredArgsConstructor for constructor injection (never in domain-shared
