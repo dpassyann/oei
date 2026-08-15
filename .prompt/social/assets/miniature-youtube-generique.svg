@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Gabarit miniature YouTube OEI — The IT Order</title>
+  <desc id="desc">Gabarit generique de miniature : fond bleu nuit, bouclier/globe, zone de titre a personnaliser par video.</desc>
+
+  <defs>
+    <style>
+      .serif { font-family: "Playfair Display", Georgia, "Times New Roman", serif; }
+      .sans { font-family: Inter, Montserrat, Arial, Helvetica, sans-serif; }
+    </style>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a1e3f" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#050f20" stop-opacity="0.85"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="720" fill="#0a1e3f"/>
+
+  <!-- Zone reservee au visage / capture d'ecran a droite (voir guide-production-video.md) -->
+  <rect x="760" y="0" width="520" height="720" fill="#0d2447"/>
+  <text x="1020" y="360" text-anchor="middle" class="sans" fill="#5a7297" style="font-size:22px;">[ visage / capture ecran ]</text>
+
+  <g transform="translate(190 300) scale(0.7)" fill="none" stroke="#e8a530" stroke-width="12"
+     stroke-linecap="round" stroke-linejoin="round">
+    <path d="M0,-250 C-95,-175 -210,-150 -280,-145 V10 C-280,210 -165,345 0,445
+             C165,345 280,210 280,10 V-145 C210,-150 95,-175 0,-250 Z"/>
+    <circle cx="0" cy="40" r="115"/>
+    <ellipse cx="0" cy="40" rx="55" ry="115"/>
+    <path d="M-115,40 H115"/>
+    <path d="M-100,-10 C-45,15 45,15 100,-10"/>
+    <path d="M-100,90 C-45,65 45,65 100,90"/>
+    <path d="M0,-75 V-160"/>
+    <circle cx="0" cy="-182" r="16"/>
+    <path d="M0,155 V240"/>
+    <circle cx="0" cy="262" r="16"/>
+  </g>
+
+  <rect x="0" y="560" width="760" height="160" fill="url(#fade)"/>
+  <text x="60" y="630" class="serif" fill="#ffffff" style="font-size:58px; font-weight:700;">TITRE DE LA VIDEO</text>
+  <text x="60" y="680" class="sans" fill="#e8a530" style="font-size:28px; font-weight:600; letter-spacing:1px;">OEI — theitorder.global</text>
+</svg>

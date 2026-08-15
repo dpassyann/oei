@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="312" viewBox="0 0 820 312"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Photo de couverture Facebook OEI — The IT Order</title>
+  <desc id="desc">Bandeau bleu nuit et dore, bouclier/globe a gauche, nom et signature a droite.</desc>
+
+  <defs>
+    <style>
+      .serif { font-family: "Playfair Display", Georgia, "Times New Roman", serif; }
+      .sans { font-family: Inter, Montserrat, Arial, Helvetica, sans-serif; }
+    </style>
+  </defs>
+
+  <rect width="820" height="312" fill="#0a1e3f"/>
+  <rect x="0" y="0" width="820" height="3" fill="#e8a530"/>
+  <rect x="0" y="309" width="820" height="3" fill="#e8a530"/>
+
+  <!-- Le rond de photo de profil Facebook chevauche generalement le bas-gauche : logo place en haut-gauche -->
+  <g transform="translate(140 110) scale(0.34)" fill="none" stroke="#e8a530" stroke-width="12"
+     stroke-linecap="round" stroke-linejoin="round">
+    <path d="M0,-250 C-95,-175 -210,-150 -280,-145 V10 C-280,210 -165,345 0,445
+             C165,345 280,210 280,10 V-145 C210,-150 95,-175 0,-250 Z"/>
+    <circle cx="0" cy="40" r="115"/>
+    <ellipse cx="0" cy="40" rx="55" ry="115"/>
+    <path d="M-115,40 H115"/>
+    <path d="M-100,-10 C-45,15 45,15 100,-10"/>
+    <path d="M-100,90 C-45,65 45,65 100,90"/>
+    <path d="M0,-75 V-160"/>
+    <circle cx="0" cy="-182" r="16"/>
+    <path d="M0,155 V240"/>
+    <circle cx="0" cy="262" r="16"/>
+  </g>
+
+  <text x="270" y="150" class="serif" fill="#ffffff" style="font-size:34px; font-weight:700;">OEI — The IT Order</text>
+  <text x="270" y="185" class="sans" fill="#e8a530" style="font-size:16px;">Reconnaissance de la profession informatique</text>
+  <text x="270" y="230" class="sans" fill="#ffffff" style="font-size:15px; opacity:0.85;">Un mouvement fondateur international — en construction</text>
+  <text x="270" y="265" class="sans" fill="#e8a530" style="font-size:16px; font-weight:600; letter-spacing:0.5px;">theitorder.global</text>
+</svg>

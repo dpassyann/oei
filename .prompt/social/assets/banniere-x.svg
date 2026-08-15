@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="500" viewBox="0 0 1500 500"
+     role="img" aria-labelledby="title desc">
+  <title id="title">Banniere X/Twitter OEI — The IT Order</title>
+  <desc id="desc">Bandeau bleu nuit et dore, bouclier/globe centre, nom et signature.</desc>
+
+  <defs>
+    <style>
+      .serif { font-family: "Playfair Display", Georgia, "Times New Roman", serif; }
+      .sans { font-family: Inter, Montserrat, Arial, Helvetica, sans-serif; }
+    </style>
+  </defs>
+
+  <rect width="1500" height="500" fill="#0a1e3f"/>
+  <rect x="0" y="0" width="1500" height="4" fill="#e8a530"/>
+  <rect x="0" y="496" width="1500" height="4" fill="#e8a530"/>
+
+  <!-- Zone centrale masquee par la photo de profil ronde de X (bas-gauche) : on decale le contenu a droite -->
+  <g transform="translate(420 250) scale(0.5)" fill="none" stroke="#e8a530" stroke-width="12"
+     stroke-linecap="round" stroke-linejoin="round">
+    <path d="M0,-250 C-95,-175 -210,-150 -280,-145 V10 C-280,210 -165,345 0,445
+             C165,345 280,210 280,10 V-145 C210,-150 95,-175 0,-250 Z"/>
+    <circle cx="0" cy="40" r="115"/>
+    <ellipse cx="0" cy="40" rx="55" ry="115"/>
+    <path d="M-115,40 H115"/>
+    <path d="M-100,-10 C-45,15 45,15 100,-10"/>
+    <path d="M-100,90 C-45,65 45,65 100,90"/>
+    <path d="M0,-75 V-160"/>
+    <circle cx="0" cy="-182" r="16"/>
+    <path d="M-115,40 H-185"/>
+    <circle cx="-208" cy="40" r="16"/>
+    <path d="M115,40 H185"/>
+    <circle cx="208" cy="40" r="16"/>
+    <path d="M0,155 V240"/>
+    <circle cx="0" cy="262" r="16"/>
+  </g>
+
+  <text x="640" y="230" class="serif" fill="#ffffff" style="font-size:60px; font-weight:700;">OEI — The IT Order</text>
+  <text x="640" y="280" class="sans" fill="#e8a530" style="font-size:28px;">Reconnaissance de la profession informatique</text>
+  <text x="640" y="330" class="sans" fill="#ffffff" style="font-size:26px; opacity:0.9;">Recognition for the computing profession</text>
+  <text x="640" y="385" class="sans" fill="#e8a530" style="font-size:26px; font-weight:600; letter-spacing:1px;">theitorder.global</text>
+</svg>
