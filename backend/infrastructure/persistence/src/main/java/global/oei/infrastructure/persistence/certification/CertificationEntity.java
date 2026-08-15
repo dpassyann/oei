@@ -6,8 +6,6 @@ import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -48,7 +46,6 @@ public class CertificationEntity {
     @Column(name = "proof_document_url")
     private String proofDocumentUrl;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
     private String status;
 

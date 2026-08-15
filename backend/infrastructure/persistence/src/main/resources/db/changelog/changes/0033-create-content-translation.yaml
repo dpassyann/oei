@@ -16,8 +16,9 @@ databaseChangeLog:
               - column:
                   name: content_version_id
                   type: uuid
-                  foreignKeyName: fk_content_translation_content_version
-                  references: content_version(id)
+                  constraints:
+                    foreignKeyName: fk_content_translation_content_version
+                    references: content_version(id)
               - column:
                   name: language
                   type: varchar(10)

@@ -36,9 +36,18 @@
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-core</artifactId>
     </dependency>
+    <!--
+      Spring Boot 4 moved Liquibase autoconfiguration out of spring-boot-autoconfigure into
+      its own module: depending on liquibase-core alone (the previous state of this pom) is
+      NOT enough to make SpringLiquibase auto-run on startup anymore, discovered by
+      OeiWiringConfigurationTest (infrastructure-wiring) failing schema validation against a
+      real, empty Testcontainers Postgres with "missing table [badge]": Liquibase was
+      silently never running, in this module's own tests AND in the real application, this
+      whole time. spring-boot-liquibase pulls liquibase-core transitively.
+    -->
     <dependency>
-      <groupId>org.liquibase</groupId>
-      <artifactId>liquibase-core</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-liquibase</artifactId>
     </dependency>
     <dependency>
       <groupId>org.postgresql</groupId>
@@ -71,9 +80,16 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- Real Postgres for every persistence-adapter integration test (never H2, per the
+         spring-boot-ddd-backend skill's conviction on this point). -->
     <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers-postgresql</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers-junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>

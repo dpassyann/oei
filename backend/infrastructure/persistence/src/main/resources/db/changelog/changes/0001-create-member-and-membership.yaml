@@ -36,7 +36,10 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: country
-                  type: varchar(2)
+                  # Free text (e.g. "Suisse", "France"), same convention as
+                  # NetworkExpert.country/Institution.country/EventLocation.country --
+                  # never a strict ISO-3166 2-letter code, despite the column name.
+                  type: varchar(100)
                   constraints:
                     nullable: false
               - column:

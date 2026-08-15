@@ -52,5 +52,18 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- Real Postgres for the composition-root context test (never H2, per the
+         spring-boot-ddd-backend skill's conviction on this point). Versions come from the
+         inherited spring-boot-starter-parent BOM. -->
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers-postgresql</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers-junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 </project>

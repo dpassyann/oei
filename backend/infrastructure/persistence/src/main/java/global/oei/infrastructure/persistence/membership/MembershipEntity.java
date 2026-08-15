@@ -5,8 +5,6 @@ import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -40,11 +38,9 @@ public class MembershipEntity extends BaseAudit {
     @Column(name = "member_id", nullable = false, unique = true)
     private UUID memberId;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "tier", nullable = false, length = 40)
     private String tier;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 40)
     private String status;
 

@@ -4,8 +4,6 @@ import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -47,7 +45,6 @@ public class NetworkExpertEntity {
     @Column(name = "company", nullable = false)
     private String company;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "level", nullable = false, length = 5)
     private String level;
 

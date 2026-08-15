@@ -20,8 +20,9 @@ databaseChangeLog:
               - column:
                   name: institution_id
                   type: uuid
-                  foreignKeyName: fk_institution_audit_log_institution
-                  references: institution(id)
+                  constraints:
+                    foreignKeyName: fk_institution_audit_log_institution
+                    references: institution(id)
               - column:
                   name: actor_id
                   type: varchar(255)

@@ -2,8 +2,6 @@ package global.oei.infrastructure.persistence.badge;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -39,7 +37,6 @@ public class BadgeEntity {
     @Column(name = "icon_url")
     private String iconUrl;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "category", nullable = false, length = 20)
     private String category;
 }

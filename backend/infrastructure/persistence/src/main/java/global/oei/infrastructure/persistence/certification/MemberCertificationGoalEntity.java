@@ -4,8 +4,6 @@ import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -32,7 +30,6 @@ public class MemberCertificationGoalEntity extends BaseAudit {
     @Column(name = "recognized_certification_id", nullable = false)
     private String recognizedCertificationId;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
     private String status;
 }

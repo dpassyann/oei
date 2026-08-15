@@ -111,6 +111,22 @@
         <artifactId>jackson-databind-nullable</artifactId>
         <version>${jackson-databind-nullable.version}</version>
       </dependency>
+
+      <!--
+        Testcontainers BOM: the inherited spring-boot-starter-parent BOM only manages the
+        "testcontainers.version" property (used below) and the org.springframework.boot
+        "spring-boot-testcontainers" starter itself, not the underlying org.testcontainers:*
+        artifacts (postgresql, junit-jupiter, ...) that every Testcontainers-backed
+        integration/acceptance test in this project depends on directly. Imported here so
+        those modules never need to pin a version themselves.
+      -->
+      <dependency>
+        <groupId>org.testcontainers</groupId>
+        <artifactId>testcontainers-bom</artifactId>
+        <version>${testcontainers.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

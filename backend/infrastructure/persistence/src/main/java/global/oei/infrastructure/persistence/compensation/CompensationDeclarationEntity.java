@@ -5,8 +5,6 @@ import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -38,7 +36,6 @@ public class CompensationDeclarationEntity extends BaseAudit {
     @Column(name = "member_id", nullable = false)
     private UUID memberId;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "node_type", nullable = false, length = 20)
     private String nodeType;
 
@@ -54,7 +51,6 @@ public class CompensationDeclarationEntity extends BaseAudit {
     @Column(name = "currency", nullable = false, length = 3)
     private String currency;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "period", nullable = false, length = 10)
     private String period;
 }

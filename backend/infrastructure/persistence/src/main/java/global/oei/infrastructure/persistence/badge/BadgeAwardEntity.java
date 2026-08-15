@@ -5,8 +5,6 @@ import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -35,7 +33,6 @@ public class BadgeAwardEntity {
     @Column(name = "awarded_at", nullable = false)
     private Instant awardedAt;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "source", nullable = false, length = 30)
     private String source;
 
