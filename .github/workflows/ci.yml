@@ -1,0 +1,61 @@
+name: CI
+
+# Safety net before any deployment: build and test both the backend and the
+# frontend on every push/PR to main. This workflow never touches AWS — it
+# has no `permissions.id-token` and configures no AWS credentials, so it is
+# safe to run on pull requests from forks.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    name: Backend (Maven)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 25 (Temurin)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: maven
+
+      - name: mvn clean verify
+        working-directory: backend
+        run: mvn -B clean verify
+
+  frontend:
+    name: Frontend (Angular)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Enable corepack (pnpm 10.33.0)
+        run: corepack enable && corepack prepare pnpm@10.33.0 --activate
+
+      - name: Install dependencies
+        working-directory: frontend/oei-web
+        run: pnpm install --frozen-lockfile
+
+      - name: ng test
+        working-directory: frontend/oei-web
+        # @angular/build:unit-test runs non-interactively (no watch) by
+        # default when it detects a CI environment (CI=true, set by
+        # GitHub Actions runners automatically).
+        run: NODE_OPTIONS=--no-experimental-webstorage pnpm run test
+
+      - name: ng build
+        working-directory: frontend/oei-web
+        run: pnpm run build

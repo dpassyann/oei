@@ -1,0 +1,163 @@
+name: Deploy App (backend image + EC2 rollout)
+
+# Manually dispatched only, on purpose: the project owner wants to trigger
+# every deployment explicitly (no auto-deploy on push). ci.yml is the
+# separate safety net that already runs the full test suite on every
+# push/PR to main — this workflow does NOT re-run tests (see -DskipTests
+# below), it only builds/publishes what has already been validated.
+on:
+  workflow_dispatch: {}
+
+permissions:
+  id-token: write # required for AWS OIDC federation (no long-lived keys)
+  contents: read
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION }}
+  ECR_REPOSITORY: oei-backend
+
+jobs:
+  build-and-push:
+    name: Build & push backend image
+    runs-on: ubuntu-latest
+    outputs:
+      image-tag: ${{ steps.tags.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 25 (Temurin)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: maven
+
+      # Tests already ran in ci.yml for this commit (push/PR gate on main).
+      # Re-running the full Maven test suite here would only slow down a
+      # deploy that a human has already decided to trigger explicitly.
+      - name: mvn package (application-web, tests skipped)
+        working-directory: backend
+        run: mvn -B clean package -pl application/web -am -DskipTests
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: ecr-login
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Compute image tags
+        id: tags
+        run: echo "sha=${GITHUB_SHA::12}" >> "$GITHUB_OUTPUT"
+
+      - name: Build and push backend image
+        working-directory: backend
+        env:
+          REGISTRY: ${{ steps.ecr-login.outputs.registry }}
+          IMAGE_SHA_TAG: ${{ steps.tags.outputs.sha }}
+        run: |
+          set -euo pipefail
+          docker build \
+            -f application/web/Dockerfile \
+            -t "$REGISTRY/$ECR_REPOSITORY:$IMAGE_SHA_TAG" \
+            -t "$REGISTRY/$ECR_REPOSITORY:latest" \
+            .
+          docker push "$REGISTRY/$ECR_REPOSITORY:$IMAGE_SHA_TAG"
+          docker push "$REGISTRY/$ECR_REPOSITORY:latest"
+
+  rollout:
+    name: Roll out on EC2 (SSM)
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    steps:
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      # No SSH key anywhere in this pipeline: the instance is reached only
+      # through AWS Systems Manager Run Command (the instance role already
+      # includes the SSM managed instance permissions per
+      # deploiement-aws.md §5.4 / infra IAM), consistent with the "no
+      # inbound port beyond 80/443/22-restricted" security posture.
+      #
+      # This mirrors deploiement-aws.md §10.1 "Redéploiements ultérieurs" :
+      # pull the freshly-pushed image and recreate only the backend
+      # container (no full compose down, no downtime for postgres/keycloak).
+      - name: Resolve EC2 instance ID
+        id: instance
+        run: |
+          set -euo pipefail
+          INSTANCE_ID=$(aws ec2 describe-instances \
+            --filters "Name=tag:Name,Values=oei-prod" "Name=instance-state-name,Values=running" \
+            --query "Reservations[0].Instances[0].InstanceId" \
+            --output text)
+          if [ -z "$INSTANCE_ID" ] || [ "$INSTANCE_ID" = "None" ]; then
+            echo "::error::No running EC2 instance found with tag Name=oei-prod" >&2
+            exit 1
+          fi
+          echo "id=$INSTANCE_ID" >> "$GITHUB_OUTPUT"
+
+      - name: Send deployment command via SSM
+        id: send-command
+        run: |
+          set -euo pipefail
+
+          # Built as a JSON file (rather than inline --parameters shorthand)
+          # to avoid fragile nested-quoting between bash, the AWS CLI
+          # shorthand parser and JSON — jq handles all the escaping.
+          REMOTE_SCRIPT=$(cat <<EOS
+          set -euo pipefail
+          cd /home/oei-deploy/oei/infra
+          ACCOUNT_ID=\$(aws sts get-caller-identity --query Account --output text)
+          aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin "\${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+          docker compose -f docker-compose.prod.yml --env-file .env pull backend
+          docker compose -f docker-compose.prod.yml --env-file .env up -d --no-deps backend
+          docker image prune -f
+          EOS
+          )
+
+          jq -n --arg script "$REMOTE_SCRIPT" '{commands: [$script]}' > ssm-params.json
+
+          COMMAND_ID=$(aws ssm send-command \
+            --instance-ids "${{ steps.instance.outputs.id }}" \
+            --document-name "AWS-RunShellScript" \
+            --comment "oei deploy-app.yml: pull+recreate backend (${{ needs.build-and-push.outputs.image-tag }})" \
+            --parameters file://ssm-params.json \
+            --query "Command.CommandId" \
+            --output text)
+          echo "id=$COMMAND_ID" >> "$GITHUB_OUTPUT"
+
+      - name: Wait for SSM command completion
+        run: |
+          set -euo pipefail
+          INSTANCE_ID="${{ steps.instance.outputs.id }}"
+          COMMAND_ID="${{ steps.send-command.outputs.id }}"
+          aws ssm wait command-executed \
+            --command-id "$COMMAND_ID" \
+            --instance-id "$INSTANCE_ID" || true
+
+          STATUS=$(aws ssm get-command-invocation \
+            --command-id "$COMMAND_ID" \
+            --instance-id "$INSTANCE_ID" \
+            --query "Status" --output text)
+
+          echo "--- stdout ---"
+          aws ssm get-command-invocation \
+            --command-id "$COMMAND_ID" \
+            --instance-id "$INSTANCE_ID" \
+            --query "StandardOutputContent" --output text || true
+          echo "--- stderr ---"
+          aws ssm get-command-invocation \
+            --command-id "$COMMAND_ID" \
+            --instance-id "$INSTANCE_ID" \
+            --query "StandardErrorContent" --output text || true
+
+          if [ "$STATUS" != "Success" ]; then
+            echo "::error::SSM command finished with status $STATUS" >&2
+            exit 1
+          fi

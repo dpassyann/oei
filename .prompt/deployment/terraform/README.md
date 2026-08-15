@@ -19,6 +19,15 @@ Périmètre couvert par ce Terraform :
 - Enregistrements Route 53 (`api.`, `auth.`, apex, `www.`) dans une hosted
   zone **existante**.
 - Budget AWS avec alertes email à 80 %/100 %.
+- Backend d'état Terraform distant S3 + DynamoDB (`backend.tf`).
+- Fédération d'identité OIDC GitHub Actions : provider OIDC + rôle IAM
+  scopé + policy moindre-privilège (`github_oidc.tf`), utilisés par
+  `.github/workflows/deploy-infra.yml` et `deploy-app.yml`.
+- Dépôt ECR unique `oei-backend` (`ecr.tf`) pour l'image du backend.
+
+Le pilotage CI/CD (workflows GitHub Actions, bootstrap manuel unique) est
+documenté dans
+[`../pipeline-github-actions.md`](../pipeline-github-actions.md).
 
 ## Prérequis
 
@@ -87,30 +96,27 @@ Après un premier `apply` réussi :
 
 ## Gestion du state
 
-Par défaut, le state Terraform reste **local** (`terraform.tfstate` dans ce
-dossier, ignoré par `.gitignore`) — suffisant pour un premier essai ou un
-usage solo.
+Le state Terraform est désormais déclaré en backend distant **S3 + DynamoDB**
+(`backend.tf`, bucket `oei-terraform-state`, table de verrouillage
+`oei-terraform-locks`, région `eu-west-3`) — nécessaire pour que le pipeline
+GitHub Actions (`deploy-infra.yml`) et un opérateur humain partagent le même
+state, avec verrouillage contre les applies concurrents.
 
-Pour la production, migrez vers un backend distant **S3 + DynamoDB**
-(state partagé, verrouillage contre les applies concurrents) :
+Le state a été créé **localement** par un agent précédent (`terraform.tfstate`
+dans ce dossier, ignoré par `.gitignore`). Le bucket/table du backend distant
+ne sont volontairement **pas** des ressources de ce Terraform (un backend ne
+peut pas bootstrapper le stockage dont il dépend lui-même) : leur création et
+la migration du state local vers S3 font partie du **bootstrap manuel unique**
+documenté dans
+[`../pipeline-github-actions.md`](../pipeline-github-actions.md) — à exécuter
+une seule fois, depuis la machine de l'opérateur, avec ses propres
+identifiants AWS (`aws s3api create-bucket` / `aws dynamodb create-table` /
+`terraform init -migrate-state`).
 
-1. Créez (une fois, hors Terraform ou dans un module bootstrap séparé) un
-   bucket S3 versionné + chiffré et une table DynamoDB avec une clé de
-   partition `LockID`.
-2. Ajoutez un bloc backend, par exemple dans `versions.tf` :
-   ```hcl
-   terraform {
-     backend "s3" {
-       bucket         = "oei-terraform-state"
-       key            = "prod/terraform.tfstate"
-       region         = "eu-west-3"
-       dynamodb_table = "oei-terraform-locks"
-       encrypt        = true
-     }
-   }
-   ```
-3. Exécutez `terraform init -migrate-state` pour transférer le state local
-   vers S3.
+Ce même bootstrap manuel effectue aussi le tout premier `terraform apply` en
+local, pour créer le rôle IAM OIDC (`github_oidc.tf`) que GitHub Actions
+utilisera ensuite pour tous les déploiements suivants — voir
+`pipeline-github-actions.md` pour l'ordre exact des commandes.
 
 ## Vérification
 

@@ -57,3 +57,13 @@ output "route53_zone_id" {
   description = "Hosted zone ID used for DNS records."
   value       = data.aws_route53_zone.primary.zone_id
 }
+
+output "github_actions_deploy_role_arn" {
+  description = "ARN of the OIDC-federated IAM role assumed by GitHub Actions (deploy-infra.yml, deploy-app.yml). Set this once as the GitHub repository variable AWS_DEPLOY_ROLE_ARN — see pipeline-github-actions.md."
+  value       = aws_iam_role.github_actions_deploy.arn
+}
+
+output "ecr_backend_repository_url" {
+  description = "URL of the ECR repository holding the oei-backend image, used by deploy-app.yml to push/pull and by docker-compose.prod.yml's `backend.image`."
+  value       = aws_ecr_repository.backend.repository_url
+}
