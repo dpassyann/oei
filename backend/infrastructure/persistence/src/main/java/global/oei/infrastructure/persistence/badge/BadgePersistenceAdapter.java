@@ -1,6 +1,7 @@
 package global.oei.infrastructure.persistence.badge;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +31,16 @@ public class BadgePersistenceAdapter implements BadgeCatalogPort, BadgeAwardPort
         return badgeAwardRepository.findByMemberId(memberId.value()).stream()
                 .map(BadgePersistenceAdapter::toDomain)
                 .toList();
+    }
+
+    @Override
+    @Transactional
+    public BadgeAward save(final BadgeAward award) {
+        final BadgeAwardEntity entity = new BadgeAwardEntity(
+                UUID.fromString(award.id()), award.badgeId(), award.memberId().value(), award.awardedAt(), award.source().name(),
+                award.awardedBy(), award.revoked());
+        badgeAwardRepository.save(entity);
+        return award;
     }
 
     private static Badge toDomain(final BadgeEntity entity) {

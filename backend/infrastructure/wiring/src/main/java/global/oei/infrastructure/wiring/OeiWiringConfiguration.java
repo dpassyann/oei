@@ -6,7 +6,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import global.oei.domain.core.badge.AwardBadgeService;
+import global.oei.domain.core.book.CreateBookCompilationService;
+import global.oei.domain.core.book.RenderBookCompilationService;
 import global.oei.domain.core.certification.DeclareCertificationService;
+import global.oei.domain.core.certification.RejectCertificationService;
+import global.oei.domain.core.certification.ValidateCertificationService;
 import global.oei.domain.core.charter.SignEthicalCharterService;
 import global.oei.domain.core.content.CreateContentContributionService;
 import global.oei.domain.core.content.CreateContentService;
@@ -15,6 +20,7 @@ import global.oei.domain.core.cv.CreateCvService;
 import global.oei.domain.core.cv.RenderCvService;
 import global.oei.domain.core.event.RegisterToEventService;
 import global.oei.domain.core.event.SubmitEventProposalService;
+import global.oei.domain.core.git.TriggerGitSynchronizationService;
 import global.oei.domain.core.identity.GetMyIdentityService;
 import global.oei.domain.core.institution.CreateInstitutionBadgeProposalService;
 import global.oei.domain.core.institution.CreateInstitutionInvitationService;
@@ -22,19 +28,29 @@ import global.oei.domain.core.institution.CreateInstitutionOpportunityService;
 import global.oei.domain.core.institution.CreateInstitutionPublicationService;
 import global.oei.domain.core.institution.CreateInstitutionService;
 import global.oei.domain.core.institution.RequestEmploymentAffiliationService;
+import global.oei.domain.core.media.UploadMediaAssetService;
+import global.oei.domain.core.member.RegisterAccountService;
 import global.oei.domain.core.membershipfee.PayMembershipFeeService;
 import global.oei.domain.core.network.GetSalaryInsightService;
 import global.oei.domain.core.profile.GetMyProfileService;
 import global.oei.domain.core.profile.UpdateMyProfileService;
 import global.oei.domain.core.publicprofile.GenerateDigitalBusinessCardService;
 import global.oei.domain.core.publicprofile.PublishPublicProfileService;
+import global.oei.domain.core.verification.ApproveVerificationRequestService;
 import global.oei.domain.core.verification.CreateVerificationRequestService;
+import global.oei.domain.core.verification.RejectVerificationRequestService;
 import global.oei.domain.core.wallet.CreateWalletPassService;
+import global.oei.domain.shared.badge.AwardBadgeUseCase;
 import global.oei.domain.shared.badge.BadgeAwardPort;
 import global.oei.domain.shared.badge.BadgeCatalogPort;
+import global.oei.domain.shared.book.BookCompilationPort;
+import global.oei.domain.shared.book.CreateBookCompilationUseCase;
+import global.oei.domain.shared.book.RenderBookCompilationUseCase;
 import global.oei.domain.shared.certification.CertificationGoalPort;
 import global.oei.domain.shared.certification.CertificationPort;
 import global.oei.domain.shared.certification.DeclareCertificationUseCase;
+import global.oei.domain.shared.certification.RejectCertificationUseCase;
+import global.oei.domain.shared.certification.ValidateCertificationUseCase;
 import global.oei.domain.shared.charter.SignEthicalCharterUseCase;
 import global.oei.domain.shared.content.ContentApprovalPort;
 import global.oei.domain.shared.content.ContentCommentPort;
@@ -59,6 +75,15 @@ import global.oei.domain.shared.event.EventProposalPort;
 import global.oei.domain.shared.event.EventRegistrationPort;
 import global.oei.domain.shared.event.RegisterToEventUseCase;
 import global.oei.domain.shared.event.SubmitEventProposalUseCase;
+import global.oei.domain.shared.git.GitSyncedFilePort;
+import global.oei.domain.shared.git.GitSynchronizationPort;
+import global.oei.domain.shared.git.TriggerGitSynchronizationUseCase;
+import global.oei.domain.shared.home.ContactMessagePort;
+import global.oei.domain.shared.home.HomeDomainAreaPort;
+import global.oei.domain.shared.home.HomeNewsPort;
+import global.oei.domain.shared.home.HomePartnerPort;
+import global.oei.domain.shared.home.HomeStatPort;
+import global.oei.domain.shared.home.LeadPort;
 import global.oei.domain.shared.institution.CreateInstitutionBadgeProposalUseCase;
 import global.oei.domain.shared.institution.CreateInstitutionInvitationUseCase;
 import global.oei.domain.shared.institution.CreateInstitutionOpportunityUseCase;
@@ -75,6 +100,10 @@ import global.oei.domain.shared.institution.InstitutionPort;
 import global.oei.domain.shared.institution.InstitutionPublicationPort;
 import global.oei.domain.shared.institution.PartnershipPort;
 import global.oei.domain.shared.institution.RequestEmploymentAffiliationUseCase;
+import global.oei.domain.shared.media.MediaAssetPort;
+import global.oei.domain.shared.media.UploadMediaAssetUseCase;
+import global.oei.domain.shared.member.MemberPort;
+import global.oei.domain.shared.member.RegisterAccountUseCase;
 import global.oei.domain.shared.membership.MembershipLookupPort;
 import global.oei.domain.shared.membershipfee.MembershipFeeAccountPort;
 import global.oei.domain.shared.membershipfee.PayMembershipFeeUseCase;
@@ -88,13 +117,17 @@ import global.oei.domain.shared.publicprofile.PublicProfilePort;
 import global.oei.domain.shared.publicprofile.PublishPublicProfileUseCase;
 import global.oei.domain.shared.security.GetMyIdentityUseCase;
 import global.oei.domain.shared.security.SecurityContextPort;
+import global.oei.domain.shared.verification.ApproveVerificationRequestUseCase;
 import global.oei.domain.shared.verification.CreateVerificationRequestUseCase;
+import global.oei.domain.shared.verification.RejectVerificationRequestUseCase;
 import global.oei.domain.shared.verification.VerificationRequestPort;
 import global.oei.domain.shared.wallet.CreateWalletPassUseCase;
 import global.oei.domain.shared.wallet.WalletPassPort;
 import global.oei.infrastructure.persistence.badge.BadgeAwardRepository;
 import global.oei.infrastructure.persistence.badge.BadgePersistenceAdapter;
 import global.oei.infrastructure.persistence.badge.BadgeRepository;
+import global.oei.infrastructure.persistence.book.BookCompilationPersistenceAdapter;
+import global.oei.infrastructure.persistence.book.BookCompilationRepository;
 import global.oei.infrastructure.persistence.certification.CertificationGoalPersistenceAdapter;
 import global.oei.infrastructure.persistence.certification.CertificationPersistenceAdapter;
 import global.oei.infrastructure.persistence.certification.CertificationRepository;
@@ -134,6 +167,22 @@ import global.oei.infrastructure.persistence.event.EventProposalRepository;
 import global.oei.infrastructure.persistence.event.EventRegistrationPersistenceAdapter;
 import global.oei.infrastructure.persistence.event.EventRegistrationRepository;
 import global.oei.infrastructure.persistence.event.EventRepository;
+import global.oei.infrastructure.persistence.git.GitSyncedFilePersistenceAdapter;
+import global.oei.infrastructure.persistence.git.GitSyncedFileRepository;
+import global.oei.infrastructure.persistence.git.GitSynchronizationPersistenceAdapter;
+import global.oei.infrastructure.persistence.git.GitSynchronizationRepository;
+import global.oei.infrastructure.persistence.home.ContactMessagePersistenceAdapter;
+import global.oei.infrastructure.persistence.home.HomeContactMessageRepository;
+import global.oei.infrastructure.persistence.home.HomeDomainAreaPersistenceAdapter;
+import global.oei.infrastructure.persistence.home.HomeDomainAreaRepository;
+import global.oei.infrastructure.persistence.home.HomeLeadRepository;
+import global.oei.infrastructure.persistence.home.HomeNewsItemRepository;
+import global.oei.infrastructure.persistence.home.HomeNewsPersistenceAdapter;
+import global.oei.infrastructure.persistence.home.HomePartnerPersistenceAdapter;
+import global.oei.infrastructure.persistence.home.HomePartnerRepository;
+import global.oei.infrastructure.persistence.home.HomeStatPersistenceAdapter;
+import global.oei.infrastructure.persistence.home.HomeStatRepository;
+import global.oei.infrastructure.persistence.home.LeadPersistenceAdapter;
 import global.oei.infrastructure.persistence.institution.EmploymentAffiliationPersistenceAdapter;
 import global.oei.infrastructure.persistence.institution.EmploymentAffiliationRepository;
 import global.oei.infrastructure.persistence.institution.InstitutionAuditLogPersistenceAdapter;
@@ -154,6 +203,9 @@ import global.oei.infrastructure.persistence.institution.InstitutionPublicationR
 import global.oei.infrastructure.persistence.institution.InstitutionRepository;
 import global.oei.infrastructure.persistence.institution.PartnershipPersistenceAdapter;
 import global.oei.infrastructure.persistence.institution.PartnershipRepository;
+import global.oei.infrastructure.persistence.media.MediaAssetPersistenceAdapter;
+import global.oei.infrastructure.persistence.media.MediaAssetRepository;
+import global.oei.infrastructure.persistence.member.MemberPersistenceAdapter;
 import global.oei.infrastructure.persistence.member.MemberRepository;
 import global.oei.infrastructure.persistence.membership.MembershipPersistenceAdapter;
 import global.oei.infrastructure.persistence.membership.MembershipRepository;
@@ -535,5 +587,112 @@ public class OeiWiringConfiguration {
     @Bean
     public CreateVerificationRequestUseCase createVerificationRequestUseCase(final VerificationRequestPort port) {
         return new CreateVerificationRequestService(port);
+    }
+
+    @Bean
+    public ValidateCertificationUseCase validateCertificationUseCase(final CertificationPort certificationPort) {
+        return new ValidateCertificationService(certificationPort);
+    }
+
+    @Bean
+    public RejectCertificationUseCase rejectCertificationUseCase(final CertificationPort certificationPort) {
+        return new RejectCertificationService(certificationPort);
+    }
+
+    @Bean
+    public AwardBadgeUseCase awardBadgeUseCase(final BadgeAwardPort badgeAwardPort) {
+        return new AwardBadgeService(badgeAwardPort);
+    }
+
+    @Bean
+    public ApproveVerificationRequestUseCase approveVerificationRequestUseCase(final VerificationRequestPort port) {
+        return new ApproveVerificationRequestService(port);
+    }
+
+    @Bean
+    public RejectVerificationRequestUseCase rejectVerificationRequestUseCase(final VerificationRequestPort port) {
+        return new RejectVerificationRequestService(port);
+    }
+
+    @Bean
+    public MemberPort memberPort(final MemberRepository repository) {
+        return new MemberPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public RegisterAccountUseCase registerAccountUseCase(final MemberPort memberPort) {
+        return new RegisterAccountService(memberPort);
+    }
+
+    @Bean
+    public HomeStatPort homeStatPort(final HomeStatRepository repository) {
+        return new HomeStatPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public HomeDomainAreaPort homeDomainAreaPort(final HomeDomainAreaRepository repository) {
+        return new HomeDomainAreaPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public HomeNewsPort homeNewsPort(final HomeNewsItemRepository repository) {
+        return new HomeNewsPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public HomePartnerPort homePartnerPort(final HomePartnerRepository repository) {
+        return new HomePartnerPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public LeadPort leadPort(final HomeLeadRepository repository) {
+        return new LeadPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public ContactMessagePort contactMessagePort(final HomeContactMessageRepository repository) {
+        return new ContactMessagePersistenceAdapter(repository);
+    }
+
+    @Bean
+    public MediaAssetPort mediaAssetPort(final MediaAssetRepository repository) {
+        return new MediaAssetPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public UploadMediaAssetUseCase uploadMediaAssetUseCase(final MediaAssetPort mediaAssetPort) {
+        return new UploadMediaAssetService(mediaAssetPort);
+    }
+
+    @Bean
+    public BookCompilationPort bookCompilationPort(final BookCompilationRepository repository) {
+        return new BookCompilationPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public CreateBookCompilationUseCase createBookCompilationUseCase(
+            final BookCompilationPort bookCompilationPort, final ContentPort contentPort) {
+        return new CreateBookCompilationService(bookCompilationPort, contentPort);
+    }
+
+    @Bean
+    public RenderBookCompilationUseCase renderBookCompilationUseCase(final PdfGenerationJobPort pdfGenerationJobPort) {
+        return new RenderBookCompilationService(pdfGenerationJobPort);
+    }
+
+    @Bean
+    public GitSynchronizationPort gitSynchronizationPort(final GitSynchronizationRepository repository) {
+        return new GitSynchronizationPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public GitSyncedFilePort gitSyncedFilePort(final GitSyncedFileRepository repository) {
+        return new GitSyncedFilePersistenceAdapter(repository);
+    }
+
+    @Bean
+    public TriggerGitSynchronizationUseCase triggerGitSynchronizationUseCase(
+            final GitSynchronizationPort gitSynchronizationPort, final GitSyncedFilePort gitSyncedFilePort) {
+        return new TriggerGitSynchronizationService(gitSynchronizationPort, gitSyncedFilePort);
     }
 }

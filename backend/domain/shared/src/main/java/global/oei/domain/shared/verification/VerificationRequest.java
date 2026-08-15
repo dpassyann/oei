@@ -32,4 +32,18 @@ public record VerificationRequest(
         Objects.requireNonNull(status, "status must not be null");
         Objects.requireNonNull(submittedAt, "submittedAt must not be null");
     }
+
+    /**
+     * @return a new instance moved to {@link VerificationRequestStatus#APPROVED} by {@code reviewerId}
+     */
+    public VerificationRequest approve(final String reviewerId, final Instant now) {
+        return new VerificationRequest(id, memberId, type, referenceId, VerificationRequestStatus.APPROVED, submittedAt, now, reviewerId);
+    }
+
+    /**
+     * @return a new instance moved to {@link VerificationRequestStatus#REJECTED} by {@code reviewerId}
+     */
+    public VerificationRequest reject(final String reviewerId, final Instant now) {
+        return new VerificationRequest(id, memberId, type, referenceId, VerificationRequestStatus.REJECTED, submittedAt, now, reviewerId);
+    }
 }

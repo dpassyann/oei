@@ -33,4 +33,22 @@ public record Certification(
         Objects.requireNonNull(issuingOrganization, "issuingOrganization must not be null");
         Objects.requireNonNull(status, "status must not be null");
     }
+
+    /**
+     * @return a new instance moved to {@link CertificationStatus#VALIDATED} by {@code validatorId}
+     */
+    public Certification validate(final String validatorId, final Instant now) {
+        return new Certification(
+                id, memberId, name, issuingOrganization, recognizedCertificationId, issuedAt, expiresAt, proofDocumentUrl,
+                CertificationStatus.VALIDATED, validatorId, now);
+    }
+
+    /**
+     * @return a new instance moved to {@link CertificationStatus#REJECTED} by {@code validatorId}
+     */
+    public Certification reject(final String validatorId, final Instant now) {
+        return new Certification(
+                id, memberId, name, issuingOrganization, recognizedCertificationId, issuedAt, expiresAt, proofDocumentUrl,
+                CertificationStatus.REJECTED, validatorId, now);
+    }
 }
