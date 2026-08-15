@@ -89,6 +89,22 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- SecurityMockMvcRequestPostProcessors.jwt(): fabricates an authenticated JWT request
+         directly in the SecurityContext, bypassing real token decoding, for @WebMvcTest
+         slices against infrastructure-security's real JWT resource server filter chain. -->
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- @WebMvcTest: Spring Boot 4 moved this out of spring-boot-test-autoconfigure's
+         "core" set into its own webmvc-test module (same reorganization as
+         spring-boot-liquibase, see infrastructure-persistence's pom). -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-webmvc-test</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
