@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import global.oei.domain.core.certification.DeclareCertificationService;
 import global.oei.domain.core.charter.SignEthicalCharterService;
+import global.oei.domain.core.content.CreateContentContributionService;
 import global.oei.domain.core.content.CreateContentService;
 import global.oei.domain.core.content.CreateContentVersionService;
 import global.oei.domain.core.cv.CreateCvService;
@@ -36,11 +37,13 @@ import global.oei.domain.shared.certification.CertificationPort;
 import global.oei.domain.shared.certification.DeclareCertificationUseCase;
 import global.oei.domain.shared.charter.SignEthicalCharterUseCase;
 import global.oei.domain.shared.content.ContentApprovalPort;
+import global.oei.domain.shared.content.ContentCommentPort;
 import global.oei.domain.shared.content.ContentContributionPort;
 import global.oei.domain.shared.content.ContentPort;
 import global.oei.domain.shared.content.ContentPublicationPort;
 import global.oei.domain.shared.content.ContentTranslationPort;
 import global.oei.domain.shared.content.ContentVersionPort;
+import global.oei.domain.shared.content.CreateContentContributionUseCase;
 import global.oei.domain.shared.content.CreateContentUseCase;
 import global.oei.domain.shared.content.CreateContentVersionUseCase;
 import global.oei.domain.shared.cv.CreateCvUseCase;
@@ -103,6 +106,8 @@ import global.oei.infrastructure.persistence.compensation.SalaryInsightPersisten
 import global.oei.infrastructure.persistence.config.audit.PersistenceAuditingConfiguration;
 import global.oei.infrastructure.persistence.content.ContentApprovalPersistenceAdapter;
 import global.oei.infrastructure.persistence.content.ContentApprovalRepository;
+import global.oei.infrastructure.persistence.content.ContentCommentPersistenceAdapter;
+import global.oei.infrastructure.persistence.content.ContentCommentRepository;
 import global.oei.infrastructure.persistence.content.ContentContributionPersistenceAdapter;
 import global.oei.infrastructure.persistence.content.ContentContributionRepository;
 import global.oei.infrastructure.persistence.content.ContentPersistenceAdapter;
@@ -440,6 +445,16 @@ public class OeiWiringConfiguration {
     @Bean
     public ContentContributionPort contentContributionPort(final ContentContributionRepository repository) {
         return new ContentContributionPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public CreateContentContributionUseCase createContentContributionUseCase(final ContentContributionPort contentContributionPort) {
+        return new CreateContentContributionService(contentContributionPort);
+    }
+
+    @Bean
+    public ContentCommentPort contentCommentPort(final ContentCommentRepository repository) {
+        return new ContentCommentPersistenceAdapter(repository);
     }
 
     @Bean

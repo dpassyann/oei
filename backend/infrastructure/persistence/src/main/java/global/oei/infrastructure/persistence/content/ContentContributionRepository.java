@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ContentContributionRepository extends JpaRepository<ContentContributionEntity, UUID> {
 
     List<ContentContributionEntity> findByContentId(UUID contentId);
+
+    List<ContentContributionEntity> findByAuthorMemberId(UUID authorMemberId);
 }

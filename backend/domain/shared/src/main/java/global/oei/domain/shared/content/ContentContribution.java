@@ -7,10 +7,9 @@ import global.oei.domain.shared.member.MemberId;
 
 /**
  * A member-proposed Markdown patch on a {@link Content} (never a direct edit of published
- * text). Read-only in this iteration: {@code listAdminContentContributions} is real and
- * DB-backed, but the member-facing write path ({@code createContribution}, tag
- * {@code member-contributions}) is not implemented yet — documented TODO — so this table is
- * legitimately empty until that slice lands, not silently faked.
+ * text). Created via the member-facing write path ({@code createContribution}, tag
+ * {@code member-contributions}, see {@code CreateContentContributionService}) and consulted
+ * both by the member who authored it and by admin staff ({@code listAdminContentContributions}).
  */
 public record ContentContribution(
         String id, String contentId, String patch, MemberId authorMemberId, ContentContributionStatus status, Instant createdAt) {
