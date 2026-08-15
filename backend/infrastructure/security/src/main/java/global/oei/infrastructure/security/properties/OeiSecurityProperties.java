@@ -20,7 +20,8 @@ public class OeiSecurityProperties {
      * Ant-style URL patterns that require no authentication at all.
      */
     private String[] publicUrls = new String[] {
-        "/actuator/health", "/actuator/health/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html"
+        "/actuator/health", "/actuator/health/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html",
+        "/api/public/**"
     };
 
     public String getRolesClaim() {

@@ -25,6 +25,10 @@ oei:
     public-urls:
       - /actuator/health
       - /actuator/health/**
+      # /api/public/** backs PublicEventsApi/PublicAccountsApi/PublicInstitutionsApi/etc:
+      # genuinely anonymous, visitor-facing endpoints (event listings, anonymized salary
+      # insights, public member/institution profiles) — never require a bearer token.
+      - /api/public/**
 
 management:
   endpoints:
