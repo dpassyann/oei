@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>global.oei</groupId>
+    <artifactId>infrastructure</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <relativePath>..</relativePath>
+  </parent>
+
+  <artifactId>infrastructure-client</artifactId>
+  <packaging>jar</packaging>
+  <name>OEI Backend - Infrastructure Client</name>
+  <description>
+    Outbound HTTP clients for payment providers (Stripe, PayPal), contract-first: generated
+    from local, reduced OpenAPI specs (see src/main/resources/openapi) using the
+    openapi-generator "java" generator with the spring-http-interface library (Spring
+    RestClient + @HttpExchange, never RestTemplate/WebClient). Handwritten adapters map
+    generated provider DTOs to domain-shared types at the PaymentProviderPort boundary; no
+    generated DTO ever leaks past this module. Depends only on domain-shared, never on
+    domain-core.
+  </description>
+
+  <dependencies>
+    <dependency>
+      <groupId>global.oei</groupId>
+      <artifactId>domain-shared</artifactId>
+    </dependency>
+
+    <!-- RestClient + HttpServiceProxyFactory (spring-http-interface library output), no
+         servlet container/Tomcat needed here: this module is an HTTP client, not a server,
+         so spring-web is depended on directly rather than through spring-boot-starter-web. -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-autoconfigure</artifactId>
+    </dependency>
+
+    <!-- Generated client DTOs reference these annotation/type libraries, same as
+         application-web's generated server DTOs. -->
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-annotations-jakarta</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.openapitools</groupId>
+      <artifactId>jackson-databind-nullable</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>tools.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+
+    <!-- Generated *Api interfaces carry a jakarta.annotation.Generated marker; spring-web
+         alone (unlike spring-boot-starter-web) does not pull this in transitively. -->
+    <dependency>
+      <groupId>jakarta.annotation</groupId>
+      <artifactId>jakarta.annotation-api</artifactId>
+    </dependency>
+    <!-- Logging facade used by the handwritten adapters (@Slf4j); spring-web alone does not
+         pull this in transitively the way spring-boot-starter-web/data-jpa do. -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- Never a real network call to Stripe/PayPal (even sandbox) from any automated test:
+         WireMock stubs the provider HTTP APIs locally instead. The shaded "standalone"
+         artifact is used deliberately (instead of the thin org.wiremock:wiremock jar) to
+         avoid a Jetty version clash with the org.eclipse.jetty versions the inherited
+         spring-boot-starter-parent BOM manages for the rest of the reactor. -->
+    <dependency>
+      <groupId>org.wiremock</groupId>
+      <artifactId>wiremock-standalone</artifactId>
+      <version>${wiremock.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.openapitools</groupId>
+        <artifactId>openapi-generator-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>generate-stripe-client</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <inputSpec>${project.basedir}/src/main/resources/openapi/stripe-api.yaml</inputSpec>
+              <generatorName>spring</generatorName>
+              <library>spring-http-interface</library>
+              <apiPackage>global.oei.infrastructure.client.stripe.generated.api</apiPackage>
+              <invokerPackage>global.oei.infrastructure.client.stripe.generated</invokerPackage>
+              <modelPackage>global.oei.infrastructure.client.stripe.generated.model</modelPackage>
+              <output>${project.build.directory}/generated-sources</output>
+              <modelNameSuffix>Dto</modelNameSuffix>
+              <globalProperties>
+                <supportingFiles>false</supportingFiles>
+              </globalProperties>
+              <configOptions>
+                <useJakartaEe>true</useJakartaEe>
+                <dateLibrary>java8</dateLibrary>
+                <serializationLibrary>jackson</serializationLibrary>
+                <serializableModel>true</serializableModel>
+              </configOptions>
+            </configuration>
+          </execution>
+          <execution>
+            <id>generate-paypal-client</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <inputSpec>${project.basedir}/src/main/resources/openapi/paypal-api.yaml</inputSpec>
+              <generatorName>spring</generatorName>
+              <library>spring-http-interface</library>
+              <apiPackage>global.oei.infrastructure.client.paypal.generated.api</apiPackage>
+              <invokerPackage>global.oei.infrastructure.client.paypal.generated</invokerPackage>
+              <modelPackage>global.oei.infrastructure.client.paypal.generated.model</modelPackage>
+              <output>${project.build.directory}/generated-sources</output>
+              <modelNameSuffix>Dto</modelNameSuffix>
+              <globalProperties>
+                <supportingFiles>false</supportingFiles>
+              </globalProperties>
+              <configOptions>
+                <useJakartaEe>true</useJakartaEe>
+                <dateLibrary>java8</dateLibrary>
+                <serializationLibrary>jackson</serializationLibrary>
+                <serializableModel>true</serializableModel>
+              </configOptions>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

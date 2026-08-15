@@ -1,0 +1,199 @@
+# -----------------------------------------------------------------------------------------
+# HAND-AUTHORED, REDUCED SUBSET OF THE STRIPE API — NOT THE VENDOR'S OFFICIAL SPEC.
+#
+# Stripe's official OpenAPI spec (https://raw.githubusercontent.com/stripe/openapi) is
+# hundreds of endpoints/schemas. This environment had no network access to fetch it, so this
+# file was hand-written to contain ONLY the four operations the OEI store feature actually
+# needs, modeled as closely as practical on Stripe's real PaymentIntents/Refunds API shape
+# (form-encoded requests, "id"/"object"/"status" response envelope) as of Stripe API version
+# "2024-*"-era PaymentIntents/Refunds resources (reference date for this hand-authored
+# reduction: 2026-08-10). Replace with a real, narrowed copy of the vendor spec the first time
+# this project has network access to stripe/openapi, keeping the same operationIds so the
+# generated Java interface/adapter do not need to change.
+#
+# Kept operations: create PaymentIntent, confirm PaymentIntent, retrieve PaymentIntent,
+# create Refund — exactly the four operations listed in
+# .prompt/plan/store/04-architecture-technique.md §2.
+# -----------------------------------------------------------------------------------------
+openapi: 3.0.3
+info:
+  title: Stripe API (OEI reduced subset)
+  version: "2026-08-10-reduced"
+  description: >
+    Hand-authored reduced subset of the Stripe API — see file header comment above.
+servers:
+  - url: https://api.stripe.com/v1
+paths:
+  /payment_intents:
+    post:
+      operationId: createPaymentIntent
+      tags: [PaymentIntents]
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreatePaymentIntentRequest'
+      responses:
+        '200':
+          description: The created PaymentIntent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripePaymentIntent'
+        default:
+          description: Stripe error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripeErrorResponse'
+  /payment_intents/{intent}/confirm:
+    post:
+      operationId: confirmPaymentIntent
+      tags: [PaymentIntents]
+      parameters:
+        - name: intent
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ConfirmPaymentIntentRequest'
+      responses:
+        '200':
+          description: The confirmed PaymentIntent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripePaymentIntent'
+        default:
+          description: Stripe error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripeErrorResponse'
+  /payment_intents/{intent}:
+    get:
+      operationId: getPaymentIntent
+      tags: [PaymentIntents]
+      parameters:
+        - name: intent
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The PaymentIntent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripePaymentIntent'
+        default:
+          description: Stripe error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripeErrorResponse'
+  /refunds:
+    post:
+      operationId: createRefund
+      tags: [Refunds]
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateRefundRequest'
+      responses:
+        '200':
+          description: The created Refund.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripeRefund'
+        default:
+          description: Stripe error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripeErrorResponse'
+components:
+  schemas:
+    CreatePaymentIntentRequest:
+      type: object
+      required: [amount, currency, payment_method]
+      properties:
+        amount:
+          type: integer
+          format: int64
+          description: Amount in the smallest currency unit (e.g. cents).
+        currency:
+          type: string
+        payment_method:
+          type: string
+          description: Opaque, already-tokenized Stripe PaymentMethod id (e.g. from Stripe.js).
+        confirm:
+          type: boolean
+    ConfirmPaymentIntentRequest:
+      type: object
+      properties:
+        payment_method:
+          type: string
+    CreateRefundRequest:
+      type: object
+      required: [payment_intent]
+      properties:
+        payment_intent:
+          type: string
+    StripePaymentIntent:
+      type: object
+      required: [id, object, status, amount, currency]
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          example: payment_intent
+        status:
+          type: string
+          description: succeeded | requires_payment_method | requires_confirmation | canceled | processing.
+        amount:
+          type: integer
+          format: int64
+        currency:
+          type: string
+        last_payment_error:
+          $ref: '#/components/schemas/StripeError'
+    StripeRefund:
+      type: object
+      required: [id, object, status]
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          example: refund
+        status:
+          type: string
+          description: succeeded | pending | failed.
+        payment_intent:
+          type: string
+    StripeError:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        type:
+          type: string
+    StripeErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/StripeError'

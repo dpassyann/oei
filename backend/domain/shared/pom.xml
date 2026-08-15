@@ -26,6 +26,16 @@
       <artifactId>jakarta.validation-api</artifactId>
     </dependency>
 
+    <!-- Lombok: used narrowly for the PaymentMethod enum-strategy pattern's
+         @Getter/@Setter-injected PaymentProviderPort field (reproduced exactly from the
+         reference model, see 04-architecture-technique.md §3.1) — annotation processing only,
+         never a runtime Spring/framework dependency, so this stays framework-agnostic. -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>

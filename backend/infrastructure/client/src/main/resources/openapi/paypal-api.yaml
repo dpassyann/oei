@@ -1,0 +1,191 @@
+# -----------------------------------------------------------------------------------------
+# HAND-AUTHORED, REDUCED SUBSET OF THE PAYPAL ORDERS V2 API — NOT THE VENDOR'S OFFICIAL SPEC.
+#
+# PayPal publishes per-product OpenAPI specs on its developer portal; this environment had no
+# network access to fetch them, so this file was hand-written to contain ONLY the operations
+# the OEI store feature actually needs, modeled as closely as practical on the real PayPal
+# Orders v2 API resource/response shape (reference date for this hand-authored reduction:
+# 2026-08-10). Replace with a real, narrowed copy of the vendor spec the first time this
+# project has network access to PayPal's developer portal, keeping the same operationIds so
+# the generated Java interface/adapter do not need to change.
+#
+# Kept operations: create Order, capture Order, retrieve Order, refund a Capture — exactly
+# the four operations listed in .prompt/plan/store/04-architecture-technique.md §2.
+# -----------------------------------------------------------------------------------------
+openapi: 3.0.3
+info:
+  title: PayPal Orders v2 API (OEI reduced subset)
+  version: "v2-reduced"
+  description: >
+    Hand-authored reduced subset of the PayPal Orders v2 API — see file header comment above.
+servers:
+  - url: https://api-m.sandbox.paypal.com/v2
+paths:
+  /checkout/orders:
+    post:
+      operationId: createPaypalOrder
+      tags: [Orders]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePaypalOrderRequest'
+      responses:
+        '201':
+          description: The created PayPal order.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaypalOrder'
+        default:
+          description: PayPal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaypalErrorResponse'
+  /checkout/orders/{id}:
+    get:
+      operationId: getPaypalOrder
+      tags: [Orders]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The PayPal order.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaypalOrder'
+        default:
+          description: PayPal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaypalErrorResponse'
+  /checkout/orders/{id}/capture:
+    post:
+      operationId: capturePaypalOrder
+      tags: [Orders]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: The captured PayPal order.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaypalOrder'
+        default:
+          description: PayPal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaypalErrorResponse'
+  /payments/captures/{captureId}/refund:
+    post:
+      operationId: refundPaypalCapture
+      tags: [Payments]
+      parameters:
+        - name: captureId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefundPaypalCaptureRequest'
+      responses:
+        '201':
+          description: The created refund.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaypalRefund'
+        default:
+          description: PayPal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaypalErrorResponse'
+components:
+  schemas:
+    CreatePaypalOrderRequest:
+      type: object
+      required: [intent, purchase_units]
+      properties:
+        intent:
+          type: string
+          example: CAPTURE
+        purchase_units:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaypalPurchaseUnit'
+    PaypalPurchaseUnit:
+      type: object
+      required: [amount]
+      properties:
+        reference_id:
+          type: string
+          description: OEI order id, for reconciliation on PayPal's side.
+        amount:
+          $ref: '#/components/schemas/PaypalAmount'
+    PaypalAmount:
+      type: object
+      required: [currency_code, value]
+      properties:
+        currency_code:
+          type: string
+        value:
+          type: string
+          description: Decimal string amount, e.g. "19.90".
+    RefundPaypalCaptureRequest:
+      type: object
+      properties:
+        amount:
+          $ref: '#/components/schemas/PaypalAmount'
+    PaypalOrder:
+      type: object
+      required: [id, status]
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          description: CREATED | APPROVED | COMPLETED | VOIDED.
+    PaypalRefund:
+      type: object
+      required: [id, status]
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          description: COMPLETED | PENDING | FAILED.
+    PaypalErrorResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              issue:
+                type: string
+              description:
+                type: string

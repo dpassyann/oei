@@ -1,5 +1,7 @@
 package global.oei.infrastructure.wiring;
 
+import java.util.List;
+
 import org.springframework.boot.persistence.autoconfigure.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -123,6 +125,15 @@ import global.oei.domain.shared.verification.RejectVerificationRequestUseCase;
 import global.oei.domain.shared.verification.VerificationRequestPort;
 import global.oei.domain.shared.wallet.CreateWalletPassUseCase;
 import global.oei.domain.shared.wallet.WalletPassPort;
+import global.oei.infrastructure.client.payment.PaymentProviderBinder;
+import global.oei.infrastructure.client.paypal.PaypalClientConfiguration;
+import global.oei.infrastructure.client.paypal.PaypalPaymentProviderAdapter;
+import global.oei.infrastructure.client.paypal.generated.api.OrdersApi;
+import global.oei.infrastructure.client.paypal.generated.api.PaymentsApi;
+import global.oei.infrastructure.client.stripe.StripeClientConfiguration;
+import global.oei.infrastructure.client.stripe.StripePaymentProviderAdapter;
+import global.oei.infrastructure.client.stripe.generated.api.PaymentIntentsApi;
+import global.oei.infrastructure.client.stripe.generated.api.RefundsApi;
 import global.oei.infrastructure.persistence.badge.BadgeAwardRepository;
 import global.oei.infrastructure.persistence.badge.BadgePersistenceAdapter;
 import global.oei.infrastructure.persistence.badge.BadgeRepository;
@@ -253,7 +264,7 @@ import global.oei.infrastructure.persistence.wallet.WalletPassRepository;
  * explicit {@code @Bean} methods, so it is pulled in via {@code @Import} rather than scanned.
  */
 @Configuration(proxyBeanMethods = false)
-@Import(PersistenceAuditingConfiguration.class)
+@Import({PersistenceAuditingConfiguration.class, StripeClientConfiguration.class, PaypalClientConfiguration.class})
 @EnableJpaRepositories(basePackages = "global.oei.infrastructure.persistence")
 @EntityScan(basePackages = "global.oei.infrastructure.persistence")
 public class OeiWiringConfiguration {
@@ -694,5 +705,31 @@ public class OeiWiringConfiguration {
     public TriggerGitSynchronizationUseCase triggerGitSynchronizationUseCase(
             final GitSynchronizationPort gitSynchronizationPort, final GitSyncedFilePort gitSyncedFilePort) {
         return new TriggerGitSynchronizationService(gitSynchronizationPort, gitSyncedFilePort);
+    }
+
+    @Bean
+    public StripePaymentProviderAdapter stripePaymentProviderAdapter(
+            final PaymentIntentsApi paymentIntentsApi, final RefundsApi refundsApi) {
+        return new StripePaymentProviderAdapter(paymentIntentsApi, refundsApi);
+    }
+
+    @Bean
+    public PaypalPaymentProviderAdapter paypalPaymentProviderAdapter(final OrdersApi ordersApi, final PaymentsApi paymentsApi) {
+        return new PaypalPaymentProviderAdapter(ordersApi, paymentsApi);
+    }
+
+    /**
+     * Binds {@link global.oei.domain.shared.payment.PaymentMethod#CARD}/{@code PAYPAL} to
+     * their respective {@link global.oei.domain.shared.payment.PaymentProviderPort} adapter
+     * at startup (see {@code PaymentProviderBinder}'s own Javadoc for the enum-strategy
+     * pattern). Built explicitly here (never via classpath component scanning, consistent
+     * with every other adapter in this configuration) — Spring still calls
+     * {@code InitializingBean#afterPropertiesSet()} on it because it is a registered bean.
+     */
+    @Bean
+    public PaymentProviderBinder paymentProviderBinder(
+            final StripePaymentProviderAdapter stripePaymentProviderAdapter,
+            final PaypalPaymentProviderAdapter paypalPaymentProviderAdapter) {
+        return new PaymentProviderBinder(List.of(stripePaymentProviderAdapter, paypalPaymentProviderAdapter));
     }
 }

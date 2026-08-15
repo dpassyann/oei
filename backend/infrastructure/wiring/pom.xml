@@ -41,6 +41,10 @@
       <groupId>global.oei</groupId>
       <artifactId>infrastructure-persistence</artifactId>
     </dependency>
+    <dependency>
+      <groupId>global.oei</groupId>
+      <artifactId>infrastructure-client</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
