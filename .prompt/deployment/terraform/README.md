@@ -31,15 +31,26 @@ documenté dans
 
 ## Prérequis
 
-1. Un compte AWS avec des credentials configurés localement (`aws configure`
-   ou variables `AWS_ACCESS_KEY_ID`/`AWS_SECRET_ACCESS_KEY`/`AWS_SESSION_TOKEN`),
-   utilisateur IAM dédié (pas root), cf. manuel §3.2.
+**Si vous partez de zéro** (rien d'installé sur votre Mac), suivez d'abord
+[`../pipeline-github-actions.md` §0](../pipeline-github-actions.md#0-prérequis--installer-les-outils-sur-votre-machine-macos) :
+installation pas à pas de Homebrew, AWS CLI v2 (+ création des identifiants
+IAM et `aws configure`), Terraform, et GitHub CLI. Revenez ici une fois que
+`aws sts get-caller-identity` et `terraform -version` répondent correctement.
+
+Résumé une fois les outils installés :
+
+1. Un compte AWS avec des credentials configurés localement (`aws configure
+   --profile oei-admin`, cf. §0.2 du document ci-dessus), utilisateur IAM
+   dédié (**jamais** le compte root).
 2. Le domaine `theitorder.global` **déjà déposé** (Route 53 Domains ou
    registrar tiers) et une **hosted zone Route 53 déjà créée manuellement**
    pour ce domaine (manuel §2) — Terraform ne peut pas acheter un nom de
    domaine, il se contente de référencer la zone existante via une data
    source (`data.aws_route53_zone.primary`).
-3. Terraform CLI installé (>= 1.7, voir `versions.tf`).
+3. Terraform CLI installé (>= 1.7, voir `versions.tf`) :
+   ```bash
+   brew tap hashicorp/tap && brew install hashicorp/tap/terraform
+   ```
 4. Une paire de clés SSH générée localement, dont on va importer la clé
    **publique** (jamais la clé privée) :
    ```bash

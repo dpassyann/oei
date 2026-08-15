@@ -26,6 +26,111 @@ solution est donc :
   `gh workflow run` / `gh run watch`, qui sont des appels à l'API GitHub, pas
   à l'API AWS.
 
+## 0. Prérequis : installer les outils sur votre machine (macOS)
+
+Avant de pouvoir taper la moindre commande de ce document, il vous faut 4 outils en ligne de commande installés sur votre Mac. Si vous ne savez pas si l'un d'eux est déjà installé, tapez simplement son nom de commande de vérification (colonne "Vérifier") — si le terminal répond `command not found`, il n'est pas installé.
+
+### 0.1. Homebrew (le gestionnaire de paquets macOS — installe tout le reste)
+
+Vérifier :
+```bash
+brew --version
+```
+
+Si absent, installer (copie-colle tel quel dans le Terminal) :
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+À la fin de l'installation, le script affiche 1-2 lignes `echo ... >> ~/.zprofile` à exécuter — copiez-collez-les exactement telles qu'affichées, puis fermez et rouvrez le Terminal.
+
+### 0.2. AWS CLI v2
+
+Vérifier :
+```bash
+aws --version
+# doit afficher quelque chose comme : aws-cli/2.x.x Python/3.x ...
+```
+
+Installer :
+```bash
+brew install awscli
+```
+
+**Configurer vos identifiants** (obligatoire avant toute commande `aws`/`terraform`) :
+
+1. Connectez-vous à la [console AWS](https://console.aws.amazon.com/) avec votre compte.
+2. **N'utilisez jamais le compte "root"** pour les opérations quotidiennes — allez dans **IAM → Users → Create user**, donnez-lui un nom (ex. `oei-admin`), cochez **Attach policies directly** puis `AdministratorAccess` (uniquement pour ce compte de bootstrap personnel, pas pour le rôle GitHub Actions qui lui est bien moins privilégié — voir §1.3).
+3. Une fois l'utilisateur créé, ouvrez-le → onglet **Security credentials** → **Create access key** → choisissez **Command Line Interface (CLI)** → confirmez → **copiez immédiatement** l'`Access Key ID` et le `Secret Access Key` affichés (le secret ne sera plus jamais visible ensuite).
+4. Dans votre Terminal :
+   ```bash
+   aws configure --profile oei-admin
+   ```
+   Il vous demande 4 valeurs, dans l'ordre :
+   ```
+   AWS Access Key ID [None]: <collez l'Access Key ID>
+   AWS Secret Access Key [None]: <collez le Secret Access Key>
+   Default region name [None]: eu-west-3
+   Default output format [None]: json
+   ```
+5. Faites en sorte que ce profil soit utilisé par défaut pour ce projet, à chaque nouvelle session de terminal :
+   ```bash
+   export AWS_PROFILE=oei-admin
+   ```
+   (ajoutez cette ligne à `~/.zprofile` pour ne pas avoir à la retaper — `echo 'export AWS_PROFILE=oei-admin' >> ~/.zprofile`)
+6. Vérifiez que ça fonctionne :
+   ```bash
+   aws sts get-caller-identity
+   # doit afficher votre UserId/Account/Arn, pas une erreur
+   ```
+
+**Ne committez jamais** ces clés dans Git (elles ne sont de toute façon écrites que dans `~/.aws/credentials`, hors du dépôt).
+
+### 0.3. Terraform
+
+Vérifier :
+```bash
+terraform -version
+```
+
+Installer (méthode officielle HashiCorp, recommandée plutôt que le simple `brew install terraform` pour rester à jour facilement) :
+```bash
+brew tap hashicorp/tap
+brew install hashicorp/tap/terraform
+```
+
+### 0.4. GitHub CLI (`gh`)
+
+Vérifier :
+```bash
+gh --version
+```
+
+Installer :
+```bash
+brew install gh
+```
+
+**S'authentifier** (nécessaire pour les commandes `gh variable set`/`gh workflow run` de ce document) :
+```bash
+gh auth login
+```
+Répondez aux questions dans cet ordre : `GitHub.com` → `HTTPS` → `Login with a web browser` (le plus simple) → une commande à 8 caractères s'affiche, laissez la fenêtre ouverte et appuyez sur Entrée → votre navigateur s'ouvre sur github.com, collez le code, autorisez l'accès. Vérifiez ensuite :
+```bash
+gh auth status
+# doit afficher "Logged in to github.com as ..."
+```
+
+### 0.5. Récapitulatif — tout est prêt quand ces 4 commandes répondent sans erreur
+
+```bash
+brew --version
+aws sts get-caller-identity
+terraform -version
+gh auth status
+```
+
+Si les 4 passent, vous pouvez enchaîner directement sur le bootstrap ci-dessous.
+
 ## 1. Bootstrap manuel unique (à faire UNE SEULE FOIS, par vous, depuis votre machine)
 
 C'est la **seule** étape de tout ce pipeline où vous devez taper des
