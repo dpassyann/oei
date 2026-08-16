@@ -8,10 +8,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.slf4j.MDC;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import org.jspecify.annotations.NonNull;
+import org.slf4j.MDC;
 
 /**
  * Servlet filter that propagates a {@code X-Correlation-ID} header (set by the Angular
@@ -36,7 +38,7 @@ public class CorrelationIdFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(
-            final HttpServletRequest request,
+            final @NonNull HttpServletRequest request,
             final HttpServletResponse response,
             final FilterChain filterChain)
             throws ServletException, IOException {
@@ -57,4 +59,3 @@ public class CorrelationIdFilter extends OncePerRequestFilter {
         return (header != null && !header.isBlank()) ? header : UUID.randomUUID().toString();
     }
 }
-
