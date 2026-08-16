@@ -614,6 +614,8 @@
       "generatingPdf": "Generazione in corso…",
       "downloadPdf": "Scarica PDF",
       "exportBlocked": "L'esportazione in PDF non è disponibile con il tuo attuale stato di adesione.",
+      "editBlocked": "Riservato ai membri in regola con la quota associativa — paga la tua quota per modificare il tuo CV.",
+      "editBlockedLink": "Regolarizza la mia quota",
       "renewalImminentWarning": "La tua quota associativa sta per scadere: ricordati di rinnovarla a breve.",
       "templateGallery": {
         "title": "Galleria dei modelli",
@@ -715,6 +717,8 @@
         "addApple": "Aggiungi a Apple Wallet",
         "addGoogle": "Aggiungi a Google Wallet",
         "blockedByStatus": "Il rinnovo del pass Wallet è disattivato finché l'adesione non viene regolarizzata.",
+        "passNeedsReactivation": "Carta disattivata — quota associativa da regolarizzare.",
+        "reactivateLink": "Regolarizza la mia quota",
         "issueError": "Aggiunta al wallet non riuscita.",
         "mockNotice": "Pass dimostrativo aggiunto (simulazione) — questo non è un documento di identità ufficiale.",
         "emptyPasses": "Non hai ancora aggiunto alcun pass.",
@@ -800,6 +804,10 @@
         "body": "Grazie! La tua quota per il ciclo in corso è stata registrata.",
         "emailNotice": "Riceverai a breve un'email di conferma."
       }
+    },
+    "cotisationBanner": {
+      "message": "La tua quota associativa non è aggiornata: alcune funzionalità sono limitate.",
+      "action": "Regolarizza la mia quota"
     },
     "nav": {
       "title": "Il mio spazio membro",
@@ -1546,6 +1554,118 @@
         "submit": "Salva",
         "validationError": "Indicare almeno il nome e l'organizzazione erogatrice.",
         "submitError": "Si è verificato un errore durante il salvataggio della certificazione."
+      }
+    },
+    "menus": {
+      "title": "Menu del sito",
+      "intro": "Gestisci le voci di navigazione dell'header e del footer: etichetta, percorso, ordine e visibilità.",
+      "empty": "Nessuna voce in questa zona per il momento.",
+      "new": "Aggiungi una voce",
+      "edit": "Modifica",
+      "activate": "Attiva",
+      "deactivate": "Disattiva",
+      "zone": {
+        "header": "Intestazione",
+        "footer": "Piè di pagina"
+      },
+      "columns": {
+        "label": "Etichetta",
+        "route": "Percorso",
+        "order": "Ordine",
+        "status": "Stato"
+      },
+      "status": {
+        "active": "Attivo",
+        "inactive": "Inattivo"
+      },
+      "form": {
+        "labelKey": "Chiave i18n dell'etichetta",
+        "labelKeyError": "La chiave i18n dell'etichetta è obbligatoria.",
+        "preview": "Anteprima (FR)",
+        "route": "Percorso di destinazione",
+        "routeError": "Il percorso deve iniziare con \"/\".",
+        "zone": "Zona",
+        "save": "Salva",
+        "cancel": "Annulla"
+      }
+    },
+    "translations": {
+      "title": "Traduzioni",
+      "intro": "Chiavi presenti in francese e assenti o vuote nelle altre lingue.",
+      "empty": "Nessuna chiave mancante: tutte le lingue sono aggiornate.",
+      "note": "La modifica seguente è simulata in memoria (mock): non riscrive mai i file public/i18n/*.json dal browser.",
+      "columns": {
+        "key": "Chiave",
+        "frValue": "Valore FR"
+      },
+      "status": {
+        "ok": "OK",
+        "missing": "Mancante"
+      },
+      "form": {
+        "title": "Modifica una traduzione",
+        "language": "Lingua",
+        "value": "Valore",
+        "save": "Salva (simulazione)",
+        "cancel": "Annulla",
+        "saved": "Modifica salvata in memoria (non persistita)."
+      }
+    },
+    "emailTemplates": {
+      "title": "Template email",
+      "intro": "Template di email transazionali. Il rendering reale (Thymeleaf) resta lato backend: questa pagina mostra solo un'anteprima semplificata.",
+      "empty": "Nessun template per il momento.",
+      "columns": {
+        "name": "Nome",
+        "subject": "Oggetto",
+        "status": "Stato"
+      },
+      "status": {
+        "active": "Attivo",
+        "inactive": "Inattivo"
+      },
+      "open": "Apri",
+      "back": "Torna all'elenco",
+      "samples": {
+        "paymentConfirmation": { "subject": "Conferma del pagamento" },
+        "orderConfirmation": { "subject": "Conferma dell'ordine" },
+        "donationReceipt": { "subject": "Grazie per la tua donazione" },
+        "membershipWelcome": { "subject": "Benvenuto nell'OEI" },
+        "passwordReset": { "subject": "Reimposta la tua password" },
+        "eventRegistration": { "subject": "Conferma di iscrizione all'evento" }
+      },
+      "detail": {
+        "variables": "Variabili disponibili",
+        "subjectLabel": "Oggetto (chiave i18n)",
+        "bodyLabel": "Corpo (anteprima, testo semplice)",
+        "bodyHint": "Solo anteprima semplificata — il rendering reale dei template resta effettuato dal backend Spring Boot (motore Thymeleaf), mai in questo browser.",
+        "previewLabel": "Anteprima con dati di esempio",
+        "activeLabel": "Template attivo",
+        "save": "Salva",
+        "saved": "Modifiche salvate in memoria (non persistite)."
+      }
+    },
+    "homeBlocks": {
+      "title": "Blocchi della home page",
+      "intro": "Attiva, riordina e rinomina i blocchi mostrati sulla home page pubblica. Queste impostazioni sono solo una maquette admin: non influenzano ancora il rendering reale della pagina /.",
+      "empty": "Nessun blocco configurato.",
+      "columns": {
+        "label": "Blocco",
+        "order": "Ordine",
+        "status": "Stato"
+      },
+      "status": {
+        "active": "Attivo",
+        "inactive": "Inattivo"
+      },
+      "activate": "Attiva",
+      "deactivate": "Disattiva",
+      "edit": "Modifica",
+      "form": {
+        "label": "Titolo / etichetta del blocco",
+        "labelError": "L'etichetta è obbligatoria.",
+        "save": "Salva",
+        "cancel": "Annulla"
       }
     }
   },

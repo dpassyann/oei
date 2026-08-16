@@ -614,6 +614,8 @@
       "generatingPdf": "A gerar…",
       "downloadPdf": "Transferir PDF",
       "exportBlocked": "A exportação em PDF não está disponível com o seu estado de adesão atual.",
+      "editBlocked": "Reservado a membros em dia com a quota — pague a sua quota para editar o seu CV.",
+      "editBlockedLink": "Regularizar a minha quota",
       "renewalImminentWarning": "A sua cotização está a chegar ao termo: lembre-se de a renovar em breve.",
       "templateGallery": {
         "title": "Galeria de modelos",
@@ -715,6 +717,8 @@
         "addApple": "Adicionar à Apple Wallet",
         "addGoogle": "Adicionar à Google Wallet",
         "blockedByStatus": "A renovação do passe da Wallet está desativada até a sua adesão ser regularizada.",
+        "passNeedsReactivation": "Cartão desativado — quota a regularizar.",
+        "reactivateLink": "Regularizar a minha quota",
         "issueError": "Falha ao adicionar à wallet.",
         "mockNotice": "Passe de demonstração adicionado (simulação) — este não é um documento de identificação oficial.",
         "emptyPasses": "Ainda não adicionou nenhum passe.",
@@ -800,6 +804,10 @@
         "body": "Obrigado! A sua quota para o ciclo em curso foi registada.",
         "emailNotice": "Em breve receberá um email de confirmação."
       }
+    },
+    "cotisationBanner": {
+      "message": "A sua quota não está em dia: algumas funcionalidades estão limitadas.",
+      "action": "Regularizar a minha quota"
     },
     "nav": {
       "title": "O meu espaço de membro",
@@ -1546,6 +1554,118 @@
         "submit": "Guardar",
         "validationError": "Indique pelo menos o nome e o organismo emissor.",
         "submitError": "Ocorreu um erro ao guardar a certificação."
+      }
+    },
+    "menus": {
+      "title": "Menus do site",
+      "intro": "Gerencie as entradas de navegação do cabeçalho e do rodapé: rótulo, rota, ordem e visibilidade.",
+      "empty": "Nenhuma entrada nesta zona por enquanto.",
+      "new": "Adicionar uma entrada",
+      "edit": "Editar",
+      "activate": "Ativar",
+      "deactivate": "Desativar",
+      "zone": {
+        "header": "Cabeçalho",
+        "footer": "Rodapé"
+      },
+      "columns": {
+        "label": "Rótulo",
+        "route": "Rota",
+        "order": "Ordem",
+        "status": "Estado"
+      },
+      "status": {
+        "active": "Ativo",
+        "inactive": "Inativo"
+      },
+      "form": {
+        "labelKey": "Chave i18n do rótulo",
+        "labelKeyError": "A chave i18n do rótulo é obrigatória.",
+        "preview": "Pré-visualização (FR)",
+        "route": "Rota de destino",
+        "routeError": "A rota deve começar com \"/\".",
+        "zone": "Zona",
+        "save": "Guardar",
+        "cancel": "Cancelar"
+      }
+    },
+    "translations": {
+      "title": "Traduções",
+      "intro": "Chaves presentes em francês e ausentes ou vazias nos outros idiomas.",
+      "empty": "Nenhuma chave em falta: todos os idiomas estão atualizados.",
+      "note": "A edição abaixo é simulada em memória (mock): nunca reescreve os ficheiros public/i18n/*.json a partir do navegador.",
+      "columns": {
+        "key": "Chave",
+        "frValue": "Valor FR"
+      },
+      "status": {
+        "ok": "OK",
+        "missing": "Em falta"
+      },
+      "form": {
+        "title": "Editar uma tradução",
+        "language": "Idioma",
+        "value": "Valor",
+        "save": "Guardar (simulação)",
+        "cancel": "Cancelar",
+        "saved": "Alteração guardada em memória (não persistida)."
+      }
+    },
+    "emailTemplates": {
+      "title": "Modelos de email",
+      "intro": "Modelos de emails transacionais. A renderização real (Thymeleaf) permanece no backend: esta página mostra apenas uma pré-visualização simplificada.",
+      "empty": "Nenhum modelo por enquanto.",
+      "columns": {
+        "name": "Nome",
+        "subject": "Assunto",
+        "status": "Estado"
+      },
+      "status": {
+        "active": "Ativo",
+        "inactive": "Inativo"
+      },
+      "open": "Abrir",
+      "back": "Voltar à lista",
+      "samples": {
+        "paymentConfirmation": { "subject": "Confirmação do seu pagamento" },
+        "orderConfirmation": { "subject": "Confirmação da sua encomenda" },
+        "donationReceipt": { "subject": "Obrigado pela sua doação" },
+        "membershipWelcome": { "subject": "Bem-vindo à OEI" },
+        "passwordReset": { "subject": "Redefinir a sua palavra-passe" },
+        "eventRegistration": { "subject": "Confirmação da sua inscrição no evento" }
+      },
+      "detail": {
+        "variables": "Variáveis disponíveis",
+        "subjectLabel": "Assunto (chave i18n)",
+        "bodyLabel": "Corpo (pré-visualização, texto simples)",
+        "bodyHint": "Apenas pré-visualização simplificada — a renderização real dos modelos continua a ser feita pelo backend Spring Boot (motor Thymeleaf), nunca neste navegador.",
+        "previewLabel": "Pré-visualização com dados de exemplo",
+        "activeLabel": "Modelo ativo",
+        "save": "Guardar",
+        "saved": "Alterações guardadas em memória (não persistidas)."
+      }
+    },
+    "homeBlocks": {
+      "title": "Blocos da página inicial",
+      "intro": "Ative, reordene e renomeie os blocos mostrados na página inicial pública. Estas definições são apenas uma maquete admin: ainda não afetam a renderização real da página /.",
+      "empty": "Nenhum bloco configurado.",
+      "columns": {
+        "label": "Bloco",
+        "order": "Ordem",
+        "status": "Estado"
+      },
+      "status": {
+        "active": "Ativo",
+        "inactive": "Inativo"
+      },
+      "activate": "Ativar",
+      "deactivate": "Desativar",
+      "edit": "Editar",
+      "form": {
+        "label": "Título / rótulo do bloco",
+        "labelError": "O rótulo é obrigatório.",
+        "save": "Guardar",
+        "cancel": "Cancelar"
       }
     }
   },

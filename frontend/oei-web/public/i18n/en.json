@@ -614,6 +614,8 @@
       "generatingPdf": "Generating…",
       "downloadPdf": "Download PDF",
       "exportBlocked": "PDF export is not available with your current membership status.",
+      "editBlocked": "Reserved for members up to date with their membership fee — pay your membership fee to edit your CV.",
+      "editBlockedLink": "Pay my membership fee",
       "renewalImminentWarning": "Your cotisation is due soon — please renew it shortly.",
       "templateGallery": {
         "title": "Template gallery",
@@ -715,6 +717,8 @@
         "addApple": "Add to Apple Wallet",
         "addGoogle": "Add to Google Wallet",
         "blockedByStatus": "Wallet pass renewal is disabled until your membership is regularized.",
+        "passNeedsReactivation": "Card disabled — membership fee needs to be paid.",
+        "reactivateLink": "Pay my membership fee",
         "issueError": "Adding to wallet failed.",
         "mockNotice": "Demonstration pass added (simulation) — this is not an official identity document.",
         "emptyPasses": "You have not added any passes yet.",
@@ -800,6 +804,10 @@
         "body": "Thank you! Your cotisation for the current cycle has been recorded.",
         "emailNotice": "A confirmation email will be sent to you shortly."
       }
+    },
+    "cotisationBanner": {
+      "message": "Your membership fee is not up to date: some features are limited.",
+      "action": "Pay my membership fee"
     },
     "nav": {
       "title": "My member space",
@@ -1552,6 +1560,118 @@
         "submit": "Save",
         "validationError": "Please fill in at least the name and the issuing organization.",
         "submitError": "An error occurred while saving the certification."
+      }
+    },
+    "menus": {
+      "title": "Site menus",
+      "intro": "Manage the header and footer navigation entries: label, route, order and visibility.",
+      "empty": "No entry in this zone yet.",
+      "new": "Add an entry",
+      "edit": "Edit",
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "zone": {
+        "header": "Header",
+        "footer": "Footer"
+      },
+      "columns": {
+        "label": "Label",
+        "route": "Route",
+        "order": "Order",
+        "status": "Status"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "form": {
+        "labelKey": "Label i18n key",
+        "labelKeyError": "The label i18n key is required.",
+        "preview": "Preview (FR)",
+        "route": "Target route",
+        "routeError": "The route must start with \"/\".",
+        "zone": "Zone",
+        "save": "Save",
+        "cancel": "Cancel"
+      }
+    },
+    "translations": {
+      "title": "Translations",
+      "intro": "Keys present in French and missing or empty in the other languages.",
+      "empty": "No missing key: every language is up to date.",
+      "note": "The edit form below is simulated in memory (mock): it never rewrites the public/i18n/*.json files from the browser.",
+      "columns": {
+        "key": "Key",
+        "frValue": "FR value"
+      },
+      "status": {
+        "ok": "OK",
+        "missing": "Missing"
+      },
+      "form": {
+        "title": "Edit a translation",
+        "language": "Language",
+        "value": "Value",
+        "save": "Save (simulation)",
+        "cancel": "Cancel",
+        "saved": "Change saved in memory (not persisted)."
+      }
+    },
+    "emailTemplates": {
+      "title": "Email templates",
+      "intro": "Transactional email templates. The actual rendering (Thymeleaf) stays on the backend: this page only shows a simplified preview.",
+      "empty": "No template yet.",
+      "columns": {
+        "name": "Name",
+        "subject": "Subject",
+        "status": "Status"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "open": "Open",
+      "back": "Back to list",
+      "samples": {
+        "paymentConfirmation": { "subject": "Your payment confirmation" },
+        "orderConfirmation": { "subject": "Your order confirmation" },
+        "donationReceipt": { "subject": "Thank you for your donation" },
+        "membershipWelcome": { "subject": "Welcome to the OEI" },
+        "passwordReset": { "subject": "Reset your password" },
+        "eventRegistration": { "subject": "Your event registration confirmation" }
+      },
+      "detail": {
+        "variables": "Available variables",
+        "subjectLabel": "Subject (i18n key)",
+        "bodyLabel": "Body (preview, plain text)",
+        "bodyHint": "Simplified preview only — the actual template rendering is still performed by the Spring Boot backend (Thymeleaf engine), never in this browser.",
+        "previewLabel": "Preview with sample data",
+        "activeLabel": "Active template",
+        "save": "Save",
+        "saved": "Changes saved in memory (not persisted)."
+      }
+    },
+    "homeBlocks": {
+      "title": "Home page blocks",
+      "intro": "Activate, reorder and rename the blocks shown on the public home page. These settings are only an admin mock-up: they don't affect the actual rendering of the / page yet.",
+      "empty": "No block configured.",
+      "columns": {
+        "label": "Block",
+        "order": "Order",
+        "status": "Status"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "edit": "Edit",
+      "form": {
+        "label": "Block title / label",
+        "labelError": "The label is required.",
+        "save": "Save",
+        "cancel": "Cancel"
       }
     }
   },

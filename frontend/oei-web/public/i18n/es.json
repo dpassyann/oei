@@ -614,6 +614,8 @@
       "generatingPdf": "Generando…",
       "downloadPdf": "Descargar PDF",
       "exportBlocked": "La exportación en PDF no está disponible con su estado de afiliación actual.",
+      "editBlocked": "Reservado a los miembros al día con su cuota — pague su cuota para editar su CV.",
+      "editBlockedLink": "Regularizar mi cuota",
       "renewalImminentWarning": "Su cotización vence próximamente: recuerde renovarla pronto.",
       "templateGallery": {
         "title": "Galería de plantillas",
@@ -715,6 +717,8 @@
         "addApple": "Añadir a Apple Wallet",
         "addGoogle": "Añadir a Google Wallet",
         "blockedByStatus": "La renovación del pase Wallet está desactivada hasta que se regularice su afiliación.",
+        "passNeedsReactivation": "Tarjeta desactivada — cuota por regularizar.",
+        "reactivateLink": "Regularizar mi cuota",
         "issueError": "Error al añadir a la wallet.",
         "mockNotice": "Pase de demostración añadido (simulación) — esto no es un documento de identidad oficial.",
         "emptyPasses": "Todavía no ha añadido ningún pase.",
@@ -800,6 +804,10 @@
         "body": "¡Gracias! Su cuota para el ciclo en curso ha sido registrada.",
         "emailNotice": "En breve recibirá un correo electrónico de confirmación."
       }
+    },
+    "cotisationBanner": {
+      "message": "Su cuota no está al día: algunas funcionalidades están limitadas.",
+      "action": "Regularizar mi cuota"
     },
     "nav": {
       "title": "Mi espacio de miembro",
@@ -1546,6 +1554,118 @@
         "submit": "Guardar",
         "validationError": "Por favor, indique al menos el nombre y el organismo emisor.",
         "submitError": "Se produjo un error al guardar la certificación."
+      }
+    },
+    "menus": {
+      "title": "Menús del sitio",
+      "intro": "Gestione las entradas de navegación del encabezado y del pie de página: etiqueta, ruta, orden y visibilidad.",
+      "empty": "Ninguna entrada en esta zona por el momento.",
+      "new": "Añadir una entrada",
+      "edit": "Modificar",
+      "activate": "Activar",
+      "deactivate": "Desactivar",
+      "zone": {
+        "header": "Encabezado",
+        "footer": "Pie de página"
+      },
+      "columns": {
+        "label": "Etiqueta",
+        "route": "Ruta",
+        "order": "Orden",
+        "status": "Estado"
+      },
+      "status": {
+        "active": "Activo",
+        "inactive": "Inactivo"
+      },
+      "form": {
+        "labelKey": "Clave i18n de la etiqueta",
+        "labelKeyError": "La clave i18n de la etiqueta es obligatoria.",
+        "preview": "Vista previa (FR)",
+        "route": "Ruta de destino",
+        "routeError": "La ruta debe comenzar con \"/\".",
+        "zone": "Zona",
+        "save": "Guardar",
+        "cancel": "Cancelar"
+      }
+    },
+    "translations": {
+      "title": "Traducciones",
+      "intro": "Claves presentes en francés y ausentes o vacías en los demás idiomas.",
+      "empty": "Ninguna clave faltante: todos los idiomas están al día.",
+      "note": "La edición siguiente se simula en memoria (mock): nunca reescribe los archivos public/i18n/*.json desde el navegador.",
+      "columns": {
+        "key": "Clave",
+        "frValue": "Valor FR"
+      },
+      "status": {
+        "ok": "OK",
+        "missing": "Falta"
+      },
+      "form": {
+        "title": "Modificar una traducción",
+        "language": "Idioma",
+        "value": "Valor",
+        "save": "Guardar (simulación)",
+        "cancel": "Cancelar",
+        "saved": "Cambio guardado en memoria (no persistido)."
+      }
+    },
+    "emailTemplates": {
+      "title": "Plantillas de email",
+      "intro": "Plantillas de correos transaccionales. El renderizado real (Thymeleaf) se mantiene en el backend: esta página solo muestra una vista previa simplificada.",
+      "empty": "Ninguna plantilla por el momento.",
+      "columns": {
+        "name": "Nombre",
+        "subject": "Asunto",
+        "status": "Estado"
+      },
+      "status": {
+        "active": "Activo",
+        "inactive": "Inactivo"
+      },
+      "open": "Abrir",
+      "back": "Volver a la lista",
+      "samples": {
+        "paymentConfirmation": { "subject": "Confirmación de su pago" },
+        "orderConfirmation": { "subject": "Confirmación de su pedido" },
+        "donationReceipt": { "subject": "Gracias por su donación" },
+        "membershipWelcome": { "subject": "Bienvenido a la OEI" },
+        "passwordReset": { "subject": "Restablecer su contraseña" },
+        "eventRegistration": { "subject": "Confirmación de su inscripción al evento" }
+      },
+      "detail": {
+        "variables": "Variables disponibles",
+        "subjectLabel": "Asunto (clave i18n)",
+        "bodyLabel": "Cuerpo (vista previa, texto plano)",
+        "bodyHint": "Vista previa simplificada únicamente: el renderizado real de las plantillas lo realiza el backend Spring Boot (motor Thymeleaf), nunca este navegador.",
+        "previewLabel": "Vista previa con datos de ejemplo",
+        "activeLabel": "Plantilla activa",
+        "save": "Guardar",
+        "saved": "Cambios guardados en memoria (no persistidos)."
+      }
+    },
+    "homeBlocks": {
+      "title": "Bloques de la página de inicio",
+      "intro": "Active, reordene y renombre los bloques mostrados en la página de inicio pública. Estos ajustes son solo una maqueta admin: aún no afectan al renderizado real de la página /.",
+      "empty": "Ningún bloque configurado.",
+      "columns": {
+        "label": "Bloque",
+        "order": "Orden",
+        "status": "Estado"
+      },
+      "status": {
+        "active": "Activo",
+        "inactive": "Inactivo"
+      },
+      "activate": "Activar",
+      "deactivate": "Desactivar",
+      "edit": "Modificar",
+      "form": {
+        "label": "Título / etiqueta del bloque",
+        "labelError": "La etiqueta es obligatoria.",
+        "save": "Guardar",
+        "cancel": "Cancelar"
       }
     }
   },

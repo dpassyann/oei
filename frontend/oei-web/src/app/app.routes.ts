@@ -51,7 +51,6 @@ import { AdminInstitutionDetail } from './presentation/pages/admin/admin-institu
 import { AdminAuditLogPage } from './presentation/pages/admin/admin-audit-log/admin-audit-log';
 import { AdminCertificationsCatalogList } from './presentation/pages/admin/admin-certifications-catalog-list/admin-certifications-catalog-list';
 import { AdminCertificationCatalogForm } from './presentation/pages/admin/admin-certification-catalog-form/admin-certification-catalog-form';
-import { AdminComingSoon } from './presentation/pages/admin/admin-coming-soon/admin-coming-soon';
 import { CartePublique } from './presentation/pages/carte-publique/carte-publique';
 import { VerificationMembre } from './presentation/pages/verification-membre/verification-membre';
 
@@ -168,8 +167,13 @@ export const routes: Routes = [
   // Admin console (task: .prompt/plan/final/03-ADMIN-CONSOLE.md), appended last so this never
   // reorders any pre-existing route. Guarded by `adminGuard` (any of the 8 admin realm roles —
   // see `domain/model/admin/admin-role.ts`); `AdminLayout` further filters its sidebar nav per
-  // role via `visibleSections()`. `menus`/`traductions`/`templates-email`/`blocs-home` all share
-  // the same `AdminComingSoon` placeholder component, distinguished by `data.section`.
+  // role via `visibleSections()` — `adminGuard` on the shell is sufficient section-level
+  // enforcement for these 4 pages too, so none of them add their own `canActivate`.
+  //
+  // `menus`/`traductions`/`templates-email`/`blocs-home` used to all share a single
+  // `AdminComingSoon` placeholder component; they're now real (mock-first) features, each
+  // `loadComponent`-lazy so their code stays out of the eager initial bundle (same convention as
+  // `cotisation`/`reseau-neuronal` below).
   {
     path: 'admin',
     canActivate: [adminGuard],
@@ -184,10 +188,34 @@ export const routes: Routes = [
       { path: 'certifications/new', component: AdminCertificationCatalogForm },
       { path: 'certifications/:id/edit', component: AdminCertificationCatalogForm },
       { path: 'audit-log', component: AdminAuditLogPage },
-      { path: 'menus', component: AdminComingSoon, data: { section: 'menus' } },
-      { path: 'traductions', component: AdminComingSoon, data: { section: 'translations' } },
-      { path: 'templates-email', component: AdminComingSoon, data: { section: 'emailTemplates' } },
-      { path: 'blocs-home', component: AdminComingSoon, data: { section: 'homeBlocks' } },
+      {
+        path: 'menus',
+        loadComponent: () => import('./presentation/pages/admin/admin-menus/admin-menus').then((m) => m.AdminMenus),
+      },
+      {
+        path: 'traductions',
+        loadComponent: () =>
+          import('./presentation/pages/admin/admin-translations/admin-translations').then((m) => m.AdminTranslations),
+      },
+      {
+        path: 'templates-email',
+        loadComponent: () =>
+          import('./presentation/pages/admin/admin-email-templates-list/admin-email-templates-list').then(
+            (m) => m.AdminEmailTemplatesList,
+          ),
+      },
+      {
+        path: 'templates-email/:id',
+        loadComponent: () =>
+          import('./presentation/pages/admin/admin-email-template-detail/admin-email-template-detail').then(
+            (m) => m.AdminEmailTemplateDetail,
+          ),
+      },
+      {
+        path: 'blocs-home',
+        loadComponent: () =>
+          import('./presentation/pages/admin/admin-home-blocks/admin-home-blocks').then((m) => m.AdminHomeBlocks),
+      },
     ],
   },
   // Lazy-loaded (not eagerly imported like the rest of this file): the canvas explorer pulls

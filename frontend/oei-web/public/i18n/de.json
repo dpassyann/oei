@@ -614,6 +614,8 @@
       "generatingPdf": "Wird erstellt…",
       "downloadPdf": "PDF herunterladen",
       "exportBlocked": "Der PDF-Export ist mit Ihrem aktuellen Mitgliedschaftsstatus nicht verfügbar.",
+      "editBlocked": "Nur für Mitglieder mit aktuellem Mitgliedsbeitrag — begleichen Sie Ihren Mitgliedsbeitrag, um Ihren Lebenslauf zu bearbeiten.",
+      "editBlockedLink": "Mitgliedsbeitrag begleichen",
       "renewalImminentWarning": "Ihr Mitgliedsbeitrag wird bald fällig – bitte erneuern Sie ihn rechtzeitig.",
       "templateGallery": {
         "title": "Vorlagengalerie",
@@ -715,6 +717,8 @@
         "addApple": "Zu Apple Wallet hinzufügen",
         "addGoogle": "Zu Google Wallet hinzufügen",
         "blockedByStatus": "Die Erneuerung des Wallet-Passes ist deaktiviert, bis Ihre Mitgliedschaft aktualisiert wurde.",
+        "passNeedsReactivation": "Karte deaktiviert — Mitgliedsbeitrag muss beglichen werden.",
+        "reactivateLink": "Mitgliedsbeitrag begleichen",
         "issueError": "Hinzufügen zur Wallet fehlgeschlagen.",
         "mockNotice": "Demonstrationspass hinzugefügt (Simulation) — dies ist kein offizielles Ausweisdokument.",
         "emptyPasses": "Sie haben noch keine Pässe hinzugefügt.",
@@ -800,6 +804,10 @@
         "body": "Vielen Dank! Ihr Mitgliedsbeitrag für den laufenden Zyklus wurde erfasst.",
         "emailNotice": "In Kürze erhalten Sie eine Bestätigungs-E-Mail."
       }
+    },
+    "cotisationBanner": {
+      "message": "Ihr Mitgliedsbeitrag ist nicht aktuell: einige Funktionen sind eingeschränkt.",
+      "action": "Mitgliedsbeitrag begleichen"
     },
     "nav": {
       "title": "Mein Mitgliederbereich",
@@ -1546,6 +1554,118 @@
         "submit": "Speichern",
         "validationError": "Bitte geben Sie mindestens den Namen und die ausstellende Organisation an.",
         "submitError": "Beim Speichern der Zertifizierung ist ein Fehler aufgetreten."
+      }
+    },
+    "menus": {
+      "title": "Website-Menüs",
+      "intro": "Verwalten Sie die Navigationseinträge von Header und Footer: Bezeichnung, Route, Reihenfolge und Sichtbarkeit.",
+      "empty": "Noch kein Eintrag in diesem Bereich.",
+      "new": "Eintrag hinzufügen",
+      "edit": "Bearbeiten",
+      "activate": "Aktivieren",
+      "deactivate": "Deaktivieren",
+      "zone": {
+        "header": "Kopfzeile",
+        "footer": "Fußzeile"
+      },
+      "columns": {
+        "label": "Bezeichnung",
+        "route": "Route",
+        "order": "Reihenfolge",
+        "status": "Status"
+      },
+      "status": {
+        "active": "Aktiv",
+        "inactive": "Inaktiv"
+      },
+      "form": {
+        "labelKey": "i18n-Schlüssel der Bezeichnung",
+        "labelKeyError": "Der i18n-Schlüssel der Bezeichnung ist erforderlich.",
+        "preview": "Vorschau (FR)",
+        "route": "Zielroute",
+        "routeError": "Die Route muss mit \"/\" beginnen.",
+        "zone": "Bereich",
+        "save": "Speichern",
+        "cancel": "Abbrechen"
+      }
+    },
+    "translations": {
+      "title": "Übersetzungen",
+      "intro": "Schlüssel, die auf Französisch vorhanden, in den anderen Sprachen jedoch fehlend oder leer sind.",
+      "empty": "Kein fehlender Schlüssel: alle Sprachen sind aktuell.",
+      "note": "Die folgende Bearbeitung wird nur im Arbeitsspeicher simuliert (Mock): Die Dateien public/i18n/*.json werden nie vom Browser aus überschrieben.",
+      "columns": {
+        "key": "Schlüssel",
+        "frValue": "FR-Wert"
+      },
+      "status": {
+        "ok": "OK",
+        "missing": "Fehlt"
+      },
+      "form": {
+        "title": "Übersetzung bearbeiten",
+        "language": "Sprache",
+        "value": "Wert",
+        "save": "Speichern (Simulation)",
+        "cancel": "Abbrechen",
+        "saved": "Änderung im Arbeitsspeicher gespeichert (nicht dauerhaft)."
+      }
+    },
+    "emailTemplates": {
+      "title": "E-Mail-Vorlagen",
+      "intro": "Vorlagen für transaktionale E-Mails. Das eigentliche Rendering (Thymeleaf) bleibt im Backend: diese Seite zeigt nur eine vereinfachte Vorschau.",
+      "empty": "Noch keine Vorlage.",
+      "columns": {
+        "name": "Name",
+        "subject": "Betreff",
+        "status": "Status"
+      },
+      "status": {
+        "active": "Aktiv",
+        "inactive": "Inaktiv"
+      },
+      "open": "Öffnen",
+      "back": "Zurück zur Liste",
+      "samples": {
+        "paymentConfirmation": { "subject": "Bestätigung Ihrer Zahlung" },
+        "orderConfirmation": { "subject": "Bestätigung Ihrer Bestellung" },
+        "donationReceipt": { "subject": "Danke für Ihre Spende" },
+        "membershipWelcome": { "subject": "Willkommen bei der OEI" },
+        "passwordReset": { "subject": "Passwort zurücksetzen" },
+        "eventRegistration": { "subject": "Bestätigung Ihrer Veranstaltungsanmeldung" }
+      },
+      "detail": {
+        "variables": "Verfügbare Variablen",
+        "subjectLabel": "Betreff (i18n-Schlüssel)",
+        "bodyLabel": "Inhalt (Vorschau, Klartext)",
+        "bodyHint": "Nur vereinfachte Vorschau — das eigentliche Rendering der Vorlagen erfolgt weiterhin durch das Spring-Boot-Backend (Thymeleaf-Engine), niemals in diesem Browser.",
+        "previewLabel": "Vorschau mit Beispieldaten",
+        "activeLabel": "Vorlage aktiv",
+        "save": "Speichern",
+        "saved": "Änderungen im Arbeitsspeicher gespeichert (nicht dauerhaft)."
+      }
+    },
+    "homeBlocks": {
+      "title": "Blöcke der Startseite",
+      "intro": "Aktivieren, neu anordnen und benennen Sie die auf der öffentlichen Startseite angezeigten Blöcke. Diese Einstellungen sind nur ein Admin-Mock-up: Sie wirken sich noch nicht auf die tatsächliche Darstellung der Seite / aus.",
+      "empty": "Kein Block konfiguriert.",
+      "columns": {
+        "label": "Block",
+        "order": "Reihenfolge",
+        "status": "Status"
+      },
+      "status": {
+        "active": "Aktiv",
+        "inactive": "Inaktiv"
+      },
+      "activate": "Aktivieren",
+      "deactivate": "Deaktivieren",
+      "edit": "Bearbeiten",
+      "form": {
+        "label": "Titel / Bezeichnung des Blocks",
+        "labelError": "Die Bezeichnung ist erforderlich.",
+        "save": "Speichern",
+        "cancel": "Abbrechen"
       }
     }
   },

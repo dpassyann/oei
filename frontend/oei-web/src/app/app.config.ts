@@ -186,6 +186,18 @@ import { AdminCertificationCatalogApiAdapter } from './infrastructure/adapter/ad
 import { ADMIN_MEMBERS_PORT } from './domain/port/admin/admin-members.port';
 import { AdminMembersMockAdapter } from './infrastructure/adapter/admin-members-mock.adapter';
 import { AdminMembersApiAdapter } from './infrastructure/adapter/admin-members-api.adapter';
+import { ADMIN_MENUS_PORT } from './domain/port/admin/admin-menus.port';
+import { AdminMenusMockAdapter } from './infrastructure/adapter/admin-menus-mock.adapter';
+import { AdminMenusApiAdapter } from './infrastructure/adapter/admin-menus-api.adapter';
+import { ADMIN_TRANSLATIONS_PORT } from './domain/port/admin/admin-translations.port';
+import { AdminTranslationsMockAdapter } from './infrastructure/adapter/admin-translations-mock.adapter';
+import { AdminTranslationsApiAdapter } from './infrastructure/adapter/admin-translations-api.adapter';
+import { ADMIN_EMAIL_TEMPLATES_PORT } from './domain/port/admin/admin-email-templates.port';
+import { AdminEmailTemplatesMockAdapter } from './infrastructure/adapter/admin-email-templates-mock.adapter';
+import { AdminEmailTemplatesApiAdapter } from './infrastructure/adapter/admin-email-templates-api.adapter';
+import { ADMIN_HOME_BLOCKS_PORT } from './domain/port/admin/admin-home-blocks.port';
+import { AdminHomeBlocksMockAdapter } from './infrastructure/adapter/admin-home-blocks-mock.adapter';
+import { AdminHomeBlocksApiAdapter } from './infrastructure/adapter/admin-home-blocks-api.adapter';
 
 // Professional Neural Network canvas explorer (`/reseau-neuronal`) — progressive domain →
 // topics/certifications → paginated experts loading, see `NetworkGraphPort`'s doc comment.
@@ -518,6 +530,25 @@ export const appConfig: ApplicationConfig = {
     {
       provide: ADMIN_MEMBERS_PORT,
       useFactory: () => (inject(RuntimeConfig).isMock() ? inject(AdminMembersMockAdapter) : inject(AdminMembersApiAdapter)),
+    },
+    {
+      provide: ADMIN_MENUS_PORT,
+      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(AdminMenusMockAdapter) : inject(AdminMenusApiAdapter)),
+    },
+    {
+      provide: ADMIN_TRANSLATIONS_PORT,
+      useFactory: () =>
+        inject(RuntimeConfig).isMock() ? inject(AdminTranslationsMockAdapter) : inject(AdminTranslationsApiAdapter),
+    },
+    {
+      provide: ADMIN_EMAIL_TEMPLATES_PORT,
+      useFactory: () =>
+        inject(RuntimeConfig).isMock() ? inject(AdminEmailTemplatesMockAdapter) : inject(AdminEmailTemplatesApiAdapter),
+    },
+    {
+      provide: ADMIN_HOME_BLOCKS_PORT,
+      useFactory: () =>
+        inject(RuntimeConfig).isMock() ? inject(AdminHomeBlocksMockAdapter) : inject(AdminHomeBlocksApiAdapter),
     },
     {
       provide: ADMIN_CERTIFICATION_CATALOG_PORT,

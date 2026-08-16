@@ -20,7 +20,14 @@ $oei-gold: #e8a530;
 .oei-admin-institution-new,
 .oei-admin-institution-detail,
 .oei-admin-members,
-.oei-admin-audit-log {
+.oei-admin-audit-log,
+// Added for the menus/traductions/templates-email/blocs-home admin sections (task:
+// `.prompt/plan/final/03-ADMIN-CONSOLE.md` §CMS) — same navy/gold h1/table look, no new markup.
+.oei-admin-menus,
+.oei-admin-translations,
+.oei-admin-email-templates,
+.oei-admin-email-template-detail,
+.oei-admin-home-blocks {
   color: #222;
 
   h1 {
