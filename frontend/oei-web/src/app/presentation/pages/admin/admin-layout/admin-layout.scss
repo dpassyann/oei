@@ -1,6 +1,10 @@
 .oei-admin {
   display: flex;
-  min-height: 60vh;
+  // Same fix as `.oei-cms-shell` (cms-layout.scss): `flex: 1` so the shell fills whatever
+  // vertical space `.oei-app-shell__main` (app.scss, a column flex container) has left after the
+  // header/footer, instead of only ever measuring its own content via `min-height: 60vh` — that
+  // left a white gap between a short sidebar and the site footer on pages with little content.
+  flex: 1 0 auto;
 
   &__sidebar {
     width: 220px;
@@ -17,10 +21,19 @@
     opacity: 0.7;
   }
 
+  // Sticky nav, not sticky sidebar: `&__sidebar`'s border/background still stretch to the
+  // shell's full height via the default flex `align-items: stretch`, so there's no white gap.
+  // The nav itself sticks while the (often long) admin content list scrolls — same ergonomics as
+  // `FloatingSideMenu`, reused for scroll behaviour only; this remains section navigation
+  // (dashboard/articles/institutions/...), not a page table-of-contents.
   &__nav {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
+    position: sticky;
+    top: 5.5rem;
+    max-height: calc(100vh - 7rem);
+    overflow-y: auto;
   }
 
   &__nav-link {

@@ -28,6 +28,7 @@ export const ADMIN_SECTIONS = [
   'members',
   'events',
   'resources',
+  'certifications',
   'menus',
   'translations',
   'email-templates',
@@ -51,6 +52,9 @@ export const SECTION_ROLES: Readonly<Record<AdminSection, readonly AdminRole[]>>
   members: [...FULL_ACCESS, 'MEMBERSHIP_SUPPORT'],
   events: [...FULL_ACCESS, 'EVENT_ADMIN'],
   resources: [...FULL_ACCESS, 'CONTENT_ADMIN'],
+  // Same access scope as `resources`/`articles`: the recognized-certification catalog is
+  // editorial reference content, not institution/member/event operational data.
+  certifications: [...FULL_ACCESS, 'CONTENT_ADMIN'],
   menus: [...FULL_ACCESS],
   translations: [...FULL_ACCESS, 'CONTENT_ADMIN'],
   'email-templates': [...FULL_ACCESS],

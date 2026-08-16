@@ -1,11 +1,37 @@
-<main class="oei-page">
-  <h1 class="oei-page__title">{{ i18n.translate('nosMissions.title') }}</h1>
+<main class="oei-nos-missions-page">
+  <div class="oei-nos-missions-page__content">
+    <div class="oei-page">
+      <h1 class="oei-page__title">{{ i18n.translate('nosMissions.title') }}</h1>
 
-  <p class="oei-page__intro">{{ i18n.translate('nosMissions.intro') }}</p>
+      <p class="oei-page__intro">{{ i18n.translate('nosMissions.intro') }}</p>
 
-  <ol class="oei-page__list">
-    @for (commitment of i18n.translateList('nosMissions.commitments'); track commitment) {
-      <li class="oei-page__list-item">{{ commitment }}</li>
-    }
-  </ol>
+      <ol class="oei-page__list">
+        @for (commitment of i18n.translateList('nosMissions.commitments'); track commitment) {
+          <li class="oei-page__list-item">{{ commitment }}</li>
+        }
+      </ol>
+
+      <!-- Developed sections (task: porteur du projet — "/nos-missions trop vide"). Each anchor
+           `id` matches the corresponding entry in `MISSION_SECTIONS` (nos-missions.ts), which
+           `FloatingSideMenu` below tracks via `IntersectionObserver`. -->
+      @for (section of sections; track section.id) {
+        <section class="oei-page__section" [id]="section.id">
+          <h2 class="oei-page__section-title">
+            {{ i18n.translate('nosMissions.sections.' + section.key + '.title') }}
+          </h2>
+          @for (
+            paragraph of i18n.translateList('nosMissions.sections.' + section.key + '.paragraphs');
+            track paragraph
+          ) {
+            <p class="oei-page__section-body">{{ paragraph }}</p>
+          }
+        </section>
+      }
+    </div>
+  </div>
+
+  <oei-floating-side-menu
+    [title]="i18n.translate('nosMissions.tableOfContents')"
+    [links]="sideMenuLinks()"
+  />
 </main>

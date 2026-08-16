@@ -21,6 +21,7 @@ const NAV_ENTRIES: readonly AdminNavEntry[] = [
   { section: 'members', path: '/admin/members', labelKey: 'admin.nav.members' },
   { section: 'events', path: '/actualites', labelKey: 'admin.nav.events' },
   { section: 'resources', path: '/ressources', labelKey: 'admin.nav.resources' },
+  { section: 'certifications', path: '/admin/certifications', labelKey: 'admin.nav.certifications' },
   { section: 'menus', path: '/admin/menus', labelKey: 'admin.nav.menus' },
   { section: 'translations', path: '/admin/traductions', labelKey: 'admin.nav.translations' },
   { section: 'email-templates', path: '/admin/templates-email', labelKey: 'admin.nav.emailTemplates' },

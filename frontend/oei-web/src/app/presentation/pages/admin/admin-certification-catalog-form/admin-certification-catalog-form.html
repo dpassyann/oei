@@ -1,0 +1,92 @@
+<section class="oei-admin-certification-form">
+  <h1>
+    {{ isEditing() ? i18n.translate('admin.certifications.form.editTitle') : i18n.translate('admin.certifications.form.newTitle') }}
+  </h1>
+
+  <form class="oei-admin-certification-form__form" (submit)="$event.preventDefault(); submit()">
+    <label class="oei-field">
+      {{ i18n.translate('admin.certifications.form.fields.name') }}
+      <input class="oei-input" type="text" [ngModel]="draft().name" (ngModelChange)="updateDraft({ name: $event })" name="name" required />
+    </label>
+
+    <label class="oei-field">
+      {{ i18n.translate('admin.certifications.form.fields.issuingOrganization') }}
+      <input class="oei-input" type="text" [ngModel]="draft().issuingOrganization" (ngModelChange)="updateDraft({ issuingOrganization: $event })" name="issuingOrganization" required />
+    </label>
+
+    <label class="oei-field">
+      {{ i18n.translate('admin.certifications.form.fields.domain') }}
+      <input class="oei-input" type="text" [ngModel]="draft().domain" (ngModelChange)="updateDraft({ domain: $event })" name="domain" />
+    </label>
+
+    <label class="oei-field">
+      {{ i18n.translate('admin.certifications.form.fields.level') }}
+      <select class="oei-select" [ngModel]="draft().level" (ngModelChange)="updateDraft({ level: $event })" name="level">
+        <option value="">{{ i18n.translate('admin.certifications.form.noSelection') }}</option>
+        @for (level of levelOrder; track level; let i = $index) {
+          <option [value]="level">{{ i18n.translate('certifications.levels.' + i) }}</option>
+        }
+      </select>
+    </label>
+
+    <label class="oei-field">
+      {{ i18n.translate('admin.certifications.form.fields.language') }}
+      <input class="oei-input" type="text" [ngModel]="draft().language" (ngModelChange)="updateDraft({ language: $event })" name="language" placeholder="fr, en…" />
+    </label>
+
+    <label class="oei-field">
+      {{ i18n.translate('admin.certifications.form.fields.oeiStatus') }}
+      <select class="oei-select" [ngModel]="draft().oeiStatus" (ngModelChange)="updateDraft({ oeiStatus: $event })" name="oeiStatus">
+        <option value="">{{ i18n.translate('admin.certifications.form.noSelection') }}</option>
+        @for (status of oeiStatusOptions; track status) {
+          <option [value]="status">{{ i18n.translate('certifications.catalog.oeiStatus.' + status) }}</option>
+        }
+      </select>
+    </label>
+
+    <label class="oei-field">
+      {{ i18n.translate('admin.certifications.form.fields.description') }}
+      <textarea class="oei-textarea" [ngModel]="draft().description" (ngModelChange)="updateDraft({ description: $event })" name="description"></textarea>
+    </label>
+
+    <fieldset class="oei-admin-certification-form__competencies">
+      <legend>{{ i18n.translate('admin.certifications.form.fields.competencies') }}</legend>
+      <ul>
+        @for (competency of competencies(); track competency; let i = $index) {
+          <li>
+            {{ competency }}
+            <button type="button" class="oei-btn oei-btn--text" (click)="removeCompetency(i)">{{ i18n.translate('admin.certifications.form.removeCompetency') }}</button>
+          </li>
+        }
+      </ul>
+      <div class="oei-admin-certification-form__add-competency">
+        <input class="oei-input" type="text" [ngModel]="newCompetency()" (ngModelChange)="newCompetency.set($event)" name="newCompetency" />
+        <button type="button" class="oei-btn oei-btn--secondary" (click)="addCompetency()">{{ i18n.translate('admin.certifications.form.addCompetency') }}</button>
+      </div>
+    </fieldset>
+
+    <label class="oei-field">
+      {{ i18n.translate('admin.certifications.form.fields.validityMonths') }}
+      <input class="oei-input" type="number" min="0" [ngModel]="draft().validityMonths" (ngModelChange)="updateDraft({ validityMonths: $event })" name="validityMonths" />
+    </label>
+
+    <label class="oei-field">
+      {{ i18n.translate('admin.certifications.form.fields.catalogReference') }}
+      <input class="oei-input" type="text" [ngModel]="draft().catalogReference" (ngModelChange)="updateDraft({ catalogReference: $event })" name="catalogReference" />
+    </label>
+
+    <label class="oei-admin-certification-form__checkbox">
+      <input type="checkbox" [ngModel]="draft().autoValidate" (ngModelChange)="updateDraft({ autoValidate: $event })" name="autoValidate" />
+      {{ i18n.translate('admin.certifications.form.fields.autoValidate') }}
+    </label>
+
+    @if (validationError()) {
+      <p class="oei-admin-certification-form__error">{{ i18n.translate('admin.certifications.form.validationError') }}</p>
+    }
+    @if (submitError()) {
+      <p class="oei-admin-certification-form__error">{{ i18n.translate('admin.certifications.form.submitError') }}</p>
+    }
+
+    <button type="submit" class="oei-btn oei-btn--primary" [disabled]="submitting()">{{ i18n.translate('admin.certifications.form.submit') }}</button>
+  </form>
+</section>

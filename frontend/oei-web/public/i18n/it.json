@@ -1510,6 +1510,43 @@
       "confirmSuspend": "Conferma sospensione",
       "cancel": "Annulla",
       "actionError": "Impossibile completare l'azione."
+    },
+    "certifications": {
+      "list": {
+        "title": "Certificazioni riconosciute",
+        "new": "Aggiungi una certificazione",
+        "empty": "Nessuna certificazione nel catalogo per ora.",
+        "edit": "Modifica",
+        "columns": {
+          "name": "Nome",
+          "organization": "Organizzazione",
+          "domain": "Dominio",
+          "oeiStatus": "Stato OEI"
+        }
+      },
+      "form": {
+        "newTitle": "Aggiungi una certificazione",
+        "editTitle": "Modifica una certificazione",
+        "noSelection": "—",
+        "fields": {
+          "name": "Nome della certificazione",
+          "issuingOrganization": "Organizzazione erogatrice",
+          "domain": "Dominio",
+          "level": "Livello di riferimento",
+          "language": "Lingua dell'esame",
+          "oeiStatus": "Stato di riconoscimento OEI",
+          "description": "Descrizione",
+          "competencies": "Competenze coperte",
+          "validityMonths": "Durata di validità (mesi)",
+          "catalogReference": "Riferimento catalogo",
+          "autoValidate": "Convalida automaticamente una dichiarazione del membro corrispondente"
+        },
+        "addCompetency": "Aggiungi",
+        "removeCompetency": "Rimuovi",
+        "submit": "Salva",
+        "validationError": "Indicare almeno il nome e l'organizzazione erogatrice.",
+        "submitError": "Si è verificato un errore durante il salvataggio della certificazione."
+      }
     }
   },
   "network": {

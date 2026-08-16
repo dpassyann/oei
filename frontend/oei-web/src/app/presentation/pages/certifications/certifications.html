@@ -29,10 +29,11 @@
   <p class="oei-catalog__intro">{{ i18n.translate('certifications.catalog.intro') }}</p>
 
   <div class="oei-catalog__toolbar">
-    <label class="oei-catalog__search">
+    <label class="oei-catalog__search oei-field">
       <span class="oei-catalog__label">{{ i18n.translate('certifications.catalog.searchLabel') }}</span>
       <input
         type="search"
+        class="oei-input"
         [ngModel]="filters().query"
         (ngModelChange)="updateQuery($event)"
         [placeholder]="i18n.translate('certifications.catalog.searchPlaceholder')"
@@ -40,9 +41,9 @@
     </label>
 
     <div class="oei-catalog__filters">
-      <label class="oei-catalog__filter">
+      <label class="oei-catalog__filter oei-field">
         <span class="oei-catalog__label">{{ i18n.translate('certifications.catalog.filters.domain') }}</span>
-        <select [ngModel]="filters().domain" (ngModelChange)="updateFilter('domain', $event)">
+        <select class="oei-select" [ngModel]="filters().domain" (ngModelChange)="updateFilter('domain', $event)">
           <option value="">{{ i18n.translate('certifications.catalog.filters.all') }}</option>
           @for (domain of domainOptions(); track domain) {
             <option [value]="domain">{{ domain }}</option>
@@ -50,9 +51,9 @@
         </select>
       </label>
 
-      <label class="oei-catalog__filter">
+      <label class="oei-catalog__filter oei-field">
         <span class="oei-catalog__label">{{ i18n.translate('certifications.catalog.filters.level') }}</span>
-        <select [ngModel]="filters().level" (ngModelChange)="updateFilter('level', $event)">
+        <select class="oei-select" [ngModel]="filters().level" (ngModelChange)="updateFilter('level', $event)">
           <option value="">{{ i18n.translate('certifications.catalog.filters.all') }}</option>
           @for (i of levelIndexes; track i) {
             <option [value]="levelCodeAt(i)">{{ i18n.translate('certifications.levels.' + i) }}</option>
@@ -60,9 +61,9 @@
         </select>
       </label>
 
-      <label class="oei-catalog__filter">
+      <label class="oei-catalog__filter oei-field">
         <span class="oei-catalog__label">{{ i18n.translate('certifications.catalog.filters.organization') }}</span>
-        <select [ngModel]="filters().organization" (ngModelChange)="updateFilter('organization', $event)">
+        <select class="oei-select" [ngModel]="filters().organization" (ngModelChange)="updateFilter('organization', $event)">
           <option value="">{{ i18n.translate('certifications.catalog.filters.all') }}</option>
           @for (organization of organizationOptions(); track organization) {
             <option [value]="organization">{{ organization }}</option>
@@ -70,9 +71,9 @@
         </select>
       </label>
 
-      <label class="oei-catalog__filter">
+      <label class="oei-catalog__filter oei-field">
         <span class="oei-catalog__label">{{ i18n.translate('certifications.catalog.filters.language') }}</span>
-        <select [ngModel]="filters().language" (ngModelChange)="updateFilter('language', $event)">
+        <select class="oei-select" [ngModel]="filters().language" (ngModelChange)="updateFilter('language', $event)">
           <option value="">{{ i18n.translate('certifications.catalog.filters.all') }}</option>
           @for (language of languageOptions(); track language) {
             <option [value]="language">{{ language }}</option>
@@ -80,9 +81,9 @@
         </select>
       </label>
 
-      <label class="oei-catalog__filter">
+      <label class="oei-catalog__filter oei-field">
         <span class="oei-catalog__label">{{ i18n.translate('certifications.catalog.filters.oeiStatus') }}</span>
-        <select [ngModel]="filters().oeiStatus" (ngModelChange)="updateFilter('oeiStatus', $event)">
+        <select class="oei-select" [ngModel]="filters().oeiStatus" (ngModelChange)="updateFilter('oeiStatus', $event)">
           <option value="">{{ i18n.translate('certifications.catalog.filters.all') }}</option>
           @for (status of oeiStatusOptions; track status) {
             <option [value]="status">{{ i18n.translate('certifications.catalog.oeiStatus.' + status) }}</option>
@@ -90,7 +91,7 @@
         </select>
       </label>
 
-      <button type="button" class="oei-catalog__reset" (click)="resetFilters()">
+      <button type="button" class="oei-catalog__reset oei-btn oei-btn--secondary" (click)="resetFilters()">
         {{ i18n.translate('certifications.catalog.filters.reset') }}
       </button>
     </div>

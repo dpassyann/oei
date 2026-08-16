@@ -3,11 +3,27 @@
 }
 
 $oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+
+// Grid + `FloatingSideMenu` layout, identical rationale to `a-propos.scss`: no `align-items:
+// start` so the side menu's grid cell stretches to the full row height, giving its sticky
+// positioning room to stick throughout the whole scroll rather than stopping once the page
+// scrolls past the (short) menu's own content height.
+.oei-nos-missions-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2.5rem;
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem;
+}
+
+.oei-nos-missions-page__content {
+  min-width: 0;
+}
 
 .oei-page {
   max-width: 48rem;
-  margin: 0 auto;
-  padding: 3.5rem 1.5rem;
 }
 
 .oei-page__title {
@@ -23,7 +39,7 @@ $oei-navy: #0a1e3f;
 }
 
 .oei-page__list {
-  margin: 0;
+  margin: 0 0 3rem;
   padding-left: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -33,4 +49,32 @@ $oei-navy: #0a1e3f;
 .oei-page__list-item {
   line-height: 1.6;
   color: #333;
+}
+
+.oei-page__section {
+  & + & {
+    margin-top: 2.5rem;
+  }
+}
+
+.oei-page__section-title {
+  margin: 0 0 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(10, 30, 63, 0.1);
+  font-size: 1.5rem;
+  color: $oei-navy;
+  // Keeps the heading clear of the sticky site header when `FloatingSideMenu` scrolls to it.
+  scroll-margin-top: 5.5rem;
+}
+
+.oei-page__section-body {
+  margin: 0 0 1rem;
+  line-height: 1.7;
+  color: #222;
+}
+
+@media (max-width: 900px) {
+  .oei-nos-missions-page {
+    grid-template-columns: 1fr;
+  }
 }

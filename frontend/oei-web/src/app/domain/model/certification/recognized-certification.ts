@@ -34,6 +34,9 @@ export interface RecognizedCertification {
   /** ISO 639-1 code of the certification exam's language (e.g. "en", "fr"). */
   readonly language?: string;
   readonly oeiStatus?: CertificationOeiStatus;
+  /** Free-text description of the certification, surfaced by the admin catalog form
+   * (`AdminCertificationCatalogForm`) — catalog data, not an i18n key, same rule as `name`. */
+  readonly description?: string;
   /** Skills/competencies this certification is meant to cover (catalog data, not i18n keys). */
   readonly competencies?: readonly string[];
   /** How long the certification stays valid once obtained, in months. `null`/`undefined` means

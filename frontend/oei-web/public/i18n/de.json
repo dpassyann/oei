@@ -1510,6 +1510,43 @@
       "confirmSuspend": "Sperrung bestätigen",
       "cancel": "Abbrechen",
       "actionError": "Die Aktion konnte nicht durchgeführt werden."
+    },
+    "certifications": {
+      "list": {
+        "title": "Anerkannte Zertifizierungen",
+        "new": "Zertifizierung hinzufügen",
+        "empty": "Noch keine Zertifizierung im Katalog.",
+        "edit": "Bearbeiten",
+        "columns": {
+          "name": "Name",
+          "organization": "Organisation",
+          "domain": "Bereich",
+          "oeiStatus": "OEI-Status"
+        }
+      },
+      "form": {
+        "newTitle": "Zertifizierung hinzufügen",
+        "editTitle": "Zertifizierung bearbeiten",
+        "noSelection": "—",
+        "fields": {
+          "name": "Name der Zertifizierung",
+          "issuingOrganization": "Ausstellende Organisation",
+          "domain": "Bereich",
+          "level": "Referenzstufe",
+          "language": "Prüfungssprache",
+          "oeiStatus": "OEI-Anerkennungsstatus",
+          "description": "Beschreibung",
+          "competencies": "Abgedeckte Kompetenzen",
+          "validityMonths": "Gültigkeitsdauer (Monate)",
+          "catalogReference": "Katalogreferenz",
+          "autoValidate": "Passende Mitgliedererklärung automatisch validieren"
+        },
+        "addCompetency": "Hinzufügen",
+        "removeCompetency": "Entfernen",
+        "submit": "Speichern",
+        "validationError": "Bitte geben Sie mindestens den Namen und die ausstellende Organisation an.",
+        "submitError": "Beim Speichern der Zertifizierung ist ein Fehler aufgetreten."
+      }
     }
   },
   "network": {

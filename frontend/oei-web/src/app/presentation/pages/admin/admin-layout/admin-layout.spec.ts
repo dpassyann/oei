@@ -16,7 +16,7 @@ describe('AdminLayout', () => {
     const fixture = TestBed.createComponent(AdminLayout);
     fixture.detectChanges();
     const links = (fixture.nativeElement as HTMLElement).querySelectorAll('.oei-admin__nav-link');
-    expect(links.length).toBe(11);
+    expect(links.length).toBe(12);
   });
 
   it('givenEventAdmin_whenCreated_thenOnlyRendersDashboardAndEventsLinks', () => {

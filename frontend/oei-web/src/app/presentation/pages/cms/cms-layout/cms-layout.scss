@@ -6,7 +6,14 @@ $oei-gold: #e8a530;
 
 .oei-cms-shell {
   display: flex;
-  min-height: 60vh;
+  // `flex: 1` (not `min-height: 60vh`) so this shell always fills whatever vertical space
+  // `.oei-app-shell__main` (app.scss) has leftover after the header/footer, and grows further
+  // when the routed content is taller than the viewport. `.oei-app-shell__main` is itself a
+  // column flex container, so this is the correct axis for that stretch — a plain `min-height`
+  // here only ever measured the shell's own content, so on short pages the navy sidebar stopped
+  // short of the footer, leaving a white gap. See `.oei-admin` (admin-layout.scss) for the same
+  // fix applied to the twin `/admin` shell.
+  flex: 1 0 auto;
   background: #fff;
 
   &__sidebar {
@@ -26,10 +33,22 @@ $oei-gold: #e8a530;
     font-weight: 700;
   }
 
+  // Sticky *nav*, not sticky *sidebar*: the `&__sidebar` (navy background) still stretches to
+  // the shell's full height via the default flex `align-items: stretch`, so there is never a
+  // white gap below it. This inner nav is what follows the scroll, so the section links
+  // (Contenus/Contributions/Modération...) stay reachable while a long content list scrolls by —
+  // the same sticky-on-scroll behaviour as `FloatingSideMenu` (`floating-side-menu.scss`), reused
+  // here for its scroll ergonomics only. This is NOT a table-of-contents/anchor menu like
+  // `FloatingSideMenu` — it stays a section-navigation sidebar (CMS areas, not page headings), so
+  // we deliberately did not replace it with a `<oei-floating-side-menu>` instance.
   &__nav {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
+    position: sticky;
+    top: 5.5rem;
+    max-height: calc(100vh - 7rem);
+    overflow-y: auto;
   }
 
   &__nav-link {

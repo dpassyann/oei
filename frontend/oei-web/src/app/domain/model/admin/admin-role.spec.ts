@@ -53,6 +53,7 @@ describe('admin-role', () => {
         'members',
         'events',
         'resources',
+        'certifications',
         'menus',
         'translations',
         'email-templates',

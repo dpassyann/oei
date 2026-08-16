@@ -1,0 +1,39 @@
+<section class="oei-admin-certifications">
+  <header class="oei-admin-certifications__header">
+    <h1>{{ i18n.translate('admin.certifications.list.title') }}</h1>
+    <a routerLink="/admin/certifications/new" class="oei-btn oei-btn--primary">{{ i18n.translate('admin.certifications.list.new') }}</a>
+  </header>
+
+  @if (certifications().length === 0) {
+    <p>{{ i18n.translate('admin.certifications.list.empty') }}</p>
+  } @else {
+    <table class="oei-admin-certifications__table">
+      <thead>
+        <tr>
+          <th>{{ i18n.translate('admin.certifications.list.columns.name') }}</th>
+          <th>{{ i18n.translate('admin.certifications.list.columns.organization') }}</th>
+          <th>{{ i18n.translate('admin.certifications.list.columns.domain') }}</th>
+          <th>{{ i18n.translate('admin.certifications.list.columns.oeiStatus') }}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (certification of certifications(); track certification.id) {
+          <tr>
+            <td>{{ certification.name }}</td>
+            <td>{{ certification.issuingOrganization }}</td>
+            <td>{{ certification.domain }}</td>
+            <td>
+              @if (certification.oeiStatus) {
+                <span class="oei-admin-status" [attr.data-status]="certification.oeiStatus">
+                  {{ i18n.translate('certifications.catalog.oeiStatus.' + certification.oeiStatus) }}
+                </span>
+              }
+            </td>
+            <td><a [routerLink]="['/admin/certifications', certification.id, 'edit']">{{ i18n.translate('admin.certifications.list.edit') }}</a></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</section>

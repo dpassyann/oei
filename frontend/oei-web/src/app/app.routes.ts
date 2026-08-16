@@ -49,6 +49,8 @@ import { AdminMembers } from './presentation/pages/admin/admin-members/admin-mem
 import { AdminInstitutionNew } from './presentation/pages/admin/admin-institution-new/admin-institution-new';
 import { AdminInstitutionDetail } from './presentation/pages/admin/admin-institution-detail/admin-institution-detail';
 import { AdminAuditLogPage } from './presentation/pages/admin/admin-audit-log/admin-audit-log';
+import { AdminCertificationsCatalogList } from './presentation/pages/admin/admin-certifications-catalog-list/admin-certifications-catalog-list';
+import { AdminCertificationCatalogForm } from './presentation/pages/admin/admin-certification-catalog-form/admin-certification-catalog-form';
 import { AdminComingSoon } from './presentation/pages/admin/admin-coming-soon/admin-coming-soon';
 import { CartePublique } from './presentation/pages/carte-publique/carte-publique';
 import { VerificationMembre } from './presentation/pages/verification-membre/verification-membre';
@@ -178,6 +180,9 @@ export const routes: Routes = [
       { path: 'institutions/new', component: AdminInstitutionNew },
       { path: 'institutions/:id', component: AdminInstitutionDetail },
       { path: 'members', component: AdminMembers },
+      { path: 'certifications', component: AdminCertificationsCatalogList },
+      { path: 'certifications/new', component: AdminCertificationCatalogForm },
+      { path: 'certifications/:id/edit', component: AdminCertificationCatalogForm },
       { path: 'audit-log', component: AdminAuditLogPage },
       { path: 'menus', component: AdminComingSoon, data: { section: 'menus' } },
       { path: 'traductions', component: AdminComingSoon, data: { section: 'translations' } },

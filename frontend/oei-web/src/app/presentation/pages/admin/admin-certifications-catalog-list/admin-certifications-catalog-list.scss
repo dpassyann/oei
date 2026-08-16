@@ -1,0 +1,23 @@
+// Layout only — colors/borders come from the shared `.oei-btn`/`.oei-admin-status` partials
+// (`src/styles/_forms.scss`/`src/styles/_status-badges.scss`), same convention as
+// `admin-institutions-list.scss`.
+.oei-admin-certifications {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      text-align: left;
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+  }
+}
