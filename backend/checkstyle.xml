@@ -40,11 +40,13 @@
 
     <module name="TreeWalker">
         <!-- Import hygiene -->
-        <module name="UnusedImports"/>
+        <module name="UnusedImports">
+            <property name="processJavadoc" value="false"/>
+        </module>
         <module name="AvoidStarImport"/>
         <module name="RedundantImport"/>
         <module name="ImportOrder">
-            <property name="groups" value="java,jakarta,javax,org.springframework"/>
+            <property name="groups" value="/^java\./,/^javax\./,/^jakarta\./,/^org\./,*,/^global\.oei\./"/>
             <property name="ordered" value="true"/>
             <property name="separated" value="true"/>
             <property name="option" value="top"/>

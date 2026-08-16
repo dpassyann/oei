@@ -157,10 +157,8 @@ import global.oei.infrastructure.client.stripe.generated.api.RefundsApi;
 import global.oei.infrastructure.mail.EmailAsyncConfiguration;
 import global.oei.infrastructure.mail.EmailNotificationAdapter;
 import global.oei.infrastructure.mail.EmailTemplateConfiguration;
-import global.oei.infrastructure.wiring.adapter.MediaStorageUrlProviderAdapter;
-import global.oei.infrastructure.wiring.config.MediaStorageProperties;
-import global.oei.infrastructure.persistence.badge.BadgePersistenceAdapter;
 import global.oei.infrastructure.persistence.badge.BadgeAwardRepository;
+import global.oei.infrastructure.persistence.badge.BadgePersistenceAdapter;
 import global.oei.infrastructure.persistence.badge.BadgeRepository;
 import global.oei.infrastructure.persistence.book.BookCompilationPersistenceAdapter;
 import global.oei.infrastructure.persistence.book.BookCompilationRepository;
@@ -275,6 +273,8 @@ import global.oei.infrastructure.persistence.verification.VerificationRequestPer
 import global.oei.infrastructure.persistence.verification.VerificationRequestRepository;
 import global.oei.infrastructure.persistence.wallet.WalletPassPersistenceAdapter;
 import global.oei.infrastructure.persistence.wallet.WalletPassRepository;
+import global.oei.infrastructure.wiring.adapter.MediaStorageUrlProviderAdapter;
+import global.oei.infrastructure.wiring.config.MediaStorageProperties;
 
 /**
  * Composition root of the OEI backend.
