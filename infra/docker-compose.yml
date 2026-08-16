@@ -167,9 +167,9 @@ services:
         condition: service_healthy
 
   # Simulateur SMTP local — capture tous les emails sans les envoyer.
-  # Le backend est déjà configuré pour pointer sur localhost:1025 (application.yml).
+  # Toujours démarré en local (même sans --profile obs) car le backend Spring
+  # pointe par défaut sur localhost:1025 dans application.yml.
   mailpit:
-    profiles: [obs]
     image: axllent/mailpit:latest
     restart: unless-stopped
     ports:
