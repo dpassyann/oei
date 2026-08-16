@@ -90,6 +90,7 @@ import global.oei.domain.shared.git.GitSyncedFilePort;
 import global.oei.domain.shared.git.GitSynchronizationPort;
 import global.oei.domain.shared.git.TriggerGitSynchronizationUseCase;
 import global.oei.domain.shared.home.ContactMessagePort;
+import global.oei.domain.shared.home.HomeDomainAreaDetailPort;
 import global.oei.domain.shared.home.HomeDomainAreaPort;
 import global.oei.domain.shared.home.HomeNewsPort;
 import global.oei.domain.shared.home.HomePartnerPort;
@@ -206,6 +207,8 @@ import global.oei.infrastructure.persistence.git.GitSynchronizationPersistenceAd
 import global.oei.infrastructure.persistence.git.GitSynchronizationRepository;
 import global.oei.infrastructure.persistence.home.ContactMessagePersistenceAdapter;
 import global.oei.infrastructure.persistence.home.HomeContactMessageRepository;
+import global.oei.infrastructure.persistence.home.HomeDomainAreaDetailPersistenceAdapter;
+import global.oei.infrastructure.persistence.home.HomeDomainAreaDetailRepository;
 import global.oei.infrastructure.persistence.home.HomeDomainAreaPersistenceAdapter;
 import global.oei.infrastructure.persistence.home.HomeDomainAreaRepository;
 import global.oei.infrastructure.persistence.home.HomeLeadRepository;
@@ -689,6 +692,12 @@ public class OeiWiringConfiguration {
     @Bean
     public HomeDomainAreaPort homeDomainAreaPort(final HomeDomainAreaRepository repository) {
         return new HomeDomainAreaPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public HomeDomainAreaDetailPort homeDomainAreaDetailPort(
+            final HomeDomainAreaRepository areaRepository, final HomeDomainAreaDetailRepository detailRepository) {
+        return new HomeDomainAreaDetailPersistenceAdapter(areaRepository, detailRepository);
     }
 
     @Bean

@@ -2,7 +2,6 @@ package global.oei.infrastructure.persistence.home;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,18 +22,12 @@ public class HomePartnerPersistenceAdapter implements HomePartnerPort {
 
     @Override
     public Optional<HomePartner> findByLangAndId(final String lang, final String id) {
-        final UUID uuid;
-        try {
-            uuid = UUID.fromString(id);
-        } catch (final IllegalArgumentException e) {
-            return Optional.empty();
-        }
-        return repository.findByLangAndId(lang, uuid).map(HomePartnerPersistenceAdapter::toDomain);
+        return repository.findByLangAndExternalId(lang, id).map(HomePartnerPersistenceAdapter::toDomain);
     }
 
     private static HomePartner toDomain(final HomePartnerEntity entity) {
         return new HomePartner(
-                entity.getId().toString(), entity.getLang(), entity.getName(), entity.getLogoUrl(), entity.getDescription(),
+                entity.getExternalId(), entity.getLang(), entity.getName(), entity.getLogoUrl(), entity.getDescription(),
                 entity.getWebsiteUrl(), entity.getCategory());
     }
 }

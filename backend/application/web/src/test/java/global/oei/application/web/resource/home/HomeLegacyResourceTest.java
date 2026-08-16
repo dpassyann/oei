@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import global.oei.domain.shared.home.ContactMessage;
 import global.oei.domain.shared.home.ContactMessagePort;
+import global.oei.domain.shared.home.HomeDomainAreaDetailPort;
 import global.oei.domain.shared.home.HomeDomainAreaPort;
 import global.oei.domain.shared.home.HomeNewsPort;
 import global.oei.domain.shared.home.HomePartnerPort;
@@ -30,6 +31,7 @@ class HomeLegacyResourceTest {
 
     private HomeStatPort homeStatPort;
     private HomeDomainAreaPort homeDomainAreaPort;
+    private HomeDomainAreaDetailPort homeDomainAreaDetailPort;
     private HomeNewsPort homeNewsPort;
     private HomePartnerPort homePartnerPort;
     private LeadPort leadPort;
@@ -40,12 +42,19 @@ class HomeLegacyResourceTest {
     void setUp() {
         homeStatPort = mock(HomeStatPort.class);
         homeDomainAreaPort = mock(HomeDomainAreaPort.class);
+        homeDomainAreaDetailPort = mock(HomeDomainAreaDetailPort.class);
         homeNewsPort = mock(HomeNewsPort.class);
         homePartnerPort = mock(HomePartnerPort.class);
         leadPort = mock(LeadPort.class);
         contactMessagePort = mock(ContactMessagePort.class);
         mockMvc = MockMvcBuilders.standaloneSetup(new HomeLegacyResource(
-                        homeStatPort, homeDomainAreaPort, homeNewsPort, homePartnerPort, leadPort, contactMessagePort))
+                        homeStatPort,
+                        homeDomainAreaPort,
+                        homeDomainAreaDetailPort,
+                        homeNewsPort,
+                        homePartnerPort,
+                        leadPort,
+                        contactMessagePort))
                 .build();
     }
 

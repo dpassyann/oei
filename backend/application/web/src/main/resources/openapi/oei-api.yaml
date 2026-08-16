@@ -198,7 +198,7 @@ paths:
     get:
       tags: [home-legacy]
       operationId: getDomainAreas
-      summary: Les 8 domaines d'action de l'OEI.
+      summary: Les 9 domaines d'action de l'OEI.
       parameters:
         - name: lang
           in: path
@@ -214,6 +214,30 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/DomainArea"
+
+  /api/v1/domains/{lang}/{slug}:
+    get:
+      tags: [home-legacy]
+      operationId: getDomainArea
+      summary: Détail editorial d'un domaine d'action.
+      parameters:
+        - name: lang
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Domaine trouvé
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DomainArea"
 
   /api/v1/news/{lang}:
     get:
@@ -3625,13 +3649,62 @@ components:
 
     DomainArea:
       type: object
-      required: [icon, title, description]
+      required: [slug, icon, title, description, lastModified]
       properties:
+        slug:
+          type: string
         icon:
           type: string
         title:
           type: string
         description:
+          type: string
+        lastModified:
+          type: string
+          format: date
+        subtitle:
+          type: string
+        sections:
+          type: array
+          items:
+            $ref: "#/components/schemas/DomainSection"
+        relatedResources:
+          type: array
+          items:
+            $ref: "#/components/schemas/RelatedResource"
+        relatedNews:
+          type: array
+          items:
+            $ref: "#/components/schemas/NewsItem"
+        isContentFallback:
+          type: boolean
+
+    DomainSection:
+      type: object
+      required: [id, title, paragraphs]
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        paragraphs:
+          type: array
+          items:
+            type: string
+        bullets:
+          type: array
+          items:
+            type: string
+
+    RelatedResource:
+      type: object
+      required: [title, description, path]
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        path:
           type: string
 
     NewsItem:

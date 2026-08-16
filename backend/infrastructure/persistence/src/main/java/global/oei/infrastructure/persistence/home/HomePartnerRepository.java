@@ -10,5 +10,5 @@ public interface HomePartnerRepository extends JpaRepository<HomePartnerEntity, 
 
     List<HomePartnerEntity> findByLang(String lang);
 
-    Optional<HomePartnerEntity> findByLangAndId(String lang, UUID id);
+    Optional<HomePartnerEntity> findByLangAndExternalId(String lang, String externalId);
 }

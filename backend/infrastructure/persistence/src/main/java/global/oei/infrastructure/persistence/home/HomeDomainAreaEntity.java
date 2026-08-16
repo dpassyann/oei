@@ -1,5 +1,6 @@
 package global.oei.infrastructure.persistence.home;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -26,6 +27,9 @@ public class HomeDomainAreaEntity {
     @Column(name = "lang", nullable = false, length = 10)
     private String lang;
 
+    @Column(name = "slug", nullable = false)
+    private String slug;
+
     @Column(name = "icon", nullable = false)
     private String icon;
 
@@ -34,6 +38,9 @@ public class HomeDomainAreaEntity {
 
     @Column(name = "description", nullable = false)
     private String description;
+
+    @Column(name = "last_modified", nullable = false)
+    private LocalDate lastModified;
 
     @Column(name = "display_order", nullable = false)
     private int displayOrder;

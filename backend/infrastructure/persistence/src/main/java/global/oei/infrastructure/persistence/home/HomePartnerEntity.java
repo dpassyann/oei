@@ -26,6 +26,9 @@ public class HomePartnerEntity {
     @Column(name = "lang", nullable = false, length = 10)
     private String lang;
 
+    @Column(name = "external_id", nullable = false)
+    private String externalId;
+
     @Column(name = "name", nullable = false)
     private String name;
 

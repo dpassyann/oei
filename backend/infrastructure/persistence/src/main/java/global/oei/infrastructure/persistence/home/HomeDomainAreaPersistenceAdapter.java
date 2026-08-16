@@ -17,7 +17,9 @@ public class HomeDomainAreaPersistenceAdapter implements HomeDomainAreaPort {
     @Override
     public List<HomeDomainArea> findByLang(final String lang) {
         return repository.findByLangOrderByDisplayOrderAsc(lang).stream()
-                .map(entity -> new HomeDomainArea(entity.getLang(), entity.getIcon(), entity.getTitle(), entity.getDescription()))
+                .map(entity -> new HomeDomainArea(
+                        entity.getSlug(), entity.getLang(), entity.getIcon(), entity.getTitle(), entity.getDescription(),
+                        entity.getLastModified()))
                 .toList();
     }
 }

@@ -1,18 +1,15 @@
 package global.oei.application.web.resource.content;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import global.oei.application.web.ContentLegacyApi;
 import global.oei.application.web.model.ContentDocumentDTO;
-import global.oei.domain.shared.content.Content;
 import global.oei.domain.shared.content.ContentPort;
-import global.oei.domain.shared.content.ContentVersion;
 import global.oei.domain.shared.content.ContentVersionPort;
+import global.oei.domain.shared.content.ContentWorkflowStatus;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -34,20 +31,33 @@ public class ContentLegacyResource implements ContentLegacyApi {
 
     @Override
     public ResponseEntity<ContentDocumentDTO> getContent(final String lang, final String slug) {
-        final Optional<Content> content = contentPort.findAll().stream().filter(c -> c.slug().equals(slug)).findFirst();
-        if (content.isEmpty()) {
-            return ResponseEntity.ok(new ContentDocumentDTO(slug, lang, slug, "", true));
+        final String resolvedLang = resolveLang(lang);
+        return contentPort.findAll().stream()
+                .filter(content -> content.slug().equals(slug))
+                .findFirst()
+                .flatMap(content -> contentVersionPort.findByContentId(content.id()).stream()
+                        .filter(version -> version.language().equals(resolvedLang))
+                        .filter(version -> version.status() == ContentWorkflowStatus.PUBLISHED)
+                        .max((left, right) -> left.createdAt().compareTo(right.createdAt()))
+                        .map(version -> new ContentDocumentDTO(slug, resolvedLang, version.title(), version.body(), false)))
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.ok(new ContentDocumentDTO(
+                        slug,
+                        resolvedLang,
+                        "Content not available",
+                        "The requested content is not available yet.",
+                        true)));
+    }
+
+    private static String resolveLang(final String langFromPath) {
+        final ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (attributes == null) {
+            return langFromPath;
         }
-        final List<ContentVersion> versions = contentVersionPort.findByContentId(content.get().id());
-        final Optional<ContentVersion> exactLanguage = versions.stream().filter(v -> v.language().equals(lang))
-                .max(Comparator.comparing(ContentVersion::createdAt));
-        if (exactLanguage.isPresent()) {
-            final ContentVersion version = exactLanguage.get();
-            return ResponseEntity.ok(new ContentDocumentDTO(slug, lang, version.title(), version.body(), false));
+        final String preferredLang = attributes.getRequest().getHeader("preferred_lang");
+        if (preferredLang == null || preferredLang.isBlank()) {
+            return langFromPath;
         }
-        final Optional<ContentVersion> anyVersion = versions.stream().max(Comparator.comparing(ContentVersion::createdAt));
-        return anyVersion
-                .map(version -> ResponseEntity.ok(new ContentDocumentDTO(slug, lang, version.title(), version.body(), true)))
-                .orElseGet(() -> ResponseEntity.ok(new ContentDocumentDTO(slug, lang, content.get().title(), "", true)));
+        return preferredLang;
     }
 }
