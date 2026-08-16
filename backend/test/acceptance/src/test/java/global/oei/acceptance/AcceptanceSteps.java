@@ -35,6 +35,7 @@ public class AcceptanceSteps {
     private String bearerToken;
     private ResponseEntity<String> response;
     private String contentId;
+    private String orderId;
 
     // --- authentication ---
 
@@ -241,6 +242,48 @@ public class AcceptanceSteps {
         assertThat(list.getStatusCode()).isEqualTo(HttpStatus.OK);
         final String id = extractJsonStringField(response.getBody(), "id");
         assertThat(list.getBody()).contains(id);
+    }
+
+    // --- store ---
+
+    @Quand("je commande {int} exemplaire du produit {string}")
+    public void createStoreOrder(final int quantity, final String productName) {
+        final ResponseEntity<String> catalog = get("/api/public/v1/store/products");
+        assertThat(catalog.getStatusCode()).isEqualTo(HttpStatus.OK);
+        final String productId = extractProductIdByName(catalog.getBody(), productName);
+        final String body = """
+                {"lines":[{"productId":"%s","quantity":%d}]}""".formatted(productId, quantity);
+        response = post("/api/member/v1/store/orders", body);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        orderId = extractJsonStringField(response.getBody(), "id");
+    }
+
+    @Alors("la commande est créée avec le statut {string}")
+    public void assertsOrderStatus(final String status) {
+        assertThat(response.getBody()).contains("\"status\":\"" + status + "\"");
+    }
+
+    @Quand("je paie cette commande par carte")
+    public void payOrderByCard() {
+        response = post("/api/member/v1/store/orders/" + orderId + "/payments", """
+                {"paymentMethod":"CARD","paymentToken":"pm_card_visa"}""");
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @Alors("la commande passe au statut {string}")
+    public void assertsOrderStatusAfterPayment(final String status) {
+        assertThat(response.getBody()).contains("\"status\":\"" + status + "\"");
+    }
+
+    /** Minimal, dependency-free lookup of a product's {@code id} by {@code name} in a JSON array. */
+    private static String extractProductIdByName(final String json, final String name) {
+        final var matcher = java.util.regex.Pattern
+                .compile("\\{[^{}]*\"name\":\"" + java.util.regex.Pattern.quote(name) + "\"[^{}]*}")
+                .matcher(json);
+        if (!matcher.find()) {
+            throw new IllegalStateException("product " + name + " not found in " + json);
+        }
+        return extractJsonStringField(matcher.group(), "id");
     }
 
     // --- HTTP helpers ---

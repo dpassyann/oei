@@ -100,5 +100,14 @@
       <artifactId>junit-platform-suite</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- Stubs Stripe's PaymentIntents API locally for the "member buys a store product and
+         pays by card" scenario: never a real (even sandbox) Stripe HTTP call from Cucumber,
+         same posture/artifact as infrastructure-client's own adapter tests. -->
+    <dependency>
+      <groupId>org.wiremock</groupId>
+      <artifactId>wiremock-standalone</artifactId>
+      <version>${wiremock.version}</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 </project>
