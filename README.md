@@ -32,62 +32,92 @@ Plan directeur et roadmap : [`.prompt/OEI-Plan-Directeur-Roadmap.md`](.prompt/OE
 
 Ce README documente le **chantier technique**. Les deux autres avancent en parallèle, hors du code.
 
-## 3. Vue système (C4 — Contexte)
+## 3. Fonctionnalités principales de la plateforme
+
+Au-delà du corpus documentaire (§2), le dépôt implémente déjà un produit riche. Détails
+techniques dans les README spécifiques ([`backend/README.md`](backend/README.md),
+[`frontend/oei-web/README.md`](frontend/oei-web/README.md)) — ci-dessous, une vue produit :
+
+| Fonctionnalité | En une phrase |
+|---|---|
+| **Réseau neuronal + transparence salariale** | Visualisation 3D (Three.js) du réseau de membres, avec un benchmark de salaires anonymisé et agrégé par domaine/séniorité. |
+| **Certifications** | Catalogue de certifications OEI (référentiel de compétences gradué), demande, suivi et validation d'une certification par un membre. |
+| **CV / carte de visite / Wallet** | Générateur de CV professionnel (export PDF), carte de visite numérique avec QR code scannable, et carte "Wallet" (Apple/Google Wallet) scellée et notariée. |
+| **Boutique (Store)** | Achat de produits/services liés à l'OEI (ex. certifications payantes), intégration de paiement (Stripe/PayPal). |
+| **CMS / Gouvernance documentaire** | Édition, revue et publication du corpus documentaire multilingue par les membres habilités, avec un flux de contribution/modération et une synchronisation Git du contenu versionné. |
+| **Espace institution** | Portail dédié aux membres-institutions (entreprises, écoles) : fiche publique, gestion de leurs collaborateurs rattachés. |
+| **Espace membre** | Profil, cotisation, badges, historique de contributions, accès aux outils ci-dessus (CV, Wallet, réseau). |
+| **Administration** | Back-office : gestion des membres, institutions, contenu, catalogue de certifications, templates d'e-mail, menus, traductions, tableau de bord, journal d'audit. |
+
+## 4. Vue système (C4 — Contexte)
+
+> Diagramme mis à jour pour refléter l'état actuel de l'implémentation (au-delà de la seule
+> adhésion, qui n'était que le premier flux modélisé) : quatre types d'acteurs, et l'ensemble
+> des systèmes externes réellement intégrés par le backend (`infrastructure-client`,
+> `infrastructure-mail`, `infrastructure-security`, `infrastructure-persistence`).
 
 ```mermaid
 C4Context
     title OEI — Diagramme de contexte (C4 niveau 1)
 
-    Person(visitor, "Visiteur public", "Consulte le site, le manifeste, les ressources publiées, dans la langue de son choix.")
-    Person(candidate, "Futur membre", "Crée un compte, se connecte via Keycloak, dépose une demande d'adhésion.")
-    Person(admin, "Administrateur (conseil)", "Valide/refuse les demandes d'adhésion (art. 6 des statuts).")
+    Person(visitor, "Visiteur", "Consulte le site public, le manifeste, le corpus documentaire, dans la langue de son choix.")
+    Person(member, "Membre", "Individu authentifié : profil, réseau, CV/carte/Wallet, certifications, cotisation, boutique.")
+    Person(institutionMember, "Membre-institution", "Entreprise/école affiliée : fiche publique, gestion de ses collaborateurs rattachés.")
+    Person(moderator, "Modérateur / Administrateur", "Valide les adhésions, modère les contributions, gère le CMS, le catalogue de certifications et le back-office.")
 
     System_Boundary(oei, "Plateforme OEI") {
-        System(oeiSys, "Site OEI", "Site public multilingue + espace membre. Sert le contenu documentaire versionné et gère l'adhésion.")
+        System(oeiSys, "Site OEI", "Frontend Angular + API Spring Boot. Site public multilingue, espace membre, espace institution, CMS/gouvernance, boutique, back-office.")
     }
 
-    System_Ext(keycloak, "Keycloak", "Fournisseur d'identité OIDC, thème de login personnalisé.")
-    System_Ext(minio, "MinIO (S3-compatible)", "Documents publics téléchargeables + pièces jointes d'adhésion.")
+    System_Ext(keycloak, "Keycloak", "Fournisseur d'identité OIDC (login, thème personnalisé, rôles).")
+    System_Ext(postgres, "PostgreSQL", "Base de données transactionnelle applicative.")
+    System_Ext(s3, "S3 / MinIO", "Stockage objet : documents publics, pièces jointes, médias, CV générés. MinIO en local, S3 en production.")
+    System_Ext(payment, "Stripe / PayPal", "Fournisseurs de paiement pour la boutique et la cotisation.")
+    System_Ext(ses, "Amazon SES", "Envoi d'e-mails transactionnels (confirmations, relances de cotisation, notifications).")
 
     Rel(visitor, oeiSys, "Consulte le contenu", "HTTPS, 6 langues")
-    Rel(candidate, oeiSys, "Crée un compte, dépose une demande", "HTTPS")
-    Rel(candidate, keycloak, "S'authentifie", "OIDC")
-    Rel(admin, oeiSys, "Valide les demandes d'adhésion", "HTTPS (rôle admin)")
+    Rel(member, oeiSys, "Utilise l'espace membre", "HTTPS")
+    Rel(institutionMember, oeiSys, "Gère sa fiche et ses collaborateurs", "HTTPS")
+    Rel(moderator, oeiSys, "Modère, administre", "HTTPS (rôles admin/modérateur)")
+
+    Rel(member, keycloak, "S'authentifie", "OIDC")
     Rel(oeiSys, keycloak, "Valide les jetons", "OAuth2 Resource Server")
-    Rel(oeiSys, minio, "Lit/écrit des documents", "S3 API")
+    Rel(oeiSys, postgres, "Lit/écrit les données applicatives", "JDBC")
+    Rel(oeiSys, s3, "Lit/écrit des documents et médias", "S3 API")
+    Rel(oeiSys, payment, "Encaisse un paiement", "API REST (webhooks)")
+    Rel(oeiSys, ses, "Envoie des e-mails transactionnels", "SMTP")
 ```
 
-## 4. Vue système (C4 — Conteneurs)
+## 5. Vue système (C4 — Conteneurs)
 
 ```mermaid
 C4Container
     title OEI — Diagramme de conteneurs (C4 niveau 2)
 
-    Person(visitor, "Visiteur / Futur membre")
+    Person(user, "Visiteur / Membre / Institution / Modérateur")
 
     System_Boundary(frontend, "Frontend") {
-        Container(ng, "Angular", "Angular, @angular/localize (6 langues)", "Site public + espace membre, fidèle à la maquette validée.")
+        Container(ng, "Frontend Angular (SPA)", "Angular 22, @angular/localize (6 langues)", "Site public + espace membre/institution + CMS + back-office. Bascule mock/API via RuntimeConfig.")
     }
 
     System_Boundary(backend, "Backend") {
-        Container(api, "Spring Boot", "Java, Spring Security (resource server OIDC)", "API : contenu documentaire, formulaire d'adhésion, endpoints protégés.")
+        Container(api, "Backend Spring Boot (API REST)", "Java 25, Spring Boot, Spring Security (resource server OIDC)", "API contract-first (OpenAPI) : une vingtaine de bounded contexts (membership, réseau, certification, CV, wallet, institution, CMS, store, ...).")
     }
 
-    ContainerDb(pg, "PostgreSQL", "SGBD", "Adhésions, config Keycloak.")
-    Container(kc, "Keycloak", "IdP OIDC", "Auth, thème de login personnalisé bleu nuit/doré.")
-    ContainerDb(s3, "MinIO", "Stockage S3-compatible", "Bucket public `oei-public`, bucket privé `oei-membership`.")
-    ContainerDb(content, "content/", "Markdown versionné", "Corpus documentaire par langue, chargé par l'API, pas compilé dans le frontend.")
+    Container(kc, "Keycloak (IAM)", "IdP OIDC", "Authentification, gestion des rôles, thèmes personnalisés (login/account/admin/email).")
+    ContainerDb(pg, "PostgreSQL (données)", "SGBD", "Toutes les données transactionnelles applicatives (membres, adhésions, certifications, contributions, ...).")
+    ContainerDb(s3, "S3 (stockage objet)", "S3 / MinIO en local", "Documents publics, médias, CV générés, pièces jointes.")
 
-    Rel(visitor, ng, "Utilise", "HTTPS")
-    Rel(ng, api, "Appelle l'API", "HTTPS/JSON")
-    Rel(visitor, kc, "S'authentifie", "OIDC")
-    Rel(api, kc, "Valide les JWT", "OAuth2")
+    Rel(user, ng, "Utilise", "HTTPS")
+    Rel(ng, api, "Appelle l'API", "HTTPS/JSON (REST)")
+    Rel(user, kc, "S'authentifie", "OIDC/OAuth2")
+    Rel(ng, kc, "Redirige pour le login, gère le token", "OIDC (Authorization Code + PKCE)")
+    Rel(api, kc, "Valide les JWT entrants", "OAuth2 Resource Server")
     Rel(api, pg, "Lit/écrit", "JDBC")
     Rel(api, s3, "Lit/écrit des objets", "S3 API")
-    Rel(api, content, "Lit le contenu", "Filesystem")
 ```
 
-## 5. Flux d'adhésion (séquence)
+## 6. Flux d'adhésion (séquence)
 
 ```mermaid
 sequenceDiagram
@@ -115,57 +145,75 @@ sequenceDiagram
     API->>DB: Met à jour le statut
 ```
 
-## 6. Structure du monorepo
+## 7. Structure du monorepo
 
-| Chemin | Rôle | État |
-|---|---|---|
-| `.prompt/` | Documents fondateurs (vision, statuts, roadmap) | Existant |
-| `.docs/superpowers/specs/` | Design technique validé | [`2026-07-31-site-plateforme-oei-design.md`](.docs/superpowers/specs/2026-07-31-site-plateforme-oei-design.md) |
-| `.docs/superpowers/plans/` | Plans d'implémentation détaillés | [`2026-07-31-infra-locale-keycloak-postgres-minio.md`](.docs/superpowers/plans/2026-07-31-infra-locale-keycloak-postgres-minio.md) |
-| `frontend/` | Angular (site public + espace membre) | À initialiser |
-| `backend/` | Spring Boot (API + intégration Keycloak) | À initialiser |
-| `content/` | Corpus documentaire versionné, par langue (`fr`, `en`, `de`, `es`, `it`, `pt`) | À initialiser |
-| `keycloak/` | Export de realm (`oei`), thème de login personnalisé | En cours |
-| `infra/` | `docker-compose.yml` (local) + scripts de vérification | En cours |
+| Chemin | Rôle |
+|---|---|
+| `frontend/oei-web/` | SPA Angular 22 (site public + espace membre/institution + CMS + back-office). Détails : [`frontend/oei-web/README.md`](frontend/oei-web/README.md). |
+| `backend/` | API Spring Boot, Maven multi-module DDD/hexagonal (contract-first OpenAPI). Détails : [`backend/README.md`](backend/README.md). |
+| `content/` | Corpus documentaire versionné en Markdown, par langue (`fr`, `en`, `de`, `es`, `it`, `pt`), organisé par grande section (`000-VISION`, `100-CONSTITUTION`, `200-WHITE-PAPERS`, `300-STANDARDS`, `400-CERTIFICATIONS`, `500-COUNCILS`, `600-COMMUNICATION`, `700-WEBSITE`, `800-INTERNATIONAL`, `900-LEGAL`, `annexes`). Servi par le backend, jamais compilé dans le frontend. |
+| `keycloak/` | Export de realm (`oei`) et thèmes personnalisés (login, account, admin, email) aux couleurs de l'OEI. |
+| `infra/` | `docker-compose.yml` (stack locale : Postgres, Keycloak, MinIO) + scripts de vérification (`infra/scripts/verify-*.sh`). |
+| `.prompt/` | Documents fondateurs (vision, statuts, roadmap), plans d'implémentation détaillés (`.prompt/plan/`), et procédures opérationnelles (`.prompt/local/`, `.prompt/deployment/`). |
+| `.docs/` | Specs/plans techniques historiques (`superpowers`) et ADRs (`.docs/adr/`). |
 
-## 7. Prérequis
+## 8. Comment démarrer
 
-- **Docker** + Docker Compose v2
-- **Node.js** et **pnpm/npm** (frontend, une fois initialisé)
-- **Java** et **Maven** (backend, une fois initialisé)
+Le guide complet — lancer le frontend seul en mode mock, ou frontend + backend + Postgres +
+Keycloak en mode API réelle, avec ou sans Docker — est déjà écrit et à jour :
+[`.prompt/local/run-local-frontend-backend.md`](.prompt/local/run-local-frontend-backend.md).
+Ce README ne le duplique pas ; se référer directement à ce guide.
 
-## 8. Démarrer l'environnement local
+En résumé très bref (voir le guide pour le détail et les prérequis) :
 
-1. `cp infra/.env.example infra/.env` puis adapter les valeurs.
-2. `./infra/scripts/dev-up.sh` — démarre Postgres, Keycloak (realm `oei` + thème de login) et MinIO (buckets `oei-public`/`oei-membership`), puis vérifie que tout est opérationnel.
-3. Console Keycloak : http://localhost:8081 (admin défini dans `infra/.env`).
-4. Console MinIO : http://localhost:9001 (identifiants définis dans `infra/.env`).
-5. `./infra/scripts/dev-down.sh` — arrête la stack.
+```bash
+# Frontend seul, mode mock (aucun backend requis)
+cd frontend/oei-web && pnpm install && pnpm run start   # http://localhost:4300
 
-La mise en cloud (AWS EC2 + Traefik/HTTPS) est traitée dans une itération ultérieure, une fois
-l'environnement local stable — voir §5 du document de design.
+# Stack complète (Postgres + Keycloak + MinIO) puis backend + frontend en mode API
+cp infra/.env.example infra/.env
+./infra/scripts/dev-up.sh
+cd backend && mvn spring-boot:run -pl application/web -am
+```
 
-## 9. Tests & qualité
+## 9. Déploiement
 
-Chaque brique d'infrastructure est vérifiée par un script dédié avant d'être considérée livrée
-(`infra/scripts/verify-*.sh`), agrégés par `infra/scripts/verify-all.sh`. Les futurs modules
-frontend/backend ajouteront leurs propres suites (tests de composants Angular, JUnit + Testcontainers
-côté Spring Boot) selon le même principe : pas de tâche marquée terminée sans vérification exécutée.
+Le manuel de déploiement AWS complet (achat de domaine, EC2, S3, secrets SSM, Dockerfiles,
+`docker-compose.prod.yml`, CloudFront, sauvegardes, supervision) et le pipeline CI/CD
+GitHub Actions sont déjà rédigés — ce README y renvoie plutôt que de les dupliquer :
 
-## 10. Règles principales (non négociables)
+- Manuel de déploiement : [`.prompt/deployment/deploiement-aws.md`](.prompt/deployment/deploiement-aws.md)
+- Infrastructure as Code (Terraform) : [`.prompt/deployment/terraform/`](.prompt/deployment/terraform/)
+- Pipeline GitHub Actions : [`.prompt/deployment/pipeline-github-actions.md`](.prompt/deployment/pipeline-github-actions.md)
 
-- Le site public est **multilingue dès la v1** (FR, EN, DE, ES, IT, PT) ; repli automatique vers
+## 10. Tests & qualité
+
+- **Backend** : `mvn clean verify` depuis `backend/` — tests unitaires du domaine, tests
+  `MockMvc` de la couche web, tests Testcontainers de la persistance, suite ArchUnit
+  (pureté du domaine + règles d'architecture cross-module), suite Cucumber d'acceptance.
+  Détail : [`backend/README.md`](backend/README.md).
+- **Frontend** : `ng test` (Vitest) depuis `frontend/oei-web/` pour les tests unitaires,
+  `pnpm run e2e` (Playwright) pour les tests de bout en bout. Détail :
+  [`frontend/oei-web/README.md`](frontend/oei-web/README.md).
+- **Infra locale** : chaque brique est vérifiée par un script dédié
+  (`infra/scripts/verify-*.sh`), agrégés par `infra/scripts/verify-all.sh`.
+
+## 11. Règles principales (non négociables)
+
+- Le site public est **multilingue** (FR, EN, DE, ES, IT, PT) ; repli automatique vers
   l'anglais si un document n'est pas encore traduit dans la langue choisie.
-- **Contenu documentaire en Markdown versionné**, pas de CMS headless en v1 — traçabilité git adaptée
-  à des documents à portée quasi-juridique (statuts, code de déontologie).
+- **Contenu documentaire en Markdown versionné**, pas de CMS headless pour le corpus —
+  traçabilité git adaptée à des documents à portée quasi-juridique (statuts, code de déontologie).
+- **Aucun texte en dur dans le code** (frontend comme backend) : tout passe par de l'i18n ou
+  une API localisée.
 - **Keycloak gère entièrement l'authentification** ; aucune gestion de mot de passe côté application.
-- **Aucun secret en clair dans git** — tout passe par `infra/.env` (gitignoré) ; seul
-  `infra/.env.example` (valeurs factices) est versionné.
+- **Aucun secret en clair dans git** — tout passe par `infra/.env` (gitignoré) en local, ou
+  AWS SSM Parameter Store en production ; seul `infra/.env.example` (valeurs factices) est versionné.
 - **HTTPS partout** en production ; pas de HTTP exposé.
 - Développement sur **branches dédiées**, jamais directement sur `main` — rebase sur `main` une fois
   stable, merge décidé par le porteur du projet.
 
-## 11. Cadre associatif et juridique
+## 12. Cadre associatif et juridique
 
 - L'OEI est un **mouvement fondateur** ; toute communication doit éviter la confusion avec un ordre
   professionnel légalement constitué (voir `.prompt/01-Glossaire.md`).
@@ -174,10 +222,18 @@ côté Spring Boot) selon le même principe : pas de tâche marquée terminée s
   pour la checklist complète (nom, marque IPI, RGPD/nLPD, compte bancaire associatif).
 - Aucune reconnaissance légale d'ordre professionnel n'est revendiquée tant qu'aucune loi ne la crée.
 
-## 12. Références
+## 13. Pour aller plus loin
 
+- **Décisions d'architecture (ADR)** : [`.docs/adr/`](.docs/adr/) — journal des choix
+  techniques structurants et de leurs raisons.
+- **Plans de développement** : [`.prompt/plan/`](.prompt/plan/) — plans détaillés par grande
+  fonctionnalité (page d'accueil dynamique, espace membre individuel, espace membre
+  institutionnel, CMS/gouvernance documentaire, plan de développement v1).
+- **Skill Claude de référence backend** : `spring-boot-ddd-backend-skill` (voir
+  `.claude/skills/spring-boot-ddd-backend-skill/`) — les conventions Maven multi-module
+  DDD/hexagonal appliquées dans `backend/` en découlent directement ; s'y référer avant
+  toute modification du backend.
 - Design technique validé : [`.docs/superpowers/specs/2026-07-31-site-plateforme-oei-design.md`](.docs/superpowers/specs/2026-07-31-site-plateforme-oei-design.md)
-- Plan d'implémentation infra : [`.docs/superpowers/plans/2026-07-31-infra-locale-keycloak-postgres-minio.md`](.docs/superpowers/plans/2026-07-31-infra-locale-keycloak-postgres-minio.md)
 - Plan directeur et roadmap : [`.prompt/OEI-Plan-Directeur-Roadmap.md`](.prompt/OEI-Plan-Directeur-Roadmap.md)
 - Roadmap administrative et technique détaillée : [`.prompt/05-Roadmap-Administrative-Technique.md`](.prompt/05-Roadmap-Administrative-Technique.md)
 - Maquette validée de la page d'accueil : [`.prompt/maquetteUI.png`](.prompt/maquetteUI.png)
