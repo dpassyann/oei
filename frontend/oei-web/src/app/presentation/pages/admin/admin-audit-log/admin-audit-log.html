@@ -17,11 +17,11 @@
         </tr>
       </thead>
       <tbody>
-        @for (entry of entries(); track entry.id) {
+        @for (entry of pagedEntries(); track entry.id) {
           <tr>
-            <td>{{ entry.occurredAt }}</td>
+            <td>{{ entry.occurredAt | date: 'medium' }}</td>
             <td>{{ entry.actorId }}</td>
-            <td>{{ entry.action }}</td>
+            <td><span class="oei-admin-audit-log__action">{{ entry.action }}</span></td>
             <td>{{ entry.targetType }} #{{ entry.targetId }}</td>
             <td>{{ entry.reason ?? '—' }}</td>
             <td>{{ entry.correlationId }}</td>
@@ -29,5 +29,17 @@
         }
       </tbody>
     </table>
+
+    @if (pageCount() > 1) {
+      <div class="oei-admin-audit-log__pagination">
+        <button type="button" class="oei-btn oei-btn--secondary" [disabled]="page() === 0" (click)="previousPage()">
+          {{ i18n.translate('admin.auditLog.pagination.previous') }}
+        </button>
+        <span>{{ i18n.translate('admin.auditLog.pagination.pageOf').replace('{current}', (page() + 1).toString()).replace('{total}', pageCount().toString()) }}</span>
+        <button type="button" class="oei-btn oei-btn--secondary" [disabled]="page() >= pageCount() - 1" (click)="nextPage()">
+          {{ i18n.translate('admin.auditLog.pagination.next') }}
+        </button>
+      </div>
+    }
   }
 </section>

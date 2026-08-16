@@ -7,8 +7,31 @@
     td {
       text-align: left;
       padding: 0.5rem 0.75rem;
-      border-bottom: 1px solid #e0e0e0;
+      border-bottom: 1px solid rgba(10, 30, 63, 0.15);
       font-size: 0.85rem;
     }
+  }
+
+  // Neutral navy pill for the raw action code (e.g. `INSTITUTION_SUSPEND`) — distinct from
+  // `.oei-admin-status`/`.oei-cms-status` (see `_status-badges.scss`) since an audit action isn't
+  // itself a lifecycle status, just journals one.
+  &__action {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+    background: rgba(10, 30, 63, 0.08);
+    color: #0a1e3f;
+  }
+
+  &__pagination {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    font-size: 0.85rem;
   }
 }

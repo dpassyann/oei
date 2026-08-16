@@ -1329,6 +1329,7 @@
       "members": "Membres",
       "events": "Événements",
       "resources": "Ressources",
+      "certifications": "Certifications",
       "menus": "Menus",
       "translations": "Traductions",
       "emailTemplates": "Templates email",
@@ -1435,6 +1436,11 @@
         "entity": "Entité",
         "reason": "Raison",
         "correlationId": "Identifiant de corrélation"
+      },
+      "pagination": {
+        "previous": "Précédent",
+        "next": "Suivant",
+        "pageOf": "Page {current} sur {total}"
       }
     },
     "comingSoon": {
@@ -1510,6 +1516,43 @@
       "confirmSuspend": "Confirmer la suspension",
       "cancel": "Annuler",
       "actionError": "L'action n'a pas pu être effectuée."
+    },
+    "certifications": {
+      "list": {
+        "title": "Certifications reconnues",
+        "new": "Ajouter une certification",
+        "empty": "Aucune certification dans le catalogue pour le moment.",
+        "edit": "Modifier",
+        "columns": {
+          "name": "Nom",
+          "organization": "Organisme",
+          "domain": "Domaine",
+          "oeiStatus": "Statut OEI"
+        }
+      },
+      "form": {
+        "newTitle": "Ajouter une certification",
+        "editTitle": "Modifier une certification",
+        "noSelection": "—",
+        "fields": {
+          "name": "Nom de la certification",
+          "issuingOrganization": "Organisme délivrant",
+          "domain": "Domaine",
+          "level": "Niveau de référence",
+          "language": "Langue de l'examen",
+          "oeiStatus": "Statut de reconnaissance OEI",
+          "description": "Description",
+          "competencies": "Compétences couvertes",
+          "validityMonths": "Durée de validité (mois)",
+          "catalogReference": "Référence catalogue",
+          "autoValidate": "Valider automatiquement une déclaration de membre correspondante"
+        },
+        "addCompetency": "Ajouter",
+        "removeCompetency": "Retirer",
+        "submit": "Enregistrer",
+        "validationError": "Merci de renseigner au moins le nom et l'organisme délivrant.",
+        "submitError": "Une erreur est survenue lors de l'enregistrement de la certification."
+      }
     }
   },
   "network": {

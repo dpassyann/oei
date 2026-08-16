@@ -1329,6 +1329,7 @@
       "members": "Members",
       "events": "Events",
       "resources": "Resources",
+      "certifications": "Certifications",
       "menus": "Menus",
       "translations": "Translations",
       "emailTemplates": "Email templates",
@@ -1435,6 +1436,11 @@
         "entity": "Entity",
         "reason": "Reason",
         "correlationId": "Correlation ID"
+      },
+      "pagination": {
+        "previous": "Previous",
+        "next": "Next",
+        "pageOf": "Page {current} of {total}"
       }
     },
     "comingSoon": {
@@ -1510,6 +1516,43 @@
       "confirmSuspend": "Confirm suspension",
       "cancel": "Cancel",
       "actionError": "The action could not be completed."
+    },
+    "certifications": {
+      "list": {
+        "title": "Recognized certifications",
+        "new": "Add a certification",
+        "empty": "No certification in the catalog yet.",
+        "edit": "Edit",
+        "columns": {
+          "name": "Name",
+          "organization": "Organization",
+          "domain": "Domain",
+          "oeiStatus": "OEI status"
+        }
+      },
+      "form": {
+        "newTitle": "Add a certification",
+        "editTitle": "Edit a certification",
+        "noSelection": "—",
+        "fields": {
+          "name": "Certification name",
+          "issuingOrganization": "Issuing organization",
+          "domain": "Domain",
+          "level": "Reference level",
+          "language": "Exam language",
+          "oeiStatus": "OEI recognition status",
+          "description": "Description",
+          "competencies": "Competencies covered",
+          "validityMonths": "Validity period (months)",
+          "catalogReference": "Catalog reference",
+          "autoValidate": "Auto-validate a matching member declaration"
+        },
+        "addCompetency": "Add",
+        "removeCompetency": "Remove",
+        "submit": "Save",
+        "validationError": "Please fill in at least the name and the issuing organization.",
+        "submitError": "An error occurred while saving the certification."
+      }
     }
   },
   "network": {

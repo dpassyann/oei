@@ -1,0 +1,67 @@
+// =============================================================================================
+// Shared "well-integrated back office" look for the `/admin/**` console pages (dashboard,
+// institutions list/new/detail, members, audit log) — typography, link and table styling coded
+// on the OEI charte graphique (bleu nuit `#0A1E3F` / doré `#E8A530`, see `_forms.scss`).
+//
+// Context: unlike `/cms/**` (covered by `_cms-shell.scss`), the `/admin/**` pages let the browser
+// default black text / grey borders show through their `h1`s, tables and plain links, even though
+// buttons/fields/status pills already used the shared `.oei-btn`/`.oei-field`/`.oei-admin-status`
+// classes. This partial keys off the existing page wrapper classes (`.oei-admin-dashboard`,
+// `.oei-admin-institutions`, `.oei-admin-institution-new`, `.oei-admin-institution-detail`,
+// `.oei-admin-members`, `.oei-admin-audit-log`) rather than adding new markup, so no template or
+// `.spec.ts` selector changes are needed.
+// =============================================================================================
+
+$oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+
+.oei-admin-dashboard,
+.oei-admin-institutions,
+.oei-admin-institution-new,
+.oei-admin-institution-detail,
+.oei-admin-members,
+.oei-admin-audit-log {
+  color: #222;
+
+  h1 {
+    color: $oei-navy;
+    font-size: 1.6rem;
+    margin: 0 0 0.4rem;
+  }
+
+  h2 {
+    color: $oei-navy;
+    font-size: 1.1rem;
+    margin: 0 0 0.75rem;
+  }
+
+  > p {
+    color: #555;
+  }
+
+  a:not(.oei-btn) {
+    color: $oei-navy;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      color: $oei-gold;
+      text-decoration: underline;
+    }
+  }
+
+  table {
+    thead th {
+      color: $oei-navy;
+      font-weight: 700;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      background: rgba(10, 30, 63, 0.05);
+    }
+
+    tbody tr:hover {
+      background: rgba(10, 30, 63, 0.03);
+    }
+  }
+}

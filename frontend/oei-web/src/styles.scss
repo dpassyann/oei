@@ -8,6 +8,8 @@
 @use 'styles/status-badges';
 // Shared `/cms` back-office typography/table look — see `src/styles/_cms-shell.scss`.
 @use 'styles/cms-shell';
+// Shared `/admin` back-office typography/table look — see `src/styles/_admin-shell.scss`.
+@use 'styles/admin-shell';
 
 html,
 body {

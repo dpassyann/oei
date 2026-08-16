@@ -1,7 +1,7 @@
 <section class="oei-admin-institutions">
   <header class="oei-admin-institutions__header">
     <h1>{{ i18n.translate('admin.institutions.list.title') }}</h1>
-    <a routerLink="/admin/institutions/new" class="oei-admin-institutions__new">{{ i18n.translate('admin.institutions.list.new') }}</a>
+    <a routerLink="/admin/institutions/new" class="oei-admin-institutions__new oei-btn oei-btn--primary">{{ i18n.translate('admin.institutions.list.new') }}</a>
   </header>
 
   @if (institutions().length === 0) {
@@ -26,7 +26,7 @@
                 {{ i18n.translate('admin.institutions.status.' + (institution.status ?? 'ACTIVE')) }}
               </span>
             </td>
-            <td><a [routerLink]="['/admin/institutions', institution.id]">{{ i18n.translate('admin.institutions.list.open') }}</a></td>
+            <td><a [routerLink]="['/admin/institutions', institution.id]" class="oei-btn oei-btn--text">{{ i18n.translate('admin.institutions.list.open') }}</a></td>
           </tr>
         }
       </tbody>

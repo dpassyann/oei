@@ -20,7 +20,7 @@
     flex-direction: column;
     gap: 0.5rem;
     max-width: 480px;
-    border: 1px solid #e0e0e0;
+    border: 1px solid rgba(10, 30, 63, 0.15);
     border-radius: 6px;
     padding: 0.75rem;
   }
@@ -31,13 +31,11 @@
   }
 
   &__error {
-    color: #b00020;
+    color: #7f1d1d;
   }
 }
 
-.oei-admin-status {
-  padding: 0.15rem 0.5rem;
-  border-radius: 4px;
-  background: #eee;
-  font-size: 0.8rem;
-}
+// `.oei-admin-status` color/shape now come only from the shared `src/styles/_status-badges.scss`
+// partial. This local override used to hardcode a flat grey background regardless of the
+// institution's actual status, silently defeating the shared badge's status-coded colors
+// (approve/suspend/revoke all rendered the same grey pill).

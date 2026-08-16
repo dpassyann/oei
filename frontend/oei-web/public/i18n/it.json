@@ -1323,6 +1323,7 @@
       "members": "Membri",
       "events": "Eventi",
       "resources": "Risorse",
+      "certifications": "Certificazioni",
       "menus": "Menu",
       "translations": "Traduzioni",
       "emailTemplates": "Modelli email",
@@ -1429,6 +1430,11 @@
         "entity": "Entità",
         "reason": "Motivo",
         "correlationId": "ID di correlazione"
+      },
+      "pagination": {
+        "previous": "Precedente",
+        "next": "Successivo",
+        "pageOf": "Pagina {current} di {total}"
       }
     },
     "comingSoon": {
