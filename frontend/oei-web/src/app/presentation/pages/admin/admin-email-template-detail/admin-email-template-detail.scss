@@ -1,0 +1,46 @@
+.oei-admin-email-template-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 40rem;
+
+  &__back {
+    align-self: flex-start;
+  }
+
+  &__variables ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0;
+  }
+
+  &__variables code {
+    background: rgba(10, 30, 63, 0.06);
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.25rem;
+  }
+
+  &__preview pre {
+    white-space: pre-wrap;
+    background: #f7f4ec;
+    border: 1px solid rgba(10, 30, 63, 0.15);
+    border-radius: 0.35rem;
+    padding: 1rem;
+  }
+
+  &__active {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: #0a1e3f;
+  }
+
+  &__saved {
+    color: #1a7f37;
+    font-weight: 600;
+  }
+}

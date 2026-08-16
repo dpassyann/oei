@@ -1,0 +1,35 @@
+<section class="oei-admin-email-templates">
+  <header class="oei-admin-email-templates__header">
+    <h1>{{ i18n.translate('admin.emailTemplates.title') }}</h1>
+  </header>
+  <p>{{ i18n.translate('admin.emailTemplates.intro') }}</p>
+
+  @if (templates().length === 0) {
+    <p>{{ i18n.translate('admin.emailTemplates.empty') }}</p>
+  } @else {
+    <table class="oei-admin-email-templates__table">
+      <thead>
+        <tr>
+          <th>{{ i18n.translate('admin.emailTemplates.columns.name') }}</th>
+          <th>{{ i18n.translate('admin.emailTemplates.columns.subject') }}</th>
+          <th>{{ i18n.translate('admin.emailTemplates.columns.status') }}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (template of templates(); track template.id) {
+          <tr>
+            <td>{{ template.name }}</td>
+            <td>{{ i18n.translate(template.subjectKey) }}</td>
+            <td>
+              <span class="oei-admin-status" [attr.data-status]="template.active ? 'ACTIVE' : 'SUSPENDED'">
+                {{ i18n.translate(template.active ? 'admin.emailTemplates.status.active' : 'admin.emailTemplates.status.inactive') }}
+              </span>
+            </td>
+            <td><a [routerLink]="['/admin/templates-email', template.id]" class="oei-btn oei-btn--text">{{ i18n.translate('admin.emailTemplates.open') }}</a></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</section>

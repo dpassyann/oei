@@ -1,0 +1,42 @@
+@if (template(); as template) {
+  <section class="oei-admin-email-template-detail">
+    <a routerLink="/admin/templates-email" class="oei-admin-email-template-detail__back">{{ i18n.translate('admin.emailTemplates.back') }}</a>
+    <h1>{{ template.name }}</h1>
+
+    <label class="oei-field">
+      {{ i18n.translate('admin.emailTemplates.detail.subjectLabel') }}
+      <input class="oei-input" name="subjectKey" [ngModel]="subjectKey()" (ngModelChange)="subjectKey.set($event)" />
+    </label>
+
+    <div class="oei-admin-email-template-detail__variables">
+      <h2>{{ i18n.translate('admin.emailTemplates.detail.variables') }}</h2>
+      <ul>
+        @for (variable of template.variables; track variable) {
+          <li><code>{{ variable }}</code></li>
+        }
+      </ul>
+    </div>
+
+    <label class="oei-field">
+      {{ i18n.translate('admin.emailTemplates.detail.bodyLabel') }}
+      <textarea class="oei-textarea" rows="8" name="body" [ngModel]="body()" (ngModelChange)="body.set($event)"></textarea>
+      <span class="oei-field__hint">{{ i18n.translate('admin.emailTemplates.detail.bodyHint') }}</span>
+    </label>
+
+    <div class="oei-admin-email-template-detail__preview">
+      <h2>{{ i18n.translate('admin.emailTemplates.detail.previewLabel') }}</h2>
+      <pre>{{ preview() }}</pre>
+    </div>
+
+    <label class="oei-admin-email-template-detail__active">
+      <input type="checkbox" name="active" [ngModel]="active()" (ngModelChange)="active.set($event)" />
+      {{ i18n.translate('admin.emailTemplates.detail.activeLabel') }}
+    </label>
+
+    @if (saved()) {
+      <p class="oei-admin-email-template-detail__saved">{{ i18n.translate('admin.emailTemplates.detail.saved') }}</p>
+    }
+
+    <button type="button" class="oei-btn oei-btn--primary" (click)="save()">{{ i18n.translate('admin.emailTemplates.detail.save') }}</button>
+  </section>
+}
