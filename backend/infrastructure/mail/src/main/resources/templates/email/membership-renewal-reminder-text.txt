@@ -2,6 +2,6 @@
 
 [(#{email.renewal-reminder.body(${cycleYear})})]
 
-[(#{email.renewal-reminder.cta})] https://oei.global/espace-membre/cotisation
+[(#{email.renewal-reminder.cta})] [(${publicBaseUrl})]/espace-membre/cotisation
 
 [(#{email.renewal-reminder.signature-text})]

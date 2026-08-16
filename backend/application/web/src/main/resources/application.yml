@@ -36,10 +36,13 @@ spring:
             enable: ${OEI_SMTP_STARTTLS:false}
 
 oei:
+  # Public site base URL, used to build absolute links in transactional emails (header/footer
+  # nav, CTA buttons) — never hardcoded per-template, so a domain change is a one-property fix.
+  public-base-url: ${OEI_PUBLIC_BASE_URL:https://theitorder.global}
   mail:
     # From address for every EmailNotificationAdapter send; must be a verified SES identity
     # in production.
-    from: ${OEI_MAIL_FROM:no-reply@oei.global}
+    from: ${OEI_MAIL_FROM:no-reply@theitorder.global}
   security:
     public-urls:
       - /actuator/health

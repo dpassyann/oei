@@ -76,7 +76,8 @@ class EmailNotificationAdapterTest {
         templateEngine.setTemplateEngineMessageSource(messageSource);
 
         adapter = new EmailNotificationAdapter(mailSender, templateEngine, messageSource);
-        ReflectionTestUtils.setField(adapter, "fromAddress", "no-reply@oei.global");
+        ReflectionTestUtils.setField(adapter, "fromAddress", "no-reply@theitorder.global");
+        ReflectionTestUtils.setField(adapter, "publicBaseUrl", "https://theitorder.global");
     }
 
     private Member member() {
@@ -159,11 +160,13 @@ class EmailNotificationAdapterTest {
         final Context frenchContext = new Context(Locale.forLanguageTag("fr"));
         frenchContext.setVariable("member", frenchMember);
         frenchContext.setVariable("order", order);
+        frenchContext.setVariable("publicBaseUrl", "https://theitorder.global");
         final String frenchHtml = templateEngine.process("email/order-confirmation", frenchContext);
 
         final Context englishContext = new Context(Locale.forLanguageTag("en"));
         englishContext.setVariable("member", englishMember);
         englishContext.setVariable("order", order);
+        englishContext.setVariable("publicBaseUrl", "https://theitorder.global");
         final String englishHtml = templateEngine.process("email/order-confirmation", englishContext);
 
         assertThat(frenchHtml).contains("Bonjour").doesNotContain("Hello");

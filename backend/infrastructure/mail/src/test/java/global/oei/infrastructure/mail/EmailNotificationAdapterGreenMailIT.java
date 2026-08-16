@@ -66,7 +66,8 @@ class EmailNotificationAdapterGreenMailIT {
         templateEngine.setTemplateEngineMessageSource(messageSource);
 
         adapter = new EmailNotificationAdapter(mailSender, templateEngine, messageSource);
-        ReflectionTestUtils.setField(adapter, "fromAddress", "no-reply@oei.global");
+        ReflectionTestUtils.setField(adapter, "fromAddress", "no-reply@theitorder.global");
+        ReflectionTestUtils.setField(adapter, "publicBaseUrl", "https://theitorder.global");
     }
 
     @AfterEach

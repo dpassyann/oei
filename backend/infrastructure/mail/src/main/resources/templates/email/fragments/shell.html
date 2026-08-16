@@ -1,35 +1,53 @@
 <!--
-  Shared table-based, inline-CSS email shell (header + footer) reused by every HTML email
-  template via th:replace — email clients do not reliably support flex/grid/<head> <style>,
-  hence the table layout and inline styles throughout. Brand colors: midnight-blue (#0a1e3f)
-  + gold (#e8a530), per the OEI charte graphique.
+  Shared table-based, inline-CSS email shell (card open/close + header + footer + CTA button)
+  reused by every HTML email template via th:replace/th:insert — email clients do not
+  reliably support flex/grid/<head><style>, hence the table layout and inline styles
+  throughout. Colors/button style reproduced verbatim from the site's own design-system
+  source of truth, frontend/oei-web/src/styles/_forms.scss: midnight blue #0a1e3f, gold
+  #e8a530, ivoire #f7f4ec, white #ffffff; the CTA button below mirrors .oei-btn--primary
+  exactly (solid gold fill, navy text, font-weight 600, ~0.35rem/6px border-radius,
+  ~0.7rem/1.5rem padding), built as a "bulletproof" nested table (not a plain styled <a>) so
+  it renders consistently across email clients that strip CSS on anchors.
 
   Logo: no PNG rasterization tool (rsvg-convert/imagemagick/inkscape) was available in this
   environment to convert frontend/oei-web/public/assets/logo-icon.svg -- TODO(follow-up):
   rasterize the real logo and reference it here via ${logoUrl} once available. Until then,
-  every email falls back to a styled text wordmark (th:text="#{email.shell.wordmark}").
+  every email falls back to a styled text wordmark (th:text="#{email.shell.wordmark}") plus a
+  discreet tagline underneath, so the header still reads as a real brand header.
+
+  Every absolute link below is built from ${publicBaseUrl} (see EmailNotificationAdapter's
+  "oei.public-base-url" property, itself backed by application.yml's
+  oei.public-base-url/OEI_PUBLIC_BASE_URL) -- never a domain hardcoded in this template.
+
+  The outer "page background + 600px card" wrapper table is intentionally duplicated in each
+  template's own <body> (not a th:replace-able fragment here): Thymeleaf fragments must be
+  individually well-formed, well-balanced HTML, so an "open the card"/"close the card" fragment
+  pair spanning unbalanced tags across two separate th:fragment blocks is not expressible this
+  way -- only header/footer/CTA, each a genuinely self-contained <tr>, are shared as fragments.
 -->
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 
 <th:block th:fragment="header">
   <tr>
-    <td style="background-color:#0a1e3f;padding:24px 32px;text-align:center;border-radius:4px 4px 0 0;">
-      <span style="color:#e8a530;font-size:20px;font-weight:bold;font-family:Arial,Helvetica,sans-serif;letter-spacing:0.5px;"
-            th:text="#{email.shell.wordmark}">Ordre des Experts Informatique</span>
+    <td style="background-color:#0a1e3f;padding:28px 32px;text-align:center;">
+      <div style="color:#e8a530;font-size:21px;font-weight:700;font-family:Arial,Helvetica,sans-serif;letter-spacing:0.3px;"
+           th:text="#{email.shell.wordmark}">Ordre International des Experts de l'Informatique</div>
+      <div style="color:#c9d3e0;font-size:12px;font-family:Arial,Helvetica,sans-serif;margin-top:6px;letter-spacing:0.4px;text-transform:uppercase;"
+           th:text="#{email.shell.tagline}">Excellence. Éthique. Reconnaissance.</div>
     </td>
   </tr>
 </th:block>
 
 <th:block th:fragment="footer">
   <tr>
-    <td style="background-color:#0a1e3f;padding:20px 32px;text-align:center;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#c9d3e0;border-radius:0 0 4px 4px;">
+    <td style="background-color:#0a1e3f;padding:20px 32px;text-align:center;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#c9d3e0;">
       <p style="margin:0 0 10px;">
-        <a href="https://oei.global" style="color:#e8a530;text-decoration:none;margin:0 6px;" th:text="#{email.shell.nav.home}">Accueil</a>
+        <a th:href="${publicBaseUrl}" style="color:#e8a530;text-decoration:none;margin:0 6px;" th:text="#{email.shell.nav.home}">Accueil</a>
         <span style="color:#3a4d6e;">·</span>
-        <a href="https://oei.global/espace-membre" style="color:#e8a530;text-decoration:none;margin:0 6px;" th:text="#{email.shell.nav.member-space}">Espace membre</a>
+        <a th:href="${publicBaseUrl} + '/espace-membre'" style="color:#e8a530;text-decoration:none;margin:0 6px;" th:text="#{email.shell.nav.member-space}">Espace membre</a>
         <span style="color:#3a4d6e;">·</span>
-        <a href="https://oei.global/contact" style="color:#e8a530;text-decoration:none;margin:0 6px;" th:text="#{email.shell.nav.contact}">Contact</a>
+        <a th:href="${publicBaseUrl} + '/contact'" style="color:#e8a530;text-decoration:none;margin:0 6px;" th:text="#{email.shell.nav.contact}">Contact</a>
       </p>
       <p style="margin:0 0 6px;" th:text="#{email.shell.legal}">Legal</p>
       <p style="margin:0 0 6px;" th:text="#{email.shell.unsubscribe}">Unsubscribe</p>
@@ -37,6 +55,25 @@
          th:text="'© ' + ${#calendars.format(#calendars.createNow(), 'yyyy')} + ' OEI'">© 2026 OEI</p>
     </td>
   </tr>
+</th:block>
+
+<!--
+  Bulletproof CTA button (.oei-btn--primary equivalent): a fixed table cell carries the gold
+  background/border-radius so Outlook (which ignores <a> background/border-radius CSS) still
+  renders a solid rounded gold pill; requires ${ctaUrl} and ${ctaLabel} variables from the
+  including template.
+-->
+<th:block th:fragment="ctaButton">
+  <table role="presentation" cellpadding="0" cellspacing="0" style="margin:22px 0;">
+    <tr>
+      <td style="background-color:#e8a530;border:1px solid #e8a530;border-radius:6px;">
+        <a th:href="${ctaUrl}" th:text="${ctaLabel}"
+           style="display:inline-block;padding:11px 24px;color:#0a1e3f;font-weight:600;font-family:Arial,Helvetica,sans-serif;font-size:14px;text-decoration:none;border-radius:6px;">
+          Call to action
+        </a>
+      </td>
+    </tr>
+  </table>
 </th:block>
 
 </body>

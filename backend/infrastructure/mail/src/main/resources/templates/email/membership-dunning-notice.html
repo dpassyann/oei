@@ -5,27 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title th:text="#{email.dunning.subject}">Adhésion OEI</title>
 </head>
-<body style="margin:0;padding:0;background-color:#f4f4f7;">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f4f7;">
+<body style="margin:0;padding:0;background-color:#eef1f6;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#eef1f6;">
   <tr>
-    <td align="center" style="padding:24px 0;">
+    <td align="center" style="padding:32px 16px;">
       <table role="presentation" width="600" cellpadding="0" cellspacing="0"
-             style="background-color:#ffffff;border-radius:4px;font-family:Arial,Helvetica,sans-serif;">
+             style="background-color:#ffffff;border:1px solid rgba(10,30,63,0.15);border-radius:8px;font-family:Arial,Helvetica,sans-serif;overflow:hidden;">
         <tbody th:replace="~{email/fragments/shell :: header}"></tbody>
         <tr>
-          <td style="padding:32px;color:#1a1a1a;font-size:15px;line-height:1.6;">
+          <td style="padding:32px;background-color:#f7f4ec;color:#1a1a1a;font-size:15px;line-height:1.6;">
             <p th:text="#{email.dunning.greeting(${member.displayName()})}">Bonjour,</p>
             <p th:text="#{email.dunning.body(${status})}">Statut</p>
             <p th:text="#{email.dunning.cta}">CTA</p>
-            <table role="presentation" cellpadding="0" cellspacing="0" style="margin:24px 0;">
-              <tr>
-                <td style="background-color:#e8a530;border-radius:4px;">
-                  <a href="https://oei.global/espace-membre/cotisation"
-                     style="display:inline-block;padding:12px 24px;color:#0a1e3f;font-weight:bold;text-decoration:none;font-size:14px;"
-                     th:text="#{email.dunning.button}">Renouveler ma cotisation</a>
-                </td>
-              </tr>
-            </table>
+            <div th:with="ctaUrl=${publicBaseUrl} + '/espace-membre/cotisation', ctaLabel=#{email.dunning.button}">
+              <table th:replace="~{email/fragments/shell :: ctaButton}"></table>
+            </div>
             <p th:text="#{email.dunning.signature}">Signature</p>
           </td>
         </tr>

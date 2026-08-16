@@ -59,14 +59,23 @@ public class EmailNotificationAdapter implements EmailNotificationPort {
     private final SpringTemplateEngine templateEngine;
     private final MessageSource messageSource;
 
-    @Value("${oei.mail.from:no-reply@oei.global}")
+    @Value("${oei.mail.from:no-reply@theitorder.global}")
     private String fromAddress;
+
+    /**
+     * Public site base URL (e.g. {@code https://theitorder.global}), used to build every
+     * absolute link in a template (header/footer nav, CTA buttons) — never hardcoded per
+     * template, so a domain change is a one-property fix. See {@code application.yml}'s
+     * {@code oei.public-base-url}.
+     */
+    @Value("${oei.public-base-url:https://theitorder.global}")
+    private String publicBaseUrl;
 
     @Override
     @Async(EmailAsyncConfiguration.EXECUTOR_BEAN_NAME)
     public void sendMembershipFeePaymentConfirmation(final MembershipFeePayment payment, final Member member) {
         final Locale locale = memberLocale(member);
-        final Context context = new Context(locale);
+        final Context context = newContext(locale);
         context.setVariable("member", member);
         context.setVariable("payment", payment);
         send(member, locale, "email.membership-fee-payment-confirmation.subject", "membership-fee-payment-confirmation", context);
@@ -76,7 +85,7 @@ public class EmailNotificationAdapter implements EmailNotificationPort {
     @Async(EmailAsyncConfiguration.EXECUTOR_BEAN_NAME)
     public void sendOrderConfirmation(final Order order, final Member member) {
         final Locale locale = memberLocale(member);
-        final Context context = new Context(locale);
+        final Context context = newContext(locale);
         context.setVariable("member", member);
         context.setVariable("order", order);
         send(member, locale, "email.order-confirmation.subject", "order-confirmation", context);
@@ -86,7 +95,7 @@ public class EmailNotificationAdapter implements EmailNotificationPort {
     @Async(EmailAsyncConfiguration.EXECUTOR_BEAN_NAME)
     public void sendContributionAcknowledgement(final ContentContribution contribution, final Member member) {
         final Locale locale = memberLocale(member);
-        final Context context = new Context(locale);
+        final Context context = newContext(locale);
         context.setVariable("member", member);
         context.setVariable("contribution", contribution);
         send(member, locale, "email.contribution-acknowledgement.subject", "contribution-acknowledgement", context);
@@ -96,7 +105,7 @@ public class EmailNotificationAdapter implements EmailNotificationPort {
     @Async(EmailAsyncConfiguration.EXECUTOR_BEAN_NAME)
     public void sendMembershipDunningNotice(final Member member, final MembershipStatus status) {
         final Locale locale = memberLocale(member);
-        final Context context = new Context(locale);
+        final Context context = newContext(locale);
         context.setVariable("member", member);
         context.setVariable("status", status);
         send(member, locale, "email.dunning.subject", "membership-dunning-notice", context);
@@ -106,10 +115,21 @@ public class EmailNotificationAdapter implements EmailNotificationPort {
     @Async(EmailAsyncConfiguration.EXECUTOR_BEAN_NAME)
     public void sendMembershipRenewalReminder(final Member member, final int cycleYear) {
         final Locale locale = memberLocale(member);
-        final Context context = new Context(locale);
+        final Context context = newContext(locale);
         context.setVariable("member", member);
         context.setVariable("cycleYear", cycleYear);
         send(member, locale, "email.renewal-reminder.subject", "membership-renewal-reminder", context);
+    }
+
+    /**
+     * A fresh {@link Context} pre-seeded with {@code publicBaseUrl}, so every template/fragment
+     * (shell header/footer, CTA buttons) can build absolute links without ever hardcoding the
+     * site domain itself.
+     */
+    private Context newContext(final Locale locale) {
+        final Context context = new Context(locale);
+        context.setVariable("publicBaseUrl", publicBaseUrl);
+        return context;
     }
 
     private void send(final Member member, final Locale locale, final String subjectKey, final String templateName, final Context context) {

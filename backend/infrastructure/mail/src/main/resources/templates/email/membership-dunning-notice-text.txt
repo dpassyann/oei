@@ -2,6 +2,6 @@
 
 [(#{email.dunning.body(${status})})]
 
-[(#{email.dunning.cta})] https://oei.global/espace-membre/cotisation
+[(#{email.dunning.cta})] [(${publicBaseUrl})]/espace-membre/cotisation
 
 [(#{email.dunning.signature})]
