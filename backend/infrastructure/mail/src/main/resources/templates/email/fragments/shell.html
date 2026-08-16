@@ -1,0 +1,43 @@
+<!--
+  Shared table-based, inline-CSS email shell (header + footer) reused by every HTML email
+  template via th:replace — email clients do not reliably support flex/grid/<head> <style>,
+  hence the table layout and inline styles throughout. Brand colors: midnight-blue (#0a1e3f)
+  + gold (#e8a530), per the OEI charte graphique.
+
+  Logo: no PNG rasterization tool (rsvg-convert/imagemagick/inkscape) was available in this
+  environment to convert frontend/oei-web/public/assets/logo-icon.svg -- TODO(follow-up):
+  rasterize the real logo and reference it here via ${logoUrl} once available. Until then,
+  every email falls back to a styled text wordmark (th:text="#{email.shell.wordmark}").
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<th:block th:fragment="header">
+  <tr>
+    <td style="background-color:#0a1e3f;padding:24px 32px;text-align:center;border-radius:4px 4px 0 0;">
+      <span style="color:#e8a530;font-size:20px;font-weight:bold;font-family:Arial,Helvetica,sans-serif;letter-spacing:0.5px;"
+            th:text="#{email.shell.wordmark}">Ordre des Experts Informatique</span>
+    </td>
+  </tr>
+</th:block>
+
+<th:block th:fragment="footer">
+  <tr>
+    <td style="background-color:#0a1e3f;padding:20px 32px;text-align:center;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#c9d3e0;border-radius:0 0 4px 4px;">
+      <p style="margin:0 0 10px;">
+        <a href="https://oei.global" style="color:#e8a530;text-decoration:none;margin:0 6px;" th:text="#{email.shell.nav.home}">Accueil</a>
+        <span style="color:#3a4d6e;">·</span>
+        <a href="https://oei.global/espace-membre" style="color:#e8a530;text-decoration:none;margin:0 6px;" th:text="#{email.shell.nav.member-space}">Espace membre</a>
+        <span style="color:#3a4d6e;">·</span>
+        <a href="https://oei.global/contact" style="color:#e8a530;text-decoration:none;margin:0 6px;" th:text="#{email.shell.nav.contact}">Contact</a>
+      </p>
+      <p style="margin:0 0 6px;" th:text="#{email.shell.legal}">Legal</p>
+      <p style="margin:0 0 6px;" th:text="#{email.shell.unsubscribe}">Unsubscribe</p>
+      <p style="margin:8px 0 0;color:#7488a8;"
+         th:text="'© ' + ${#calendars.format(#calendars.createNow(), 'yyyy')} + ' OEI'">© 2026 OEI</p>
+    </td>
+  </tr>
+</th:block>
+
+</body>
+</html>

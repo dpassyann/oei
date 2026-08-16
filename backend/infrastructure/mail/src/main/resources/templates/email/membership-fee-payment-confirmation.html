@@ -2,15 +2,27 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8"/>
-  <title>Confirmation de cotisation OEI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title th:text="#{email.membership-fee-payment-confirmation.subject}">Confirmation de cotisation OEI</title>
 </head>
-<body>
-  <p>Bonjour <span th:text="${member.displayName()}">Nom du membre</span>,</p>
-  <p>
-    Votre cotisation pour le cycle <strong th:text="${payment.cycleYear()}">année</strong>
-    d'un montant de <strong th:text="${payment.amount()}">montant</strong>€ a bien été
-    enregistrée.
-  </p>
-  <p>Merci pour votre engagement auprès de l'OEI,<br/>L'équipe OEI</p>
+<body style="margin:0;padding:0;background-color:#f4f4f7;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f4f7;">
+  <tr>
+    <td align="center" style="padding:24px 0;">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0"
+             style="background-color:#ffffff;border-radius:4px;font-family:Arial,Helvetica,sans-serif;">
+        <tbody th:replace="~{email/fragments/shell :: header}"></tbody>
+        <tr>
+          <td style="padding:32px;color:#1a1a1a;font-size:15px;line-height:1.6;">
+            <p th:text="#{email.membership-fee-payment-confirmation.greeting(${member.displayName()})}">Bonjour,</p>
+            <p th:text="#{email.membership-fee-payment-confirmation.body(${payment.cycleYear()}, ${payment.amount()})}">Cotisation</p>
+            <p th:utext="#{email.membership-fee-payment-confirmation.signature}">Signature</p>
+          </td>
+        </tr>
+        <tbody th:replace="~{email/fragments/shell :: footer}"></tbody>
+      </table>
+    </td>
+  </tr>
+</table>
 </body>
 </html>

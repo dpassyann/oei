@@ -1,8 +1,7 @@
-Bonjour [(${member.displayName()})],
+[(#{email.order-confirmation.greeting(${member.displayName()})})]
 
-Votre commande [(${order.id()})] d'un montant de [(${order.totalAmount()})] [(${order.totalCurrency()})] a bien été enregistrée et payée.
+[(#{email.order-confirmation.body(${order.id()}, ${order.totalAmount()}, ${order.totalCurrency()})})]
 
-Elle est désormais en attente de traitement (impression/envoi). Vous serez notifié séparément lors de son expédition.
+[(#{email.order-confirmation.fulfillment-note})]
 
-Merci pour votre confiance,
-L'équipe OEI
+[(#{email.order-confirmation.signature})]

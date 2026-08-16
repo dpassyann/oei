@@ -1,5 +1,6 @@
 package global.oei.infrastructure.mail;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
@@ -11,6 +12,7 @@ import static org.mockito.Mockito.when;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -19,6 +21,7 @@ import jakarta.mail.internet.MimeMessage;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.MessageSource;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -28,25 +31,30 @@ import global.oei.domain.shared.content.ContentContributionStatus;
 import global.oei.domain.shared.member.AccountType;
 import global.oei.domain.shared.member.Member;
 import global.oei.domain.shared.member.MemberId;
+import global.oei.domain.shared.membership.MembershipStatus;
 import global.oei.domain.shared.membershipfee.MembershipFeePayment;
 import global.oei.domain.shared.membershipfee.MembershipFeePaymentStatus;
 import global.oei.domain.shared.membershipfee.MembershipFeeTier;
 import global.oei.domain.shared.store.Order;
 import global.oei.domain.shared.store.OrderLine;
 import global.oei.domain.shared.store.OrderStatus;
+import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 /**
  * Never sends a real email: {@link JavaMailSender} is fully mocked here — only verifies that a
- * {@link MimeMessage} is built and handed to {@code send(...)} for each use case, and that a
+ * {@link MimeMessage} is built and handed to {@code send(...)} for each use case, that a
  * mail-sending failure never propagates back to the caller (see {@code EmailNotificationPort}'s
- * Javadoc).
+ * Javadoc), and that the same template genuinely renders different text for different member
+ * locales (see {@code EmailNotificationAdapter}'s locale-driven i18n Javadoc).
  */
 class EmailNotificationAdapterTest {
 
     private JavaMailSender mailSender;
+    private SpringTemplateEngine templateEngine;
+    private MessageSource messageSource;
     private EmailNotificationAdapter adapter;
 
     @BeforeEach
@@ -55,7 +63,7 @@ class EmailNotificationAdapterTest {
         final Session session = Session.getDefaultInstance(new Properties());
         when(mailSender.createMimeMessage()).thenAnswer(invocation -> new MimeMessage(session));
 
-        final SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+        templateEngine = new SpringTemplateEngine();
         final ClassLoaderTemplateResolver htmlResolver = new ClassLoaderTemplateResolver();
         htmlResolver.setPrefix("templates/");
         htmlResolver.setSuffix(".html");
@@ -64,13 +72,19 @@ class EmailNotificationAdapterTest {
         htmlResolver.setOrder(1);
         templateEngine.addTemplateResolver(htmlResolver);
         templateEngine.addTemplateResolver(new EmailTemplateConfiguration().emailTextTemplateResolver());
+        messageSource = new EmailTemplateConfiguration().messageSource();
+        templateEngine.setTemplateEngineMessageSource(messageSource);
 
-        adapter = new EmailNotificationAdapter(mailSender, templateEngine);
+        adapter = new EmailNotificationAdapter(mailSender, templateEngine, messageSource);
         ReflectionTestUtils.setField(adapter, "fromAddress", "no-reply@oei.global");
     }
 
     private Member member() {
-        return new Member(new MemberId(UUID.randomUUID()), "jane-doe", "Jane Doe", "Jane Doe", "fr", "FR", AccountType.REAL, Instant.now());
+        return member("fr");
+    }
+
+    private Member member(final String locale) {
+        return new Member(new MemberId(UUID.randomUUID()), "jane-doe", "Jane Doe", "Jane Doe", locale, "FR", AccountType.REAL, Instant.now());
     }
 
     private Order order(final MemberId memberId) {
@@ -111,10 +125,49 @@ class EmailNotificationAdapterTest {
     }
 
     @Test
+    void sendMembershipDunningNotice_sendsAMimeMessage() {
+        final Member member = member();
+
+        adapter.sendMembershipDunningNotice(member, MembershipStatus.EXPIRED);
+
+        verify(mailSender, timeout(2000)).send(any(MimeMessage.class));
+    }
+
+    @Test
+    void sendMembershipRenewalReminder_sendsAMimeMessage() {
+        final Member member = member();
+
+        adapter.sendMembershipRenewalReminder(member, 2026);
+
+        verify(mailSender, timeout(2000)).send(any(MimeMessage.class));
+    }
+
+    @Test
     void send_neverPropagatesAMailSendingFailure() {
         final Member member = member();
         doThrow(new MailSendException("boom")).when(mailSender).send(any(MimeMessage.class));
 
         assertThatCode(() -> adapter.sendOrderConfirmation(order(member.id()), member)).doesNotThrowAnyException();
+    }
+
+    @Test
+    void sameTemplate_rendersDifferentTextForDifferentMemberLocales() {
+        final Member frenchMember = member("fr");
+        final Member englishMember = member("en");
+        final Order order = order(frenchMember.id());
+
+        final Context frenchContext = new Context(Locale.forLanguageTag("fr"));
+        frenchContext.setVariable("member", frenchMember);
+        frenchContext.setVariable("order", order);
+        final String frenchHtml = templateEngine.process("email/order-confirmation", frenchContext);
+
+        final Context englishContext = new Context(Locale.forLanguageTag("en"));
+        englishContext.setVariable("member", englishMember);
+        englishContext.setVariable("order", order);
+        final String englishHtml = templateEngine.process("email/order-confirmation", englishContext);
+
+        assertThat(frenchHtml).contains("Bonjour").doesNotContain("Hello");
+        assertThat(englishHtml).contains("Hello").doesNotContain("Bonjour");
+        assertThat(frenchHtml).isNotEqualTo(englishHtml);
     }
 }

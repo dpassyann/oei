@@ -1,6 +1,5 @@
-Bonjour [(${member.displayName()})],
+[(#{email.contribution-acknowledgement.greeting(${member.displayName()})})]
 
-Votre contribution ([(${contribution.id()})]) au contenu normatif a bien été reçue et est en attente de revue par l'équipe OEI.
+[(#{email.contribution-acknowledgement.body(${contribution.id()})})]
 
-Merci pour votre contribution,
-L'équipe OEI
+[(#{email.contribution-acknowledgement.signature-text})]

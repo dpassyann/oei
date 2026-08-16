@@ -1,0 +1,7 @@
+[(#{email.dunning.greeting(${member.displayName()})})]
+
+[(#{email.dunning.body(${status})})]
+
+[(#{email.dunning.cta})] https://oei.global/espace-membre/cotisation
+
+[(#{email.dunning.signature})]

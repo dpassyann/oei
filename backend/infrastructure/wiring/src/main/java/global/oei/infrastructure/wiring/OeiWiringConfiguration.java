@@ -3,6 +3,7 @@ package global.oei.infrastructure.wiring;
 import java.util.List;
 
 import org.springframework.boot.persistence.autoconfigure.EntityScan;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -822,11 +823,12 @@ public class OeiWiringConfiguration {
      * with every other adapter in this configuration): {@code mailSender}/{@code templateEngine}
      * are supplied by Spring Boot's {@code spring-boot-starter-mail}/{@code -thymeleaf}
      * autoconfiguration (triggered by {@code infrastructure-mail}'s dependencies being on the
-     * classpath), {@code emailTextTemplateResolver} by {@link EmailTemplateConfiguration}
-     * (imported above).
+     * classpath), {@code emailTextTemplateResolver}/{@code messageSource} by
+     * {@link EmailTemplateConfiguration} (imported above).
      */
     @Bean
-    public EmailNotificationPort emailNotificationPort(final JavaMailSender mailSender, final SpringTemplateEngine templateEngine) {
-        return new EmailNotificationAdapter(mailSender, templateEngine);
+    public EmailNotificationPort emailNotificationPort(
+            final JavaMailSender mailSender, final SpringTemplateEngine templateEngine, final MessageSource messageSource) {
+        return new EmailNotificationAdapter(mailSender, templateEngine, messageSource);
     }
 }

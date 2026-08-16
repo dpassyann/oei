@@ -1,6 +1,5 @@
-Bonjour [(${member.displayName()})],
+[(#{email.membership-fee-payment-confirmation.greeting(${member.displayName()})})]
 
-Votre cotisation pour le cycle [(${payment.cycleYear()})] d'un montant de [(${payment.amount()})]€ a bien été enregistrée.
+[(#{email.membership-fee-payment-confirmation.body(${payment.cycleYear()}, ${payment.amount()})})]
 
-Merci pour votre engagement auprès de l'OEI,
-L'équipe OEI
+[(#{email.membership-fee-payment-confirmation.signature-text})]

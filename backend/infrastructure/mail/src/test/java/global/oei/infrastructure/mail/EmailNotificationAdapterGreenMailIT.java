@@ -62,8 +62,10 @@ class EmailNotificationAdapterGreenMailIT {
         htmlResolver.setOrder(1);
         templateEngine.addTemplateResolver(htmlResolver);
         templateEngine.addTemplateResolver(new EmailTemplateConfiguration().emailTextTemplateResolver());
+        final var messageSource = new EmailTemplateConfiguration().messageSource();
+        templateEngine.setTemplateEngineMessageSource(messageSource);
 
-        adapter = new EmailNotificationAdapter(mailSender, templateEngine);
+        adapter = new EmailNotificationAdapter(mailSender, templateEngine, messageSource);
         ReflectionTestUtils.setField(adapter, "fromAddress", "no-reply@oei.global");
     }
 
