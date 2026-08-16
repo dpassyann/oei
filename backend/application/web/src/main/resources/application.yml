@@ -63,4 +63,10 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info
+        # health + info toujours exposés ; prometheus activé pour le scraping Prometheus
+        # (profil obs, infra/docker-compose.yml). Ne pas exposer env/beans/mappings en prod.
+        include: health,info,prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
+      env: ${spring.profiles.active:default}

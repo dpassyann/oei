@@ -63,6 +63,12 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
+    <!-- Expose /actuator/prometheus — scraped by Prometheus in the obs Docker profile.
+         The MeterRegistry is autoconfigured by Spring Boot Actuator autoconfiguration. -->
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-registry-prometheus</artifactId>
+    </dependency>
 
     <!-- Generated OpenAPI server interfaces/DTOs reference these annotation/type libraries.
          Versions managed centrally in the root pom's dependencyManagement. -->

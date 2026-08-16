@@ -1,0 +1,47 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    project: oei
+    env: local
+
+scrape_configs:
+  # ── Prometheus lui-même ───────────────────────────────────────────────────
+  - job_name: prometheus
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # ── Backend Spring Boot ───────────────────────────────────────────────────
+  # Lance en local depuis IntelliJ sur le port 8080.
+  # Prérequis : micrometer-registry-prometheus dans le pom.xml (déjà fait) et
+  # management.endpoints.web.exposure.include = health,info,prometheus dans application.yml.
+  # host.docker.internal résout vers l'hôte macOS depuis un conteneur Docker Desktop.
+  - job_name: oei-backend
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: ['host.docker.internal:8080']
+    relabel_configs:
+      - target_label: service
+        replacement: oei-backend
+
+  # ── Keycloak ──────────────────────────────────────────────────────────────
+  # Endpoint exposé par --legacy-observability-interface=true sur le port HTTP principal.
+  # En mode start-dev, Keycloak 25 expose /metrics sur le port 8080 (interface legacy).
+  - job_name: keycloak
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['keycloak:8080']
+    relabel_configs:
+      - target_label: service
+        replacement: keycloak
+
+  # ── MinIO ─────────────────────────────────────────────────────────────────
+  # MINIO_PROMETHEUS_AUTH_TYPE=public activé dans docker-compose.yml (local uniquement).
+  - job_name: minio
+    metrics_path: /minio/v2/metrics/cluster
+    static_configs:
+      - targets: ['minio:9000']
+    relabel_configs:
+      - target_label: service
+        replacement: minio
+

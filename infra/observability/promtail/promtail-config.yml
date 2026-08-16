@@ -1,0 +1,62 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+  log_level: warn
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+    batchwait: 1s
+    batchsize: 102400
+
+scrape_configs:
+  # ── Collecte via l'API Docker (socket) ────────────────────────────────────
+  # Compatible macOS/Docker Desktop : lit les logs via l'API Docker sans accéder
+  # directement à /var/lib/docker/containers (non accessible hors VM sur macOS).
+  - job_name: docker
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 5s
+        filters:
+          # Limite à ce projet uniquement
+          - name: label
+            values: ["com.docker.compose.project=oei"]
+    relabel_configs:
+      # nom du conteneur (ex: oei-postgres-1 → postgres-1)
+      - source_labels: ['__meta_docker_container_name']
+        regex: '/(.*)'
+        target_label: container
+      # service compose (ex: postgres, keycloak, backend)
+      - source_labels: ['__meta_docker_container_label_com_docker_compose_service']
+        target_label: service
+      # projet compose
+      - source_labels: ['__meta_docker_container_label_com_docker_compose_project']
+        target_label: project
+      # label custom oei.service si présent
+      - source_labels: ['__meta_docker_container_label_oei_service']
+        regex: '(.+)'
+        target_label: oei_service
+      # stream : stdout / stderr
+      - source_labels: ['__meta_docker_container_log_stream']
+        target_label: logstream
+    pipeline_stages:
+      # Retire l'enveloppe JSON que Docker ajoute autour de chaque ligne de log
+      - docker: {}
+      # Essaie de parser les logs JSON (profil !local → LogstashEncoder)
+      # En cas d'échec (profil local → texte plat), le log est transmis tel quel
+      - match:
+          selector: '{service=~"oei-backend|keycloak"}'
+          stages:
+            - json:
+                expressions:
+                  level: '"@level"'
+                  msg: '"@message"'
+                  trace_id: traceId
+                  span_id: spanId
+            - labels:
+                level:
+                trace_id:
+                span_id:
+

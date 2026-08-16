@@ -1,0 +1,31 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    project: oei
+    env: prod
+
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Backend Spring Boot — tourne dans le même réseau Docker (oei-net)
+  - job_name: oei-backend
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: ['backend:8080']
+    relabel_configs:
+      - target_label: service
+        replacement: oei-backend
+
+  # Keycloak — mode "start" (prod) : interface de gestion sur port 9000 par défaut
+  # Si KC_HTTP_MANAGEMENT_PORT n'est pas surchargé, Keycloak 25 expose /metrics sur :9000
+  - job_name: keycloak
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['keycloak:9000']
+    relabel_configs:
+      - target_label: service
+        replacement: keycloak
+

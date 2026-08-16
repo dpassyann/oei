@@ -1,0 +1,246 @@
+# infra/docker-compose.prod.yml
+# Composition de production — EC2 t4g.large (ARM64/Graviton), Amazon Linux 2023.
+#
+# Différences majeures par rapport à docker-compose.yml (local) :
+#   - Aucun "ports:" publié pour postgres, keycloak, backend — réseau interne uniquement.
+#   - minio/minio-init supprimés (remplacés par S3 natif AWS — voir deploiement-aws.md §6).
+#   - keycloak démarre en mode "start" (production, pas "start-dev").
+#   - Caddy = seul point d'entrée réseau (443/80), TLS Let's Encrypt automatique.
+#   - postgres-init : crée le rôle oei_app + la base oei de façon idempotente.
+#   - Tous les services core écrivent leurs logs dans CloudWatch (awslogs driver).
+#   - Profil "obs" : Prometheus + Grafana + Loki + Promtail pour l'observabilité locale
+#     sur le serveur (en complément de CloudWatch pour les métriques/alertes).
+#
+# Démarrage core uniquement :
+#   docker compose -f docker-compose.prod.yml --env-file .env pull
+#   docker compose -f docker-compose.prod.yml --env-file .env up -d
+#
+# Démarrage avec observabilité :
+#   docker compose -f docker-compose.prod.yml --env-file .env --profile obs up -d
+#
+# Les secrets sont récupérés depuis SSM Parameter Store via infra/scripts/fetch-secrets.sh
+# AVANT ce compose up — ne jamais committer .env de production.
+# ─────────────────────────────────────────────────────────────────────────────
+
+name: oei
+
+networks:
+  oei-net:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  caddy-data:
+  caddy-config:
+  # ── Observabilité (profile: obs) ──────────────────────────────────────────
+  prometheus-data:
+  grafana-data:
+  loki-data:
+
+# Logging CloudWatch commun à tous les services core.
+x-logging-cloudwatch: &logging-cloudwatch
+  driver: awslogs
+  options:
+    awslogs-region: eu-west-3
+    awslogs-group: oei-prod-app
+    awslogs-create-group: "true"
+
+services:
+
+  # ── Core ──────────────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${OEI_USER}
+      POSTGRES_PASSWORD: ${OEI_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      OEI_APP_PASSWORD: ${OEI_APP_PASSWORD}
+    # Aucun port publié en prod : accessible uniquement depuis oei-net.
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./postgres-init:/docker-entrypoint-initdb.d
+    networks:
+      - oei-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${OEI_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    logging: *logging-cloudwatch
+
+  # Crée le rôle oei_app + la base oei de façon idempotente à chaque démarrage.
+  postgres-init:
+    image: postgres:17
+    restart: "no"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      POSTGRES_USER: ${OEI_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+      OEI_APP_PASSWORD: ${OEI_APP_PASSWORD}
+      PGHOST: postgres
+      PGPASSWORD: ${OEI_PASSWORD}
+    volumes:
+      - ./postgres-init:/scripts:ro
+    networks:
+      - oei-net
+    entrypoint: /bin/bash /scripts/01-create-oei-app-db.sh
+    logging: *logging-cloudwatch
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:25.0
+    restart: unless-stopped
+    # "start" (prod) au lieu de "start-dev" ; hostname public et header proxy configurés.
+    command: start --import-realm --hostname=auth.theitorder.global --proxy-headers=xforwarded
+    environment:
+      KEYCLOAK_ADMIN: ${OEI_USER}
+      KEYCLOAK_ADMIN_PASSWORD: ${OEI_PASSWORD}
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      KC_DB_USERNAME: ${OEI_USER}
+      KC_DB_PASSWORD: ${OEI_PASSWORD}
+      KC_HOSTNAME_STRICT_HTTPS: "true"
+    # Aucun port publié : Caddy proxifie vers keycloak:8080 via oei-net.
+    volumes:
+      - ../keycloak/realm-export:/opt/keycloak/data/import
+      - ../keycloak/themes/oei:/opt/keycloak/themes/oei
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - oei-net
+    logging: *logging-cloudwatch
+
+  backend:
+    # Image construite par infra/docker/backend.Dockerfile, poussée sur ECR.
+    # Remplacer <ACCOUNT_ID> par l'ID AWS du compte cible (§8 + pipeline deploy-app.yml).
+    image: ${OEI_ECR_REGISTRY}/oei-backend:${OEI_IMAGE_TAG:-latest}
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      OEI_DB_USER: oei_app
+      OEI_DB_PASSWORD: ${OEI_APP_PASSWORD}
+      OEI_OIDC_ISSUER_URI: ${OEI_OIDC_ISSUER_URI}
+      # Stockage objet : S3 via Instance Profile (aucune clé statique)
+      OEI_S3_PUBLIC_BUCKET: oei-public
+      OEI_S3_MEMBERSHIP_BUCKET: oei-membership
+      AWS_REGION: eu-west-3
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/oei
+      # SMTP : Amazon SES en prod (via SSM)
+      OEI_SMTP_HOST: ${OEI_SMTP_HOST}
+      OEI_SMTP_PORT: ${OEI_SMTP_PORT:-587}
+      OEI_SMTP_USERNAME: ${OEI_SMTP_USERNAME}
+      OEI_SMTP_PASSWORD: ${OEI_SMTP_PASSWORD}
+      OEI_SMTP_AUTH: "true"
+      OEI_SMTP_STARTTLS: "true"
+      OEI_PUBLIC_BASE_URL: https://theitorder.global
+      OEI_MAIL_FROM: ${OEI_MAIL_FROM:-no-reply@theitorder.global}
+    # Aucun port publié : Caddy proxifie vers backend:8080 via oei-net.
+    depends_on:
+      postgres:
+        condition: service_healthy
+      postgres-init:
+        condition: service_completed_successfully
+      keycloak:
+        condition: service_started
+    networks:
+      - oei-net
+    logging: *logging-cloudwatch
+
+  # Reverse-proxy TLS — seul service qui publie des ports vers l'hôte/Internet.
+  # TLS Let's Encrypt automatique (renouvellement sans cron ni certbot).
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"   # HTTP/3 (QUIC)
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - backend
+      - keycloak
+    networks:
+      - oei-net
+    logging: *logging-cloudwatch
+
+  # ── Observabilité (profile: obs) ──────────────────────────────────────────
+  # Démarrage : docker compose -f docker-compose.prod.yml --profile obs up -d
+  #
+  # En prod, ces services tournent sur le réseau interne uniquement.
+  # Accès depuis l'extérieur via SSH tunnel :
+  #   ssh -L 3000:localhost:3000 -L 9090:localhost:9090 oei-deploy@<ELASTIC_IP>
+  # ──────────────────────────────────────────────────────────────────────────
+  prometheus:
+    profiles: [obs]
+    image: prom/prometheus:v2.52.0
+    restart: unless-stopped
+    # Pas de port publié en prod — accès via SSH tunnel uniquement
+    volumes:
+      - ./observability/prometheus/prometheus.prod.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=30d
+      - --web.enable-lifecycle
+    networks:
+      - oei-net
+
+  loki:
+    profiles: [obs]
+    image: grafana/loki:3.1.0
+    restart: unless-stopped
+    volumes:
+      - ./observability/loki/loki-config.yml:/etc/loki/local-config.yaml:ro
+      - loki-data:/loki
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - oei-net
+    healthcheck:
+      test: ["CMD-SHELL", "wget --quiet --tries=1 --spider http://localhost:3100/ready || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # En prod, Promtail collecte les logs Docker via socket (même approche qu'en local).
+  # Les logs sont aussi poussés vers CloudWatch (awslogs driver sur les services core).
+  promtail:
+    profiles: [obs]
+    image: grafana/promtail:3.1.0
+    restart: unless-stopped
+    volumes:
+      - ./observability/promtail/promtail-config.yml:/etc/promtail/config.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - oei-net
+    depends_on:
+      loki:
+        condition: service_healthy
+
+  grafana:
+    profiles: [obs]
+    image: grafana/grafana:11.1.0
+    restart: unless-stopped
+    # Pas de port publié en prod — accès via SSH tunnel : ssh -L 3000:localhost:3000 ...
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: ${OEI_PASSWORD}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s:%(http_port)s/grafana/"
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./observability/grafana/provisioning:/etc/grafana/provisioning:ro
+    networks:
+      - oei-net
+    depends_on:
+      - prometheus
+      - loki
+
