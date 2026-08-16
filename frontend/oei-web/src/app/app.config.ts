@@ -7,6 +7,7 @@ import {
 import { provideRouter, withInMemoryScrolling, withRouterConfig } from '@angular/router';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { AuthConfig, OAuthService, provideOAuthClient } from 'angular-oauth2-oidc';
+import { bearerTokenInterceptor } from './infrastructure/auth/bearer-token.interceptor';
 import { httpLoggingInterceptor } from './infrastructure/logging/http-logging.interceptor';
 
 import { routes } from './app.routes';
@@ -236,7 +237,7 @@ export const appConfig: ApplicationConfig = {
     // `httpLoggingInterceptor` (see `infrastructure/logging/`) stamps same-origin requests with
     // `X-Correlation-Id` and logs request/response/error as structured JSON — added last so it
     // does not change existing HTTP behavior, only observes it.
-    provideHttpClient(withFetch(), withInterceptors([httpLoggingInterceptor])),
+    provideHttpClient(withFetch(), withInterceptors([bearerTokenInterceptor, httpLoggingInterceptor])),
     provideOAuthClient(),
     provideAppInitializer(() => inject(RuntimeConfig).load()),
     // Blocking app initializer (runs, like the one above, before the router resolves its first
