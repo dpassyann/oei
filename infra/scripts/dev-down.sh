@@ -17,4 +17,8 @@ if [ "$OBS" = true ]; then
   PROFILE_ARGS=(--profile obs)
 fi
 
-docker compose --env-file "$INFRA_DIR/.env" -f "$INFRA_DIR/docker-compose.yml" "${PROFILE_ARGS[@]}" down
+if [ "$OBS" = true ]; then
+  docker compose --env-file "$INFRA_DIR/.env" -f "$INFRA_DIR/docker-compose.yml" --profile obs down
+else
+  docker compose --env-file "$INFRA_DIR/.env" -f "$INFRA_DIR/docker-compose.yml" down
+fi

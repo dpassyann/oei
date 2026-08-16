@@ -23,7 +23,11 @@ if [ "$OBS" = true ]; then
   echo "Mode observabilité activé : Grafana (3000), Prometheus (9090), Loki (3100), pgAdmin (5050), Mailpit (8025)."
 fi
 
-docker compose --env-file "$INFRA_DIR/.env" -f "$INFRA_DIR/docker-compose.yml" "${PROFILE_ARGS[@]}" up -d
+if [ "$OBS" = true ]; then
+  docker compose --env-file "$INFRA_DIR/.env" -f "$INFRA_DIR/docker-compose.yml" --profile obs up -d
+else
+  docker compose --env-file "$INFRA_DIR/.env" -f "$INFRA_DIR/docker-compose.yml" up -d
+fi
 
 echo "Attente de la disponibilité des services (Keycloak peut prendre 30-60s à froid)..."
 attempts=0

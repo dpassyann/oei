@@ -9,7 +9,7 @@ set -euo pipefail
 CODE_VERIFIER="abcdefghij0123456789abcdefghij0123456789abc"
 CODE_CHALLENGE=$(printf '%s' "$CODE_VERIFIER" | openssl dgst -sha256 -binary | openssl base64 | tr '+/' '-_' | tr -d '=')
 
-LOGIN_PAGE_URL="http://localhost:8081/realms/oei/protocol/openid-connect/auth?client_id=oei-frontend&response_type=code&redirect_uri=http://localhost:4200/&scope=openid&code_challenge=${CODE_CHALLENGE}&code_challenge_method=S256"
+LOGIN_PAGE_URL="http://localhost:8081/realms/oei/protocol/openid-connect/auth?client_id=oei-frontend&response_type=code&redirect_uri=http://localhost:4300/&scope=openid&code_challenge=${CODE_CHALLENGE}&code_challenge_method=S256"
 
 html=$(curl -sf "$LOGIN_PAGE_URL")
 

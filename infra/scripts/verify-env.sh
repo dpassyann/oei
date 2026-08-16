@@ -2,13 +2,16 @@
 # infra/scripts/verify-env.sh
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(dirname "$(dirname "$SCRIPT_DIR")")"
+
 REQUIRED_KEYS=(
   OEI_USER OEI_PASSWORD
   POSTGRES_DB
   MINIO_ROOT_USER
 )
 
-ENV_EXAMPLE="infra/.env.example"
+ENV_EXAMPLE="$REPO_ROOT/infra/.env.example"
 
 if [ ! -f "$ENV_EXAMPLE" ]; then
   echo "MANQUANT: $ENV_EXAMPLE"
