@@ -7,10 +7,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.mail.javamail.JavaMailSender;
 
 import global.oei.domain.core.badge.AwardBadgeService;
 import global.oei.domain.core.book.CreateBookCompilationService;
 import global.oei.domain.core.book.RenderBookCompilationService;
+import global.oei.domain.core.certification.CreateRecognizedCertificationService;
 import global.oei.domain.core.certification.DeclareCertificationService;
 import global.oei.domain.core.certification.RejectCertificationService;
 import global.oei.domain.core.certification.ValidateCertificationService;
@@ -38,6 +40,10 @@ import global.oei.domain.core.profile.GetMyProfileService;
 import global.oei.domain.core.profile.UpdateMyProfileService;
 import global.oei.domain.core.publicprofile.GenerateDigitalBusinessCardService;
 import global.oei.domain.core.publicprofile.PublishPublicProfileService;
+import global.oei.domain.core.store.CreateOrderService;
+import global.oei.domain.core.store.GenerateBusinessCardPreviewService;
+import global.oei.domain.core.store.PayOrderService;
+import global.oei.domain.core.store.RefundOrderService;
 import global.oei.domain.core.verification.ApproveVerificationRequestService;
 import global.oei.domain.core.verification.CreateVerificationRequestService;
 import global.oei.domain.core.verification.RejectVerificationRequestService;
@@ -50,7 +56,9 @@ import global.oei.domain.shared.book.CreateBookCompilationUseCase;
 import global.oei.domain.shared.book.RenderBookCompilationUseCase;
 import global.oei.domain.shared.certification.CertificationGoalPort;
 import global.oei.domain.shared.certification.CertificationPort;
+import global.oei.domain.shared.certification.CreateRecognizedCertificationUseCase;
 import global.oei.domain.shared.certification.DeclareCertificationUseCase;
+import global.oei.domain.shared.certification.RecognizedCertificationPort;
 import global.oei.domain.shared.certification.RejectCertificationUseCase;
 import global.oei.domain.shared.certification.ValidateCertificationUseCase;
 import global.oei.domain.shared.charter.SignEthicalCharterUseCase;
@@ -102,6 +110,7 @@ import global.oei.domain.shared.institution.InstitutionPort;
 import global.oei.domain.shared.institution.InstitutionPublicationPort;
 import global.oei.domain.shared.institution.PartnershipPort;
 import global.oei.domain.shared.institution.RequestEmploymentAffiliationUseCase;
+import global.oei.domain.shared.mail.EmailNotificationPort;
 import global.oei.domain.shared.media.MediaAssetPort;
 import global.oei.domain.shared.media.UploadMediaAssetUseCase;
 import global.oei.domain.shared.member.MemberPort;
@@ -119,6 +128,13 @@ import global.oei.domain.shared.publicprofile.PublicProfilePort;
 import global.oei.domain.shared.publicprofile.PublishPublicProfileUseCase;
 import global.oei.domain.shared.security.GetMyIdentityUseCase;
 import global.oei.domain.shared.security.SecurityContextPort;
+import global.oei.domain.shared.store.CreateOrderUseCase;
+import global.oei.domain.shared.store.GenerateBusinessCardPreviewUseCase;
+import global.oei.domain.shared.store.OrderPort;
+import global.oei.domain.shared.store.PayOrderUseCase;
+import global.oei.domain.shared.store.PaymentPort;
+import global.oei.domain.shared.store.ProductPort;
+import global.oei.domain.shared.store.RefundOrderUseCase;
 import global.oei.domain.shared.verification.ApproveVerificationRequestUseCase;
 import global.oei.domain.shared.verification.CreateVerificationRequestUseCase;
 import global.oei.domain.shared.verification.RejectVerificationRequestUseCase;
@@ -134,6 +150,9 @@ import global.oei.infrastructure.client.stripe.StripeClientConfiguration;
 import global.oei.infrastructure.client.stripe.StripePaymentProviderAdapter;
 import global.oei.infrastructure.client.stripe.generated.api.PaymentIntentsApi;
 import global.oei.infrastructure.client.stripe.generated.api.RefundsApi;
+import global.oei.infrastructure.mail.EmailAsyncConfiguration;
+import global.oei.infrastructure.mail.EmailNotificationAdapter;
+import global.oei.infrastructure.mail.EmailTemplateConfiguration;
 import global.oei.infrastructure.persistence.badge.BadgeAwardRepository;
 import global.oei.infrastructure.persistence.badge.BadgePersistenceAdapter;
 import global.oei.infrastructure.persistence.badge.BadgeRepository;
@@ -143,6 +162,8 @@ import global.oei.infrastructure.persistence.certification.CertificationGoalPers
 import global.oei.infrastructure.persistence.certification.CertificationPersistenceAdapter;
 import global.oei.infrastructure.persistence.certification.CertificationRepository;
 import global.oei.infrastructure.persistence.certification.MemberCertificationGoalRepository;
+import global.oei.infrastructure.persistence.certification.RecognizedCertificationPersistenceAdapter;
+import global.oei.infrastructure.persistence.certification.RecognizedCertificationRepository;
 import global.oei.infrastructure.persistence.charter.EthicalCharterSignaturePersistenceAdapter;
 import global.oei.infrastructure.persistence.charter.EthicalCharterSignatureRepository;
 import global.oei.infrastructure.persistence.compensation.CompensationDeclarationRepository;
@@ -233,10 +254,20 @@ import global.oei.infrastructure.persistence.profile.ProfessionalProfilePersiste
 import global.oei.infrastructure.persistence.profile.ProfessionalProfileRepository;
 import global.oei.infrastructure.persistence.publicprofile.PublicProfilePersistenceAdapter;
 import global.oei.infrastructure.persistence.publicprofile.PublicProfileRepository;
+import global.oei.infrastructure.persistence.store.BusinessCardTemplateRepository;
+import global.oei.infrastructure.persistence.store.OrderPersistenceAdapter;
+import global.oei.infrastructure.persistence.store.PaymentPersistenceAdapter;
+import global.oei.infrastructure.persistence.store.ProductCategoryRepository;
+import global.oei.infrastructure.persistence.store.ProductPersistenceAdapter;
+import global.oei.infrastructure.persistence.store.ProductRepository;
+import global.oei.infrastructure.persistence.store.StoreOrderLineRepository;
+import global.oei.infrastructure.persistence.store.StoreOrderRepository;
+import global.oei.infrastructure.persistence.store.StorePaymentRepository;
 import global.oei.infrastructure.persistence.verification.VerificationRequestPersistenceAdapter;
 import global.oei.infrastructure.persistence.verification.VerificationRequestRepository;
 import global.oei.infrastructure.persistence.wallet.WalletPassPersistenceAdapter;
 import global.oei.infrastructure.persistence.wallet.WalletPassRepository;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
 /**
  * Composition root of the OEI backend.
@@ -264,7 +295,10 @@ import global.oei.infrastructure.persistence.wallet.WalletPassRepository;
  * explicit {@code @Bean} methods, so it is pulled in via {@code @Import} rather than scanned.
  */
 @Configuration(proxyBeanMethods = false)
-@Import({PersistenceAuditingConfiguration.class, StripeClientConfiguration.class, PaypalClientConfiguration.class})
+@Import({
+        PersistenceAuditingConfiguration.class, StripeClientConfiguration.class, PaypalClientConfiguration.class,
+        EmailAsyncConfiguration.class, EmailTemplateConfiguration.class
+})
 @EnableJpaRepositories(basePackages = "global.oei.infrastructure.persistence")
 @EntityScan(basePackages = "global.oei.infrastructure.persistence")
 public class OeiWiringConfiguration {
@@ -344,6 +378,17 @@ public class OeiWiringConfiguration {
     @Bean
     public CertificationGoalPort certificationGoalPort(final MemberCertificationGoalRepository repository) {
         return new CertificationGoalPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public RecognizedCertificationPort recognizedCertificationPort(final RecognizedCertificationRepository repository) {
+        return new RecognizedCertificationPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public CreateRecognizedCertificationUseCase createRecognizedCertificationUseCase(
+            final RecognizedCertificationPort recognizedCertificationPort) {
+        return new CreateRecognizedCertificationService(recognizedCertificationPort);
     }
 
     @Bean
@@ -731,5 +776,57 @@ public class OeiWiringConfiguration {
             final StripePaymentProviderAdapter stripePaymentProviderAdapter,
             final PaypalPaymentProviderAdapter paypalPaymentProviderAdapter) {
         return new PaymentProviderBinder(List.of(stripePaymentProviderAdapter, paypalPaymentProviderAdapter));
+    }
+
+    @Bean
+    public ProductPort productPort(
+            final ProductCategoryRepository categoryRepository, final ProductRepository productRepository,
+            final BusinessCardTemplateRepository businessCardTemplateRepository) {
+        return new ProductPersistenceAdapter(categoryRepository, productRepository, businessCardTemplateRepository);
+    }
+
+    @Bean
+    public OrderPort orderPort(final StoreOrderRepository orderRepository, final StoreOrderLineRepository lineRepository) {
+        return new OrderPersistenceAdapter(orderRepository, lineRepository);
+    }
+
+    @Bean
+    public PaymentPort paymentPort(final StorePaymentRepository repository) {
+        return new PaymentPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public CreateOrderUseCase createOrderUseCase(final ProductPort productPort, final OrderPort orderPort) {
+        return new CreateOrderService(productPort, orderPort);
+    }
+
+    @Bean
+    public PayOrderUseCase payOrderUseCase(
+            final OrderPort orderPort, final PaymentPort paymentPort, final MemberPort memberPort,
+            final EmailNotificationPort emailNotificationPort) {
+        return new PayOrderService(orderPort, paymentPort, memberPort, emailNotificationPort);
+    }
+
+    @Bean
+    public RefundOrderUseCase refundOrderUseCase(final OrderPort orderPort, final PaymentPort paymentPort) {
+        return new RefundOrderService(orderPort, paymentPort);
+    }
+
+    @Bean
+    public GenerateBusinessCardPreviewUseCase generateBusinessCardPreviewUseCase() {
+        return new GenerateBusinessCardPreviewService();
+    }
+
+    /**
+     * {@link EmailNotificationAdapter} is a plain class (never {@code @Component}, consistent
+     * with every other adapter in this configuration): {@code mailSender}/{@code templateEngine}
+     * are supplied by Spring Boot's {@code spring-boot-starter-mail}/{@code -thymeleaf}
+     * autoconfiguration (triggered by {@code infrastructure-mail}'s dependencies being on the
+     * classpath), {@code emailTextTemplateResolver} by {@link EmailTemplateConfiguration}
+     * (imported above).
+     */
+    @Bean
+    public EmailNotificationPort emailNotificationPort(final JavaMailSender mailSender, final SpringTemplateEngine templateEngine) {
+        return new EmailNotificationAdapter(mailSender, templateEngine);
     }
 }

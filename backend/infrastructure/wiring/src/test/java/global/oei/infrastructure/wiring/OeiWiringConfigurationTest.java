@@ -13,6 +13,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import global.oei.domain.shared.certification.CertificationPort;
+import global.oei.domain.shared.certification.RecognizedCertificationPort;
 import global.oei.domain.shared.content.ContentPort;
 import global.oei.domain.shared.cv.CvPort;
 import global.oei.domain.shared.event.EventPort;
@@ -34,7 +35,11 @@ import global.oei.domain.shared.wallet.WalletPassPort;
         classes = OeiWiringConfigurationTestApp.class,
         properties = {
                 "spring.jpa.hibernate.ddl-auto=validate",
-                "spring.liquibase.change-log=classpath:db/changelog/db.changelog-master.yaml"
+                "spring.liquibase.change-log=classpath:db/changelog/db.changelog-master.yaml",
+                // MailSenderAutoConfiguration only activates once spring.mail.host is set (see
+                // EmailNotificationAdapter's javadoc): a harmless localhost placeholder is
+                // enough for this wiring-completeness test, which never actually sends mail.
+                "spring.mail.host=localhost"
         })
 class OeiWiringConfigurationTest {
 
@@ -56,6 +61,7 @@ class OeiWiringConfigurationTest {
         assertThat(context.getBean(GetMyIdentityUseCase.class)).isNotNull();
         assertThat(context.getBean(MembershipLookupPort.class)).isNotNull();
         assertThat(context.getBean(CertificationPort.class)).isNotNull();
+        assertThat(context.getBean(RecognizedCertificationPort.class)).isNotNull();
         assertThat(context.getBean(WalletPassPort.class)).isNotNull();
         assertThat(context.getBean(CvPort.class)).isNotNull();
         assertThat(context.getBean(InstitutionPort.class)).isNotNull();

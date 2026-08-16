@@ -19,8 +19,27 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: ${OEI_OIDC_ISSUER_URI:http://localhost:8081/realms/oei}
+  # Amazon SES over standard SMTP (see .prompt/plan/store/03-emails-transactionnels.md §1):
+  # EmailNotificationAdapter never sends a real email outside this configuration. Dev-local
+  # defaults point nowhere real (localhost:1025, e.g. a local MailHog/Mailpit container) --
+  # never a real SES endpoint/credential committed here, same posture as OEI_DB_PASSWORD.
+  mail:
+    host: ${OEI_SMTP_HOST:localhost}
+    port: ${OEI_SMTP_PORT:1025}
+    username: ${OEI_SMTP_USERNAME:}
+    password: ${OEI_SMTP_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: ${OEI_SMTP_AUTH:false}
+          starttls:
+            enable: ${OEI_SMTP_STARTTLS:false}
 
 oei:
+  mail:
+    # From address for every EmailNotificationAdapter send; must be a verified SES identity
+    # in production.
+    from: ${OEI_MAIL_FROM:no-reply@oei.global}
   security:
     public-urls:
       - /actuator/health
