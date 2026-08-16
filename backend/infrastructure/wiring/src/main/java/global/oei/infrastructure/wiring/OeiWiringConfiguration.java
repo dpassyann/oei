@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import global.oei.domain.core.badge.AwardBadgeService;
 import global.oei.domain.core.book.CreateBookCompilationService;
@@ -158,8 +159,8 @@ import global.oei.infrastructure.mail.EmailNotificationAdapter;
 import global.oei.infrastructure.mail.EmailTemplateConfiguration;
 import global.oei.infrastructure.wiring.adapter.MediaStorageUrlProviderAdapter;
 import global.oei.infrastructure.wiring.config.MediaStorageProperties;
-import global.oei.infrastructure.persistence.badge.BadgeAwardRepository;
 import global.oei.infrastructure.persistence.badge.BadgePersistenceAdapter;
+import global.oei.infrastructure.persistence.badge.BadgeAwardRepository;
 import global.oei.infrastructure.persistence.badge.BadgeRepository;
 import global.oei.infrastructure.persistence.book.BookCompilationPersistenceAdapter;
 import global.oei.infrastructure.persistence.book.BookCompilationRepository;
@@ -274,7 +275,6 @@ import global.oei.infrastructure.persistence.verification.VerificationRequestPer
 import global.oei.infrastructure.persistence.verification.VerificationRequestRepository;
 import global.oei.infrastructure.persistence.wallet.WalletPassPersistenceAdapter;
 import global.oei.infrastructure.persistence.wallet.WalletPassRepository;
-import org.thymeleaf.spring6.SpringTemplateEngine;
 
 /**
  * Composition root of the OEI backend.
