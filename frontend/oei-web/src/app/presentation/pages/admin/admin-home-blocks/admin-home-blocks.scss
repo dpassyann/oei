@@ -1,0 +1,18 @@
+.oei-admin-home-blocks {
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      text-align: left;
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid rgba(10, 30, 63, 0.15);
+    }
+  }
+
+  &__row-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+}

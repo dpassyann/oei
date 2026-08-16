@@ -1,0 +1,60 @@
+<section class="oei-admin-home-blocks">
+  <h1>{{ i18n.translate('admin.homeBlocks.title') }}</h1>
+  <p>{{ i18n.translate('admin.homeBlocks.intro') }}</p>
+
+  @if (blocks().length === 0) {
+    <p>{{ i18n.translate('admin.homeBlocks.empty') }}</p>
+  } @else {
+    <table class="oei-admin-home-blocks__table">
+      <thead>
+        <tr>
+          <th>{{ i18n.translate('admin.homeBlocks.columns.label') }}</th>
+          <th>{{ i18n.translate('admin.homeBlocks.columns.order') }}</th>
+          <th>{{ i18n.translate('admin.homeBlocks.columns.status') }}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (block of blocks(); track block.id) {
+          <tr>
+            <td>
+              @if (editingId() === block.id) {
+                <input
+                  class="oei-input"
+                  name="label-{{ block.id }}"
+                  [ngModel]="labelDraft()"
+                  (ngModelChange)="labelDraft.set($event)"
+                />
+                @if (labelError()) {
+                  <div class="oei-field__hint">{{ i18n.translate('admin.homeBlocks.form.labelError') }}</div>
+                }
+              } @else {
+                {{ block.label }}
+              }
+            </td>
+            <td>
+              <button type="button" class="oei-btn oei-btn--text" (click)="move(block, 'up')">&uarr;</button>
+              <button type="button" class="oei-btn oei-btn--text" (click)="move(block, 'down')">&darr;</button>
+            </td>
+            <td>
+              <span class="oei-admin-status" [attr.data-status]="block.active ? 'ACTIVE' : 'SUSPENDED'">
+                {{ i18n.translate(block.active ? 'admin.homeBlocks.status.active' : 'admin.homeBlocks.status.inactive') }}
+              </span>
+            </td>
+            <td class="oei-admin-home-blocks__row-actions">
+              @if (editingId() === block.id) {
+                <button type="button" class="oei-btn oei-btn--primary" (click)="saveLabel(block)">{{ i18n.translate('admin.homeBlocks.form.save') }}</button>
+                <button type="button" class="oei-btn oei-btn--secondary" (click)="cancelEdit()">{{ i18n.translate('admin.homeBlocks.form.cancel') }}</button>
+              } @else {
+                <button type="button" class="oei-btn oei-btn--text" (click)="startEdit(block)">{{ i18n.translate('admin.homeBlocks.edit') }}</button>
+                <button type="button" class="oei-btn oei-btn--text" (click)="toggleActive(block)">
+                  {{ i18n.translate(block.active ? 'admin.homeBlocks.deactivate' : 'admin.homeBlocks.activate') }}
+                </button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</section>
