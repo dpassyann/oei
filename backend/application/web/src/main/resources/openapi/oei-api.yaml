@@ -102,6 +102,12 @@ tags:
     description: Supervision des institutions par l'OEI.
   - name: admin-members
     description: Supervision des membres, certifications et vérifications par l'OEI.
+  - name: admin-certifications
+    description: >
+      Gestion du catalogue public des certifications reconnues (`/certifications`) —
+      ajout/édition/dépublication d'entrées `RecognizedCertification`, distinct de la
+      supervision des déclarations individuelles des membres (tag `admin-members`) — voir
+      ADR 0002, qui laissait ce schéma sans endpoint dédié en V1.
   - name: admin-audit
     description: Journal d'audit global.
   - name: public-events
@@ -122,6 +128,19 @@ tags:
       `NetworkGraphPort` (frontend) : `listDomains` (toujours, faible volume),
       `listTopicsAndCertifications` (par domaine, au zoom), `listExperts` (paginé par topic,
       `offset`/`limit`, correspondant côté backend à `Pageable`/`Page<T>` Spring Data JPA).
+  - name: public-store
+    description: >
+      Catalogue boutique en lecture seule (produits, catégories, templates de carte de
+      visite), accessible sans authentification — voir `.prompt/plan/store/01-catalogue-produits.md`.
+  - name: member-store
+    description: >
+      Personnalisation de carte de visite, panier/checkout et historique de commandes du
+      membre connecté — paiement réel Stripe/PayPal (sandbox en développement), fulfillment
+      mocké (`OrderStatus.PENDING_FULFILLMENT`) — voir `.prompt/plan/store/02-paiement.md`.
+  - name: admin-store
+    description: >
+      Supervision des commandes boutique (suivi manuel du fulfillment mocké) et remboursement
+      admin — voir `.prompt/plan/store/02-paiement.md §3`.
 security: []
 paths:
   # ---------------------------------------------------------------------------
@@ -2609,6 +2628,112 @@ paths:
               schema:
                 $ref: "#/components/schemas/Certification"
 
+  # ---------------------------------------------------------------------------
+  # /api/admin/v1/certifications/catalog — public catalog of recognized certifications
+  # (RecognizedCertification, /certifications page — see ADR 0002, previously a documentary
+  # schema with no dedicated endpoint). Distinct from /api/admin/v1/certifications/{id}/** above,
+  # which validates/rejects a MEMBER's own individual declaration (Certification), not this
+  # catalog.
+  # ---------------------------------------------------------------------------
+  /api/admin/v1/certifications/catalog:
+    get:
+      tags: [admin-certifications]
+      operationId: listAdminRecognizedCertifications
+      summary: Liste paginée du catalogue des certifications reconnues (brouillons compris).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+      responses:
+        "200":
+          description: Page du catalogue
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecognizedCertificationPage"
+    post:
+      tags: [admin-certifications]
+      operationId: createAdminRecognizedCertification
+      summary: >
+        Ajoute une entrée au catalogue, publiée immédiatement (pas de workflow de brouillon
+        pour ce périmètre — voir CertificationCatalogStatus).
+      security: [{ bearerAuth: [admin] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecognizedCertificationUpsert"
+      responses:
+        "201":
+          description: Entrée créée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecognizedCertification"
+
+  /api/admin/v1/certifications/catalog/{id}:
+    put:
+      tags: [admin-certifications]
+      operationId: updateAdminRecognizedCertification
+      summary: Édite une entrée du catalogue (son statut de publication est inchangé par cet appel).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecognizedCertificationUpsert"
+      responses:
+        "200":
+          description: Entrée mise à jour
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecognizedCertification"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/admin/v1/certifications/catalog/{id}/archive:
+    post:
+      tags: [admin-certifications]
+      operationId: archiveAdminRecognizedCertification
+      summary: >
+        Dépublie une entrée du catalogue (soft delete — jamais de suppression physique,
+        cohérent avec la règle déjà établie pour le CMS).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Entrée dépubliée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecognizedCertification"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
   /api/admin/v1/badges/{memberId}/award:
     post:
       tags: [admin-members]
@@ -3178,6 +3303,228 @@ paths:
         "204":
           description: Pas assez de déclarations agrégées pour ce nœud (seuil d'anonymisation non atteint)
 
+  # ---------------------------------------------------------------------------
+  # /api/public/v1/store — boutique OEI, catalogue public (voir .prompt/plan/store/)
+  # ---------------------------------------------------------------------------
+  /api/public/v1/store/products:
+    get:
+      tags: [public-store]
+      operationId: listStoreProducts
+      summary: Catalogue de produits actifs, filtrable par catégorie.
+      parameters:
+        - name: categoryCode
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Produits
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+
+  /api/public/v1/store/products/{id}:
+    get:
+      tags: [public-store]
+      operationId: getStoreProduct
+      summary: Détail d'un produit du catalogue.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Produit
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/public/v1/store/business-card-templates:
+    get:
+      tags: [public-store]
+      operationId: listBusinessCardTemplates
+      summary: Templates de carte de visite disponibles.
+      responses:
+        "200":
+          description: Templates
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BusinessCardTemplate"
+
+  # ---------------------------------------------------------------------------
+  # /api/member/v1/store — boutique OEI, panier/checkout/paiement du membre connecté
+  # ---------------------------------------------------------------------------
+  /api/member/v1/store/business-card-preview:
+    post:
+      tags: [member-store]
+      operationId: generateBusinessCardPreview
+      summary: Rendu HTML live d'une personnalisation de carte de visite en cours.
+      security: [{ bearerAuth: [member] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BusinessCardCustomization"
+      responses:
+        "200":
+          description: Preview
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BusinessCardPreview"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/member/v1/store/orders:
+    get:
+      tags: [member-store]
+      operationId: listMyStoreOrders
+      summary: Historique des commandes du membre connecté.
+      security: [{ bearerAuth: [member] }]
+      responses:
+        "200":
+          description: Commandes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+    post:
+      tags: [member-store]
+      operationId: createMyStoreOrder
+      summary: Crée une commande boutique au statut PENDING_PAYMENT (montant calculé serveur).
+      security: [{ bearerAuth: [member] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateOrderRequest"
+      responses:
+        "201":
+          description: Commande créée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+
+  /api/member/v1/store/orders/{id}:
+    get:
+      tags: [member-store]
+      operationId: getMyStoreOrder
+      summary: Détail d'une commande du membre connecté.
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Commande
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/member/v1/store/orders/{id}/payments:
+    post:
+      tags: [member-store]
+      operationId: payMyStoreOrder
+      summary: >
+        Initie/confirme le paiement d'une commande via le `PaymentMethod` choisi (le token de
+        paiement est déjà tokenisé côté client — jamais de numéro de carte brut).
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PayOrderRequest"
+      responses:
+        "200":
+          description: Commande mise à jour après tentative de paiement
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # ---------------------------------------------------------------------------
+  # /api/admin/v1/store — supervision des commandes boutique
+  # ---------------------------------------------------------------------------
+  /api/admin/v1/store/orders:
+    get:
+      tags: [admin-store]
+      operationId: listStoreOrdersForAdmin
+      summary: >
+        Vue admin de toutes les commandes, filtrable par statut — permet le suivi manuel du
+        fulfillment mocké (quelles commandes sont `PENDING_FULFILLMENT`).
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - name: status
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/OrderStatus"
+      responses:
+        "200":
+          description: Commandes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+
+  /api/admin/v1/store/orders/{id}/refund:
+    post:
+      tags: [admin-store]
+      operationId: refundStoreOrder
+      summary: Remboursement total (pas de remboursement partiel en V1) de la commande.
+      security: [{ bearerAuth: [admin] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Commande remboursée
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
 components:
   securitySchemes:
     bearerAuth:
@@ -3682,7 +4029,7 @@ components:
 
     RecognizedCertification:
       type: object
-      required: [id, name, issuingOrganization]
+      required: [id, name, issuingOrganization, oeiStatus, catalogStatus]
       properties:
         id:
           type: string
@@ -3719,6 +4066,21 @@ components:
           description: >
             Chemin du parcours associé sur le site, si une page pertinente existe déjà.
             `null` quand aucune page pertinente n'existe encore (CTA désactivé côté UI).
+        description:
+          type: string
+          description: Description libre de la certification affichée sur `/certifications`.
+        catalogStatus:
+          $ref: "#/components/schemas/CertificationCatalogStatus"
+
+    CertificationCatalogStatus:
+      type: string
+      description: >
+        Statut de publication d'une entrée du catalogue public (voir le tag
+        `admin-certifications`) — DRAFT n'est atteint par aucune opération de ce contrat pour
+        l'instant : `createAdminRecognizedCertification` publie directement (pas de workflow
+        de brouillon demandé pour ce périmètre), `archiveAdminRecognizedCertification`
+        dépublie (jamais de suppression physique).
+      enum: [DRAFT, PUBLISHED, ARCHIVED]
 
     CertificationLevel:
       type: string
@@ -3731,6 +4093,51 @@ components:
     CertificationOeiStatus:
       type: string
       enum: [OEI_RECOGNIZED, PARTNER_RECOGNIZED, UNDER_REVIEW, NOT_RECOGNIZED]
+
+    RecognizedCertificationUpsert:
+      type: object
+      required: [name, issuingOrganization, oeiStatus]
+      properties:
+        name:
+          type: string
+        issuingOrganization:
+          type: string
+        catalogReference:
+          type: string
+        autoValidate:
+          type: boolean
+          default: false
+        domain:
+          type: string
+        level:
+          $ref: "#/components/schemas/CertificationLevel"
+        language:
+          type: string
+        oeiStatus:
+          $ref: "#/components/schemas/CertificationOeiStatus"
+        competencies:
+          type: array
+          items:
+            type: string
+        validityMonths:
+          type: integer
+          nullable: true
+        associatedPathRoute:
+          type: string
+          nullable: true
+        description:
+          type: string
+
+    RecognizedCertificationPage:
+      type: object
+      required: [items, pageMetadata]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/RecognizedCertification"
+        pageMetadata:
+          $ref: "#/components/schemas/PageMetadata"
 
     CertificationStatus:
       type: string
@@ -5501,3 +5908,184 @@ components:
             $ref: "#/components/schemas/NetworkExpert"
         total:
           type: integer
+
+    # -------------------------------------------------------------------------
+    # Boutique OEI ("store") — voir .prompt/plan/store/
+    # -------------------------------------------------------------------------
+    FulfillmentKind:
+      type: string
+      description: >
+        Comment une `ProductCategory` est honorée physiquement une fois la commande payée —
+        les deux natures sont mockées en V1 (aucun imprimeur/transporteur réel appelé).
+      enum: [PHYSICAL_GOODS, PRINT_AND_SHIP]
+
+    ProductCategory:
+      type: object
+      required: [id, code, label, fulfillmentKind]
+      properties:
+        id:
+          type: string
+        code:
+          type: string
+          description: Slug technique stable (ex. `goodies`, `business-card`, `print-cv`, `print-whitepaper`).
+        label:
+          type: string
+        fulfillmentKind:
+          $ref: "#/components/schemas/FulfillmentKind"
+
+    Product:
+      type: object
+      required: [id, categoryId, sku, name, unitPriceAmount, unitPriceCurrency, active, customizable]
+      properties:
+        id:
+          type: string
+        categoryId:
+          type: string
+        sku:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        unitPriceAmount:
+          type: number
+        unitPriceCurrency:
+          type: string
+        active:
+          type: boolean
+        customizable:
+          type: boolean
+          description: Vrai uniquement pour la carte de visite en V1.
+
+    BusinessCardTemplate:
+      type: object
+      required: [id, name, previewUrl]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        previewUrl:
+          type: string
+
+    BusinessCardCustomization:
+      type: object
+      required: [templateId, displayName, title, email, qrCodeUrl, membershipTierAtOrder]
+      properties:
+        templateId:
+          type: string
+        displayName:
+          type: string
+        title:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        qrCodeUrl:
+          type: string
+          description: Généré (même mécanisme que `DigitalBusinessCard`), jamais saisi par le membre.
+        membershipTierAtOrder:
+          type: string
+          description: Palier de membre capturé au moment de la commande, ne varie jamais rétroactivement.
+
+    BusinessCardPreview:
+      type: object
+      required: [html]
+      properties:
+        html:
+          type: string
+
+    NewOrderLine:
+      type: object
+      required: [productId, quantity]
+      properties:
+        productId:
+          type: string
+        quantity:
+          type: integer
+          minimum: 1
+        businessCardCustomization:
+          $ref: "#/components/schemas/BusinessCardCustomization"
+        sourceReferenceId:
+          type: string
+          description: >
+            Non-null uniquement pour le produit `print-cv` (id du `Cv` existant du membre).
+
+    CreateOrderRequest:
+      type: object
+      required: [lines]
+      properties:
+        lines:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/NewOrderLine"
+
+    OrderLine:
+      type: object
+      required: [id, orderId, productId, quantity, unitPriceAmountAtOrder]
+      properties:
+        id:
+          type: string
+        orderId:
+          type: string
+        productId:
+          type: string
+        quantity:
+          type: integer
+        unitPriceAmountAtOrder:
+          type: number
+        businessCardCustomization:
+          $ref: "#/components/schemas/BusinessCardCustomization"
+        sourceReferenceId:
+          type: string
+
+    OrderStatus:
+      type: string
+      description: >
+        Voir `.prompt/plan/store/02-paiement.md §2` — `PAID`/`PENDING_FULFILLMENT` sont
+        deux statuts distincts même si en V1 la transition est immédiate et automatique.
+      enum: [PENDING_PAYMENT, PAID, PENDING_FULFILLMENT, PAYMENT_FAILED, CANCELLED, REFUNDED]
+
+    Order:
+      type: object
+      required: [id, memberId, lines, totalAmount, totalCurrency, status, createdAt]
+      properties:
+        id:
+          type: string
+        memberId:
+          type: string
+        lines:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderLine"
+        totalAmount:
+          type: number
+        totalCurrency:
+          type: string
+        status:
+          $ref: "#/components/schemas/OrderStatus"
+        createdAt:
+          type: string
+          format: date-time
+        paidAt:
+          type: string
+          format: date-time
+
+    PaymentMethod:
+      type: string
+      description: Moyen de paiement choisi au checkout (voir `PaymentProviderPort`/`PaymentProviderBinder`).
+      enum: [CARD, PAYPAL]
+
+    PayOrderRequest:
+      type: object
+      required: [paymentMethod, paymentToken]
+      properties:
+        paymentMethod:
+          $ref: "#/components/schemas/PaymentMethod"
+        paymentToken:
+          type: string
+          description: >
+            Référence déjà tokenisée côté client (Stripe.js `PaymentMethod` id, ou id de
+            commande PayPal approuvée client-side) — jamais un numéro de carte brut.
