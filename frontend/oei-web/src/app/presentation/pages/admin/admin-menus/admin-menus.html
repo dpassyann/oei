@@ -1,0 +1,101 @@
+<section class="oei-admin-menus">
+  <h1>{{ i18n.translate('admin.menus.title') }}</h1>
+  <p>{{ i18n.translate('admin.menus.intro') }}</p>
+
+  @for (zone of ['header', 'footer']; track zone) {
+    <div class="oei-admin-menus__zone">
+      <header class="oei-admin-menus__zone-header">
+        <h2>{{ i18n.translate('admin.menus.zone.' + zone) }}</h2>
+        <button type="button" class="oei-btn oei-btn--primary" (click)="startCreate(zone === 'header' ? 'header' : 'footer')">
+          {{ i18n.translate('admin.menus.new') }}
+        </button>
+      </header>
+
+      @let list = zone === 'header' ? headerEntries() : footerEntries();
+      @if (list.length === 0) {
+        <p>{{ i18n.translate('admin.menus.empty') }}</p>
+      } @else {
+        <table class="oei-admin-menus__table">
+          <thead>
+            <tr>
+              <th>{{ i18n.translate('admin.menus.columns.label') }}</th>
+              <th>{{ i18n.translate('admin.menus.columns.route') }}</th>
+              <th>{{ i18n.translate('admin.menus.columns.order') }}</th>
+              <th>{{ i18n.translate('admin.menus.columns.status') }}</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (entry of list; track entry.id) {
+              <tr>
+                <td>
+                  <strong>{{ i18n.translate(entry.labelKey) }}</strong>
+                  <div class="oei-admin-menus__key-preview">{{ entry.labelKey }}</div>
+                </td>
+                <td>{{ entry.route }}</td>
+                <td>
+                  <button type="button" class="oei-btn oei-btn--text" (click)="move(entry, 'up')">&uarr;</button>
+                  <button type="button" class="oei-btn oei-btn--text" (click)="move(entry, 'down')">&darr;</button>
+                </td>
+                <td>
+                  <span class="oei-admin-status" [attr.data-status]="entry.active ? 'ACTIVE' : 'SUSPENDED'">
+                    {{ i18n.translate(entry.active ? 'admin.menus.status.active' : 'admin.menus.status.inactive') }}
+                  </span>
+                </td>
+                <td class="oei-admin-menus__row-actions">
+                  <button type="button" class="oei-btn oei-btn--text" (click)="startEdit(entry)">{{ i18n.translate('admin.menus.edit') }}</button>
+                  <button type="button" class="oei-btn oei-btn--text" (click)="toggleActive(entry)">
+                    {{ i18n.translate(entry.active ? 'admin.menus.deactivate' : 'admin.menus.activate') }}
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+  }
+
+  @if (editingId()) {
+    <form class="oei-admin-menus__form" (ngSubmit)="submit()">
+      <h2>{{ editingId() === 'new' ? i18n.translate('admin.menus.new') : i18n.translate('admin.menus.edit') }}</h2>
+
+      <label class="oei-field" [class.oei-field--error]="labelKeyError()">
+        {{ i18n.translate('admin.menus.form.labelKey') }}
+        <input
+          class="oei-input"
+          name="labelKey"
+          [ngModel]="draft().labelKey"
+          (ngModelChange)="updateDraft({ labelKey: $event })"
+        />
+        @if (draft().labelKey) {
+          <span class="oei-field__hint">{{ i18n.translate('admin.menus.form.preview') }}: {{ i18n.translate(draft().labelKey) }}</span>
+        }
+        @if (labelKeyError()) {
+          <span class="oei-field__hint">{{ i18n.translate('admin.menus.form.labelKeyError') }}</span>
+        }
+      </label>
+
+      <label class="oei-field" [class.oei-field--error]="routeError()">
+        {{ i18n.translate('admin.menus.form.route') }}
+        <input class="oei-input" name="route" [ngModel]="draft().route" (ngModelChange)="updateDraft({ route: $event })" />
+        @if (routeError()) {
+          <span class="oei-field__hint">{{ i18n.translate('admin.menus.form.routeError') }}</span>
+        }
+      </label>
+
+      <label class="oei-field">
+        {{ i18n.translate('admin.menus.form.zone') }}
+        <select class="oei-select" name="zone" [ngModel]="draft().zone" (ngModelChange)="updateDraft({ zone: $event })">
+          <option value="header">{{ i18n.translate('admin.menus.zone.header') }}</option>
+          <option value="footer">{{ i18n.translate('admin.menus.zone.footer') }}</option>
+        </select>
+      </label>
+
+      <div class="oei-admin-menus__form-actions">
+        <button type="submit" class="oei-btn oei-btn--primary" [disabled]="saving()">{{ i18n.translate('admin.menus.form.save') }}</button>
+        <button type="button" class="oei-btn oei-btn--secondary" (click)="cancelEdit()">{{ i18n.translate('admin.menus.form.cancel') }}</button>
+      </div>
+    </form>
+  }
+</section>
