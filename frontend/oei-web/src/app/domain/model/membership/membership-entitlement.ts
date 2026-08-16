@@ -15,7 +15,8 @@ export type MembershipEntitlement =
   | 'EVENT_POST'
   | 'MEMBER_DIRECTORY'
   | 'WALLET_PASS'
-  | 'CERTIFICATION_BADGE';
+  | 'CERTIFICATION_BADGE'
+  | 'STORE_ACCESS';
 
 export const MEMBERSHIP_ENTITLEMENTS: readonly MembershipEntitlement[] = [
   'PROFILE_EDIT',
@@ -29,6 +30,7 @@ export const MEMBERSHIP_ENTITLEMENTS: readonly MembershipEntitlement[] = [
   'MEMBER_DIRECTORY',
   'WALLET_PASS',
   'CERTIFICATION_BADGE',
+  'STORE_ACCESS',
 ];
 
 const ALL_ENTITLEMENTS: readonly MembershipEntitlement[] = MEMBERSHIP_ENTITLEMENTS;
@@ -44,15 +46,22 @@ const EXPIRED_ENTITLEMENTS: readonly MembershipEntitlement[] = [
   'MEMBER_DIRECTORY',
 ];
 
-// `SUSPENDED`/`PENDING` (doc §Entitlements asks us to document the decision: "le plus
-// restrictif"). Decision: a suspended member is under an active disciplinary/administrative
-// hold — grant nothing except being able to see their own (private) profile/CV so they can
-// still find and correct whatever triggered the hold; no public exposure (`PROFILE_PUBLIC`,
-// `MEMBER_DIRECTORY`) and no premium action. `PENDING` (onboarding not yet complete — e.g.
-// cotisation never paid a first time) is treated identically: nothing is unlocked until the
-// membership is confirmed `ACTIVE`, but the member can still fill in their profile/CV while
-// waiting, exactly like `SUSPENDED`, so onboarding progress isn't lost while waiting.
-const SUSPENDED_OR_PENDING_ENTITLEMENTS: readonly MembershipEntitlement[] = ['PROFILE_EDIT', 'CV_EDIT'];
+// `SUSPENDED` (doc §Entitlements asks us to document the decision: "le plus restrictif").
+// Decision: a suspended member is under an active disciplinary/administrative hold — grant
+// nothing except being able to see and edit their own (private) profile/CV so they can still
+// find and correct whatever triggered the hold; no public exposure (`PROFILE_PUBLIC`,
+// `MEMBER_DIRECTORY`), no `STORE_ACCESS`, and no other premium action.
+const SUSPENDED_ENTITLEMENTS: readonly MembershipEntitlement[] = ['PROFILE_EDIT', 'CV_EDIT'];
+
+// `PENDING` (onboarding grace period: account just created, first cotisation never paid).
+// Explicit product-owner decision (2026, supersedes the earlier "treat like SUSPENDED, let
+// them keep filling in their CV while waiting" reasoning, which is abandoned): only
+// `PROFILE_EDIT` is granted. The profile (identity, photo, descriptions) stays editable so a
+// brand-new member isn't discouraged right after signing up, but the CV (`CV_EDIT`) and the
+// Store (`STORE_ACCESS`) stay closed until the first cotisation is actually paid — CV/Store
+// are membership *benefits*, not onboarding steps, so nothing there is unlocked before the
+// membership is confirmed (`ACTIVE`/`GRACE_PERIOD`/... via a paid cotisation).
+const PENDING_ENTITLEMENTS: readonly MembershipEntitlement[] = ['PROFILE_EDIT'];
 
 /**
  * Pure lookup: given a `MembershipStatus`, returns the full set of rights granted. Kept as a
@@ -68,7 +77,8 @@ const SUSPENDED_OR_PENDING_ENTITLEMENTS: readonly MembershipEntitlement[] = ['PR
  *   `MembershipEntitlementService.renewalImminent()` — never silently, per the "message
  *   explicite plutôt qu'un échec silencieux" rule for anything user-visible.
  * - `EXPIRED`: the reduced set documented above.
- * - `SUSPENDED`/`PENDING`: the minimal set documented above.
+ * - `SUSPENDED`: the minimal set documented above (`PROFILE_EDIT` + `CV_EDIT`).
+ * - `PENDING`: the onboarding-grace-period set documented above (`PROFILE_EDIT` only).
  * - `TERMINATED`: nothing at all — membership has definitively ended.
  */
 export function computeMembershipEntitlements(status: MembershipStatus): ReadonlySet<MembershipEntitlement> {
@@ -81,8 +91,9 @@ export function computeMembershipEntitlements(status: MembershipStatus): Readonl
     case 'EXPIRED':
       return new Set(EXPIRED_ENTITLEMENTS);
     case 'SUSPENDED':
+      return new Set(SUSPENDED_ENTITLEMENTS);
     case 'PENDING':
-      return new Set(SUSPENDED_OR_PENDING_ENTITLEMENTS);
+      return new Set(PENDING_ENTITLEMENTS);
     case 'TERMINATED':
       return new Set();
   }

@@ -33,6 +33,14 @@
     </nav>
   </div>
   <div class="oei-espace-membre-layout__content">
+    @if (entitlements.hasRestrictedAccess()) {
+      <p class="oei-espace-membre-cotisation-banner" role="status">
+        {{ i18n.translate('espaceMembre.cotisationBanner.message') }}
+        <a class="oei-espace-membre-cotisation-banner__link" routerLink="/espace-membre/cotisation">
+          {{ i18n.translate('espaceMembre.cotisationBanner.action') }}
+        </a>
+      </p>
+    }
     <router-outlet />
   </div>
 </div>

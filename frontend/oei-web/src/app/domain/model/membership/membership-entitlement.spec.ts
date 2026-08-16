@@ -12,7 +12,7 @@ const EXPECTED: Record<MembershipStatus, readonly MembershipEntitlement[]> = {
   GRACE_PERIOD: [...MEMBERSHIP_ENTITLEMENTS],
   EXPIRED: ['PROFILE_EDIT', 'PROFILE_PUBLIC', 'CV_EDIT', 'MEMBER_DIRECTORY'],
   SUSPENDED: ['PROFILE_EDIT', 'CV_EDIT'],
-  PENDING: ['PROFILE_EDIT', 'CV_EDIT'],
+  PENDING: ['PROFILE_EDIT'],
   TERMINATED: [],
 };
 
@@ -46,4 +46,33 @@ describe('computeMembershipEntitlements', () => {
     const entitlements = computeMembershipEntitlements('TERMINATED');
     expect(entitlements.size).toBe(0);
   });
+
+  it('givenPending_whenChecked_thenGrantsOnlyProfileEditAndBlocksCvAndStore', () => {
+    const entitlements = computeMembershipEntitlements('PENDING');
+    expect(entitlements.has('PROFILE_EDIT')).toBe(true);
+    expect(entitlements.has('CV_EDIT')).toBe(false);
+    expect(entitlements.has('STORE_ACCESS')).toBe(false);
+    expect(entitlements.has('PROFILE_PUBLIC')).toBe(false);
+  });
+
+  it('givenSuspended_whenChecked_thenStillGrantsCvEditButNotStoreAccess', () => {
+    const entitlements = computeMembershipEntitlements('SUSPENDED');
+    expect(entitlements.has('PROFILE_EDIT')).toBe(true);
+    expect(entitlements.has('CV_EDIT')).toBe(true);
+    expect(entitlements.has('STORE_ACCESS')).toBe(false);
+  });
+
+  it.each(['ACTIVE', 'HONORARY', 'FOUNDING', 'GRACE_PERIOD'] as const)(
+    'given%s_whenChecked_thenGrantsStoreAccess',
+    (status) => {
+      expect(computeMembershipEntitlements(status).has('STORE_ACCESS')).toBe(true);
+    },
+  );
+
+  it.each(['PENDING', 'SUSPENDED', 'EXPIRED', 'TERMINATED'] as const)(
+    'given%s_whenChecked_thenBlocksStoreAccess',
+    (status) => {
+      expect(computeMembershipEntitlements(status).has('STORE_ACCESS')).toBe(false);
+    },
+  );
 });

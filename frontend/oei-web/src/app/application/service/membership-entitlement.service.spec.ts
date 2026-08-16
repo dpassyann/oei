@@ -67,6 +67,32 @@ describe('MembershipEntitlementService', () => {
     },
   );
 
+  it('givenPendingMembership_whenLoaded_thenGrantsOnlyProfileEditAndBlocksCvAndStore', async () => {
+    const service = setup(membershipFixture({ status: 'PENDING' }));
+    await vi.waitFor(() => expect(service.status()).toBe('PENDING'));
+    expect(service.has('PROFILE_EDIT')).toBe(true);
+    expect(service.has('CV_EDIT')).toBe(false);
+    expect(service.has('STORE_ACCESS')).toBe(false);
+  });
+
+  it.each(['PENDING', 'SUSPENDED', 'EXPIRED'] as const)(
+    'given%sMembership_whenLoaded_thenSignalsRestrictedAccess',
+    async (status) => {
+      const service = setup(membershipFixture({ status }));
+      await vi.waitFor(() => expect(service.status()).toBe(status));
+      expect(service.hasRestrictedAccess()).toBe(true);
+    },
+  );
+
+  it.each(['ACTIVE', 'GRACE_PERIOD', 'HONORARY', 'FOUNDING'] as const)(
+    'given%sMembership_whenLoaded_thenDoesNotSignalRestrictedAccess',
+    async (status) => {
+      const service = setup(membershipFixture({ status }));
+      await vi.waitFor(() => expect(service.status()).toBe(status));
+      expect(service.hasRestrictedAccess()).toBe(false);
+    },
+  );
+
   it('givenMembershipNotYetLoaded_whenCheckingEntitlement_thenDefaultsToNotEntitled', () => {
     const getMembership = vi.fn().mockReturnValue(of(membershipFixture()));
     TestBed.configureTestingModule({

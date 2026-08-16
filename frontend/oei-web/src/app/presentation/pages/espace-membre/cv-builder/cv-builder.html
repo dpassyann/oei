@@ -179,7 +179,7 @@
                   <button
                     type="button"
                     class="oei-cv-builder__validate-button oei-btn oei-btn--primary"
-                    [disabled]="membershipAccess.isReadOnly()"
+                    [disabled]="membershipAccess.isReadOnly() || !canEditCv()"
                     (click)="validateTranslation(section.id, translation.language)"
                   >
                     {{ i18n.translate('espaceMembre.cv.validateTranslation') }}
@@ -209,7 +209,11 @@
                   name="content-{{ section.id }}"
                 />
               </label>
-              <button type="submit" class="oei-cv-builder__add-translation-submit oei-btn oei-btn--primary" [disabled]="membershipAccess.isReadOnly()">
+              <button
+                type="submit"
+                class="oei-cv-builder__add-translation-submit oei-btn oei-btn--primary"
+                [disabled]="membershipAccess.isReadOnly() || !canEditCv()"
+              >
                 {{ i18n.translate('espaceMembre.cv.addTranslationSubmit') }}
               </button>
             </form>
@@ -220,6 +224,15 @@
 
     <section class="oei-cv-builder__add-section">
       <h2 class="oei-cv-builder__section-heading">{{ i18n.translate('espaceMembre.cv.addSectionTitle') }}</h2>
+
+      @if (!canEditCv()) {
+        <p class="oei-cv-builder__edit-blocked" role="alert">
+          {{ i18n.translate('espaceMembre.cv.editBlocked') }}
+          <a class="oei-cv-builder__edit-blocked-link" routerLink="/espace-membre/cotisation">
+            {{ i18n.translate('espaceMembre.cv.editBlockedLink') }}
+          </a>
+        </p>
+      }
 
       @if (availableSectionTypes().length === 0) {
         <p class="oei-page__empty">{{ i18n.translate('espaceMembre.cv.noAvailableSectionTypes') }}</p>
@@ -244,7 +257,11 @@
               name="newSectionContent"
             />
           </label>
-          <button type="submit" class="oei-cv-builder__add-section-submit oei-btn oei-btn--primary" [disabled]="membershipAccess.isReadOnly()">
+          <button
+            type="submit"
+            class="oei-cv-builder__add-section-submit oei-btn oei-btn--primary"
+            [disabled]="membershipAccess.isReadOnly() || !canEditCv()"
+          >
             {{ i18n.translate('espaceMembre.cv.addSectionSubmit') }}
           </button>
         </form>

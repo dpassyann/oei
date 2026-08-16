@@ -1,5 +1,6 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { CarteNumerique } from './carte-numerique';
 import { MemberApplicationService } from '../../../../application/service/member-application.service';
@@ -49,6 +50,10 @@ const INTERFACE_STRINGS: Record<string, string> = {
   'espaceMembre.carte.wallet.passStatus.ISSUED': 'Émis',
   'espaceMembre.carte.wallet.passStatus.REVOKED': 'Révoqué',
   'espaceMembre.carte.wallet.passStatus.RENEWED': 'Renouvelé',
+  'espaceMembre.carte.wallet.blockedByStatus':
+    "Le renouvellement du pass Wallet est désactivé tant que votre adhésion n'est pas régularisée.",
+  'espaceMembre.carte.wallet.passNeedsReactivation': 'Carte désactivée — cotisation à régulariser.',
+  'espaceMembre.carte.wallet.reactivateLink': 'Régulariser ma cotisation',
 };
 
 const FAKE_I18N_SERVICE = {
@@ -95,14 +100,19 @@ const DEMO_CARD: DigitalBusinessCard = createDigitalBusinessCard({
   theme: 'default',
 });
 
-function configure(initialPasses: WalletPass[] = [], issuedPass: WalletPass | 'error' = initialPasses[0]) {
+function configure(
+  initialPasses: WalletPass[] = [],
+  issuedPass: WalletPass | 'error' = initialPasses[0],
+  membership: Membership = DEMO_MEMBERSHIP,
+) {
   const passes = [...initialPasses];
   TestBed.configureTestingModule({
     imports: [CarteNumerique],
     providers: [
+      provideRouter([]),
       { provide: I18nService, useValue: FAKE_I18N_SERVICE },
       { provide: MemberApplicationService, useValue: { getCurrentMember: () => of(DEMO_MEMBER) } },
-      { provide: MembershipApplicationService, useValue: { getMembership: () => of(DEMO_MEMBERSHIP) } },
+      { provide: MembershipApplicationService, useValue: { getMembership: () => of(membership) } },
       {
         provide: ProfessionalProfileApplicationService,
         useValue: { getProfile: () => of(DEMO_PROFILE) },
@@ -225,6 +235,50 @@ describe('CarteNumerique', () => {
 
     const statusEl = compiled.querySelector('.oei-carte-numerique__pass-status');
     expect(statusEl?.textContent).toContain('Révoqué');
+  });
+
+  it.each(['PENDING', 'SUSPENDED', 'EXPIRED'] as const)(
+    'given%sMembershipWithIssuedPass_whenCreated_thenShowsReactivationNoticeWithLinkToCotisation',
+    async (status) => {
+      const existingPass = createWalletPass({
+        id: 'pass-3',
+        memberId: 'member-1',
+        provider: 'APPLE',
+        status: 'MOCKED',
+        serialNumber: 'MOCK-APPLE-2',
+        issuedAt: '2026-03-01T00:00:00.000Z',
+      });
+      configure([existingPass], undefined, createMembership({ ...DEMO_MEMBERSHIP, status }));
+      const fixture = TestBed.createComponent(CarteNumerique);
+      fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
+      const compiled = fixture.nativeElement as HTMLElement;
+
+      const notice = compiled.querySelector('.oei-carte-numerique__pass-reactivate-notice');
+      expect(notice).toBeTruthy();
+      expect(notice?.querySelector('a')?.getAttribute('href')).toBe('/espace-membre/cotisation');
+      expect(compiled.querySelector('.oei-carte-numerique__pass-item--disabled')).toBeTruthy();
+    },
+  );
+
+  it('givenActiveMembershipWithIssuedPass_whenCreated_thenDoesNotShowReactivationNotice', async () => {
+    const existingPass = createWalletPass({
+      id: 'pass-4',
+      memberId: 'member-1',
+      provider: 'APPLE',
+      status: 'MOCKED',
+      serialNumber: 'MOCK-APPLE-3',
+      issuedAt: '2026-03-01T00:00:00.000Z',
+    });
+    configure([existingPass]);
+    const fixture = TestBed.createComponent(CarteNumerique);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector('.oei-carte-numerique__pass-reactivate-notice')).toBeNull();
   });
 
   it('givenFullScreenToggle_whenClicked_thenTogglesFullScreenClass', async () => {

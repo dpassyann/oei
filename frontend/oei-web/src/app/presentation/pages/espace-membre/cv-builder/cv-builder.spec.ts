@@ -1,5 +1,6 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 import { describe, expect, it, vi } from 'vitest';
 import { CvBuilder } from './cv-builder';
@@ -73,6 +74,8 @@ const INTERFACE_STRINGS: Record<string, string> = {
   'espaceMembre.cv.livePreview.sealBrand': 'OEI',
   'espaceMembre.cv.livePreview.sealCertifiedLabel': 'CERTIFIÉ',
   'espaceMembre.cv.exportBlocked': "L'export PDF n'est pas disponible avec votre statut d'adhésion actuel.",
+  'espaceMembre.cv.editBlocked': "Réservé aux membres à jour de cotisation — payez votre cotisation pour éditer votre CV.",
+  'espaceMembre.cv.editBlockedLink': 'Régulariser ma cotisation',
   'espaceMembre.cv.renewalImminentWarning': 'Votre renouvellement est proche.',
 };
 
@@ -170,6 +173,7 @@ describe('CvBuilder', () => {
     TestBed.configureTestingModule({
       imports: [CvBuilder],
       providers: [
+        provideRouter([]),
         { provide: I18nService, useValue: FAKE_I18N_SERVICE },
         { provide: CvApplicationService, useValue: fakeCvService(cvServiceOverrides) },
         { provide: MemberApplicationService, useValue: FAKE_MEMBER_SERVICE },
@@ -366,5 +370,36 @@ describe('CvBuilder', () => {
 
     expect(compiled.querySelector<HTMLButtonElement>('.oei-cv-builder__generate-button')?.disabled).toBe(false);
     expect(compiled.querySelector('.oei-cv-builder__renewal-warning')).toBeTruthy();
+  });
+
+  it('givenPendingMembership_whenRendered_thenDisablesCvMutationButtonsAndShowsExplicitMessage', async () => {
+    configure({}, PAID_FEE_STATUS, 'PENDING');
+    const fixture = TestBed.createComponent(CvBuilder);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector<HTMLButtonElement>('.oei-cv-builder__add-section-submit')?.disabled).toBe(true);
+    expect(compiled.querySelector<HTMLButtonElement>('.oei-cv-builder__add-translation-submit')?.disabled).toBe(true);
+    expect(compiled.querySelector<HTMLButtonElement>('.oei-cv-builder__validate-button')?.disabled).toBe(true);
+    const blockedMessage = compiled.querySelector('.oei-cv-builder__edit-blocked');
+    expect(blockedMessage).toBeTruthy();
+    expect(blockedMessage?.querySelector('a')?.getAttribute('href')).toBe('/espace-membre/cotisation');
+  });
+
+  it('givenPendingMembership_whenAddSectionCalledDirectly_thenDoesNotPersist', async () => {
+    const addSection = vi.fn().mockReturnValue(of(section({ id: 'section-2', type: 'SUMMARY' })));
+    configure({ addSection }, PAID_FEE_STATUS, 'PENDING');
+    const fixture = TestBed.createComponent(CvBuilder);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+
+    component['newSectionType'].set('SUMMARY');
+    component['addSection']();
+
+    expect(addSection).not.toHaveBeenCalled();
   });
 });

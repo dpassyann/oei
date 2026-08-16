@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { RouterLink } from '@angular/router';
 import { MemberApplicationService } from '../../../../application/service/member-application.service';
 import { MembershipApplicationService } from '../../../../application/service/membership-application.service';
 import { ProfessionalProfileApplicationService } from '../../../../application/service/professional-profile-application.service';
@@ -26,7 +27,7 @@ const TIER_COLORS: Record<MembershipTier, string> = {
 
 @Component({
   selector: 'oei-carte-numerique',
-  imports: [StyledQr, DatePipe],
+  imports: [StyledQr, DatePipe, RouterLink],
   templateUrl: './carte-numerique.html',
   styleUrl: './carte-numerique.scss',
   // Component-scoped (not root-singleton) — see `MembershipAccessService`'s doc comment
@@ -88,6 +89,14 @@ export class CarteNumerique {
   // Gates the Apple/Google Wallet issuance CTAs (doc §Entitlements: `WALLET_PASS`) — e.g. an
   // `EXPIRED` membership can still view/revoke its existing passes but not issue new ones.
   protected readonly canIssueWalletPass = computed(() => this.entitlements.has('WALLET_PASS'));
+
+  // A pass issued while the member still had `WALLET_PASS` must show as needing reactivation
+  // once the membership status drops below that entitlement (`PENDING`/`SUSPENDED`/`EXPIRED`) —
+  // not just block *new* issuance. A `REVOKED` pass is already inactive on its own terms, so it
+  // is excluded here (its own status label already says so).
+  protected passNeedsReactivation(pass: WalletPass): boolean {
+    return pass.status !== 'REVOKED' && !this.canIssueWalletPass();
+  }
 
   // The value actually encoded in the styled QR (see `StyledQr`): the card's own public page
   // (`/card/{slug}`), same URL as `share()` puts on the clipboard — a real, scannable link,

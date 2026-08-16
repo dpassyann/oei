@@ -4,6 +4,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { I18nService } from '../../../i18n/i18n.service';
 import { MemberApplicationService } from '../../../../application/service/member-application.service';
 import { ProfessionalProfileApplicationService } from '../../../../application/service/professional-profile-application.service';
+import { MembershipEntitlementService } from '../../../../application/service/membership-entitlement.service';
 
 interface EspaceMembreNavLink {
   readonly path: string;
@@ -24,9 +25,15 @@ interface EspaceMembreNavLink {
   imports: [RouterLink, RouterLinkActive, RouterOutlet],
   templateUrl: './espace-membre-layout.html',
   styleUrl: './espace-membre-layout.scss',
+  // Component-scoped, like every other espace-membre page's `MembershipEntitlementService`
+  // (see that service's doc comment) — this instance only backs the single, centralized
+  // "cotisation not up to date" banner shown around every nested page via `hasRestrictedAccess`
+  // below, so that banner isn't duplicated page by page.
+  providers: [MembershipEntitlementService],
 })
 export class EspaceMembreLayout {
   protected readonly i18n = inject(I18nService);
+  protected readonly entitlements = inject(MembershipEntitlementService);
   private readonly memberApplicationService = inject(MemberApplicationService);
   private readonly professionalProfileApplicationService = inject(ProfessionalProfileApplicationService);
 

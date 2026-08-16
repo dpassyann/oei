@@ -2,6 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { NgTemplateOutlet } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { CvApplicationService } from '../../../../application/service/cv-application.service';
 import { MemberApplicationService } from '../../../../application/service/member-application.service';
 import { I18nService } from '../../../i18n/i18n.service';
@@ -27,7 +28,7 @@ import { MembershipEntitlementService } from '../../../../application/service/me
 // up the next iteration.
 @Component({
   selector: 'oei-cv-builder',
-  imports: [FormsModule, NgTemplateOutlet],
+  imports: [FormsModule, NgTemplateOutlet, RouterLink],
   templateUrl: './cv-builder.html',
   styleUrl: './cv-builder.scss',
   // Component-scoped (not root-singleton) — see `MembershipAccessService`'s doc comment
@@ -46,6 +47,14 @@ export class CvBuilder {
   // `membershipAccess.isReadOnly()`, which gates *mutating* actions on the current
   // cotisation cycle's paid/unpaid state, not on the overall membership status.
   protected readonly canExportPdf = computed(() => this.entitlements.has('CV_EXPORT_PDF'));
+
+  // Gates every *mutating* CV action (add section, add translation, validate translation) —
+  // doc §Entitlements: `CV_EDIT`. A `PENDING` member (onboarding grace period, first cotisation
+  // never paid) no longer has this right — see `membership-entitlement.ts`'s doc comment on
+  // that decision. Independent from `membershipAccess.isReadOnly()`, which gates the same
+  // actions for a different reason (current cotisation cycle unpaid, regardless of overall
+  // membership status) — both are checked together below so either restriction applies.
+  protected readonly canEditCv = computed(() => this.entitlements.has('CV_EDIT'));
 
   private readonly cvsResource = rxResource({
     stream: () => this.cvService.listCvs(),
@@ -164,7 +173,7 @@ export class CvBuilder {
   protected addSection(): void {
     const cv = this.cv();
     const type = this.newSectionType();
-    if (!cv || !type || this.membershipAccess.isReadOnly()) {
+    if (!cv || !type || this.membershipAccess.isReadOnly() || !this.canEditCv()) {
       return;
     }
     this.cvService
@@ -182,7 +191,7 @@ export class CvBuilder {
 
   protected validateTranslation(sectionId: string, language: string): void {
     const cv = this.cv();
-    if (!cv || this.membershipAccess.isReadOnly()) {
+    if (!cv || this.membershipAccess.isReadOnly() || !this.canEditCv()) {
       return;
     }
     this.cvService.validateTranslation(cv.id, sectionId, language).subscribe(() => {
@@ -194,7 +203,7 @@ export class CvBuilder {
     const cv = this.cv();
     const language = this.translationLanguageFor(sectionId);
     const text = this.translationContentFor(sectionId);
-    if (!cv || !language || this.membershipAccess.isReadOnly()) {
+    if (!cv || !language || this.membershipAccess.isReadOnly() || !this.canEditCv()) {
       return;
     }
     this.cvService.addTranslation(cv.id, sectionId, { language, content: { text } }).subscribe(() => {

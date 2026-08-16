@@ -40,6 +40,17 @@ export class MembershipEntitlementService {
     return status ? computeMembershipEntitlements(status) : new Set();
   });
 
+  /** `true` once the member's status is positively known to be one of the three "cotisation
+   * not up to date" statuses (`PENDING`/`SUSPENDED`/`EXPIRED` — NOT `GRACE_PERIOD`, which keeps
+   * full rights, see `computeMembershipEntitlements`'s doc comment). Backs the single,
+   * centralized espace-membre-wide banner in `EspaceMembreLayout` — kept here (not
+   * re-derived per page) so every page reads the same decision. `false` while the status
+   * hasn't loaded yet, same "don't assume the worst before we know" rule as `entitlements`. */
+  readonly hasRestrictedAccess = computed(() => {
+    const status = this.status();
+    return status === 'PENDING' || status === 'SUSPENDED' || status === 'EXPIRED';
+  });
+
   has(entitlement: MembershipEntitlement): boolean {
     return this.entitlements().has(entitlement);
   }

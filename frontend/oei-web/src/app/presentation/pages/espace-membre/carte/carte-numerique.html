@@ -214,9 +214,20 @@
     } @else {
       <ul class="oei-carte-numerique__pass-list">
         @for (pass of passes(); track pass.id) {
-          <li class="oei-carte-numerique__pass-item">
+          <li
+            class="oei-carte-numerique__pass-item"
+            [class.oei-carte-numerique__pass-item--disabled]="passNeedsReactivation(pass)"
+          >
             <span class="oei-carte-numerique__pass-provider">{{ providerLabel(pass.provider) }}</span>
             <span class="oei-carte-numerique__pass-status">{{ passStatusLabel(pass.status) }}</span>
+            @if (passNeedsReactivation(pass)) {
+              <span class="oei-carte-numerique__pass-reactivate-notice" role="alert">
+                {{ i18n.translate('espaceMembre.carte.wallet.passNeedsReactivation') }}
+                <a class="oei-carte-numerique__pass-reactivate-link" routerLink="/espace-membre/cotisation">
+                  {{ i18n.translate('espaceMembre.carte.wallet.reactivateLink') }}
+                </a>
+              </span>
+            }
             @if (pass.status !== 'REVOKED') {
               <button type="button" class="oei-carte-numerique__pass-revoke" (click)="revoke(pass.id)">
                 {{ i18n.translate('espaceMembre.carte.wallet.revoke') }}
