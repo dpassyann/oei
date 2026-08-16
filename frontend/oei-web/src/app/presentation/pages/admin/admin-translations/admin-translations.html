@@ -1,0 +1,67 @@
+<section class="oei-admin-translations">
+  <h1>{{ i18n.translate('admin.translations.title') }}</h1>
+  <p>{{ i18n.translate('admin.translations.intro') }}</p>
+  <p class="oei-admin-translations__note">{{ i18n.translate('admin.translations.note') }}</p>
+
+  @if (missingRows().length === 0) {
+    <p>{{ i18n.translate('admin.translations.empty') }}</p>
+  } @else {
+    <table class="oei-admin-translations__table">
+      <thead>
+        <tr>
+          <th>{{ i18n.translate('admin.translations.columns.key') }}</th>
+          <th>{{ i18n.translate('admin.translations.columns.frValue') }}</th>
+          @for (lang of targetLanguages; track lang) {
+            <th>{{ lang.toUpperCase() }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of missingRows(); track row.key) {
+          <tr>
+            <td>{{ row.key }}</td>
+            <td>{{ row.frValue }}</td>
+            @for (lang of targetLanguages; track lang) {
+              <td>
+                <button
+                  type="button"
+                  class="oei-admin-status oei-admin-translations__badge"
+                  [attr.data-status]="row.statusByLanguage[lang] === 'ok' ? 'ACTIVE' : 'SUSPENDED'"
+                  (click)="openEditor(row, lang)"
+                >
+                  {{ i18n.translate('admin.translations.status.' + row.statusByLanguage[lang]) }}
+                </button>
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  @if (editingRow(); as row) {
+    <form class="oei-admin-translations__form" (ngSubmit)="save()">
+      <h2>{{ i18n.translate('admin.translations.form.title') }}</h2>
+      <p><strong>{{ row.key }}</strong> — {{ row.frValue }}</p>
+
+      <label class="oei-field">
+        {{ i18n.translate('admin.translations.form.language') }}
+        <span>{{ editingLang().toUpperCase() }}</span>
+      </label>
+
+      <label class="oei-field">
+        {{ i18n.translate('admin.translations.form.value') }}
+        <textarea class="oei-textarea" name="value" [ngModel]="editingValue()" (ngModelChange)="editingValue.set($event)"></textarea>
+      </label>
+
+      @if (saved()) {
+        <p class="oei-admin-translations__saved">{{ i18n.translate('admin.translations.form.saved') }}</p>
+      }
+
+      <div class="oei-admin-translations__form-actions">
+        <button type="submit" class="oei-btn oei-btn--primary">{{ i18n.translate('admin.translations.form.save') }}</button>
+        <button type="button" class="oei-btn oei-btn--secondary" (click)="cancelEditor()">{{ i18n.translate('admin.translations.form.cancel') }}</button>
+      </div>
+    </form>
+  }
+</section>
