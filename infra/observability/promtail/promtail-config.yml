@@ -55,8 +55,11 @@ scrape_configs:
                   msg: '"@message"'
                   trace_id: traceId
                   span_id: spanId
+                  correlation_id: correlationId
+                  logger: logger_name
             - labels:
                 level:
                 trace_id:
                 span_id:
+                correlation_id:
 

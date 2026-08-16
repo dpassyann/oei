@@ -1,6 +1,8 @@
 package global.oei.infrastructure.persistence.membership;
 
+import java.time.Instant;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +32,23 @@ public class MembershipPersistenceAdapter implements MembershipLookupPort {
     @Override
     public Optional<Membership> findByMemberId(final MemberId memberId) {
         return repository.findByMemberId(memberId.value()).map(MembershipPersistenceAdapter::toDomain);
+    }
+
+    @Override
+    @Transactional
+    public Membership save(final Membership membership) {
+        final MembershipEntity entity = new MembershipEntity(
+                UUID.randomUUID(),
+                membership.memberId().value(),
+                membership.tier().name(),
+                membership.status().name(),
+                membership.startedAt(),
+                membership.renewedAt(),
+                membership.endsAt());
+        // Use findByMemberId to detect existing row (idempotent upsert)
+        return repository.findByMemberId(membership.memberId().value())
+                .map(MembershipPersistenceAdapter::toDomain)
+                .orElseGet(() -> toDomain(repository.save(entity)));
     }
 
     private static Membership toDomain(final MembershipEntity entity) {

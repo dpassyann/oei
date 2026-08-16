@@ -16,4 +16,12 @@ import global.oei.domain.shared.member.MemberId;
 public interface MembershipLookupPort {
 
     Optional<Membership> findByMemberId(MemberId memberId);
+
+    /**
+     * Persists a new {@link Membership}. Used by the auto-provisioning path in
+     * {@code MemberSelfService} when a member registers via the Keycloak native form
+     * (without calling {@code POST /api/public/v1/accounts}) and hits
+     * {@code GET /api/member/v1/members/me} for the first time.
+     */
+    Membership save(Membership membership);
 }

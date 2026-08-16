@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.RestController;
 import global.oei.application.web.MemberProfileApi;
 import global.oei.application.web.model.EthicalCharterSignatureDTO;
 import global.oei.application.web.model.GetMyEntitlements200ResponseDTO;
+import global.oei.application.web.model.MemberDTO;
 import global.oei.application.web.model.MembershipDTO;
 import global.oei.application.web.model.ProfessionalProfileDTO;
 import global.oei.application.web.model.SignEthicalCharterRequestDTO;
 import global.oei.application.web.resource.member.adapter.CharterAdapter;
+import global.oei.application.web.resource.member.adapter.MemberSelfAdapter;
 import global.oei.application.web.resource.member.adapter.MembershipAdapter;
 import global.oei.application.web.resource.member.adapter.ProfileAdapter;
 import global.oei.application.web.resource.member.mapper.CharterDtoMapper;
@@ -41,6 +43,12 @@ public class MemberProfileResource implements MemberProfileApi {
     private final MembershipAdapter membershipAdapter;
     private final ProfileAdapter profileAdapter;
     private final CharterAdapter charterAdapter;
+    private final MemberSelfAdapter memberSelfAdapter;
+
+    @Override
+    public ResponseEntity<MemberDTO> getCurrentMember() {
+        return ResponseEntity.ok(memberSelfAdapter.getCurrentMember());
+    }
 
     @Override
     public ResponseEntity<MembershipDTO> getMyMembership() {

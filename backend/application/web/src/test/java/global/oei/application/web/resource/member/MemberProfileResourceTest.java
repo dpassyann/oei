@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import global.oei.application.web.resource.member.adapter.CharterAdapter;
+import global.oei.application.web.resource.member.adapter.MemberSelfAdapter;
 import global.oei.application.web.resource.member.adapter.MembershipAdapter;
 import global.oei.application.web.resource.member.adapter.ProfileAdapter;
 import global.oei.domain.shared.charter.EthicalCharterSignature;
@@ -37,6 +38,7 @@ class MemberProfileResourceTest {
     private MembershipAdapter membershipAdapter;
     private ProfileAdapter profileAdapter;
     private CharterAdapter charterAdapter;
+    private MemberSelfAdapter memberSelfAdapter;
     private MockMvc mockMvc;
 
     @BeforeEach
@@ -44,7 +46,9 @@ class MemberProfileResourceTest {
         membershipAdapter = mock(MembershipAdapter.class);
         profileAdapter = mock(ProfileAdapter.class);
         charterAdapter = mock(CharterAdapter.class);
-        mockMvc = MockMvcBuilders.standaloneSetup(new MemberProfileResource(membershipAdapter, profileAdapter, charterAdapter)).build();
+        memberSelfAdapter = mock(MemberSelfAdapter.class);
+        mockMvc = MockMvcBuilders.standaloneSetup(
+                new MemberProfileResource(membershipAdapter, profileAdapter, charterAdapter, memberSelfAdapter)).build();
     }
 
     @Test

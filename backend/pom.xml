@@ -134,6 +134,14 @@
         <version>${jackson-databind-nullable.version}</version>
       </dependency>
 
+      <!-- Structured JSON logging for Loki (logstash-logback-encoder).
+           Spring Boot 4 / Logback 1.5 require version 8.x. -->
+      <dependency>
+        <groupId>net.logstash.logback</groupId>
+        <artifactId>logstash-logback-encoder</artifactId>
+        <version>8.1</version>
+      </dependency>
+
       <!--
         Testcontainers BOM: the inherited spring-boot-starter-parent BOM only manages the
         "testcontainers.version" property (used below) and the org.springframework.boot

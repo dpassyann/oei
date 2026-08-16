@@ -50,6 +50,8 @@ tags:
     description: Pages publiques institutionnelles.
   - name: public-members
     description: Profils publics, cartes numériques et vérification de badges/pass.
+  - name: public-certifications
+    description: Catalogue public des certifications reconnues par l'OEI (lecture seule, sans authentification).
   - name: member-profile
     description: Profil professionnel du membre connecté.
   - name: member-membership-fee
@@ -660,6 +662,60 @@ paths:
                 $ref: "#/components/schemas/WalletPassVerification"
         "404":
           $ref: "#/components/responses/NotFound"
+
+  # ---------------------------------------------------------------------------
+  # /api/public/v1 — recognized certifications catalog (public read-only)
+  # ---------------------------------------------------------------------------
+  /api/public/v1/recognized-certifications:
+    get:
+      tags: [public-certifications]
+      operationId: listPublicRecognizedCertifications
+      summary: >
+        Catalogue public des certifications reconnues par l'OEI — utilisé par la page
+        /certifications et le formulaire de déclaration (sélecteur de certification).
+        Retourne uniquement les entrées actives (statut ACTIVE).
+      security: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            default: 100
+      responses:
+        "200":
+          description: Liste des certifications reconnues actives
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RecognizedCertification"
+
+  # ---------------------------------------------------------------------------
+  # /api/member/v1 — identity (current member self-resource)
+  # ---------------------------------------------------------------------------
+  /api/member/v1/members/me:
+    get:
+      tags: [member-profile]
+      operationId: getCurrentMember
+      summary: >
+        Identité complète du membre connecté (id, slug, displayName, locale, country,
+        membership). Si aucun enregistrement n'existe encore pour ce sujet Keycloak
+        (inscription via formulaire natif Keycloak sans passer par POST /accounts),
+        un enregistrement Member + Membership BRONZE/PENDING est auto-provisionné.
+      security: [{ bearerAuth: [member] }]
+      responses:
+        "200":
+          description: Membre courant avec son adhésion
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Member"
 
   # ---------------------------------------------------------------------------
   # /api/member/v1 — profile
