@@ -1,0 +1,71 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0054-create-recognized-certification
+      author: oei-backend
+      comment: >
+        Public catalog of certifications recognized by OEI (/certifications page, admin-managed
+        via /api/admin/v1/certifications/catalog/**) — see ADR 0002, which had left
+        RecognizedCertification as a documentary schema with no dedicated endpoint/table.
+        competencies_json stores the competencies list as JSON, same rationale as
+        institution.sectors_json.
+      changes:
+        - createTable:
+            tableName: recognized_certification
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: issuing_organization
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: catalog_reference
+                  type: varchar(255)
+              - column:
+                  name: auto_validate
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: domain
+                  type: varchar(255)
+              - column:
+                  name: level
+                  type: varchar(20)
+              - column:
+                  name: language
+                  type: varchar(10)
+              - column:
+                  name: oei_status
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: competencies_json
+                  type: jsonb
+              - column:
+                  name: validity_months
+                  type: integer
+              - column:
+                  name: associated_path_route
+                  type: varchar(255)
+              - column:
+                  name: description
+                  type: text
+              - column:
+                  name: catalog_status
+                  type: varchar(20)
+                  constraints:
+                    nullable: false

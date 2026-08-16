@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0055-demo-recognized-certifications
+      author: oei-backend
+      comment: >
+        7 demo catalog entries, same taxonomy as the frontend's
+        certification-mock.adapter.ts RECOGNIZED_CERTIFICATIONS constant (AWS, Azure,
+        Kubernetes, CISSP, PMP, TensorFlow, DPO/CNIL).
+      changes:
+        - sqlFile:
+            path: db/changelog/changes/0055-demo-recognized-certifications.sql
+            relativeToChangelogFile: false
+            splitStatements: true
+            stripComments: true
