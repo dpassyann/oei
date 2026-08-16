@@ -848,6 +848,15 @@
     }
   },
   "cms": {
+    "shell": {
+      "title": "Back-office éditorial"
+    },
+    "nav": {
+      "contentList": "Contenus",
+      "contributions": "Contributions",
+      "moderation": "Modération articles",
+      "eventsModeration": "Modération événements"
+    },
     "type": {
       "PAGE": "Page",
       "ARTICLE": "Article",
@@ -980,13 +989,19 @@
       "columns": {
         "title": "Titre",
         "author": "Auteur",
-        "submittedAt": "Soumis le"
+        "submittedAt": "Soumis le",
+        "status": "Statut"
       },
       "approve": "Approuver",
       "reject": "Rejeter",
       "confirmReject": "Confirmer le rejet",
       "cancel": "Annuler",
-      "rejectReasonPlaceholder": "Motif du rejet (optionnel)"
+      "rejectReasonPlaceholder": "Motif du rejet (optionnel)",
+      "status": {
+        "pending": "En attente",
+        "approved": "Approuvé",
+        "rejected": "Rejeté"
+      }
     },
     "eventsModeration": {
       "title": "Modération des événements",
@@ -996,7 +1011,8 @@
         "title": "Titre",
         "author": "Auteur",
         "startAt": "Date de début",
-        "aiPrecheck": "Précheck IA"
+        "aiPrecheck": "Précheck IA",
+        "status": "Statut"
       },
       "approve": "Approuver",
       "reject": "Rejeter",

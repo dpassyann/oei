@@ -12,6 +12,7 @@
           <th>{{ i18n.translate('cms.moderation.columns.title') }}</th>
           <th>{{ i18n.translate('cms.moderation.columns.author') }}</th>
           <th>{{ i18n.translate('cms.moderation.columns.submittedAt') }}</th>
+          <th>{{ i18n.translate('cms.moderation.columns.status') }}</th>
           <th></th>
         </tr>
       </thead>
@@ -21,9 +22,11 @@
             <td>{{ submission.title }}</td>
             <td>{{ submission.authorId }}</td>
             <td>{{ submission.submittedAt }}</td>
+            <td><span class="oei-cms-status" [attr.data-status]="submission.status">{{ i18n.translate('espaceMembre.publier.status.' + submission.status) }}</span></td>
             <td class="oei-cms-moderation__actions">
               <button
                 type="button"
+                class="oei-btn oei-btn--primary"
                 [disabled]="processingId() === submission.id"
                 (click)="approve(submission)"
               >
@@ -32,16 +35,17 @@
               @if (rejectingId() === submission.id) {
                 <input
                   type="text"
+                  class="oei-input"
                   [attr.placeholder]="i18n.translate('cms.moderation.rejectReasonPlaceholder')"
                   [value]="rejectReason()"
                   (input)="onRejectReasonChange($any($event.target).value)"
                 />
-                <button type="button" [disabled]="processingId() === submission.id" (click)="reject(submission)">
+                <button type="button" class="oei-btn oei-btn--primary" [disabled]="processingId() === submission.id" (click)="reject(submission)">
                   {{ i18n.translate('cms.moderation.confirmReject') }}
                 </button>
-                <button type="button" (click)="cancelReject()">{{ i18n.translate('cms.moderation.cancel') }}</button>
+                <button type="button" class="oei-btn oei-btn--text" (click)="cancelReject()">{{ i18n.translate('cms.moderation.cancel') }}</button>
               } @else {
-                <button type="button" [disabled]="processingId() === submission.id" (click)="startReject(submission)">
+                <button type="button" class="oei-btn oei-btn--secondary" [disabled]="processingId() === submission.id" (click)="startReject(submission)">
                   {{ i18n.translate('cms.moderation.reject') }}
                 </button>
               }

@@ -1,0 +1,64 @@
+// Mirrors `admin-layout.scss`'s shell layout, restyled with the OEI charte graphique (bleu nuit
+// / doré — see `src/styles/_forms.scss` for the source-of-truth palette) so `/cms` finally reads
+// as part of the same site as `/admin` and `/espace-membre` rather than an unstyled prototype.
+$oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+
+.oei-cms-shell {
+  display: flex;
+  min-height: 60vh;
+  background: #fff;
+
+  &__sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    padding: 1.5rem 1rem;
+    background: $oei-navy;
+    color: #fff;
+  }
+
+  &__sidebar-title {
+    font-size: 0.95rem;
+    margin: 0 0 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: $oei-gold;
+    font-weight: 700;
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  &__nav-link {
+    padding: 0.6rem 0.75rem;
+    border-radius: 0.35rem;
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.15s ease, color 0.15s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $oei-gold;
+      outline-offset: 2px;
+    }
+
+    &--active {
+      background: $oei-gold;
+      color: $oei-navy;
+      font-weight: 700;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+  }
+}

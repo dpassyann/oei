@@ -5,16 +5,14 @@
       <p>{{ i18n.translate('cms.list.intro') }}</p>
     </div>
     <div class="oei-cms-list__header-actions">
-      <a routerLink="/cms/contributions">{{ i18n.translate('cms.list.openContributions') }}</a>
-      <a routerLink="/cms/moderation">{{ i18n.translate('cms.list.openModeration') }}</a>
-      <a routerLink="/cms/new" class="oei-cms-list__new">{{ i18n.translate('cms.list.newContent') }}</a>
+      <a routerLink="/cms/new" class="oei-cms-list__new oei-btn oei-btn--primary">{{ i18n.translate('cms.list.newContent') }}</a>
     </div>
   </header>
 
   <section class="oei-cms-list__filters">
-    <label>
+    <label class="oei-field">
       {{ i18n.translate('cms.list.filters.type') }}
-      <select (change)="onTypeFilterChange($any($event.target).value)">
+      <select class="oei-select" (change)="onTypeFilterChange($any($event.target).value)">
         <option value="">{{ i18n.translate('cms.list.filters.all') }}</option>
         @for (type of contentTypes; track type) {
           <option [value]="type">{{ i18n.translate('cms.type.' + type) }}</option>
@@ -22,9 +20,9 @@
       </select>
     </label>
 
-    <label>
+    <label class="oei-field">
       {{ i18n.translate('cms.list.filters.status') }}
-      <select (change)="onStatusFilterChange($any($event.target).value)">
+      <select class="oei-select" (change)="onStatusFilterChange($any($event.target).value)">
         <option value="">{{ i18n.translate('cms.list.filters.all') }}</option>
         @for (status of workflowStatuses; track status) {
           <option [value]="status">{{ i18n.translate('cms.status.' + status) }}</option>
@@ -32,14 +30,14 @@
       </select>
     </label>
 
-    <label>
+    <label class="oei-field">
       {{ i18n.translate('cms.list.filters.language') }}
-      <input type="text" (input)="onLanguageFilterChange($any($event.target).value)" />
+      <input type="text" class="oei-input" (input)="onLanguageFilterChange($any($event.target).value)" />
     </label>
 
-    <label>
+    <label class="oei-field">
       {{ i18n.translate('cms.list.filters.query') }}
-      <input type="text" (input)="onQueryFilterChange($any($event.target).value)" />
+      <input type="text" class="oei-input" (input)="onQueryFilterChange($any($event.target).value)" />
     </label>
   </section>
 
@@ -61,7 +59,7 @@
             <td>{{ content.title }}</td>
             <td>{{ i18n.translate('cms.type.' + content.type) }}</td>
             <td><span class="oei-cms-status" [attr.data-status]="content.status">{{ i18n.translate('cms.status.' + content.status) }}</span></td>
-            <td><a [routerLink]="['/cms', content.id]">{{ i18n.translate('cms.list.open') }}</a></td>
+            <td><a [routerLink]="['/cms', content.id]" class="oei-btn oei-btn--text">{{ i18n.translate('cms.list.open') }}</a></td>
           </tr>
         }
       </tbody>
@@ -70,7 +68,7 @@
 
   <section class="oei-cms-list__git-sync">
     <h2>{{ i18n.translate('cms.gitSync.legend') }}</h2>
-    <button type="button" [disabled]="synchronizing()" (click)="triggerSynchronization()">
+    <button type="button" class="oei-btn oei-btn--secondary" [disabled]="synchronizing()" (click)="triggerSynchronization()">
       {{ i18n.translate('cms.gitSync.trigger') }}
     </button>
     @if (lastSynchronization(); as last) {

@@ -848,6 +848,15 @@
     }
   },
   "cms": {
+    "shell": {
+      "title": "Redaktions-Backoffice"
+    },
+    "nav": {
+      "contentList": "Inhalte",
+      "contributions": "Beiträge",
+      "moderation": "Artikelmoderation",
+      "eventsModeration": "Veranstaltungsmoderation"
+    },
     "type": {
       "PAGE": "Seite",
       "ARTICLE": "Artikel",
@@ -980,13 +989,19 @@
       "columns": {
         "title": "Titel",
         "author": "Autor",
-        "submittedAt": "Eingereicht am"
+        "submittedAt": "Eingereicht am",
+        "status": "Status"
       },
       "approve": "Genehmigen",
       "reject": "Ablehnen",
       "confirmReject": "Ablehnung bestätigen",
       "cancel": "Abbrechen",
-      "rejectReasonPlaceholder": "Ablehnungsgrund (optional)"
+      "rejectReasonPlaceholder": "Ablehnungsgrund (optional)",
+      "status": {
+        "pending": "Ausstehend",
+        "approved": "Genehmigt",
+        "rejected": "Abgelehnt"
+      }
     },
     "eventsModeration": {
       "title": "Veranstaltungsmoderation",
@@ -996,7 +1011,8 @@
         "title": "Titel",
         "author": "Autor",
         "startAt": "Startdatum",
-        "aiPrecheck": "KI-Vorprüfung"
+        "aiPrecheck": "KI-Vorprüfung",
+        "status": "Status"
       },
       "approve": "Genehmigen",
       "reject": "Ablehnen",

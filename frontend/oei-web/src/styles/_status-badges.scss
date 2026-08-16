@@ -1,0 +1,96 @@
+// =============================================================================================
+// Shared status badge — SOURCE OF TRUTH for `.oei-cms-status`/`.oei-admin-status` pills used
+// across the CMS back-office (`cms-content-list`, `cms-content-editor`, `cms-moderation`,
+// `cms-events-moderation`) and the admin console (`admin-institutions-list`).
+//
+// Context: every back-office table used to render its `data-status` pill with the same flat
+// grey background regardless of the actual status, so a reader had to read the label text to
+// tell "brouillon" from "publié" from "rejeté". This partial gives each status family a
+// consistent, legible color coded on the OEI charte graphique (bleu nuit / doré, see
+// `_forms.scss`) instead of ad hoc greens/reds invented per page.
+//
+// Usage (unchanged from before — only the color now comes from here):
+//   <span class="oei-cms-status" [attr.data-status]="content.status">…</span>
+//   <span class="oei-admin-status" [attr.data-status]="institution.status">…</span>
+//
+// Status families (covers `ContentWorkflowStatus`, `ArticleSubmissionStatus` and
+// `InstitutionStatus` — see `domain/model/cms/content.model.ts`,
+// `domain/model/article/article-submission.ts`, `domain/model/institution/*`):
+//   - neutral/draft (grey): DRAFT, pending-ish placeholders
+//   - in progress (amber): IN_REVIEW, LEGAL_REVIEW, GOVERNANCE_REVIEW, TRANSLATION_PENDING,
+//     CONTACTED, DOCUMENTS_PENDING, pending
+//   - positive (green): APPROVED, ACTIVE, PUBLISHED, approved
+//   - scheduled (blue): SCHEDULED
+//   - negative (red): REJECTED, SUSPENDED, REVOKED, rejected
+//   - archived (muted navy): ARCHIVED
+// =============================================================================================
+
+@mixin oei-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+  background: rgba(10, 30, 63, 0.08);
+  color: #0a1e3f;
+
+  &[data-status='DRAFT'],
+  &[data-status='pending'] {
+    background: rgba(10, 30, 63, 0.08);
+    color: #0a1e3f;
+  }
+
+  &[data-status='IN_REVIEW'],
+  &[data-status='LEGAL_REVIEW'],
+  &[data-status='GOVERNANCE_REVIEW'],
+  &[data-status='TRANSLATION_PENDING'],
+  &[data-status='CONTACTED'],
+  &[data-status='DOCUMENTS_PENDING'],
+  &[data-status='SUBMITTED'],
+  &[data-status='AI_PRECHECK'],
+  &[data-status='MODERATOR_REVIEW'],
+  &[data-status='CHANGES_REQUESTED'],
+  &[data-status='PROPOSED'],
+  &[data-status='IN_CONSULTATION'] {
+    background: #fdf1dc;
+    color: #8a5a00;
+  }
+
+  &[data-status='APPROVED'],
+  &[data-status='ACTIVE'],
+  &[data-status='PUBLISHED'],
+  &[data-status='ACCEPTED'],
+  &[data-status='approved'] {
+    background: #e6f4ea;
+    color: #1e6b34;
+  }
+
+  &[data-status='SCHEDULED'],
+  &[data-status='MERGED'] {
+    background: #e5edff;
+    color: #1d3f9e;
+  }
+
+  &[data-status='REJECTED'],
+  &[data-status='SUSPENDED'],
+  &[data-status='REVOKED'],
+  &[data-status='CANCELLED'],
+  &[data-status='rejected'] {
+    background: #fde8e8;
+    color: #a11f2a;
+  }
+
+  &[data-status='ARCHIVED'],
+  &[data-status='ENDED'] {
+    background: rgba(10, 30, 63, 0.12);
+    color: rgba(10, 30, 63, 0.65);
+  }
+}
+
+.oei-cms-status,
+.oei-admin-status {
+  @include oei-status-badge;
+}

@@ -1,0 +1,19 @@
+<div class="oei-cms-shell">
+  <aside class="oei-cms-shell__sidebar">
+    <h2 class="oei-cms-shell__sidebar-title">{{ i18n.translate('cms.shell.title') }}</h2>
+    <nav class="oei-cms-shell__nav">
+      @for (entry of navEntries; track entry.path) {
+        <a
+          [routerLink]="entry.path"
+          routerLinkActive="oei-cms-shell__nav-link--active"
+          [routerLinkActiveOptions]="{ exact: entry.exact }"
+          class="oei-cms-shell__nav-link"
+          >{{ i18n.translate(entry.labelKey) }}</a
+        >
+      }
+    </nav>
+  </aside>
+  <section class="oei-cms-shell__content">
+    <router-outlet />
+  </section>
+</div>

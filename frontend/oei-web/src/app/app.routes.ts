@@ -26,6 +26,7 @@ import { CmsContentList } from './presentation/pages/cms/cms-content-list/cms-co
 import { CmsContentEditor } from './presentation/pages/cms/cms-content-editor/cms-content-editor';
 import { CmsContributions } from './presentation/pages/cms/cms-contributions/cms-contributions';
 import { CmsModeration } from './presentation/pages/cms/cms-moderation/cms-moderation';
+import { CmsLayout } from './presentation/pages/cms/cms-layout/cms-layout';
 import { cmsGuard } from './presentation/auth/cms.guard';
 import { memberSpaceGuard } from './presentation/auth/member-space.guard';
 import { Onboarding } from './presentation/pages/espace-membre/onboarding/onboarding';
@@ -95,15 +96,24 @@ export const routes: Routes = [
   {
     path: 'cms',
     canActivate: [cmsGuard],
+    // Wrapped in `CmsLayout` (sidebar nav + `<router-outlet>`) so `/cms/**` finally shares a
+    // consistent back-office shell across its pages, the same pattern as `AdminLayout`/
+    // `EspaceMembreLayout` below — see that component's doc comment.
     children: [
-      { path: '', component: CmsContentList },
-      { path: 'contributions', component: CmsContributions },
-      { path: 'moderation', component: CmsModeration },
-      // Events proposal moderation queue (docs "03-EVENTS-FEED-MODERATION-V2.md") — same
-      // `cmsGuard`, sibling of `/cms/moderation` (articles). Kept before `:id` so it is never
-      // swallowed by the editor's catch-all id route.
-      { path: 'events-moderation', component: CmsEventsModeration },
-      { path: ':id', component: CmsContentEditor },
+      {
+        path: '',
+        component: CmsLayout,
+        children: [
+          { path: '', component: CmsContentList },
+          { path: 'contributions', component: CmsContributions },
+          { path: 'moderation', component: CmsModeration },
+          // Events proposal moderation queue (docs "03-EVENTS-FEED-MODERATION-V2.md") — same
+          // `cmsGuard`, sibling of `/cms/moderation` (articles). Kept before `:id` so it is never
+          // swallowed by the editor's catch-all id route.
+          { path: 'events-moderation', component: CmsEventsModeration },
+          { path: ':id', component: CmsContentEditor },
+        ],
+      },
     ],
   },
   // Espace membre individuel (docs/adr/0002-v2-foundations.md, .prompt/plan/02-...):

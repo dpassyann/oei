@@ -36,9 +36,4 @@
   }
 }
 
-.oei-cms-status {
-  padding: 0.15rem 0.5rem;
-  border-radius: 4px;
-  background: #eee;
-  font-size: 0.8rem;
-}
+// `.oei-cms-status` color now comes from the shared `src/styles/_status-badges.scss` partial.

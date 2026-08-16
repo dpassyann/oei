@@ -3,6 +3,11 @@
 // Shared OEI form/button primitives (.oei-btn, .oei-field, .oei-input, .oei-select,
 // .oei-textarea) — see `src/styles/_forms.scss` for the source of truth.
 @use 'styles/forms';
+// Shared status badge colors (.oei-cms-status, .oei-admin-status) — see
+// `src/styles/_status-badges.scss`.
+@use 'styles/status-badges';
+// Shared `/cms` back-office typography/table look — see `src/styles/_cms-shell.scss`.
+@use 'styles/cms-shell';
 
 html,
 body {

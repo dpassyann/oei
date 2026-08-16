@@ -20,7 +20,7 @@
           <tr>
             <td>{{ contribution.contentId }}</td>
             <td>{{ contribution.authorMemberId }}</td>
-            <td>{{ i18n.translate('cms.contributionStatus.' + contribution.status) }}</td>
+            <td><span class="oei-cms-status" [attr.data-status]="contribution.status">{{ i18n.translate('cms.contributionStatus.' + contribution.status) }}</span></td>
             <td><button type="button" class="oei-btn oei-btn--text" (click)="select(contribution)">{{ i18n.translate('cms.list.open') }}</button></td>
           </tr>
         }

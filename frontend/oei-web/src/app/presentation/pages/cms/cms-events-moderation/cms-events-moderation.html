@@ -12,6 +12,7 @@
           <th>{{ i18n.translate('cms.eventsModeration.columns.title') }}</th>
           <th>{{ i18n.translate('cms.eventsModeration.columns.author') }}</th>
           <th>{{ i18n.translate('cms.eventsModeration.columns.startAt') }}</th>
+          <th>{{ i18n.translate('cms.eventsModeration.columns.status') }}</th>
           <th>{{ i18n.translate('cms.eventsModeration.columns.aiPrecheck') }}</th>
           <th></th>
         </tr>
@@ -22,43 +23,47 @@
             <td>{{ proposal.title }}</td>
             <td>{{ proposal.authorId }}</td>
             <td>{{ proposal.startAt }}</td>
+            <td><span class="oei-cms-status" [attr.data-status]="proposal.status">{{ i18n.translate('espaceMembre.proposerEvenement.status.' + proposal.status) }}</span></td>
             <td class="oei-cms-events-moderation__ai-precheck">{{ proposal.aiPrecheck?.summary ?? '—' }}</td>
             <td class="oei-cms-events-moderation__actions">
-              <button type="button" [disabled]="processingId() === proposal.id" (click)="approve(proposal)">
+              <button type="button" class="oei-btn oei-btn--primary" [disabled]="processingId() === proposal.id" (click)="approve(proposal)">
                 {{ i18n.translate('cms.eventsModeration.approve') }}
               </button>
 
               @if (actionTargetId() === proposal.id && actionKind() === 'reject') {
                 <input
                   type="text"
+                  class="oei-input"
                   [attr.placeholder]="i18n.translate('cms.eventsModeration.rejectReasonPlaceholder')"
                   [value]="actionReason()"
                   (input)="onReasonChange($any($event.target).value)"
                 />
-                <button type="button" [disabled]="processingId() === proposal.id" (click)="confirmReject(proposal)">
+                <button type="button" class="oei-btn oei-btn--primary" [disabled]="processingId() === proposal.id" (click)="confirmReject(proposal)">
                   {{ i18n.translate('cms.eventsModeration.confirmReject') }}
                 </button>
-                <button type="button" (click)="cancelAction()">{{ i18n.translate('cms.eventsModeration.cancel') }}</button>
+                <button type="button" class="oei-btn oei-btn--text" (click)="cancelAction()">{{ i18n.translate('cms.eventsModeration.cancel') }}</button>
               } @else if (actionTargetId() === proposal.id && actionKind() === 'requestChanges') {
                 <input
                   type="text"
+                  class="oei-input"
                   [attr.placeholder]="i18n.translate('cms.eventsModeration.requestChangesReasonPlaceholder')"
                   [value]="actionReason()"
                   (input)="onReasonChange($any($event.target).value)"
                 />
                 <button
                   type="button"
+                  class="oei-btn oei-btn--primary"
                   [disabled]="processingId() === proposal.id || !actionReason().trim()"
                   (click)="confirmRequestChanges(proposal)"
                 >
                   {{ i18n.translate('cms.eventsModeration.confirmRequestChanges') }}
                 </button>
-                <button type="button" (click)="cancelAction()">{{ i18n.translate('cms.eventsModeration.cancel') }}</button>
+                <button type="button" class="oei-btn oei-btn--text" (click)="cancelAction()">{{ i18n.translate('cms.eventsModeration.cancel') }}</button>
               } @else {
-                <button type="button" [disabled]="processingId() === proposal.id" (click)="startRequestChanges(proposal)">
+                <button type="button" class="oei-btn oei-btn--secondary" [disabled]="processingId() === proposal.id" (click)="startRequestChanges(proposal)">
                   {{ i18n.translate('cms.eventsModeration.requestChanges') }}
                 </button>
-                <button type="button" [disabled]="processingId() === proposal.id" (click)="startReject(proposal)">
+                <button type="button" class="oei-btn oei-btn--secondary" [disabled]="processingId() === proposal.id" (click)="startReject(proposal)">
                   {{ i18n.translate('cms.eventsModeration.reject') }}
                 </button>
               }
