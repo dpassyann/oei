@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Contribution reçue</title>
+</head>
+<body>
+  <p>Bonjour <span th:text="${member.displayName()}">Nom du membre</span>,</p>
+  <p>
+    Votre contribution (<span th:text="${contribution.id()}">id</span>) au contenu normatif
+    a bien été reçue et est en attente de revue par l'équipe OEI.
+  </p>
+  <p>Merci pour votre contribution,<br/>L'équipe OEI</p>
+</body>
+</html>

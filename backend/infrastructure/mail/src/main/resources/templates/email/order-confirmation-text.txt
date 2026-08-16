@@ -1,0 +1,8 @@
+Bonjour [(${member.displayName()})],
+
+Votre commande [(${order.id()})] d'un montant de [(${order.totalAmount()})] [(${order.totalCurrency()})] a bien été enregistrée et payée.
+
+Elle est désormais en attente de traitement (impression/envoi). Vous serez notifié séparément lors de son expédition.
+
+Merci pour votre confiance,
+L'équipe OEI

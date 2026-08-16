@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Confirmation de commande OEI</title>
+</head>
+<body>
+  <p>Bonjour <span th:text="${member.displayName()}">Nom du membre</span>,</p>
+  <p>
+    Votre commande <strong th:text="${order.id()}">ID commande</strong> d'un montant de
+    <strong th:text="${order.totalAmount() + ' ' + order.totalCurrency()}">montant</strong>
+    a bien été enregistrée et payée.
+  </p>
+  <p>
+    Elle est désormais en attente de traitement (impression/envoi). Vous serez notifié
+    séparément lors de son expédition.
+  </p>
+  <p>Merci pour votre confiance,<br/>L'équipe OEI</p>
+</body>
+</html>

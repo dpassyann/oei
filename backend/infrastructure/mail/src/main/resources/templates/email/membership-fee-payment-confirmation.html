@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Confirmation de cotisation OEI</title>
+</head>
+<body>
+  <p>Bonjour <span th:text="${member.displayName()}">Nom du membre</span>,</p>
+  <p>
+    Votre cotisation pour le cycle <strong th:text="${payment.cycleYear()}">année</strong>
+    d'un montant de <strong th:text="${payment.amount()}">montant</strong>€ a bien été
+    enregistrée.
+  </p>
+  <p>Merci pour votre engagement auprès de l'OEI,<br/>L'équipe OEI</p>
+</body>
+</html>

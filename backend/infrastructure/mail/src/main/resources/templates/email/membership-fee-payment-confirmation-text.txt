@@ -1,0 +1,6 @@
+Bonjour [(${member.displayName()})],
+
+Votre cotisation pour le cycle [(${payment.cycleYear()})] d'un montant de [(${payment.amount()})]€ a bien été enregistrée.
+
+Merci pour votre engagement auprès de l'OEI,
+L'équipe OEI

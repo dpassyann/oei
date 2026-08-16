@@ -19,6 +19,7 @@
     <module>security</module>
     <module>persistence</module>
     <module>client</module>
+    <module>mail</module>
     <module>wiring</module>
   </modules>
 </project>

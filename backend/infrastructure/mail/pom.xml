@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>global.oei</groupId>
+    <artifactId>infrastructure</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <relativePath>..</relativePath>
+  </parent>
+
+  <artifactId>infrastructure-mail</artifactId>
+  <packaging>jar</packaging>
+  <name>OEI Backend - Infrastructure Mail</name>
+  <description>
+    EmailNotificationPort adapter: business-reassurance transactional emails sent by the Spring
+    backend itself (never Keycloak's account-lifecycle emails, see
+    .prompt/plan/store/03-emails-transactionnels.md §0). Spring Mail + Amazon SES over SMTP,
+    Thymeleaf HTML+text templates, asynchronous dispatch so a slow/failed SMTP send never fails
+    the triggering business transaction. Depends only on domain-shared, never on domain-core.
+  </description>
+
+  <dependencies>
+    <dependency>
+      <groupId>global.oei</groupId>
+      <artifactId>domain-shared</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-mail</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- Never a real SMTP send from any automated test: an in-memory test SMTP server backs
+         the one representative end-to-end MIME test (order confirmation). -->
+    <dependency>
+      <groupId>com.icegreen</groupId>
+      <artifactId>greenmail</artifactId>
+      <version>${greenmail.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.icegreen</groupId>
+      <artifactId>greenmail-junit5</artifactId>
+      <version>${greenmail.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>

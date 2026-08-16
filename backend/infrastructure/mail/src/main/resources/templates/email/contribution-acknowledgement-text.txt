@@ -1,0 +1,6 @@
+Bonjour [(${member.displayName()})],
+
+Votre contribution ([(${contribution.id()})]) au contenu normatif a bien été reçue et est en attente de revue par l'équipe OEI.
+
+Merci pour votre contribution,
+L'équipe OEI
