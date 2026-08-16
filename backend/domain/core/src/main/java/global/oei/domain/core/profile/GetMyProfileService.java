@@ -1,28 +1,34 @@
 package global.oei.domain.core.profile;
 
 import java.util.List;
-import java.util.Objects;
 
 import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.profile.Availability;
 import global.oei.domain.shared.profile.GetMyProfileUseCase;
 import global.oei.domain.shared.profile.ProfessionalProfile;
 import global.oei.domain.shared.profile.ProfileLookupPort;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Default {@code GetMyProfileUseCase} implementation.
  */
+@Slf4j
+@RequiredArgsConstructor
 public class GetMyProfileService implements GetMyProfileUseCase {
 
+    @NonNull
     private final ProfileLookupPort profileLookupPort;
-
-    public GetMyProfileService(final ProfileLookupPort profileLookupPort) {
-        this.profileLookupPort = Objects.requireNonNull(profileLookupPort, "profileLookupPort must not be null");
-    }
 
     @Override
     public ProfessionalProfile execute(final MemberId memberId) {
-        return profileLookupPort.findByMemberId(memberId).orElseGet(() -> blankProfile(memberId));
+        final ProfessionalProfile profile = profileLookupPort.findByMemberId(memberId).orElseGet(() -> {
+            log.info("getMyProfile: no profile found, returning blank profile for memberId={}", memberId);
+            return blankProfile(memberId);
+        });
+        log.debug("getMyProfile: profile resolved for memberId={}", memberId);
+        return profile;
     }
 
     private static ProfessionalProfile blankProfile(final MemberId memberId) {

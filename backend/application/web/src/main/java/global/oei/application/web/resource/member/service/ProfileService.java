@@ -12,6 +12,7 @@ import global.oei.domain.shared.profile.UpdateMyProfileUseCase;
 import global.oei.domain.shared.security.AuthenticatedIdentity;
 import global.oei.domain.shared.security.SecurityContextPort;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Implements {@link ProfileAdapter} by resolving the current caller's identity via
@@ -23,6 +24,7 @@ import lombok.RequiredArgsConstructor;
  * {@code OeiBackendApplication}'s own {@code @SpringBootApplication} component scan, not
  * registered via a hand-written {@code @Bean} method.</p>
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProfileService implements ProfileAdapter {

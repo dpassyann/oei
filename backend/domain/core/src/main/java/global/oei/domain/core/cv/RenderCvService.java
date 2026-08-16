@@ -2,7 +2,6 @@ package global.oei.domain.core.cv;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 import global.oei.domain.shared.cv.Cv;
@@ -11,6 +10,9 @@ import global.oei.domain.shared.cv.PdfGenerationJobPort;
 import global.oei.domain.shared.cv.PdfGenerationJobStatus;
 import global.oei.domain.shared.cv.PdfGenerationTargetType;
 import global.oei.domain.shared.cv.RenderCvUseCase;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Mocked CV-to-PDF rendering: no real HTML/CSS layout engine (fonts, A4 pagination, QR code
@@ -25,16 +27,16 @@ import global.oei.domain.shared.cv.RenderCvUseCase;
  * but have no effect on the mocked output — kept as parameters so the port/use-case contract
  * does not need to change once a real renderer is introduced.</p>
  */
+@Slf4j
+@RequiredArgsConstructor
 public class RenderCvService implements RenderCvUseCase {
 
+    @NonNull
     private final PdfGenerationJobPort pdfGenerationJobPort;
-
-    public RenderCvService(final PdfGenerationJobPort pdfGenerationJobPort) {
-        this.pdfGenerationJobPort = Objects.requireNonNull(pdfGenerationJobPort, "pdfGenerationJobPort must not be null");
-    }
 
     @Override
     public PdfGenerationJob execute(final Cv cv, final String language, final List<String> includeBadges) {
+        log.debug("RenderCvService: execute called");
         final String jobId = UUID.randomUUID().toString();
         final Instant now = Instant.now();
         final PdfGenerationJob job = new PdfGenerationJob(

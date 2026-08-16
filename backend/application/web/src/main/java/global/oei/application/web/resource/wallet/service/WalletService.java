@@ -18,7 +18,9 @@ import global.oei.domain.shared.wallet.WalletPassPort;
 import global.oei.domain.shared.wallet.WalletPassProvider;
 import global.oei.domain.shared.wallet.WalletPassVerification;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class WalletService implements WalletAdapter {

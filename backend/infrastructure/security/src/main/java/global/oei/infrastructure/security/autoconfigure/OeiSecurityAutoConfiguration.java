@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -15,27 +16,25 @@ import global.oei.domain.shared.security.SecurityContextPort;
 import global.oei.infrastructure.security.authentication.OeiJwtAuthenticationConverter;
 import global.oei.infrastructure.security.context.SpringSecurityContextAdapter;
 import global.oei.infrastructure.security.properties.OeiSecurityProperties;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Auto-configures an OAuth2/JWT resource server pointed at the OEI Keycloak realm.
  *
- * <p>Registers, unless the consuming application already provides its own bean of the same
- * type ({@code @ConditionalOnMissingBean}):</p>
- * <ul>
- *   <li>{@link OeiJwtAuthenticationConverter} — maps {@code realm_access.roles} to
- *       {@code ROLE_*} authorities;</li>
- *   <li>a default {@link SecurityFilterChain} — stateless resource server, only
- *       {@code oei.security.public-urls} are permitted anonymously, everything else
- *       requires a valid bearer token;</li>
- *   <li>{@link SpringSecurityContextAdapter} — the {@link SecurityContextPort}
- *       implementation consumed by {@code domain-core} use cases.</li>
- * </ul>
+ * <p>Two security filter chains are registered (unless overridden):</p>
+ * <ol>
+ *   <li><b>Public chain</b> (Order 1) — matches {@code oei.security.public-urls} patterns,
+ *       requires no authentication and performs <em>no JWT validation</em>. This prevents
+ *       Spring Security from returning 401 when the frontend sends an expired/invalid bearer
+ *       token to a public endpoint (e.g. {@code /api/public/**}).</li>
+ *   <li><b>Protected chain</b> (Order 2) — matches everything else, stateless OAuth2/JWT
+ *       resource server, every request must carry a valid Keycloak bearer token.</li>
+ * </ol>
  *
  * <p>The resource server issuer itself comes from the standard
- * {@code spring.security.oauth2.resourceserver.jwt.issuer-uri} property, so this
- * auto-configuration relies on Spring Boot's own OAuth2 resource server auto-configuration
- * for JWT decoding/validation and only customizes role mapping and URL rules.</p>
+ * {@code spring.security.oauth2.resourceserver.jwt.issuer-uri} property.</p>
  */
+@Slf4j
 @AutoConfiguration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @EnableWebSecurity
@@ -54,20 +53,39 @@ public class OeiSecurityAutoConfiguration {
         return new SpringSecurityContextAdapter();
     }
 
-    @Bean
-    @ConditionalOnMissingBean(SecurityFilterChain.class)
-    public SecurityFilterChain oeiSecurityFilterChain(
+    /**
+     * Public security chain (Order 1): matches the configured public URL patterns and allows
+     * all requests without any JWT validation. Running before the protected chain (Order 2)
+     * ensures that public paths are never handed to the JWT filter — an expired or invalid
+     * bearer token sent by the frontend will NOT cause a 401 on these paths.
+     */
+    @Bean("oeiPublicSecurityFilterChain")
+    @Order(1)
+    @ConditionalOnMissingBean(name = "oeiPublicSecurityFilterChain")
+    public SecurityFilterChain oeiPublicSecurityFilterChain(
             final HttpSecurity http,
-            final OeiSecurityProperties properties,
-            final OeiJwtAuthenticationConverter converter)
-            throws Exception {
+            final OeiSecurityProperties properties) throws Exception {
+        log.debug("Registering public security filter chain for patterns: {}", (Object) properties.getPublicUrls());
+        http.securityMatcher(properties.getPublicUrls())
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
+        return http.build();
+    }
+
+    /**
+     * Protected security chain (Order 2): matches every request not claimed by the public
+     * chain. Every request must carry a valid Keycloak bearer token.
+     */
+    @Bean("oeiProtectedSecurityFilterChain")
+    @Order(2)
+    @ConditionalOnMissingBean(name = "oeiProtectedSecurityFilterChain")
+    public SecurityFilterChain oeiProtectedSecurityFilterChain(
+            final HttpSecurity http,
+            final OeiJwtAuthenticationConverter converter) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(properties.getPublicUrls())
-                        .permitAll()
-                        .anyRequest()
-                        .authenticated())
+                .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(converter)));
         return http.build();
     }

@@ -4,7 +4,6 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 import java.util.UUID;
 
 import global.oei.domain.shared.content.Content;
@@ -13,24 +12,27 @@ import global.oei.domain.shared.content.ContentVersion;
 import global.oei.domain.shared.content.ContentVersionPort;
 import global.oei.domain.shared.content.ContentWorkflowStatus;
 import global.oei.domain.shared.content.CreateContentVersionUseCase;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Default {@code CreateContentVersionUseCase} implementation.
  */
+@Slf4j
+@RequiredArgsConstructor
 public class CreateContentVersionService implements CreateContentVersionUseCase {
 
+    @NonNull
     private final ContentPort contentPort;
+    @NonNull
     private final ContentVersionPort contentVersionPort;
-
-    public CreateContentVersionService(final ContentPort contentPort, final ContentVersionPort contentVersionPort) {
-        this.contentPort = Objects.requireNonNull(contentPort, "contentPort must not be null");
-        this.contentVersionPort = Objects.requireNonNull(contentVersionPort, "contentVersionPort must not be null");
-    }
 
     @Override
     public ContentVersion execute(
             final String contentId, final String language, final String title, final String body, final Map<String, Object> frontMatter,
             final String authorId) {
+        log.debug("CreateContentVersionService: execute called");
         final Content content =
                 contentPort.findById(contentId).orElseThrow(() -> new NoSuchElementException("content not found: " + contentId));
         final int nextVersionNumber = contentVersionPort.findByContentId(contentId).size() + 1;

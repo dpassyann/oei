@@ -43,21 +43,24 @@ oei:
     # From address for every EmailNotificationAdapter send; must be a verified SES identity
     # in production.
     from: ${OEI_MAIL_FROM:no-reply@theitorder.global}
-  security:
-    public-urls:
-      - /actuator/health
-      - /actuator/health/**
-      # /api/public/** backs PublicEventsApi/PublicAccountsApi/PublicInstitutionsApi/etc:
-      # genuinely anonymous, visitor-facing endpoints (event listings, anonymized salary
-      # insights, public member/institution profiles) — never require a bearer token.
-      - /api/public/**
-      # /content/** backs the legacy, unversioned ContentLegacyApi (content-legacy tag) --
-      # no `security:` override in the OpenAPI contract (document-level `security: []`
-      # applies), so genuinely anonymous.
-      - /content/**
-      # /api/v1/** backs the legacy, unversioned HomeLegacyApi (home-legacy tag) -- same
-      # reasoning as /content/** above.
-      - /api/v1/**
+   security:
+     public-urls:
+       - /actuator/health
+       - /actuator/health/**
+       # /api/public/** backs PublicEventsApi/PublicAccountsApi/PublicInstitutionsApi/etc:
+       # genuinely anonymous, visitor-facing endpoints (event listings, anonymized salary
+       # insights, public member/institution profiles) — never require a bearer token.
+       - /api/public/**
+       # /content/** backs the legacy, unversioned ContentLegacyApi (content-legacy tag) --
+       # no `security:` override in the OpenAPI contract (document-level `security: []`
+       # applies), so genuinely anonymous.
+       - /content/**
+       # /api/v1/** backs the legacy, unversioned HomeLegacyApi (home-legacy tag) -- same
+       # reasoning as /content/** above.
+       - /api/v1/**
+   media:
+     storage:
+       base-url: ${OEI_MEDIA_STORAGE_BASE_URL:https://mock-media.oei.local/}
 
 management:
   endpoints:

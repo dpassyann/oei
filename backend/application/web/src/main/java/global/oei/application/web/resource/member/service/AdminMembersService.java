@@ -21,12 +21,14 @@ import global.oei.domain.shared.verification.ApproveVerificationRequestUseCase;
 import global.oei.domain.shared.verification.RejectVerificationRequestUseCase;
 import global.oei.domain.shared.verification.VerificationRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Passes the currently authenticated admin's own subject as the {@code validatorId}/
  * {@code reviewerId}/{@code awardedBy} actor on every write operation below — same convention
  * as {@code ContentService.currentActorId()}.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AdminMembersService implements AdminMembersAdapter {

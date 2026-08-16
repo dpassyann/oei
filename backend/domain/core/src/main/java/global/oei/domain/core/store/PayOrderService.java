@@ -16,6 +16,9 @@ import global.oei.domain.shared.store.Order;
 import global.oei.domain.shared.store.OrderPort;
 import global.oei.domain.shared.store.PayOrderUseCase;
 import global.oei.domain.shared.store.PaymentPort;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Resolves the {@link PaymentMethod} chosen at checkout, charges it, and transitions the
@@ -26,23 +29,22 @@ import global.oei.domain.shared.store.PaymentPort;
  * {@link EmailNotificationPort} implementation is responsible for its own async dispatch (see
  * {@code 03-emails-transactionnels.md §3}), this service only calls it.
  */
+@Slf4j
+@RequiredArgsConstructor
 public class PayOrderService implements PayOrderUseCase {
 
+    @NonNull
     private final OrderPort orderPort;
+    @NonNull
     private final PaymentPort paymentPort;
+    @NonNull
     private final MemberPort memberPort;
+    @NonNull
     private final EmailNotificationPort emailNotificationPort;
-
-    public PayOrderService(
-            final OrderPort orderPort, final PaymentPort paymentPort, final MemberPort memberPort, final EmailNotificationPort emailNotificationPort) {
-        this.orderPort = Objects.requireNonNull(orderPort, "orderPort must not be null");
-        this.paymentPort = Objects.requireNonNull(paymentPort, "paymentPort must not be null");
-        this.memberPort = Objects.requireNonNull(memberPort, "memberPort must not be null");
-        this.emailNotificationPort = Objects.requireNonNull(emailNotificationPort, "emailNotificationPort must not be null");
-    }
 
     @Override
     public Order execute(final String orderId, final MemberId memberId, final PaymentMethod paymentMethod, final String paymentToken) {
+        log.debug("payOrder: start orderId={} memberId={} method={}", orderId, memberId, paymentMethod);
         Objects.requireNonNull(orderId, "orderId must not be null");
         Objects.requireNonNull(paymentMethod, "paymentMethod must not be null");
         Objects.requireNonNull(paymentToken, "paymentToken must not be null");
@@ -59,6 +61,7 @@ public class PayOrderService implements PayOrderUseCase {
         paymentPort.save(result);
 
         if (result.status() != PaymentStatus.SUCCEEDED) {
+            log.info("payOrder: payment failed orderId={} status={}", order.id(), result.status());
             return orderPort.save(order.failPayment());
         }
 
@@ -67,6 +70,7 @@ public class PayOrderService implements PayOrderUseCase {
         if (member != null) {
             emailNotificationPort.sendOrderConfirmation(paidOrder, member);
         }
+        log.info("payOrder: payment succeeded orderId={} paymentStatus={}", paidOrder.id(), result.status());
         return paidOrder;
     }
 }

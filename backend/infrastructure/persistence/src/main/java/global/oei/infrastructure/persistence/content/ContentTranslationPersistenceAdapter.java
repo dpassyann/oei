@@ -9,7 +9,9 @@ import global.oei.domain.shared.content.ContentTranslation;
 import global.oei.domain.shared.content.ContentTranslationPort;
 import global.oei.domain.shared.content.ContentTranslationStatus;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class ContentTranslationPersistenceAdapter implements ContentTranslationPort {

@@ -1,7 +1,6 @@
 package global.oei.domain.core.certification;
 
 import java.time.LocalDate;
-import java.util.Objects;
 import java.util.UUID;
 
 import global.oei.domain.shared.certification.Certification;
@@ -9,17 +8,19 @@ import global.oei.domain.shared.certification.CertificationPort;
 import global.oei.domain.shared.certification.CertificationStatus;
 import global.oei.domain.shared.certification.DeclareCertificationUseCase;
 import global.oei.domain.shared.member.MemberId;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Default {@code DeclareCertificationUseCase} implementation.
  */
+@Slf4j
+@RequiredArgsConstructor
 public class DeclareCertificationService implements DeclareCertificationUseCase {
 
+    @NonNull
     private final CertificationPort certificationPort;
-
-    public DeclareCertificationService(final CertificationPort certificationPort) {
-        this.certificationPort = Objects.requireNonNull(certificationPort, "certificationPort must not be null");
-    }
 
     @Override
     public Certification execute(
@@ -30,6 +31,7 @@ public class DeclareCertificationService implements DeclareCertificationUseCase 
             final LocalDate issuedAt,
             final LocalDate expiresAt,
             final String proofDocumentUrl) {
+        log.debug("declareCertification: memberId={} name={} recognizedCertificationId={}", memberId, name, recognizedCertificationId);
         final Certification certification = new Certification(
                 UUID.randomUUID().toString(),
                 memberId,
@@ -42,6 +44,7 @@ public class DeclareCertificationService implements DeclareCertificationUseCase 
                 CertificationStatus.DECLARED,
                 null,
                 null);
+        log.info("declareCertification: declared certificationId={} memberId={}", certification.id(), memberId);
         return certificationPort.save(certification);
     }
 }

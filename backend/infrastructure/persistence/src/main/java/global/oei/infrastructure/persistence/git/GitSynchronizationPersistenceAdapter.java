@@ -11,8 +11,10 @@ import global.oei.domain.shared.git.GitSynchronizationPort;
 import global.oei.domain.shared.git.GitSynchronizationStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import tools.jackson.databind.ObjectMapper;
 
+@Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class GitSynchronizationPersistenceAdapter implements GitSynchronizationPort {

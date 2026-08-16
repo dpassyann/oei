@@ -2,12 +2,14 @@ package global.oei.domain.core.publicprofile;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Objects;
 
 import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.publicprofile.PublicProfile;
 import global.oei.domain.shared.publicprofile.PublicProfilePort;
 import global.oei.domain.shared.publicprofile.PublishPublicProfileUseCase;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Enforces the publication invariant on {@link PublicProfile}: {@link PublicProfile#publishedAt()}
@@ -16,17 +18,17 @@ import global.oei.domain.shared.publicprofile.PublishPublicProfileUseCase;
  * been public); {@link PublicProfile#viewsCount()} is likewise preserved across republications,
  * never reset to zero.
  */
+@Slf4j
+@RequiredArgsConstructor
 public class PublishPublicProfileService implements PublishPublicProfileUseCase {
 
+    @NonNull
     private final PublicProfilePort publicProfilePort;
-
-    public PublishPublicProfileService(final PublicProfilePort publicProfilePort) {
-        this.publicProfilePort = Objects.requireNonNull(publicProfilePort, "publicProfilePort must not be null");
-    }
 
     @Override
     public PublicProfile execute(
             final MemberId memberId, final String publicSlug, final List<String> visibleFields, final String seoDescription) {
+        log.debug("PublishPublicProfileService: execute called");
         final PublicProfile existing = publicProfilePort.findByMemberId(memberId);
         final Instant publishedAt = existing.isPublished() ? existing.publishedAt() : Instant.now();
         final PublicProfile updated = new PublicProfile(memberId, publicSlug, visibleFields, seoDescription, publishedAt, existing.viewsCount());

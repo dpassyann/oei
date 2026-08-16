@@ -9,7 +9,9 @@ import global.oei.domain.shared.event.EventPhotoConsent;
 import global.oei.domain.shared.event.EventPhotoConsentPort;
 import global.oei.domain.shared.member.MemberId;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class EventPhotoConsentPersistenceAdapter implements EventPhotoConsentPort {

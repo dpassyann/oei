@@ -11,7 +11,9 @@ import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.security.AuthenticatedIdentity;
 import global.oei.domain.shared.security.SecurityContextPort;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CharterService implements CharterAdapter {

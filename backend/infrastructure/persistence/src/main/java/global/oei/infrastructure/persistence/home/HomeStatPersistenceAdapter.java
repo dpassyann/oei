@@ -7,7 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import global.oei.domain.shared.home.HomeStat;
 import global.oei.domain.shared.home.HomeStatPort;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class HomeStatPersistenceAdapter implements HomeStatPort {

@@ -16,24 +16,27 @@ import global.oei.domain.shared.store.OrderPort;
 import global.oei.domain.shared.store.OrderStatus;
 import global.oei.domain.shared.store.Product;
 import global.oei.domain.shared.store.ProductPort;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Creates a new {@link Order} at {@link OrderStatus#PENDING_PAYMENT}. Every line's price is
  * resolved from the current, active catalog {@link Product} — the client-declared quantity is
  * trusted, its price never is (see the OpenAPI contract summary and {@code 02-paiement.md §1}).
  */
+@Slf4j
+@RequiredArgsConstructor
 public class CreateOrderService implements CreateOrderUseCase {
 
+    @NonNull
     private final ProductPort productPort;
+    @NonNull
     private final OrderPort orderPort;
-
-    public CreateOrderService(final ProductPort productPort, final OrderPort orderPort) {
-        this.productPort = Objects.requireNonNull(productPort, "productPort must not be null");
-        this.orderPort = Objects.requireNonNull(orderPort, "orderPort must not be null");
-    }
 
     @Override
     public Order execute(final MemberId memberId, final List<NewOrderLine> newLines) {
+        log.debug("createOrder: start memberId={} lines={}", memberId, newLines == null ? null : newLines.size());
         Objects.requireNonNull(memberId, "memberId must not be null");
         Objects.requireNonNull(newLines, "newLines must not be null");
         if (newLines.isEmpty()) {
@@ -59,6 +62,7 @@ public class CreateOrderService implements CreateOrderUseCase {
         }
 
         final Order order = new Order(orderId, memberId, lines, total, currency, OrderStatus.PENDING_PAYMENT, Instant.now(), null);
+        log.info("createOrder: order built orderId={} memberId={} total={} currency={}", orderId, memberId, total, currency);
         return orderPort.save(order);
     }
 }

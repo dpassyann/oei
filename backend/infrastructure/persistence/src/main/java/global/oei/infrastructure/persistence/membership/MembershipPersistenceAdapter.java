@@ -1,9 +1,9 @@
 package global.oei.infrastructure.persistence.membership;
 
-import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import global.oei.domain.shared.member.MemberId;
@@ -12,17 +12,13 @@ import global.oei.domain.shared.membership.MembershipLookupPort;
 import global.oei.domain.shared.membership.MembershipStatus;
 import global.oei.domain.shared.membership.MembershipTier;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Maps between {@link MembershipEntity} (JPA) and {@link Membership} (domain) at the
- * persistence boundary. Explicit, hand-written mapping: only six fields, MapStruct would
- * add ceremony without benefit here (see persistence skill reference).
- *
- * <p>Not a {@code @Component}: no classpath component scanning is used in this project
- * (see the spring-boot-ddd-backend skill's "Explicit wiring" rule). This class is
- * instantiated explicitly as a {@code MembershipLookupPort} bean by
- * {@code infrastructure-wiring}'s {@code OeiWiringConfiguration}.</p>
+ * persistence boundary.
  */
+@Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class MembershipPersistenceAdapter implements MembershipLookupPort {
@@ -34,21 +30,36 @@ public class MembershipPersistenceAdapter implements MembershipLookupPort {
         return repository.findByMemberId(memberId.value()).map(MembershipPersistenceAdapter::toDomain);
     }
 
+    /**
+     * Idempotent upsert: if the membership already exists (concurrent provisioning), returns
+     * the existing row. Uses {@link Propagation#REQUIRES_NEW} so that this INSERT runs in its
+     * own transaction — callers can catch {@link org.springframework.dao.DataIntegrityViolationException}
+     * without their outer transaction being marked rollback-only.
+     */
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Membership save(final Membership membership) {
-        final MembershipEntity entity = new MembershipEntity(
-                UUID.randomUUID(),
-                membership.memberId().value(),
-                membership.tier().name(),
-                membership.status().name(),
-                membership.startedAt(),
-                membership.renewedAt(),
-                membership.endsAt());
-        // Use findByMemberId to detect existing row (idempotent upsert)
+        log.debug("Persisting membership for memberId={} tier={} status={}",
+                membership.memberId().value(), membership.tier(), membership.status());
+        // Idempotent upsert: if another concurrent request already inserted the row, return it
         return repository.findByMemberId(membership.memberId().value())
-                .map(MembershipPersistenceAdapter::toDomain)
-                .orElseGet(() -> toDomain(repository.save(entity)));
+                .map(existing -> {
+                    log.debug("Membership already exists for memberId={}, returning existing", membership.memberId().value());
+                    return toDomain(existing);
+                })
+                .orElseGet(() -> {
+                    final MembershipEntity entity = new MembershipEntity(
+                            UUID.randomUUID(),
+                            membership.memberId().value(),
+                            membership.tier().name(),
+                            membership.status().name(),
+                            membership.startedAt(),
+                            membership.renewedAt(),
+                            membership.endsAt());
+                    final MembershipEntity saved = repository.save(entity);
+                    log.info("Membership provisioned for memberId={}", membership.memberId().value());
+                    return toDomain(saved);
+                });
     }
 
     private static Membership toDomain(final MembershipEntity entity) {

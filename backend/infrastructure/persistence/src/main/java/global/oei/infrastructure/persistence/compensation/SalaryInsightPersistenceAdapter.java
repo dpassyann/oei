@@ -9,12 +9,14 @@ import global.oei.domain.shared.network.NetworkSalaryNodeType;
 import global.oei.domain.shared.network.SalaryInsight;
 import global.oei.domain.shared.network.SalaryInsightPort;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Reports the raw aggregate (min/max/count) of {@link CompensationDeclarationEntity} rows
  * attached to one graph node, without applying any anonymization threshold — that business
  * rule belongs to {@code domain-core}'s {@code GetSalaryInsightService}, not here.
  */
+@Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class SalaryInsightPersistenceAdapter implements SalaryInsightPort {

@@ -8,7 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 import global.oei.domain.shared.home.HomePartner;
 import global.oei.domain.shared.home.HomePartnerPort;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class HomePartnerPersistenceAdapter implements HomePartnerPort {

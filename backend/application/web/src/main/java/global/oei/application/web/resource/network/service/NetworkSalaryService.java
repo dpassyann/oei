@@ -9,6 +9,7 @@ import global.oei.domain.shared.network.GetSalaryInsightUseCase;
 import global.oei.domain.shared.network.NetworkSalaryNodeType;
 import global.oei.domain.shared.network.SalaryInsight;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Implements {@link NetworkSalaryAdapter} by delegating to {@link GetSalaryInsightUseCase} —
@@ -20,6 +21,7 @@ import lombok.RequiredArgsConstructor;
  * {@code OeiBackendApplication}'s own {@code @SpringBootApplication} component scan, not
  * registered via a hand-written {@code @Bean} method.</p>
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class NetworkSalaryService implements NetworkSalaryAdapter {

@@ -114,6 +114,7 @@ import global.oei.domain.shared.institution.PartnershipPort;
 import global.oei.domain.shared.institution.RequestEmploymentAffiliationUseCase;
 import global.oei.domain.shared.mail.EmailNotificationPort;
 import global.oei.domain.shared.media.MediaAssetPort;
+import global.oei.domain.shared.media.MediaStorageUrlProvider;
 import global.oei.domain.shared.media.UploadMediaAssetUseCase;
 import global.oei.domain.shared.member.MemberPort;
 import global.oei.domain.shared.member.RegisterAccountUseCase;
@@ -155,6 +156,8 @@ import global.oei.infrastructure.client.stripe.generated.api.RefundsApi;
 import global.oei.infrastructure.mail.EmailAsyncConfiguration;
 import global.oei.infrastructure.mail.EmailNotificationAdapter;
 import global.oei.infrastructure.mail.EmailTemplateConfiguration;
+import global.oei.infrastructure.wiring.adapter.MediaStorageUrlProviderAdapter;
+import global.oei.infrastructure.wiring.config.MediaStorageProperties;
 import global.oei.infrastructure.persistence.badge.BadgeAwardRepository;
 import global.oei.infrastructure.persistence.badge.BadgePersistenceAdapter;
 import global.oei.infrastructure.persistence.badge.BadgeRepository;
@@ -726,8 +729,14 @@ public class OeiWiringConfiguration {
     }
 
     @Bean
-    public UploadMediaAssetUseCase uploadMediaAssetUseCase(final MediaAssetPort mediaAssetPort) {
-        return new UploadMediaAssetService(mediaAssetPort);
+    public MediaStorageUrlProvider mediaStorageUrlProvider(final MediaStorageProperties properties) {
+        return new MediaStorageUrlProviderAdapter(properties);
+    }
+
+    @Bean
+    public UploadMediaAssetUseCase uploadMediaAssetUseCase(final MediaAssetPort mediaAssetPort,
+                                                            final MediaStorageUrlProvider storageUrlProvider) {
+        return new UploadMediaAssetService(mediaAssetPort, storageUrlProvider);
     }
 
     @Bean

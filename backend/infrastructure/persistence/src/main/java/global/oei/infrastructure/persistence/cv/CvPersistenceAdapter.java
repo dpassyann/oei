@@ -11,6 +11,7 @@ import global.oei.domain.shared.cv.CvPort;
 import global.oei.domain.shared.member.MemberId;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import tools.jackson.databind.ObjectMapper;
 
 /**
@@ -20,6 +21,7 @@ import tools.jackson.databind.ObjectMapper;
  * natively supported by {@code jackson-databind}. Jackson 3's {@code jackson-databind}
  * supports {@code java.time} types natively, so no separate date/time module is registered.
  */
+@Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class CvPersistenceAdapter implements CvPort {

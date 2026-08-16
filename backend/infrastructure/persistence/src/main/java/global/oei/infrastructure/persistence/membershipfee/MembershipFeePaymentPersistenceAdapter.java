@@ -12,7 +12,9 @@ import global.oei.domain.shared.membershipfee.MembershipFeePayment;
 import global.oei.domain.shared.membershipfee.MembershipFeePaymentStatus;
 import global.oei.domain.shared.membershipfee.MembershipFeeTier;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class MembershipFeePaymentPersistenceAdapter implements MembershipFeeAccountPort {

@@ -23,11 +23,13 @@ import global.oei.domain.shared.store.OrderPort;
 import global.oei.domain.shared.store.PayOrderUseCase;
 import global.oei.domain.shared.store.ProductPort;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Implements {@link StoreAdapter}: resolves the current member from {@link SecurityContextPort}
  * and delegates to the store use cases/ports, refusing access to another member's order.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class StoreService implements StoreAdapter {

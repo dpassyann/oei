@@ -11,7 +11,9 @@ import global.oei.domain.shared.certification.MemberCertificationGoal;
 import global.oei.domain.shared.certification.MemberCertificationGoalStatus;
 import global.oei.domain.shared.member.MemberId;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class CertificationGoalPersistenceAdapter implements CertificationGoalPort {

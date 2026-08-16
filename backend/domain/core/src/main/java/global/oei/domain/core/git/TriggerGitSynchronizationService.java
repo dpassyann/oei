@@ -2,7 +2,6 @@ package global.oei.domain.core.git;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 import global.oei.domain.shared.git.GitSyncedFile;
@@ -11,6 +10,9 @@ import global.oei.domain.shared.git.GitSynchronization;
 import global.oei.domain.shared.git.GitSynchronizationPort;
 import global.oei.domain.shared.git.GitSynchronizationStatus;
 import global.oei.domain.shared.git.TriggerGitSynchronizationUseCase;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Mocked Git synchronization: no real Git client (clone/pull/checkout) is wired in this
@@ -20,19 +22,18 @@ import global.oei.domain.shared.git.TriggerGitSynchronizationUseCase;
  * any upstream repository), same mocking posture as {@code RenderCvService}/
  * {@code CreateWalletPassService}.
  */
+@Slf4j
+@RequiredArgsConstructor
 public class TriggerGitSynchronizationService implements TriggerGitSynchronizationUseCase {
 
+    @NonNull
     private final GitSynchronizationPort gitSynchronizationPort;
+    @NonNull
     private final GitSyncedFilePort gitSyncedFilePort;
-
-    public TriggerGitSynchronizationService(
-            final GitSynchronizationPort gitSynchronizationPort, final GitSyncedFilePort gitSyncedFilePort) {
-        this.gitSynchronizationPort = Objects.requireNonNull(gitSynchronizationPort, "gitSynchronizationPort must not be null");
-        this.gitSyncedFilePort = Objects.requireNonNull(gitSyncedFilePort, "gitSyncedFilePort must not be null");
-    }
 
     @Override
     public GitSynchronization execute() {
+        log.debug("triggerGitSynchronization: start");
         final String syncId = UUID.randomUUID().toString();
         final Instant now = Instant.now();
         final String commitSha = "mock" + Integer.toHexString(syncId.hashCode());
@@ -43,6 +44,7 @@ public class TriggerGitSynchronizationService implements TriggerGitSynchronizati
         gitSyncedFilePort.saveAll(files);
         final GitSynchronization synchronization =
                 new GitSynchronization(syncId, now, now, GitSynchronizationStatus.SUCCESS, files.size(), List.of());
+        log.info("triggerGitSynchronization: completed syncId={} files={}", syncId, files.size());
         return gitSynchronizationPort.save(synchronization);
     }
 }

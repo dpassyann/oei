@@ -14,6 +14,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import global.oei.infrastructure.security.properties.OeiSecurityProperties;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Converts a validated Keycloak {@link Jwt} into a {@link JwtAuthenticationToken}, mapping
@@ -26,6 +27,7 @@ import lombok.RequiredArgsConstructor;
  * the IAP starter this module takes inspiration from.</p>
  */
 @RequiredArgsConstructor
+@Slf4j
 public class OeiJwtAuthenticationConverter implements Converter<Jwt, AbstractAuthenticationToken> {
 
     @NonNull
@@ -36,6 +38,7 @@ public class OeiJwtAuthenticationConverter implements Converter<Jwt, AbstractAut
         final Collection<SimpleGrantedAuthority> authorities = extractRoles(jwt).stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .toList();
+        log.debug("convertJwt: subject={} authoritiesCount={}", jwt.getSubject(), authorities.size());
         return new JwtAuthenticationToken(jwt, authorities);
     }
 
@@ -48,6 +51,7 @@ public class OeiJwtAuthenticationConverter implements Converter<Jwt, AbstractAut
         Object current = jwt.getClaims();
         for (final String segment : path) {
             if (!(current instanceof Map<?, ?> map)) {
+                log.warn("extractRoles: claim path segment '{}' not found in JWT structure", segment);
                 return Set.of();
             }
             current = map.get(segment);
@@ -58,6 +62,7 @@ public class OeiJwtAuthenticationConverter implements Converter<Jwt, AbstractAut
                     .map(String.class::cast)
                     .collect(Collectors.toUnmodifiableSet());
         }
+        log.warn("extractRoles: claim '{}' is not a collection", properties.getRolesClaim());
         return Set.of();
     }
 }

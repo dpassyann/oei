@@ -15,7 +15,9 @@ import global.oei.domain.shared.verification.VerificationRequest;
 import global.oei.domain.shared.verification.VerificationRequestPort;
 import global.oei.domain.shared.verification.VerificationType;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class VerificationRequestService implements VerificationRequestAdapter {

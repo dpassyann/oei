@@ -12,8 +12,10 @@ import global.oei.domain.shared.content.ContentVersionPort;
 import global.oei.domain.shared.content.ContentWorkflowStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import tools.jackson.databind.ObjectMapper;
 
+@Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class ContentVersionPersistenceAdapter implements ContentVersionPort {

@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import global.oei.domain.shared.member.AccountType;
@@ -11,23 +12,32 @@ import global.oei.domain.shared.member.Member;
 import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.member.MemberPort;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class MemberPersistenceAdapter implements MemberPort {
 
     private final MemberRepository repository;
 
+    /**
+     * Persists a new {@link Member}. Uses {@link Propagation#REQUIRES_NEW} so that this
+     * INSERT runs in its own transaction, independent of any outer transaction. This lets
+     * callers catch {@link org.springframework.dao.DataIntegrityViolationException} (or
+     * {@link org.springframework.orm.ObjectOptimisticLockingFailureException}) without
+     * polluting the outer transaction, enabling a clean "get-or-create" retry on concurrent
+     * first-login provisioning.
+     */
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Member save(final Member member) {
+        log.debug("Persisting member id={} slug={}", member.id().value(), member.publicSlug());
         final MemberEntity entity = new MemberEntity(
                 member.id().value(), member.publicSlug(), member.displayName(), member.legalName(), member.locale(), member.country(),
                 member.accountType().name(), member.createdAt());
         final MemberEntity saved = repository.save(entity);
-        // MemberEntity's id column is @GeneratedValue: re-read it in case the generator
-        // assigned a different value than the domain-generated MemberId, keeping the returned
-        // aggregate's identity consistent with what was actually persisted.
+        log.info("Member provisioned id={}", saved.getId());
         return toDomain(saved);
     }
 

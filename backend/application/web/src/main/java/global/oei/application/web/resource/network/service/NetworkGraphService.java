@@ -11,6 +11,7 @@ import global.oei.domain.shared.network.NetworkExpertPage;
 import global.oei.domain.shared.network.NetworkGraphPort;
 import global.oei.domain.shared.network.NetworkTopicsAndCertifications;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Implements {@link NetworkGraphAdapter} by delegating to {@link NetworkGraphPort} directly
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
  * {@code infrastructure-wiring}'s {@code OeiWiringConfiguration}. No intermediate
  * {@code domain-core} use case: these are plain reads with no business rule to enforce.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class NetworkGraphService implements NetworkGraphAdapter {

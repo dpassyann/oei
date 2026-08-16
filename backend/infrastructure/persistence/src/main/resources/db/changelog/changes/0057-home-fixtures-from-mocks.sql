@@ -124,6 +124,46 @@ INSERT INTO home_domain_area (id, lang, slug, icon, title, description, last_mod
 INSERT INTO home_domain_area (id, lang, slug, icon, title, description, last_modified, display_order) VALUES ('db4603c7-4add-52eb-53fc-9693e8ef1ee9', 'pt', 'ethique-societe', 'users', 'Ética e Sociedade', 'Questionar o impacto do digital sobre o ser humano e a sociedade.', '2026-07-20', 8);
 INSERT INTO home_domain_area (id, lang, slug, icon, title, description, last_modified, display_order) VALUES ('8e6cb4a4-0044-f4ac-f2e7-cee21fcef525', 'pt', 'normes-pratiques', 'book-open', 'Normas e Práticas Profissionais', 'Ligar os padrões técnicos internacionais a uma prática profissional rigorosa e partilhada.', '2026-08-05', 9);
 
+INSERT INTO home_domain_area_detail (
+    id,
+    lang,
+    slug,
+    subtitle,
+    sections_json,
+    related_resources_json,
+    related_news_json,
+    is_content_fallback
+)
+SELECT
+    (
+        substr(md5(hda.lang || ':' || hda.slug || ':fallback-detail'), 1, 8) || '-' ||
+        substr(md5(hda.lang || ':' || hda.slug || ':fallback-detail'), 9, 4) || '-' ||
+        substr(md5(hda.lang || ':' || hda.slug || ':fallback-detail'), 13, 4) || '-' ||
+        substr(md5(hda.lang || ':' || hda.slug || ':fallback-detail'), 17, 4) || '-' ||
+        substr(md5(hda.lang || ':' || hda.slug || ':fallback-detail'), 21, 12)
+    )::uuid,
+    hda.lang,
+    hda.slug,
+    hda.description,
+    jsonb_build_array(
+        jsonb_build_object(
+            'id', 'introduction',
+            'title', 'Introduction',
+            'paragraphs', jsonb_build_array(hda.description)
+        )
+    ),
+    '[]'::jsonb,
+    '[]'::jsonb,
+    TRUE
+FROM home_domain_area hda
+WHERE hda.lang IN ('fr', 'en', 'de', 'es', 'it', 'pt')
+  AND NOT EXISTS (
+      SELECT 1
+      FROM home_domain_area_detail hdad
+      WHERE hdad.lang = hda.lang
+        AND hdad.slug = hda.slug
+  );
+
 INSERT INTO home_news_item (id, lang, title, excerpt, image_url, path, category, published_at) VALUES ('315b8c6e-59d1-23d6-510e-827e26cd9922', 'fr', 'Publication du Livre blanc de l’OEI', 'L''Observatoire publie son premier livre blanc, qui pose les fondations éthiques et professionnelles du métier d''informaticien.', '/assets/news/livre-blanc.svg', '/ressources', 'livre-blanc', '2026-07-15');
 INSERT INTO home_news_item (id, lang, title, excerpt, image_url, path, category, published_at) VALUES ('a115cdb1-f991-3afd-b86e-7ad75f4c86e0', 'fr', 'Lancement du site public de l’OEI', 'Le site de l''Observatoire des Experts Informaticiens ouvre ses portes pour présenter la mission, les domaines d''action et l''espace membre.', '/assets/news/lancement-site.svg', '/a-propos', 'evenement', '2026-07-28');
 INSERT INTO home_news_item (id, lang, title, excerpt, image_url, path, category, published_at) VALUES ('930ec294-648c-cbf4-8555-0a58042e8aa9', 'fr', 'Appel à contribution : rejoignez les groupes de travail thématiques', 'L''OEI invite les professionnels du numérique à contribuer aux groupes de travail sur la cybersécurité, l''IA, l''informatique verte et les autres domaines d''action.', '/assets/news/appel-contribution.svg', '/nos-missions', 'appel-a-contribution', '2026-08-01');

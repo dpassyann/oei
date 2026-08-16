@@ -5,7 +5,9 @@ import org.springframework.transaction.annotation.Transactional;
 import global.oei.domain.shared.charter.EthicalCharterSignature;
 import global.oei.domain.shared.charter.EthicalCharterSignaturePort;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Transactional
 public class EthicalCharterSignaturePersistenceAdapter implements EthicalCharterSignaturePort {

@@ -8,7 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 import global.oei.domain.shared.content.ContentComment;
 import global.oei.domain.shared.content.ContentCommentPort;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class ContentCommentPersistenceAdapter implements ContentCommentPort {

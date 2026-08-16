@@ -47,12 +47,14 @@ import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.security.AuthenticatedIdentity;
 import global.oei.domain.shared.security.SecurityContextPort;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Implements every operation of the Institution bounded context. Every institution-side
  * method resolves "my institution" strictly from the caller's {@code institutionId} JWT
  * claim (ADR 0002 Décision 2, multi-tenant isolation) — never from a client-supplied id.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class InstitutionService implements InstitutionAdapter {

@@ -12,7 +12,9 @@ import global.oei.domain.shared.payment.PaymentMethod;
 import global.oei.domain.shared.payment.PaymentStatus;
 import global.oei.domain.shared.store.PaymentPort;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class PaymentPersistenceAdapter implements PaymentPort {

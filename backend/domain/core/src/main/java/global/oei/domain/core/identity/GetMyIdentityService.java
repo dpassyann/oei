@@ -1,11 +1,13 @@
 package global.oei.domain.core.identity;
 
-import java.util.Objects;
 import java.util.Optional;
 
 import global.oei.domain.shared.security.AuthenticatedIdentity;
 import global.oei.domain.shared.security.GetMyIdentityUseCase;
 import global.oei.domain.shared.security.SecurityContextPort;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Minimal use case proving the end-to-end wiring of {@link SecurityContextPort}:
@@ -15,16 +17,16 @@ import global.oei.domain.shared.security.SecurityContextPort;
  * will build on the same {@link SecurityContextPort} to resolve the acting
  * {@code MemberId} rather than duplicating this lookup.</p>
  */
+@Slf4j
+@RequiredArgsConstructor
 public class GetMyIdentityService implements GetMyIdentityUseCase {
 
+    @NonNull
     private final SecurityContextPort securityContextPort;
-
-    public GetMyIdentityService(final SecurityContextPort securityContextPort) {
-        this.securityContextPort = Objects.requireNonNull(securityContextPort, "securityContextPort must not be null");
-    }
 
     @Override
     public Optional<AuthenticatedIdentity> execute() {
+        log.debug("GetMyIdentityService: execute called");
         return securityContextPort.currentIdentity();
     }
 }

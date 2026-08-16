@@ -12,7 +12,9 @@ import global.oei.domain.shared.verification.VerificationRequestPort;
 import global.oei.domain.shared.verification.VerificationRequestStatus;
 import global.oei.domain.shared.verification.VerificationType;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class VerificationRequestPersistenceAdapter implements VerificationRequestPort {

@@ -9,6 +9,7 @@ import global.oei.domain.shared.profile.ProfessionalProfile;
 import global.oei.domain.shared.profile.ProfileLookupPort;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import tools.jackson.databind.ObjectMapper;
 
 /**
@@ -19,6 +20,7 @@ import tools.jackson.databind.ObjectMapper;
  * canonical constructor + compiled parameter names). Jackson 3's {@code jackson-databind}
  * supports {@code java.time} types natively, so no separate date/time module is registered.
  */
+@Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class ProfessionalProfilePersistenceAdapter implements ProfileLookupPort {
