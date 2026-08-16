@@ -8,10 +8,40 @@ import { SUPPORTED_LANGUAGES, SupportedLanguage } from '../../domain/model/docum
 type TranslationValue = string | readonly string[] | TranslationDict;
 type TranslationDict = { readonly [key: string]: TranslationValue };
 
-// Default language is the visitor's browser language when we support it, English otherwise
-// (never French by default — the site targets an international audience). `navigator` is
-// guarded for non-browser test/SSR environments, where it falls back to English.
+const STORAGE_KEY = 'oei-lang';
+
+// A manually-selected language must survive a full page reload — notably the Keycloak
+// Authorization Code + PKCE redirect round-trip (login/logout genuinely navigate away from the
+// SPA and back), which would otherwise silently reset the UI to the browser-detected language
+// and undo the visitor's own choice. `localStorage` is guarded (private browsing, etc.).
+function readStoredLanguage(): SupportedLanguage | undefined {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored && (SUPPORTED_LANGUAGES as readonly string[]).includes(stored)
+      ? (stored as SupportedLanguage)
+      : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+function storeLanguage(lang: SupportedLanguage): void {
+  try {
+    localStorage.setItem(STORAGE_KEY, lang);
+  } catch {
+    // localStorage unavailable (private browsing, etc.) — not blocking, just not persisted.
+  }
+}
+
+// Default language: a previously-selected language wins, then the visitor's browser language
+// when we support it, English otherwise (never French by default — the site targets an
+// international audience). `navigator` is guarded for non-browser test/SSR environments, where
+// it falls back to English.
 function detectBrowserLanguage(): SupportedLanguage {
+  const stored = readStoredLanguage();
+  if (stored) {
+    return stored;
+  }
   if (typeof navigator === 'undefined') {
     return 'en';
   }
@@ -42,6 +72,7 @@ export class I18nService {
       this.cache.update((map) => new Map(map).set(lang, dict));
     }
     this.currentLang.set(lang);
+    storeLanguage(lang);
   }
 
   translate(key: string): string {
