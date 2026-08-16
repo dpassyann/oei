@@ -1,0 +1,61 @@
+// Colors/typography for buttons, fields and status pills come from the shared `.oei-btn`/
+// `.oei-field`/`.oei-textarea`/`.oei-admin-status` classes (see `src/styles/_forms.scss` and
+// `src/styles/_status-badges.scss`) — this file only keeps layout (gap, grid, table structure).
+.oei-admin-members {
+  &__header {
+    margin-bottom: 1.5rem;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      text-align: left;
+      vertical-align: top;
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid rgba(10, 30, 63, 0.15);
+    }
+  }
+
+  &__email {
+    font-size: 0.8rem;
+    color: #666;
+  }
+
+  &__reason {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 0.25rem;
+    max-width: 220px;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  &__suspend-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 220px;
+
+    .oei-field {
+      font-size: 0.85rem;
+    }
+  }
+
+  &__suspend-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  &__error {
+    color: #7f1d1d;
+    font-size: 0.8rem;
+  }
+}

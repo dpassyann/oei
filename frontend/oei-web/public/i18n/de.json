@@ -278,7 +278,45 @@
       "Eine Weiterbildungspflicht während der gesamten Laufbahn fordern.",
       "Den tatsächlichen Zustand des Berufsstands dokumentieren und veröffentlichen — Vergütung, Trends, technologische Umbrüche.",
       "Ein glaubwürdiger Ansprechpartner für Hochschulen, Unternehmen und langfristig auch für die öffentliche Hand werden."
-    ]
+    ],
+    "tableOfContents": "Inhaltsverzeichnis",
+    "sections": {
+      "recognition": {
+        "title": "Den Berufsstand anerkennen lassen",
+        "paragraphs": [
+          "Software ist zu einer kritischen Infrastruktur geworden — sie steuert Krankenhäuser, Banken, Verkehrssysteme, Stromnetze —, doch der Berufsstand, der sie entwickelt, bleibt in den meisten Ländern ohne formale Anerkennung: kein geschützter Titel, kein gemeinsamer Rahmen, keine Vertretung gegenüber Hochschulen, Unternehmen oder Behörden. Die erste Aufgabe der OEI ist es, diese Lücke zu schließen und geduldig die Legitimität aufzubauen, die eines Tages diesen Dialog ermöglichen wird.",
+          "Diese Anerkennung ist kein Selbstzweck: Sie ist die Voraussetzung dafür, dass IT-Experten, die kritische Verantwortung tragen, ihre Kompetenz anerkannt, ihre Stimme gehört und ihre berechtigte Ablehnung gefährlicher Anweisungen geschützt sehen — zum gemeinsamen Nutzen der Fachleute und der Öffentlichkeit, die von ihren Systemen abhängt."
+        ]
+      },
+      "standards": {
+        "title": "Kompetenzstandards festlegen",
+        "paragraphs": [
+          "Wir wollen präzise und öffentlich beschreiben, was ein IT-Experte ist: einen Kompetenz- und Stufenrahmen — Praktiker, Ingenieur, Architekt, Experte, Senior-Experte, Fellow —, der die dauerhafte Beherrschung einer Disziplin von der bloßen Kenntnis eines aktuellen kommerziellen Produkts unterscheidet.",
+          "Dieser Rahmen wird gemeinsam mit akademischen Partnern entwickelt und nach Methoden bewertet, die nachgewiesene Kompetenzen statt auswendig gelernten Wissens messen — in völliger Unabhängigkeit von Softwareanbietern, denen gegenüber wir distanziert bleiben wollen."
+        ]
+      },
+      "ethics": {
+        "title": "Eine gemeinsame Berufsethik tragen",
+        "paragraphs": [
+          "Ein Berufsstand, der die Sicherheit, die Privatsphäre und die Freiheiten von Millionen Menschen direkt beeinflusst, braucht einen gemeinsamen Verhaltenskodex, inspiriert von Berufen mit hoher Verantwortung — Medizin, Ingenieurwesen, Recht — und angepasst an die digitalen Gegebenheiten: technische Sorgfalt, Ablehnung gefährlicher Anweisungen, Datenschutz, Transparenz über die Grenzen eines Systems.",
+          "Dieser Kodex hat nur Wert, wenn er geteilt und gelebt wird: Er wird öffentlich diskutiert, anhand von Rückmeldungen aus der Praxis überarbeitet und soll zu einem gemeinsamen Bezugspunkt für jede Fachperson werden, die ihre Verantwortung mit Sorgfalt wahrnehmen möchte."
+        ]
+      },
+      "network": {
+        "title": "Ein Netzwerk der Transparenz und gegenseitigen Hilfe schaffen",
+        "paragraphs": [
+          "Isoliert haben IT-Experten kaum Möglichkeiten, ihre Praxis, Vergütung oder Arbeitsbedingungen mit denen ihrer Kollegen zu vergleichen. Wir bauen ein Berufsnetzwerk auf — das Neuronale Netzwerk der OEI —, das Experten miteinander verbindet, den tatsächlichen Zustand des Berufsstands öffentlich dokumentiert (Vergütung, Trends, technologische Umbrüche) und gegenseitige Hilfe über Fachgebiete und Generationen hinweg ermöglicht.",
+          "Diese kollektive Transparenz ist ein individueller Schutz: Sie gibt jeder Fachperson die Mittel, ihre Laufbahn einzuordnen, in Kenntnis der Sachlage zu verhandeln und sich auf eine Gemeinschaft zu stützen, statt den raschen Wandlungen der Branche allein gegenüberzustehen."
+        ]
+      },
+      "governance": {
+        "title": "Eine internationale Governance aufbauen",
+        "paragraphs": [
+          "Eine Organisation, die Sorgfalt fördert, muss selbst vorbildlich sein. Die OEI baut auf einer zweistufigen Governance auf: einer Generalversammlung und einem Verwaltungsrat, die die Souveränität der Mitglieder garantieren, sowie thematischen Räten (Ethik, Cybersicherheit, künstliche Intelligenz, Cloud, grüne IT, Weiterbildung), die die inhaltliche Arbeit leisten.",
+          "Diese Governance entwickelt sich schrittweise: Sie beginnt als leichte, transparente und sparsame Vereinsform und wird einen Akkreditierungsmechanismus oder eine Disziplinarkammer erst aktivieren, wenn der Kompetenzrahmen selbst ausgereift ist — denn eine Akkreditierung wird nicht vergeben, bevor definiert ist, was sie bescheinigt, und eine junge Organisation beansprucht keine Disziplinarbefugnis, die sie sich noch nicht verdient hat."
+        ]
+      }
+    }
   },
   "planDuSite": {
     "title": "Sitemap",
@@ -1430,6 +1468,42 @@
           "Veröffentlichungsplanung"
         ]
       }
+    },
+    "members": {
+      "list": {
+        "title": "Mitglieder",
+        "intro": "Beitragsstatus und administrative Aktionen für Mitglieder.",
+        "empty": "Noch keine Mitglieder.",
+        "columns": {
+          "name": "Name",
+          "country": "Land",
+          "duesStatus": "Beitrag",
+          "membershipStatus": "Status"
+        }
+      },
+      "duesStatus": {
+        "PAID": "Aktuell",
+        "UNPAID": "Unbezahlt",
+        "EXPIRED": "Abgelaufen"
+      },
+      "membershipStatus": {
+        "ACTIVE": "Aktiv",
+        "SUSPENDED": "Gesperrt",
+        "EXCEPTIONAL_FREE": "Ausnahme (kostenlos)",
+        "EXCEPTIONAL_HONORARY": "Ehrenmitglied"
+      },
+      "actions": {
+        "resyncPayment": "Zahlung neu synchronisieren",
+        "suspend": "Sperren",
+        "liftSuspension": "Sperre aufheben",
+        "setExceptionalFree": "Ausnahmestatus kostenlos setzen",
+        "setExceptionalHonorary": "Als Ehrenmitglied setzen"
+      },
+      "suspendReasonLabel": "Grund der Sperrung (erforderlich)",
+      "suspendReasonRequired": "Ein Grund ist erforderlich, um ein Mitglied zu sperren.",
+      "confirmSuspend": "Sperrung bestätigen",
+      "cancel": "Abbrechen",
+      "actionError": "Die Aktion konnte nicht durchgeführt werden."
     }
   },
   "network": {

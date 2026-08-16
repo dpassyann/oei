@@ -278,7 +278,45 @@
       "Défendre une exigence de formation continue tout au long de la carrière.",
       "Documenter et publier l'état réel de la profession — rémunérations, tendances, ruptures technologiques.",
       "Devenir un interlocuteur crédible des universités, des entreprises et, à terme, des pouvoirs publics."
-    ]
+    ],
+    "tableOfContents": "Sommaire",
+    "sections": {
+      "recognition": {
+        "title": "Faire reconnaître la profession",
+        "paragraphs": [
+          "Le logiciel est devenu une infrastructure critique — il pilote des hôpitaux, des banques, des transports, des réseaux électriques — mais la profession qui le conçoit reste, dans la plupart des pays, sans reconnaissance formelle : pas de titre protégé, pas de référentiel commun, pas d'instance représentative face aux universités, aux entreprises ou aux pouvoirs publics. L'OEI se donne pour première mission de combler ce vide, en construisant patiemment la légitimité qui permettra, un jour, d'ouvrir ce dialogue.",
+          "Cette reconnaissance n'est pas une fin en soi : elle est la condition pour que les experts informaticiens qui assument une responsabilité critique puissent voir leur compétence identifiée, leur parole entendue et leur refus légitime d'instructions dangereuses protégé — au bénéfice conjoint des professionnels et du public qui dépend de leurs systèmes."
+        ]
+      },
+      "standards": {
+        "title": "Établir des standards de compétence",
+        "paragraphs": [
+          "Nous voulons décrire, avec précision et de façon publique, ce qu'est un expert informaticien : un référentiel de compétences et de niveaux — Praticien, Ingénieur, Architecte, Expert, Expert senior, Fellow — qui distingue la maîtrise durable d'une discipline de la simple connaissance d'un produit commercial du moment.",
+          "Ce référentiel sera construit avec des partenaires académiques et évalué selon des méthodes qui mesurent des compétences démontrées plutôt que des connaissances mémorisées, en toute indépendance vis-à-vis des éditeurs de logiciels dont nous entendons rester détachés."
+        ]
+      },
+      "ethics": {
+        "title": "Porter une déontologie commune",
+        "paragraphs": [
+          "Une profession qui influence directement la sécurité, la vie privée et les libertés de millions de personnes a besoin d'un code de déontologie commun, inspiré des professions à haute responsabilité — médecine, ingénierie, droit — adapté aux réalités du numérique : rigueur technique, refus des instructions dangereuses, protection des données, transparence sur les limites d'un système.",
+          "Ce code n'a de valeur que partagé et vécu : il sera débattu publiquement, révisé au fil des retours du terrain, et destiné à devenir un repère commun pour tout professionnel qui souhaite exercer ses responsabilités avec exigence."
+        ]
+      },
+      "network": {
+        "title": "Créer un réseau de transparence et d'entraide",
+        "paragraphs": [
+          "Isolés, les experts informaticiens ont peu de moyens de comparer leur pratique, leur rémunération ou leurs conditions à celles de leurs pairs. Nous construisons un réseau professionnel — le Réseau Neuronal de l'OEI — qui relie les experts entre eux, documente publiquement l'état réel de la profession (rémunérations, tendances, ruptures technologiques) et permet l'entraide entre spécialités et générations.",
+          "Cette transparence collective est une protection individuelle : elle donne à chaque professionnel les moyens de situer sa carrière, de négocier en connaissance de cause et de s'appuyer sur une communauté plutôt que d'affronter seul les mutations rapides du secteur."
+        ]
+      },
+      "governance": {
+        "title": "Construire une gouvernance internationale",
+        "paragraphs": [
+          "Une organisation qui promeut la rigueur doit être elle-même exemplaire. L'OEI se construit sur une gouvernance à deux niveaux : une assemblée générale et un conseil d'administration garants de la souveraineté des membres, et des conseils thématiques (éthique, cybersécurité, intelligence artificielle, cloud, informatique verte, formation) qui produisent le travail de fond.",
+          "Cette gouvernance progresse par étapes : elle commence sous une forme associative légère, transparente et sobre, et n'activera un mécanisme d'agrément ou une chambre disciplinaire que lorsque le référentiel de compétences sera lui-même mature — car on ne délivre pas un agrément avant d'avoir défini ce qu'il atteste, et une organisation naissante ne s'arroge pas un pouvoir disciplinaire qu'elle n'a pas encore mérité."
+        ]
+      }
+    }
   },
   "planDuSite": {
     "title": "Plan du site",
@@ -1436,6 +1474,42 @@
           "Planification de publication"
         ]
       }
+    },
+    "members": {
+      "list": {
+        "title": "Membres",
+        "intro": "Statut de cotisation et actions administratives sur les membres.",
+        "empty": "Aucun membre pour le moment.",
+        "columns": {
+          "name": "Nom",
+          "country": "Pays",
+          "duesStatus": "Cotisation",
+          "membershipStatus": "Statut"
+        }
+      },
+      "duesStatus": {
+        "PAID": "À jour",
+        "UNPAID": "Impayée",
+        "EXPIRED": "Expirée"
+      },
+      "membershipStatus": {
+        "ACTIVE": "Actif",
+        "SUSPENDED": "Suspendu",
+        "EXCEPTIONAL_FREE": "Exceptionnel (gratuit)",
+        "EXCEPTIONAL_HONORARY": "Membre d'honneur"
+      },
+      "actions": {
+        "resyncPayment": "Resynchroniser le paiement",
+        "suspend": "Suspendre",
+        "liftSuspension": "Lever la suspension",
+        "setExceptionalFree": "Statut exceptionnel gratuit",
+        "setExceptionalHonorary": "Membre d'honneur"
+      },
+      "suspendReasonLabel": "Raison de la suspension (obligatoire)",
+      "suspendReasonRequired": "Une raison est obligatoire pour suspendre un membre.",
+      "confirmSuspend": "Confirmer la suspension",
+      "cancel": "Annuler",
+      "actionError": "L'action n'a pas pu être effectuée."
     }
   },
   "network": {

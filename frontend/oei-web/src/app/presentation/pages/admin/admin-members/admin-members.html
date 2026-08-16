@@ -1,0 +1,111 @@
+<section class="oei-admin-members">
+  <header class="oei-admin-members__header">
+    <h1>{{ i18n.translate('admin.members.list.title') }}</h1>
+    <p>{{ i18n.translate('admin.members.list.intro') }}</p>
+  </header>
+
+  @if (members().length === 0) {
+    <p>{{ i18n.translate('admin.members.list.empty') }}</p>
+  } @else {
+    <table class="oei-admin-members__table">
+      <thead>
+        <tr>
+          <th>{{ i18n.translate('admin.members.list.columns.name') }}</th>
+          <th>{{ i18n.translate('admin.members.list.columns.country') }}</th>
+          <th>{{ i18n.translate('admin.members.list.columns.duesStatus') }}</th>
+          <th>{{ i18n.translate('admin.members.list.columns.membershipStatus') }}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (member of members(); track member.id) {
+          <tr>
+            <td>
+              {{ member.displayName }}
+              <div class="oei-admin-members__email">{{ member.email }}</div>
+            </td>
+            <td>{{ member.country }}</td>
+            <td>
+              <span class="oei-admin-status" [attr.data-status]="member.duesStatus">
+                {{ i18n.translate('admin.members.duesStatus.' + member.duesStatus) }}
+              </span>
+            </td>
+            <td>
+              <span class="oei-admin-status" [attr.data-status]="member.membershipStatus">
+                {{ i18n.translate('admin.members.membershipStatus.' + member.membershipStatus) }}
+              </span>
+              @if (member.suspendedReason) {
+                <div class="oei-admin-members__reason">{{ member.suspendedReason }}</div>
+              }
+            </td>
+            <td class="oei-admin-members__actions">
+              <button
+                type="button"
+                class="oei-btn oei-btn--secondary"
+                [disabled]="busyId() === member.id"
+                (click)="resyncPayment(member)"
+              >
+                {{ i18n.translate('admin.members.actions.resyncPayment') }}
+              </button>
+
+              @if (member.membershipStatus === 'SUSPENDED') {
+                <button
+                  type="button"
+                  class="oei-btn oei-btn--primary"
+                  [disabled]="busyId() === member.id"
+                  (click)="liftSuspension(member)"
+                >
+                  {{ i18n.translate('admin.members.actions.liftSuspension') }}
+                </button>
+              } @else if (suspendingId() === member.id) {
+                <form class="oei-admin-members__suspend-form" (submit)="$event.preventDefault(); confirmSuspend(member)">
+                  <label class="oei-field">
+                    {{ i18n.translate('admin.members.suspendReasonLabel') }}
+                    <textarea class="oei-textarea" [ngModel]="suspendReason()" (ngModelChange)="suspendReason.set($event)" name="suspendReason" required></textarea>
+                  </label>
+                  @if (suspendValidationError()) {
+                    <p class="oei-admin-members__error">{{ i18n.translate('admin.members.suspendReasonRequired') }}</p>
+                  }
+                  <div class="oei-admin-members__suspend-actions">
+                    <button type="submit" class="oei-btn oei-btn--primary">{{ i18n.translate('admin.members.confirmSuspend') }}</button>
+                    <button type="button" class="oei-btn oei-btn--text" (click)="cancelSuspend()">{{ i18n.translate('admin.members.cancel') }}</button>
+                  </div>
+                </form>
+              } @else {
+                <button
+                  type="button"
+                  class="oei-btn oei-btn--secondary"
+                  [disabled]="busyId() === member.id"
+                  (click)="startSuspend(member)"
+                >
+                  {{ i18n.translate('admin.members.actions.suspend') }}
+                </button>
+              }
+
+              <button
+                type="button"
+                class="oei-btn oei-btn--text"
+                [disabled]="busyId() === member.id"
+                (click)="setExceptionalStatus(member, 'EXCEPTIONAL_FREE')"
+              >
+                {{ i18n.translate('admin.members.actions.setExceptionalFree') }}
+              </button>
+              <button
+                type="button"
+                class="oei-btn oei-btn--text"
+                [disabled]="busyId() === member.id"
+                (click)="setExceptionalStatus(member, 'EXCEPTIONAL_HONORARY')"
+              >
+                {{ i18n.translate('admin.members.actions.setExceptionalHonorary') }}
+              </button>
+
+              @if (actionErrorId() === member.id) {
+                <p class="oei-admin-members__error">{{ i18n.translate('admin.members.actionError') }}</p>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</section>

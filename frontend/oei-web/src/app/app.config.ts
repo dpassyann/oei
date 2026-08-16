@@ -180,6 +180,12 @@ import { AdminAuditLogApiAdapter } from './infrastructure/adapter/admin-audit-lo
 import { ADMIN_INSTITUTIONS_PORT } from './domain/port/admin/admin-institutions.port';
 import { AdminInstitutionsMockAdapter } from './infrastructure/adapter/admin-institutions-mock.adapter';
 import { AdminInstitutionsApiAdapter } from './infrastructure/adapter/admin-institutions-api.adapter';
+import { ADMIN_CERTIFICATION_CATALOG_PORT } from './domain/port/admin/admin-certification-catalog.port';
+import { AdminCertificationCatalogMockAdapter } from './infrastructure/adapter/admin-certification-catalog-mock.adapter';
+import { AdminCertificationCatalogApiAdapter } from './infrastructure/adapter/admin-certification-catalog-api.adapter';
+import { ADMIN_MEMBERS_PORT } from './domain/port/admin/admin-members.port';
+import { AdminMembersMockAdapter } from './infrastructure/adapter/admin-members-mock.adapter';
+import { AdminMembersApiAdapter } from './infrastructure/adapter/admin-members-api.adapter';
 
 // Professional Neural Network canvas explorer (`/reseau-neuronal`) — progressive domain →
 // topics/certifications → paginated experts loading, see `NetworkGraphPort`'s doc comment.
@@ -508,6 +514,17 @@ export const appConfig: ApplicationConfig = {
     {
       provide: ADMIN_INSTITUTIONS_PORT,
       useFactory: () => (inject(RuntimeConfig).isMock() ? inject(AdminInstitutionsMockAdapter) : inject(AdminInstitutionsApiAdapter)),
+    },
+    {
+      provide: ADMIN_MEMBERS_PORT,
+      useFactory: () => (inject(RuntimeConfig).isMock() ? inject(AdminMembersMockAdapter) : inject(AdminMembersApiAdapter)),
+    },
+    {
+      provide: ADMIN_CERTIFICATION_CATALOG_PORT,
+      useFactory: () =>
+        inject(RuntimeConfig).isMock()
+          ? inject(AdminCertificationCatalogMockAdapter)
+          : inject(AdminCertificationCatalogApiAdapter),
     },
     {
       provide: CERTIFICATION_GOAL_PORT,

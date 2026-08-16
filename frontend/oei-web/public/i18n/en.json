@@ -278,7 +278,45 @@
       "Advocate for a continuing-education requirement throughout one's career.",
       "Document and publish the real state of the profession — pay, trends, technological disruptions.",
       "Become a credible counterpart for universities, businesses and, eventually, public authorities."
-    ]
+    ],
+    "tableOfContents": "Contents",
+    "sections": {
+      "recognition": {
+        "title": "Getting the profession recognized",
+        "paragraphs": [
+          "Software has become critical infrastructure — it runs hospitals, banks, transport systems, power grids — yet the profession that builds it remains, in most countries, without formal recognition: no protected title, no shared framework, no representative body facing universities, businesses or public authorities. The OEI's first mission is to fill that gap, patiently building the legitimacy that will one day allow that dialogue to open.",
+          "This recognition is not an end in itself: it is the condition for IT experts who carry critical responsibility to have their competence identified, their voice heard, and their legitimate refusal of dangerous instructions protected — to the joint benefit of professionals and the public that depends on their systems."
+        ]
+      },
+      "standards": {
+        "title": "Establishing competency standards",
+        "paragraphs": [
+          "We want to describe, precisely and publicly, what an IT expert is: a competency and level framework — Practitioner, Engineer, Architect, Expert, Senior Expert, Fellow — that distinguishes durable mastery of a discipline from mere knowledge of the commercial product of the moment.",
+          "This framework will be built with academic partners and assessed through methods that measure demonstrated competence rather than memorized knowledge, in full independence from the software vendors we intend to remain detached from."
+        ]
+      },
+      "ethics": {
+        "title": "Carrying a shared code of ethics",
+        "paragraphs": [
+          "A profession that directly influences the safety, privacy and freedoms of millions of people needs a shared code of ethics, inspired by high-accountability professions — medicine, engineering, law — adapted to digital realities: technical rigor, refusal of dangerous instructions, data protection, transparency about a system's limitations.",
+          "This code only has value if it is shared and lived: it will be debated publicly, revised as feedback comes in from the field, and meant to become a common reference for every professional who wants to exercise their responsibilities with rigor."
+        ]
+      },
+      "network": {
+        "title": "Building a network of transparency and mutual support",
+        "paragraphs": [
+          "Left isolated, IT experts have few ways to compare their practice, pay or working conditions with their peers. We are building a professional network — the OEI Neural Network — that connects experts with one another, publicly documents the real state of the profession (pay, trends, technological disruptions) and enables mutual support across specialties and generations.",
+          "This collective transparency is an individual protection: it gives every professional the means to place their career, negotiate with full knowledge, and rely on a community rather than face the sector's rapid changes alone."
+        ]
+      },
+      "governance": {
+        "title": "Building an international governance",
+        "paragraphs": [
+          "An organization that promotes rigor must itself be exemplary. The OEI is built on a two-tier governance: a general assembly and a board of directors that guarantee members' sovereignty, and thematic councils (ethics, cybersecurity, artificial intelligence, cloud, green IT, training) that produce the substantive work.",
+          "This governance advances in stages: it starts as a light, transparent and frugal association, and will only activate an accreditation mechanism or a disciplinary chamber once the competency framework is itself mature — because no accreditation should be granted before defining what it attests to, and a nascent organization does not claim a disciplinary power it has not yet earned."
+        ]
+      }
+    }
   },
   "planDuSite": {
     "title": "Sitemap",
@@ -1436,6 +1474,42 @@
           "Publication scheduling"
         ]
       }
+    },
+    "members": {
+      "list": {
+        "title": "Members",
+        "intro": "Dues status and administrative actions on members.",
+        "empty": "No members yet.",
+        "columns": {
+          "name": "Name",
+          "country": "Country",
+          "duesStatus": "Dues",
+          "membershipStatus": "Status"
+        }
+      },
+      "duesStatus": {
+        "PAID": "Up to date",
+        "UNPAID": "Unpaid",
+        "EXPIRED": "Expired"
+      },
+      "membershipStatus": {
+        "ACTIVE": "Active",
+        "SUSPENDED": "Suspended",
+        "EXCEPTIONAL_FREE": "Exceptional (free)",
+        "EXCEPTIONAL_HONORARY": "Honorary member"
+      },
+      "actions": {
+        "resyncPayment": "Resync payment",
+        "suspend": "Suspend",
+        "liftSuspension": "Lift suspension",
+        "setExceptionalFree": "Set exceptional free status",
+        "setExceptionalHonorary": "Set honorary member"
+      },
+      "suspendReasonLabel": "Suspension reason (required)",
+      "suspendReasonRequired": "A reason is required to suspend a member.",
+      "confirmSuspend": "Confirm suspension",
+      "cancel": "Cancel",
+      "actionError": "The action could not be completed."
     }
   },
   "network": {

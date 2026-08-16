@@ -13,15 +13,16 @@
 //   <span class="oei-cms-status" [attr.data-status]="content.status">…</span>
 //   <span class="oei-admin-status" [attr.data-status]="institution.status">…</span>
 //
-// Status families (covers `ContentWorkflowStatus`, `ArticleSubmissionStatus` and
-// `InstitutionStatus` — see `domain/model/cms/content.model.ts`,
-// `domain/model/article/article-submission.ts`, `domain/model/institution/*`):
+// Status families (covers `ContentWorkflowStatus`, `ArticleSubmissionStatus`,
+// `InstitutionStatus` and `AdminMemberDuesStatus`/`AdminMemberStatus` — see
+// `domain/model/cms/content.model.ts`, `domain/model/article/article-submission.ts`,
+// `domain/model/institution/*`, `domain/model/admin/admin-member.ts`):
 //   - neutral/draft (grey): DRAFT, pending-ish placeholders
 //   - in progress (amber): IN_REVIEW, LEGAL_REVIEW, GOVERNANCE_REVIEW, TRANSLATION_PENDING,
-//     CONTACTED, DOCUMENTS_PENDING, pending
-//   - positive (green): APPROVED, ACTIVE, PUBLISHED, approved
-//   - scheduled (blue): SCHEDULED
-//   - negative (red): REJECTED, SUSPENDED, REVOKED, rejected
+//     CONTACTED, DOCUMENTS_PENDING, pending, UNPAID
+//   - positive (green): APPROVED, ACTIVE, PUBLISHED, approved, PAID
+//   - scheduled (blue): SCHEDULED, EXCEPTIONAL_FREE, EXCEPTIONAL_HONORARY
+//   - negative (red): REJECTED, SUSPENDED, REVOKED, rejected, EXPIRED
 //   - archived (muted navy): ARCHIVED
 // =============================================================================================
 
@@ -54,7 +55,8 @@
   &[data-status='MODERATOR_REVIEW'],
   &[data-status='CHANGES_REQUESTED'],
   &[data-status='PROPOSED'],
-  &[data-status='IN_CONSULTATION'] {
+  &[data-status='IN_CONSULTATION'],
+  &[data-status='UNPAID'] {
     background: #fdf1dc;
     color: #8a5a00;
   }
@@ -63,13 +65,16 @@
   &[data-status='ACTIVE'],
   &[data-status='PUBLISHED'],
   &[data-status='ACCEPTED'],
-  &[data-status='approved'] {
+  &[data-status='approved'],
+  &[data-status='PAID'] {
     background: #e6f4ea;
     color: #1e6b34;
   }
 
   &[data-status='SCHEDULED'],
-  &[data-status='MERGED'] {
+  &[data-status='MERGED'],
+  &[data-status='EXCEPTIONAL_FREE'],
+  &[data-status='EXCEPTIONAL_HONORARY'] {
     background: #e5edff;
     color: #1d3f9e;
   }
@@ -78,7 +83,8 @@
   &[data-status='SUSPENDED'],
   &[data-status='REVOKED'],
   &[data-status='CANCELLED'],
-  &[data-status='rejected'] {
+  &[data-status='rejected'],
+  &[data-status='EXPIRED'] {
     background: #fde8e8;
     color: #a11f2a;
   }

@@ -278,7 +278,45 @@
       "Defender uma exigência de formação contínua ao longo de toda a carreira.",
       "Documentar e publicar o estado real da profissão — remunerações, tendências, rupturas tecnológicas.",
       "Tornar-se um interlocutor confiável junto a universidades, empresas e, no futuro, poderes públicos."
-    ]
+    ],
+    "tableOfContents": "Sumário",
+    "sections": {
+      "recognition": {
+        "title": "Conquistar o reconhecimento da profissão",
+        "paragraphs": [
+          "O software tornou-se uma infraestrutura crítica — comanda hospitais, bancos, transportes, redes elétricas —, mas a profissão que o desenvolve permanece, na maioria dos países, sem reconhecimento formal: sem título protegido, sem referencial comum, sem instância representativa perante universidades, empresas ou poderes públicos. A primeira missão da OEI é preencher essa lacuna, construindo pacientemente a legitimidade que um dia permitirá abrir esse diálogo.",
+          "Esse reconhecimento não é um fim em si mesmo: é a condição para que os especialistas em informática que assumem responsabilidade crítica vejam sua competência identificada, sua voz ouvida e sua recusa legítima de instruções perigosas protegida — em benefício conjunto dos profissionais e do público que depende de seus sistemas."
+        ]
+      },
+      "standards": {
+        "title": "Estabelecer padrões de competência",
+        "paragraphs": [
+          "Queremos descrever, com precisão e de forma pública, o que é um especialista em informática: um referencial de competências e níveis — Praticante, Engenheiro, Arquiteto, Especialista, Especialista sênior, Fellow — que distinga o domínio duradouro de uma disciplina do simples conhecimento de um produto comercial do momento.",
+          "Esse referencial será construído com parceiros acadêmicos e avaliado por métodos que medem competências demonstradas em vez de conhecimentos memorizados, com total independência em relação aos fornecedores de software dos quais pretendemos permanecer afastados."
+        ]
+      },
+      "ethics": {
+        "title": "Sustentar uma deontologia comum",
+        "paragraphs": [
+          "Uma profissão que influencia diretamente a segurança, a privacidade e as liberdades de milhões de pessoas precisa de um código deontológico comum, inspirado nas profissões de alta responsabilidade — medicina, engenharia, direito — adaptado às realidades digitais: rigor técnico, recusa de instruções perigosas, proteção de dados, transparência sobre os limites de um sistema.",
+          "Esse código só tem valor se for compartilhado e vivido: será debatido publicamente, revisado com base nos retornos do campo, e destinado a se tornar uma referência comum para todo profissional que deseje exercer suas responsabilidades com exigência."
+        ]
+      },
+      "network": {
+        "title": "Criar uma rede de transparência e ajuda mútua",
+        "paragraphs": [
+          "Isolados, os especialistas em informática têm poucos meios de comparar sua prática, remuneração ou condições com as de seus pares. Estamos construindo uma rede profissional — a Rede Neural da OEI — que conecta especialistas entre si, documenta publicamente o estado real da profissão (remunerações, tendências, rupturas tecnológicas) e permite a ajuda mútua entre especialidades e gerações.",
+          "Essa transparência coletiva é uma proteção individual: dá a cada profissional os meios de situar sua carreira, negociar com pleno conhecimento de causa e apoiar-se em uma comunidade em vez de enfrentar sozinho as rápidas mudanças do setor."
+        ]
+      },
+      "governance": {
+        "title": "Construir uma governança internacional",
+        "paragraphs": [
+          "Uma organização que promove o rigor deve ser ela própria exemplar. A OEI se constrói sobre uma governança de dois níveis: uma assembleia geral e um conselho de administração que garantem a soberania dos membros, e conselhos temáticos (ética, cibersegurança, inteligência artificial, nuvem, TI verde, formação) que produzem o trabalho de fundo.",
+          "Essa governança avança por etapas: começa sob uma forma associativa leve, transparente e sóbria, e só ativará um mecanismo de credenciamento ou uma câmara disciplinar quando o referencial de competências for, por sua vez, maduro — pois não se concede um credenciamento antes de definir o que ele atesta, e uma organização nascente não se arroga um poder disciplinar que ainda não conquistou."
+        ]
+      }
+    }
   },
   "planDuSite": {
     "title": "Mapa do site",
@@ -1430,6 +1468,42 @@
           "Agendamento de publicação"
         ]
       }
+    },
+    "members": {
+      "list": {
+        "title": "Membros",
+        "intro": "Estado da quota e ações administrativas sobre os membros.",
+        "empty": "Ainda não há membros.",
+        "columns": {
+          "name": "Nome",
+          "country": "País",
+          "duesStatus": "Quota",
+          "membershipStatus": "Estado"
+        }
+      },
+      "duesStatus": {
+        "PAID": "Em dia",
+        "UNPAID": "Não paga",
+        "EXPIRED": "Expirada"
+      },
+      "membershipStatus": {
+        "ACTIVE": "Ativo",
+        "SUSPENDED": "Suspenso",
+        "EXCEPTIONAL_FREE": "Excecional (gratuito)",
+        "EXCEPTIONAL_HONORARY": "Membro honorário"
+      },
+      "actions": {
+        "resyncPayment": "Ressincronizar pagamento",
+        "suspend": "Suspender",
+        "liftSuspension": "Levantar suspensão",
+        "setExceptionalFree": "Definir estado excecional gratuito",
+        "setExceptionalHonorary": "Definir membro honorário"
+      },
+      "suspendReasonLabel": "Motivo da suspensão (obrigatório)",
+      "suspendReasonRequired": "É necessário um motivo para suspender um membro.",
+      "confirmSuspend": "Confirmar suspensão",
+      "cancel": "Cancelar",
+      "actionError": "Não foi possível concluir a ação."
     }
   },
   "network": {

@@ -45,6 +45,7 @@ import { adminGuard } from './presentation/auth/admin.guard';
 import { AdminLayout } from './presentation/pages/admin/admin-layout/admin-layout';
 import { AdminDashboard } from './presentation/pages/admin/admin-dashboard/admin-dashboard';
 import { AdminInstitutionsList } from './presentation/pages/admin/admin-institutions-list/admin-institutions-list';
+import { AdminMembers } from './presentation/pages/admin/admin-members/admin-members';
 import { AdminInstitutionNew } from './presentation/pages/admin/admin-institution-new/admin-institution-new';
 import { AdminInstitutionDetail } from './presentation/pages/admin/admin-institution-detail/admin-institution-detail';
 import { AdminAuditLogPage } from './presentation/pages/admin/admin-audit-log/admin-audit-log';
@@ -176,6 +177,7 @@ export const routes: Routes = [
       { path: 'institutions', component: AdminInstitutionsList },
       { path: 'institutions/new', component: AdminInstitutionNew },
       { path: 'institutions/:id', component: AdminInstitutionDetail },
+      { path: 'members', component: AdminMembers },
       { path: 'audit-log', component: AdminAuditLogPage },
       { path: 'menus', component: AdminComingSoon, data: { section: 'menus' } },
       { path: 'traductions', component: AdminComingSoon, data: { section: 'translations' } },
