@@ -1,19 +1,21 @@
 # -----------------------------------------------------------------------------------------
-# HAND-AUTHORED, REDUCED SUBSET OF THE STRIPE API — NOT THE VENDOR'S OFFICIAL SPEC.
+# REDUCED SUBSET OF THE STRIPE API — FIELD-VERIFIED AGAINST THE REAL VENDOR SPEC.
 #
-# Stripe's official OpenAPI spec (https://raw.githubusercontent.com/stripe/openapi) is
-# hundreds of endpoints/schemas. This environment had no network access to fetch it, so this
-# file was hand-written to contain ONLY the four operations the OEI store feature actually
-# needs, modeled as closely as practical on Stripe's real PaymentIntents/Refunds API shape
-# (form-encoded requests, "id"/"object"/"status" response envelope) as of Stripe API version
-# "2024-*"-era PaymentIntents/Refunds resources (reference date for this hand-authored
-# reduction: 2026-08-10). Replace with a real, narrowed copy of the vendor spec the first time
-# this project has network access to stripe/openapi, keeping the same operationIds so the
-# generated Java interface/adapter do not need to change.
+# Stripe's official OpenAPI spec (https://raw.githubusercontent.com/stripe/openapi,
+# openapi/spec3.json) is hundreds of endpoints/schemas; this file keeps ONLY the four
+# operations the OEI store feature actually needs (create PaymentIntent, confirm
+# PaymentIntent, retrieve PaymentIntent, create Refund — exactly the four operations listed
+# in .prompt/plan/store/04-architecture-technique.md §2).
 #
-# Kept operations: create PaymentIntent, confirm PaymentIntent, retrieve PaymentIntent,
-# create Refund — exactly the four operations listed in
-# .prompt/plan/store/04-architecture-technique.md §2.
+# Every path, operationId-relevant field name, and enum value below (payment_intent.id/
+# object/status/amount/currency/last_payment_error, api_errors.code/message/type,
+# refund.id/object/status/payment_intent, the create-PaymentIntent form params
+# amount/currency/payment_method/confirm) was checked field-by-field on 2026-08-16 against
+# a real copy of the vendor spec (paths /v1/payment_intents, /v1/payment_intents/{intent},
+# /v1/payment_intents/{intent}/confirm, /v1/refunds) — every one matched exactly, so no
+# schema/operationId change was needed here. The full vendor file used for that check is
+# gitignored (see .gitignore) and never committed — it is a multi-MB third-party artifact,
+# not this project's own source.
 # -----------------------------------------------------------------------------------------
 openapi: 3.0.3
 info:

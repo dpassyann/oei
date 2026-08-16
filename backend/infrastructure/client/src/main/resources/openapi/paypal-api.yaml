@@ -1,16 +1,24 @@
 # -----------------------------------------------------------------------------------------
-# HAND-AUTHORED, REDUCED SUBSET OF THE PAYPAL ORDERS V2 API — NOT THE VENDOR'S OFFICIAL SPEC.
+# REDUCED SUBSET OF THE PAYPAL ORDERS V2 / PAYMENTS API — FIELD-VERIFIED AGAINST THE REAL
+# VENDOR SPECS.
 #
-# PayPal publishes per-product OpenAPI specs on its developer portal; this environment had no
-# network access to fetch them, so this file was hand-written to contain ONLY the operations
-# the OEI store feature actually needs, modeled as closely as practical on the real PayPal
-# Orders v2 API resource/response shape (reference date for this hand-authored reduction:
-# 2026-08-10). Replace with a real, narrowed copy of the vendor spec the first time this
-# project has network access to PayPal's developer portal, keeping the same operationIds so
-# the generated Java interface/adapter do not need to change.
+# PayPal publishes per-product OpenAPI specs on its developer portal (Orders v2, Payments);
+# this file keeps ONLY the four operations the OEI store feature actually needs (create
+# Order, capture Order, retrieve Order, refund a Capture — exactly the four operations
+# listed in .prompt/plan/store/04-architecture-technique.md §2).
 #
-# Kept operations: create Order, capture Order, retrieve Order, refund a Capture — exactly
-# the four operations listed in .prompt/plan/store/04-architecture-technique.md §2.
+# Every field name/status enum below (order_request.intent/purchase_units,
+# purchase_unit_request.reference_id/amount, money.currency_code/value, order.id/status,
+# refund.id/status with CREATED/APPROVED/COMPLETED/VOIDED and
+# CANCELLED/FAILED/PENDING/COMPLETED status vocabularies) was checked field-by-field on
+# 2026-08-16 against real copies of the vendor Orders v2 (paths /v2/checkout/orders,
+# /v2/checkout/orders/{id}, /v2/checkout/orders/{id}/capture) and Payments
+# (/v2/payments/captures/{capture_id}/refund) specs — every one matched exactly, so no
+# schema/operationId change was needed here (the {captureId} path-parameter name is a purely
+# cosmetic, internally-consistent choice — it has no bearing on the generated client, unlike
+# the vendor's {capture_id}). The full vendor files used for that check are gitignored (see
+# .gitignore) and never committed — they are multi-MB third-party artifacts, not this
+# project's own source.
 # -----------------------------------------------------------------------------------------
 openapi: 3.0.3
 info:
