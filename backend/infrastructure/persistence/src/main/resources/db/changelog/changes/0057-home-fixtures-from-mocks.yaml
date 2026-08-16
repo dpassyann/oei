@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0057-home-fixtures-from-mocks
+      author: oei-backend
+      comment: Persist frontend home/domain mock fixtures into relational tables and jsonb detail rows.
+      changes:
+        - sqlFile:
+            path: db/changelog/changes/0057-home-fixtures-from-mocks.sql
+            relativeToChangelogFile: false
+            splitStatements: true
+            stripComments: false
+

@@ -113,6 +113,18 @@ services:
       - oei-net
     logging: *logging-cloudwatch
 
+  postgres-exporter:
+    profiles: [obs]
+    image: prometheuscommunity/postgres-exporter:v0.15.0
+    restart: unless-stopped
+    environment:
+      DATA_SOURCE_NAME: postgresql://${OEI_USER}:${OEI_PASSWORD}@postgres:5432/${POSTGRES_DB}?sslmode=disable
+    networks:
+      - oei-net
+    depends_on:
+      postgres:
+        condition: service_healthy
+
   backend:
     # Image construite par infra/docker/backend.Dockerfile, poussée sur ECR.
     # Remplacer <ACCOUNT_ID> par l'ID AWS du compte cible (§8 + pipeline deploy-app.yml).

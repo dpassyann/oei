@@ -45,3 +45,11 @@ scrape_configs:
       - target_label: service
         replacement: minio
 
+  # ── PostgreSQL exporter ───────────────────────────────────────────────────
+  - job_name: postgres
+    static_configs:
+      - targets: ['postgres-exporter:9187']
+    relabel_configs:
+      - target_label: service
+        replacement: postgres-exporter
+

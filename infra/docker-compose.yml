@@ -137,6 +137,18 @@ services:
       mc anonymous set none local/oei-membership
       "
 
+  postgres-exporter:
+    profiles: [obs]
+    image: prometheuscommunity/postgres-exporter:v0.15.0
+    restart: unless-stopped
+    environment:
+      DATA_SOURCE_NAME: postgresql://${OEI_USER}:${OEI_PASSWORD}@postgres:5432/${POSTGRES_DB}?sslmode=disable
+    networks:
+      - oei-net
+    depends_on:
+      postgres:
+        condition: service_healthy
+
   # ── Observabilité (profile: obs) ──────────────────────────────────────────
   # Démarrage : ./infra/scripts/dev-up.sh --obs
   # Arrêt     : ./infra/scripts/dev-down.sh --obs
