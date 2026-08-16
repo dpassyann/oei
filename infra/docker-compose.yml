@@ -154,7 +154,7 @@ services:
     image: dpage/pgadmin4:8
     restart: unless-stopped
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@oei.local}
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@oei.dev}
       PGADMIN_DEFAULT_PASSWORD: ${OEI_PASSWORD}
     ports:
       - "5050:80"
