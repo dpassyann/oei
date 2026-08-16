@@ -174,8 +174,8 @@ C'est utile pour comparer rapidement le rendu mock vs réel sans changer de conf
 
 ## 5. Résumé express
 
-| Je veux... | À faire |
-|---|---|
-| Travailler sur l'UI sans rien installer d'autre | `pnpm run start` dans `frontend/oei-web`, rien d'autre (mode mock par défaut) |
-| Tester contre le vrai backend | `docker compose up -d` (infra) + `mvn spring-boot:run -pl application/web` (backend) + `dataSource: "api"` dans `public/config.json` + `pnpm run start` |
-| Basculer à la volée sans rien relancer | `localStorage.setItem('oei-data-source', 'api'|'mock')` puis `location.reload()` dans la console du navigateur |
+| Je veux...                                      | À faire                                                                                                                                                 |
+|-------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Travailler sur l'UI sans rien installer d'autre | `pnpm run start` dans `frontend/oei-web`, rien d'autre (mode mock par défaut)                                                                           |
+| Tester contre le vrai backend                   | `docker compose up -d` (infra) + `mvn spring-boot:run -pl application/web` (backend) + `dataSource: "api"` dans `public/config.json` + `pnpm run start` |
+| Basculer à la volée sans rien relancer          | `localStorage.setItem('oei-data-source', 'api')                                                                                                         |'mock')` puis `location.reload()` dans la console du navigateur |

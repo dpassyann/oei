@@ -9,7 +9,7 @@ L'OEI est une organisation à but non lucratif. L'espace membre doit justifier l
 1. **Espace membre individuel** (personne physique).
 2. **Espace membre institutionnel** (entreprise, école, partenaire).
 
-Authentification : Keycloak (déjà en place, realm `oei`, voir `docs/superpowers/plans/2026-07-31-infra-locale-keycloak-postgres-minio.md`). Pas d'application mobile prévue — le site doit être **full responsive** et couvrir tous les usages sur mobile.
+Authentification : Keycloak (déjà en place, realm `oei`, voir `../../.docs/superpowers/plans/2026-07-31-infra-locale-keycloak-postgres-minio.md`). Pas d'application mobile prévue — le site doit être **full responsive** et couvrir tous les usages sur mobile.
 
 ---
 
@@ -67,7 +67,7 @@ Contrairement à une hypothèse de départ (repousser le CMS à une V2), le port
 
 ### 3.1 Principe
 
-- Le contenu documentaire reste **versionné en Markdown dans git** (cohérent avec le choix déjà fait dans le design technique, `docs/superpowers/specs/2026-07-31-site-plateforme-oei-design.md`, section 4 — pas de CMS en base de données classique, la traçabilité git est jugée précieuse pour des documents à portée quasi-juridique).
+- Le contenu documentaire reste **versionné en Markdown dans git** (cohérent avec le choix déjà fait dans le design technique, `../../.docs/superpowers/specs/2026-07-31-site-plateforme-oei-design.md`, section 4 — pas de CMS en base de données classique, la traçabilité git est jugée précieuse pour des documents à portée quasi-juridique).
 - Le CMS n'est donc pas un éditeur de contenu en base de données, mais une **interface d'administration qui pilote un workflow git** : proposition de modification → débat/validation par le conseil (« conseil constitutionnel » de l'association) → intégration → traduction dans toutes les langues → publication effective sur le site.
 
 ### 3.2 Rôles et permissions

@@ -28,7 +28,7 @@ Plan directeur et roadmap : [`.prompt/OEI-Plan-Directeur-Roadmap.md`](.prompt/OE
 |---|---|---|
 | **Documentaire** | Ébauche uniquement — le glossaire (`01-Glossaire.md`) est une v1 à compléter, le « livre blanc » actuel n'est que sa synthèse exécutive (4-6 pages), pas les 120-180 pages visées. Corpus complet (code de déontologie, charte des membres, référentiel de compétences) encore à écrire. | `.prompt/`, futur `content/` |
 | **Administratif/juridique** | Statuts modèles rédigés (`04-Statuts-Association.md`), en attente de finalisation (siège, composition du CA) et de dépôt formel en Suisse (art. 60 ss CC). Marque et noms de domaine pas encore déposés. | `.prompt/04-Statuts-Association.md`, `.prompt/05-Roadmap-Administrative-Technique.md` |
-| **Technique** (ce dépôt) | Design validé, implémentation démarrée par l'infra locale. Voir §3-9 ci-dessous. | `docs/`, `frontend/`, `backend/`, `content/`, `keycloak/`, `infra/` |
+| **Technique** (ce dépôt) | Design validé, implémentation démarrée par l'infra locale. Voir §3-9 ci-dessous. | `.docs/`, `frontend/`, `backend/`, `content/`, `keycloak/`, `infra/` |
 
 Ce README documente le **chantier technique**. Les deux autres avancent en parallèle, hors du code.
 
@@ -120,8 +120,8 @@ sequenceDiagram
 | Chemin | Rôle | État |
 |---|---|---|
 | `.prompt/` | Documents fondateurs (vision, statuts, roadmap) | Existant |
-| `docs/superpowers/specs/` | Design technique validé | [`2026-07-31-site-plateforme-oei-design.md`](docs/superpowers/specs/2026-07-31-site-plateforme-oei-design.md) |
-| `docs/superpowers/plans/` | Plans d'implémentation détaillés | [`2026-07-31-infra-locale-keycloak-postgres-minio.md`](docs/superpowers/plans/2026-07-31-infra-locale-keycloak-postgres-minio.md) |
+| `.docs/superpowers/specs/` | Design technique validé | [`2026-07-31-site-plateforme-oei-design.md`](.docs/superpowers/specs/2026-07-31-site-plateforme-oei-design.md) |
+| `.docs/superpowers/plans/` | Plans d'implémentation détaillés | [`2026-07-31-infra-locale-keycloak-postgres-minio.md`](.docs/superpowers/plans/2026-07-31-infra-locale-keycloak-postgres-minio.md) |
 | `frontend/` | Angular (site public + espace membre) | À initialiser |
 | `backend/` | Spring Boot (API + intégration Keycloak) | À initialiser |
 | `content/` | Corpus documentaire versionné, par langue (`fr`, `en`, `de`, `es`, `it`, `pt`) | À initialiser |
@@ -176,8 +176,8 @@ côté Spring Boot) selon le même principe : pas de tâche marquée terminée s
 
 ## 12. Références
 
-- Design technique validé : [`docs/superpowers/specs/2026-07-31-site-plateforme-oei-design.md`](docs/superpowers/specs/2026-07-31-site-plateforme-oei-design.md)
-- Plan d'implémentation infra : [`docs/superpowers/plans/2026-07-31-infra-locale-keycloak-postgres-minio.md`](docs/superpowers/plans/2026-07-31-infra-locale-keycloak-postgres-minio.md)
+- Design technique validé : [`.docs/superpowers/specs/2026-07-31-site-plateforme-oei-design.md`](.docs/superpowers/specs/2026-07-31-site-plateforme-oei-design.md)
+- Plan d'implémentation infra : [`.docs/superpowers/plans/2026-07-31-infra-locale-keycloak-postgres-minio.md`](.docs/superpowers/plans/2026-07-31-infra-locale-keycloak-postgres-minio.md)
 - Plan directeur et roadmap : [`.prompt/OEI-Plan-Directeur-Roadmap.md`](.prompt/OEI-Plan-Directeur-Roadmap.md)
 - Roadmap administrative et technique détaillée : [`.prompt/05-Roadmap-Administrative-Technique.md`](.prompt/05-Roadmap-Administrative-Technique.md)
 - Maquette validée de la page d'accueil : [`.prompt/maquetteUI.png`](.prompt/maquetteUI.png)

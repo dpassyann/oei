@@ -73,7 +73,7 @@ structurantes prises pour éviter cette divergence.
 
 ## Décision 2 — Modèle de rôles Keycloak
 
-Voir `docs/architecture/keycloak-roles.md` pour le détail complet. Résumé des
+Voir `../architecture/keycloak-roles.md` pour le détail complet. Résumé des
 décisions :
 
 - **Rôles de niveau membre** (`member-standard`, `member-silver`, `member-gold`,
@@ -140,7 +140,7 @@ décisions :
      définis dans `openapi/oei-api.yaml` (ajuster si un cas d'usage manque
      manifestement, mais rester dans la convention de préfixe/versionnement).
   3. Utiliser les rôles Keycloak définis ici (pas de nouveau rôle ad hoc sans
-     mise à jour de `docs/architecture/keycloak-roles.md`).
+     mise à jour de `../architecture/keycloak-roles.md`).
 - Si un chantier découvre qu'un endpoint ou un rôle manque, il doit l'ajouter en
   cohérence avec ces conventions plutôt qu'en introduire une nouvelle en
   parallèle.

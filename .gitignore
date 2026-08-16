@@ -26,6 +26,7 @@ frontend/**/api/generated
 .settings/
 .project
 .classpath
+backend/.scratch-tmp
 
 # Claude Code local state (settings.local.json, agent worktrees)
 .claude/
