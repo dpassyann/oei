@@ -714,17 +714,53 @@
         "justificationPrefix": "correspondente a",
         "justificationSuffix": "meses restantes dos 12 do ciclo"
       },
+      "tierPanel": {
+        "title": "A sua categoria de quota",
+        "currentBadge": "Categoria atual"
+      },
+      "paymentMethod": {
+        "title": "Método de pagamento",
+        "card": "Cartão bancário",
+        "paypal": "Conta PayPal"
+      },
+      "summary": {
+        "title": "Resumo",
+        "includedTitle": "Incluído na sua quota",
+        "inclusions": [
+          "Acesso completo à área de membro e ao diretório da rede",
+          "Participação nos eventos e workshops da associação",
+          "Cartão de membro digital e crachás de certificação",
+          "Subscrição da newsletter e das publicações da instituição"
+        ],
+        "totalLabel": "Total a pagar",
+        "secureNotice": "Pagamento seguro — os seus dados de pagamento nunca são armazenados nos nossos servidores."
+      },
       "form": {
         "mockNotice": "Formulário de pagamento simulado — não é utilizado nenhum processador de pagamento real.",
-        "cardNumberLabel": "Número do cartão (simulação)",
-        "payButton": "Pagar",
+        "card": {
+          "numberLabel": "Número do cartão",
+          "numberPlaceholder": "4242 4242 4242 4242",
+          "expiryLabel": "Data de validade",
+          "expiryPlaceholder": "MM/AA",
+          "cvcLabel": "CVC",
+          "cvcPlaceholder": "123",
+          "invalidNumber": "Número de cartão inválido.",
+          "invalidExpiry": "Data de validade inválida.",
+          "invalidCvc": "CVC inválido."
+        },
+        "paypal": {
+          "button": "Pagar com PayPal",
+          "notice": "Pré-visualização da interface — o pagamento real com PayPal estará disponível em breve."
+        },
+        "payButton": "Confirmar e pagar a quota",
         "paying": "A processar o pagamento…",
         "error": "O pagamento falhou. Por favor, tente novamente.",
         "skip": "Mais tarde"
       },
       "success": {
         "title": "Pagamento concluído",
-        "body": "Obrigado! A sua quota para o ciclo em curso foi registada."
+        "body": "Obrigado! A sua quota para o ciclo em curso foi registada.",
+        "emailNotice": "Em breve receberá um email de confirmação."
       }
     },
     "nav": {

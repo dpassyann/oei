@@ -714,17 +714,53 @@
         "justificationPrefix": "correspondiente a",
         "justificationSuffix": "meses restantes de los 12 del ciclo"
       },
+      "tierPanel": {
+        "title": "Su categoría de cuota",
+        "currentBadge": "Categoría actual"
+      },
+      "paymentMethod": {
+        "title": "Método de pago",
+        "card": "Tarjeta bancaria",
+        "paypal": "Cuenta PayPal"
+      },
+      "summary": {
+        "title": "Resumen",
+        "includedTitle": "Incluido en su cuota",
+        "inclusions": [
+          "Acceso completo al espacio de miembros y al directorio de la red",
+          "Participación en los eventos y talleres de la asociación",
+          "Carné de miembro digital e insignias de certificación",
+          "Suscripción al boletín y a las publicaciones de la institución"
+        ],
+        "totalLabel": "Total a pagar",
+        "secureNotice": "Pago seguro — sus datos de pago nunca se almacenan en nuestros servidores."
+      },
       "form": {
         "mockNotice": "Formulario de pago simulado — no se utiliza ningún procesador de pago real.",
-        "cardNumberLabel": "Número de tarjeta (simulación)",
-        "payButton": "Pagar",
+        "card": {
+          "numberLabel": "Número de tarjeta",
+          "numberPlaceholder": "4242 4242 4242 4242",
+          "expiryLabel": "Fecha de caducidad",
+          "expiryPlaceholder": "MM/AA",
+          "cvcLabel": "CVC",
+          "cvcPlaceholder": "123",
+          "invalidNumber": "Número de tarjeta no válido.",
+          "invalidExpiry": "Fecha de caducidad no válida.",
+          "invalidCvc": "CVC no válido."
+        },
+        "paypal": {
+          "button": "Pagar con PayPal",
+          "notice": "Vista previa de la interfaz — el pago real con PayPal estará disponible próximamente."
+        },
+        "payButton": "Confirmar y pagar la cuota",
         "paying": "Procesando el pago…",
         "error": "El pago ha fallado. Por favor, inténtelo de nuevo.",
         "skip": "Más tarde"
       },
       "success": {
         "title": "Pago realizado",
-        "body": "¡Gracias! Su cuota para el ciclo en curso ha sido registrada."
+        "body": "¡Gracias! Su cuota para el ciclo en curso ha sido registrada.",
+        "emailNotice": "En breve recibirá un correo electrónico de confirmación."
       }
     },
     "nav": {

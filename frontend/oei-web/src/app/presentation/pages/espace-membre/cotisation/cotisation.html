@@ -4,10 +4,6 @@
   @if (loading() && !status()) {
     <p class="oei-page__empty">{{ i18n.translate('espaceMembre.cotisation.loading') }}</p>
   } @else if (status(); as membershipFeeStatus) {
-    <p class="oei-cotisation__tier">
-      {{ i18n.translate('membresFondateurs.feeTiers.tiers.' + feeTierGridIndex[membershipFeeStatus.account.tier] + '.label') }}
-    </p>
-
     @if (paymentState() === 'success') {
       <!-- Checked before `isPaid` on purpose: right after paying, `statusResource.reload()`
            flips `isPaid` to true in the same tick, which would otherwise make this
@@ -16,44 +12,171 @@
       <section class="oei-cotisation__payment-success" role="status">
         <h2>{{ i18n.translate('espaceMembre.cotisation.success.title') }}</h2>
         <p>{{ i18n.translate('espaceMembre.cotisation.success.body') }}</p>
-        <a routerLink="/espace-membre/profil">{{ i18n.translate('espaceMembre.cotisation.backToProfile') }}</a>
+        <p class="oei-cotisation__email-notice">{{ i18n.translate('espaceMembre.cotisation.success.emailNotice') }}</p>
+        <a class="oei-btn oei-btn--primary" routerLink="/espace-membre/profil">{{ i18n.translate('espaceMembre.cotisation.backToProfile') }}</a>
       </section>
     } @else if (membershipFeeStatus.isPaid) {
       <section class="oei-cotisation__up-to-date" role="status">
         <h2>{{ i18n.translate('espaceMembre.cotisation.upToDate.title') }}</h2>
         <p>{{ i18n.translate('espaceMembre.cotisation.upToDate.body') }}</p>
-        <a routerLink="/espace-membre/profil">{{ i18n.translate('espaceMembre.cotisation.backToProfile') }}</a>
+        <a class="oei-btn oei-btn--secondary" routerLink="/espace-membre/profil">{{ i18n.translate('espaceMembre.cotisation.backToProfile') }}</a>
       </section>
     } @else {
       @if (membershipFeeStatus.reminderActive) {
         <p class="oei-cotisation__reminder" role="alert">{{ i18n.translate('espaceMembre.cotisation.due.reminder') }}</p>
       }
 
-      <section class="oei-cotisation__amount">
-        <p class="oei-cotisation__amount-value">{{ membershipFeeStatus.amountDue }} €</p>
-        <p class="oei-cotisation__justification">
-          {{ i18n.translate('espaceMembre.cotisation.due.justificationPrefix') }}
-          {{ membershipFeeStatus.monthsRemaining }}
-          {{ i18n.translate('espaceMembre.cotisation.due.justificationSuffix') }}
-        </p>
-      </section>
+      <form class="oei-cotisation__checkout" (submit)="$event.preventDefault(); pay()">
+        <div class="oei-cotisation__col-left">
+          <!-- Tier is derived from the member's account, not chosen at payment time (no
+               tier-change flow exists yet) — shown as a read-only comparison grid so the
+               visitor still sees the full fee scale, mirroring the reference "plan selector"
+               layout without inventing a tier-switch feature out of scope. -->
+          <section class="oei-cotisation__tier-panel">
+            <h2 class="oei-cotisation__panel-title">{{ i18n.translate('espaceMembre.cotisation.tierPanel.title') }}</h2>
+            <ul class="oei-cotisation__tier-list">
+              @for (tier of [0, 1, 2, 3]; track tier) {
+                <li
+                  class="oei-cotisation__tier-item"
+                  [class.oei-cotisation__tier-item--current]="feeTierGridIndex[membershipFeeStatus.account.tier] === tier"
+                >
+                  <span class="oei-cotisation__tier-label">{{ i18n.translate('membresFondateurs.feeTiers.tiers.' + tier + '.label') }}</span>
+                  <span class="oei-cotisation__tier-amount">{{ i18n.translate('membresFondateurs.feeTiers.tiers.' + tier + '.amount') }}</span>
+                  @if (feeTierGridIndex[membershipFeeStatus.account.tier] === tier) {
+                    <span class="oei-cotisation__tier-badge">{{ i18n.translate('espaceMembre.cotisation.tierPanel.currentBadge') }}</span>
+                  }
+                </li>
+              }
+            </ul>
+          </section>
 
-      <form class="oei-cotisation__form" (submit)="$event.preventDefault(); pay()">
-        @if (paymentState() === 'error') {
-          <p class="oei-cotisation__error" role="alert">{{ i18n.translate('espaceMembre.cotisation.form.error') }}</p>
-        }
-        <p class="oei-cotisation__mock-notice">{{ i18n.translate('espaceMembre.cotisation.form.mockNotice') }}</p>
-        <label class="oei-cotisation__field oei-field">
-          {{ i18n.translate('espaceMembre.cotisation.form.cardNumberLabel') }}
-          <input type="text" class="oei-input" [ngModel]="cardNumber()" (ngModelChange)="cardNumber.set($event)" name="cardNumber" placeholder="4242 4242 4242 4242" />
-        </label>
+          <section class="oei-cotisation__payment-method">
+            <h2 class="oei-cotisation__panel-title">{{ i18n.translate('espaceMembre.cotisation.paymentMethod.title') }}</h2>
+            <div class="oei-cotisation__tabs" role="tablist">
+              <button
+                type="button"
+                role="tab"
+                class="oei-cotisation__tab"
+                [class.oei-cotisation__tab--active]="paymentMethod() === 'CARD'"
+                [attr.aria-selected]="paymentMethod() === 'CARD'"
+                (click)="selectPaymentMethod('CARD')"
+              >
+                {{ i18n.translate('espaceMembre.cotisation.paymentMethod.card') }}
+              </button>
+              <button
+                type="button"
+                role="tab"
+                class="oei-cotisation__tab"
+                [class.oei-cotisation__tab--active]="paymentMethod() === 'PAYPAL'"
+                [attr.aria-selected]="paymentMethod() === 'PAYPAL'"
+                (click)="selectPaymentMethod('PAYPAL')"
+              >
+                {{ i18n.translate('espaceMembre.cotisation.paymentMethod.paypal') }}
+              </button>
+            </div>
 
-        <div class="oei-cotisation__actions">
-          <button type="submit" class="oei-btn oei-btn--primary" [disabled]="!canPay()">
-            {{ paymentState() === 'submitting' ? i18n.translate('espaceMembre.cotisation.form.paying') : i18n.translate('espaceMembre.cotisation.form.payButton') }}
-          </button>
-          <a class="oei-cotisation__skip" routerLink="/espace-membre/profil">{{ i18n.translate('espaceMembre.cotisation.form.skip') }}</a>
+            @if (paymentMethod() === 'CARD') {
+              <div class="oei-cotisation__card-form">
+                <p class="oei-cotisation__mock-notice">{{ i18n.translate('espaceMembre.cotisation.form.mockNotice') }}</p>
+
+                <label class="oei-cotisation__field oei-field">
+                  {{ i18n.translate('espaceMembre.cotisation.form.card.numberLabel') }}
+                  <span class="oei-cotisation__card-number-wrap">
+                    <input
+                      type="text"
+                      class="oei-input oei-cotisation__card-number-input"
+                      inputmode="numeric"
+                      autocomplete="cc-number"
+                      [ngModel]="cardNumber()"
+                      (ngModelChange)="onCardNumberChange($event)"
+                      name="cardNumber"
+                      [placeholder]="i18n.translate('espaceMembre.cotisation.form.card.numberPlaceholder')"
+                    />
+                    <span class="oei-cotisation__card-brand oei-cotisation__card-brand--{{ cardBrand().toLowerCase() }}">{{ cardBrand() !== 'UNKNOWN' ? cardBrand() : '' }}</span>
+                  </span>
+                </label>
+
+                <div class="oei-cotisation__card-row">
+                  <label class="oei-cotisation__field oei-field">
+                    {{ i18n.translate('espaceMembre.cotisation.form.card.expiryLabel') }}
+                    <input
+                      type="text"
+                      class="oei-input"
+                      inputmode="numeric"
+                      autocomplete="cc-exp"
+                      [ngModel]="cardExpiry()"
+                      (ngModelChange)="onCardExpiryChange($event)"
+                      name="cardExpiry"
+                      [placeholder]="i18n.translate('espaceMembre.cotisation.form.card.expiryPlaceholder')"
+                    />
+                  </label>
+
+                  <label class="oei-cotisation__field oei-field">
+                    {{ i18n.translate('espaceMembre.cotisation.form.card.cvcLabel') }}
+                    <input
+                      type="text"
+                      class="oei-input"
+                      inputmode="numeric"
+                      autocomplete="cc-csc"
+                      [ngModel]="cardCvc()"
+                      (ngModelChange)="cardCvc.set($event)"
+                      name="cardCvc"
+                      [placeholder]="i18n.translate('espaceMembre.cotisation.form.card.cvcPlaceholder')"
+                    />
+                  </label>
+                </div>
+              </div>
+            } @else {
+              <div class="oei-cotisation__paypal">
+                <p class="oei-cotisation__paypal-notice">{{ i18n.translate('espaceMembre.cotisation.form.paypal.notice') }}</p>
+                <span class="oei-cotisation__paypal-button" aria-hidden="true">{{ i18n.translate('espaceMembre.cotisation.form.paypal.button') }}</span>
+              </div>
+            }
+          </section>
         </div>
+
+        <aside class="oei-cotisation__col-right oei-cotisation__summary">
+          <h2 class="oei-cotisation__panel-title">{{ i18n.translate('espaceMembre.cotisation.summary.title') }}</h2>
+          <p class="oei-cotisation__tier">
+            {{ i18n.translate('membresFondateurs.feeTiers.tiers.' + feeTierGridIndex[membershipFeeStatus.account.tier] + '.label') }}
+          </p>
+
+          <h3 class="oei-cotisation__included-title">{{ i18n.translate('espaceMembre.cotisation.summary.includedTitle') }}</h3>
+          <ul class="oei-cotisation__inclusions">
+            @for (inclusion of i18n.translateList('espaceMembre.cotisation.summary.inclusions'); track inclusion) {
+              <li>{{ inclusion }}</li>
+            }
+          </ul>
+
+          <div class="oei-cotisation__total">
+            <span>{{ i18n.translate('espaceMembre.cotisation.summary.totalLabel') }}</span>
+            <span class="oei-cotisation__amount-value">{{ membershipFeeStatus.amountDue }} €</span>
+          </div>
+          <p class="oei-cotisation__justification">
+            {{ i18n.translate('espaceMembre.cotisation.due.justificationPrefix') }}
+            {{ membershipFeeStatus.monthsRemaining }}
+            {{ i18n.translate('espaceMembre.cotisation.due.justificationSuffix') }}
+          </p>
+
+          @if (paymentState() === 'error') {
+            <p class="oei-cotisation__error" role="alert">{{ i18n.translate('espaceMembre.cotisation.form.error') }}</p>
+          }
+
+          <div class="oei-cotisation__actions">
+            <button type="submit" class="oei-btn oei-btn--primary" [disabled]="!canPay()">
+              {{ paymentState() === 'submitting' ? i18n.translate('espaceMembre.cotisation.form.paying') : i18n.translate('espaceMembre.cotisation.form.payButton') }}
+            </button>
+            <a class="oei-cotisation__skip" routerLink="/espace-membre/profil">{{ i18n.translate('espaceMembre.cotisation.form.skip') }}</a>
+          </div>
+
+          <p class="oei-cotisation__secure-notice">
+            <svg viewBox="0 0 24 24" fill="none" class="oei-cotisation__secure-icon" aria-hidden="true">
+              <path d="M12 2 4 5v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V5l-8-3Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" />
+              <path d="m9 12 2 2 4-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            {{ i18n.translate('espaceMembre.cotisation.summary.secureNotice') }}
+          </p>
+        </aside>
       </form>
     }
   }

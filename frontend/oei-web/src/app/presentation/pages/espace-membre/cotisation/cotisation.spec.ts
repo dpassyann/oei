@@ -12,7 +12,7 @@ const FAKE_I18N_SERVICE = {
   currentLang: signal('fr'),
   setLang: () => Promise.resolve(),
   translate: (key: string) => key,
-  translateList: () => [],
+  translateList: () => ['inclusion-1', 'inclusion-2'],
 };
 
 function statusFixture(overrides: Partial<MembershipFeeStatus>): MembershipFeeStatus {
@@ -36,6 +36,12 @@ function statusFixture(overrides: Partial<MembershipFeeStatus>): MembershipFeeSt
 
 interface CotisationTestHandle {
   readonly cardNumber: { set(value: string): void };
+  readonly cardExpiry: { set(value: string): void };
+  readonly cardCvc: { set(value: string): void };
+  readonly paymentMethod: { set(value: 'CARD' | 'PAYPAL'): void };
+  onCardNumberChange(value: string): void;
+  onCardExpiryChange(value: string): void;
+  selectPaymentMethod(method: 'CARD' | 'PAYPAL'): void;
   pay(): void;
 }
 
@@ -55,12 +61,17 @@ describe('Cotisation', () => {
     return { payCurrentCycle };
   }
 
-  it('givenUnpaidStatus_whenRendered_thenShowsProratedAmountAndJustification', async () => {
-    configure(statusFixture({}));
+  async function renderCheckout(status: MembershipFeeStatus, payCurrentCycle?: Parameters<typeof configure>[1]) {
+    const handles = payCurrentCycle === undefined ? configure(status) : configure(status, payCurrentCycle);
     const fixture = TestBed.createComponent(Cotisation);
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();
+    return { fixture, ...handles };
+  }
+
+  it('givenUnpaidStatus_whenRendered_thenShowsProratedAmountAndJustification', async () => {
+    const { fixture } = await renderCheckout(statusFixture({}));
 
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.textContent).toContain('24.93');
@@ -68,35 +79,80 @@ describe('Cotisation', () => {
   });
 
   it('givenReminderActive_whenRendered_thenShowsReminderMessage', async () => {
-    configure(statusFixture({ reminderActive: true }));
-    const fixture = TestBed.createComponent(Cotisation);
-    fixture.detectChanges();
-    await fixture.whenStable();
-    fixture.detectChanges();
+    const { fixture } = await renderCheckout(statusFixture({ reminderActive: true }));
 
     expect(fixture.nativeElement.querySelector('.oei-cotisation__reminder')).toBeTruthy();
   });
 
-  it('givenPaidStatus_whenRendered_thenShowsUpToDatePanelInsteadOfPaymentForm', async () => {
-    configure(statusFixture({ isPaid: true, amountDue: 0, monthsRemaining: 0 }));
-    const fixture = TestBed.createComponent(Cotisation);
-    fixture.detectChanges();
-    await fixture.whenStable();
-    fixture.detectChanges();
+  it('givenPaidStatus_whenRendered_thenShowsUpToDatePanelInsteadOfCheckout', async () => {
+    const { fixture } = await renderCheckout(statusFixture({ isPaid: true, amountDue: 0, monthsRemaining: 0 }));
 
     expect(fixture.nativeElement.querySelector('.oei-cotisation__up-to-date')).toBeTruthy();
-    expect(fixture.nativeElement.querySelector('.oei-cotisation__form')).toBeFalsy();
+    expect(fixture.nativeElement.querySelector('.oei-cotisation__checkout')).toBeFalsy();
   });
 
-  it('givenValidCardNumber_whenPay_thenSimulatesSuccessfulPayment', async () => {
-    const { payCurrentCycle } = configure(statusFixture({}));
-    const fixture = TestBed.createComponent(Cotisation);
+  it('givenUnpaidStatus_whenRendered_thenShowsTierComparisonWithCurrentTierBadged', async () => {
+    const { fixture } = await renderCheckout(statusFixture({}));
+
+    const currentItem = fixture.nativeElement.querySelector('.oei-cotisation__tier-item--current');
+    expect(currentItem).toBeTruthy();
+    expect(currentItem.querySelector('.oei-cotisation__tier-badge')).toBeTruthy();
+  });
+
+  it('givenCardNumberTyped_whenFormatting_thenGroupsDigitsAndDetectsBrand', async () => {
+    const { fixture } = await renderCheckout(statusFixture({}));
+    const component = fixture.componentInstance as unknown as CotisationTestHandle;
+
+    component.onCardNumberChange('4242424242424242');
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();
 
+    expect(fixture.nativeElement.querySelector('.oei-cotisation__card-number-input').value).toBe('4242 4242 4242 4242');
+    expect(fixture.nativeElement.querySelector('.oei-cotisation__card-brand').textContent.trim()).toBe('VISA');
+  });
+
+  it('givenPayPalTabSelected_whenRendered_thenShowsPayPalPlaceholderInsteadOfCardFields', async () => {
+    const { fixture } = await renderCheckout(statusFixture({}));
     const component = fixture.componentInstance as unknown as CotisationTestHandle;
-    component.cardNumber.set('4242 4242 4242 4242');
+
+    component.selectPaymentMethod('PAYPAL');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.oei-cotisation__paypal')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('.oei-cotisation__card-form')).toBeFalsy();
+  });
+
+  it('givenIncompleteCardForm_whenRendered_thenPayButtonIsDisabled', async () => {
+    const { fixture } = await renderCheckout(statusFixture({}));
+
+    const payButton = fixture.nativeElement.querySelector('.oei-cotisation__actions button[type="submit"]') as HTMLButtonElement;
+    expect(payButton.disabled).toBe(true);
+  });
+
+  it('givenValidCardDetails_whenPay_thenSimulatesSuccessfulPayment', async () => {
+    const { fixture, payCurrentCycle } = await renderCheckout(statusFixture({}));
+    const component = fixture.componentInstance as unknown as CotisationTestHandle;
+
+    component.onCardNumberChange('4242424242424242');
+    component.onCardExpiryChange('1230');
+    component.cardCvc.set('123');
+    fixture.detectChanges();
+    component.pay();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(payCurrentCycle).toHaveBeenCalled();
+    expect(fixture.nativeElement.querySelector('.oei-cotisation__payment-success')).toBeTruthy();
+  });
+
+  it('givenPayPalTabSelected_whenPay_thenSimulatesSuccessfulPaymentWithoutCardDetails', async () => {
+    const { fixture, payCurrentCycle } = await renderCheckout(statusFixture({}));
+    const component = fixture.componentInstance as unknown as CotisationTestHandle;
+
+    component.selectPaymentMethod('PAYPAL');
+    fixture.detectChanges();
     component.pay();
     fixture.detectChanges();
     await fixture.whenStable();
@@ -107,14 +163,10 @@ describe('Cotisation', () => {
   });
 
   it('givenPaymentFails_whenPay_thenShowsErrorMessage', async () => {
-    configure(statusFixture({}), vi.fn().mockReturnValue(throwError(() => new Error('boom'))));
-    const fixture = TestBed.createComponent(Cotisation);
-    fixture.detectChanges();
-    await fixture.whenStable();
-    fixture.detectChanges();
-
+    const { fixture } = await renderCheckout(statusFixture({}), vi.fn().mockReturnValue(throwError(() => new Error('boom'))));
     const component = fixture.componentInstance as unknown as CotisationTestHandle;
-    component.cardNumber.set('0000');
+
+    component.selectPaymentMethod('PAYPAL');
     component.pay();
     fixture.detectChanges();
     await fixture.whenStable();

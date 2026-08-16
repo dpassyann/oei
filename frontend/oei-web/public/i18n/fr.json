@@ -714,17 +714,53 @@
         "justificationPrefix": "correspondant à",
         "justificationSuffix": "mois restants sur les 12 du cycle"
       },
+      "tierPanel": {
+        "title": "Votre palier de cotisation",
+        "currentBadge": "Palier actuel"
+      },
+      "paymentMethod": {
+        "title": "Moyen de paiement",
+        "card": "Carte bancaire",
+        "paypal": "Compte PayPal"
+      },
+      "summary": {
+        "title": "Récapitulatif",
+        "includedTitle": "Inclus dans votre cotisation",
+        "inclusions": [
+          "Accès complet à l'espace membre et à l'annuaire du réseau",
+          "Participation aux événements et ateliers de l'association",
+          "Carte de membre numérique et badges de certification",
+          "Abonnement à la newsletter et aux publications de l'institution"
+        ],
+        "totalLabel": "Total à payer",
+        "secureNotice": "Paiement sécurisé — vos informations de paiement ne sont jamais stockées sur nos serveurs."
+      },
       "form": {
         "mockNotice": "Formulaire de paiement simulé — aucun processeur de paiement réel n'est utilisé.",
-        "cardNumberLabel": "Numéro de carte (simulation)",
-        "payButton": "Payer",
+        "card": {
+          "numberLabel": "Numéro de carte",
+          "numberPlaceholder": "4242 4242 4242 4242",
+          "expiryLabel": "Date d'expiration",
+          "expiryPlaceholder": "MM/AA",
+          "cvcLabel": "CVC",
+          "cvcPlaceholder": "123",
+          "invalidNumber": "Numéro de carte invalide.",
+          "invalidExpiry": "Date d'expiration invalide.",
+          "invalidCvc": "CVC invalide."
+        },
+        "paypal": {
+          "button": "Payer avec PayPal",
+          "notice": "Aperçu de l'interface — le paiement PayPal réel sera bientôt disponible."
+        },
+        "payButton": "Confirmer et cotiser",
         "paying": "Paiement en cours…",
         "error": "Le paiement a échoué. Merci de réessayer.",
         "skip": "Plus tard"
       },
       "success": {
         "title": "Paiement effectué",
-        "body": "Merci ! Votre cotisation pour le cycle en cours a été enregistrée."
+        "body": "Merci ! Votre cotisation pour le cycle en cours a été enregistrée.",
+        "emailNotice": "Un email de confirmation vous sera envoyé sous peu."
       }
     },
     "nav": {

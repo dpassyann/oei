@@ -35,7 +35,6 @@ import { CvBuilder } from './presentation/pages/espace-membre/cv-builder/cv-buil
 import { Badges } from './presentation/pages/espace-membre/badges/badges';
 import { CarteNumerique } from './presentation/pages/espace-membre/carte/carte-numerique';
 import { ProfilPublic } from './presentation/pages/espace-membre/profil-public/profil-public';
-import { Cotisation } from './presentation/pages/espace-membre/cotisation/cotisation';
 import { PublierArticle } from './presentation/pages/espace-membre/publier-article/publier-article';
 import { ProposerEvenement } from './presentation/pages/espace-membre/proposer-evenement/proposer-evenement';
 import { EventsList } from './presentation/pages/events/events-list/events-list';
@@ -129,8 +128,14 @@ export const routes: Routes = [
           { path: 'carte', component: CarteNumerique },
           // Mocked cotisation payment page (adhésion & cotisation plan) — see `home.ts`'s
           // `onJoinClick` and the account-creation flow's (now Keycloak-native) "Payer
-          // maintenant" choice.
-          { path: 'cotisation', component: Cotisation },
+          // maintenant" choice. Lazy-loaded (`loadComponent`): its Stripe-Checkout-style
+          // two-column layout/card-brand logic is sizeable and only ever needed by a member
+          // actively paying a cotisation, so keeping it out of the eager initial bundle is
+          // what keeps the production budget (`angular.json`) met.
+          {
+            path: 'cotisation',
+            loadComponent: () => import('./presentation/pages/espace-membre/cotisation/cotisation').then((m) => m.Cotisation),
+          },
           // Member-facing article submission form — feeds the CMS moderation queue built
           // separately; approved submissions are the only ones that ever reach `/actualites`.
           { path: 'publier', component: PublierArticle },

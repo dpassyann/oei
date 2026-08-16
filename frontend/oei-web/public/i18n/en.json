@@ -714,17 +714,53 @@
         "justificationPrefix": "corresponding to",
         "justificationSuffix": "months remaining out of the 12-month cycle"
       },
+      "tierPanel": {
+        "title": "Your cotisation tier",
+        "currentBadge": "Current tier"
+      },
+      "paymentMethod": {
+        "title": "Payment method",
+        "card": "Credit or debit card",
+        "paypal": "PayPal account"
+      },
+      "summary": {
+        "title": "Summary",
+        "includedTitle": "Included with your cotisation",
+        "inclusions": [
+          "Full access to the member area and the network directory",
+          "Participation in the association's events and workshops",
+          "Digital member card and certification badges",
+          "Subscription to the newsletter and institution publications"
+        ],
+        "totalLabel": "Total due",
+        "secureNotice": "Secure payment — your payment details are never stored on our servers."
+      },
       "form": {
         "mockNotice": "Simulated payment form — no real payment processor is used.",
-        "cardNumberLabel": "Card number (simulation)",
-        "payButton": "Pay",
+        "card": {
+          "numberLabel": "Card number",
+          "numberPlaceholder": "4242 4242 4242 4242",
+          "expiryLabel": "Expiry date",
+          "expiryPlaceholder": "MM/YY",
+          "cvcLabel": "CVC",
+          "cvcPlaceholder": "123",
+          "invalidNumber": "Invalid card number.",
+          "invalidExpiry": "Invalid expiry date.",
+          "invalidCvc": "Invalid CVC."
+        },
+        "paypal": {
+          "button": "Pay with PayPal",
+          "notice": "Interface preview — the real PayPal payment flow is coming soon."
+        },
+        "payButton": "Confirm and pay",
         "paying": "Paying…",
         "error": "Payment failed. Please try again.",
         "skip": "Later"
       },
       "success": {
         "title": "Payment completed",
-        "body": "Thank you! Your cotisation for the current cycle has been recorded."
+        "body": "Thank you! Your cotisation for the current cycle has been recorded.",
+        "emailNotice": "A confirmation email will be sent to you shortly."
       }
     },
     "nav": {

@@ -714,17 +714,53 @@
         "justificationPrefix": "corrispondente a",
         "justificationSuffix": "mesi rimanenti sui 12 del ciclo"
       },
+      "tierPanel": {
+        "title": "La tua fascia di quota",
+        "currentBadge": "Fascia attuale"
+      },
+      "paymentMethod": {
+        "title": "Metodo di pagamento",
+        "card": "Carta di credito o debito",
+        "paypal": "Account PayPal"
+      },
+      "summary": {
+        "title": "Riepilogo",
+        "includedTitle": "Incluso nella tua quota",
+        "inclusions": [
+          "Accesso completo all'area riservata e alla rubrica della rete",
+          "Partecipazione agli eventi e ai workshop dell'associazione",
+          "Tessera associativa digitale e badge di certificazione",
+          "Abbonamento alla newsletter e alle pubblicazioni dell'istituzione"
+        ],
+        "totalLabel": "Totale da pagare",
+        "secureNotice": "Pagamento sicuro — i tuoi dati di pagamento non vengono mai memorizzati sui nostri server."
+      },
       "form": {
         "mockNotice": "Modulo di pagamento simulato — non viene utilizzato alcun processore di pagamento reale.",
-        "cardNumberLabel": "Numero di carta (simulazione)",
-        "payButton": "Paga",
+        "card": {
+          "numberLabel": "Numero di carta",
+          "numberPlaceholder": "4242 4242 4242 4242",
+          "expiryLabel": "Data di scadenza",
+          "expiryPlaceholder": "MM/AA",
+          "cvcLabel": "CVC",
+          "cvcPlaceholder": "123",
+          "invalidNumber": "Numero di carta non valido.",
+          "invalidExpiry": "Data di scadenza non valida.",
+          "invalidCvc": "CVC non valido."
+        },
+        "paypal": {
+          "button": "Paga con PayPal",
+          "notice": "Anteprima dell'interfaccia — il pagamento PayPal reale sarà presto disponibile."
+        },
+        "payButton": "Conferma e paga la quota",
         "paying": "Pagamento in corso…",
         "error": "Il pagamento non è riuscito. Riprova.",
         "skip": "Più tardi"
       },
       "success": {
         "title": "Pagamento completato",
-        "body": "Grazie! La tua quota per il ciclo in corso è stata registrata."
+        "body": "Grazie! La tua quota per il ciclo in corso è stata registrata.",
+        "emailNotice": "Riceverai a breve un'email di conferma."
       }
     },
     "nav": {

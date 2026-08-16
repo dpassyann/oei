@@ -714,17 +714,53 @@
         "justificationPrefix": "entsprechend",
         "justificationSuffix": "verbleibenden Monaten von den 12 des Zyklus"
       },
+      "tierPanel": {
+        "title": "Ihre Beitragsstufe",
+        "currentBadge": "Aktuelle Stufe"
+      },
+      "paymentMethod": {
+        "title": "Zahlungsmethode",
+        "card": "Kreditkarte",
+        "paypal": "PayPal-Konto"
+      },
+      "summary": {
+        "title": "Zusammenfassung",
+        "includedTitle": "In Ihrem Mitgliedsbeitrag enthalten",
+        "inclusions": [
+          "Voller Zugriff auf den Mitgliederbereich und das Netzwerkverzeichnis",
+          "Teilnahme an Veranstaltungen und Workshops des Vereins",
+          "Digitale Mitgliedskarte und Zertifizierungsabzeichen",
+          "Abonnement des Newsletters und der Veröffentlichungen der Institution"
+        ],
+        "totalLabel": "Fälliger Gesamtbetrag",
+        "secureNotice": "Sichere Zahlung — Ihre Zahlungsdaten werden nie auf unseren Servern gespeichert."
+      },
       "form": {
         "mockNotice": "Simuliertes Zahlungsformular — es wird kein echter Zahlungsdienstleister verwendet.",
-        "cardNumberLabel": "Kartennummer (Simulation)",
-        "payButton": "Bezahlen",
+        "card": {
+          "numberLabel": "Kartennummer",
+          "numberPlaceholder": "4242 4242 4242 4242",
+          "expiryLabel": "Ablaufdatum",
+          "expiryPlaceholder": "MM/JJ",
+          "cvcLabel": "CVC",
+          "cvcPlaceholder": "123",
+          "invalidNumber": "Ungültige Kartennummer.",
+          "invalidExpiry": "Ungültiges Ablaufdatum.",
+          "invalidCvc": "Ungültiger CVC."
+        },
+        "paypal": {
+          "button": "Mit PayPal bezahlen",
+          "notice": "Vorschau der Oberfläche — die echte PayPal-Zahlung ist bald verfügbar."
+        },
+        "payButton": "Bestätigen und Beitrag zahlen",
         "paying": "Zahlung wird verarbeitet…",
         "error": "Die Zahlung ist fehlgeschlagen. Bitte versuchen Sie es erneut.",
         "skip": "Später"
       },
       "success": {
         "title": "Zahlung abgeschlossen",
-        "body": "Vielen Dank! Ihr Mitgliedsbeitrag für den laufenden Zyklus wurde erfasst."
+        "body": "Vielen Dank! Ihr Mitgliedsbeitrag für den laufenden Zyklus wurde erfasst.",
+        "emailNotice": "In Kürze erhalten Sie eine Bestätigungs-E-Mail."
       }
     },
     "nav": {
