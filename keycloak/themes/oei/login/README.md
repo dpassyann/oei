@@ -31,25 +31,42 @@ c'est l'équivalent de ce que produirait `PUT /admin/realms/oei/users/profile`).
   (pattern standard Keycloak pour une case à cocher unique dans le User Profile déclaratif),
   également `required.roles: [user]`.
 
-## i18n : labels en français
+## i18n : labels dans les 6 langues du produit
 
-Le realm était auparavant sans configuration d'internationalisation explicite (mono-locale de
-fait, sans `internationalizationEnabled`). Ce changement active proprement :
+Le realm était auparavant mono-locale FR. Il est maintenant aligné sur les 6 langues déjà
+supportées par le frontend Angular et les emails Spring (fr/en/es/de/it/pt) :
 
 ```json
 "internationalizationEnabled": true,
-"supportedLocales": ["fr"],
+"supportedLocales": ["fr", "en", "es", "de", "it", "pt"],
 "defaultLocale": "fr"
 ```
 
-... et ce thème (`theme.properties` : `locales=fr`) charge
-`messages/messages_fr.properties`, qui définit :
+... et ce thème (`theme.properties` : `locales=fr,en,es,de,it,pt`) charge
+`messages/messages_{fr,en,es,de,it,pt}.properties`, qui définissent chacun :
 
-- `country=Pays` et `consentAccepted=...` (labels des champs, via `displayName: "${country}"` /
-  `"${consentAccepted}"` dans la config User Profile) ;
-- `country.<CODE>=<Nom français>` pour chacun des 247 codes ISO 3166-1 (ex. `country.FR=France`)
+- `country=Pays`/`Country`/`País`/`Land`/`Paese`/`País` et `consentAccepted=...` (labels des
+  champs, via `displayName: "${country}"` / `"${consentAccepted}"` dans la config User
+  Profile) ;
+- `country.<CODE>=<Nom localisé>` pour chacun des 247 codes ISO 3166-1 (ex. `country.FR=France`
+  en français, `country.FR=France` en anglais aussi, `country.DE=Deutschland` en allemand, etc.)
   — c'est la convention Keycloak standard de résolution des labels d'options `select` : la clé
   de message est `<nomAttribut>.<valeurOption>`.
+
+Les 5 fichiers non-français (`messages_{en,es,de,it,pt}.properties`) ont été générés à partir
+des données CLDR (noms de territoires ISO 3166-1 par langue) via la bibliothèque Python
+`babel`, en reprenant exactement les 247 codes du fichier `messages_fr.properties` (source de
+vérité pour la liste des codes) — pas de traduction manuelle pays par pays, pas d'appel réseau.
+Les libellés `country`/`consentAccepted` des 5 langues ont, eux, été rédigés à la main en
+reprenant la terminologie déjà utilisée dans `frontend/oei-web/public/i18n/*.json`
+(`nav.home`, `header.memberArea`, etc.) et dans les emails Spring
+(`backend/infrastructure/mail/.../messages_{locale}.properties`, clés `email.shell.*`) pour
+rester cohérent d'un bout à l'autre du produit.
+
+Le sélecteur de langue natif Keycloak (`kc-locale-dropdown`) apparaît désormais automatiquement
+sur les écrans de connexion/inscription/mise à jour de profil, sans code supplémentaire — c'est
+le thème `keycloak` parent (`import=common/keycloak`) qui le fournit dès que plusieurs locales
+sont déclarées.
 
 Aucun appel réseau : la liste est entièrement statique, générée une fois dans ce commit.
 
