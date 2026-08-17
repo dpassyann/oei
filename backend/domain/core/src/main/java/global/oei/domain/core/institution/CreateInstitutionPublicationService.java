@@ -12,6 +12,7 @@ import global.oei.domain.shared.institution.InstitutionId;
 import global.oei.domain.shared.institution.InstitutionPublication;
 import global.oei.domain.shared.institution.InstitutionPublicationPort;
 import global.oei.domain.shared.institution.InstitutionPublicationType;
+import global.oei.domain.shared.institution.PublicationWorkflowStatus;
 import global.oei.domain.shared.member.MemberId;
 
 /**

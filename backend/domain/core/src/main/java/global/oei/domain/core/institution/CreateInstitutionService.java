@@ -14,6 +14,7 @@ import global.oei.domain.shared.institution.Institution;
 import global.oei.domain.shared.institution.InstitutionDomain;
 import global.oei.domain.shared.institution.InstitutionId;
 import global.oei.domain.shared.institution.InstitutionPort;
+import global.oei.domain.shared.institution.InstitutionWorkflowStatus;
 
 /**
  * Enforces the "always starts DRAFT" invariant on every admin-created institution, and

@@ -12,6 +12,7 @@ import global.oei.domain.shared.institution.CreateInstitutionOpportunityUseCase;
 import global.oei.domain.shared.institution.InstitutionId;
 import global.oei.domain.shared.institution.InstitutionOpportunity;
 import global.oei.domain.shared.institution.InstitutionOpportunityPort;
+import global.oei.domain.shared.institution.InstitutionOpportunityStatus;
 import global.oei.domain.shared.institution.InstitutionOpportunityType;
 
 /**

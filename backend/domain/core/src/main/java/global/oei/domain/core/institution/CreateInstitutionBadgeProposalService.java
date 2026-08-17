@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import global.oei.domain.shared.institution.CreateInstitutionBadgeProposalUseCase;
 import global.oei.domain.shared.institution.InstitutionBadgeProposal;
 import global.oei.domain.shared.institution.InstitutionBadgeProposalPort;
+import global.oei.domain.shared.institution.InstitutionBadgeProposalStatus;
 import global.oei.domain.shared.institution.InstitutionId;
 import global.oei.domain.shared.member.MemberId;
 

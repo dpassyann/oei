@@ -8,6 +8,7 @@ import org.jspecify.annotations.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import global.oei.domain.shared.certification.CertificationCatalogStatus;
 import global.oei.domain.shared.certification.CertificationLevel;
 import global.oei.domain.shared.certification.CertificationOeiStatus;
 import global.oei.domain.shared.certification.CreateRecognizedCertificationUseCase;

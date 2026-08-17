@@ -8,8 +8,10 @@ import org.jspecify.annotations.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import global.oei.domain.shared.member.AccountType;
 import global.oei.domain.shared.member.Member;
 import global.oei.domain.shared.member.MemberAlreadyRegisteredException;
+import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.member.MemberPort;
 import global.oei.domain.shared.member.RegisterAccountUseCase;
 
@@ -42,15 +44,20 @@ public class RegisterAccountService implements RegisterAccountUseCase {
 
     @Override
     public Member execute(
-            final String email, final String locale, final String country, final boolean consentAccepted, final String oidcSubject) {
-        log.debug("registerAccount: email={} locale={} country={} consentAccepted={}", email, locale, country, consentAccepted);
+            final String email, final String locale, final String country,
+            final boolean consentAccepted,
+            final String oidcSubject) {
+        log.debug("registerAccount: email={} locale={} country={} consentAccepted={}",
+                email, locale, country, consentAccepted);
         final String localPart = email.contains("@") ? email.substring(0, email.indexOf('@')) : email;
-        final String slug = localPart.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]+", "-").replaceAll("(^-|-$)", "");
+        final String slug = localPart.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]+", "-")
+                .replaceAll("(^-|-$)", "");
         if (memberPort.findByPublicSlug(slug).isPresent()) {
             log.info("registerAccount: rejected duplicate slug={} email={}", slug, email);
             throw new MemberAlreadyRegisteredException("an account already exists for " + email);
         }
-        final Member member = new Member(MemberId.newId(), slug, localPart, localPart, locale, country, AccountType.REAL, Instant.now());
+        final Member member = new Member(MemberId.newId(), slug, localPart, localPart, locale, country,
+                AccountType.REAL, Instant.now());
         log.info("registerAccount: account created memberId={} slug={}", member.id(), slug);
         return memberPort.save(member);
     }

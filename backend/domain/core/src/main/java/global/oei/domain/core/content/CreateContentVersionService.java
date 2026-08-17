@@ -15,6 +15,7 @@ import global.oei.domain.shared.content.Content;
 import global.oei.domain.shared.content.ContentPort;
 import global.oei.domain.shared.content.ContentVersion;
 import global.oei.domain.shared.content.ContentVersionPort;
+import global.oei.domain.shared.content.ContentWorkflowStatus;
 import global.oei.domain.shared.content.CreateContentVersionUseCase;
 
 /**

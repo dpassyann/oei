@@ -13,6 +13,7 @@ import global.oei.domain.shared.institution.CreateInstitutionInvitationUseCase;
 import global.oei.domain.shared.institution.InstitutionId;
 import global.oei.domain.shared.institution.InstitutionInvitation;
 import global.oei.domain.shared.institution.InstitutionInvitationPort;
+import global.oei.domain.shared.institution.InstitutionInvitationStatus;
 import global.oei.domain.shared.institution.InstitutionRole;
 
 /**

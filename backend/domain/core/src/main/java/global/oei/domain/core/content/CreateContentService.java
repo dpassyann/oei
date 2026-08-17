@@ -13,6 +13,7 @@ import global.oei.domain.shared.content.ContentGovernance;
 import global.oei.domain.shared.content.ContentPort;
 import global.oei.domain.shared.content.ContentSourceType;
 import global.oei.domain.shared.content.ContentType;
+import global.oei.domain.shared.content.ContentWorkflowStatus;
 import global.oei.domain.shared.content.CreateContentUseCase;
 
 /**

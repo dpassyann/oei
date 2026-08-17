@@ -13,6 +13,7 @@ import global.oei.domain.shared.cv.Cv;
 import global.oei.domain.shared.cv.PdfGenerationJob;
 import global.oei.domain.shared.cv.PdfGenerationJobPort;
 import global.oei.domain.shared.cv.PdfGenerationJobStatus;
+import global.oei.domain.shared.cv.PdfGenerationTargetType;
 import global.oei.domain.shared.cv.RenderCvUseCase;
 
 /**
