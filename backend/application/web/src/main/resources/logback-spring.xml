@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
+  <springProperty scope="context" name="oeiLogDir" source="oei.logging.dir" defaultValue="./logs"/>
+
   <!--
     OEI Backend — Logback configuration.
 
@@ -22,8 +24,18 @@
         <pattern>%d{HH:mm:ss.SSS} %highlight(%-5level) [%cyan(%thread)] %yellow(%logger{36}) - %msg%replace(%magenta( [%mdc])){' \[\]', ''}%n</pattern>
       </encoder>
     </appender>
+    <appender name="FILE_JSON" class="ch.qos.logback.core.FileAppender">
+      <file>${oeiLogDir}/oei-backend.json.log</file>
+      <append>true</append>
+      <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+        <customFields>{"service":"oei-backend"}</customFields>
+        <includeMdcKeyName>correlationId</includeMdcKeyName>
+        <includeMdcKeyName>userId</includeMdcKeyName>
+      </encoder>
+    </appender>
     <root level="INFO">
       <appender-ref ref="CONSOLE_TEXT"/>
+      <appender-ref ref="FILE_JSON"/>
     </root>
     <!-- Reduce noise from hibernate SQL in local -->
     <logger name="org.hibernate.SQL" level="WARN"/>
@@ -42,8 +54,18 @@
         <includeMdcKeyName>userId</includeMdcKeyName>
       </encoder>
     </appender>
+    <appender name="FILE_JSON" class="ch.qos.logback.core.FileAppender">
+      <file>${oeiLogDir}/oei-backend.json.log</file>
+      <append>true</append>
+      <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+        <customFields>{"service":"oei-backend"}</customFields>
+        <includeMdcKeyName>correlationId</includeMdcKeyName>
+        <includeMdcKeyName>userId</includeMdcKeyName>
+      </encoder>
+    </appender>
     <root level="INFO">
       <appender-ref ref="CONSOLE_JSON"/>
+      <appender-ref ref="FILE_JSON"/>
     </root>
     <logger name="org.hibernate.SQL" level="WARN"/>
     <logger name="org.hibernate.orm.jdbc.bind" level="WARN"/>

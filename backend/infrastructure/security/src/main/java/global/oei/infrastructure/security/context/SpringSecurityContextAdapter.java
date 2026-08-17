@@ -52,6 +52,32 @@ public class SpringSecurityContextAdapter implements SecurityContextPort {
                 jwt.getClaimAsString("email"),
                 jwt.getClaimAsString("name"),
                 roles,
-                jwt.getClaimAsString("institutionId")));
+                resolveInstitutionId(jwt)));
+    }
+
+    private String resolveInstitutionId(final Jwt jwt) {
+        final String directClaim = jwt.getClaimAsString("institutionId");
+        if (directClaim != null && !directClaim.isBlank()) {
+            return directClaim;
+        }
+
+        final String institutionsPrefix = "/institutions/";
+        final var groups = jwt.getClaimAsStringList("groups");
+        if (groups == null) {
+            return null;
+        }
+
+        for (final String groupPath : groups) {
+            if (groupPath == null || !groupPath.startsWith(institutionsPrefix)) {
+                continue;
+            }
+            final String suffix = groupPath.substring(institutionsPrefix.length());
+            final int nextSlash = suffix.indexOf('/');
+            final String institutionId = nextSlash >= 0 ? suffix.substring(0, nextSlash) : suffix;
+            if (!institutionId.isBlank()) {
+                return institutionId;
+            }
+        }
+        return null;
     }
 }

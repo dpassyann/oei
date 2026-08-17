@@ -42,6 +42,9 @@ spring:
             enable: ${OEI_SMTP_STARTTLS:false}
 
 oei:
+  logging:
+    # Utilisé par logback-spring.xml pour écrire un flux JSON local scrappable par Promtail.
+    dir: ${OEI_LOG_DIR:./logs}
   # Public site base URL, used to build absolute links in transactional emails (header/footer
   # nav, CTA buttons) — never hardcoded per-template, so a domain change is a one-property fix.
   public-base-url: ${OEI_PUBLIC_BASE_URL:https://theitorder.global}
