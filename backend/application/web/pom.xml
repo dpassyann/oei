@@ -80,6 +80,10 @@
       <groupId>org.openapitools</groupId>
       <artifactId>jackson-databind-nullable</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+    </dependency>
 
     <!-- Lombok: @RequiredArgsConstructor for constructor injection in *Service/*Resource
          classes (never in domain-shared/domain-core, kept framework-agnostic). Version
@@ -226,11 +230,24 @@
         </executions>
       </plugin>
 
-    </plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <configuration>
+          <useDefaultDelimiters>false</useDefaultDelimiters>
+          <delimiters>
+            <delimiter>@</delimiter>
+          </delimiters>
+        </configuration>
+      </plugin>
 
+    </plugins>
+    <!-- @...@-only filtering: fills the Maven identity placeholders in application.yml
+                     (see OpenApiConfig) without touching the Spring ${...} placeholders it also contains. -->
     <resources>
       <resource>
         <directory>src/main/resources</directory>
+        <filtering>true</filtering>
         <excludes>
           <exclude>openapi/**</exclude>
         </excludes>

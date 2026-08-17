@@ -1,6 +1,12 @@
 spring:
   application:
-    name: oei-backend
+    name: "@name@"
+    version: "@version@"
+    description: "@description@"
+  # Resilience: Java 25 virtual threads (recommended with Spring Boot 4, avoids thread pinning).
+  threads:
+    virtual:
+      enabled: true
   datasource:
     # Dev-local Postgres, exposed on the host by infra/docker-compose.yml (see comment
     # there: "dev local uniquement"). OEI_DB_USER/OEI_DB_PASSWORD default to the
@@ -47,6 +53,9 @@ oei:
     public-urls:
       - /actuator/health
       - /actuator/health/**
+      - /v3/api-docs/**
+      - /swagger-ui/**
+      - /swagger-ui.html
       # /api/public/** backs PublicEventsApi/PublicAccountsApi/PublicInstitutionsApi/etc:
       # genuinely anonymous, visitor-facing endpoints (event listings, anonymized salary
       # insights, public member/institution profiles) — never require a bearer token.
@@ -73,3 +82,5 @@ management:
     tags:
       application: ${spring.application.name}
       env: ${spring.profiles.active:default}
+server:
+  shutdown: graceful

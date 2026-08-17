@@ -62,6 +62,7 @@
     <jacoco-maven-plugin.version>0.8.15</jacoco-maven-plugin.version>
     <swagger-annotations-jakarta.version>2.2.52</swagger-annotations-jakarta.version>
     <jackson-databind-nullable.version>0.2.11</jackson-databind-nullable.version>
+    <springdoc-openapi.version>3.1.0</springdoc-openapi.version>
     <!-- infrastructure-client outbound HTTP stubbing only (never a real Stripe/PayPal call
          from any automated test). Pinned here instead of Spring-Boot-managed since Spring
          Boot's own BOM does not manage WireMock. -->
@@ -132,6 +133,11 @@
         <groupId>org.openapitools</groupId>
         <artifactId>jackson-databind-nullable</artifactId>
         <version>${jackson-databind-nullable.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springdoc</groupId>
+        <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+        <version>${springdoc-openapi.version}</version>
       </dependency>
 
       <!-- Structured JSON logging for Loki (logstash-logback-encoder).
