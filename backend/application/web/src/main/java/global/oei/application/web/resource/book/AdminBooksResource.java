@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.AdminBooksApi;
 import global.oei.application.web.model.BookCompilationCreationDTO;
 import global.oei.application.web.model.BookCompilationDTO;
@@ -13,7 +15,6 @@ import global.oei.application.web.resource.book.mapper.BookCompilationDtoMapper;
 import global.oei.domain.shared.book.BookCompilationPort;
 import global.oei.domain.shared.book.CreateBookCompilationUseCase;
 import global.oei.domain.shared.book.RenderBookCompilationUseCase;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements {@link AdminBooksApi}. See {@code RenderBookCompilationService}'s Javadoc for the

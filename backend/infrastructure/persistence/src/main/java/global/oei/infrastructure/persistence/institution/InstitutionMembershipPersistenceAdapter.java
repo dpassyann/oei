@@ -5,12 +5,13 @@ import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.domain.shared.institution.InstitutionId;
 import global.oei.domain.shared.institution.InstitutionMembership;
 import global.oei.domain.shared.institution.InstitutionMembershipPort;
 import global.oei.domain.shared.institution.InstitutionRole;
 import global.oei.domain.shared.member.MemberId;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)

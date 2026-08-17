@@ -5,13 +5,15 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
 
+import org.openapitools.jackson.nullable.JsonNullable;
+
+import lombok.experimental.UtilityClass;
+
 import global.oei.application.web.model.BookCompilationDTO;
 import global.oei.application.web.model.PdfGenerationJobDTO;
 import global.oei.application.web.model.PdfGenerationJobStatusDTO;
 import global.oei.domain.shared.book.BookCompilation;
 import global.oei.domain.shared.cv.PdfGenerationJob;
-import lombok.experimental.UtilityClass;
-import org.openapitools.jackson.nullable.JsonNullable;
 
 @UtilityClass
 public class BookCompilationDtoMapper {

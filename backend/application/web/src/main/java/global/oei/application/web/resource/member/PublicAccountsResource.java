@@ -5,13 +5,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.PublicAccountsApi;
 import global.oei.application.web.model.AccountRegistrationDTO;
 import global.oei.application.web.model.MemberDTO;
 import global.oei.application.web.resource.member.mapper.MemberDtoMapper;
 import global.oei.domain.shared.member.MemberAlreadyRegisteredException;
 import global.oei.domain.shared.member.RegisterAccountUseCase;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements {@link PublicAccountsApi}. See {@code RegisterAccountService}'s Javadoc for the

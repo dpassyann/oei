@@ -3,13 +3,15 @@ package global.oei.domain.core.publicprofile;
 import java.time.Instant;
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.publicprofile.PublicProfile;
 import global.oei.domain.shared.publicprofile.PublicProfilePort;
 import global.oei.domain.shared.publicprofile.PublishPublicProfileUseCase;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Enforces the publication invariant on {@link PublicProfile}: {@link PublicProfile#publishedAt()}

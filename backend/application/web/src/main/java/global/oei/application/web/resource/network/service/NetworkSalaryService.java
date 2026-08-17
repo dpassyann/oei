@@ -4,12 +4,13 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.application.web.resource.network.adapter.NetworkSalaryAdapter;
 import global.oei.domain.shared.network.GetSalaryInsightUseCase;
 import global.oei.domain.shared.network.NetworkSalaryNodeType;
 import global.oei.domain.shared.network.SalaryInsight;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Implements {@link NetworkSalaryAdapter} by delegating to {@link GetSalaryInsightUseCase} —

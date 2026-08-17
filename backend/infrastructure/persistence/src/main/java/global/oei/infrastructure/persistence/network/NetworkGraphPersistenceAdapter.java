@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.domain.shared.network.NetworkCertification;
 import global.oei.domain.shared.network.NetworkDomain;
 import global.oei.domain.shared.network.NetworkExpert;
@@ -18,7 +20,6 @@ import global.oei.domain.shared.network.NetworkTopic;
 import global.oei.domain.shared.network.NetworkTopicsAndCertifications;
 import global.oei.infrastructure.persistence.member.MemberEntity;
 import global.oei.infrastructure.persistence.member.MemberRepository;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements {@link NetworkGraphPort}. {@link NetworkExpert} joins back to

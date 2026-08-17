@@ -11,6 +11,11 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring6.SpringTemplateEngine;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import global.oei.domain.shared.content.ContentContribution;
 import global.oei.domain.shared.mail.EmailNotificationPort;
@@ -18,10 +23,6 @@ import global.oei.domain.shared.member.Member;
 import global.oei.domain.shared.membership.MembershipStatus;
 import global.oei.domain.shared.membershipfee.MembershipFeePayment;
 import global.oei.domain.shared.store.Order;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.spring6.SpringTemplateEngine;
 
 /**
  * Sends business-reassurance transactional emails via Spring Mail (Amazon SES over SMTP in

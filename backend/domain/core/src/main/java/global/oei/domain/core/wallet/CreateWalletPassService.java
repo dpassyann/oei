@@ -3,15 +3,17 @@ package global.oei.domain.core.wallet;
 import java.time.Instant;
 import java.util.UUID;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.wallet.CreateWalletPassUseCase;
 import global.oei.domain.shared.wallet.WalletPass;
 import global.oei.domain.shared.wallet.WalletPassPort;
 import global.oei.domain.shared.wallet.WalletPassProvider;
 import global.oei.domain.shared.wallet.WalletPassStatus;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Enforces the "always mocked" invariant documented on {@link WalletPass}: every pass this

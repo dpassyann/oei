@@ -6,13 +6,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.MemberWalletApi;
 import global.oei.application.web.model.WalletPassDTO;
 import global.oei.application.web.resource.wallet.adapter.WalletAdapter;
 import global.oei.application.web.resource.wallet.mapper.WalletPassDtoMapper;
 import global.oei.domain.shared.wallet.WalletPass;
 import global.oei.domain.shared.wallet.WalletPassProvider;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements every operation of {@link MemberWalletApi}: no stub left on this interface.

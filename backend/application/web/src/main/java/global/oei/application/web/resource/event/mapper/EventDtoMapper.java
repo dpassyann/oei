@@ -4,6 +4,10 @@ import java.net.URI;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+import org.openapitools.jackson.nullable.JsonNullable;
+
+import lombok.experimental.UtilityClass;
+
 import global.oei.application.web.model.EventCommentDTO;
 import global.oei.application.web.model.EventCommentStatusDTO;
 import global.oei.application.web.model.EventDTO;
@@ -26,8 +30,6 @@ import global.oei.domain.shared.event.EventProposal;
 import global.oei.domain.shared.event.EventRegistration;
 import global.oei.domain.shared.event.EventSpeaker;
 import global.oei.domain.shared.member.MemberId;
-import lombok.experimental.UtilityClass;
-import org.openapitools.jackson.nullable.JsonNullable;
 
 @UtilityClass
 public class EventDtoMapper {

@@ -1,11 +1,12 @@
 package global.oei.domain.core.store;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.store.BusinessCardCustomization;
 import global.oei.domain.shared.store.BusinessCardPreview;
 import global.oei.domain.shared.store.BusinessCardTemplate;
 import global.oei.domain.shared.store.GenerateBusinessCardPreviewUseCase;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Renders a server-side HTML {@link BusinessCardPreview}, cheap enough to recompute on every

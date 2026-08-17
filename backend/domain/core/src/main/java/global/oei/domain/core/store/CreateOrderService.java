@@ -7,6 +7,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.store.CreateOrderUseCase;
 import global.oei.domain.shared.store.NewOrderLine;
@@ -16,9 +21,6 @@ import global.oei.domain.shared.store.OrderPort;
 import global.oei.domain.shared.store.OrderStatus;
 import global.oei.domain.shared.store.Product;
 import global.oei.domain.shared.store.ProductPort;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Creates a new {@link Order} at {@link OrderStatus#PENDING_PAYMENT}. Every line's price is

@@ -5,13 +5,14 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.application.web.resource.network.adapter.NetworkGraphAdapter;
 import global.oei.domain.shared.network.NetworkDomain;
 import global.oei.domain.shared.network.NetworkExpertPage;
 import global.oei.domain.shared.network.NetworkGraphPort;
 import global.oei.domain.shared.network.NetworkTopicsAndCertifications;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Implements {@link NetworkGraphAdapter} by delegating to {@link NetworkGraphPort} directly

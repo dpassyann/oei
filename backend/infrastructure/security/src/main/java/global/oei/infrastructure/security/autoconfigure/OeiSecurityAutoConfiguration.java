@@ -12,11 +12,12 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.security.SecurityContextPort;
 import global.oei.infrastructure.security.authentication.OeiJwtAuthenticationConverter;
 import global.oei.infrastructure.security.context.SpringSecurityContextAdapter;
 import global.oei.infrastructure.security.properties.OeiSecurityProperties;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Auto-configures an OAuth2/JWT resource server pointed at the OEI Keycloak realm.

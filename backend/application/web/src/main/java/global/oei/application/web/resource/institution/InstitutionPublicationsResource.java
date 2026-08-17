@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.InstitutionPublicationsApi;
 import global.oei.application.web.model.InstitutionPublicationCreationDTO;
 import global.oei.application.web.model.InstitutionPublicationDTO;
@@ -13,7 +15,6 @@ import global.oei.application.web.model.InstitutionPublicationTypeDTO;
 import global.oei.application.web.resource.institution.adapter.InstitutionAdapter;
 import global.oei.application.web.resource.institution.mapper.InstitutionDtoMapper;
 import global.oei.domain.shared.institution.InstitutionPublicationType;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements every operation of {@link InstitutionPublicationsApi}: no stub left on this

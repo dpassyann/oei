@@ -1,18 +1,17 @@
 package global.oei.domain.core.membershipfee;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import org.junit.jupiter.api.Test;
-
 import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.membershipfee.MembershipFeeAccountPort;
 import global.oei.domain.shared.membershipfee.MembershipFeePayment;
 import global.oei.domain.shared.membershipfee.MembershipFeePaymentStatus;
 import global.oei.domain.shared.membershipfee.MembershipFeeTier;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class PayMembershipFeeServiceTest {
 

@@ -5,13 +5,14 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.publicprofile.PublicProfile;
 import global.oei.domain.shared.publicprofile.PublicProfilePort;
 import global.oei.infrastructure.persistence.member.MemberEntity;
 import global.oei.infrastructure.persistence.member.MemberRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor

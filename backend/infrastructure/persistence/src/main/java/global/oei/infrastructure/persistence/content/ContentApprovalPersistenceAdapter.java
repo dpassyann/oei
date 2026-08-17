@@ -4,9 +4,10 @@ import java.util.UUID;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.domain.shared.content.ContentApproval;
 import global.oei.domain.shared.content.ContentApprovalPort;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class ContentApprovalPersistenceAdapter implements ContentApprovalPort {

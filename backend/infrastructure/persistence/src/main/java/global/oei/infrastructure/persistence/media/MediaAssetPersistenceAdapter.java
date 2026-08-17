@@ -5,11 +5,12 @@ import java.util.UUID;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.media.MediaAsset;
 import global.oei.domain.shared.media.MediaAssetPort;
 import global.oei.domain.shared.media.MediaScanStatus;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor

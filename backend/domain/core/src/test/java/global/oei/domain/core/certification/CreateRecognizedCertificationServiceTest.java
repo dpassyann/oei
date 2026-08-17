@@ -1,19 +1,14 @@
 package global.oei.domain.core.certification;
 
+import global.oei.domain.shared.certification.*;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
-
-import global.oei.domain.shared.certification.CertificationCatalogStatus;
-import global.oei.domain.shared.certification.CertificationLevel;
-import global.oei.domain.shared.certification.CertificationOeiStatus;
-import global.oei.domain.shared.certification.RecognizedCertification;
-import global.oei.domain.shared.certification.RecognizedCertificationPort;
 
 class CreateRecognizedCertificationServiceTest {
 

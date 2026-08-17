@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.AdminMembersApi;
 import global.oei.application.web.model.AwardBadgeRequestDTO;
 import global.oei.application.web.model.BadgeAwardDTO;
@@ -17,7 +19,6 @@ import global.oei.application.web.resource.certification.mapper.CertificationDto
 import global.oei.application.web.resource.member.adapter.AdminMembersAdapter;
 import global.oei.application.web.resource.member.mapper.MemberDtoMapper;
 import global.oei.application.web.resource.verification.mapper.VerificationRequestDtoMapper;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements every operation of {@link AdminMembersApi}: no stub left on this interface. This

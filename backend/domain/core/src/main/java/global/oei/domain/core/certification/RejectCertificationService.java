@@ -3,12 +3,14 @@ package global.oei.domain.core.certification;
 import java.time.Instant;
 import java.util.Optional;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.certification.Certification;
 import global.oei.domain.shared.certification.CertificationPort;
 import global.oei.domain.shared.certification.RejectCertificationUseCase;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Rejects a declared {@link Certification}.

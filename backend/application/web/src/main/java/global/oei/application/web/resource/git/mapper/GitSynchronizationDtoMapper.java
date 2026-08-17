@@ -3,13 +3,15 @@ package global.oei.application.web.resource.git.mapper;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+import org.openapitools.jackson.nullable.JsonNullable;
+
+import lombok.experimental.UtilityClass;
+
 import global.oei.application.web.model.GitSyncedFileDTO;
 import global.oei.application.web.model.GitSynchronizationDTO;
 import global.oei.application.web.model.GitSynchronizationStatusDTO;
 import global.oei.domain.shared.git.GitSyncedFile;
 import global.oei.domain.shared.git.GitSynchronization;
-import lombok.experimental.UtilityClass;
-import org.openapitools.jackson.nullable.JsonNullable;
 
 @UtilityClass
 public class GitSynchronizationDtoMapper {

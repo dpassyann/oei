@@ -2,10 +2,11 @@ package global.oei.application.web.resource.network.mapper;
 
 import java.math.BigDecimal;
 
+import lombok.experimental.UtilityClass;
+
 import global.oei.application.web.model.CompensationPeriodDTO;
 import global.oei.application.web.model.SalaryInsightDTO;
 import global.oei.domain.shared.network.SalaryInsight;
-import lombok.experimental.UtilityClass;
 
 /**
  * Explicit hand-written mapping between the domain {@link SalaryInsight} and the generated

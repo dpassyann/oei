@@ -11,9 +11,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.security.AuthenticatedIdentity;
 import global.oei.domain.shared.security.SecurityContextPort;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Spring Security implementation of {@link SecurityContextPort}: reads the current

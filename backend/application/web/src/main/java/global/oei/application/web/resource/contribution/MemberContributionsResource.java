@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.MemberContributionsApi;
 import global.oei.application.web.model.AddContributionCommentRequestDTO;
 import global.oei.application.web.model.ContentCommentDTO;
@@ -13,7 +15,6 @@ import global.oei.application.web.model.ContentContributionCreationDTO;
 import global.oei.application.web.model.ContentContributionDTO;
 import global.oei.application.web.resource.contribution.adapter.ContributionAdapter;
 import global.oei.application.web.resource.contribution.mapper.ContributionDtoMapper;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements every operation of {@link MemberContributionsApi}.

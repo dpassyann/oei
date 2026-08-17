@@ -3,6 +3,8 @@ package global.oei.application.web.resource.network.mapper;
 import java.math.BigDecimal;
 import java.util.List;
 
+import lombok.experimental.UtilityClass;
+
 import global.oei.application.web.model.NetworkCertificationDTO;
 import global.oei.application.web.model.NetworkDomainDTO;
 import global.oei.application.web.model.NetworkExpertDTO;
@@ -16,7 +18,6 @@ import global.oei.domain.shared.network.NetworkExpert;
 import global.oei.domain.shared.network.NetworkExpertPage;
 import global.oei.domain.shared.network.NetworkTopic;
 import global.oei.domain.shared.network.NetworkTopicsAndCertifications;
-import lombok.experimental.UtilityClass;
 
 /**
  * Explicit hand-written mapping between the domain network graph types and their generated

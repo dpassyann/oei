@@ -3,15 +3,17 @@ package global.oei.domain.core.store;
 import java.util.List;
 import java.util.Objects;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.payment.Payment;
 import global.oei.domain.shared.payment.PaymentStatus;
 import global.oei.domain.shared.store.Order;
 import global.oei.domain.shared.store.OrderPort;
 import global.oei.domain.shared.store.PaymentPort;
 import global.oei.domain.shared.store.RefundOrderUseCase;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Admin-only action: resolves the {@link global.oei.domain.shared.payment.PaymentMethod} that

@@ -4,6 +4,10 @@ import java.net.URI;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+import org.openapitools.jackson.nullable.JsonNullable;
+
+import lombok.experimental.UtilityClass;
+
 import global.oei.application.web.model.CvDTO;
 import global.oei.application.web.model.CvSectionDTO;
 import global.oei.application.web.model.CvSectionTypeDTO;
@@ -16,8 +20,6 @@ import global.oei.domain.shared.cv.CvSection;
 import global.oei.domain.shared.cv.CvTemplate;
 import global.oei.domain.shared.cv.CvTranslation;
 import global.oei.domain.shared.cv.PdfGenerationJob;
-import lombok.experimental.UtilityClass;
-import org.openapitools.jackson.nullable.JsonNullable;
 
 @UtilityClass
 public class CvDtoMapper {

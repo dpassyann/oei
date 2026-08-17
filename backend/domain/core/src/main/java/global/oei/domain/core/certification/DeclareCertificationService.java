@@ -3,14 +3,16 @@ package global.oei.domain.core.certification;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.certification.Certification;
 import global.oei.domain.shared.certification.CertificationPort;
 import global.oei.domain.shared.certification.CertificationStatus;
 import global.oei.domain.shared.certification.DeclareCertificationUseCase;
 import global.oei.domain.shared.member.MemberId;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Default {@code DeclareCertificationUseCase} implementation.

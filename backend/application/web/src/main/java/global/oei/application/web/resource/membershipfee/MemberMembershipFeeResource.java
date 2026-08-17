@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.MemberMembershipFeeApi;
 import global.oei.application.web.model.MembershipFeeAccountDTO;
 import global.oei.application.web.model.MembershipFeePaymentDTO;
@@ -11,7 +13,6 @@ import global.oei.application.web.model.MembershipFeePaymentRequestDTO;
 import global.oei.application.web.resource.membershipfee.adapter.MembershipFeeAdapter;
 import global.oei.application.web.resource.membershipfee.mapper.MembershipFeeDtoMapper;
 import global.oei.domain.shared.membershipfee.MembershipFeeTier;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements every operation of {@link MemberMembershipFeeApi}. Every payment recorded here is

@@ -1,5 +1,7 @@
 package global.oei.application.web.resource.home.mapper;
 
+import lombok.experimental.UtilityClass;
+
 import global.oei.application.web.model.DomainAreaDTO;
 import global.oei.application.web.model.DomainSectionDTO;
 import global.oei.application.web.model.NewsItemDTO;
@@ -14,7 +16,6 @@ import global.oei.domain.shared.home.HomePartner;
 import global.oei.domain.shared.home.HomeRelatedNewsItem;
 import global.oei.domain.shared.home.HomeRelatedResource;
 import global.oei.domain.shared.home.HomeStat;
-import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class HomeDtoMapper {

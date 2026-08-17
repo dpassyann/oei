@@ -4,6 +4,10 @@ import java.net.URI;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+import org.openapitools.jackson.nullable.JsonNullable;
+
+import lombok.experimental.UtilityClass;
+
 import global.oei.application.web.model.MembershipTierDTO;
 import global.oei.application.web.model.WalletPassDTO;
 import global.oei.application.web.model.WalletPassProviderDTO;
@@ -11,8 +15,6 @@ import global.oei.application.web.model.WalletPassStatusDTO;
 import global.oei.application.web.model.WalletPassVerificationDTO;
 import global.oei.domain.shared.wallet.WalletPass;
 import global.oei.domain.shared.wallet.WalletPassVerification;
-import lombok.experimental.UtilityClass;
-import org.openapitools.jackson.nullable.JsonNullable;
 
 @UtilityClass
 public class WalletPassDtoMapper {

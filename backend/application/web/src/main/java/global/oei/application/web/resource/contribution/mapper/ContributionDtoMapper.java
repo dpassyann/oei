@@ -3,12 +3,14 @@ package global.oei.application.web.resource.contribution.mapper;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+import org.openapitools.jackson.nullable.JsonNullable;
+
+import lombok.experimental.UtilityClass;
+
 import global.oei.application.web.model.ContentCommentDTO;
 import global.oei.application.web.model.ContentContributionDTO;
 import global.oei.domain.shared.content.ContentComment;
 import global.oei.domain.shared.content.ContentContribution;
-import lombok.experimental.UtilityClass;
-import org.openapitools.jackson.nullable.JsonNullable;
 
 @UtilityClass
 public class ContributionDtoMapper {

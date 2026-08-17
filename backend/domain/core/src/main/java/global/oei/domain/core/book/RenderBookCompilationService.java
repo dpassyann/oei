@@ -3,15 +3,17 @@ package global.oei.domain.core.book;
 import java.time.Instant;
 import java.util.UUID;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.book.BookCompilation;
 import global.oei.domain.shared.book.RenderBookCompilationUseCase;
 import global.oei.domain.shared.cv.PdfGenerationJob;
 import global.oei.domain.shared.cv.PdfGenerationJobPort;
 import global.oei.domain.shared.cv.PdfGenerationJobStatus;
 import global.oei.domain.shared.cv.PdfGenerationTargetType;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Mocked book-to-PDF rendering: same posture as {@code RenderCvService} — no real HTML/CSS

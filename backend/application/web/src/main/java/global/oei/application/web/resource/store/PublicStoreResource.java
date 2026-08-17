@@ -6,13 +6,14 @@ import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.PublicStoreApi;
 import global.oei.application.web.model.BusinessCardTemplateDTO;
 import global.oei.application.web.model.ProductDTO;
 import global.oei.application.web.resource.store.mapper.StoreDtoMapper;
 import global.oei.domain.shared.store.Product;
 import global.oei.domain.shared.store.ProductPort;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements every operation of {@link PublicStoreApi}: read-only catalog, no authentication.

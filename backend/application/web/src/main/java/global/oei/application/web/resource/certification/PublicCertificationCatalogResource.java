@@ -5,12 +5,13 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.PublicCertificationsApi;
 import global.oei.application.web.model.RecognizedCertificationDTO;
 import global.oei.application.web.resource.certification.mapper.CertificationDtoMapper;
 import global.oei.domain.shared.certification.CertificationCatalogStatus;
 import global.oei.domain.shared.certification.RecognizedCertificationPort;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Public, unauthenticated read-only view of the {@link RecognizedCertificationPort} catalog.

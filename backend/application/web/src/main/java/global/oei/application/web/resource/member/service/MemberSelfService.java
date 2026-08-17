@@ -9,6 +9,9 @@ import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.application.web.model.MemberDTO;
 import global.oei.application.web.resource.member.adapter.MemberSelfAdapter;
 import global.oei.application.web.resource.member.mapper.MemberDtoMapper;
@@ -23,8 +26,6 @@ import global.oei.domain.shared.membership.MembershipStatus;
 import global.oei.domain.shared.membership.MembershipTier;
 import global.oei.domain.shared.security.AuthenticatedIdentity;
 import global.oei.domain.shared.security.SecurityContextPort;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Implements {@link MemberSelfAdapter}.

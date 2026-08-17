@@ -3,15 +3,17 @@ package global.oei.domain.core.membershipfee;
 import java.time.Instant;
 import java.util.UUID;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.membershipfee.MembershipFeeAccountPort;
 import global.oei.domain.shared.membershipfee.MembershipFeePayment;
 import global.oei.domain.shared.membershipfee.MembershipFeePaymentStatus;
 import global.oei.domain.shared.membershipfee.MembershipFeeTier;
 import global.oei.domain.shared.membershipfee.PayMembershipFeeUseCase;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Records a membership fee payment. Mocked — no real payment processor is called in this

@@ -4,15 +4,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.institution.CreateInstitutionUseCase;
 import global.oei.domain.shared.institution.Institution;
 import global.oei.domain.shared.institution.InstitutionDomain;
 import global.oei.domain.shared.institution.InstitutionId;
 import global.oei.domain.shared.institution.InstitutionPort;
-import global.oei.domain.shared.institution.InstitutionWorkflowStatus;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Enforces the "always starts DRAFT" invariant on every admin-created institution, and

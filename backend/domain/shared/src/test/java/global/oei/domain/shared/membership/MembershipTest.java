@@ -1,13 +1,13 @@
 package global.oei.domain.shared.membership;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import global.oei.domain.shared.member.MemberId;
+import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
-import org.junit.jupiter.api.Test;
-import global.oei.domain.shared.member.MemberId;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class MembershipTest {
 

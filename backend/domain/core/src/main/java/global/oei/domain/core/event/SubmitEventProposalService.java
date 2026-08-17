@@ -3,6 +3,11 @@ package global.oei.domain.core.event;
 import java.time.Instant;
 import java.util.UUID;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.event.EventLocation;
 import global.oei.domain.shared.event.EventProposal;
 import global.oei.domain.shared.event.EventProposalPort;
@@ -10,9 +15,6 @@ import global.oei.domain.shared.event.EventProposalStatus;
 import global.oei.domain.shared.event.EventType;
 import global.oei.domain.shared.event.SubmitEventProposalUseCase;
 import global.oei.domain.shared.member.MemberId;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Creates the proposal in {@link EventProposalStatus#DRAFT} then immediately

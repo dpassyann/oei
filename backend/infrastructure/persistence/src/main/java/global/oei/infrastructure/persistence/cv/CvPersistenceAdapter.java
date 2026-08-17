@@ -6,13 +6,14 @@ import java.util.UUID;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import global.oei.domain.shared.cv.Cv;
-import global.oei.domain.shared.cv.CvPort;
-import global.oei.domain.shared.member.MemberId;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import tools.jackson.databind.ObjectMapper;
+
+import global.oei.domain.shared.cv.Cv;
+import global.oei.domain.shared.cv.CvPort;
+import global.oei.domain.shared.member.MemberId;
 
 /**
  * Implements {@link CvPort} by (de)serializing the whole {@link Cv} record as JSON into

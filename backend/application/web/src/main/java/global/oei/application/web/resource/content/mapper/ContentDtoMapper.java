@@ -3,6 +3,10 @@ package global.oei.application.web.resource.content.mapper;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+import org.openapitools.jackson.nullable.JsonNullable;
+
+import lombok.experimental.UtilityClass;
+
 import global.oei.application.web.model.ContentApprovalDTO;
 import global.oei.application.web.model.ContentContributionDTO;
 import global.oei.application.web.model.ContentDTO;
@@ -20,8 +24,6 @@ import global.oei.domain.shared.content.ContentContribution;
 import global.oei.domain.shared.content.ContentPublication;
 import global.oei.domain.shared.content.ContentTranslation;
 import global.oei.domain.shared.content.ContentVersion;
-import lombok.experimental.UtilityClass;
-import org.openapitools.jackson.nullable.JsonNullable;
 
 @UtilityClass
 public class ContentDtoMapper {

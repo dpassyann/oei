@@ -3,6 +3,8 @@ package global.oei.application.web.resource.store.mapper;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+import lombok.experimental.UtilityClass;
+
 import global.oei.application.web.model.BusinessCardCustomizationDTO;
 import global.oei.application.web.model.BusinessCardPreviewDTO;
 import global.oei.application.web.model.BusinessCardTemplateDTO;
@@ -21,7 +23,6 @@ import global.oei.domain.shared.store.NewOrderLine;
 import global.oei.domain.shared.store.Order;
 import global.oei.domain.shared.store.OrderLine;
 import global.oei.domain.shared.store.ProductCategory;
-import lombok.experimental.UtilityClass;
 
 /**
  * Maps between the store's {@code domain-shared} types and their generated OpenAPI DTOs.

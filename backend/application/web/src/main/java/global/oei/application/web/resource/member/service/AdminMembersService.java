@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.application.web.resource.member.adapter.AdminMembersAdapter;
 import global.oei.domain.shared.badge.AwardBadgeUseCase;
 import global.oei.domain.shared.badge.BadgeAward;
@@ -20,8 +23,6 @@ import global.oei.domain.shared.security.SecurityContextPort;
 import global.oei.domain.shared.verification.ApproveVerificationRequestUseCase;
 import global.oei.domain.shared.verification.RejectVerificationRequestUseCase;
 import global.oei.domain.shared.verification.VerificationRequest;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Passes the currently authenticated admin's own subject as the {@code validatorId}/

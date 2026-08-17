@@ -1,13 +1,12 @@
 package global.oei.domain.shared.profile;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import global.oei.domain.shared.member.MemberId;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
-
-import global.oei.domain.shared.member.MemberId;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ProfessionalProfileTest {
 

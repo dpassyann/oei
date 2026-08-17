@@ -1,17 +1,16 @@
 package global.oei.domain.core.verification;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import org.junit.jupiter.api.Test;
-
 import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.verification.VerificationRequest;
 import global.oei.domain.shared.verification.VerificationRequestPort;
 import global.oei.domain.shared.verification.VerificationRequestStatus;
 import global.oei.domain.shared.verification.VerificationType;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class CreateVerificationRequestServiceTest {
 

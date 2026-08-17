@@ -1,18 +1,17 @@
 package global.oei.domain.core.network;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.util.Optional;
-
-import org.junit.jupiter.api.Test;
-
 import global.oei.domain.shared.network.CompensationPeriod;
 import global.oei.domain.shared.network.NetworkSalaryNodeType;
 import global.oei.domain.shared.network.SalaryInsight;
 import global.oei.domain.shared.network.SalaryInsightPort;
+import org.junit.jupiter.api.Test;
+
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class GetSalaryInsightServiceTest {
 

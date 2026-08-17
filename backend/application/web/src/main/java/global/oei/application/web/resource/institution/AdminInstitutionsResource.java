@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.AdminInstitutionsApi;
 import global.oei.application.web.model.InstitutionAdminCreationDTO;
 import global.oei.application.web.model.InstitutionDTO;
@@ -17,7 +19,6 @@ import global.oei.application.web.model.SuspendInstitutionRequestDTO;
 import global.oei.application.web.resource.institution.adapter.InstitutionAdapter;
 import global.oei.application.web.resource.institution.mapper.InstitutionDtoMapper;
 import global.oei.domain.shared.institution.PartnershipLevel;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements every operation of {@link AdminInstitutionsApi}: no stub left on this

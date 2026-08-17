@@ -1,5 +1,9 @@
 package global.oei.domain.core.store;
 
+import global.oei.domain.shared.member.MemberId;
+import global.oei.domain.shared.store.*;
+import org.junit.jupiter.api.Test;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -9,16 +13,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-import org.junit.jupiter.api.Test;
-
-import global.oei.domain.shared.member.MemberId;
-import global.oei.domain.shared.store.NewOrderLine;
-import global.oei.domain.shared.store.Order;
-import global.oei.domain.shared.store.OrderPort;
-import global.oei.domain.shared.store.OrderStatus;
-import global.oei.domain.shared.store.Product;
-import global.oei.domain.shared.store.ProductPort;
 
 class CreateOrderServiceTest {
 

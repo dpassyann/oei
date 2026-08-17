@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.payment.ChargeRequest;
 import global.oei.domain.shared.payment.Payment;
 import global.oei.domain.shared.payment.PaymentFailureReason;
@@ -19,8 +22,6 @@ import global.oei.infrastructure.client.stripe.generated.api.PaymentIntentsApi;
 import global.oei.infrastructure.client.stripe.generated.api.RefundsApi;
 import global.oei.infrastructure.client.stripe.generated.model.StripePaymentIntentDto;
 import global.oei.infrastructure.client.stripe.generated.model.StripeRefundDto;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * {@link PaymentProviderPort} implementation for {@link PaymentMethod#CARD}, backed by

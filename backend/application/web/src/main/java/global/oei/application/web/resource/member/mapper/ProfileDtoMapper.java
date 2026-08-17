@@ -3,6 +3,8 @@ package global.oei.application.web.resource.member.mapper;
 import java.math.BigDecimal;
 import java.util.List;
 
+import lombok.experimental.UtilityClass;
+
 import global.oei.application.web.model.CompensationPeriodDTO;
 import global.oei.application.web.model.CurrentCompensationDTO;
 import global.oei.application.web.model.EducationDTO;
@@ -19,7 +21,6 @@ import global.oei.domain.shared.profile.LanguageLevel;
 import global.oei.domain.shared.profile.LanguageProficiency;
 import global.oei.domain.shared.profile.ProfessionalProfile;
 import global.oei.domain.shared.profile.Skill;
-import lombok.experimental.UtilityClass;
 
 /**
  * Explicit hand-written mapping between the domain {@link ProfessionalProfile} and the

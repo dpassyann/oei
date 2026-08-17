@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.application.web.resource.institution.adapter.InstitutionAdapter;
 import global.oei.domain.shared.institution.CreateInstitutionBadgeProposalUseCase;
 import global.oei.domain.shared.institution.CreateInstitutionInvitationUseCase;
@@ -46,8 +49,6 @@ import global.oei.domain.shared.institution.RequestEmploymentAffiliationUseCase;
 import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.security.AuthenticatedIdentity;
 import global.oei.domain.shared.security.SecurityContextPort;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Implements every operation of the Institution bounded context. Every institution-side

@@ -6,12 +6,13 @@ import java.util.UUID;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.domain.shared.institution.InstitutionId;
 import global.oei.domain.shared.institution.InstitutionOpportunity;
 import global.oei.domain.shared.institution.InstitutionOpportunityPort;
 import global.oei.domain.shared.institution.InstitutionOpportunityStatus;
 import global.oei.domain.shared.institution.InstitutionOpportunityType;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)

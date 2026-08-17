@@ -1,16 +1,15 @@
 package global.oei.domain.core.content;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import org.junit.jupiter.api.Test;
-
 import global.oei.domain.shared.content.ContentContribution;
 import global.oei.domain.shared.content.ContentContributionPort;
 import global.oei.domain.shared.content.ContentContributionStatus;
 import global.oei.domain.shared.member.MemberId;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class CreateContentContributionServiceTest {
 

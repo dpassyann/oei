@@ -5,11 +5,12 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.PublicEventsApi;
 import global.oei.application.web.model.EventDTO;
 import global.oei.application.web.resource.event.adapter.EventAdapter;
 import global.oei.application.web.resource.event.mapper.EventDtoMapper;
-import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor

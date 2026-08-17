@@ -4,15 +4,16 @@ import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.cv.Cv;
 import global.oei.domain.shared.cv.PdfGenerationJob;
 import global.oei.domain.shared.cv.PdfGenerationJobPort;
 import global.oei.domain.shared.cv.PdfGenerationJobStatus;
-import global.oei.domain.shared.cv.PdfGenerationTargetType;
 import global.oei.domain.shared.cv.RenderCvUseCase;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Mocked CV-to-PDF rendering: no real HTML/CSS layout engine (fonts, A4 pagination, QR code

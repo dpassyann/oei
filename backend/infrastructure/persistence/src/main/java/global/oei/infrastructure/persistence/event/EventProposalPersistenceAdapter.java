@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.domain.shared.event.EventLocation;
 import global.oei.domain.shared.event.EventProposal;
 import global.oei.domain.shared.event.EventProposalAiPrecheck;
@@ -13,7 +15,6 @@ import global.oei.domain.shared.event.EventProposalPort;
 import global.oei.domain.shared.event.EventProposalStatus;
 import global.oei.domain.shared.event.EventType;
 import global.oei.domain.shared.member.MemberId;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)

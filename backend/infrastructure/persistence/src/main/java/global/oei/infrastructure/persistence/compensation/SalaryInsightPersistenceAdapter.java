@@ -4,12 +4,13 @@ import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.network.CompensationPeriod;
 import global.oei.domain.shared.network.NetworkSalaryNodeType;
 import global.oei.domain.shared.network.SalaryInsight;
 import global.oei.domain.shared.network.SalaryInsightPort;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Reports the raw aggregate (min/max/count) of {@link CompensationDeclarationEntity} rows

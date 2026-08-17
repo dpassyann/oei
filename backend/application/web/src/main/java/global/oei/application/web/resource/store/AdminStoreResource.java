@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.AdminStoreApi;
 import global.oei.application.web.model.OrderDTO;
 import global.oei.application.web.model.OrderStatusDTO;
@@ -14,7 +16,6 @@ import global.oei.domain.shared.store.Order;
 import global.oei.domain.shared.store.OrderPort;
 import global.oei.domain.shared.store.OrderStatus;
 import global.oei.domain.shared.store.RefundOrderUseCase;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements every operation of {@link AdminStoreApi}: admin-only supervision of store orders,

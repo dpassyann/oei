@@ -4,13 +4,15 @@ import java.net.URI;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+import org.openapitools.jackson.nullable.JsonNullable;
+
+import lombok.experimental.UtilityClass;
+
 import global.oei.application.web.model.DigitalBusinessCardDTO;
 import global.oei.application.web.model.MembershipTierDTO;
 import global.oei.application.web.model.PublicProfileDTO;
 import global.oei.domain.shared.publicprofile.DigitalBusinessCard;
 import global.oei.domain.shared.publicprofile.PublicProfile;
-import lombok.experimental.UtilityClass;
-import org.openapitools.jackson.nullable.JsonNullable;
 
 @UtilityClass
 public class PublicProfileDtoMapper {

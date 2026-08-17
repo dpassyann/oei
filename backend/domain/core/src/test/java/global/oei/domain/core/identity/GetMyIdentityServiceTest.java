@@ -1,17 +1,17 @@
 package global.oei.domain.core.identity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import global.oei.domain.shared.security.AuthenticatedIdentity;
+import global.oei.domain.shared.security.GetMyIdentityUseCase;
+import global.oei.domain.shared.security.SecurityContextPort;
+import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 import java.util.Set;
 
-import org.junit.jupiter.api.Test;
-import global.oei.domain.shared.security.AuthenticatedIdentity;
-import global.oei.domain.shared.security.GetMyIdentityUseCase;
-import global.oei.domain.shared.security.SecurityContextPort;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class GetMyIdentityServiceTest {
 

@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.AdminContentApi;
 import global.oei.application.web.model.ContentApprovalCreationDTO;
 import global.oei.application.web.model.ContentApprovalDTO;
@@ -31,7 +33,6 @@ import global.oei.domain.shared.content.ContentSourceType;
 import global.oei.domain.shared.content.ContentTranslationStatus;
 import global.oei.domain.shared.content.ContentType;
 import global.oei.domain.shared.content.ContentWorkflowStatus;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements every operation of {@link AdminContentApi}: no stub left on this interface.

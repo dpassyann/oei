@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.application.web.resource.store.adapter.StoreAdapter;
 import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.payment.PaymentMethod;
@@ -22,8 +25,6 @@ import global.oei.domain.shared.store.Order;
 import global.oei.domain.shared.store.OrderPort;
 import global.oei.domain.shared.store.PayOrderUseCase;
 import global.oei.domain.shared.store.ProductPort;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Implements {@link StoreAdapter}: resolves the current member from {@link SecurityContextPort}

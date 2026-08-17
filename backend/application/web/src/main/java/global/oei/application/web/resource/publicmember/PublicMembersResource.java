@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.PublicMembersApi;
 import global.oei.application.web.model.BadgeDTO;
 import global.oei.application.web.model.WalletPassVerificationDTO;
@@ -12,7 +14,6 @@ import global.oei.application.web.resource.badge.adapter.BadgeAdapter;
 import global.oei.application.web.resource.badge.mapper.BadgeDtoMapper;
 import global.oei.application.web.resource.wallet.adapter.WalletAdapter;
 import global.oei.application.web.resource.wallet.mapper.WalletPassDtoMapper;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements the public-facing operations of {@link PublicMembersApi} covered so far: the

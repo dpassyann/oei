@@ -3,9 +3,10 @@ package global.oei.application.web.resource.member.mapper;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+import lombok.experimental.UtilityClass;
+
 import global.oei.application.web.model.MemberDTO;
 import global.oei.domain.shared.member.Member;
-import lombok.experimental.UtilityClass;
 
 /**
  * Maps {@link Member} to {@link MemberDTO}. {@code membership} is left unset: no {@code

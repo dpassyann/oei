@@ -4,15 +4,17 @@ import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.git.GitSyncedFile;
 import global.oei.domain.shared.git.GitSyncedFilePort;
 import global.oei.domain.shared.git.GitSynchronization;
 import global.oei.domain.shared.git.GitSynchronizationPort;
 import global.oei.domain.shared.git.GitSynchronizationStatus;
 import global.oei.domain.shared.git.TriggerGitSynchronizationUseCase;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Mocked Git synchronization: no real Git client (clone/pull/checkout) is wired in this

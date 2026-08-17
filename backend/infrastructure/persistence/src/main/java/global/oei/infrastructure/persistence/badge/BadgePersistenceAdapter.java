@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.domain.shared.badge.Badge;
 import global.oei.domain.shared.badge.BadgeAward;
 import global.oei.domain.shared.badge.BadgeAwardPort;
@@ -12,7 +14,6 @@ import global.oei.domain.shared.badge.BadgeAwardSource;
 import global.oei.domain.shared.badge.BadgeCatalogPort;
 import global.oei.domain.shared.badge.BadgeCategory;
 import global.oei.domain.shared.member.MemberId;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)

@@ -6,12 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.MemberAffiliationApi;
 import global.oei.application.web.model.EmploymentAffiliationDTO;
 import global.oei.application.web.model.RequestEmploymentAffiliationRequestDTO;
 import global.oei.application.web.resource.institution.adapter.InstitutionAdapter;
 import global.oei.application.web.resource.institution.mapper.InstitutionDtoMapper;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements every operation of {@link MemberAffiliationApi}: no stub left on this interface.

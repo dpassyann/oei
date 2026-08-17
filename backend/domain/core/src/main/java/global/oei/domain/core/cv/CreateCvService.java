@@ -3,14 +3,16 @@ package global.oei.domain.core.cv;
 import java.util.List;
 import java.util.UUID;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.cv.CreateCvUseCase;
 import global.oei.domain.shared.cv.Cv;
 import global.oei.domain.shared.cv.CvPort;
 import global.oei.domain.shared.cv.CvStatus;
 import global.oei.domain.shared.member.MemberId;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Enforces the "always starts blank" invariant documented on {@link CreateCvUseCase}: every

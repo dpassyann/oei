@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.membership.MembershipTier;
 import global.oei.domain.shared.wallet.WalletPass;
@@ -17,7 +19,6 @@ import global.oei.infrastructure.persistence.member.MemberEntity;
 import global.oei.infrastructure.persistence.member.MemberRepository;
 import global.oei.infrastructure.persistence.membership.MembershipEntity;
 import global.oei.infrastructure.persistence.membership.MembershipRepository;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)

@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.MemberCvApi;
 import global.oei.application.web.model.CvCreationDTO;
 import global.oei.application.web.model.CvDTO;
@@ -17,7 +19,6 @@ import global.oei.application.web.model.PdfGenerationJobDTO;
 import global.oei.application.web.resource.cv.adapter.CvAdapter;
 import global.oei.application.web.resource.cv.mapper.CvDtoMapper;
 import global.oei.domain.shared.cv.CvSectionType;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements every operation of {@link MemberCvApi}: no stub left on this interface. CV

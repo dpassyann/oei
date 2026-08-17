@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.domain.shared.institution.EmploymentAffiliationStatus;
 import global.oei.domain.shared.institution.InstitutionDashboard;
 import global.oei.domain.shared.institution.InstitutionDashboardPort;
@@ -13,7 +15,6 @@ import global.oei.infrastructure.persistence.badge.BadgeAwardRepository;
 import global.oei.infrastructure.persistence.certification.CertificationRepository;
 import global.oei.infrastructure.persistence.charter.EthicalCharterSignatureRepository;
 import global.oei.infrastructure.persistence.profile.ProfessionalProfileRepository;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Computes real, DB-backed KPIs by joining the institution's accepted

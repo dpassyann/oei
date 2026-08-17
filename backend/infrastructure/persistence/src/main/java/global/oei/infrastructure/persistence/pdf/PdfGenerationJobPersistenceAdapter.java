@@ -4,10 +4,11 @@ import java.util.UUID;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import global.oei.domain.shared.cv.PdfGenerationJob;
-import global.oei.domain.shared.cv.PdfGenerationJobPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import global.oei.domain.shared.cv.PdfGenerationJob;
+import global.oei.domain.shared.cv.PdfGenerationJobPort;
 
 @Slf4j
 @RequiredArgsConstructor

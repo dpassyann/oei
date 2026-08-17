@@ -2,14 +2,16 @@ package global.oei.domain.core.profile;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.profile.Availability;
 import global.oei.domain.shared.profile.GetMyProfileUseCase;
 import global.oei.domain.shared.profile.ProfessionalProfile;
 import global.oei.domain.shared.profile.ProfileLookupPort;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Default {@code GetMyProfileUseCase} implementation.

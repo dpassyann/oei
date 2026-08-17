@@ -7,6 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.payment.ChargeRequest;
 import global.oei.domain.shared.payment.Payment;
 import global.oei.domain.shared.payment.PaymentFailureReason;
@@ -17,8 +20,6 @@ import global.oei.infrastructure.client.paypal.generated.api.OrdersApi;
 import global.oei.infrastructure.client.paypal.generated.api.PaymentsApi;
 import global.oei.infrastructure.client.paypal.generated.model.PaypalOrderDto;
 import global.oei.infrastructure.client.paypal.generated.model.PaypalRefundDto;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * {@link PaymentProviderPort} implementation for {@link PaymentMethod#PAYPAL}, backed by

@@ -5,13 +5,14 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.InstitutionRolesApi;
 import global.oei.application.web.model.InstitutionMembershipDTO;
 import global.oei.application.web.model.UpdateInstitutionRoleAssignmentRequestDTO;
 import global.oei.application.web.resource.institution.adapter.InstitutionAdapter;
 import global.oei.application.web.resource.institution.mapper.InstitutionDtoMapper;
 import global.oei.domain.shared.institution.InstitutionRole;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements every operation of {@link InstitutionRolesApi}: no stub left on this interface.

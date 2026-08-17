@@ -6,9 +6,10 @@ import java.util.Map;
 
 import org.springframework.beans.factory.InitializingBean;
 
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.payment.PaymentMethod;
 import global.oei.domain.shared.payment.PaymentProviderPort;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Binds each {@link PaymentProviderPort} to its {@link PaymentMethod} at startup.

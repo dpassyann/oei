@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.MemberEventsApi;
 import global.oei.application.web.model.EventCommentDTO;
 import global.oei.application.web.model.EventCommentDraftDTO;
@@ -23,7 +25,6 @@ import global.oei.application.web.resource.event.adapter.EventAdapter;
 import global.oei.application.web.resource.event.mapper.EventDtoMapper;
 import global.oei.domain.shared.event.EventLocation;
 import global.oei.domain.shared.event.EventType;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements every operation of {@link MemberEventsApi}: no stub left on this interface.

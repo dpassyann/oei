@@ -4,9 +4,10 @@ import java.util.UUID;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.domain.shared.content.ContentPublication;
 import global.oei.domain.shared.content.ContentPublicationPort;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class ContentPublicationPersistenceAdapter implements ContentPublicationPort {

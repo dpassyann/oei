@@ -4,6 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.application.web.resource.member.adapter.ProfileAdapter;
 import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.profile.GetMyProfileUseCase;
@@ -11,8 +14,6 @@ import global.oei.domain.shared.profile.ProfessionalProfile;
 import global.oei.domain.shared.profile.UpdateMyProfileUseCase;
 import global.oei.domain.shared.security.AuthenticatedIdentity;
 import global.oei.domain.shared.security.SecurityContextPort;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Implements {@link ProfileAdapter} by resolving the current caller's identity via

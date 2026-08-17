@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.AdminGitApi;
 import global.oei.application.web.model.GitSyncedFileDTO;
 import global.oei.application.web.model.GitSynchronizationDTO;
@@ -13,7 +15,6 @@ import global.oei.application.web.resource.git.mapper.GitSynchronizationDtoMappe
 import global.oei.domain.shared.git.GitSyncedFilePort;
 import global.oei.domain.shared.git.GitSynchronizationPort;
 import global.oei.domain.shared.git.TriggerGitSynchronizationUseCase;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements every operation of {@link AdminGitApi}: no stub left on this interface. See

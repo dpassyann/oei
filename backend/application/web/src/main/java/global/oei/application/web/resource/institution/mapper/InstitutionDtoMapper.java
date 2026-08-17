@@ -5,6 +5,10 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
 
+import org.openapitools.jackson.nullable.JsonNullable;
+
+import lombok.experimental.UtilityClass;
+
 import global.oei.application.web.model.EmploymentAffiliationDTO;
 import global.oei.application.web.model.InstitutionAuditLogDTO;
 import global.oei.application.web.model.InstitutionBadgeProposalDTO;
@@ -33,8 +37,6 @@ import global.oei.domain.shared.institution.InstitutionMembership;
 import global.oei.domain.shared.institution.InstitutionOpportunity;
 import global.oei.domain.shared.institution.InstitutionPublication;
 import global.oei.domain.shared.institution.Partnership;
-import lombok.experimental.UtilityClass;
-import org.openapitools.jackson.nullable.JsonNullable;
 
 @UtilityClass
 public class InstitutionDtoMapper {

@@ -6,15 +6,16 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.content.Content;
 import global.oei.domain.shared.content.ContentPort;
 import global.oei.domain.shared.content.ContentVersion;
 import global.oei.domain.shared.content.ContentVersionPort;
-import global.oei.domain.shared.content.ContentWorkflowStatus;
 import global.oei.domain.shared.content.CreateContentVersionUseCase;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Default {@code CreateContentVersionUseCase} implementation.

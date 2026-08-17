@@ -1,12 +1,11 @@
 package global.oei.domain.core.store;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.jupiter.api.Test;
-
 import global.oei.domain.shared.store.BusinessCardCustomization;
 import global.oei.domain.shared.store.BusinessCardPreview;
 import global.oei.domain.shared.store.BusinessCardTemplate;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class GenerateBusinessCardPreviewServiceTest {
 

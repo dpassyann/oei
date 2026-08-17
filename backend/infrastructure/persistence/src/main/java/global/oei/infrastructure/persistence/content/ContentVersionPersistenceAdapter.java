@@ -7,13 +7,14 @@ import java.util.UUID;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import global.oei.domain.shared.content.ContentVersion;
-import global.oei.domain.shared.content.ContentVersionPort;
-import global.oei.domain.shared.content.ContentWorkflowStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import tools.jackson.databind.ObjectMapper;
+
+import global.oei.domain.shared.content.ContentVersion;
+import global.oei.domain.shared.content.ContentVersionPort;
+import global.oei.domain.shared.content.ContentWorkflowStatus;
 
 @Slf4j
 @RequiredArgsConstructor

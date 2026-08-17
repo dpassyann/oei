@@ -4,15 +4,16 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.institution.CreateInstitutionInvitationUseCase;
 import global.oei.domain.shared.institution.InstitutionId;
 import global.oei.domain.shared.institution.InstitutionInvitation;
 import global.oei.domain.shared.institution.InstitutionInvitationPort;
-import global.oei.domain.shared.institution.InstitutionInvitationStatus;
 import global.oei.domain.shared.institution.InstitutionRole;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Enforces the "always starts PENDING, always expires in 30 days" invariant on every

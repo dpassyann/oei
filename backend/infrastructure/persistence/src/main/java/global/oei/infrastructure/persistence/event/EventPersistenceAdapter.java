@@ -6,6 +6,10 @@ import java.util.UUID;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import tools.jackson.databind.ObjectMapper;
+
 import global.oei.domain.shared.event.Event;
 import global.oei.domain.shared.event.EventLocation;
 import global.oei.domain.shared.event.EventPort;
@@ -13,9 +17,6 @@ import global.oei.domain.shared.event.EventSpeaker;
 import global.oei.domain.shared.event.EventStatus;
 import global.oei.domain.shared.event.EventType;
 import global.oei.domain.shared.event.EventVisibility;
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
-import tools.jackson.databind.ObjectMapper;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)

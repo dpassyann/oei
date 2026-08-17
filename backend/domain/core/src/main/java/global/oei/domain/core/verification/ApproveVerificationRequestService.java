@@ -3,12 +3,14 @@ package global.oei.domain.core.verification;
 import java.time.Instant;
 import java.util.Optional;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.verification.ApproveVerificationRequestUseCase;
 import global.oei.domain.shared.verification.VerificationRequest;
 import global.oei.domain.shared.verification.VerificationRequestPort;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Approves a pending {@link VerificationRequest}.

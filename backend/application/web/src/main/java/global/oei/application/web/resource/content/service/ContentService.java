@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.application.web.resource.content.adapter.ContentAdapter;
 import global.oei.domain.shared.content.Content;
 import global.oei.domain.shared.content.ContentApproval;
@@ -34,8 +37,6 @@ import global.oei.domain.shared.content.CreateContentUseCase;
 import global.oei.domain.shared.content.CreateContentVersionUseCase;
 import global.oei.domain.shared.security.AuthenticatedIdentity;
 import global.oei.domain.shared.security.SecurityContextPort;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service

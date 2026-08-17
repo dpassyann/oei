@@ -1,5 +1,10 @@
 package global.oei.domain.core.store;
 
+import global.oei.domain.shared.member.MemberId;
+import global.oei.domain.shared.payment.*;
+import global.oei.domain.shared.store.*;
+import org.junit.jupiter.api.Test;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
@@ -9,20 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-import org.junit.jupiter.api.Test;
-
-import global.oei.domain.shared.member.MemberId;
-import global.oei.domain.shared.payment.ChargeRequest;
-import global.oei.domain.shared.payment.Payment;
-import global.oei.domain.shared.payment.PaymentMethod;
-import global.oei.domain.shared.payment.PaymentProviderPort;
-import global.oei.domain.shared.payment.PaymentStatus;
-import global.oei.domain.shared.store.Order;
-import global.oei.domain.shared.store.OrderLine;
-import global.oei.domain.shared.store.OrderPort;
-import global.oei.domain.shared.store.OrderStatus;
-import global.oei.domain.shared.store.PaymentPort;
 
 class RefundOrderServiceTest {
 

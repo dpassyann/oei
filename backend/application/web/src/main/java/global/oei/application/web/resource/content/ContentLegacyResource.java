@@ -5,12 +5,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.ContentLegacyApi;
 import global.oei.application.web.model.ContentDocumentDTO;
 import global.oei.domain.shared.content.ContentPort;
 import global.oei.domain.shared.content.ContentVersionPort;
 import global.oei.domain.shared.content.ContentWorkflowStatus;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements the legacy, unversioned {@code getContent} operation directly against

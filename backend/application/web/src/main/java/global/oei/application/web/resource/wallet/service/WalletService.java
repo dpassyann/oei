@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.application.web.resource.wallet.adapter.WalletAdapter;
 import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.security.AuthenticatedIdentity;
@@ -17,8 +20,6 @@ import global.oei.domain.shared.wallet.WalletPass;
 import global.oei.domain.shared.wallet.WalletPassPort;
 import global.oei.domain.shared.wallet.WalletPassProvider;
 import global.oei.domain.shared.wallet.WalletPassVerification;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service

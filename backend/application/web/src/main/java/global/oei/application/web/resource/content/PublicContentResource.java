@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.PublicContentApi;
 import global.oei.application.web.model.ContentVersionDTO;
 import global.oei.application.web.model.ContentVersionPageDTO;
@@ -17,7 +19,6 @@ import global.oei.domain.shared.content.ContentPort;
 import global.oei.domain.shared.content.ContentVersion;
 import global.oei.domain.shared.content.ContentVersionPort;
 import global.oei.domain.shared.content.ContentWorkflowStatus;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements {@link PublicContentApi}: read-only public facade over the CMS {@link ContentPort}

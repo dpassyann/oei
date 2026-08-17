@@ -5,11 +5,12 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.MemberBadgesApi;
 import global.oei.application.web.model.BadgeAwardDTO;
 import global.oei.application.web.resource.badge.adapter.BadgeAdapter;
 import global.oei.application.web.resource.badge.mapper.BadgeDtoMapper;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements {@code GET /api/member/v1/badges} — the only operation on {@link MemberBadgesApi}.

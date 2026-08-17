@@ -3,13 +3,15 @@ package global.oei.domain.core.charter;
 import java.time.Instant;
 import java.util.UUID;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.charter.EthicalCharterSignature;
 import global.oei.domain.shared.charter.EthicalCharterSignaturePort;
 import global.oei.domain.shared.charter.SignEthicalCharterUseCase;
 import global.oei.domain.shared.member.MemberId;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Default {@code SignEthicalCharterUseCase} implementation.

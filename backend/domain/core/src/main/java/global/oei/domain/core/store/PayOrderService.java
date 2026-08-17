@@ -4,6 +4,11 @@ import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.mail.EmailNotificationPort;
 import global.oei.domain.shared.member.Member;
 import global.oei.domain.shared.member.MemberId;
@@ -16,9 +21,6 @@ import global.oei.domain.shared.store.Order;
 import global.oei.domain.shared.store.OrderPort;
 import global.oei.domain.shared.store.PayOrderUseCase;
 import global.oei.domain.shared.store.PaymentPort;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Resolves the {@link PaymentMethod} chosen at checkout, charges it, and transitions the

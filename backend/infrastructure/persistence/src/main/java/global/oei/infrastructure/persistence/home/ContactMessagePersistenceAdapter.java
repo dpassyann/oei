@@ -4,10 +4,11 @@ import java.util.UUID;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import global.oei.domain.shared.home.ContactMessage;
-import global.oei.domain.shared.home.ContactMessagePort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import global.oei.domain.shared.home.ContactMessage;
+import global.oei.domain.shared.home.ContactMessagePort;
 
 @Slf4j
 @RequiredArgsConstructor

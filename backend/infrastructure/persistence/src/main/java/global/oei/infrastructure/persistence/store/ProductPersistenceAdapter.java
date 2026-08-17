@@ -6,12 +6,13 @@ import java.util.UUID;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.domain.shared.store.BusinessCardTemplate;
 import global.oei.domain.shared.store.FulfillmentKind;
 import global.oei.domain.shared.store.Product;
 import global.oei.domain.shared.store.ProductCategory;
 import global.oei.domain.shared.store.ProductPort;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)

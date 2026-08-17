@@ -3,9 +3,10 @@ package global.oei.application.web.resource.member.mapper;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+import lombok.experimental.UtilityClass;
+
 import global.oei.application.web.model.EthicalCharterSignatureDTO;
 import global.oei.domain.shared.charter.EthicalCharterSignature;
-import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class CharterDtoMapper {

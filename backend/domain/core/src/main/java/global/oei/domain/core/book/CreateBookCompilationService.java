@@ -4,14 +4,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.book.BookCompilation;
 import global.oei.domain.shared.book.BookCompilationPort;
 import global.oei.domain.shared.book.CreateBookCompilationUseCase;
 import global.oei.domain.shared.content.Content;
 import global.oei.domain.shared.content.ContentPort;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Compiles a {@link BookCompilation}'s table of contents from the titles of the referenced

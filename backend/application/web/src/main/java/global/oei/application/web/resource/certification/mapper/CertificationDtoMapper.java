@@ -5,6 +5,10 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
 
+import org.openapitools.jackson.nullable.JsonNullable;
+
+import lombok.experimental.UtilityClass;
+
 import global.oei.application.web.model.CertificationCatalogStatusDTO;
 import global.oei.application.web.model.CertificationDTO;
 import global.oei.application.web.model.CertificationLevelDTO;
@@ -23,8 +27,6 @@ import global.oei.domain.shared.certification.CertificationOeiStatus;
 import global.oei.domain.shared.certification.MemberCertificationGoal;
 import global.oei.domain.shared.certification.RecognizedCertification;
 import global.oei.domain.shared.certification.RecognizedCertificationPage;
-import lombok.experimental.UtilityClass;
-import org.openapitools.jackson.nullable.JsonNullable;
 
 @UtilityClass
 public class CertificationDtoMapper {

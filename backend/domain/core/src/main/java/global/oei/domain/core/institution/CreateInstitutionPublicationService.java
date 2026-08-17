@@ -2,16 +2,17 @@ package global.oei.domain.core.institution;
 
 import java.util.UUID;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.institution.CreateInstitutionPublicationUseCase;
 import global.oei.domain.shared.institution.InstitutionId;
 import global.oei.domain.shared.institution.InstitutionPublication;
 import global.oei.domain.shared.institution.InstitutionPublicationPort;
 import global.oei.domain.shared.institution.InstitutionPublicationType;
-import global.oei.domain.shared.institution.PublicationWorkflowStatus;
 import global.oei.domain.shared.member.MemberId;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Default {@code CreateInstitutionPublicationUseCase} implementation.

@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.MemberStoreApi;
 import global.oei.application.web.model.BusinessCardCustomizationDTO;
 import global.oei.application.web.model.BusinessCardPreviewDTO;
@@ -20,7 +22,6 @@ import global.oei.domain.shared.store.BusinessCardCustomization;
 import global.oei.domain.shared.store.BusinessCardPreview;
 import global.oei.domain.shared.store.NewOrderLine;
 import global.oei.domain.shared.store.Order;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements every operation of {@link MemberStoreApi}: business-card preview, order

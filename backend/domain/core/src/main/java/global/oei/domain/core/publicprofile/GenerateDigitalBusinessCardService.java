@@ -1,11 +1,12 @@
 package global.oei.domain.core.publicprofile;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.membership.MembershipTier;
 import global.oei.domain.shared.publicprofile.DigitalBusinessCard;
 import global.oei.domain.shared.publicprofile.GenerateDigitalBusinessCardUseCase;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Enforces the "always mocked" invariant documented on {@link DigitalBusinessCard}: no real

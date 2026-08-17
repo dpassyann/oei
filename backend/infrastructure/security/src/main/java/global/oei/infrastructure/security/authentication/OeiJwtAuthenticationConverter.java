@@ -11,10 +11,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
-import global.oei.infrastructure.security.properties.OeiSecurityProperties;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import global.oei.infrastructure.security.properties.OeiSecurityProperties;
 
 /**
  * Converts a validated Keycloak {@link Jwt} into a {@link JwtAuthenticationToken}, mapping

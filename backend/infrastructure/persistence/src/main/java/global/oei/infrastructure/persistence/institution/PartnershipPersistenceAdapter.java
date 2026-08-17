@@ -4,11 +4,12 @@ import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.domain.shared.institution.InstitutionId;
 import global.oei.domain.shared.institution.Partnership;
 import global.oei.domain.shared.institution.PartnershipLevel;
 import global.oei.domain.shared.institution.PartnershipPort;
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)

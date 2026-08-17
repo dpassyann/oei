@@ -6,13 +6,14 @@ import java.util.UUID;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.membership.Membership;
 import global.oei.domain.shared.membership.MembershipLookupPort;
 import global.oei.domain.shared.membership.MembershipStatus;
 import global.oei.domain.shared.membership.MembershipTier;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Maps between {@link MembershipEntity} (JPA) and {@link Membership} (domain) at the

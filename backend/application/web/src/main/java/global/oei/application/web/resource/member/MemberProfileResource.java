@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.MemberProfileApi;
 import global.oei.application.web.model.EthicalCharterSignatureDTO;
 import global.oei.application.web.model.GetMyEntitlements200ResponseDTO;
@@ -19,7 +21,6 @@ import global.oei.application.web.resource.member.mapper.CharterDtoMapper;
 import global.oei.application.web.resource.member.mapper.MembershipDtoMapper;
 import global.oei.application.web.resource.member.mapper.ProfileDtoMapper;
 import global.oei.domain.shared.member.MemberId;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements every "member" domain operation of {@link MemberProfileApi}: membership,

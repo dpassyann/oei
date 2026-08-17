@@ -3,13 +3,15 @@ package global.oei.domain.core.event;
 import java.time.Instant;
 import java.util.UUID;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.event.EventRegistration;
 import global.oei.domain.shared.event.EventRegistrationPort;
 import global.oei.domain.shared.event.RegisterToEventUseCase;
 import global.oei.domain.shared.member.MemberId;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /** Idempotent: registering twice returns the existing registration rather than duplicating it. */
 @Slf4j

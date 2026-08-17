@@ -4,12 +4,14 @@ import java.net.URI;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
+import org.openapitools.jackson.nullable.JsonNullable;
+
+import lombok.experimental.UtilityClass;
+
 import global.oei.application.web.model.BadgeAwardDTO;
 import global.oei.application.web.model.BadgeDTO;
 import global.oei.domain.shared.badge.Badge;
 import global.oei.domain.shared.badge.BadgeAward;
-import lombok.experimental.UtilityClass;
-import org.openapitools.jackson.nullable.JsonNullable;
 
 @UtilityClass
 public class BadgeDtoMapper {

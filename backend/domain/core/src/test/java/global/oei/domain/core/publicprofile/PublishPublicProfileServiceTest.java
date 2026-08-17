@@ -1,18 +1,17 @@
 package global.oei.domain.core.publicprofile;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import global.oei.domain.shared.member.MemberId;
+import global.oei.domain.shared.publicprofile.PublicProfile;
+import global.oei.domain.shared.publicprofile.PublicProfilePort;
+import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
-
-import global.oei.domain.shared.member.MemberId;
-import global.oei.domain.shared.publicprofile.PublicProfile;
-import global.oei.domain.shared.publicprofile.PublicProfilePort;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class PublishPublicProfileServiceTest {
 

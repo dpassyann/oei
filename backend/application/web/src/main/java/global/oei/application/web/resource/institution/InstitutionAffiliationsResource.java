@@ -5,11 +5,12 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.InstitutionAffiliationsApi;
 import global.oei.application.web.model.MemberInstitutionAffiliationDTO;
 import global.oei.application.web.resource.institution.adapter.InstitutionAdapter;
 import global.oei.application.web.resource.institution.mapper.InstitutionDtoMapper;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements every operation of {@link InstitutionAffiliationsApi}: no stub left on this

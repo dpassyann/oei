@@ -7,11 +7,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-import global.oei.infrastructure.persistence.config.audit.BaseAudit;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import global.oei.infrastructure.persistence.config.audit.BaseAudit;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

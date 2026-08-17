@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.HomeLegacyApi;
 import global.oei.application.web.model.DomainAreaDTO;
 import global.oei.application.web.model.NewsItemDTO;
@@ -26,7 +28,6 @@ import global.oei.domain.shared.home.HomePartnerPort;
 import global.oei.domain.shared.home.HomeStatPort;
 import global.oei.domain.shared.home.Lead;
 import global.oei.domain.shared.home.LeadPort;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements every operation of {@link HomeLegacyApi}: no stub left on this interface. Every

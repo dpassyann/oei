@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.PublicNetworkApi;
 import global.oei.application.web.model.NetworkDomainDTO;
 import global.oei.application.web.model.NetworkExpertPageDTO;
@@ -17,7 +19,6 @@ import global.oei.application.web.resource.network.mapper.NetworkGraphDtoMapper;
 import global.oei.application.web.resource.network.mapper.SalaryInsightDtoMapper;
 import global.oei.domain.shared.network.NetworkSalaryNodeType;
 import global.oei.domain.shared.network.SalaryInsight;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements every operation of {@link PublicNetworkApi}: the graph itself (domains, topics/

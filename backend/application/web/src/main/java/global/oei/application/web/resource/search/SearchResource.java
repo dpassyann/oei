@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.SearchApi;
 import global.oei.application.web.model.SearchResultDTO;
 import global.oei.domain.shared.content.Content;
@@ -18,7 +20,6 @@ import global.oei.domain.shared.content.ContentType;
 import global.oei.domain.shared.content.ContentWorkflowStatus;
 import global.oei.domain.shared.home.HomeNewsItem;
 import global.oei.domain.shared.home.HomeNewsPort;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements {@link SearchApi}: V1 scope only (resources + news, per the operation's OpenAPI

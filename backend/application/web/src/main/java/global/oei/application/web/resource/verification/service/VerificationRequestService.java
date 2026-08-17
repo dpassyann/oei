@@ -6,6 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.application.web.resource.verification.adapter.VerificationRequestAdapter;
 import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.security.AuthenticatedIdentity;
@@ -14,8 +17,6 @@ import global.oei.domain.shared.verification.CreateVerificationRequestUseCase;
 import global.oei.domain.shared.verification.VerificationRequest;
 import global.oei.domain.shared.verification.VerificationRequestPort;
 import global.oei.domain.shared.verification.VerificationType;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service

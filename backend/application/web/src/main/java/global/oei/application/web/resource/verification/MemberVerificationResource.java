@@ -6,13 +6,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.MemberVerificationApi;
 import global.oei.application.web.model.VerificationRequestCreationDTO;
 import global.oei.application.web.model.VerificationRequestDTO;
 import global.oei.application.web.resource.verification.adapter.VerificationRequestAdapter;
 import global.oei.application.web.resource.verification.mapper.VerificationRequestDtoMapper;
 import global.oei.domain.shared.verification.VerificationType;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements every operation of {@link MemberVerificationApi}.

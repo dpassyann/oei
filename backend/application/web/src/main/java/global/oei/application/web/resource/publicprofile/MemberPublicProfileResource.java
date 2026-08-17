@@ -3,13 +3,14 @@ package global.oei.application.web.resource.publicprofile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+
 import global.oei.application.web.MemberPublicProfileApi;
 import global.oei.application.web.model.DigitalBusinessCardDTO;
 import global.oei.application.web.model.PublicProfileDTO;
 import global.oei.application.web.model.PublicProfilePublicationDTO;
 import global.oei.application.web.resource.publicprofile.adapter.PublicProfileAdapter;
 import global.oei.application.web.resource.publicprofile.mapper.PublicProfileDtoMapper;
-import lombok.RequiredArgsConstructor;
 
 /**
  * Implements every operation of {@link MemberPublicProfileApi}. Digital cards generated here

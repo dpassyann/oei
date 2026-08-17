@@ -1,12 +1,11 @@
 package global.oei.domain.core.publicprofile;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.jupiter.api.Test;
-
 import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.membership.MembershipTier;
 import global.oei.domain.shared.publicprofile.DigitalBusinessCard;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class GenerateDigitalBusinessCardServiceTest {
 

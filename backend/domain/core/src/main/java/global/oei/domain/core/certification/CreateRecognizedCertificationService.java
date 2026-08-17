@@ -3,15 +3,16 @@ package global.oei.domain.core.certification;
 import java.util.List;
 import java.util.UUID;
 
-import global.oei.domain.shared.certification.CertificationCatalogStatus;
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.certification.CertificationLevel;
 import global.oei.domain.shared.certification.CertificationOeiStatus;
 import global.oei.domain.shared.certification.CreateRecognizedCertificationUseCase;
 import global.oei.domain.shared.certification.RecognizedCertification;
 import global.oei.domain.shared.certification.RecognizedCertificationPort;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Enforces the "always starts PUBLISHED" invariant on every admin-created catalog entry (see

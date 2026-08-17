@@ -1,18 +1,17 @@
 package global.oei.domain.core.profile;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.util.List;
-import java.util.Optional;
-
-import org.junit.jupiter.api.Test;
-
 import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.profile.Availability;
 import global.oei.domain.shared.profile.ProfessionalProfile;
 import global.oei.domain.shared.profile.ProfileLookupPort;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class GetMyProfileServiceTest {
 

@@ -2,15 +2,16 @@ package global.oei.domain.core.institution;
 
 import java.util.UUID;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.institution.CreateInstitutionBadgeProposalUseCase;
 import global.oei.domain.shared.institution.InstitutionBadgeProposal;
 import global.oei.domain.shared.institution.InstitutionBadgeProposalPort;
-import global.oei.domain.shared.institution.InstitutionBadgeProposalStatus;
 import global.oei.domain.shared.institution.InstitutionId;
 import global.oei.domain.shared.member.MemberId;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Default {@code CreateInstitutionBadgeProposalUseCase} implementation.

@@ -5,10 +5,11 @@ import java.util.UUID;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import global.oei.domain.shared.git.GitSyncedFile;
-import global.oei.domain.shared.git.GitSyncedFilePort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import global.oei.domain.shared.git.GitSyncedFile;
+import global.oei.domain.shared.git.GitSyncedFilePort;
 
 @Slf4j
 @RequiredArgsConstructor

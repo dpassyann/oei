@@ -6,13 +6,14 @@ import java.util.UUID;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.payment.Payment;
 import global.oei.domain.shared.payment.PaymentFailureReason;
 import global.oei.domain.shared.payment.PaymentMethod;
 import global.oei.domain.shared.payment.PaymentStatus;
 import global.oei.domain.shared.store.PaymentPort;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor

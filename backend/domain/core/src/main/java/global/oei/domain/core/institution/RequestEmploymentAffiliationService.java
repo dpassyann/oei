@@ -3,6 +3,11 @@ package global.oei.domain.core.institution;
 import java.time.Instant;
 import java.util.UUID;
 
+import org.jspecify.annotations.NonNull;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import global.oei.domain.shared.institution.EmploymentAffiliation;
 import global.oei.domain.shared.institution.EmploymentAffiliationPort;
 import global.oei.domain.shared.institution.EmploymentAffiliationStatus;
@@ -10,9 +15,6 @@ import global.oei.domain.shared.institution.EmploymentAffiliationVerificationMet
 import global.oei.domain.shared.institution.InstitutionId;
 import global.oei.domain.shared.institution.RequestEmploymentAffiliationUseCase;
 import global.oei.domain.shared.member.MemberId;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Enforces that a self-requested affiliation always starts {@link EmploymentAffiliationStatus#PENDING}

@@ -3,15 +3,15 @@ package global.oei.domain.core.member;
 import java.time.Instant;
 import java.util.Locale;
 
-import global.oei.domain.shared.member.AccountType;
-import global.oei.domain.shared.member.Member;
-import global.oei.domain.shared.member.MemberAlreadyRegisteredException;
-import global.oei.domain.shared.member.MemberId;
-import global.oei.domain.shared.member.MemberPort;
-import global.oei.domain.shared.member.RegisterAccountUseCase;
+import org.jspecify.annotations.NonNull;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
+
+import global.oei.domain.shared.member.Member;
+import global.oei.domain.shared.member.MemberAlreadyRegisteredException;
+import global.oei.domain.shared.member.MemberPort;
+import global.oei.domain.shared.member.RegisterAccountUseCase;
 
 /**
  * Creates the {@link Member} identity row for {@code registerAccount}. Intentionally minimal
