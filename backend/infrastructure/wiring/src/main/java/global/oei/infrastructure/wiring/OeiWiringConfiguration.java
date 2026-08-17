@@ -2,6 +2,7 @@ package global.oei.infrastructure.wiring;
 
 import java.util.List;
 
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.persistence.autoconfigure.EntityScan;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -302,6 +303,7 @@ import global.oei.infrastructure.wiring.config.MediaStorageProperties;
  * explicit {@code @Bean} methods, so it is pulled in via {@code @Import} rather than scanned.
  */
 @Configuration(proxyBeanMethods = false)
+@EnableConfigurationProperties(MediaStorageProperties.class)
 @Import({
         PersistenceAuditingConfiguration.class, StripeClientConfiguration.class, PaypalClientConfiguration.class,
         EmailAsyncConfiguration.class, EmailTemplateConfiguration.class
