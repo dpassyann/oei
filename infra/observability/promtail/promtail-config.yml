@@ -47,7 +47,7 @@ scrape_configs:
       # Essaie de parser les logs JSON (profil !local → LogstashEncoder)
       # En cas d'échec (profil local → texte plat), le log est transmis tel quel
       - match:
-          selector: '{service=~"oei-backend|keycloak"}'
+          selector: '{service="keycloak"}'
           stages:
             - json:
                 expressions:
@@ -62,28 +62,4 @@ scrape_configs:
                 trace_id:
                 span_id:
                 correlation_id:
-
-  # ── Backend local (hors Docker) : logs JSON fichier ────────────────────────
-  - job_name: oei-backend-file
-    static_configs:
-      - targets: [localhost]
-        labels:
-          job: oei-backend-file
-          service: oei-backend
-          project: oei
-          __path__: /var/log/oei-backend/*.log
-    pipeline_stages:
-      - json:
-          expressions:
-            level: '"@level"'
-            msg: '"@message"'
-            trace_id: traceId
-            span_id: spanId
-            correlation_id: correlationId
-            logger: logger_name
-      - labels:
-          level:
-          trace_id:
-          span_id:
-          correlation_id:
 

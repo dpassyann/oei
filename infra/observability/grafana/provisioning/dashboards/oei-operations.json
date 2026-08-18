@@ -556,7 +556,7 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "{service=\"backend\"}",
+          "expr": "{service=\"oei-backend\"}",
           "queryType": "range"
         }
       ],

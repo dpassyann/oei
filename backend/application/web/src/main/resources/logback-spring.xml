@@ -1,22 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-  <springProperty scope="context" name="oeiLogDir" source="oei.logging.dir" defaultValue="./logs"/>
+  <springProperty scope="context" name="lokiUrl" source="oei.logging.loki.url" defaultValue="http://localhost:3100/loki/api/v1/push"/>
+  <springProperty scope="context" name="applicationName" source="spring.application.name" defaultValue="oei-backend"/>
+  <springProperty scope="context" name="activeProfile" source="spring.profiles.active" defaultValue="default"/>
 
-  <!--
-    OEI Backend — Logback configuration.
-
-    Two profiles:
-    • local  → human-readable coloured text (Spring Boot default pattern), suitable for
-               reading directly in the IDE / terminal.
-    • !local → structured JSON via logstash-logback-encoder, consumed by Docker Logging
-               driver → Promtail → Loki.  Every MDC entry (correlationId, userId, …) is
-               automatically serialised as a top-level JSON field.
-
-    Inspired by the IAP platform's logback-iap-base.xml.
-  -->
-
-  <!-- ── Plain-text appender — local dev only ──────────────────────────────── -->
   <springProfile name="local">
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <appender name="CONSOLE_TEXT" class="ch.qos.logback.core.ConsoleAppender">
@@ -24,48 +12,85 @@
         <pattern>%d{HH:mm:ss.SSS} %highlight(%-5level) [%cyan(%thread)] %yellow(%logger{36}) - %msg%replace(%magenta( [%mdc])){' \[\]', ''}%n</pattern>
       </encoder>
     </appender>
-    <appender name="FILE_JSON" class="ch.qos.logback.core.FileAppender">
-      <file>${oeiLogDir}/oei-backend.json.log</file>
-      <append>true</append>
-      <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-        <customFields>{"service":"oei-backend"}</customFields>
-        <includeMdcKeyName>correlationId</includeMdcKeyName>
-        <includeMdcKeyName>userId</includeMdcKeyName>
-      </encoder>
+    <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
+      <labels>
+        service=${applicationName}
+        application=${applicationName}
+        environment=local
+      </labels>
+      <structuredMetadata>
+        level=%level
+        logger=%logger
+        thread=%thread
+        correlationId=%X{correlationId}
+        userId=%X{userId}
+      </structuredMetadata>
+      <message>
+        <pattern>%msg %ex</pattern>
+      </message>
+      <http>
+        <url>${lokiUrl}</url>
+        <connectionTimeoutMs>3000</connectionTimeoutMs>
+        <requestTimeoutMs>5000</requestTimeoutMs>
+        <maxRetries>3</maxRetries>
+        <minRetryBackoffMs>500</minRetryBackoffMs>
+        <maxRetryBackoffMs>5000</maxRetryBackoffMs>
+      </http>
+      <batch>
+        <maxItems>100</maxItems>
+        <maxBytes>1048576</maxBytes>
+        <timeoutMs>2000</timeoutMs>
+        <drainOnStop>true</drainOnStop>
+      </batch>
     </appender>
     <root level="INFO">
       <appender-ref ref="CONSOLE_TEXT"/>
-      <appender-ref ref="FILE_JSON"/>
+      <appender-ref ref="LOKI"/>
     </root>
-    <!-- Reduce noise from hibernate SQL in local -->
     <logger name="org.hibernate.SQL" level="WARN"/>
     <logger name="org.hibernate.orm.jdbc.bind" level="WARN"/>
   </springProfile>
 
-  <!-- ── JSON appender — every non-local environment (Docker / CI / prod) ─── -->
   <springProfile name="!local">
-    <appender name="CONSOLE_JSON" class="ch.qos.logback.core.ConsoleAppender">
-      <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-        <!-- Fields expected by the Promtail pipeline_stages JSON parser:
-             @level, @message, correlationId (from MDC). -->
-        <customFields>{"service":"oei-backend"}</customFields>
-        <!-- Include MDC as top-level JSON fields so Promtail can label on correlationId -->
-        <includeMdcKeyName>correlationId</includeMdcKeyName>
-        <includeMdcKeyName>userId</includeMdcKeyName>
+    <appender name="CONSOLE_TEXT" class="ch.qos.logback.core.ConsoleAppender">
+      <encoder>
+        <pattern>%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} %-5level [%thread] %logger{36} - %msg%n%ex</pattern>
       </encoder>
     </appender>
-    <appender name="FILE_JSON" class="ch.qos.logback.core.FileAppender">
-      <file>${oeiLogDir}/oei-backend.json.log</file>
-      <append>true</append>
-      <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-        <customFields>{"service":"oei-backend"}</customFields>
-        <includeMdcKeyName>correlationId</includeMdcKeyName>
-        <includeMdcKeyName>userId</includeMdcKeyName>
-      </encoder>
+    <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
+      <labels>
+        service=${applicationName}
+        application=${applicationName}
+        environment=${activeProfile}
+      </labels>
+      <structuredMetadata>
+        level=%level
+        logger=%logger
+        thread=%thread
+        correlationId=%X{correlationId}
+        userId=%X{userId}
+      </structuredMetadata>
+      <message>
+        <pattern>%msg %ex</pattern>
+      </message>
+      <http>
+        <url>${lokiUrl}</url>
+        <connectionTimeoutMs>5000</connectionTimeoutMs>
+        <requestTimeoutMs>5000</requestTimeoutMs>
+        <maxRetries>3</maxRetries>
+        <minRetryBackoffMs>500</minRetryBackoffMs>
+        <maxRetryBackoffMs>10000</maxRetryBackoffMs>
+      </http>
+      <batch>
+        <maxItems>500</maxItems>
+        <maxBytes>4194304</maxBytes>
+        <timeoutMs>5000</timeoutMs>
+        <drainOnStop>true</drainOnStop>
+      </batch>
     </appender>
     <root level="INFO">
-      <appender-ref ref="CONSOLE_JSON"/>
-      <appender-ref ref="FILE_JSON"/>
+      <appender-ref ref="CONSOLE_TEXT"/>
+      <appender-ref ref="LOKI"/>
     </root>
     <logger name="org.hibernate.SQL" level="WARN"/>
     <logger name="org.hibernate.orm.jdbc.bind" level="WARN"/>

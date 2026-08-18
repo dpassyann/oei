@@ -2,8 +2,10 @@ package global.oei.application.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Import;
 
+import global.oei.application.web.config.OeiLokiLoggingProperties;
 import global.oei.infrastructure.wiring.OeiWiringConfiguration;
 
 /**
@@ -24,6 +26,7 @@ import global.oei.infrastructure.wiring.OeiWiringConfiguration;
  * boundaries only" rule.</p>
  */
 @SpringBootApplication
+@EnableConfigurationProperties(OeiLokiLoggingProperties.class)
 @Import(OeiWiringConfiguration.class)
 public class OeiBackendApplication {
 

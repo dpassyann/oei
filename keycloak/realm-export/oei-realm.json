@@ -183,6 +183,15 @@
     "pt"
   ],
   "defaultLocale": "fr",
+  "smtpServer": {
+    "host": "mailpit",
+    "port": "1025",
+    "from": "no-reply@oei.local",
+    "fromDisplayName": "Ordre International des Experts",
+    "auth": "false",
+    "starttls": "false",
+    "ssl": "false"
+  },
   "requiredActions": [
     {
       "alias": "CONFIGURE_TOTP",

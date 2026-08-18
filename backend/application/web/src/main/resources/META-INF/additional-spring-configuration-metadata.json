@@ -1,0 +1,11 @@
+{
+  "properties": [
+    {
+      "name": "oei.logging.loki.url",
+      "type": "java.lang.String",
+      "description": "Loki push endpoint used by the Loki4j Logback appender.",
+      "defaultValue": "http://localhost:3100/loki/api/v1/push"
+    }
+  ]
+}
+
