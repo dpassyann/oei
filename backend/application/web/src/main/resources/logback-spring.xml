@@ -14,7 +14,7 @@
     </appender>
     <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
       <labels>
-        service=${applicationName}
+        service=oei-backend
         application=${applicationName}
         environment=local
       </labels>
@@ -49,6 +49,7 @@
     </root>
     <logger name="org.hibernate.SQL" level="WARN"/>
     <logger name="org.hibernate.orm.jdbc.bind" level="WARN"/>
+    <logger name="io.swagger.v3.core.util.Json" level="OFF"/>
   </springProfile>
 
   <springProfile name="!local">
@@ -59,7 +60,7 @@
     </appender>
     <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
       <labels>
-        service=${applicationName}
+        service=oei-backend
         application=${applicationName}
         environment=${activeProfile}
       </labels>
@@ -94,6 +95,7 @@
     </root>
     <logger name="org.hibernate.SQL" level="WARN"/>
     <logger name="org.hibernate.orm.jdbc.bind" level="WARN"/>
+    <logger name="io.swagger.v3.core.util.Json" level="OFF"/>
   </springProfile>
 
 </configuration>
