@@ -1,7 +1,10 @@
 package global.oei.application.web.resource.member.service;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Locale;
+import java.util.Optional;
+import java.util.concurrent.locks.LockSupport;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -53,6 +56,9 @@ import global.oei.domain.shared.security.SecurityContextPort;
 @RequiredArgsConstructor
 public class MemberSelfService implements MemberSelfAdapter {
 
+    private static final int CONCURRENT_PROVISIONING_LOOKUP_ATTEMPTS = 20;
+    private static final Duration CONCURRENT_PROVISIONING_RETRY_DELAY = Duration.ofMillis(100);
+
     private final SecurityContextPort securityContextPort;
     private final MemberPort memberPort;
     private final MembershipLookupPort membershipLookupPort;
@@ -88,11 +94,18 @@ public class MemberSelfService implements MemberSelfAdapter {
                         log.info("Auto-provisioning member id={}", memberId.value());
                         return provisionMember(memberId, identity);
                     });
-        } catch (ObjectOptimisticLockingFailureException | DataIntegrityViolationException e) {
+        } catch (ObjectOptimisticLockingFailureException | DataIntegrityViolationException _) {
             log.info("Concurrent member provisioning detected for id={} — retrying lookup", memberId.value());
-            return memberPort.findById(memberId)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
-                            "Member not found after concurrent provisioning"));
+            final Optional<Member> existing = retryLookupOptional(() -> memberPort.findById(memberId), "member", memberId);
+            if (existing.isPresent()) {
+                return existing.get();
+            }
+            log.warn("Member id={} still not visible after concurrent retries; retrying explicit provisioning", memberId.value());
+            try {
+                return provisionMember(memberId, identity);
+            } catch (ObjectOptimisticLockingFailureException | DataIntegrityViolationException __) {
+                return retryFindMember(memberId);
+            }
         }
     }
 
@@ -107,12 +120,64 @@ public class MemberSelfService implements MemberSelfAdapter {
                         log.info("Auto-provisioning membership for memberId={}", memberId.value());
                         return membershipLookupPort.save(provisionMembership(memberId));
                     });
-        } catch (ObjectOptimisticLockingFailureException | DataIntegrityViolationException e) {
+        } catch (ObjectOptimisticLockingFailureException | DataIntegrityViolationException _) {
             log.info("Concurrent membership provisioning detected for memberId={} — retrying lookup", memberId.value());
-            return membershipLookupPort.findByMemberId(memberId)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
-                            "Membership not found after concurrent provisioning"));
+            final Optional<Membership> existing =
+                    retryLookupOptional(() -> membershipLookupPort.findByMemberId(memberId), "membership", memberId);
+            if (existing.isPresent()) {
+                return existing.get();
+            }
+            log.warn("Membership for memberId={} still not visible after concurrent retries; retrying explicit provisioning",
+                    memberId.value());
+            try {
+                return membershipLookupPort.save(provisionMembership(memberId));
+            } catch (ObjectOptimisticLockingFailureException | DataIntegrityViolationException __) {
+                return retryFindMembership(memberId);
+            }
         }
+    }
+
+    private Member retryFindMember(final MemberId memberId) {
+        return retryLookup(
+                () -> memberPort.findById(memberId),
+                "member",
+                memberId,
+                "Member not found after concurrent provisioning");
+    }
+
+    private Membership retryFindMembership(final MemberId memberId) {
+        return retryLookup(
+                () -> membershipLookupPort.findByMemberId(memberId),
+                "membership",
+                memberId,
+                "Membership not found after concurrent provisioning");
+    }
+
+    private <T> T retryLookup(
+            final java.util.function.Supplier<Optional<T>> lookup,
+            final String target,
+            final MemberId memberId,
+            final String failureMessage) {
+        return retryLookupOptional(lookup, target, memberId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, failureMessage));
+    }
+
+    private <T> Optional<T> retryLookupOptional(
+            final java.util.function.Supplier<Optional<T>> lookup,
+            final String target,
+            final MemberId memberId) {
+        for (int attempt = 1; attempt <= CONCURRENT_PROVISIONING_LOOKUP_ATTEMPTS; attempt++) {
+            final Optional<T> candidate = lookup.get();
+            if (candidate.isPresent()) {
+                return candidate;
+            }
+            if (attempt < CONCURRENT_PROVISIONING_LOOKUP_ATTEMPTS) {
+                log.debug("Concurrent {} provisioning still not visible for memberId={} on retry {}/{}",
+                        target, memberId.value(), attempt, CONCURRENT_PROVISIONING_LOOKUP_ATTEMPTS);
+                LockSupport.parkNanos(CONCURRENT_PROVISIONING_RETRY_DELAY.toNanos());
+            }
+        }
+        return Optional.empty();
     }
 
     private Member provisionMember(final MemberId memberId, final AuthenticatedIdentity identity) {
@@ -135,15 +200,14 @@ public class MemberSelfService implements MemberSelfAdapter {
             return identity.displayName();
         }
         if (identity.email() != null && !identity.email().isBlank()) {
-            final String local = identity.email().contains("@")
+            return identity.email().contains("@")
                     ? identity.email().substring(0, identity.email().indexOf('@'))
                     : identity.email();
-            return local;
         }
         return identity.subject();
     }
 
     private static String toSlug(final String value) {
-        return value.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]+", "-").replaceAll("(^-|-$)", "");
+        return value.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]+", "-").replaceAll("((^-)|(-$))", "");
     }
 }

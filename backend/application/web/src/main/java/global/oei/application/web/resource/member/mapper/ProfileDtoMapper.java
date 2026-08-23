@@ -20,6 +20,7 @@ import global.oei.domain.shared.profile.Experience;
 import global.oei.domain.shared.profile.LanguageLevel;
 import global.oei.domain.shared.profile.LanguageProficiency;
 import global.oei.domain.shared.profile.ProfessionalProfile;
+import global.oei.domain.shared.profile.ProfileSource;
 import global.oei.domain.shared.profile.Skill;
 
 /**
@@ -31,6 +32,8 @@ public class ProfileDtoMapper {
 
     public ProfessionalProfileDTO toDto(final ProfessionalProfile profile) {
         final ProfessionalProfileDTO dto = new ProfessionalProfileDTO(profile.memberId().value().toString());
+        // NOTE: dto.setSource(...) — activated after mvn generate-sources regenerates the DTO
+        // with the new ProfileSource enum (added to ProfessionalProfile schema in oei-api.yaml).
         dto.setTitle(profile.title());
         dto.setSummary(profile.summary());
         dto.setLocation(profile.location());
@@ -52,8 +55,11 @@ public class ProfileDtoMapper {
     }
 
     public ProfessionalProfile toDomain(final MemberId memberId, final ProfessionalProfileDTO dto) {
+        // NOTE: source mapping — activated after mvn generate-sources regenerates the DTO.
+        // When dto.getSource() is available, map it: ProfileSource.valueOf(dto.getSource().getValue())
         return new ProfessionalProfile(
                 memberId,
+                null, // source: set explicitly via ProfileImport confirm flow, not from raw PUT body
                 dto.getTitle(),
                 dto.getSummary(),
                 dto.getLocation(),
@@ -67,6 +73,15 @@ public class ProfileDtoMapper {
                 dto.getSkills() == null ? List.of() : dto.getSkills().stream().map(ProfileDtoMapper::toDomain).toList(),
                 dto.getCurrentCompensation() == null ? null : toDomain(dto.getCurrentCompensation()),
                 0);
+    }
+
+    /**
+     * Overload used by the profile-import confirm flow: preserves the {@link ProfileSource}
+     * determined by the import pipeline rather than letting the caller supply it.
+     */
+    public ProfessionalProfile toDomain(final MemberId memberId, final ProfessionalProfileDTO dto,
+                                         final ProfileSource source) {
+        return toDomain(memberId, dto).withSource(source);
     }
 
     private LanguageProficiencyDTO toDto(final LanguageProficiency language) {

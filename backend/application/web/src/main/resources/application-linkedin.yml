@@ -1,0 +1,13 @@
+spring:
+  config:
+    activate:
+      on-profile: linkedin
+
+oei:
+  linkedin:
+    api-base-url: ${OEI_LINKEDIN_API_BASE_URL:https://api.linkedin.com}
+    oauth:
+      base-url: ${OEI_LINKEDIN_OAUTH_BASE_URL:https://www.linkedin.com}
+      client-id: ${OEI_LINKEDIN_CLIENT_ID:linkedin_client_id_placeholder}
+      client-secret: ${OEI_LINKEDIN_CLIENT_SECRET:linkedin_client_secret_placeholder}
+

@@ -47,9 +47,15 @@ export class EspaceMembreLayout {
     stream: () => this.professionalProfileApplicationService.getProfile(),
   });
 
-  protected readonly displayName = computed(() => this.memberResource.value()?.displayName ?? '');
-  protected readonly headline = computed(() => this.profileResource.value()?.title ?? '');
-  protected readonly photoUrl = computed(() => this.profileResource.value()?.photoUrl);
+  protected readonly displayName = computed(() =>
+    this.memberResource.hasValue() ? this.memberResource.value().displayName : '',
+  );
+  protected readonly headline = computed(() =>
+    this.profileResource.hasValue() ? this.profileResource.value().title ?? '' : '',
+  );
+  protected readonly photoUrl = computed(() =>
+    this.profileResource.hasValue() ? this.profileResource.value().photoUrl : undefined,
+  );
 
   protected readonly initials = computed(() =>
     this.displayName()

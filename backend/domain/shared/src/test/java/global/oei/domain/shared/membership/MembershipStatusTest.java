@@ -23,7 +23,10 @@ class MembershipStatusTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"ACTIVE, 11", "HONORARY, 11", "FOUNDING, 11", "GRACE_PERIOD, 11", "EXPIRED, 4", "SUSPENDED, 2", "PENDING, 2", "TERMINATED, 0"})
+    // Active/Honorary/Founding/GracePeriod: all 14 entitlements (11 original + 3 AI).
+    // PENDING: PROFILE_EDIT + CV_EDIT + AI_CV_IMPORT = 3 (was 2 before AI entitlements).
+    // EXPIRED: 4 (unchanged). SUSPENDED: 2 (unchanged). TERMINATED: 0.
+    @CsvSource({"ACTIVE, 14", "HONORARY, 14", "FOUNDING, 14", "GRACE_PERIOD, 14", "EXPIRED, 4", "SUSPENDED, 2", "PENDING, 3", "TERMINATED, 0"})
     void entitlements_matchesExpectedSetSize(final MembershipStatus status, final int expectedSize) {
         assertThat(status.entitlements()).hasSize(expectedSize);
     }

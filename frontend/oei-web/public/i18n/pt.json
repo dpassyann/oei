@@ -1780,6 +1780,13 @@
       "INSTITUTIONAL_AFFILIATE": "Afiliado institucional"
     }
   },
+  "cookieConsent": {
+    "title": "Configuracoes de cookies",
+    "description": "Usamos cookies essenciais para o funcionamento do site e, com o seu consentimento, cookies opcionais de analise. Pode alterar a sua escolha mais tarde nas configuracoes do navegador.",
+    "acceptLabel": "Aceitar",
+    "rejectLabel": "Rejeitar cookies opcionais",
+    "ariaLabel": "Banner de consentimento de cookies"
+  },
   "walletVerification": {
     "loading": "A verificar…",
     "verifiedTitle": "✓ Membro OEI verificado",

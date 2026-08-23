@@ -1,5 +1,6 @@
 package global.oei.domain.shared.membership;
 
+import static global.oei.domain.shared.membership.MembershipEntitlement.AI_CV_IMPORT;
 import static global.oei.domain.shared.membership.MembershipEntitlement.CV_EDIT;
 import static global.oei.domain.shared.membership.MembershipEntitlement.MEMBER_DIRECTORY;
 import static global.oei.domain.shared.membership.MembershipEntitlement.PROFILE_EDIT;
@@ -19,10 +20,14 @@ import java.util.Set;
  * (membership-entitlement.ts) so the two never disagree.</p>
  */
 public enum MembershipStatus {
+    /**
+     * Membership in progress — profile and CV editing allowed, plus AI_CV_IMPORT to
+     * complete the import-first onboarding flow, but public/premium capabilities withheld.
+     */
     PENDING(false) {
         @Override
         public Set<MembershipEntitlement> entitlements() {
-            return EnumSet.of(PROFILE_EDIT, CV_EDIT);
+            return EnumSet.of(PROFILE_EDIT, CV_EDIT, AI_CV_IMPORT);
         }
     },
     ACTIVE(true) {

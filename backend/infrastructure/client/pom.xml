@@ -150,6 +150,31 @@
               </configOptions>
             </configuration>
           </execution>
+          <execution>
+            <id>generate-linkedin-client</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <inputSpec>${project.basedir}/src/main/resources/openapi/linkedin-api.yaml</inputSpec>
+              <generatorName>spring</generatorName>
+              <library>spring-http-interface</library>
+              <apiPackage>global.oei.infrastructure.client.linkedin.generated.api</apiPackage>
+              <invokerPackage>global.oei.infrastructure.client.linkedin.generated</invokerPackage>
+              <modelPackage>global.oei.infrastructure.client.linkedin.generated.model</modelPackage>
+              <output>${project.build.directory}/generated-sources</output>
+              <modelNameSuffix>Dto</modelNameSuffix>
+              <globalProperties>
+                <supportingFiles>false</supportingFiles>
+              </globalProperties>
+              <configOptions>
+                <useJakartaEe>true</useJakartaEe>
+                <dateLibrary>java8</dateLibrary>
+                <serializationLibrary>jackson</serializationLibrary>
+                <serializableModel>true</serializableModel>
+              </configOptions>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
     </plugins>

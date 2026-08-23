@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
+import { throwError } from 'rxjs';
 import { describe, expect, it, vi } from 'vitest';
 import { MembershipEntitlementService } from './membership-entitlement.service';
 import { MembershipApplicationService } from './membership-application.service';
@@ -101,5 +102,19 @@ describe('MembershipEntitlementService', () => {
     // Read synchronously, before the resource's microtask has a chance to settle.
     const service = TestBed.inject(MembershipEntitlementService);
     expect(service.has('CV_EXPORT_PDF')).toBe(false);
+  });
+
+  it('givenMembershipLoadFailure_whenCheckingEntitlements_thenDoesNotThrowAndSignalsFailure', async () => {
+    const getMembership = vi.fn().mockReturnValue(throwError(() => new Error('boom')));
+    TestBed.configureTestingModule({
+      providers: [MembershipEntitlementService, { provide: MembershipApplicationService, useValue: { getMembership } }],
+    });
+
+    const service = TestBed.inject(MembershipEntitlementService);
+
+    await vi.waitFor(() => expect(service.loadFailed()).toBe(true));
+    expect(service.status()).toBeUndefined();
+    expect(service.has('CV_EXPORT_PDF')).toBe(false);
+    expect(service.hasRestrictedAccess()).toBe(false);
   });
 });

@@ -21,7 +21,7 @@ class UpdateMyProfileServiceTest {
     @Test
     void execute_recomputesCompletenessBeforeSaving() {
         final ProfessionalProfile submitted = new ProfessionalProfile(
-                MemberId.newId(), "Title", "Summary", "Location", Availability.AVAILABLE, List.of("Cloud"),
+                MemberId.newId(), null, "Title", "Summary", "Location", Availability.AVAILABLE, List.of("Cloud"),
                 List.of(), List.of(), List.of(), List.of(), List.of(), List.of(), null, 0);
         when(port.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
 

@@ -12,7 +12,7 @@ class ProfessionalProfileTest {
 
     private ProfessionalProfile blank() {
         return new ProfessionalProfile(
-                MemberId.newId(), null, null, null, null, List.of(), List.of(), List.of(), List.of(), List.of(),
+                MemberId.newId(), null, null, null, null, null, List.of(), List.of(), List.of(), List.of(), List.of(),
                 List.of(), List.of(), null, 0);
     }
 
@@ -25,6 +25,7 @@ class ProfessionalProfileTest {
     void withRecomputedCompleteness_isFullWhenEveryCriterionIsMet() {
         final ProfessionalProfile complete = new ProfessionalProfile(
                 MemberId.newId(),
+                ProfileSource.CV_IMPORTED,
                 "Architecte cloud",
                 "Résumé",
                 "Genève",
@@ -49,6 +50,7 @@ class ProfessionalProfileTest {
     void withRecomputedCompleteness_isPartialWhenSomeCriteriaAreMissing() {
         final ProfessionalProfile partial = new ProfessionalProfile(
                 MemberId.newId(),
+                null,
                 "Titre",
                 "Résumé",
                 "Lieu",
@@ -70,7 +72,7 @@ class ProfessionalProfileTest {
     @Test
     void constructor_defaultsNullListsToEmpty() {
         final ProfessionalProfile profile =
-                new ProfessionalProfile(MemberId.newId(), null, null, null, null, null, null, null, null, null, null, null, null, 0);
+                new ProfessionalProfile(MemberId.newId(), null, null, null, null, null, null, null, null, null, null, null, null, null, 0);
 
         assertThat(profile.expertiseAreas()).isEmpty();
         assertThat(profile.skills()).isEmpty();

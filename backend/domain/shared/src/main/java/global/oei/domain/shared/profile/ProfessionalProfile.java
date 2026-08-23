@@ -13,9 +13,21 @@ import global.oei.domain.shared.member.MemberId;
  * <p>{@link #currentCompensation()} is always private: never part of any public-facing
  * schema/endpoint. See its own Javadoc for how it currently relates (or, more precisely,
  * does not yet automatically relate) to the anonymized {@code SalaryInsight} aggregates.</p>
+ *
+ * <p>{@link #source()} records how the profile content was initially obtained (manual,
+ * LinkedIn, CV import …). A {@code null} source means the member never went through a
+ * structured onboarding path — typically a legacy account that predates the import-first
+ * onboarding feature. It is NOT a required field: the profile is valid with or without a
+ * source value.</p>
+ *
+ * <p>Note: a {@code ProfessionalProfile} does NOT require a CV. The CV document (see
+ * {@link global.oei.domain.shared.cv.Cv}) is an independent, optional construct. A
+ * profile may exist without any CV document, including when it was created via
+ * LinkedIn or manually.</p>
  */
 public record ProfessionalProfile(
         MemberId memberId,
+        ProfileSource source,
         String title,
         String summary,
         String location,
@@ -53,6 +65,29 @@ public record ProfessionalProfile(
     public ProfessionalProfile withMemberId(final MemberId memberId) {
         return new ProfessionalProfile(
                 memberId,
+                source,
+                title,
+                summary,
+                location,
+                availability,
+                expertiseAreas,
+                technologies,
+                sectors,
+                languages,
+                experiences,
+                educations,
+                skills,
+                currentCompensation,
+                completenessScore);
+    }
+
+    /**
+     * @return a new instance with {@link #source()} replaced; every other field is unchanged.
+     */
+    public ProfessionalProfile withSource(final ProfileSource source) {
+        return new ProfessionalProfile(
+                memberId,
+                source,
                 title,
                 summary,
                 location,
@@ -101,6 +136,7 @@ public record ProfessionalProfile(
         final int score = satisfied * 100 / criteriaCount;
         return new ProfessionalProfile(
                 memberId,
+                source,
                 title,
                 summary,
                 location,

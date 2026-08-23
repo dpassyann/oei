@@ -14,6 +14,8 @@ import { CvTemplate } from '../../../../domain/model/cv/cv-template';
 import { createMember } from '../../../../domain/model/identity/member';
 import { MembershipFeeStatus } from '../../../../domain/model/membership-fee/membership-fee-status';
 import { Membership, MembershipStatus } from '../../../../domain/model/membership/membership';
+import { ProfileImportPort } from '../../../../domain/port/profile/profile-import.port';
+import { LinkedinOAuthService } from '../../../../infrastructure/auth/linkedin-oauth.service';
 
 const PAID_FEE_STATUS: MembershipFeeStatus = {
   memberId: 'demo-member-1',
@@ -182,6 +184,19 @@ describe('CvBuilder', () => {
           provide: MembershipApplicationService,
           useValue: { getMembership: () => of(membershipFixture(membershipStatus)) },
         },
+        {
+          provide: ProfileImportPort,
+          useValue: {
+            initiateCvImport: () => of({}),
+            getImport: () => of({}),
+            getImportDraft: () => of({}),
+            updateImportDraft: () => of({}),
+            confirmImport: () => of({}),
+            importLinkedinBasic: () => of({}),
+            importLinkedinBasicFromAuthorizationCode: () => of({}),
+          },
+        },
+        { provide: LinkedinOAuthService, useValue: { startAuthorizationFlow: () => undefined } },
       ],
     });
   }

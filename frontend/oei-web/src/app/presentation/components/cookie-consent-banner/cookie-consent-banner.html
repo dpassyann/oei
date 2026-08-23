@@ -1,0 +1,15 @@
+@if (consent.shouldShowBanner()) {
+  <aside class="oei-cookie-banner" role="dialog" aria-live="polite" [attr.aria-label]="copy().ariaLabel">
+    <p class="oei-cookie-banner__title">{{ copy().title }}</p>
+    <p class="oei-cookie-banner__description">{{ copy().description }}</p>
+    <div class="oei-cookie-banner__actions">
+      <button type="button" class="oei-cookie-banner__btn oei-cookie-banner__btn--ghost" (click)="consent.rejectOptional()">
+        {{ copy().rejectLabel }}
+      </button>
+      <button type="button" class="oei-cookie-banner__btn oei-cookie-banner__btn--primary" (click)="consent.accept()">
+        {{ copy().acceptLabel }}
+      </button>
+    </div>
+  </aside>
+}
+

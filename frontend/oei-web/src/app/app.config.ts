@@ -207,6 +207,16 @@ import { NETWORK_GRAPH_PORT } from './domain/port/network/network-graph.port';
 import { NetworkGraphMockAdapter } from './infrastructure/adapter/network-graph-mock.adapter';
 import { NetworkGraphApiAdapter } from './infrastructure/adapter/network-graph-api.adapter';
 
+// Bootstrap + Smart CV Import (import-first onboarding, spec §4-9).
+// MemberBootstrapPort: GET /api/member/v1/bootstrap — called once after auth to decide
+// landing experience. ProfileImportPort: Smart CV Import pipeline.
+import { MemberBootstrapPort } from './domain/port/profile/member-bootstrap.port';
+import { MemberBootstrapMockAdapter } from './infrastructure/adapter/member-bootstrap-mock.adapter';
+import { MemberBootstrapApiAdapter } from './infrastructure/adapter/member-bootstrap-api.adapter';
+import { ProfileImportPort } from './domain/port/profile/profile-import.port';
+import { ProfileImportMockAdapter } from './infrastructure/adapter/profile-import-mock.adapter';
+import { ProfileImportApiAdapter } from './infrastructure/adapter/profile-import-api.adapter';
+
 // Real Keycloak Authorization Code + PKCE config (realm `oei`, client `oei-frontend` — see
 // `keycloak/realm-export/oei-realm.json`: publicClient, standardFlowEnabled,
 // directAccessGrantsEnabled=false, pkce.code.challenge.method=S256, redirectUris
@@ -575,6 +585,21 @@ export const appConfig: ApplicationConfig = {
     {
       provide: NETWORK_GRAPH_PORT,
       useFactory: () => (inject(RuntimeConfig).isMock() ? inject(NetworkGraphMockAdapter) : inject(NetworkGraphApiAdapter)),
+    },
+    // Bootstrap + Smart CV Import — both ports now switch mock/api based on RuntimeConfig.
+    {
+      provide: MemberBootstrapPort,
+      useFactory: () =>
+        inject(RuntimeConfig).isMock()
+          ? inject(MemberBootstrapMockAdapter)
+          : inject(MemberBootstrapApiAdapter),
+    },
+    {
+      provide: ProfileImportPort,
+      useFactory: () =>
+        inject(RuntimeConfig).isMock()
+          ? inject(ProfileImportMockAdapter)
+          : inject(ProfileImportApiAdapter),
     },
   ],
 };

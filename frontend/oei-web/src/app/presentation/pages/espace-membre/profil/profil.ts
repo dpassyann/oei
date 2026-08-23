@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { form, FormField, required } from '@angular/forms/signals';
@@ -15,6 +15,7 @@ import {
 } from '../../../../domain/model/profile/professional-profile';
 import { I18nService } from '../../../i18n/i18n.service';
 import { MembershipAccessService } from '../../../auth/membership-access.service';
+import { SmartOnboarding } from '../smart-onboarding/smart-onboarding';
 
 // Signal Forms (`form()`/`required()` from `@angular/forms/signals`, verified against
 // node_modules/@angular/forms/types/signals.d.ts) work well for this page's *flat*
@@ -55,7 +56,7 @@ const COMPENSATION_PERIODS: readonly CompensationPeriod[] = ['YEAR', 'MONTH'];
 
 @Component({
   selector: 'oei-profil',
-  imports: [FormsModule, FormField],
+  imports: [FormsModule, FormField, SmartOnboarding],
   templateUrl: './profil.html',
   styleUrl: './profil.scss',
   // Component-scoped (not root-singleton) so the cotisation status is re-fetched fresh every
@@ -85,18 +86,26 @@ export class Profil {
     stream: () => this.membershipApplicationService.getMembership(),
   });
 
-  protected readonly profile = computed(() => this.profileResource.value());
+  protected readonly profile = computed(() => (this.profileResource.hasValue() ? this.profileResource.value() : undefined));
   // Distinguishes "genuinely no profile yet" from "the request failed" — without this, both
   // looked identical (a generic "Aucun profil disponible." message), which made a real fetch
   // error (e.g. `dataSource: 'api'` pointing at a backend that doesn't implement this endpoint
   // yet) indistinguishable from a brand-new, not-yet-onboarded account.
-  protected readonly profileLoadFailed = computed(() => this.profileResource.error() !== undefined);
-  protected readonly member = computed(() => this.memberResource.value());
-  protected readonly membership = computed(() => this.membershipResource.value());
+  protected readonly profileLoadFailed = computed(() => {
+    const error = this.profileResource.error() as { status?: number } | undefined;
+    return error !== undefined && error.status !== 404;
+  });
+  protected readonly profileMissing = computed(
+    () => !this.profileResource.isLoading() && !this.profileResource.hasValue() && !this.profileLoadFailed(),
+  );
+  protected readonly member = computed(() => (this.memberResource.hasValue() ? this.memberResource.value() : undefined));
+  protected readonly membership = computed(() => (this.membershipResource.hasValue() ? this.membershipResource.value() : undefined));
 
   protected readonly editing = signal(false);
   protected readonly saving = signal(false);
   protected readonly saveError = signal(false);
+  protected readonly onboardingModalOpen = signal(false);
+  private readonly onboardingAutoOpened = signal(false);
 
   private readonly editModel = signal<EditableProfileFields>({
     title: '',
@@ -244,6 +253,16 @@ export class Profil {
   });
   protected readonly benchmark = computed(() => this.benchmarkResource.value());
 
+  constructor() {
+    effect(() => {
+      if (this.onboardingAutoOpened() || !this.profileMissing()) {
+        return;
+      }
+      this.onboardingAutoOpened.set(true);
+      this.onboardingModalOpen.set(true);
+    });
+  }
+
   protected isDemoExperience(experience: Experience): boolean {
     return experience.isDemoData === true;
   }
@@ -253,5 +272,19 @@ export class Profil {
     // it today. Kept as a hook so the "Démonstration" tag can be extended if the model
     // grows one, without callers of this method needing to change.
     return false;
+  }
+
+  protected openOnboardingModal(): void {
+    this.onboardingModalOpen.set(true);
+  }
+
+  protected closeOnboardingModal(): void {
+    this.onboardingModalOpen.set(false);
+  }
+
+  protected onOnboardingCompleted(): void {
+    this.onboardingModalOpen.set(false);
+    this.profileResource.reload();
+    this.memberResource.reload();
   }
 }

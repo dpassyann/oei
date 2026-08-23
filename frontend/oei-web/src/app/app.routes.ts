@@ -29,7 +29,10 @@ import { CmsModeration } from './presentation/pages/cms/cms-moderation/cms-moder
 import { CmsLayout } from './presentation/pages/cms/cms-layout/cms-layout';
 import { cmsGuard } from './presentation/auth/cms.guard';
 import { memberSpaceGuard } from './presentation/auth/member-space.guard';
+import { bootstrapGuard } from './presentation/auth/bootstrap.guard';
 import { Onboarding } from './presentation/pages/espace-membre/onboarding/onboarding';
+import { SmartOnboarding } from './presentation/pages/espace-membre/smart-onboarding/smart-onboarding';
+import { LinkedinCallback } from './presentation/pages/espace-membre/smart-onboarding/linkedin-callback';
 import { EspaceMembreLayout } from './presentation/pages/espace-membre/espace-membre-layout/espace-membre-layout';
 import { Profil } from './presentation/pages/espace-membre/profil/profil';
 import { CvBuilder } from './presentation/pages/espace-membre/cv-builder/cv-builder';
@@ -126,12 +129,18 @@ export const routes: Routes = [
     canActivate: [memberSpaceGuard],
     children: [
       // `inscription` (the onboarding wizard) stays a sibling of the `EspaceMembreLayout`
-      // shell below, not a child of it — it's a full-screen, one-time step flow, not a page a
-      // member navigates back and forth to, so the permanent side menu would be noise there.
+      // shell below, not a child of it — it's a full-screen, one-time step flow.
       { path: 'inscription', component: Onboarding },
+      // `smart-onboarding` — new import-first onboarding flow (spec §4-13).
+      // Shown when profileStatus = ONBOARDING_REQUIRED (see MemberBootstrapApplicationService).
+      // Kept as a direct child route; the smart-onboarding component itself handles
+      // navigation back to /espace-membre/profil on completion.
+      { path: 'smart-onboarding', component: SmartOnboarding },
+      { path: 'smart-onboarding/linkedin/callback', component: LinkedinCallback },
       {
         path: '',
         component: EspaceMembreLayout,
+        canActivate: [bootstrapGuard],
         children: [
           { path: '', redirectTo: 'profil', pathMatch: 'full' },
           { path: 'profil', component: Profil },

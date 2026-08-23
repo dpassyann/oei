@@ -20,6 +20,8 @@ import global.oei.domain.shared.profile.Availability;
 import global.oei.domain.shared.profile.Experience;
 import global.oei.domain.shared.profile.ProfessionalProfile;
 import global.oei.infrastructure.persistence.PersistenceIntegrationTestApp;
+import global.oei.infrastructure.persistence.member.MemberEntity;
+import global.oei.infrastructure.persistence.member.MemberRepository;
 
 /**
  * Integration test against a real Postgres (Testcontainers, never H2): asserts the
@@ -50,15 +52,33 @@ class ProfessionalProfilePersistenceAdapterIT {
     @Autowired
     private ProfessionalProfileRepository repository;
 
+    @Autowired
+    private MemberRepository memberRepository;
+
     @Test
     void saveThenFindByMemberId_roundTripsNestedExperiencesThroughJsonb() {
-        final ProfessionalProfilePersistenceAdapter adapter = new ProfessionalProfilePersistenceAdapter(repository);
         final MemberId memberId = new MemberId(UUID.fromString("f267e070-2fd5-5f83-a48b-9a733db64489"));
+        
+        // Create Member first to satisfy FK constraint
+        final MemberEntity member = new MemberEntity(
+                memberId.value(),
+                "test-member",
+                "Test Member",
+                "Test Member",
+                "fr",
+                "FR",
+                "REAL",
+                java.time.Instant.now());
+        memberRepository.save(member);
+        
+        final ProfessionalProfilePersistenceAdapter adapter = new ProfessionalProfilePersistenceAdapter(
+                repository, memberRepository);
+        
         final Experience experience = new Experience(
                 "exp-1", "OEI Démonstration SA", "Architecte logiciel", LocalDate.of(2020, 1, 1), null, true,
                 "Conception de systèmes distribués.", false);
         final ProfessionalProfile profile = new ProfessionalProfile(
-                memberId, "Architecte logiciel senior", "Résumé de démonstration.", "Genève, Suisse", Availability.AVAILABLE,
+                memberId, null, "Architecte logiciel senior", "Résumé de démonstration.", "Genève, Suisse", Availability.AVAILABLE,
                 List.of("Cloud", "Sécurité"), List.of("Java", "Kubernetes"), List.of("Banque"), List.of(), List.of(experience),
                 List.of(), List.of(), null, 0).withRecomputedCompleteness();
 

@@ -22,7 +22,7 @@ class GetMyProfileServiceTest {
     void execute_returnsStoredProfileWhenPresent() {
         final MemberId memberId = MemberId.newId();
         final ProfessionalProfile stored = new ProfessionalProfile(
-                memberId, "Title", null, null, Availability.AVAILABLE, List.of(), List.of(), List.of(), List.of(),
+                memberId, null, "Title", null, null, Availability.AVAILABLE, List.of(), List.of(), List.of(), List.of(),
                 List.of(), List.of(), List.of(), null, 50);
         when(port.findByMemberId(memberId)).thenReturn(Optional.of(stored));
 

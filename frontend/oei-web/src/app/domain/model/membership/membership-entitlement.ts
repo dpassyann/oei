@@ -4,6 +4,10 @@ import { MembershipStatus } from './membership';
 // §Entitlements. Kept as a flat union (mirrors `CvSectionType`/`MembershipTier` style in
 // this bounded context) rather than a bitmask/flags object so call sites read as plain
 // string checks (`entitlements.has('CV_EXPORT_PDF')`).
+//
+// AI-specific entitlements (AI_CV_IMPORT, AI_CV_REIMPORT, AI_PROFILE_TRANSLATION) gate the
+// Smart CV Import pipeline (import-first onboarding). They are included in all active
+// membership statuses and can also be granted via one-time purchase for non-members.
 export type MembershipEntitlement =
   | 'PROFILE_EDIT'
   | 'PROFILE_PUBLIC'
@@ -16,7 +20,10 @@ export type MembershipEntitlement =
   | 'MEMBER_DIRECTORY'
   | 'WALLET_PASS'
   | 'CERTIFICATION_BADGE'
-  | 'STORE_ACCESS';
+  | 'STORE_ACCESS'
+  | 'AI_CV_IMPORT'
+  | 'AI_CV_REIMPORT'
+  | 'AI_PROFILE_TRANSLATION';
 
 export const MEMBERSHIP_ENTITLEMENTS: readonly MembershipEntitlement[] = [
   'PROFILE_EDIT',
@@ -31,6 +38,9 @@ export const MEMBERSHIP_ENTITLEMENTS: readonly MembershipEntitlement[] = [
   'WALLET_PASS',
   'CERTIFICATION_BADGE',
   'STORE_ACCESS',
+  'AI_CV_IMPORT',
+  'AI_CV_REIMPORT',
+  'AI_PROFILE_TRANSLATION',
 ];
 
 const ALL_ENTITLEMENTS: readonly MembershipEntitlement[] = MEMBERSHIP_ENTITLEMENTS;
@@ -46,22 +56,13 @@ const EXPIRED_ENTITLEMENTS: readonly MembershipEntitlement[] = [
   'MEMBER_DIRECTORY',
 ];
 
-// `SUSPENDED` (doc §Entitlements asks us to document the decision: "le plus restrictif").
-// Decision: a suspended member is under an active disciplinary/administrative hold — grant
-// nothing except being able to see and edit their own (private) profile/CV so they can still
-// find and correct whatever triggered the hold; no public exposure (`PROFILE_PUBLIC`,
-// `MEMBER_DIRECTORY`), no `STORE_ACCESS`, and no other premium action.
+// `SUSPENDED` — under disciplinary/administrative hold: only private profile/CV editing.
 const SUSPENDED_ENTITLEMENTS: readonly MembershipEntitlement[] = ['PROFILE_EDIT', 'CV_EDIT'];
 
-// `PENDING` (onboarding grace period: account just created, first cotisation never paid).
-// Explicit product-owner decision (2026, supersedes the earlier "treat like SUSPENDED, let
-// them keep filling in their CV while waiting" reasoning, which is abandoned): only
-// `PROFILE_EDIT` is granted. The profile (identity, photo, descriptions) stays editable so a
-// brand-new member isn't discouraged right after signing up, but the CV (`CV_EDIT`) and the
-// Store (`STORE_ACCESS`) stay closed until the first cotisation is actually paid — CV/Store
-// are membership *benefits*, not onboarding steps, so nothing there is unlocked before the
-// membership is confirmed (`ACTIVE`/`GRACE_PERIOD`/... via a paid cotisation).
-const PENDING_ENTITLEMENTS: readonly MembershipEntitlement[] = ['PROFILE_EDIT'];
+// `PENDING` (onboarding grace: first cotisation not yet paid).
+// AI_CV_IMPORT is granted so the member can complete the import-first onboarding flow
+// and create their profile before their first cotisation is confirmed.
+const PENDING_ENTITLEMENTS: readonly MembershipEntitlement[] = ['PROFILE_EDIT', 'AI_CV_IMPORT'];
 
 /**
  * Pure lookup: given a `MembershipStatus`, returns the full set of rights granted. Kept as a

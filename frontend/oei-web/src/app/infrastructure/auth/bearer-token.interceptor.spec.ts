@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { OAuthService } from 'angular-oauth2-oidc';
@@ -33,6 +33,7 @@ describe('bearerTokenInterceptor', () => {
     http.get('/api/member/v1/profile').subscribe();
     const req = httpMock.expectOne('/api/member/v1/profile');
     expect(req.request.headers.get('Authorization')).toBe('Bearer access-token');
+    expect(req.request.headers.get('API-Version')).toBe('1');
     req.flush({});
 
     httpMock.verify();
@@ -44,6 +45,18 @@ describe('bearerTokenInterceptor', () => {
     http.get('/api/public/v1/recognized-certifications').subscribe();
     const req = httpMock.expectOne('/api/public/v1/recognized-certifications');
     expect(req.request.headers.get('Authorization')).toBeNull();
+    expect(req.request.headers.get('API-Version')).toBe('1');
+    req.flush([]);
+
+    httpMock.verify();
+  });
+
+  it('preserves API-Version when already provided by the caller', () => {
+    const { http, httpMock } = setup();
+
+    http.get('/api/public/v1/recognized-certifications', { headers: { 'API-Version': '2' } }).subscribe();
+    const req = httpMock.expectOne('/api/public/v1/recognized-certifications');
+    expect(req.request.headers.get('API-Version')).toBe('2');
     req.flush([]);
 
     httpMock.verify();

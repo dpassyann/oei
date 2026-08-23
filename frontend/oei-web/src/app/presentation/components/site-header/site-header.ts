@@ -58,9 +58,10 @@ export class SiteHeader {
     stream: () => this.memberService.getCurrentMember(),
   });
 
-  protected readonly memberDisplayName = computed(() =>
-    this.memberResource.hasValue() ? this.memberResource.value().displayName : '',
-  );
+  protected readonly memberDisplayName = computed(() => {
+    const memberName = this.memberResource.hasValue() ? this.memberResource.value().displayName : '';
+    return memberName || this.keycloakAuth.getDisplayName();
+  });
 
   protected readonly navLinks: readonly NavLink[] = [
     { path: '/', labelKey: 'nav.home' },

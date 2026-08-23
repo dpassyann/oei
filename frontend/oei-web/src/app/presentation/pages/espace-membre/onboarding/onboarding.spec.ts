@@ -60,10 +60,11 @@ const INTERFACE_STRINGS: Record<string, string> = {
   'espaceMembre.onboarding.visibilite.fields.languages': 'Langues',
   'espaceMembre.onboarding.visibilite.fields.experiences': 'Expériences',
   'espaceMembre.onboarding.visibilite.fields.educations': 'Formations',
-  'espaceMembre.onboarding.visibilite.fields.certifications': 'Certifications',
-  'espaceMembre.onboarding.visibilite.fields.badges': 'Badges',
-  'espaceMembre.onboarding.visibilite.fields.membershipTier': "Niveau d'adhésion",
-  'espaceMembre.onboarding.charte.label': "J'accepte la charte éthique de l'OEI",
+   'espaceMembre.onboarding.visibilite.fields.certifications': 'Certifications',
+   'espaceMembre.onboarding.visibilite.fields.badges': 'Badges',
+   'espaceMembre.onboarding.visibilite.fields.membershipTier': "Niveau d'adhésion",
+   'espaceMembre.onboarding.visibilite.fields.socialLinks': 'Réseaux sociaux',
+   'espaceMembre.onboarding.charte.label': "J'accepte la charte éthique de l'OEI",
   'espaceMembre.onboarding.adhesion.summary': "Votre niveau d'adhésion par défaut est :",
 };
 

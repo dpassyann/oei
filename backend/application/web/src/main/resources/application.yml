@@ -3,6 +3,10 @@ spring:
     name: ${OEI_APPLICATION_NAME:${oei.name}}
     version: "@version@"
     description: "@description@"
+  profiles:
+    include: ${OEI_PROFILES_INCLUDE:clients}
+    group:
+      clients: ${OEI_EXTERNAL_CLIENTS_PROFILES:stripe,paypal,linkedin}
   # Resilience: Java 25 virtual threads (recommended with Spring Boot 4, avoids thread pinning).
   threads:
     virtual:

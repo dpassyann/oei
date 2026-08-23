@@ -7,8 +7,13 @@
     <p class="oei-page__empty">{{ i18n.translate('espaceMembre.profil.loading') }}</p>
   } @else if (profileLoadFailed()) {
     <p class="oei-page__empty" role="alert">{{ i18n.translate('espaceMembre.profil.loadError') }}</p>
-  } @else if (!profile()) {
-    <p class="oei-page__empty">{{ i18n.translate('espaceMembre.profil.empty') }}</p>
+  } @else if (profileMissing()) {
+    <section class="oei-page__empty oei-profil__empty-state">
+      <p>{{ i18n.translate('espaceMembre.profil.empty') }}</p>
+      <button type="button" class="oei-btn oei-btn--primary" (click)="openOnboardingModal()">
+        Importer mon CV dans une modale
+      </button>
+    </section>
   } @else {
     <!-- Bandeau d'identité : photo, titre, localisation — la "une" du profil-journal. -->
     <header class="oei-profil-banner">
@@ -285,5 +290,22 @@
         </div>
       </section>
     }
+  }
+
+  @if (onboardingModalOpen()) {
+    <dialog class="oei-onboarding-modal" open aria-label="Onboarding membre">
+      <div
+        class="oei-onboarding-modal__backdrop"
+        role="button"
+        tabindex="0"
+        aria-label="Fermer la modale"
+        (click)="closeOnboardingModal()"
+        (keydown.enter)="closeOnboardingModal()"
+      ></div>
+      <section class="oei-onboarding-modal__panel">
+        <button type="button" class="oei-onboarding-modal__close" (click)="closeOnboardingModal()">Fermer</button>
+        <oei-smart-onboarding initialSource="CV" (completed)="onOnboardingCompleted()"></oei-smart-onboarding>
+      </section>
+    </dialog>
   }
 </main>

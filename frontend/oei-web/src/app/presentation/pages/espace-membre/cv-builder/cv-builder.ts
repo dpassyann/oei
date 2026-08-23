@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { NgTemplateOutlet } from '@angular/common';
@@ -10,6 +10,7 @@ import { CV_SECTION_TYPES, Cv, CvSectionType, CvTranslationStatus, PdfGeneration
 import { CvTemplate } from '../../../../domain/model/cv/cv-template';
 import { MembershipAccessService } from '../../../auth/membership-access.service';
 import { MembershipEntitlementService } from '../../../../application/service/membership-entitlement.service';
+import { SmartOnboarding } from '../smart-onboarding/smart-onboarding';
 
 // This component's forms are single-purpose and flat (one select + one text input for
 // "add section", one language code + one text input for "add translation"). Signal Forms
@@ -28,7 +29,7 @@ import { MembershipEntitlementService } from '../../../../application/service/me
 // up the next iteration.
 @Component({
   selector: 'oei-cv-builder',
-  imports: [FormsModule, NgTemplateOutlet, RouterLink],
+  imports: [FormsModule, NgTemplateOutlet, RouterLink, SmartOnboarding],
   templateUrl: './cv-builder.html',
   styleUrl: './cv-builder.scss',
   // Component-scoped (not root-singleton) — see `MembershipAccessService`'s doc comment
@@ -56,7 +57,9 @@ export class CvBuilder {
   // membership status) — both are checked together below so either restriction applies.
   protected readonly canEditCv = computed(() => this.entitlements.has('CV_EDIT'));
 
-  private readonly cvsResource = rxResource({
+  // Exposed as protected so the template can check `cvsResource.isLoading()` for the
+  // empty state (when no CV exists yet — spec §18-19 "CV empty state").
+  protected readonly cvsResource = rxResource({
     stream: () => this.cvService.listCvs(),
   });
 
@@ -72,7 +75,9 @@ export class CvBuilder {
   // switcher UI is out of scope, so we simply take the first CV in the list as "current".
   protected readonly cv = computed<Cv | undefined>(() => this.cvsResource.value()?.[0]);
 
-  protected readonly memberDisplayName = computed(() => this.memberResource.value()?.displayName);
+  protected readonly memberDisplayName = computed(() =>
+    this.memberResource.hasValue() ? this.memberResource.value().displayName : undefined,
+  );
 
   protected readonly templates = computed<readonly CvTemplate[]>(() => this.templatesResource.value() ?? []);
 
@@ -119,6 +124,18 @@ export class CvBuilder {
 
   protected readonly renderJob = signal<PdfGenerationJob | undefined>(undefined);
   protected readonly renderInProgress = signal(false);
+  protected readonly onboardingModalOpen = signal(false);
+  private readonly onboardingAutoOpened = signal(false);
+
+  constructor() {
+    effect(() => {
+      if (this.onboardingAutoOpened() || this.cvsResource.isLoading() || this.cv()) {
+        return;
+      }
+      this.onboardingAutoOpened.set(true);
+      this.onboardingModalOpen.set(true);
+    });
+  }
 
   protected objectEntries(content: Readonly<Record<string, unknown>>): [string, unknown][] {
     return Object.entries(content);
@@ -223,5 +240,18 @@ export class CvBuilder {
       this.renderJob.set(job);
       this.renderInProgress.set(false);
     });
+  }
+
+  protected openOnboardingModal(): void {
+    this.onboardingModalOpen.set(true);
+  }
+
+  protected closeOnboardingModal(): void {
+    this.onboardingModalOpen.set(false);
+  }
+
+  protected onOnboardingCompleted(): void {
+    this.onboardingModalOpen.set(false);
+    this.cvsResource.reload();
   }
 }

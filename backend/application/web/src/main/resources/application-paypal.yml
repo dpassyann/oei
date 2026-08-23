@@ -1,0 +1,12 @@
+spring:
+  config:
+    activate:
+      on-profile: paypal
+
+oei:
+  payment:
+    paypal:
+      host-base-url: ${OEI_PAYPAL_HOST_BASE_URL:https://api-m.sandbox.paypal.com}
+      client-id: ${OEI_PAYPAL_CLIENT_ID:paypal_client_id_placeholder}
+      client-secret: ${OEI_PAYPAL_CLIENT_SECRET:paypal_client_secret_placeholder}
+

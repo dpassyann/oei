@@ -490,3 +490,92 @@ $oei-gold: #e8a530;
 .oei-cv-preview__section-excerpt {
   color: #333;
 }
+
+// Empty state — no CV imported yet (spec §18-19)
+.oei-cv-builder__empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #F7F4EC;
+  border-radius: 12px;
+  margin-top: 2rem;
+}
+.oei-cv-builder__empty-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1.25rem;
+}
+.oei-cv-builder__empty-title {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: #0A1E3F;
+  margin: 0 0 0.75rem;
+}
+.oei-cv-builder__empty-desc {
+  font-size: 1rem;
+  color: #4b5563;
+  max-width: 480px;
+  line-height: 1.6;
+  margin: 0 0 2rem;
+}
+.oei-cv-builder__empty-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.oei-cv-builder__empty-btn {
+  padding: 0.75rem 1.5rem;
+  border: 0;
+  border-radius: 8px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.15s;
+  &--primary {
+    background: #E8A530;
+    color: #0A1E3F;
+    &:hover { background: darken(#E8A530, 8%); }
+  }
+}
+
+.oei-onboarding-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 4000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.oei-onboarding-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 30, 63, 0.88);
+}
+
+.oei-onboarding-modal__panel {
+  position: relative;
+  z-index: 1;
+  width: min(70rem, 100%);
+  max-height: 92vh;
+  overflow: auto;
+  background: #fff;
+  border-radius: 0.75rem;
+}
+
+.oei-onboarding-modal__close {
+  position: sticky;
+  top: 0.5rem;
+  margin: 0.75rem 0.75rem 0 auto;
+  display: block;
+  border: 1px solid rgba(10, 30, 63, 0.24);
+  border-radius: 999px;
+  background: #fff;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+}
+

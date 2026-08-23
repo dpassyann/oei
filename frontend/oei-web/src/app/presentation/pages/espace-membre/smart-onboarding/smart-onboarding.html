@@ -1,0 +1,346 @@
+<!-- Smart Profile Onboarding — import-first flow -->
+<div class="smart-onboarding">
+
+  <!-- ── Source selection ── -->
+  @if (step() === 'SOURCE_SELECTION') {
+    <div class="smart-onboarding__step">
+      <div class="smart-onboarding__header">
+        <div class="smart-onboarding__icon">✦</div>
+        <h1 class="smart-onboarding__title">
+          Créez votre profil professionnel OEI
+        </h1>
+        <p class="smart-onboarding__subtitle">
+          OEI prépare automatiquement votre profil à partir de vos informations existantes,
+          plutôt que de vous demander de tout ressaisir manuellement.
+        </p>
+      </div>
+
+      <div class="smart-onboarding__options">
+        <button class="smart-onboarding__option-card" (click)="selectCv()">
+          <div class="smart-onboarding__option-icon">📄</div>
+          <div class="smart-onboarding__option-content">
+            <h2>Importer mon CV</h2>
+            <p>
+              Téléversez votre CV (PDF ou DOCX). Notre IA en extrait automatiquement
+              votre parcours, vos compétences et vos formations.
+            </p>
+            <span class="smart-onboarding__option-badge">
+              @if (hasAiCvImportEntitlement()) {
+                Inclus dans votre adhésion
+              } @else {
+                {{ price }} {{ currency }}
+              }
+            </span>
+          </div>
+          <div class="smart-onboarding__option-arrow">→</div>
+        </button>
+
+        <button class="smart-onboarding__option-card smart-onboarding__option-card--secondary"
+                (click)="selectLinkedIn()">
+          <div class="smart-onboarding__option-icon">in</div>
+          <div class="smart-onboarding__option-content">
+            <h2>Continuer avec LinkedIn</h2>
+            <p>
+              Importez votre identité de base (nom, photo, email) depuis votre profil LinkedIn.
+              Vous pourrez ensuite importer votre CV pour compléter votre parcours.
+            </p>
+            <span class="smart-onboarding__option-badge smart-onboarding__option-badge--free">
+              Gratuit
+            </span>
+          </div>
+          <div class="smart-onboarding__option-arrow">→</div>
+        </button>
+      </div>
+
+      <div class="smart-onboarding__fallback">
+        <button class="smart-onboarding__link" (click)="navigateToManualOnboarding()">
+          Saisir manuellement mes informations
+        </button>
+      </div>
+
+      @if (error()) {
+        <div class="smart-onboarding__error">{{ error() }}</div>
+      }
+    </div>
+  }
+
+  <!-- ── LinkedIn Basic ── -->
+  @if (step() === 'LINKEDIN_BASIC') {
+    <div class="smart-onboarding__step">
+      <div class="smart-onboarding__header">
+        <div class="smart-onboarding__icon smart-onboarding__icon--linkedin">in</div>
+        <h1 class="smart-onboarding__title">Connexion LinkedIn</h1>
+        <p class="smart-onboarding__subtitle">
+          Vos informations d'identité (nom, photo, email) seront importées depuis LinkedIn.
+        </p>
+        <div class="smart-onboarding__notice">
+          <strong>Note :</strong> seules les informations d'identité de base sont disponibles
+          via LinkedIn pour le moment. Importez ensuite votre CV pour compléter votre parcours professionnel.
+        </div>
+      </div>
+
+      <div class="smart-onboarding__actions">
+        <button class="smart-onboarding__btn smart-onboarding__btn--primary" (click)="finishLinkedIn()">
+          Importer mon identité LinkedIn
+        </button>
+        <button class="smart-onboarding__btn smart-onboarding__btn--ghost" (click)="step.set('SOURCE_SELECTION')">
+          Retour
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- ── Entitlement check (no AI_CV_IMPORT) ── -->
+  @if (step() === 'ENTITLEMENT_CHECK') {
+    <div class="smart-onboarding__step">
+      <div class="smart-onboarding__header">
+        <div class="smart-onboarding__icon">✦</div>
+        <h1 class="smart-onboarding__title">Import intelligent de CV</h1>
+        <p class="smart-onboarding__subtitle">
+          Transformez automatiquement votre CV en profil professionnel structuré OEI.
+        </p>
+      </div>
+
+      <div class="smart-onboarding__pricing-card">
+        <div class="smart-onboarding__pricing-amount">
+          <span class="smart-onboarding__price">{{ price }}</span>
+          <span class="smart-onboarding__currency">{{ currency }}</span>
+        </div>
+        <div class="smart-onboarding__pricing-desc">
+          Import unique · Extraction IA · Profil structuré
+        </div>
+        <div class="smart-onboarding__membership-hint">
+          Inclus dans toute adhésion OEI active.
+          <a href="/membres-fondateurs" class="smart-onboarding__link">Découvrir l'adhésion</a>
+        </div>
+      </div>
+
+      <div class="smart-onboarding__actions">
+        <button class="smart-onboarding__btn smart-onboarding__btn--primary" (click)="proceedToPayment()">
+          Importer pour {{ price }} {{ currency }}
+        </button>
+        <button class="smart-onboarding__btn smart-onboarding__btn--ghost" (click)="step.set('SOURCE_SELECTION')">
+          Retour
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- ── Payment (mock) ── -->
+  @if (step() === 'PAYMENT_REQUIRED') {
+    <div class="smart-onboarding__step">
+      <div class="smart-onboarding__header">
+        <div class="smart-onboarding__icon">💳</div>
+        <h1 class="smart-onboarding__title">Paiement sécurisé</h1>
+        <p class="smart-onboarding__subtitle">
+          Import intelligent de CV — {{ price }} {{ currency }}
+        </p>
+      </div>
+      <div class="smart-onboarding__notice smart-onboarding__notice--info">
+        En production, cette page redirige vers la page de paiement sécurisée du prestataire
+        de paiement OEI. La confirmation se fait via webhook — jamais via le frontend seul.
+      </div>
+      <div class="smart-onboarding__actions">
+        <button class="smart-onboarding__btn smart-onboarding__btn--primary" (click)="simulatePayment()">
+          ✓ Simuler le paiement (démo)
+        </button>
+        <button class="smart-onboarding__btn smart-onboarding__btn--ghost" (click)="step.set('ENTITLEMENT_CHECK')">
+          Retour
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- ── CV Upload ── -->
+  @if (step() === 'CV_UPLOAD') {
+    <div class="smart-onboarding__step">
+      <div class="smart-onboarding__header">
+        <div class="smart-onboarding__icon">📤</div>
+        <h1 class="smart-onboarding__title">Téléverser votre CV</h1>
+        <p class="smart-onboarding__subtitle">
+          Formats acceptés : PDF, DOCX · Taille max : 10 Mo
+        </p>
+      </div>
+
+      <div class="smart-onboarding__upload-zone">
+        <input type="file"
+               id="cv-file-input"
+               accept=".pdf,.docx"
+               class="smart-onboarding__file-input"
+               (change)="onFileSelected($event)" />
+        <label for="cv-file-input" class="smart-onboarding__upload-label">
+          @if (selectedFile()) {
+            <span class="smart-onboarding__file-name">✓ {{ selectedFile()!.name }}</span>
+          } @else {
+            <span>Cliquez pour sélectionner votre CV</span>
+          }
+        </label>
+      </div>
+
+      <div class="smart-onboarding__consent">
+        <label class="smart-onboarding__checkbox-label">
+          <input type="checkbox"
+                 [checked]="consentAccepted()"
+                 (change)="consentAccepted.set(!consentAccepted())" />
+          <span>
+            J'autorise OEI à traiter ce document afin de créer ou mettre à jour mon profil
+            professionnel. Je suis responsable de vérifier l'exactitude des informations
+            extraites avant leur publication.
+          </span>
+        </label>
+      </div>
+
+      @if (error()) {
+        <div class="smart-onboarding__error">{{ error() }}</div>
+      }
+
+      <div class="smart-onboarding__actions">
+        <button class="smart-onboarding__btn smart-onboarding__btn--primary"
+                [disabled]="!selectedFile() || !consentAccepted() || submitting()"
+                (click)="startCvImport()">
+          @if (submitting()) { Envoi en cours… } @else { Lancer l'import IA }
+        </button>
+        <button class="smart-onboarding__btn smart-onboarding__btn--ghost"
+                [disabled]="submitting()"
+                (click)="step.set('SOURCE_SELECTION')">
+          Retour
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- ── AI Processing ── -->
+  @if (step() === 'PROCESSING') {
+    <div class="smart-onboarding__step smart-onboarding__step--centered">
+      <div class="smart-onboarding__processing-animation">
+        <div class="smart-onboarding__spinner"></div>
+      </div>
+      <h1 class="smart-onboarding__title">Analyse de votre CV en cours…</h1>
+      <p class="smart-onboarding__processing-label">{{ processingLabel() }}</p>
+
+      <div class="smart-onboarding__processing-steps">
+        <div class="smart-onboarding__processing-step"
+             [class.active]="currentImport()?.status === 'DOCUMENT_UPLOADED'">
+          <span>Lecture de votre CV</span>
+        </div>
+        <div class="smart-onboarding__processing-step"
+             [class.active]="currentImport()?.status === 'EXTRACTING'">
+          <span>Extraction du texte</span>
+        </div>
+        <div class="smart-onboarding__processing-step"
+             [class.active]="currentImport()?.status === 'AI_PROCESSING'">
+          <span>Structuration par l'IA</span>
+        </div>
+        <div class="smart-onboarding__processing-step"
+             [class.active]="currentImport()?.status === 'REVIEW_REQUIRED'">
+          <span>Profil prêt à valider</span>
+        </div>
+      </div>
+
+      @if (error()) {
+        <div class="smart-onboarding__error">{{ error() }}</div>
+        <button class="smart-onboarding__btn smart-onboarding__btn--ghost"
+                (click)="step.set('CV_UPLOAD')">
+          Réessayer
+        </button>
+      }
+    </div>
+  }
+
+  <!-- ── Review ── -->
+  @if (step() === 'REVIEW') {
+    <div class="smart-onboarding__step">
+      <div class="smart-onboarding__header">
+        <div class="smart-onboarding__icon smart-onboarding__icon--success">✓</div>
+        <h1 class="smart-onboarding__title">Votre profil est prêt</h1>
+        <p class="smart-onboarding__subtitle">
+          Vérifiez les informations extraites avant de les publier.
+          Vous restez responsable de l'exactitude des informations.
+        </p>
+      </div>
+
+      @if (draft()) {
+        <div class="smart-onboarding__draft-preview">
+          @if (draft()!.title) {
+            <div class="smart-onboarding__draft-field">
+              <span class="smart-onboarding__draft-label">Titre</span>
+              <span class="smart-onboarding__draft-value">{{ draft()!.title }}</span>
+            </div>
+          }
+          @if (draft()!.summary) {
+            <div class="smart-onboarding__draft-field">
+              <span class="smart-onboarding__draft-label">Résumé</span>
+              <span class="smart-onboarding__draft-value">{{ draft()!.summary }}</span>
+            </div>
+          }
+          @if (draft()!.experiences && draft()!.experiences!.length > 0) {
+            <div class="smart-onboarding__draft-section">
+              <h3>Expériences ({{ draft()!.experiences!.length }})</h3>
+              @for (exp of draft()!.experiences; track exp.id) {
+                <div class="smart-onboarding__draft-item">
+                  <strong>{{ exp.title }}</strong> — {{ exp.organization }}
+                </div>
+              }
+            </div>
+          }
+          @if (draft()!.educations && draft()!.educations!.length > 0) {
+            <div class="smart-onboarding__draft-section">
+              <h3>Formations ({{ draft()!.educations!.length }})</h3>
+              @for (edu of draft()!.educations; track edu.id) {
+                <div class="smart-onboarding__draft-item">
+                  <strong>{{ edu.program }}</strong> — {{ edu.institution }}
+                </div>
+              }
+            </div>
+          }
+          @if (draft()!.skills && draft()!.skills!.length > 0) {
+            <div class="smart-onboarding__draft-section">
+              <h3>Compétences ({{ draft()!.skills!.length }})</h3>
+              <div class="smart-onboarding__skills-list">
+                @for (skill of draft()!.skills; track skill.id) {
+                  <span class="smart-onboarding__skill-chip">{{ skill.name }}</span>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      }
+
+      <div class="smart-onboarding__notice">
+        Les informations importées sont préparées automatiquement. Vous pouvez les corriger
+        individuellement depuis votre espace membre après la création du profil.
+      </div>
+
+      @if (error()) {
+        <div class="smart-onboarding__error">{{ error() }}</div>
+      }
+
+      <div class="smart-onboarding__actions">
+        <button class="smart-onboarding__btn smart-onboarding__btn--primary"
+                [disabled]="submitting()"
+                (click)="confirmImport()">
+          @if (submitting()) { Création en cours… } @else { Confirmer et créer mon profil }
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- ── Completed ── -->
+  @if (step() === 'COMPLETED') {
+    <div class="smart-onboarding__step smart-onboarding__step--centered">
+      <div class="smart-onboarding__success-icon">✦</div>
+      <h1 class="smart-onboarding__title">Votre profil OEI est créé !</h1>
+      <p class="smart-onboarding__subtitle">
+        Votre profil professionnel est maintenant disponible dans votre espace membre.
+      </p>
+      <div class="smart-onboarding__actions">
+        <button class="smart-onboarding__btn smart-onboarding__btn--primary"
+                (click)="navigateToProfile()">
+          Accéder à mon profil
+        </button>
+      </div>
+    </div>
+  }
+
+</div>
+

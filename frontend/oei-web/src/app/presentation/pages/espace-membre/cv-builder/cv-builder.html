@@ -11,6 +11,26 @@
     </p>
   }
 
+  @if (!cv() && !cvsResource.isLoading()) {
+    <!-- Empty state: no CV imported yet — import-first design (spec §18-19) -->
+    <div class="oei-cv-builder__empty-state">
+      <div class="oei-cv-builder__empty-icon">📄</div>
+      <h2 class="oei-cv-builder__empty-title">Votre CV professionnel OEI</h2>
+      <p class="oei-cv-builder__empty-desc">
+        Aucun CV n'a encore été importé. Téléversez votre CV existant et laissez l'IA OEI
+        en extraire automatiquement votre parcours, vos compétences et vos formations.
+      </p>
+      <div class="oei-cv-builder__empty-actions">
+        <button
+           type="button"
+           (click)="openOnboardingModal()"
+           class="oei-cv-builder__empty-btn oei-cv-builder__empty-btn--primary">
+          Importer mon CV
+        </button>
+      </div>
+    </div>
+  }
+
   @if (cv(); as currentCv) {
     <p class="oei-page__body oei-cv-builder__template">
       {{ i18n.translate('espaceMembre.cv.templateLabel') }} : {{ templateName() ?? currentCv.templateId }}
@@ -297,5 +317,22 @@
     </section>
   } @else {
     <p class="oei-page__empty">{{ i18n.translate('espaceMembre.cv.empty') }}</p>
+  }
+
+  @if (onboardingModalOpen()) {
+    <dialog class="oei-onboarding-modal" open aria-label="Onboarding CV">
+      <div
+        class="oei-onboarding-modal__backdrop"
+        role="button"
+        tabindex="0"
+        aria-label="Fermer la modale"
+        (click)="closeOnboardingModal()"
+        (keydown.enter)="closeOnboardingModal()"
+      ></div>
+      <section class="oei-onboarding-modal__panel">
+        <button type="button" class="oei-onboarding-modal__close" (click)="closeOnboardingModal()">Fermer</button>
+        <oei-smart-onboarding initialSource="CV" (completed)="onOnboardingCompleted()"></oei-smart-onboarding>
+      </section>
+    </dialog>
   }
 </main>

@@ -54,6 +54,12 @@ tags:
     description: Catalogue public des certifications reconnues par l'OEI (lecture seule, sans authentification).
   - name: member-profile
     description: Profil professionnel du membre connecté.
+  - name: member-profile-import
+    description: >
+      Import intelligent du profil professionnel à partir d'un document CV (PDF/DOCX).
+      Pipeline : upload → extraction texte → traitement IA → brouillon → validation membre
+      → profil créé/mis à jour. Requiert l'entitlement AI_CV_IMPORT (inclus dans les
+      adhésions actives ou achetable à l'unité).
   - name: member-membership-fee
     description: >
       Cotisation annuelle du membre connecté (cycle 22 avril → 21 avril, calcul au
@@ -176,6 +182,8 @@ paths:
   # Home sections (legacy, unversioned — see the `home-legacy` tag description)
   # ---------------------------------------------------------------------------
   /api/v1/stats/{lang}:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [home-legacy]
       operationId: getHomeStats
@@ -197,6 +205,8 @@ paths:
                   $ref: "#/components/schemas/Stat"
 
   /api/v1/domains/{lang}:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [home-legacy]
       operationId: getDomainAreas
@@ -218,6 +228,8 @@ paths:
                   $ref: "#/components/schemas/DomainArea"
 
   /api/v1/domains/{lang}/{slug}:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [home-legacy]
       operationId: getDomainArea
@@ -242,6 +254,8 @@ paths:
                 $ref: "#/components/schemas/DomainArea"
 
   /api/v1/news/{lang}:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [home-legacy]
       operationId: getLatestNews
@@ -271,6 +285,8 @@ paths:
                   $ref: "#/components/schemas/NewsItem"
 
   /api/v1/partners/{lang}:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [home-legacy]
       operationId: getPartners
@@ -292,6 +308,8 @@ paths:
                   $ref: "#/components/schemas/Partner"
 
   /api/v1/partners/{lang}/{id}:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [home-legacy]
       operationId: getPartner
@@ -318,6 +336,8 @@ paths:
           $ref: "#/components/responses/NotFound"
 
   /api/v1/leads:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [home-legacy]
       operationId: submitLead
@@ -340,6 +360,8 @@ paths:
           $ref: "#/components/responses/ValidationError"
 
   /api/v1/contact:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [home-legacy]
       operationId: submitContactMessage
@@ -376,6 +398,8 @@ paths:
   # /api/public/v1 — accounts
   # ---------------------------------------------------------------------------
   /api/public/v1/accounts:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [public-accounts]
       operationId: registerAccount
@@ -402,6 +426,8 @@ paths:
   # /api/public/v1 — content & governance documents (read-only)
   # ---------------------------------------------------------------------------
   /api/public/v1/content/{slug}:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [public-content]
       operationId: getPublicContent
@@ -428,6 +454,8 @@ paths:
           $ref: "#/components/responses/NotFound"
 
   /api/public/v1/documents/{slug}/versions:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [public-content]
       operationId: listPublicDocumentVersions
@@ -450,6 +478,8 @@ paths:
   # /api/public/v1 — global search (V1 scope: resources + news only)
   # ---------------------------------------------------------------------------
   /api/public/v1/search:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [search]
       operationId: searchPublicContent
@@ -488,6 +518,8 @@ paths:
                   $ref: "#/components/schemas/SearchResult"
 
   /api/public/v1/badges/catalog:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [public-members]
       operationId: listBadgeCatalog
@@ -506,6 +538,8 @@ paths:
   # /api/public/v1 — institutions (public pages)
   # ---------------------------------------------------------------------------
   /api/public/v1/institutions/{slug}:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [public-institutions]
       operationId: getPublicInstitution
@@ -527,6 +561,8 @@ paths:
           $ref: "#/components/responses/NotFound"
 
   /api/public/v1/institutions/{slug}/publications:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [public-institutions]
       operationId: listPublicInstitutionPublications
@@ -546,6 +582,8 @@ paths:
                 $ref: "#/components/schemas/InstitutionPublicationPage"
 
   /api/public/v1/institutions/{slug}/opportunities:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [public-institutions]
       operationId: listPublicInstitutionOpportunities
@@ -568,6 +606,8 @@ paths:
   # /api/public/v1 — members (public profile, card, wallet verification)
   # ---------------------------------------------------------------------------
   /api/public/v1/members/{publicSlug}:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [public-members]
       operationId: getPublicMemberProfile
@@ -589,6 +629,8 @@ paths:
           $ref: "#/components/responses/NotFound"
 
   /api/public/v1/members/{publicSlug}/cv:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [public-members]
       operationId: getPublicMemberCv
@@ -620,6 +662,8 @@ paths:
           $ref: "#/components/responses/NotFound"
 
   /api/public/v1/members/{publicSlug}/digital-card:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [public-members]
       operationId: getPublicDigitalCard
@@ -643,6 +687,8 @@ paths:
           $ref: "#/components/responses/NotFound"
 
   /api/public/v1/wallet/passes/{serialNumber}/verify:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [public-members]
       operationId: verifyWalletPass
@@ -667,6 +713,8 @@ paths:
   # /api/public/v1 — recognized certifications catalog (public read-only)
   # ---------------------------------------------------------------------------
   /api/public/v1/recognized-certifications:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [public-certifications]
       operationId: listPublicRecognizedCertifications
@@ -696,10 +744,223 @@ paths:
                 items:
                   $ref: "#/components/schemas/RecognizedCertification"
 
+  # /api/member/v1 — bootstrap
+  # ---------------------------------------------------------------------------
+  /api/member/v1/bootstrap:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
+    get:
+      tags: [member-profile]
+      operationId: getMemberBootstrap
+      summary: >
+        État d'amorçage du membre connecté : statut de profil (ONBOARDING_REQUIRED,
+        PROFILE_INCOMPLETE, READY, …) et statut d'adhésion. Appelé une seule fois
+        après l'authentification pour décider de l'expérience d'atterrissage.
+        Ne renvoie JAMAIS 500 pour un profil manquant — utilise ONBOARDING_REQUIRED.
+      security: [{ bearerAuth: [member] }]
+      responses:
+        "200":
+          description: État d'amorçage
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemberBootstrap"
+
+  # /api/member/v1 — profile import (Smart CV Import)
+  # ---------------------------------------------------------------------------
+  /api/member/v1/profile-import/cv:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
+    post:
+      tags: [member-profile-import]
+      operationId: initiateProfileImportFromCv
+      summary: >
+        Initie un import de profil à partir d'un document CV (PDF ou DOCX).
+        Requiert l'entitlement AI_CV_IMPORT (inclus dans les adhésions actives,
+        ou achetable à l'unité via /api/member/v1/purchases/cv-import).
+        Retourne 202 Accepted + session d'import ; traitement IA asynchrone.
+      security: [{ bearerAuth: [member] }]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file:
+                  type: string
+                  format: binary
+                consentVersion:
+                  type: string
+      responses:
+        "202":
+          description: Import initié — traitement IA en cours
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfileImport"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "402":
+          description: Entitlement AI_CV_IMPORT non disponible
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+
+  /api/member/v1/profile-import/linkedin/basic:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
+    post:
+      tags: [member-profile-import]
+      operationId: importLinkedinBasicProfile
+      summary: >
+        Importe l'identité LinkedIn de base (userinfo OpenID) puis marque la source
+        du profil comme LINKEDIN_BASIC ou LINKEDIN_AND_CV.
+      security: [{ bearerAuth: [member] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LinkedinBasicImportRequest"
+      responses:
+        "200":
+          description: Profil mis à jour après import LinkedIn basic
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfessionalProfile"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+
+  /api/member/v1/profile-import/linkedin/basic/callback:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
+    post:
+      tags: [member-profile-import]
+      operationId: importLinkedinBasicProfileFromCallback
+      summary: >
+        Finalise le callback OAuth LinkedIn: echange le authorization code cote serveur,
+        puis applique l'import LinkedIn basic sur le membre authentifie.
+      security: [{ bearerAuth: [member] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LinkedinOAuthCallbackRequest"
+      responses:
+        "200":
+          description: Profil mis a jour apres callback OAuth LinkedIn
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfessionalProfile"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+
+  /api/member/v1/profile-import/{importId}:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
+    get:
+      tags: [member-profile-import]
+      operationId: getProfileImport
+      summary: Statut courant d'une session d'import de profil.
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - name: importId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Session d'import
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfileImport"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /api/member/v1/profile-import/{importId}/draft:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
+    get:
+      tags: [member-profile-import]
+      operationId: getProfileImportDraft
+      summary: Brouillon extrait par l'IA, disponible quand status = REVIEW_REQUIRED.
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - name: importId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Brouillon extrait
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfessionalProfile"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      tags: [member-profile-import]
+      operationId: updateProfileImportDraft
+      summary: Correction du brouillon avant confirmation.
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - name: importId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProfessionalProfile"
+      responses:
+        "200":
+          description: Brouillon mis à jour
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfessionalProfile"
+
+  /api/member/v1/profile-import/{importId}/confirm:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
+    post:
+      tags: [member-profile-import]
+      operationId: confirmProfileImport
+      summary: Confirmation du brouillon — profil créé/mis à jour.
+      security: [{ bearerAuth: [member] }]
+      parameters:
+        - name: importId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Profil créé/mis à jour
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfessionalProfile"
+
   # ---------------------------------------------------------------------------
   # /api/member/v1 — identity (current member self-resource)
   # ---------------------------------------------------------------------------
   /api/member/v1/members/me:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [member-profile]
       operationId: getCurrentMember
@@ -721,6 +982,8 @@ paths:
   # /api/member/v1 — profile
   # ---------------------------------------------------------------------------
   /api/member/v1/profile:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [member-profile]
       operationId: getMyProfile
@@ -755,6 +1018,8 @@ paths:
           $ref: "#/components/responses/ValidationError"
 
   /api/member/v1/membership:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [member-profile]
       operationId: getMyMembership
@@ -769,6 +1034,8 @@ paths:
                 $ref: "#/components/schemas/Membership"
 
   /api/member/v1/entitlements:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [member-profile]
       operationId: getMyEntitlements
@@ -794,6 +1061,8 @@ paths:
                       $ref: "#/components/schemas/MembershipEntitlement"
 
   /api/member/v1/ethical-charter/sign:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [member-profile]
       operationId: signEthicalCharter
@@ -821,6 +1090,8 @@ paths:
   # /api/member/v1 — cotisation annuelle (adhésion & cotisation plan)
   # ---------------------------------------------------------------------------
   /api/member/v1/membership-fee/account:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [member-membership-fee]
       operationId: getMyMembershipFeeAccount
@@ -838,6 +1109,8 @@ paths:
                 $ref: "#/components/schemas/MembershipFeeAccount"
 
   /api/member/v1/membership-fee/payments:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [member-membership-fee]
       operationId: payMyMembershipFee
@@ -865,6 +1138,8 @@ paths:
   # /api/member/v1 — CV builder
   # ---------------------------------------------------------------------------
   /api/member/v1/cv/templates:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [member-cv]
       operationId: listCvTemplates
@@ -881,6 +1156,8 @@ paths:
                   $ref: "#/components/schemas/CvTemplate"
 
   /api/member/v1/cv:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [member-cv]
       operationId: listMyCvs
@@ -915,6 +1192,8 @@ paths:
                 $ref: "#/components/schemas/Cv"
 
   /api/member/v1/cv/{id}:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [member-cv]
       operationId: getCv
@@ -953,6 +1232,8 @@ paths:
                 $ref: "#/components/schemas/Cv"
 
   /api/member/v1/cv/{id}/sections:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [member-cv]
       operationId: addCvSection
@@ -975,6 +1256,8 @@ paths:
                 $ref: "#/components/schemas/CvSection"
 
   /api/member/v1/cv/{id}/sections/{sectionId}:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     put:
       tags: [member-cv]
       operationId: updateCvSection
@@ -1002,6 +1285,8 @@ paths:
                 $ref: "#/components/schemas/CvSection"
 
   /api/member/v1/cv/{id}/sections/{sectionId}/translations:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [member-cv]
       operationId: requestCvSectionTranslation
@@ -1029,6 +1314,8 @@ paths:
                 $ref: "#/components/schemas/CvTranslation"
 
   /api/member/v1/cv/{id}/sections/{sectionId}/translations/{language}/validate:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [member-cv]
       operationId: validateCvSectionTranslation
@@ -1055,6 +1342,8 @@ paths:
                 $ref: "#/components/schemas/CvTranslation"
 
   /api/member/v1/cv/{id}/render:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [member-cv]
       operationId: renderCv
@@ -1080,6 +1369,8 @@ paths:
   # /api/member/v1 — certifications
   # ---------------------------------------------------------------------------
   /api/member/v1/certifications:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [member-certifications]
       operationId: listMyCertifications
@@ -1114,6 +1405,8 @@ paths:
                 $ref: "#/components/schemas/Certification"
 
   /api/member/v1/certifications/{id}:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [member-certifications]
       operationId: getMyCertification
@@ -1136,6 +1429,8 @@ paths:
           $ref: "#/components/responses/NotFound"
 
   /api/member/v1/certification-goals:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [member-certifications]
       operationId: listMyCertificationGoals
@@ -1180,6 +1475,8 @@ paths:
   # /api/member/v1 — badges
   # ---------------------------------------------------------------------------
   /api/member/v1/badges:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [member-badges]
       operationId: listMyBadges
@@ -1199,6 +1496,8 @@ paths:
   # /api/member/v1 — public profile & digital card
   # ---------------------------------------------------------------------------
   /api/member/v1/public-profile:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [member-public-profile]
       operationId: getMyPublicProfileSettings
@@ -1213,6 +1512,8 @@ paths:
                 $ref: "#/components/schemas/PublicProfile"
 
   /api/member/v1/public-profile/publish:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [member-public-profile]
       operationId: publishPublicProfile
@@ -1233,6 +1534,8 @@ paths:
                 $ref: "#/components/schemas/PublicProfile"
 
   /api/member/v1/digital-card:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [member-public-profile]
       operationId: generateDigitalCard
@@ -1250,6 +1553,8 @@ paths:
   # /api/member/v1 — wallet (mocked)
   # ---------------------------------------------------------------------------
   /api/member/v1/wallet/apple-pass:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [member-wallet]
       operationId: createAppleWalletPass
@@ -1267,6 +1572,8 @@ paths:
                 $ref: "#/components/schemas/WalletPass"
 
   /api/member/v1/wallet/google-pass:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [member-wallet]
       operationId: createGoogleWalletPass
@@ -1283,6 +1590,8 @@ paths:
                 $ref: "#/components/schemas/WalletPass"
 
   /api/member/v1/wallet/passes:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [member-wallet]
       operationId: listMyWalletPasses
@@ -1299,6 +1608,8 @@ paths:
                   $ref: "#/components/schemas/WalletPass"
 
   /api/member/v1/wallet/passes/{id}/revoke:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [member-wallet]
       operationId: revokeMyWalletPass
@@ -1322,6 +1633,8 @@ paths:
   # /api/member/v1 — verification requests
   # ---------------------------------------------------------------------------
   /api/member/v1/verification-requests:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [member-verification]
       operationId: listMyVerificationRequests
@@ -1359,6 +1672,8 @@ paths:
   # /api/member/v1 — employment affiliation (Gold via employeur partenaire)
   # ---------------------------------------------------------------------------
   /api/member/v1/employment-affiliations:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [member-affiliation]
       operationId: listMyEmploymentAffiliations
@@ -1400,6 +1715,8 @@ paths:
   # /api/member/v1 — contributions to normative content
   # ---------------------------------------------------------------------------
   /api/member/v1/contributions:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [member-contributions]
       operationId: listMyContributions
@@ -1434,6 +1751,8 @@ paths:
                 $ref: "#/components/schemas/ContentContribution"
 
   /api/member/v1/contributions/{id}/comments:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [member-contributions]
       operationId: listContributionComments
@@ -1487,6 +1806,8 @@ paths:
   # /api/institution/v1 — account
   # ---------------------------------------------------------------------------
   /api/institution/v1/account:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [institution-account]
       operationId: getMyInstitutionAccount
@@ -1519,6 +1840,8 @@ paths:
                 $ref: "#/components/schemas/Institution"
 
   /api/institution/v1/partnership:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [institution-account]
       operationId: getMyPartnership
@@ -1536,6 +1859,8 @@ paths:
   # /api/institution/v1 — roles
   # ---------------------------------------------------------------------------
   /api/institution/v1/roles:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [institution-roles]
       operationId: listInstitutionRoleAssignments
@@ -1552,6 +1877,8 @@ paths:
                   $ref: "#/components/schemas/InstitutionMembership"
 
   /api/institution/v1/roles/{memberId}:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     put:
       tags: [institution-roles]
       operationId: updateInstitutionRoleAssignment
@@ -1599,6 +1926,8 @@ paths:
   # /api/institution/v1 — invitations
   # ---------------------------------------------------------------------------
   /api/institution/v1/invitations:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [institution-invitations]
       operationId: listInstitutionInvitations
@@ -1633,6 +1962,8 @@ paths:
                 $ref: "#/components/schemas/InstitutionInvitation"
 
   /api/institution/v1/invitations/{id}/revoke:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [institution-invitations]
       operationId: revokeInstitutionInvitation
@@ -1656,6 +1987,8 @@ paths:
   # /api/institution/v1 — members & affiliations
   # ---------------------------------------------------------------------------
   /api/institution/v1/members:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [institution-affiliations]
       operationId: listInstitutionMembers
@@ -1672,6 +2005,8 @@ paths:
                   $ref: "#/components/schemas/MemberInstitutionAffiliation"
 
   /api/institution/v1/affiliations:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [institution-affiliations]
       operationId: listInstitutionAffiliationRequests
@@ -1688,6 +2023,8 @@ paths:
                   $ref: "#/components/schemas/MemberInstitutionAffiliation"
 
   /api/institution/v1/affiliations/{id}/approve:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [institution-affiliations]
       operationId: approveInstitutionAffiliation
@@ -1708,6 +2045,8 @@ paths:
                 $ref: "#/components/schemas/MemberInstitutionAffiliation"
 
   /api/institution/v1/affiliations/{id}/reject:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [institution-affiliations]
       operationId: rejectInstitutionAffiliation
@@ -1728,6 +2067,8 @@ paths:
                 $ref: "#/components/schemas/MemberInstitutionAffiliation"
 
   /api/institution/v1/affiliations/{id}:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     delete:
       tags: [institution-affiliations]
       operationId: endInstitutionAffiliation
@@ -1747,6 +2088,8 @@ paths:
   # /api/institution/v1 — dashboard
   # ---------------------------------------------------------------------------
   /api/institution/v1/dashboard:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [institution-dashboard]
       operationId: getInstitutionDashboard
@@ -1764,6 +2107,8 @@ paths:
   # /api/institution/v1 — publications
   # ---------------------------------------------------------------------------
   /api/institution/v1/publications:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [institution-publications]
       operationId: listInstitutionPublications
@@ -1798,6 +2143,8 @@ paths:
                 $ref: "#/components/schemas/InstitutionPublication"
 
   /api/institution/v1/publications/{id}:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [institution-publications]
       operationId: getInstitutionPublication
@@ -1842,6 +2189,8 @@ paths:
                 $ref: "#/components/schemas/InstitutionPublication"
 
   /api/institution/v1/publications/{id}/submit:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [institution-publications]
       operationId: submitInstitutionPublication
@@ -1865,6 +2214,8 @@ paths:
   # /api/institution/v1 — opportunities
   # ---------------------------------------------------------------------------
   /api/institution/v1/opportunities:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [institution-opportunities]
       operationId: listInstitutionOpportunities
@@ -1899,6 +2250,8 @@ paths:
                 $ref: "#/components/schemas/InstitutionOpportunity"
 
   /api/institution/v1/opportunities/{id}:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     put:
       tags: [institution-opportunities]
       operationId: updateInstitutionOpportunity
@@ -1925,6 +2278,8 @@ paths:
                 $ref: "#/components/schemas/InstitutionOpportunity"
 
   /api/institution/v1/opportunities/{id}/close:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [institution-opportunities]
       operationId: closeInstitutionOpportunity
@@ -1948,6 +2303,8 @@ paths:
   # /api/institution/v1 — recognition proposals
   # ---------------------------------------------------------------------------
   /api/institution/v1/badge-proposals:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [institution-recognition]
       operationId: listInstitutionBadgeProposals
@@ -1988,6 +2345,8 @@ paths:
   # /api/institution/v1 — audit
   # ---------------------------------------------------------------------------
   /api/institution/v1/audit-log:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [institution-audit]
       operationId: listInstitutionAuditLog
@@ -2007,6 +2366,8 @@ paths:
   # /api/admin/v1 — content (CMS / gouvernance)
   # ---------------------------------------------------------------------------
   /api/admin/v1/content:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [admin-content]
       operationId: listAdminContent
@@ -2063,6 +2424,8 @@ paths:
                 $ref: "#/components/schemas/Content"
 
   /api/admin/v1/content/{id}:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [admin-content]
       operationId: getAdminContent
@@ -2103,6 +2466,8 @@ paths:
                 $ref: "#/components/schemas/ContentVersion"
 
   /api/admin/v1/content/{id}/versions:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [admin-content]
       operationId: listAdminContentVersions
@@ -2119,6 +2484,8 @@ paths:
                 $ref: "#/components/schemas/ContentVersionPage"
 
   /api/admin/v1/content/{id}/submit:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-content]
       operationId: submitAdminContent
@@ -2135,6 +2502,8 @@ paths:
                 $ref: "#/components/schemas/Content"
 
   /api/admin/v1/content/{id}/approve:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-content]
       operationId: approveAdminContent
@@ -2157,6 +2526,8 @@ paths:
                 $ref: "#/components/schemas/ContentApproval"
 
   /api/admin/v1/content/{id}/reject:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-content]
       operationId: rejectAdminContent
@@ -2183,6 +2554,8 @@ paths:
                 $ref: "#/components/schemas/Content"
 
   /api/admin/v1/content/{id}/translations/request:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-content]
       operationId: requestAdminContentTranslation
@@ -2203,6 +2576,8 @@ paths:
                 $ref: "#/components/schemas/Content"
 
   /api/admin/v1/content/{id}/schedule:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-content]
       operationId: scheduleAdminContent
@@ -2219,6 +2594,8 @@ paths:
                 $ref: "#/components/schemas/Content"
 
   /api/admin/v1/content/{id}/publish:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-content]
       operationId: publishAdminContent
@@ -2235,6 +2612,8 @@ paths:
                 $ref: "#/components/schemas/ContentPublication"
 
   /api/admin/v1/content/{id}/archive:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-content]
       operationId: archiveAdminContent
@@ -2251,6 +2630,8 @@ paths:
                 $ref: "#/components/schemas/Content"
 
   /api/admin/v1/content/{id}/translations:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-content]
       operationId: createAdminContentTranslation
@@ -2273,6 +2654,8 @@ paths:
                 $ref: "#/components/schemas/ContentTranslation"
 
   /api/admin/v1/content/{id}/translations/{language}/validate:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-content]
       operationId: validateAdminContentTranslation
@@ -2294,6 +2677,8 @@ paths:
                 $ref: "#/components/schemas/ContentTranslation"
 
   /api/admin/v1/content/{id}/contributions:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [admin-content]
       operationId: listAdminContentContributions
@@ -2315,6 +2700,8 @@ paths:
   # /api/admin/v1 — media
   # ---------------------------------------------------------------------------
   /api/admin/v1/media:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [admin-media]
       operationId: listMediaAssets
@@ -2357,6 +2744,8 @@ paths:
   # /api/admin/v1 — books
   # ---------------------------------------------------------------------------
   /api/admin/v1/books:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-books]
       operationId: createBookCompilation
@@ -2377,6 +2766,8 @@ paths:
                 $ref: "#/components/schemas/BookCompilation"
 
   /api/admin/v1/books/{id}/render:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-books]
       operationId: renderBookCompilation
@@ -2400,6 +2791,8 @@ paths:
   # /api/admin/v1 — git synchronization (read-only sync)
   # ---------------------------------------------------------------------------
   /api/admin/v1/git/synchronize:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-git]
       operationId: triggerGitSynchronization
@@ -2414,6 +2807,8 @@ paths:
                 $ref: "#/components/schemas/GitSynchronization"
 
   /api/admin/v1/git/synchronizations:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [admin-git]
       operationId: listGitSynchronizations
@@ -2430,6 +2825,8 @@ paths:
                   $ref: "#/components/schemas/GitSynchronization"
 
   /api/admin/v1/git/synchronizations/{id}:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [admin-git]
       operationId: getGitSynchronization
@@ -2450,6 +2847,8 @@ paths:
                 $ref: "#/components/schemas/GitSynchronization"
 
   /api/admin/v1/git/synchronizations/latest/files:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [admin-git]
       operationId: listLatestGitSyncedFiles
@@ -2471,6 +2870,8 @@ paths:
   # /api/admin/v1 — institutions oversight
   # ---------------------------------------------------------------------------
   /api/admin/v1/institutions:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [admin-institutions]
       operationId: listAdminInstitutions
@@ -2505,6 +2906,8 @@ paths:
                 $ref: "#/components/schemas/Institution"
 
   /api/admin/v1/institutions/{id}/approve:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-institutions]
       operationId: approveInstitution
@@ -2525,6 +2928,8 @@ paths:
                 $ref: "#/components/schemas/Institution"
 
   /api/admin/v1/institutions/{id}/activate:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-institutions]
       operationId: activateInstitution
@@ -2550,6 +2955,8 @@ paths:
                 $ref: "#/components/schemas/Institution"
 
   /api/admin/v1/institutions/{id}/suspend:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-institutions]
       operationId: suspendInstitution
@@ -2578,6 +2985,8 @@ paths:
                 $ref: "#/components/schemas/Institution"
 
   /api/admin/v1/institutions/{id}/revoke:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-institutions]
       operationId: revokeInstitution
@@ -2604,6 +3013,8 @@ paths:
                 $ref: "#/components/schemas/Institution"
 
   /api/admin/v1/institutions/{id}/verify:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-institutions]
       operationId: verifyInstitution
@@ -2624,6 +3035,8 @@ paths:
                 $ref: "#/components/schemas/Institution"
 
   /api/admin/v1/institutions/{id}/partnership:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     put:
       tags: [admin-institutions]
       operationId: updateInstitutionPartnership
@@ -2653,6 +3066,8 @@ paths:
   # /api/admin/v1 — members oversight
   # ---------------------------------------------------------------------------
   /api/admin/v1/members:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [admin-members]
       operationId: listAdminMembers
@@ -2669,6 +3084,8 @@ paths:
                   $ref: "#/components/schemas/Member"
 
   /api/admin/v1/certifications/{id}/validate:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-members]
       operationId: validateCertification
@@ -2689,6 +3106,8 @@ paths:
                 $ref: "#/components/schemas/Certification"
 
   /api/admin/v1/certifications/{id}/reject:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-members]
       operationId: rejectCertification
@@ -2716,6 +3135,8 @@ paths:
   # catalog.
   # ---------------------------------------------------------------------------
   /api/admin/v1/certifications/catalog:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [admin-certifications]
       operationId: listAdminRecognizedCertifications
@@ -2763,6 +3184,8 @@ paths:
                 $ref: "#/components/schemas/RecognizedCertification"
 
   /api/admin/v1/certifications/catalog/{id}:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     put:
       tags: [admin-certifications]
       operationId: updateAdminRecognizedCertification
@@ -2791,6 +3214,8 @@ paths:
           $ref: "#/components/responses/NotFound"
 
   /api/admin/v1/certifications/catalog/{id}/archive:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-certifications]
       operationId: archiveAdminRecognizedCertification
@@ -2815,6 +3240,8 @@ paths:
           $ref: "#/components/responses/NotFound"
 
   /api/admin/v1/badges/{memberId}/award:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-members]
       operationId: awardBadge
@@ -2845,6 +3272,8 @@ paths:
                 $ref: "#/components/schemas/BadgeAward"
 
   /api/admin/v1/verification-requests/{id}/approve:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-members]
       operationId: approveVerificationRequest
@@ -2865,6 +3294,8 @@ paths:
                 $ref: "#/components/schemas/VerificationRequest"
 
   /api/admin/v1/verification-requests/{id}/reject:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-members]
       operationId: rejectVerificationRequest
@@ -2888,6 +3319,8 @@ paths:
   # /api/admin/v1 — global audit
   # ---------------------------------------------------------------------------
   /api/admin/v1/audit-log:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [admin-audit]
       operationId: listAdminAuditLog
@@ -2911,6 +3344,8 @@ paths:
   # list/create feed entries; the literal endpoints themselves are still present verbatim.
   # ---------------------------------------------------------------------------
   /api/public/v1/events:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [public-events]
       operationId: listPublicEvents
@@ -2926,6 +3361,8 @@ paths:
                   $ref: "#/components/schemas/Event"
 
   /api/public/v1/events/{slug}:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [public-events]
       operationId: getPublicEventBySlug
@@ -2947,6 +3384,8 @@ paths:
           $ref: "#/components/responses/NotFound"
 
   /api/member/v1/events/proposals:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [member-events]
       operationId: submitEventProposal
@@ -2984,6 +3423,8 @@ paths:
                   $ref: "#/components/schemas/EventProposal"
 
   /api/member/v1/events/{id}/registrations:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [member-events]
       operationId: registerToEvent
@@ -3004,6 +3445,8 @@ paths:
                 $ref: "#/components/schemas/EventRegistration"
 
   /api/member/v1/events/{id}/registrations/me:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [member-events]
       operationId: getMyEventRegistration
@@ -3040,6 +3483,8 @@ paths:
           description: Désinscription effectuée
 
   /api/member/v1/events/{id}/feed:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [member-events]
       operationId: listEventFeedPosts
@@ -3062,6 +3507,8 @@ paths:
                   $ref: "#/components/schemas/EventPost"
 
   /api/member/v1/events/{id}/posts:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [member-events]
       operationId: createEventPost
@@ -3090,6 +3537,8 @@ paths:
                 $ref: "#/components/schemas/EventPost"
 
   /api/member/v1/events/{id}/comments:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [member-events]
       operationId: addEventComment
@@ -3118,6 +3567,8 @@ paths:
                 $ref: "#/components/schemas/EventComment"
 
   /api/member/v1/events/{id}/like:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [member-events]
       operationId: likeEventPost
@@ -3148,6 +3599,8 @@ paths:
                 $ref: "#/components/schemas/EventPost"
 
   /api/member/v1/events/{id}/photo-consent:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [member-events]
       operationId: giveEventPhotoConsent
@@ -3171,6 +3624,8 @@ paths:
                 $ref: "#/components/schemas/EventPhotoConsent"
 
   /api/admin/v1/events/moderation:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [admin-events]
       operationId: listEventModerationQueue
@@ -3187,6 +3642,8 @@ paths:
                   $ref: "#/components/schemas/EventProposal"
 
   /api/admin/v1/events/{id}/approve:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-events]
       operationId: approveEventProposal
@@ -3205,6 +3662,8 @@ paths:
           $ref: "#/components/responses/NotFound"
 
   /api/admin/v1/comments/{id}/hide:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-events]
       operationId: hideEventComment
@@ -3226,6 +3685,8 @@ paths:
   # /api/public/v1/network — Réseau Neuronal Professionnel (see `public-network` tag)
   # ---------------------------------------------------------------------------
   /api/public/v1/network/domains:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [public-network]
       operationId: listNetworkDomains
@@ -3243,6 +3704,8 @@ paths:
                   $ref: "#/components/schemas/NetworkDomain"
 
   /api/public/v1/network/domains/{domainId}/topics:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [public-network]
       operationId: listNetworkTopicsAndCertifications
@@ -3266,6 +3729,8 @@ paths:
           $ref: "#/components/responses/NotFound"
 
   /api/public/v1/network/topics/{topicId}/experts:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [public-network]
       operationId: listNetworkExperts
@@ -3304,6 +3769,8 @@ paths:
           $ref: "#/components/responses/NotFound"
 
   /api/public/v1/network/domains/{domainId}/salary-insight:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [public-network]
       operationId: getNetworkDomainSalaryInsight
@@ -3332,6 +3799,8 @@ paths:
           description: Pas assez de déclarations agrégées pour ce nœud (seuil d'anonymisation non atteint)
 
   /api/public/v1/network/topics/{topicId}/salary-insight:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [public-network]
       operationId: getNetworkTopicSalaryInsight
@@ -3358,6 +3827,8 @@ paths:
           description: Pas assez de déclarations agrégées pour ce nœud (seuil d'anonymisation non atteint)
 
   /api/public/v1/network/certifications/{certificationId}/salary-insight:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [public-network]
       operationId: getNetworkCertificationSalaryInsight
@@ -3387,6 +3858,8 @@ paths:
   # /api/public/v1/store — boutique OEI, catalogue public (voir .prompt/plan/store/)
   # ---------------------------------------------------------------------------
   /api/public/v1/store/products:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [public-store]
       operationId: listStoreProducts
@@ -3408,6 +3881,8 @@ paths:
                   $ref: "#/components/schemas/Product"
 
   /api/public/v1/store/products/{id}:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [public-store]
       operationId: getStoreProduct
@@ -3429,6 +3904,8 @@ paths:
           $ref: "#/components/responses/NotFound"
 
   /api/public/v1/store/business-card-templates:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [public-store]
       operationId: listBusinessCardTemplates
@@ -3447,6 +3924,8 @@ paths:
   # /api/member/v1/store — boutique OEI, panier/checkout/paiement du membre connecté
   # ---------------------------------------------------------------------------
   /api/member/v1/store/business-card-preview:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [member-store]
       operationId: generateBusinessCardPreview
@@ -3469,6 +3948,8 @@ paths:
           $ref: "#/components/responses/NotFound"
 
   /api/member/v1/store/orders:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [member-store]
       operationId: listMyStoreOrders
@@ -3505,6 +3986,8 @@ paths:
           $ref: "#/components/responses/ValidationError"
 
   /api/member/v1/store/orders/{id}:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [member-store]
       operationId: getMyStoreOrder
@@ -3527,6 +4010,8 @@ paths:
           $ref: "#/components/responses/NotFound"
 
   /api/member/v1/store/orders/{id}/payments:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [member-store]
       operationId: payMyStoreOrder
@@ -3560,6 +4045,8 @@ paths:
   # /api/admin/v1/store — supervision des commandes boutique
   # ---------------------------------------------------------------------------
   /api/admin/v1/store/orders:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     get:
       tags: [admin-store]
       operationId: listStoreOrdersForAdmin
@@ -3584,6 +4071,8 @@ paths:
                   $ref: "#/components/schemas/Order"
 
   /api/admin/v1/store/orders/{id}/refund:
+    parameters:
+      - $ref: "#/components/parameters/ApiVersionHeader"
     post:
       tags: [admin-store]
       operationId: refundStoreOrder
@@ -3616,6 +4105,17 @@ components:
         chemin sont documentés dans `docs/architecture/keycloak-roles.md`.
 
   parameters:
+    ApiVersionHeader:
+      name: API-Version
+      in: header
+      required: false
+      description: >
+        Version d'API attendue par le client. Si absente, le serveur applique
+        la version par defaut `1` (compatibilite ascendante).
+      schema:
+        type: string
+        default: "1"
+        example: "1"
     CvId:
       name: id
       in: path
@@ -3887,6 +4387,8 @@ components:
       description: >
         Droits calculés par `MembershipEntitlementService` (frontend) à partir du
         `MembershipStatus` — voir doc `01-MEMBERS-DYNAMIC-SPACE.md` §Entitlements.
+        Les droits AI (AI_CV_IMPORT, AI_CV_REIMPORT, AI_PROFILE_TRANSLATION) sont inclus
+        dans les statuts actifs et achetables à l'unité pour les non-membres.
       enum:
         [
           PROFILE_EDIT,
@@ -3900,7 +4402,100 @@ components:
           MEMBER_DIRECTORY,
           WALLET_PASS,
           CERTIFICATION_BADGE,
+          AI_CV_IMPORT,
+          AI_CV_REIMPORT,
+          AI_PROFILE_TRANSLATION,
         ]
+
+    ProfileStatus:
+      type: string
+      enum: [ONBOARDING_REQUIRED, ONBOARDING_IN_PROGRESS, PROFILE_INCOMPLETE, READY, SUSPENDED]
+
+    ProfileSource:
+      type: string
+      enum: [MANUAL, LINKEDIN_BASIC, CV_IMPORTED, LINKEDIN_AND_CV]
+
+    MemberBootstrap:
+      type: object
+      required: [memberId, profileStatus]
+      properties:
+        memberId:
+          type: string
+        profileStatus:
+          $ref: "#/components/schemas/ProfileStatus"
+        membershipStatus:
+          $ref: "#/components/schemas/MembershipStatus"
+          nullable: true
+        profileId:
+          type: string
+          nullable: true
+
+    ProfileImportStatus:
+      type: string
+      enum:
+        [CREATED, DOCUMENT_UPLOADED, EXTRACTING, AI_PROCESSING, REVIEW_REQUIRED,
+         CONFIRMED, COMPLETED, FAILED, EXPIRED]
+
+    ProfileImportSource:
+      type: string
+      enum: [CV_PDF, CV_DOCX, LINKEDIN_BASIC]
+
+    ProfileImport:
+      type: object
+      required: [id, memberId, source, status]
+      properties:
+        id:
+          type: string
+        memberId:
+          type: string
+        source:
+          $ref: "#/components/schemas/ProfileImportSource"
+        status:
+          $ref: "#/components/schemas/ProfileImportStatus"
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        errorCode:
+          type: string
+          nullable: true
+        processingStepLabel:
+          type: string
+          nullable: true
+
+    LinkedinBasicImportRequest:
+      type: object
+      required: [accessToken]
+      properties:
+        accessToken:
+          type: string
+          minLength: 1
+          description: Access token LinkedIn obtenu via OAuth côté frontend.
+
+    LinkedinOAuthCallbackRequest:
+      type: object
+      required: [authorizationCode, redirectUri]
+      properties:
+        authorizationCode:
+          type: string
+          minLength: 1
+        redirectUri:
+          type: string
+          minLength: 1
+
+    Problem:
+      type: object
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
 
     MembershipFeeTier:
       type: string
@@ -4062,6 +4657,8 @@ components:
       properties:
         memberId:
           type: string
+        source:
+          $ref: "#/components/schemas/ProfileSource"
         title:
           type: string
         summary:

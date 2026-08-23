@@ -36,6 +36,7 @@ public class GetMyProfileService implements GetMyProfileUseCase {
     private static ProfessionalProfile blankProfile(final MemberId memberId) {
         return new ProfessionalProfile(
                 memberId,
+                null, // source: null — no import yet; bootstrap returns ONBOARDING_REQUIRED for new accounts
                 null,
                 null,
                 null,

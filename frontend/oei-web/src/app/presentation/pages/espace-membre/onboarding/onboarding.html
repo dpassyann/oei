@@ -40,25 +40,49 @@
             />
           </label>
         }
-        @case ('langue-pays') {
-          <label class="oei-onboarding__field">
-            {{ i18n.translate('espaceMembre.onboarding.languePays.langue') }}
-            <select class="oei-select" [ngModel]="draft().locale" (ngModelChange)="updateDraft({ locale: $event })" name="locale">
-              @for (lang of supportedLanguages; track lang) {
-                <option [value]="lang">{{ lang }}</option>
-              }
-            </select>
-          </label>
-          <label class="oei-onboarding__field">
-            {{ i18n.translate('espaceMembre.onboarding.languePays.pays') }}
-            <input class="oei-input"
-              type="text"
-              [ngModel]="draft().country"
-              (ngModelChange)="updateDraft({ country: $event })"
-              name="country"
-            />
-          </label>
-        }
+         @case ('langue-pays') {
+           <label class="oei-onboarding__field">
+             {{ i18n.translate('espaceMembre.onboarding.languePays.langue') }}
+             <select class="oei-select" [ngModel]="draft().locale" (ngModelChange)="updateDraft({ locale: $event })" name="locale">
+               @for (lang of supportedLanguages; track lang) {
+                 <option [value]="lang">{{ lang }}</option>
+               }
+             </select>
+           </label>
+           <div class="oei-onboarding__country-picker">
+             <label class="oei-onboarding__field">
+               {{ i18n.translate('espaceMembre.onboarding.languePays.pays') }}
+               <input
+                 class="oei-input"
+                 type="text"
+                 placeholder="Search countries..."
+                 [ngModel]="countryFilter()"
+                 (ngModelChange)="countryFilter.set($event)"
+                 name="countrySearch"
+               />
+             </label>
+             <div class="oei-onboarding__country-list">
+               @if (filteredCountries().length > 0) {
+                 <select
+                   class="oei-select"
+                   [size]="Math.min(filteredCountries().length, 8)"
+                   [ngModel]="draft().country"
+                   (ngModelChange)="updateDraft({ country: $event }); countryFilter.set('')"
+                   name="country"
+                 >
+                   @for (country of filteredCountries(); track country) {
+                     <option [value]="country">{{ country }}</option>
+                   }
+                 </select>
+               } @else {
+                 <p class="oei-onboarding__no-results">No countries found</p>
+               }
+             </div>
+             @if (draft().country) {
+               <p class="oei-onboarding__selected-country">Selected: <strong>{{ draft().country }}</strong></p>
+             }
+           </div>
+         }
         @case ('identite') {
           <label class="oei-onboarding__field">
             {{ i18n.translate('espaceMembre.onboarding.identite.displayName') }}

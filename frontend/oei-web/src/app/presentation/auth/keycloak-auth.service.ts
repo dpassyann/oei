@@ -129,6 +129,19 @@ export class KeycloakAuthService {
     return this.getRealmRoles();
   }
 
+  getDisplayName(): string {
+    return (
+      this.getIdentityClaimString('name') ??
+      this.getIdentityClaimString('preferred_username') ??
+      this.getIdentityClaimString('given_name') ??
+      ''
+    );
+  }
+
+  getPictureUrl(): string {
+    return this.getIdentityClaimString('picture') ?? '';
+  }
+
   logout(): void {
     this.logger.info('Keycloak logout initiated', { flow: 'logout' }, 'KeycloakAuthService');
     this.oauthService.logOut();
@@ -148,6 +161,24 @@ export class KeycloakAuthService {
       return Array.isArray(roles) ? roles.filter((role): role is string => typeof role === 'string') : [];
     } catch {
       return [];
+    }
+  }
+
+  private getIdentityClaimString(claim: string): string | undefined {
+    const identityClaims = this.oauthService.getIdentityClaims();
+    if (identityClaims && typeof identityClaims === 'object') {
+      const value = (identityClaims as Record<string, unknown>)[claim];
+      if (typeof value === 'string' && value.trim().length > 0) {
+        return value.trim();
+      }
+    }
+
+    try {
+      const payload = decodeJwtPayload(this.oauthService.getAccessToken());
+      const value = payload?.[claim];
+      return typeof value === 'string' && value.trim().length > 0 ? value.trim() : undefined;
+    } catch {
+      return undefined;
     }
   }
 }

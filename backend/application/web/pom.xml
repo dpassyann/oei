@@ -175,6 +175,7 @@
               <configOptions>
                 <interfaceOnly>true</interfaceOnly>
                 <useSpringBoot4>true</useSpringBoot4>
+                <implicitHeaders>true</implicitHeaders>
                 <useTags>true</useTags>
                 <useBeanValidation>true</useBeanValidation>
                 <performBeanValidation>true</performBeanValidation>
@@ -240,6 +241,25 @@
             <delimiter>@</delimiter>
           </delimiters>
         </configuration>
+        <executions>
+          <execution>
+            <id>prepare-openapi-npm-package</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/npm-package</outputDirectory>
+              <overwrite>true</overwrite>
+              <resources>
+                <resource>
+                  <directory>src/main/resources/openapi</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
 
     </plugins>
@@ -276,29 +296,6 @@
       <id>npm-contract</id>
       <build>
         <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-resources-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>filter-npm-package</id>
-                <phase>process-resources</phase>
-                <goals>
-                  <goal>copy-resources</goal>
-                </goals>
-                <configuration>
-                  <outputDirectory>${project.build.directory}/npm-package</outputDirectory>
-                  <overwrite>true</overwrite>
-                  <resources>
-                    <resource>
-                      <directory>src/main/resources/openapi</directory>
-                      <filtering>true</filtering>
-                    </resource>
-                  </resources>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
 
           <plugin>
             <groupId>com.github.eirslett</groupId>

@@ -11,6 +11,7 @@ import {
 } from '../../../../domain/model/profile/professional-profile';
 import { PUBLIC_PROFILE_VISIBLE_FIELD_KEYS, PublicProfileVisibleFieldKey } from '../../../../domain/model/profile/public-profile';
 import { SUPPORTED_LANGUAGES, SupportedLanguage } from '../../../../domain/model/document';
+import { COUNTRIES } from '../../../../domain/model/countries';
 import { I18nService } from '../../../i18n/i18n.service';
 
 // This wizard drives a highly dynamic, list-heavy model (experiences, educations,
@@ -105,12 +106,14 @@ function newId(prefix: string): string {
   styleUrl: './onboarding.scss',
 })
 export class Onboarding {
+  protected readonly Math = Math;
   private readonly professionalProfileApplicationService = inject(ProfessionalProfileApplicationService);
   private readonly membershipApplicationService = inject(MembershipApplicationService);
   protected readonly i18n = inject(I18nService);
 
   protected readonly steps = STEPS;
   protected readonly supportedLanguages = SUPPORTED_LANGUAGES;
+  protected readonly countries = COUNTRIES;
   protected readonly languageLevels = LANGUAGE_LEVELS;
   protected readonly visibleFieldKeys = PUBLIC_PROFILE_VISIBLE_FIELD_KEYS;
   protected readonly defaultMembershipTier = DEFAULT_MEMBERSHIP_TIER;
@@ -121,6 +124,7 @@ export class Onboarding {
   protected readonly submitting = signal(false);
   protected readonly submitted = signal(false);
   protected readonly submitError = signal(false);
+  protected readonly countryFilter = signal('');
 
   // Mini-form state for "add experience / education / certification / language" — kept
   // outside `draft` since they're transient inputs, not part of the saved profile.
@@ -137,6 +141,10 @@ export class Onboarding {
   protected readonly stepLabel = computed(() => this.steps[this.currentStep()]?.labelKey ?? '');
   protected readonly isFirstStep = computed(() => this.currentStep() === 0);
   protected readonly isLastStep = computed(() => this.currentStep() === this.steps.length - 1);
+  protected readonly filteredCountries = computed(() => {
+    const filter = this.countryFilter().toLowerCase().trim();
+    return filter ? this.countries.filter((country) => country.toLowerCase().includes(filter)) : this.countries;
+  });
 
   constructor() {
     this.restoreDraft();

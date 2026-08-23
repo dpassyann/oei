@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SiteHeader } from './presentation/components/site-header/site-header';
 import { SiteFooter } from './presentation/components/site-footer/site-footer';
+import { CookieConsentBanner } from './presentation/components/cookie-consent-banner/cookie-consent-banner';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SiteHeader, SiteFooter],
+  imports: [RouterOutlet, SiteHeader, SiteFooter, CookieConsentBanner],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

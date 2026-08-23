@@ -12,6 +12,7 @@ import tools.jackson.databind.ObjectMapper;
 import global.oei.domain.shared.member.MemberId;
 import global.oei.domain.shared.profile.ProfessionalProfile;
 import global.oei.domain.shared.profile.ProfileLookupPort;
+import global.oei.infrastructure.persistence.member.MemberRepository;
 
 /**
  * Implements {@link ProfileLookupPort} by (de)serializing the whole
@@ -20,6 +21,9 @@ import global.oei.domain.shared.profile.ProfileLookupPort;
  * annotations: records are natively supported by {@code jackson-databind} (resolved via the
  * canonical constructor + compiled parameter names). Jackson 3's {@code jackson-databind}
  * supports {@code java.time} types natively, so no separate date/time module is registered.
+ *
+ * <p>{@code save()} verifies the Member exists before attempting to persist the profile,
+ * preventing Foreign Key constraint violations.</p>
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -29,6 +33,7 @@ public class ProfessionalProfilePersistenceAdapter implements ProfileLookupPort 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     private final ProfessionalProfileRepository repository;
+    private final MemberRepository memberRepository;
 
     @Override
     public Optional<ProfessionalProfile> findByMemberId(final MemberId memberId) {
@@ -38,6 +43,10 @@ public class ProfessionalProfilePersistenceAdapter implements ProfileLookupPort 
     @Override
     @Transactional
     public ProfessionalProfile save(final ProfessionalProfile profile) {
+        // Verify Member exists before saving Profile (FK constraint)
+        memberRepository.findById(profile.memberId().value())
+                .orElseThrow(() -> new IllegalStateException("Member not found: " + profile.memberId()));
+
         final ProfessionalProfileEntity entity = new ProfessionalProfileEntity(
                 profile.memberId().value(), toJson(profile), profile.completenessScore());
         repository.save(entity);

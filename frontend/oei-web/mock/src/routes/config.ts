@@ -12,6 +12,9 @@ router.get('/', (_req, res) => {
   res.json({
     dataSource: 'api',
     apiBaseUrl: '/api/v1',
+    linkedinOAuthAuthorizeUrl: 'https://www.linkedin.com/oauth/v2/authorization',
+    linkedinOAuthClientId: '',
+    linkedinOAuthScope: 'openid profile email',
   });
 });
 

@@ -39,7 +39,9 @@ import global.oei.domain.core.media.UploadMediaAssetService;
 import global.oei.domain.core.member.RegisterAccountService;
 import global.oei.domain.core.membershipfee.PayMembershipFeeService;
 import global.oei.domain.core.network.GetSalaryInsightService;
+import global.oei.domain.core.profile.GetMemberBootstrapService;
 import global.oei.domain.core.profile.GetMyProfileService;
+import global.oei.domain.core.profile.ImportLinkedinBasicService;
 import global.oei.domain.core.profile.UpdateMyProfileService;
 import global.oei.domain.core.publicprofile.GenerateDigitalBusinessCardService;
 import global.oei.domain.core.publicprofile.PublishPublicProfileService;
@@ -125,7 +127,11 @@ import global.oei.domain.shared.membershipfee.MembershipFeeAccountPort;
 import global.oei.domain.shared.membershipfee.PayMembershipFeeUseCase;
 import global.oei.domain.shared.network.GetSalaryInsightUseCase;
 import global.oei.domain.shared.network.NetworkGraphPort;
+import global.oei.domain.shared.profile.GetMemberBootstrapUseCase;
 import global.oei.domain.shared.profile.GetMyProfileUseCase;
+import global.oei.domain.shared.profile.ImportLinkedinBasicUseCase;
+import global.oei.domain.shared.profile.LinkedinAuthorizationPort;
+import global.oei.domain.shared.profile.LinkedinIdentityPort;
 import global.oei.domain.shared.profile.ProfileLookupPort;
 import global.oei.domain.shared.profile.UpdateMyProfileUseCase;
 import global.oei.domain.shared.publicprofile.GenerateDigitalBusinessCardUseCase;
@@ -146,6 +152,9 @@ import global.oei.domain.shared.verification.RejectVerificationRequestUseCase;
 import global.oei.domain.shared.verification.VerificationRequestPort;
 import global.oei.domain.shared.wallet.CreateWalletPassUseCase;
 import global.oei.domain.shared.wallet.WalletPassPort;
+import global.oei.infrastructure.client.linkedin.LinkedinAuthorizationClient;
+import global.oei.infrastructure.client.linkedin.LinkedinClientConfiguration;
+import global.oei.infrastructure.client.linkedin.LinkedinProfileClient;
 import global.oei.infrastructure.client.payment.PaymentProviderBinder;
 import global.oei.infrastructure.client.paypal.PaypalClientConfiguration;
 import global.oei.infrastructure.client.paypal.PaypalPaymentProviderAdapter;
@@ -306,6 +315,7 @@ import global.oei.infrastructure.wiring.config.MediaStorageProperties;
 @EnableConfigurationProperties(MediaStorageProperties.class)
 @Import({
         PersistenceAuditingConfiguration.class, StripeClientConfiguration.class, PaypalClientConfiguration.class,
+        LinkedinClientConfiguration.class,
         EmailAsyncConfiguration.class, EmailTemplateConfiguration.class
 })
 @EnableJpaRepositories(basePackages = "global.oei.infrastructure.persistence")
@@ -328,13 +338,39 @@ public class OeiWiringConfiguration {
     }
 
     @Bean
-    public ProfileLookupPort profileLookupPort(final ProfessionalProfileRepository repository) {
-        return new ProfessionalProfilePersistenceAdapter(repository);
+    public ProfileLookupPort profileLookupPort(final ProfessionalProfileRepository repository,
+            final MemberRepository memberRepository) {
+        return new ProfessionalProfilePersistenceAdapter(repository, memberRepository);
     }
 
     @Bean
     public GetMyProfileUseCase getMyProfileUseCase(final ProfileLookupPort profileLookupPort) {
         return new GetMyProfileService(profileLookupPort);
+    }
+
+    @Bean
+    public LinkedinIdentityPort linkedinIdentityPort(final LinkedinProfileClient linkedinProfileClient) {
+        return linkedinProfileClient;
+    }
+
+    @Bean
+    public LinkedinAuthorizationPort linkedinAuthorizationPort(
+            final LinkedinAuthorizationClient linkedinAuthorizationClient) {
+        return linkedinAuthorizationClient;
+    }
+
+    @Bean
+    public GetMemberBootstrapUseCase getMemberBootstrapUseCase(
+            final ProfileLookupPort profileLookupPort, final MembershipLookupPort membershipLookupPort) {
+        return new GetMemberBootstrapService(profileLookupPort, membershipLookupPort);
+    }
+
+    @Bean
+    public ImportLinkedinBasicUseCase importLinkedinBasicUseCase(
+            final MemberPort memberPort,
+            final ProfileLookupPort profileLookupPort,
+            final LinkedinIdentityPort linkedinIdentityPort) {
+        return new ImportLinkedinBasicService(memberPort, profileLookupPort, linkedinIdentityPort);
     }
 
     @Bean

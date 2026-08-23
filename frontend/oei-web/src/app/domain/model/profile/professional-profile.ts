@@ -81,6 +81,13 @@ export interface CurrentCompensation {
 
 export interface ProfessionalProfile {
   readonly memberId: string;
+  /**
+   * Indicates how the profile content was initially obtained.
+   * MANUAL: wizard. LINKEDIN_BASIC: LinkedIn identity OAuth.
+   * CV_IMPORTED: AI-assisted CV import. LINKEDIN_AND_CV: both.
+   * Null for legacy accounts created before the import-first onboarding.
+   */
+  readonly source?: 'MANUAL' | 'LINKEDIN_BASIC' | 'CV_IMPORTED' | 'LINKEDIN_AND_CV' | null;
   // Set from the onboarding wizard's "Photo" step (`espaceMembre.onboarding.steps.photo`,
   // `onboarding.ts`'s `photoUrl` draft field) or edited later from the profile page itself.
   // No real upload pipeline exists yet — this is a plain URL, exactly like the onboarding

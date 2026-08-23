@@ -1786,6 +1786,13 @@
       "INSTITUTIONAL_AFFILIATE": "Institutional affiliate"
     }
   },
+  "cookieConsent": {
+    "title": "Cookie settings",
+    "description": "We use essential cookies for site operation and, with your consent, optional analytics cookies. You can change your choice later in your browser settings.",
+    "acceptLabel": "Accept",
+    "rejectLabel": "Reject optional cookies",
+    "ariaLabel": "Cookie consent banner"
+  },
   "walletVerification": {
     "loading": "Verifying…",
     "verifiedTitle": "✓ Verified OEI member",

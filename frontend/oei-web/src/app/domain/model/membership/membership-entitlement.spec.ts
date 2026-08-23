@@ -12,7 +12,7 @@ const EXPECTED: Record<MembershipStatus, readonly MembershipEntitlement[]> = {
   GRACE_PERIOD: [...MEMBERSHIP_ENTITLEMENTS],
   EXPIRED: ['PROFILE_EDIT', 'PROFILE_PUBLIC', 'CV_EDIT', 'MEMBER_DIRECTORY'],
   SUSPENDED: ['PROFILE_EDIT', 'CV_EDIT'],
-  PENDING: ['PROFILE_EDIT'],
+  PENDING: ['PROFILE_EDIT', 'AI_CV_IMPORT'],
   TERMINATED: [],
 };
 
@@ -47,9 +47,10 @@ describe('computeMembershipEntitlements', () => {
     expect(entitlements.size).toBe(0);
   });
 
-  it('givenPending_whenChecked_thenGrantsOnlyProfileEditAndBlocksCvAndStore', () => {
+  it('givenPending_whenChecked_thenKeepsProfileEditAndAiCvImportButBlocksCvAndStore', () => {
     const entitlements = computeMembershipEntitlements('PENDING');
     expect(entitlements.has('PROFILE_EDIT')).toBe(true);
+    expect(entitlements.has('AI_CV_IMPORT')).toBe(true);
     expect(entitlements.has('CV_EDIT')).toBe(false);
     expect(entitlements.has('STORE_ACCESS')).toBe(false);
     expect(entitlements.has('PROFILE_PUBLIC')).toBe(false);

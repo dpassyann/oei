@@ -1,5 +1,6 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 import { describe, expect, it, vi } from 'vitest';
 import { Profil } from './profil';
@@ -13,6 +14,8 @@ import { createMember, Member } from '../../../../domain/model/identity/member';
 import { Membership } from '../../../../domain/model/membership/membership';
 import { ProfessionalProfile } from '../../../../domain/model/profile/professional-profile';
 import { MembershipFeeStatus } from '../../../../domain/model/membership-fee/membership-fee-status';
+import { ProfileImportPort } from '../../../../domain/port/profile/profile-import.port';
+import { LinkedinOAuthService } from '../../../../infrastructure/auth/linkedin-oauth.service';
 
 const INTERFACE_STRINGS: Record<string, string> = {
   'espaceMembre.profil.title': 'Profil professionnel',
@@ -126,6 +129,7 @@ describe('Profil', () => {
       imports: [Profil],
       providers: [
         { provide: I18nService, useValue: FAKE_I18N_SERVICE },
+        provideRouter([]),
         {
           provide: ProfessionalProfileApplicationService,
           useValue: { getProfile: () => of(profile), updateProfile: updateProfileSpy },
@@ -144,6 +148,19 @@ describe('Profil', () => {
         },
         { provide: MembershipFeeApplicationService, useValue: { getStatus: () => of(feeStatus) } },
         { provide: SalaryBenchmarkApplicationService, useValue: { getBenchmark: () => of(undefined) } },
+        {
+          provide: ProfileImportPort,
+          useValue: {
+            initiateCvImport: () => of({}),
+            getImport: () => of({}),
+            getImportDraft: () => of({}),
+            updateImportDraft: () => of({}),
+            confirmImport: () => of({}),
+            importLinkedinBasic: () => of({}),
+            importLinkedinBasicFromAuthorizationCode: () => of({}),
+          },
+        },
+        { provide: LinkedinOAuthService, useValue: { startAuthorizationFlow: () => undefined } },
       ],
     });
   }

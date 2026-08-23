@@ -1,0 +1,83 @@
+# -----------------------------------------------------------------------------------------
+# REDUCED SUBSET OF LINKEDIN OPENID CONNECT USERINFO API (IDENTITY-ONLY).
+#
+# This contract is intentionally limited to the smart-onboarding "LinkedIn basic" use case:
+# one call to fetch identity data from the LinkedIn userinfo endpoint with a bearer access
+# token already obtained by the frontend OAuth flow.
+#
+# OEI scope in this file:
+# - GET /v2/userinfo
+# - fields needed by backend orchestration only (sub, name, given_name, family_name,
+#   picture, locale, email, email_verified)
+# -----------------------------------------------------------------------------------------
+openapi: 3.0.3
+info:
+  title: LinkedIn OpenID UserInfo API (OEI reduced subset)
+  version: "v2-reduced"
+  description: >
+    Hand-authored reduced subset used by OEI smart-onboarding LinkedIn basic import.
+servers:
+  - url: https://api.linkedin.com
+paths:
+  /v2/userinfo:
+    get:
+      operationId: getLinkedinUserInfo
+      tags: [UserInfo]
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+            example: Bearer eyJ...
+      responses:
+        '200':
+          description: LinkedIn OpenID user info for the current bearer token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkedinUserInfo'
+        default:
+          description: LinkedIn API error payload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkedinErrorResponse'
+components:
+  schemas:
+    LinkedinUserInfo:
+      type: object
+      required: [sub]
+      properties:
+        sub:
+          type: string
+          description: LinkedIn subject identifier.
+        name:
+          type: string
+        given_name:
+          type: string
+        family_name:
+          type: string
+        picture:
+          type: string
+          format: uri
+        locale:
+          type: string
+          description: Locale returned by LinkedIn (e.g. fr_FR, fr-FR).
+        email:
+          type: string
+          format: email
+        email_verified:
+          type: boolean
+    LinkedinErrorResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+        serviceErrorCode:
+          type: integer
+        code:
+          type: string
+        message:
+          type: string
+

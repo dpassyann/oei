@@ -24,7 +24,11 @@ export class MembershipEntitlementService {
   });
 
   /** `undefined` while the membership hasn't loaded yet. */
-  readonly status = computed(() => this.membershipResource.value()?.status);
+  readonly status = computed(() => (this.membershipResource.hasValue() ? this.membershipResource.value().status : undefined));
+
+  /** `true` when the membership lookup failed; callers can then surface a friendly message
+   * instead of letting `resource.value()` throw a `ResourceValueError`. */
+  readonly loadFailed = computed(() => this.membershipResource.error() !== undefined);
 
   /** `true` only once the member's `GRACE_PERIOD` status is positively known — lets pages
    * surface a "renewal imminent" warning without blocking any right (see
