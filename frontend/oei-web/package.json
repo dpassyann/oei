@@ -10,7 +10,7 @@
     "build:api": "pnpm run generate:api && pnpm run build",
     "watch": "node scripts/copy-content-assets.mjs && ng build --watch --configuration development",
     "test": "node scripts/copy-content-assets.mjs && NODE_OPTIONS=--no-experimental-webstorage ng test",
-    "prepare:api-contract": "mvn -f ../../backend/pom.xml -pl application/web -am process-resources -DskipTests -Dstyle.color=never",
+    "prepare:api-contract": "mvn -f ../../backend/pom.xml -pl application/web -am compile -DskipTests -Dstyle.color=never",
     "generate:api": "pnpm run prepare:api-contract && openapi-generator-cli generate",
     "e2e": "playwright test"
   },
