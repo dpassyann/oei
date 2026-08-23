@@ -46,6 +46,12 @@ jobs:
           java-version: "25"
           cache: maven
 
+      - name: Set up pnpm 11.22.0
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.22.0
+          run_install: false
+
       - name: Prepare the backend OpenAPI npm package in the local workspace
         working-directory: backend
         # process-resources is too early for a fresh Maven repo: dependent modules
@@ -60,8 +66,6 @@ jobs:
           cache: pnpm
           cache-dependency-path: frontend/oei-web/pnpm-lock.yaml
 
-      - name: Enable corepack (pnpm 11.22.0)
-        run: corepack enable && corepack prepare pnpm@11.22.0 --activate
 
       - name: Install dependencies
         working-directory: frontend/oei-web
