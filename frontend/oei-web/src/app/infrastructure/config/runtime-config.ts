@@ -5,6 +5,7 @@ export type DataSource = 'mock' | 'api';
 export interface OeiRuntimeConfig {
   dataSource: DataSource;
   apiBaseUrl: string;
+  hideEspaceMembre: boolean;
   linkedinOAuthAuthorizeUrl: string;
   linkedinOAuthClientId: string;
   linkedinOAuthRedirectUri: string;
@@ -31,6 +32,7 @@ declare global {
 export class RuntimeConfig {
   private readonly dataSourceSignal = signal<DataSource>(this.resolveDataSource());
   private readonly apiBaseUrlSignal = signal<string>(this.resolveApiBaseUrl());
+  private readonly hideEspaceMembreSignal = signal<boolean>(this.resolveHideEspaceMembre());
   private readonly linkedinOAuthAuthorizeUrlSignal = signal<string>(this.resolveLinkedinOAuthAuthorizeUrl());
   private readonly linkedinOAuthClientIdSignal = signal<string>(this.resolveLinkedinOAuthClientId());
   private readonly linkedinOAuthRedirectUriSignal = signal<string>(this.resolveLinkedinOAuthRedirectUri());
@@ -38,6 +40,7 @@ export class RuntimeConfig {
 
   readonly dataSource = this.dataSourceSignal.asReadonly();
   readonly apiBaseUrl = this.apiBaseUrlSignal.asReadonly();
+  readonly hideEspaceMembre = this.hideEspaceMembreSignal.asReadonly();
   readonly linkedinOAuthAuthorizeUrl = this.linkedinOAuthAuthorizeUrlSignal.asReadonly();
   readonly linkedinOAuthClientId = this.linkedinOAuthClientIdSignal.asReadonly();
   readonly linkedinOAuthRedirectUri = this.linkedinOAuthRedirectUriSignal.asReadonly();
@@ -53,6 +56,9 @@ export class RuntimeConfig {
       const config = (await response.json()) as Partial<OeiRuntimeConfig>;
       if (typeof config.apiBaseUrl === 'string' && config.apiBaseUrl.length > 0) {
         this.apiBaseUrlSignal.set(config.apiBaseUrl);
+      }
+      if (typeof config.hideEspaceMembre === 'boolean') {
+        this.hideEspaceMembreSignal.set(config.hideEspaceMembre);
       }
       if (typeof config.linkedinOAuthAuthorizeUrl === 'string' && config.linkedinOAuthAuthorizeUrl.length > 0) {
         this.linkedinOAuthAuthorizeUrlSignal.set(config.linkedinOAuthAuthorizeUrl);
@@ -109,6 +115,13 @@ export class RuntimeConfig {
       return window.__OEI_CONFIG__.apiBaseUrl;
     }
     return '/api/v1';
+  }
+
+  private resolveHideEspaceMembre(): boolean {
+    if (typeof window !== 'undefined' && typeof window.__OEI_CONFIG__?.hideEspaceMembre === 'boolean') {
+      return window.__OEI_CONFIG__.hideEspaceMembre;
+    }
+    return false;
   }
 
   private resolveLinkedinOAuthAuthorizeUrl(): string {

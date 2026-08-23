@@ -126,16 +126,18 @@
         </button>
         @if (isDropdownOpen()) {
           <ul class="oei-member-menu__dropdown">
-            <li>
-              <a class="oei-member-menu__item" routerLink="/espace-membre/profil" (click)="closeDropdown()">{{
-                i18n.translate('header.viewProfile')
-              }}</a>
-            </li>
-            <li>
-              <a class="oei-member-menu__item" routerLink="/espace-institution" (click)="closeDropdown()">{{
-                i18n.translate('header.viewInstitutionSpace')
-              }}</a>
-            </li>
+            @if (shouldShowEspaceMembre()) {
+              <li>
+                <a class="oei-member-menu__item" routerLink="/espace-membre/profil" (click)="closeDropdown()">{{
+                  i18n.translate('header.viewProfile')
+                }}</a>
+              </li>
+              <li>
+                <a class="oei-member-menu__item" routerLink="/espace-institution" (click)="closeDropdown()">{{
+                  i18n.translate('header.viewInstitutionSpace')
+                }}</a>
+              </li>
+            }
             @if (canAccessCms()) {
               <li>
                 <a class="oei-member-menu__item" routerLink="/cms" (click)="closeDropdown()">{{
@@ -152,9 +154,11 @@
         }
       </div>
     } @else {
-      <button type="button" class="oei-cta-member" (click)="goToMemberSpace()">
-        {{ i18n.translate('header.memberArea') }}
-      </button>
+      @if (shouldShowEspaceMembre()) {
+        <button type="button" class="oei-cta-member" (click)="goToMemberSpace()">
+          {{ i18n.translate('header.memberArea') }}
+        </button>
+      }
     }
   </div>
 </header>

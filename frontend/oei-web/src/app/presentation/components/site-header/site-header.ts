@@ -15,6 +15,7 @@ import { LanguageSwitcher } from '../language-switcher/language-switcher';
 import { GlobalSearch } from '../global-search/global-search';
 import { MemberApplicationService } from '../../../application/service/member-application.service';
 import { ADMIN_ROLES } from '../../../domain/model/admin/admin-role';
+import { RuntimeConfig } from '../../../infrastructure/config/runtime-config';
 
 interface NavLink {
   readonly path: string;
@@ -32,6 +33,7 @@ export class SiteHeader {
   private readonly pendingTasks = inject(PendingTasks);
   protected readonly keycloakAuth = inject(KeycloakAuthService);
   private readonly memberService = inject(MemberApplicationService);
+  private readonly runtimeConfig = inject(RuntimeConfig);
   private readonly router = inject(Router);
   private readonly elementRef = inject(ElementRef<HTMLElement>);
 
@@ -50,6 +52,7 @@ export class SiteHeader {
   // `domain/model/admin/admin-role.ts`) — added as a separate computed/entry rather than inside
   // `navLinks` so the existing nav array's order/content is never touched.
   protected readonly isAdmin = computed(() => this.isConnected() && (this.keycloakAuth.hasAnyRole?.(ADMIN_ROLES) ?? false));
+  protected readonly shouldShowEspaceMembre = computed(() => !this.runtimeConfig.hideEspaceMembre());
 
   protected readonly isDropdownOpen = signal(false);
 

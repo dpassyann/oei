@@ -263,6 +263,17 @@ explicitement) a deux jobs :
    la commande (`aws ssm wait command-executed` puis
    `get-command-invocation`) et échoue si le statut n'est pas `Success`.
 
+`deploy-frontend.yml` (workflow_dispatch) publie la partie statique Angular sur S3 +
+CloudFront :
+
+1. build frontend (`pnpm run build:api`, donc regen OpenAPI depuis le package backend local),
+2. `aws s3 sync dist/oei-web/browser` vers le bucket statique,
+3. upload de `index.html` en `no-cache`,
+4. invalidation CloudFront.
+
+Variables de repo attendues: `AWS_REGION`, `AWS_DEPLOY_ROLE_ARN`,
+`FRONTEND_S3_BUCKET`, `FRONTEND_CLOUDFRONT_DISTRIBUTION_ID`.
+
 `ci.yml` (push/PR sur `main`) est le filet de sécurité qui tourne **avant**
 tout déploiement : `mvn clean verify` (backend) + `pnpm run test` / `pnpm run
 build` (frontend). Il ne configure aucune credential AWS — il est safe à

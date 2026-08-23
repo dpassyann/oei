@@ -1,0 +1,89 @@
+name: Deploy Frontend (S3 + CloudFront)
+
+on:
+  workflow_dispatch:
+    inputs:
+      invalidate_paths:
+        description: "CloudFront paths to invalidate (space-separated)"
+        required: false
+        default: "/index.html /"
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION }}
+  FRONTEND_S3_BUCKET: ${{ vars.FRONTEND_S3_BUCKET }}
+  FRONTEND_CLOUDFRONT_DISTRIBUTION_ID: ${{ vars.FRONTEND_CLOUDFRONT_DISTRIBUTION_ID }}
+
+jobs:
+  deploy:
+    name: Build and publish static frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 25 (Temurin)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: maven
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+          cache-dependency-path: frontend/oei-web/pnpm-lock.yaml
+
+      - name: Enable corepack (pnpm 11.22.0)
+        run: corepack enable && corepack prepare pnpm@11.22.0 --activate
+
+      - name: Install frontend dependencies
+        working-directory: frontend/oei-web
+        run: pnpm install --frozen-lockfile
+
+      - name: Build frontend (with OpenAPI regen)
+        working-directory: frontend/oei-web
+        run: pnpm run build:api
+
+      - name: Validate required deployment variables
+        run: |
+          set -euo pipefail
+          test -n "${AWS_REGION}"
+          test -n "${FRONTEND_S3_BUCKET}"
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Upload hashed assets with long cache
+        working-directory: frontend/oei-web
+        run: |
+          set -euo pipefail
+          aws s3 sync dist/oei-web/browser "s3://${FRONTEND_S3_BUCKET}" \
+            --delete \
+            --cache-control "public, max-age=31536000, immutable" \
+            --exclude "index.html"
+
+      - name: Upload index.html with no-cache
+        working-directory: frontend/oei-web
+        run: |
+          set -euo pipefail
+          aws s3 cp dist/oei-web/browser/index.html "s3://${FRONTEND_S3_BUCKET}/index.html" \
+            --cache-control "no-cache" \
+            --content-type "text/html"
+
+      - name: Invalidate CloudFront
+        if: ${{ env.FRONTEND_CLOUDFRONT_DISTRIBUTION_ID != '' }}
+        run: |
+          set -euo pipefail
+          read -r -a PATHS <<< "${{ github.event.inputs.invalidate_paths }}"
+          aws cloudfront create-invalidation \
+            --distribution-id "${FRONTEND_CLOUDFRONT_DISTRIBUTION_ID}" \
+            --paths "${PATHS[@]}"
+

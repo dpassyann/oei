@@ -1,6 +1,7 @@
 {
   "dataSource": "api",
   "apiBaseUrl": "/api/v1",
+  "hideEspaceMembre": true,
   "linkedinOAuthAuthorizeUrl": "https://www.linkedin.com/oauth/v2/authorization",
   "linkedinOAuthClientId": "",
   "linkedinOAuthScope": "openid profile email"
