@@ -6,7 +6,7 @@
     "generators": {
       "oei-api": {
         "generatorName": "typescript-angular",
-        "inputSpec": "openapi/oei-api.yaml",
+        "inputSpec": "node_modules/@oei/api-contract/oei-api.yaml",
         "output": "src/app/infrastructure/api/generated",
         "additionalProperties": {
           "ngVersion": "22.0.0",

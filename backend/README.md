@@ -1,165 +1,248 @@
-# OEI Backend
+# Backend OEI (Spring Boot)
 
-First Spring Boot backend of the OEI (Ordre des Experts Informaticiens) platform.
-Maven multi-module DDD + Hexagonal architecture, contract-first OpenAPI, JPA persistence
-separated from the domain, explicit cross-module/domain wiring, domain-first packaging,
-Maven Enforcer + ArchUnit boundary enforcement.
+Backend Spring Boot 4.1 / Java 25 de la plateforme OEI, en architecture DDD + Hexagonale,
+multi-modules Maven, contract-first OpenAPI.
 
-## Modules
+## Vue fonctionnelle
 
-```text
-backend/
-  pom.xml                       parent (inherits spring-boot-starter-parent directly,
-                                Java 25, centralized third-party plugin/library versions)
-  domain/
-    shared/                     domain-shared  — value objects, enums, ports/use-case
-                                 interfaces (no Spring/JPA)
-    core/                       domain-core    — use-case implementations; ArchUnit +
-                                 Maven Enforcer guard domain purity
-  infrastructure/
-    security/                   infrastructure-security — Keycloak JWT resource server starter
-    persistence/                 infrastructure-persistence — JPA entities, Liquibase, repositories
-    wiring/                      infrastructure-wiring — the composition root (see below)
-  application/
-    web/                         application-web — *Resource/*Adapter/service.*Service HTTP
-                                 adapter, executable entry point
-  test/
-    architecture/                test-architecture — reactor-wide ArchUnit suite (builds last)
+| Domaine | Fonctionnalites principales | Etat actuel |
+|---|---|---|
+| Membership | Adhésion, lecture de profil membre, droits de base | Partiellement implémenté |
+| Identity & Security | Auth OIDC Keycloak, mapping roles JWT -> `ROLE_*` | Implémenté |
+| CMS / Content | Lecture/édition de contenus multilingues, publication | Contrat présent, implémentation progressive |
+| Certifications | Catalogue, objectifs, déclarations | Contrat présent |
+| Institutions | Affiliation, invitations, publications, audit | Contrat présent |
+| Events | Gestion d'événements, inscriptions | Contrat présent |
+| Store | Commandes, paiement, remboursement | Contrat présent |
+| Media | Upload de médias, URL de stockage | Slice de base présente |
+| Admin | Templates email, supervision métier, gouvernance | Contrat présent |
+
+> Note: le contrat OpenAPI expose ~90 opérations, alors que seule une partie est branchée
+> fonctionnellement aujourd'hui. Les endpoints non implémentés retournent encore `501`.
+
+## Structure des modules
+
+| Module | Rôle |
+|---|---|
+| `domain/shared` | Ports, value objects, contrats de use-cases (sans Spring/JPA) |
+| `domain/core` | Implémentations métier (sans dépendance framework) |
+| `infrastructure/security` | Adaptateurs sécurité JWT/Keycloak |
+| `infrastructure/persistence` | Entités JPA, repositories, Liquibase |
+| `infrastructure/client` | Clients externes (paiement, providers) |
+| `infrastructure/mail` | Intégration email (SES/SMTP) |
+| `infrastructure/wiring` | Composition root (`OeiWiringConfiguration`) |
+| `application/web` | API HTTP (`*Resource`, `*Adapter`, `service.*Service`) |
+| `test/architecture` | Règles ArchUnit inter-modules |
+| `test/acceptance` | Scénarios Cucumber + Testcontainers |
+
+## Architecture C4 (Mermaid)
+
+### C4 - Niveau 1 (Contexte)
+
+```mermaid
+flowchart LR
+  user[Visiteur / Membre / Institution / Admin]
+  oei[OEI Backend API\nSpring Boot]
+  kc[Keycloak\nOIDC Provider]
+  pg[(PostgreSQL)]
+  s3[(S3 / MinIO)]
+  ses[Amazon SES / SMTP]
+  pay[Stripe / PayPal]
+
+  user -->|HTTPS JSON| oei
+  oei -->|Validation JWT| kc
+  oei -->|JDBC| pg
+  oei -->|Objets| s3
+  oei -->|Email transactionnel| ses
+  oei -->|Paiement| pay
 ```
 
-## Composition root
+### C4 - Niveau 2 (Conteneurs internes backend)
 
-`infrastructure-wiring`'s `OeiWiringConfiguration` is the **sole class in the project,
-outside `domain-core` itself, allowed to import concrete `domain-core` types**. Every
-`@Bean` method on it returns a `domain-shared` interface (`GetMyIdentityUseCase`,
-`MembershipLookupPort`), constructed from a `domain-core` implementation
-(`GetMyIdentityService`) wired with outbound port adapters from
-`infrastructure-security`/`infrastructure-persistence`
-(`SpringSecurityContextAdapter`, `MembershipPersistenceAdapter`).
+```mermaid
+flowchart TB
+  subgraph app[application/web]
+    res[*Resource]
+    svc[service.*Service]
+  end
 
-`application-web` depends on `domain-shared` + `infrastructure-wiring` — **never on
-`domain-core` at compile time** (`domain-core` is excluded from `infrastructure-wiring`'s
-transitive closure and reintroduced at `scope=runtime` only, see `application/pom.xml`'s
-`dependencyManagement`; verified with `mvn dependency:tree -pl application/web`). There is
-no separate `application/runtime` module: `application-web` carries its own executable
-entry point (`OeiBackendApplication`), and its own Resource/Adapter/Service classes for the
-HTTP layer.
+  subgraph dom[domain]
+    shared[domain-shared\nports/use-cases]
+    core[domain-core\nmetier]
+  end
 
-## Wiring: explicit across modules, ordinary Spring within a module
+  subgraph infra[infrastructure]
+    wiring[OeiWiringConfiguration]
+    sec[security]
+    pers[persistence]
+    cli[client]
+    mail[mail]
+  end
 
-- **Cross-module/domain wiring is always explicit.** `OeiWiringConfiguration` (in
-  `infrastructure-wiring`) is the only class in the project, outside `domain-core` itself,
-  allowed to import concrete `domain-core` types. `OeiBackendApplication` pulls it in via an
-  explicit `@Import(OeiWiringConfiguration.class)` — never via component scanning.
-- **Within `application-web`, its own `resource.<domain>` classes use ordinary Spring
-  stereotypes.** `MembershipResource` (`@RestController`) and `MembershipService`
-  (`@Service`) — both with Lombok `@RequiredArgsConstructor` — are discovered by
-  `OeiBackendApplication`'s normal `@SpringBootApplication` component scan. This is safe by
-  construction: that scan is rooted at `global.oei.application.web` and structurally cannot
-  reach `domain-core`/`infrastructure-*`, which live in different package trees and Maven
-  modules entirely. There is deliberately **no** hand-written `@Bean` method anywhere for a
-  module's own `*Resource`/`*Adapter`/`service.*Service` classes — an earlier iteration of
-  this project did that (`WebResourcesConfiguration`) and it was corrected as unnecessary
-  boilerplate.
-- A module's `config.<concern>` packages (`config/security`, `config/web`, `config/audit`,
-  ...) are reserved for genuine technical configuration (CORS, HTTP caching, allowed verbs,
-  content negotiation, Jackson customization, `AuditorAware`, ...) — never for wiring a
-  module's own domain/resource beans. `application-web` currently has none: no real
-  technical configuration is needed yet for this minimal slice.
-- The only exceptions to "no component scanning" are `@EnableJpaRepositories`/`@EntityScan`
-  on `OeiWiringConfiguration` (structural requirements of Spring Data JPA, narrowly scoped
-  to `global.oei.infrastructure.persistence`) and Spring Boot's own
-  `AutoConfiguration.imports`-based auto-configuration loading (e.g.
-  `OeiSecurityAutoConfiguration`), neither of which is classpath component scanning.
+  res --> svc
+  svc --> shared
+  wiring --> core
+  wiring --> sec
+  wiring --> pers
+  wiring --> cli
+  wiring --> mail
+  shared -.contrats.-> core
+```
 
-## Domain-first packaging, Resource / Adapter / Service naming
+## Diagrammes de sequence
 
-- Packages are organized by domain/bounded context first, technical layer second: e.g.
-  `application.web.resource.member.{adapter,service,mapper}`, never a flat `adapter`/
-  `service`/`mapper` package mixing every domain at the module root.
-- REST controllers are suffixed `Resource`, never `Controller` (`MembershipResource`).
-- A `*Resource` injects a same-domain-package `*Adapter` interface
-  (`application.web.resource.member.adapter.MembershipAdapter`), never a `domain-shared`
-  port/use case directly.
-- The concrete implementation of a `*Adapter` lives in the sibling `service` package
-  (`application.web.resource.member.service.MembershipService`) — never a `*Impl`/`impl`
-  package, which is banned project-wide (enforced by `test-architecture`).
-- Constructor injection outside the domain uses Lombok `@RequiredArgsConstructor` (with
-  `@NonNull` where a null-check used to be hand-written) and `@UtilityClass` for
-  static-methods-only helpers (`MembershipDtoMapper`). Lombok is deliberately **not** used
-  in `domain-shared`/`domain-core`.
+### Sequence - Consultation du profil membre
 
-## Building
+```mermaid
+sequenceDiagram
+  participant UI as Frontend
+  participant API as MembershipResource
+  participant SVC as MembershipService
+  participant PORT as MembershipLookupPort
+  participant ADP as MembershipPersistenceAdapter
+  participant DB as PostgreSQL
+
+  UI->>API: GET /api/member/v1/membership (Bearer JWT)
+  API->>SVC: getMembership()
+  SVC->>PORT: lookupBySubject(subject)
+  PORT->>ADP: findBySubject(...)
+  ADP->>DB: SELECT ...
+  DB-->>ADP: membership row
+  ADP-->>SVC: Membership
+  SVC-->>API: Membership DTO
+  API-->>UI: 200 JSON
+```
+
+### Sequence - Upload media (happy path)
+
+```mermaid
+sequenceDiagram
+  participant UI as Frontend
+  participant API as MediaResource
+  participant UC as UploadMediaAssetUseCase
+  participant STO as MediaStoragePort
+  participant OBJ as S3/MinIO
+
+  UI->>API: POST /api/member/v1/media
+  API->>UC: upload(command)
+  UC->>STO: store(binary, metadata)
+  STO->>OBJ: PutObject
+  OBJ-->>STO: key/url
+  STO-->>UC: MediaAsset
+  UC-->>API: result
+  API-->>UI: 201
+```
+
+## Diagramme de classes (vue logique simplifiee)
+
+```mermaid
+classDiagram
+  class MembershipResource {
+    +getMembership(): ResponseEntity
+  }
+
+  class MembershipAdapter {
+    <<interface>>
+    +getMembership(): MembershipResponseDTO
+  }
+
+  class MembershipService {
+    -GetMyIdentityUseCase getMyIdentity
+    -MembershipLookupPort membershipLookup
+    +getMembership(): MembershipResponseDTO
+  }
+
+  class OeiWiringConfiguration {
+    +getMyIdentityUseCase(...)
+    +membershipLookupPort(...)
+  }
+
+  class GetMyIdentityUseCase {
+    <<interface>>
+    +execute(): Identity
+  }
+
+  class MembershipLookupPort {
+    <<interface>>
+    +lookupBySubject(subject): Membership
+  }
+
+  MembershipResource --> MembershipAdapter
+  MembershipAdapter <|.. MembershipService
+  MembershipService --> GetMyIdentityUseCase
+  MembershipService --> MembershipLookupPort
+  OeiWiringConfiguration ..> MembershipService
+```
+
+## Diagramme de deploiement
+
+```mermaid
+flowchart LR
+  subgraph LocalDev
+    fe[Angular dev server :4300]
+    be[Spring Boot :8080]
+    kc[Keycloak :8081]
+    db[(PostgreSQL :5432)]
+    minio[(MinIO :9000)]
+  end
+
+  fe -->|/api| be
+  be --> kc
+  be --> db
+  be --> minio
+
+  subgraph Production
+    cf[CloudFront + S3 static]
+    caddy[Caddy reverse proxy]
+    ec2[EC2 Docker Compose]
+    be2[Backend container]
+    kc2[Keycloak container]
+    db2[(PostgreSQL container)]
+  end
+
+  cf --> caddy
+  caddy --> be2
+  caddy --> kc2
+  be2 --> db2
+```
+
+## Contrat OpenAPI (source unique)
+
+- Fichier source: `backend/application/web/src/main/resources/openapi/oei-api.yaml`
+- Generation serveur: `openapi-generator-maven-plugin` (interfaces Spring + DTO)
+- Packaging contrat local npm: `backend/application/web/target/npm-package`
+- Consommation frontend: `file:../../backend/application/web/target/npm-package`
+
+Flux CI/deploiement:
+
+1. backend `mvn ... process-resources` (ou `package`)
+2. frontend `pnpm run generate:api`
+3. build/test frontend/backend
+
+## Build et verification
 
 ```bash
 cd backend
-mvn clean install
+mvn clean verify
 ```
 
-Generates the OpenAPI server interfaces/DTOs under `application/web/target/generated-sources`,
-compiles all modules, runs domain unit tests (JUnit5/AssertJ/Mockito), the single-module
-domain-purity ArchUnit test (`domain/core`), and the reactor-wide ArchUnit suite
-(`test/architecture`). Maven Enforcer fails the build at `validate` if a Spring/JPA
-dependency is ever added to `domain-shared`/`domain-core`.
-
-## OpenAPI contract
-
-`application/web/src/main/resources/openapi/oei-api.yaml` is a copy of
-`frontend/oei-web/openapi/oei-api.yaml` (the backend becomes the dev source of truth going
-forward; the frontend copy is untouched by this backend). `application-web`'s `pom.xml`:
-
-- generates Spring server interfaces (`interfaceOnly=true`, one default-`501` method per
-  operation — only `GET /api/member/v1/membership` is actually implemented so far, see
-  `MembershipResource`);
-- packages the YAML into a distributable `application-web-<version>-openapi-distribution.zip`,
-  attached as a Maven artifact with classifier `api` (always built, part of `mvn install`).
-
-### Publishing the contract as an npm package (`@oei/api-contract`)
-
-An **opt-in** Maven profile, `npm-contract`, additionally builds an npm-installable `.tgz`
-(via `frontend-maven-plugin` downloading Node/pnpm and running `pnpm pack`), attached with
-classifier `npm`:
+Build cible deploy (sans tests, deja executes en CI):
 
 ```bash
-mvn -pl application/web -am -Pnpm-contract clean install
+cd backend
+mvn -B clean package -pl application/web -am -DskipTests
 ```
 
-This is **not** part of the default build: it requires downloading a Node/pnpm toolchain,
-which is unnecessary for a Java-only CI build and can fail in network-restricted
-environments. Once built, the Angular frontend can consume it, e.g.:
+## Qualite et garde-fous
 
-```bash
-pnpm add file:../backend/application/web/target/oei-api-contract-0.1.0-SNAPSHOT.tgz
-```
+- `Maven Enforcer` bloque l'introduction de deps Spring/JPA dans `domain/*`
+- `ArchUnit` valide les frontières de packages et dépendances inter-modules
+- `Checkstyle` sur convention code
+- `Cucumber` pour acceptance tests
+- `Liquibase` pour versionner le schema DB
 
-(or by publishing the `.tgz`/zip Maven artifacts to an internal registry — out of scope here).
+## Limites connues
 
-## Local database
-
-`infra/docker-compose.yml` exposes Postgres on `localhost:5432` (dev-local only) and
-provisions a dedicated `oei` application database + `oei_app` role via
-`infra/postgres-init/01-create-oei-app-db.sh`, separate from the `keycloak`
-database/role. `application/web/src/main/resources/application.yml` connects to it via
-`OEI_DB_USER`/`OEI_DB_PASSWORD` env vars (defaults are dev-only placeholders, never a real
-secret).
-
-Liquibase changelog: `infrastructure/persistence/src/main/resources/db/changelog/`.
-
-## Security
-
-`infrastructure-security` auto-configures an OAuth2 resource server against the OEI
-Keycloak realm (`spring.security.oauth2.resourceserver.jwt.issuer-uri`, defaults to
-`http://localhost:8081/realms/oei`), maps `realm_access.roles` to `ROLE_*` authorities, and
-exposes `SecurityContextPort` (declared in `domain-shared`) so the domain never references
-Spring Security types.
-
-## Known TODOs
-
-- Only `GET /api/member/v1/membership` is implemented; every other one of the ~90
-  operations in the contract returns `501 Not Implemented` via the generated interfaces'
-  default methods until a corresponding use case/controller is built.
-- No integration tests (Testcontainers) yet for `infrastructure-persistence` /
-  `infrastructure-security` — only unit tests. Not requested at this bootstrap stage.
-- JaCoCo is wired (`prepare-agent`/`report`) on the `domain` parent POM but no coverage
-  *threshold* check (`jacoco:check`) is enforced yet — the skill's 100%-domain-coverage
-  target is currently aspirational, not machine-enforced.
+- Une partie significative du contrat OpenAPI reste a implémenter côté application.
+- Les tests d'intégration couvrent encore inégalement tous les sous-domaines.
+- Le seuil de couverture automatisé `jacoco:check` n'est pas encore verrouillé globalement.

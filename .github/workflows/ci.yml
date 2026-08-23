@@ -1,7 +1,9 @@
 name: CI
 
 # Safety net before any deployment: build and test both the backend and the
-# frontend on every push/PR to main. This workflow never touches AWS — it
+# frontend on every push/PR to main. The frontend job prepares the backend
+# package again in its own runner before regenerating the OpenAPI client, so
+# no remote artifact storage is needed. This workflow never touches AWS — it
 # has no `permissions.id-token` and configures no AWS credentials, so it is
 # safe to run on pull requests from forks.
 on:
@@ -37,13 +39,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up JDK 25 (Temurin)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: maven
+
+      - name: Prepare the backend OpenAPI npm package in the local workspace
+        working-directory: backend
+        run: mvn -B -pl application/web -am process-resources -DskipTests -Dstyle.color=never
+
       - name: Set up Node.js 22
         uses: actions/setup-node@v4
         with:
           node-version: "22"
+          cache: pnpm
+          cache-dependency-path: frontend/oei-web/pnpm-lock.yaml
 
-      - name: Enable corepack (pnpm 10.33.0)
-        run: corepack enable && corepack prepare pnpm@10.33.0 --activate
+      - name: Enable corepack (pnpm 11.22.0)
+        run: corepack enable && corepack prepare pnpm@11.22.0 --activate
 
       - name: Install dependencies
         working-directory: frontend/oei-web
@@ -54,8 +69,8 @@ jobs:
         # @angular/build:unit-test runs non-interactively (no watch) by
         # default when it detects a CI environment (CI=true, set by
         # GitHub Actions runners automatically).
-        run: NODE_OPTIONS=--no-experimental-webstorage pnpm run test
+        run: CI=true NODE_OPTIONS=--no-experimental-webstorage pnpm run test
 
       - name: ng build
         working-directory: frontend/oei-web
-        run: pnpm run build
+        run: pnpm run build:api

@@ -1,77 +1,248 @@
-# OeiWeb
+# OEI Frontend (Angular)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.2.
+SPA Angular 22 de la plateforme OEI: site public multilingue, espace membre,
+espace institution, back-office admin, et consommation API contract-first.
 
-## Development server
+## Vue fonctionnelle
 
-To start a local development server, run:
+| Domaine | Fonctionnalites principales | Mode |
+|---|---|---|
+| Site public | Pages institutionnelles, contenus multilingues, livre blanc | Mock + API |
+| Membre | Profil, adhésion, badges, objectifs de certification | Mock + API |
+| Institution | Profil public, invitations, publications, audit | Mock + API |
+| CMS | Parcours de contribution/relecture/publication | API prioritaire |
+| Events | Liste, detail, inscriptions | Mock + API |
+| Admin | Catalogue certifications, templates email, gouvernance contenus | API prioritaire |
+| Identity | Login OIDC Keycloak, autorisations par roles | API |
 
-```bash
-ng serve
+## Architecture C4 (Mermaid)
+
+### C4 - Niveau 1 (Contexte)
+
+```mermaid
+flowchart LR
+  actor[Visiteur / Membre / Admin]
+  spa[OEI Web\nAngular 22]
+  api[OEI Backend\nSpring Boot API]
+  kc[Keycloak OIDC]
+  content[(Corpus Markdown versionné)]
+
+  actor -->|HTTPS| spa
+  spa -->|REST JSON| api
+  spa -->|OIDC Code + PKCE| kc
+  api -->|lecture contenu| content
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### C4 - Niveau 2 (Conteneurs frontend)
 
-## Code scaffolding
+```mermaid
+flowchart TB
+  subgraph presentation[Presentation]
+    pages[Pages / Components]
+  end
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+  subgraph app[Application]
+    services[application/service/*]
+    runtime[RuntimeConfig]
+  end
 
-```bash
-ng generate component component-name
+  subgraph domain[Domain]
+    ports[domain/port/*]
+    models[domain/model/*]
+  end
+
+  subgraph infra[Infrastructure]
+    adapters[adapter/*ApiAdapter, *MockAdapter]
+    gen[api/generated\nOpenAPI client]
+    oidc[OIDC auth]
+  end
+
+  pages --> services
+  services --> ports
+  services --> runtime
+  ports <--> adapters
+  adapters --> gen
+  oidc --> pages
+  models --> services
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Diagrammes de sequence
 
-```bash
-ng generate --help
+### Sequence - Consultation de contenu public
+
+```mermaid
+sequenceDiagram
+  participant U as Utilisateur
+  participant P as Public Page
+  participant S as PublicContentApplicationService
+  participant A as ContentApiAdapter
+  participant B as Backend
+
+  U->>P: Ouvre /fr/home
+  P->>S: getHomeContent(lang)
+  S->>A: fetchBySlug(lang, "home")
+  A->>B: GET /content/{lang}/home
+  B-->>A: markdown + metadata
+  A-->>S: Document
+  S-->>P: ViewModel
+  P-->>U: Rendu HTML
 ```
 
-## Building
+### Sequence - Connexion OIDC et appel API membre
 
-To build the project run:
+```mermaid
+sequenceDiagram
+  participant U as Membre
+  participant FE as Angular App
+  participant KC as Keycloak
+  participant API as Backend
 
-```bash
-ng build
+  U->>FE: Clique "Se connecter"
+  FE->>KC: Authorization Code + PKCE
+  KC-->>FE: Access token JWT
+  FE->>API: GET /api/member/v1/membership (Bearer)
+  API-->>FE: Membership JSON
+  FE-->>U: Espace membre
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Diagramme de classes (vue logique simplifiee)
 
-## Running unit tests
+```mermaid
+classDiagram
+  class RuntimeConfig {
+    +isMock(): boolean
+    +apiBaseUrl(): string
+  }
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+  class ContentRepositoryPort {
+    <<interface>>
+    +getHomeContent(lang): Observable~Document~
+  }
 
-```bash
-ng test
+  class ContentApplicationService {
+    -contentRepository: ContentRepositoryPort
+    +getHomeContent(lang)
+  }
+
+  class ContentApiAdapter {
+    +getHomeContent(lang)
+  }
+
+  class ContentMockAdapter {
+    +getHomeContent(lang)
+  }
+
+  class HomePageComponent {
+    +ngOnInit()
+  }
+
+  ContentRepositoryPort <|.. ContentApiAdapter
+  ContentRepositoryPort <|.. ContentMockAdapter
+  ContentApplicationService --> ContentRepositoryPort
+  HomePageComponent --> ContentApplicationService
+  ContentApplicationService --> RuntimeConfig
 ```
 
-## Running end-to-end tests
+## Diagramme de deploiement
 
-For end-to-end (e2e) testing, run:
+```mermaid
+flowchart LR
+  subgraph DevLocal
+    browser[Navigateur]
+    ng[Angular dev server :4300]
+    be[Backend :8080]
+    kc[Keycloak :8081]
+  end
 
-```bash
-ng e2e
+  browser --> ng
+  ng -->|proxy /api| be
+  ng -->|OIDC| kc
+
+  subgraph Production
+    cf[CloudFront]
+    s3[(S3 static assets)]
+    api[Backend API]
+    auth[Keycloak]
+  end
+
+  browser --> cf
+  cf --> s3
+  browser --> api
+  browser --> auth
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Services applicatifs (extraits)
 
-## Additional Resources
+| Service | Responsabilite |
+|---|---|
+| `member-application.service.ts` | Lecture/édition du profil membre |
+| `membership-application.service.ts` | Flux d'adhésion et état membership |
+| `badge-application.service.ts` | Consultation badges et progression |
+| `content-application.service.ts` | Accès contenu CMS |
+| `public-content-application.service.ts` | Rendu contenu public multilingue |
+| `institution-account-application.service.ts` | Espace institution |
+| `admin-certification-catalog-application.service.ts` | Back-office certifications |
+| `admin-email-templates-application.service.ts` | Back-office templates email |
+| `event-application.service.ts` | Gestion d'événements |
+| `event-registration-application.service.ts` | Inscriptions événements |
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Contrat API et generation OpenAPI
 
-## Notes on the `lmdb` pnpm override and `.npmrc`
+- Entrée générateur: `openapitools.json`
+- Contrat consommé: `node_modules/@oei/api-contract/oei-api.yaml`
+- Sortie générée: `src/app/infrastructure/api/generated`
 
-`package.json` pins `pnpm.overrides.lmdb` to `npm:is-odd@3.0.1`, and `.npmrc` sets
-`virtual-store-dir=node_modules/.pnpm`. Both exist to work around a sandboxed-environment-specific
-`pnpm install` failure, not to change any runtime behavior:
+Commandes:
 
-- `lmdb` is only ever pulled in transitively as Angular's optional disk build cache backend, and that
-  cache is explicitly disabled in `angular.json` (`cli.cache.enabled: false`). It is never functionally
-  needed by this project.
-- One of `lmdb`'s own dependencies, `ordered-binary`, ships a native/prebuilt file that certain
-  sandboxed CI/dev environments refuse to write during install, causing `pnpm install` to fail. Since
-  `lmdb` is unused here, overriding it to a trivial package (`is-odd`) avoids ever installing the
-  problematic dependency, sidestepping the failure entirely.
+```bash
+cd frontend/oei-web
+pnpm run generate:api
+```
 
-**If the Angular build cache is ever re-enabled** (`cli.cache.enabled: true` in `angular.json`), the
-`lmdb` override above must be removed first — otherwise the cache will silently fail to work because
-the real `lmdb` package is no longer installed.
+La commande exécute d'abord la préparation backend (`mvn ... process-resources`) puis la
+génération Typescript Angular.
+
+## Run, test, build
+
+Dev local:
+
+```bash
+cd frontend/oei-web
+pnpm install
+pnpm run start
+```
+
+Tests unitaires:
+
+```bash
+cd frontend/oei-web
+pnpm run test
+```
+
+E2E:
+
+```bash
+cd frontend/oei-web
+pnpm run e2e
+```
+
+Build standard:
+
+```bash
+cd frontend/oei-web
+pnpm run build
+```
+
+Build pipeline (avec regen API):
+
+```bash
+cd frontend/oei-web
+pnpm run build:api
+```
+
+## Notes techniques
+
+- `RuntimeConfig` permet le basculement `mock` / `api` sans recompiler.
+- `proxy.conf.json` redirige `/api` vers le backend local en dev.
+- Les contenus `content/` sont copiés dans `public/assets/content/` par script.
+- `pnpm.overrides.lmdb` est un contournement CI/sandbox; si cache Angular réactivé, revoir.

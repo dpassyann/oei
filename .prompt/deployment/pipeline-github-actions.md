@@ -248,7 +248,10 @@ explicitement) a deux jobs :
 1. **build-and-push** : `mvn clean package -pl application/web -am
    -DskipTests` (les tests tournent déjà dans `ci.yml` sur chaque push/PR
    vers `main` ; les re-exécuter ici ne ferait que ralentir un déploiement
-   déjà approuvé), build du `backend/application/web/Dockerfile`
+   déjà approuvé), puis `pnpm run generate:api` dans `frontend/oei-web`
+   pour régénérer le client OpenAPI depuis
+   `backend/application/web/target/npm-package` (même runner, aucun stockage
+   distant d'artefact contrat), puis build du `backend/application/web/Dockerfile`
    multi-stage (layertools Spring Boot, cf. `deploiement-aws.md` §8.1), tag
    `<sha-court>` + `latest`, push vers le dépôt ECR `oei-backend`.
 2. **rollout** : résout l'instance EC2 taguée `Name=oei-prod`, envoie une
@@ -264,6 +267,14 @@ explicitement) a deux jobs :
 tout déploiement : `mvn clean verify` (backend) + `pnpm run test` / `pnpm run
 build` (frontend). Il ne configure aucune credential AWS — il est safe à
 exécuter sur des PRs, y compris depuis un fork.
+
+Concrètement, le job frontend exécute d'abord `mvn -pl application/web -am
+process-resources` dans `backend/` pour produire
+`backend/application/web/target/npm-package/oei-api.yaml`, puis laisse
+`frontend/oei-web` résoudre ce chemin localement via son `file:` dependency.
+Le client OpenAPI est ensuite régénéré dans le même runner avant `pnpm run
+build:api`, donc aucun zip/tgz n'a besoin d'être publié dans un stockage
+distant entre les jobs.
 
 ## 4. Rappel important
 

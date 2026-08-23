@@ -186,6 +186,11 @@ GitHub Actions sont déjà rédigés — ce README y renvoie plutôt que de les 
 - Infrastructure as Code (Terraform) : [`.prompt/deployment/terraform/`](.prompt/deployment/terraform/)
 - Pipeline GitHub Actions : [`.prompt/deployment/pipeline-github-actions.md`](.prompt/deployment/pipeline-github-actions.md)
 
+Dans ce pipeline, le contrat OpenAPI reste côté backend comme source unique de vérité ; le
+job frontend reconstruit localement le package `@oei/api-contract` depuis
+`backend/application/web/target/npm-package` avant de régénérer le client TypeScript. Il n'y a
+donc pas de zip à déposer ou à synchroniser manuellement sur un stockage distant.
+
 ## 10. Tests & qualité
 
 - **Backend** : `mvn clean verify` depuis `backend/` — tests unitaires du domaine, tests

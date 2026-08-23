@@ -39,6 +39,28 @@ jobs:
         working-directory: backend
         run: mvn -B clean package -pl application/web -am -DskipTests
 
+      # Keep the deployment workflow aligned with the CI contract flow:
+      # frontend resolves @oei/api-contract from the backend workspace output
+      # (target/npm-package) in the same runner, without remote contract
+      # artifact storage.
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+          cache-dependency-path: frontend/oei-web/pnpm-lock.yaml
+
+      - name: Enable corepack (pnpm 11.22.0)
+        run: corepack enable && corepack prepare pnpm@11.22.0 --activate
+
+      - name: Install frontend dependencies
+        working-directory: frontend/oei-web
+        run: pnpm install --frozen-lockfile
+
+      - name: Regenerate frontend OpenAPI client from backend local package
+        working-directory: frontend/oei-web
+        run: pnpm run generate:api
+
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
