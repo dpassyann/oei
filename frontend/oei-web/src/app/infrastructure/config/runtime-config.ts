@@ -5,6 +5,7 @@ export type DataSource = 'mock' | 'api';
 export interface OeiRuntimeConfig {
   dataSource: DataSource;
   apiBaseUrl: string;
+  oidcIssuer: string;
   hideEspaceMembre: boolean;
   linkedinOAuthAuthorizeUrl: string;
   linkedinOAuthClientId: string;
@@ -13,9 +14,11 @@ export interface OeiRuntimeConfig {
 }
 
 const STORAGE_KEY = 'oei-data-source';
-const CONFIG_URL = '/config';
+const CONFIG_URLS = ['/config.json', '/config'];
 const DEFAULT_LINKEDIN_AUTHORIZE_URL = 'https://www.linkedin.com/oauth/v2/authorization';
 const DEFAULT_LINKEDIN_SCOPE = 'openid profile email';
+const LOCALHOST_OIDC_ISSUER = 'http://localhost:8081/realms/oei';
+const PROD_OIDC_ISSUER = 'https://auth.theitorder.global/realms/oei';
 
 declare global {
   interface Window {
@@ -32,6 +35,7 @@ declare global {
 export class RuntimeConfig {
   private readonly dataSourceSignal = signal<DataSource>(this.resolveDataSource());
   private readonly apiBaseUrlSignal = signal<string>(this.resolveApiBaseUrl());
+  private readonly oidcIssuerSignal = signal<string>(this.resolveOidcIssuer());
   private readonly hideEspaceMembreSignal = signal<boolean>(this.resolveHideEspaceMembre());
   private readonly linkedinOAuthAuthorizeUrlSignal = signal<string>(this.resolveLinkedinOAuthAuthorizeUrl());
   private readonly linkedinOAuthClientIdSignal = signal<string>(this.resolveLinkedinOAuthClientId());
@@ -40,6 +44,7 @@ export class RuntimeConfig {
 
   readonly dataSource = this.dataSourceSignal.asReadonly();
   readonly apiBaseUrl = this.apiBaseUrlSignal.asReadonly();
+  readonly oidcIssuer = this.oidcIssuerSignal.asReadonly();
   readonly hideEspaceMembre = this.hideEspaceMembreSignal.asReadonly();
   readonly linkedinOAuthAuthorizeUrl = this.linkedinOAuthAuthorizeUrlSignal.asReadonly();
   readonly linkedinOAuthClientId = this.linkedinOAuthClientIdSignal.asReadonly();
@@ -49,13 +54,23 @@ export class RuntimeConfig {
 
   async load(): Promise<void> {
     try {
-      const response = await fetch(CONFIG_URL, { headers: { Accept: 'application/json' } });
-      if (!response.ok || !response.headers.get('content-type')?.includes('application/json')) {
+      let response: Response | undefined;
+      for (const url of CONFIG_URLS) {
+        const candidate = await fetch(url, { headers: { Accept: 'application/json' } });
+        if (candidate.ok && candidate.headers.get('content-type')?.includes('application/json')) {
+          response = candidate;
+          break;
+        }
+      }
+      if (!response) {
         return;
       }
       const config = (await response.json()) as Partial<OeiRuntimeConfig>;
       if (typeof config.apiBaseUrl === 'string' && config.apiBaseUrl.length > 0) {
         this.apiBaseUrlSignal.set(config.apiBaseUrl);
+      }
+      if (typeof config.oidcIssuer === 'string' && config.oidcIssuer.length > 0) {
+        this.oidcIssuerSignal.set(config.oidcIssuer);
       }
       if (typeof config.hideEspaceMembre === 'boolean') {
         this.hideEspaceMembreSignal.set(config.hideEspaceMembre);
@@ -115,6 +130,17 @@ export class RuntimeConfig {
       return window.__OEI_CONFIG__.apiBaseUrl;
     }
     return '/api/v1';
+  }
+
+  private resolveOidcIssuer(): string {
+    if (typeof window !== 'undefined' && window.__OEI_CONFIG__?.oidcIssuer) {
+      return window.__OEI_CONFIG__.oidcIssuer;
+    }
+    if (typeof window !== 'undefined') {
+      const localHosts = ['localhost', '127.0.0.1'];
+      return localHosts.includes(window.location.hostname) ? LOCALHOST_OIDC_ISSUER : PROD_OIDC_ISSUER;
+    }
+    return PROD_OIDC_ISSUER;
   }
 
   private resolveHideEspaceMembre(): boolean {

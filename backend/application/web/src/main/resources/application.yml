@@ -47,6 +47,8 @@ spring:
 
 oei:
   name: "@name@"
+  cors:
+    allowed-origins: ${OEI_CORS_ALLOWED_ORIGINS:https://theitorder.global,https://www.theitorder.global,http://localhost:4300}
   logging:
     loki:
       # Endpoint HTTP Loki4j (backend -> Loki direct). Depuis l'hôte local: localhost;

@@ -217,22 +217,6 @@ import { ProfileImportPort } from './domain/port/profile/profile-import.port';
 import { ProfileImportMockAdapter } from './infrastructure/adapter/profile-import-mock.adapter';
 import { ProfileImportApiAdapter } from './infrastructure/adapter/profile-import-api.adapter';
 
-// Real Keycloak Authorization Code + PKCE config (realm `oei`, client `oei-frontend` — see
-// `keycloak/realm-export/oei-realm.json`: publicClient, standardFlowEnabled,
-// directAccessGrantsEnabled=false, pkce.code.challenge.method=S256, redirectUris
-// `http://localhost:4300/*`). `requireHttps`/`strictDiscoveryDocumentValidation` are relaxed only
-// because this targets a local, unencrypted Keycloak (`http://localhost:8081`) — both must be
-// revisited before any non-local deployment.
-const OEI_AUTH_CONFIG: AuthConfig = {
-  issuer: 'http://localhost:8081/realms/oei',
-  clientId: 'oei-frontend',
-  redirectUri: window.location.origin + '/',
-  responseType: 'code',
-  scope: 'openid',
-  requireHttps: false,
-  strictDiscoveryDocumentValidation: false,
-};
-
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZonelessChangeDetection(),
@@ -260,8 +244,22 @@ export const appConfig: ApplicationConfig = {
     // though the user just came back from a successful Keycloak login.
     provideAppInitializer(() => {
       const oauthService = inject(OAuthService);
-      oauthService.configure(OEI_AUTH_CONFIG);
-      return oauthService.loadDiscoveryDocumentAndTryLogin();
+      const runtimeConfig = inject(RuntimeConfig);
+      return runtimeConfig.load().then(() => {
+        const issuer = runtimeConfig.oidcIssuer();
+        const isLocalIssuer = issuer.startsWith('http://');
+        const authConfig: AuthConfig = {
+          issuer,
+          clientId: 'oei-frontend',
+          redirectUri: window.location.origin + '/',
+          responseType: 'code',
+          scope: 'openid',
+          requireHttps: !isLocalIssuer,
+          strictDiscoveryDocumentValidation: !isLocalIssuer,
+        };
+        oauthService.configure(authConfig);
+        return oauthService.loadDiscoveryDocumentAndTryLogin();
+      });
     }),
     {
       provide: CONTENT_REPOSITORY_PORT,

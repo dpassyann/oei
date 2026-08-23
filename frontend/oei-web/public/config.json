@@ -1,6 +1,7 @@
 {
   "dataSource": "api",
-  "apiBaseUrl": "/api/v1",
+  "apiBaseUrl": "https://api.theitorder.global/api/v1",
+  "oidcIssuer": "https://auth.theitorder.global/realms/oei",
   "hideEspaceMembre": true,
   "linkedinOAuthAuthorizeUrl": "https://www.linkedin.com/oauth/v2/authorization",
   "linkedinOAuthClientId": "",

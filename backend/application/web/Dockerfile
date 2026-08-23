@@ -44,11 +44,9 @@ COPY application application
 COPY test test
 RUN mvn -B clean package -DskipTests -pl application/web -am
 
-# Extract into layertools layers (dependencies / spring-boot-loader /
-# snapshot-dependencies / application) for Docker layer caching.
-WORKDIR /workspace/extracted
-RUN java -Djarmode=layertools \
-    -jar /workspace/application/web/target/application-web-*-exec.jar extract
+# Extract Spring Boot layers so runtime image can copy exploded layers (smaller deltas).
+RUN java -Djarmode=tools -jar /workspace/application/web/target/application-web-*-exec.jar \
+	extract --layers --launcher --destination /workspace/extracted
 
 #################################
 # Stage 2: runtime (minimal JRE) #
@@ -62,9 +60,6 @@ RUN addgroup -S oei && adduser -S oei -G oei
 WORKDIR /app
 USER oei
 
-# Deliberate order: dependencies (change rarely) -> loader -> snapshot deps
-# -> application (changes every commit), to maximize Docker layer cache
-# reuse across builds.
 COPY --from=build --chown=oei:oei /workspace/extracted/dependencies/ ./
 COPY --from=build --chown=oei:oei /workspace/extracted/spring-boot-loader/ ./
 COPY --from=build --chown=oei:oei /workspace/extracted/snapshot-dependencies/ ./

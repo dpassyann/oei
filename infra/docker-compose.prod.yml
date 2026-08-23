@@ -93,7 +93,7 @@ services:
     image: quay.io/keycloak/keycloak:25.0
     restart: unless-stopped
     # "start" (prod) au lieu de "start-dev" ; hostname public et header proxy configurés.
-    command: start --import-realm --hostname=auth.theitorder.global --proxy-headers=xforwarded
+    command: start --hostname=auth.theitorder.global --proxy-headers=xforwarded --http-enabled=true
     environment:
       KEYCLOAK_ADMIN: ${OEI_USER}
       KEYCLOAK_ADMIN_PASSWORD: ${OEI_PASSWORD}

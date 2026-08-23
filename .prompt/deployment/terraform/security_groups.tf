@@ -43,7 +43,7 @@ resource "aws_vpc_security_group_ingress_rule" "http" {
 
 resource "aws_vpc_security_group_ingress_rule" "ssh" {
   security_group_id = aws_security_group.app.id
-  description       = "SSH restricted to the administrator's CIDR"
+  description       = "SSH restricted to the administrator CIDR"
   ip_protocol       = "tcp"
   from_port         = 22
   to_port           = 22

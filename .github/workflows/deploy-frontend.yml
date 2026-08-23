@@ -1,6 +1,12 @@
 name: Deploy Frontend (S3 + CloudFront)
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'frontend/**'
+      - 'content/**'
+      - '.github/workflows/deploy-frontend.yml'
   workflow_dispatch:
     inputs:
       invalidate_paths:

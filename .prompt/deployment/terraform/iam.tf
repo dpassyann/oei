@@ -53,6 +53,27 @@ data "aws_iam_policy_document" "ec2_least_privilege" {
     ]
     resources = ["*"]
   }
+
+  # Required on the EC2 host to login/pull from private ECR repositories.
+  statement {
+    sid    = "EcrAuth"
+    effect = "Allow"
+    actions = [
+      "ecr:GetAuthorizationToken",
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    sid    = "EcrPullBackendRepository"
+    effect = "Allow"
+    actions = [
+      "ecr:BatchCheckLayerAvailability",
+      "ecr:BatchGetImage",
+      "ecr:GetDownloadUrlForLayer",
+    ]
+    resources = [aws_ecr_repository.backend.arn]
+  }
 }
 
 resource "aws_iam_role_policy" "ec2_least_privilege" {
@@ -65,3 +86,11 @@ resource "aws_iam_instance_profile" "ec2" {
   name = "oei-ec2-instance-profile"
   role = aws_iam_role.ec2.name
 }
+
+# Gives the instance the baseline Systems Manager permissions so it appears as
+# a managed instance and can be operated via SSM Run Command.
+resource "aws_iam_role_policy_attachment" "ec2_ssm_managed_instance_core" {
+  role       = aws_iam_role.ec2.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+

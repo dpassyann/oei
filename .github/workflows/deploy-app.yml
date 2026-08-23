@@ -6,6 +6,12 @@ name: Deploy App (backend image + EC2 rollout)
 # push/PR to main — this workflow does NOT re-run tests (see -DskipTests
 # below), it only builds/publishes what has already been validated.
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/**'
+      - 'infra/docker-compose.prod.yml'
+      - '.github/workflows/deploy-app.yml'
   workflow_dispatch: {}
 
 permissions:
