@@ -54,10 +54,9 @@ jobs:
 
       - name: Prepare the backend OpenAPI npm package in the local workspace
         working-directory: backend
-        # process-resources is too early for a fresh Maven repo: dependent modules
-        # (e.g. domain-core -> domain-shared) may still try remote SNAPSHOT resolution.
-        # compile keeps this step fast enough while making reactor artifacts resolvable.
-        run: mvn -B -pl application/web -am compile -DskipTests -Dstyle.color=never
+        # The frontend install consumes the generated local npm package from
+        # backend/application/web/target/npm-package, so we must reach package.
+        run: mvn -B -pl application/web -am package -DskipTests -Dstyle.color=never
 
       - name: Set up Node.js 22
         uses: actions/setup-node@v4

@@ -21,6 +21,12 @@ permissions:
 env:
   TF_WORKING_DIR: .prompt/deployment/terraform
   AWS_REGION: ${{ vars.AWS_REGION || 'eu-west-3' }}
+  TF_VAR_domain_name: ${{ vars.TF_DOMAIN_NAME || 'theitorder.global' }}
+  TF_VAR_route53_zone_id: ${{ vars.TF_ROUTE53_ZONE_ID || '' }}
+  TF_VAR_ssh_allowed_cidr: ${{ vars.TF_SSH_ALLOWED_CIDR || '' }}
+  TF_VAR_ssh_public_key: ${{ secrets.TF_SSH_PUBLIC_KEY || '' }}
+  TF_VAR_budget_alert_email: ${{ vars.TF_BUDGET_ALERT_EMAIL || '' }}
+  TF_VAR_monthly_budget_amount_usd: ${{ vars.TF_MONTHLY_BUDGET_AMOUNT_USD || '80' }}
 
 jobs:
   terraform:
@@ -34,6 +40,11 @@ jobs:
           set -euo pipefail
           test -n "${AWS_REGION}"
           test -n "${{ vars.AWS_DEPLOY_ROLE_ARN }}"
+          test -n "${TF_VAR_domain_name}"
+          test -n "${TF_VAR_ssh_allowed_cidr}"
+          test -n "${TF_VAR_ssh_public_key}"
+          test -n "${TF_VAR_budget_alert_email}"
+          test -n "${TF_VAR_monthly_budget_amount_usd}"
 
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4

@@ -25,8 +25,26 @@ variable "ses_mail_from_subdomain" {
   default     = "mail"
 }
 
+variable "dmarc_policy" {
+  description = "DMARC policy for the root domain (none, quarantine, reject)."
+  type        = string
+  default     = "quarantine"
+
+  validation {
+    condition     = contains(["none", "quarantine", "reject"], var.dmarc_policy)
+    error_message = "dmarc_policy must be one of: none, quarantine, reject."
+  }
+}
+
+variable "dmarc_rua_email" {
+  description = "Optional aggregate report email for DMARC (without mailto: prefix), e.g. dmarc@theitorder.global. Leave empty to omit rua."
+  type        = string
+  default     = ""
+}
+
 locals {
   ses_mail_from_domain = "${var.ses_mail_from_subdomain}.${var.domain_name}"
+  dmarc_record_value   = trimspace(var.dmarc_rua_email) == "" ? "v=DMARC1; p=${var.dmarc_policy}; adkim=s; aspf=s; pct=100" : "v=DMARC1; p=${var.dmarc_policy}; adkim=s; aspf=s; pct=100; rua=mailto:${trimspace(var.dmarc_rua_email)}"
 }
 
 resource "aws_ses_domain_identity" "primary" {
@@ -80,6 +98,14 @@ resource "aws_route53_record" "ses_mail_from_spf" {
   type    = "TXT"
   ttl     = 600
   records = ["v=spf1 include:amazonses.com -all"]
+}
+
+resource "aws_route53_record" "ses_dmarc" {
+  zone_id = data.aws_route53_zone.primary.zone_id
+  name    = "_dmarc.${var.domain_name}"
+  type    = "TXT"
+  ttl     = 600
+  records = [local.dmarc_record_value]
 }
 
 resource "aws_iam_user" "ses_smtp" {

@@ -17,8 +17,18 @@ Créer :
 - `AWS_REGION` (ex: `eu-west-3`)
 - `FRONTEND_S3_BUCKET` (ex: `oei-web-static`)
 - `FRONTEND_CLOUDFRONT_DISTRIBUTION_ID` (ex: `E1SCZ4YGPTAUBZ`)
+- `TF_DOMAIN_NAME` (ex: `theitorder.global`)
+- `TF_SSH_ALLOWED_CIDR` (ex: `203.0.113.10/32`)
+- `TF_BUDGET_ALERT_EMAIL` (ex: `ops@theitorder.global`)
+- `TF_MONTHLY_BUDGET_AMOUNT_USD` (ex: `80`)
+
+Et dans `Secrets` GitHub Actions :
+- `TF_SSH_PUBLIC_KEY` (contenu de la cle publique SSH, ex `ssh-ed25519 ...`)
 
 Aucune clé AWS longue durée n'est nécessaire si OIDC est correctement configuré.
+
+Terraform gère aussi le record DMARC (`_dmarc.<domain>`) et les records DKIM SES
+dans Route53 (voir `.prompt/deployment/terraform/ses.tf`).
 
 ## 3) Variables runtime applicatives dans SSM (une seule fois, puis rotation si besoin)
 
