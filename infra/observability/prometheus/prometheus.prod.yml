@@ -37,3 +37,39 @@ scrape_configs:
       - target_label: service
         replacement: postgres-exporter
 
+  # Caddy reverse-proxy
+  - job_name: caddy
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['caddy:2019']
+    relabel_configs:
+      - target_label: service
+        replacement: caddy
+
+  # Grafana
+  - job_name: grafana
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['grafana:3000']
+    relabel_configs:
+      - target_label: service
+        replacement: grafana
+
+  # Loki
+  - job_name: loki
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['loki:3100']
+    relabel_configs:
+      - target_label: service
+        replacement: loki
+
+  # Promtail
+  - job_name: promtail
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['promtail:9080']
+    relabel_configs:
+      - target_label: service
+        replacement: promtail
+
