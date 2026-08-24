@@ -1,12 +1,7 @@
 name: Deploy Frontend (S3 + CloudFront)
 
+# Manual only: frontend production publish is intentionally operator-driven.
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'frontend/**'
-      - 'content/**'
-      - '.github/workflows/deploy-frontend.yml'
   workflow_dispatch:
     inputs:
       invalidate_paths:
@@ -42,6 +37,10 @@ jobs:
         with:
           version: 11.22.0
           run_install: false
+
+      - name: Prepare backend OpenAPI npm package in local workspace
+        working-directory: backend
+        run: mvn -B -pl application/web -am package -DskipTests -Dstyle.color=never
 
       - name: Set up Node.js 22
         uses: actions/setup-node@v4

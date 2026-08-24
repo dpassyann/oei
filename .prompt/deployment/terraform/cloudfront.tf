@@ -45,6 +45,15 @@ resource "aws_cloudfront_distribution" "web" {
     error_caching_min_ttl = 10
   }
 
+  # S3 private origins return 403 AccessDenied for missing keys; map it to the
+  # SPA entry point as well so direct deep-links (/certifications, etc.) load.
+  custom_error_response {
+    error_code            = 403
+    response_code         = 200
+    response_page_path    = "/index.html"
+    error_caching_min_ttl = 10
+  }
+
   restrictions {
     geo_restriction {
       restriction_type = "none"
