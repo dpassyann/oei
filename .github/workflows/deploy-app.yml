@@ -185,7 +185,9 @@ jobs:
           aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin "${ACCOUNT_ID}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com"
           docker compose -f docker-compose.prod.yml --env-file .env pull backend
           docker compose -f docker-compose.prod.yml --env-file .env up -d --no-deps backend
-          docker compose -f docker-compose.prod.yml --env-file .env up --no-deps keycloak-realm-config
+          if docker compose -f docker-compose.prod.yml --env-file .env config --services | grep -qx keycloak-realm-config; then
+            docker compose -f docker-compose.prod.yml --env-file .env up --no-deps keycloak-realm-config
+          fi
           docker image prune -f
           EOS
           )
