@@ -310,17 +310,23 @@ data "aws_iam_policy_document" "github_actions_deploy" {
   }
 
   statement {
-    sid    = "SsmSendCommandDeploy"
-    effect = "Allow"
-    actions = [
-      "ssm:SendCommand",
-      "ssm:GetCommandInvocation",
-      "ssm:ListCommandInvocations",
-    ]
+    sid     = "SsmSendCommandDeploy"
+    effect  = "Allow"
+    actions = ["ssm:SendCommand"]
     resources = [
       aws_instance.app.arn,
       "arn:aws:ssm:${var.aws_region}::document/AWS-RunShellScript",
     ]
+  }
+
+  statement {
+    sid    = "SsmReadCommandInvocationDeploy"
+    effect = "Allow"
+    actions = [
+      "ssm:GetCommandInvocation",
+      "ssm:ListCommandInvocations",
+    ]
+    resources = ["*"]
   }
 
   # --- ECR: push/pull the oei-backend image built by deploy-app.yml, plus
