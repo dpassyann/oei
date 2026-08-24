@@ -125,10 +125,14 @@
       "standardFlowEnabled": true,
       "directAccessGrantsEnabled": false,
       "redirectUris": [
-        "http://localhost:4300/*"
+        "http://localhost:4300/*",
+        "https://theitorder.global/*",
+        "https://www.theitorder.global/*"
       ],
       "webOrigins": [
-        "http://localhost:4300"
+        "http://localhost:4300",
+        "https://theitorder.global",
+        "https://www.theitorder.global"
       ],
       "attributes": {
         "pkce.code.challenge.method": "S256"

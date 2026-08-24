@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { ContentRepositoryPort } from '../../domain/port/content-repository.port';
 import { createDocument, Document } from '../../domain/model/document';
+import { RuntimeConfig } from '../config/runtime-config';
 
 // See `src/app/infrastructure/adapter/README.md` for why `HttpClient` (Observable) replaces
 // the previous `fetch()`/Promise implementation. The OpenAPI-generated client
@@ -10,11 +11,9 @@ import { createDocument, Document } from '../../domain/model/document';
 // `http://localhost` unless wired via `provideApi(...)`; calling `HttpClient` directly against
 // the same contract path keeps the adapter simple without that extra plumbing.
 //
-// `GET /content/{lang}/{slug}` (`content-legacy` tag) is the one historical endpoint kept
-// entirely outside any `/api` prefix (see the contract preamble in `openapi/oei-api.yaml`) —
-// unlike the other `home-legacy` endpoints it does NOT sit under `RuntimeConfig.apiBaseUrl()`
-// (`/api/v1`), so this adapter builds the URL from a literal root-relative base instead.
-const CONTENT_LEGACY_API_BASE = '/content';
+// `GET /content/{lang}/{slug}` (`content-legacy`) is outside `/api/v1` but still served by
+// the backend host. In production the static site host is CloudFront/S3, so using a root-relative
+// `/content` would hit S3 and fail 403; we must target the API host origin explicitly.
 
 interface ContentDocumentResponse {
   slug: string;
@@ -27,10 +26,21 @@ interface ContentDocumentResponse {
 @Service()
 export class ContentApiAdapter implements ContentRepositoryPort {
   private readonly http = inject(HttpClient);
+  private readonly runtimeConfig = inject(RuntimeConfig);
+
+  private contentBaseUrl(): string {
+    const apiBaseUrl = this.runtimeConfig.apiBaseUrl();
+    try {
+      const apiOrigin = new URL(apiBaseUrl, window.location.origin).origin;
+      return `${apiOrigin}/content`;
+    } catch {
+      return '/content';
+    }
+  }
 
   getHomeContent(lang: string): Observable<Document> {
     return this.http
-      .get<ContentDocumentResponse>(`${CONTENT_LEGACY_API_BASE}/${lang}/home`)
+      .get<ContentDocumentResponse>(`${this.contentBaseUrl()}/${lang}/home`)
       .pipe(map((data) => createDocument(data)));
   }
 }
