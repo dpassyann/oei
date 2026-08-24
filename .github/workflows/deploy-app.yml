@@ -158,23 +158,29 @@ jobs:
           # shorthand parser and JSON — jq handles all the escaping.
           REMOTE_SCRIPT=$(cat <<'EOS'
           set -euo pipefail
-          REPO_DIR=""
+          DEPLOY_DIR=""
           for candidate in /home/ec2-user/oei /home/oei-deploy/oei /root/oei; do
-            if [ -d "$candidate/.git" ]; then
-              REPO_DIR="$candidate"
+            if [ -f "$candidate/infra/docker-compose.prod.yml" ]; then
+              DEPLOY_DIR="$candidate"
               break
             fi
           done
-          if [ -z "$REPO_DIR" ]; then
-            echo "Could not find the oei checkout on the instance" >&2
+          if [ -z "$DEPLOY_DIR" ]; then
+            echo "Could not find the oei deployment directory on the instance" >&2
             exit 1
           fi
-          cd "$REPO_DIR"
-          git fetch --all --prune
-          git reset --hard origin/main
+          cd "$DEPLOY_DIR"
+          if [ -d .git ]; then
+            git fetch --all --prune
+            git reset --hard origin/main
+          fi
           cd infra
-          chmod +x ./scripts/fetch-secrets.sh
-          ./scripts/fetch-secrets.sh .env
+          if [ -x ./scripts/fetch-secrets.sh ]; then
+            ./scripts/fetch-secrets.sh .env
+          elif [ ! -f .env ]; then
+            echo "Missing infra/.env and no fetch-secrets.sh available" >&2
+            exit 1
+          fi
           ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
           aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin "${ACCOUNT_ID}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com"
           docker compose -f docker-compose.prod.yml --env-file .env pull backend
