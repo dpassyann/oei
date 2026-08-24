@@ -156,7 +156,7 @@ jobs:
           # Built as a JSON file (rather than inline --parameters shorthand)
           # to avoid fragile nested-quoting between bash, the AWS CLI
           # shorthand parser and JSON — jq handles all the escaping.
-          REMOTE_SCRIPT=$(cat <<EOS
+          REMOTE_SCRIPT=$(cat <<'EOS'
           set -euo pipefail
           REPO_DIR=""
           for candidate in /home/ec2-user/oei /home/oei-deploy/oei /root/oei; do
@@ -175,8 +175,8 @@ jobs:
           cd infra
           chmod +x ./scripts/fetch-secrets.sh
           ./scripts/fetch-secrets.sh .env
-          ACCOUNT_ID=\$(aws sts get-caller-identity --query Account --output text)
-          aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin "\${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+          ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+          aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin "${ACCOUNT_ID}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com"
           docker compose -f docker-compose.prod.yml --env-file .env pull backend
           docker compose -f docker-compose.prod.yml --env-file .env up -d --no-deps backend
           docker compose -f docker-compose.prod.yml --env-file .env up --no-deps keycloak-realm-config
