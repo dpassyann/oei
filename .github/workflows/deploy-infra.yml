@@ -20,6 +20,7 @@ permissions:
 
 env:
   TF_WORKING_DIR: .prompt/deployment/terraform
+  AWS_REGION: ${{ vars.AWS_REGION || 'eu-west-3' }}
 
 jobs:
   terraform:
@@ -28,11 +29,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Validate required deployment variables
+        run: |
+          set -euo pipefail
+          test -n "${AWS_REGION}"
+          test -n "${{ vars.AWS_DEPLOY_ROLE_ARN }}"
+
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
-          aws-region: ${{ vars.AWS_REGION }}
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
