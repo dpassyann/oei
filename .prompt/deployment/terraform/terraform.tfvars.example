@@ -42,6 +42,7 @@ monthly_budget_amount_usd = 80
 # ses_mail_from_subdomain    = "mail"
 # dmarc_policy               = "quarantine"
 # dmarc_rua_email            = "dmarc@theitorder.global"
+# frontend_release_id        = "2026-08-24T04-30Z"
 # common_tags = {
 #   Project     = "OEI"
 #   Environment = "production"

@@ -24,7 +24,7 @@ env:
   TF_VAR_domain_name: ${{ vars.TF_DOMAIN_NAME || 'theitorder.global' }}
   TF_VAR_route53_zone_id: ${{ vars.TF_ROUTE53_ZONE_ID || '' }}
   TF_VAR_ssh_allowed_cidr: ${{ vars.TF_SSH_ALLOWED_CIDR || '' }}
-  TF_VAR_ssh_public_key: ${{ secrets.TF_SSH_PUBLIC_KEY || '' }}
+  TF_VAR_ssh_public_key: ${{ vars.TF_SSH_PUBLIC_KEY || '' }}
   TF_VAR_budget_alert_email: ${{ vars.TF_BUDGET_ALERT_EMAIL || '' }}
   TF_VAR_monthly_budget_amount_usd: ${{ vars.TF_MONTHLY_BUDGET_AMOUNT_USD || '80' }}
 

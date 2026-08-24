@@ -21,8 +21,6 @@ Créer :
 - `TF_SSH_ALLOWED_CIDR` (ex: `203.0.113.10/32`)
 - `TF_BUDGET_ALERT_EMAIL` (ex: `ops@theitorder.global`)
 - `TF_MONTHLY_BUDGET_AMOUNT_USD` (ex: `80`)
-
-Et dans `Secrets` GitHub Actions :
 - `TF_SSH_PUBLIC_KEY` (contenu de la cle publique SSH, ex `ssh-ed25519 ...`)
 
 Aucune clé AWS longue durée n'est nécessaire si OIDC est correctement configuré.

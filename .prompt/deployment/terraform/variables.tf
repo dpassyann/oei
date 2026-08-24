@@ -164,3 +164,10 @@ variable "ssm_parameter_prefix" {
   type        = string
   default     = "/oei/prod"
 }
+
+variable "frontend_release_id" {
+  description = "Optional manual trigger id to force a frontend publish via Terraform local-exec. Change this value for each new frontend release."
+  type        = string
+  default     = ""
+}
+

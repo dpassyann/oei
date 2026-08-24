@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { CertificationPort } from '../../domain/port/certification/certification.port';
 import { Certification, CertificationDeclaration } from '../../domain/model/certification/certification';
 import { RecognizedCertification } from '../../domain/model/certification/recognized-certification';
+import { RuntimeConfig } from '../config/runtime-config';
 
 // Endpoints under `/api/member/v1/**` are role-versioned per ADR 0002 and use a literal
 // prefix rather than `RuntimeConfig.apiBaseUrl()` (which defaults to the legacy `/api/v1`
@@ -19,6 +20,21 @@ const PUBLIC_API_BASE = '/api/public/v1';
 @Service()
 export class CertificationApiAdapter implements CertificationPort {
   private readonly http = inject(HttpClient);
+  private readonly runtimeConfig = inject(RuntimeConfig);
+
+  private publicApiBaseUrl(): string {
+    const apiBaseUrl = this.runtimeConfig.apiBaseUrl();
+    if (!apiBaseUrl.startsWith('http://') && !apiBaseUrl.startsWith('https://')) {
+      return PUBLIC_API_BASE;
+    }
+
+    try {
+      const apiOrigin = new URL(apiBaseUrl, window.location.origin).origin;
+      return `${apiOrigin}${PUBLIC_API_BASE}`;
+    } catch {
+      return PUBLIC_API_BASE;
+    }
+  }
 
   listCertifications(): Observable<Certification[]> {
     return this.http.get<Certification[]>(`${CERTIFICATION_API_BASE}/certifications`);
@@ -33,6 +49,6 @@ export class CertificationApiAdapter implements CertificationPort {
   }
 
   listRecognizedCertifications(): Observable<RecognizedCertification[]> {
-    return this.http.get<RecognizedCertification[]>(`${PUBLIC_API_BASE}/recognized-certifications`);
+    return this.http.get<RecognizedCertification[]>(`${this.publicApiBaseUrl()}/recognized-certifications`);
   }
 }

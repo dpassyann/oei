@@ -10,6 +10,7 @@ import {
 import { NetworkDomain } from '../../domain/model/network/network-domain.model';
 import { NetworkExpert } from '../../domain/model/network/network-expert.model';
 import { NetworkSalaryInsight, NetworkSalaryNodeType } from '../../domain/model/network/network-salary-insight.model';
+import { RuntimeConfig } from '../config/runtime-config';
 
 const NETWORK_API_BASE = '/api/public/v1/network';
 
@@ -25,17 +26,32 @@ const SALARY_INSIGHT_PATH_SEGMENT: Record<NetworkSalaryNodeType, string> = {
 @Service()
 export class NetworkGraphApiAdapter implements NetworkGraphPort {
   private readonly http = inject(HttpClient);
+  private readonly runtimeConfig = inject(RuntimeConfig);
+
+  private networkApiBaseUrl(): string {
+    const apiBaseUrl = this.runtimeConfig.apiBaseUrl();
+    if (!apiBaseUrl.startsWith('http://') && !apiBaseUrl.startsWith('https://')) {
+      return NETWORK_API_BASE;
+    }
+
+    try {
+      const apiOrigin = new URL(apiBaseUrl, window.location.origin).origin;
+      return `${apiOrigin}${NETWORK_API_BASE}`;
+    } catch {
+      return NETWORK_API_BASE;
+    }
+  }
 
   listDomains(): Observable<readonly NetworkDomain[]> {
-    return this.http.get<readonly NetworkDomain[]>(`${NETWORK_API_BASE}/domains`);
+    return this.http.get<readonly NetworkDomain[]>(`${this.networkApiBaseUrl()}/domains`);
   }
 
   listTopicsAndCertifications(domainId: string): Observable<NetworkTopicsAndCertifications> {
-    return this.http.get<NetworkTopicsAndCertifications>(`${NETWORK_API_BASE}/domains/${domainId}/topics`);
+    return this.http.get<NetworkTopicsAndCertifications>(`${this.networkApiBaseUrl()}/domains/${domainId}/topics`);
   }
 
   listExperts(topicId: string, page: OffsetPage): Observable<PagedResult<NetworkExpert>> {
-    return this.http.get<PagedResult<NetworkExpert>>(`${NETWORK_API_BASE}/topics/${topicId}/experts`, {
+    return this.http.get<PagedResult<NetworkExpert>>(`${this.networkApiBaseUrl()}/topics/${topicId}/experts`, {
       params: { offset: page.offset, limit: page.limit },
     });
   }
@@ -53,7 +69,7 @@ export class NetworkGraphApiAdapter implements NetworkGraphPort {
   ): Observable<NetworkSalaryInsight | undefined> {
     const pathSegment = SALARY_INSIGHT_PATH_SEGMENT[nodeType];
     return this.http
-      .get<NetworkSalaryInsight | null>(`${NETWORK_API_BASE}/${pathSegment}/${nodeId}/salary-insight`, {
+      .get<NetworkSalaryInsight | null>(`${this.networkApiBaseUrl()}/${pathSegment}/${nodeId}/salary-insight`, {
         params: country ? { country } : {},
       })
       .pipe(
