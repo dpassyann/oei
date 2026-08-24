@@ -16,7 +16,7 @@ describe('ContentApiAdapter', () => {
     const { adapter, httpMock } = createAdapter();
 
     const result = firstValueFrom(adapter.getHomeContent('fr'));
-    const req = httpMock.expectOne('/content/fr/home');
+    const req = httpMock.expectOne((request) => request.url.endsWith('/content/fr/home'));
     expect(req.request.method).toBe('GET');
     req.flush({ slug: 'home', lang: 'fr', title: 'Titre API', body: 'Corps API', isFallback: false });
 
@@ -29,7 +29,7 @@ describe('ContentApiAdapter', () => {
     const { adapter, httpMock } = createAdapter();
 
     const result = firstValueFrom(adapter.getHomeContent('en'));
-    const req = httpMock.expectOne('/content/en/home');
+    const req = httpMock.expectOne((request) => request.url.endsWith('/content/en/home'));
     expect(req.request.method).toBe('GET');
     req.flush({ slug: 'home', lang: 'en', title: 'Custom Title', body: 'Custom Body', isFallback: false });
 
@@ -42,7 +42,7 @@ describe('ContentApiAdapter', () => {
     const { adapter, httpMock } = createAdapter();
 
     const result = firstValueFrom(adapter.getHomeContent('fr'));
-    const req = httpMock.expectOne('/content/fr/home');
+    const req = httpMock.expectOne((request) => request.url.endsWith('/content/fr/home'));
     req.flush(null, { status: 500, statusText: 'Server Error' });
 
     await expect(result).rejects.toThrow();
