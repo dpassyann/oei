@@ -158,7 +158,18 @@ jobs:
           # shorthand parser and JSON — jq handles all the escaping.
           REMOTE_SCRIPT=$(cat <<EOS
           set -euo pipefail
-          cd /home/oei-deploy/oei
+          REPO_DIR=""
+          for candidate in /home/ec2-user/oei /home/oei-deploy/oei /root/oei; do
+            if [ -d "$candidate/.git" ]; then
+              REPO_DIR="$candidate"
+              break
+            fi
+          done
+          if [ -z "$REPO_DIR" ]; then
+            echo "Could not find the oei checkout on the instance" >&2
+            exit 1
+          fi
+          cd "$REPO_DIR"
           git fetch --all --prune
           git reset --hard origin/main
           cd infra
