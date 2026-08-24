@@ -158,7 +158,10 @@ jobs:
           # shorthand parser and JSON — jq handles all the escaping.
           REMOTE_SCRIPT=$(cat <<EOS
           set -euo pipefail
-          cd /home/oei-deploy/oei/infra
+          cd /home/oei-deploy/oei
+          git fetch --all --prune
+          git reset --hard origin/main
+          cd infra
           chmod +x ./scripts/fetch-secrets.sh
           ./scripts/fetch-secrets.sh .env
           ACCOUNT_ID=\$(aws sts get-caller-identity --query Account --output text)
