@@ -72,9 +72,10 @@ qu'un vrai serveur SMTP soit nécessaire en local.
 
 Cohérent avec la décision déjà prise pour les emails transactionnels Spring
 (`backend/infrastructure/mail/`, voir aussi `.prompt/deployment/deploiement-aws.md`) : Amazon
-SES est le fournisseur SMTP de production, **à renseigner à la main** (console Admin Keycloak,
-onglet *Realm settings → Email*, ou `kcadm.sh` en session admin) — ne jamais committer de
-vraies valeurs dans `oei-realm.json`.
+SES est le fournisseur SMTP de production. L'infrastructure SES/DNS/credentials SMTP est
+maintenant gérée par Terraform (`.prompt/deployment/terraform/ses.tf`) et les valeurs runtime
+sont récupérées depuis SSM par `infra/scripts/fetch-secrets.sh`, puis appliquées au realm via le
+service one-shot `keycloak-realm-config` de `infra/docker-compose.prod.yml`.
 
 Champs à renseigner (valeurs ci-dessous = **placeholders explicites**, pas de vraies clés) :
 
@@ -92,8 +93,7 @@ Champs à renseigner (valeurs ci-dessous = **placeholders explicites**, pas de v
 | `envelopeFrom` | optionnel (SPF) |
 | `ssl` | `false` (STARTTLS sur 587, pas de SMTPS direct sur 465) |
 
-Exemple d'application via `kcadm.sh` (à exécuter en production, jamais en local avec de vraies
-valeurs) :
+Exemple de commande `kcadm.sh` effectivement exécutée par `keycloak-realm-config` en production :
 
 ```bash
 kcadm.sh update realms/oei \

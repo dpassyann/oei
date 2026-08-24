@@ -18,6 +18,14 @@ resource "aws_route53_record" "auth" {
   records = [aws_eip.app.public_ip]
 }
 
+resource "aws_route53_record" "grafana" {
+  zone_id = data.aws_route53_zone.primary.zone_id
+  name    = "grafana.${var.domain_name}"
+  type    = "A"
+  ttl     = 300
+  records = [aws_eip.app.public_ip]
+}
+
 resource "aws_route53_record" "apex" {
   zone_id = data.aws_route53_zone.primary.zone_id
   name    = var.domain_name

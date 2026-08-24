@@ -39,6 +39,11 @@ aws ssm put-parameter --name /oei/prod/GRAFANA_BASICAUTH_USER --type String --va
 aws ssm put-parameter --name /oei/prod/GRAFANA_BASICAUTH_PASSWORD_HASH --type SecureString --value 'CHANGE_ME_BCRYPT' --overwrite
 ```
 
+Important : les emails de création/vérification de compte sont envoyés par
+**Keycloak**, pas par le backend Spring. Il ne suffit donc pas de renseigner
+`OEI_SMTP_*` pour le backend : il faut aussi que le realm Keycloak de
+production soit configuré avec ces mêmes valeurs SMTP.
+
 ## 4) Publication manuelle backend (si nécessaire)
 
 ```bash
@@ -60,8 +65,11 @@ docker push "${ECR_REGISTRY}/oei-backend:latest"
 ```bash
 ssh -i /Users/ydeungoue/oei-prod-key.pem ec2-user@52.47.88.137 '
 cd ~/oei/infra
+chmod +x ./scripts/fetch-secrets.sh
+./scripts/fetch-secrets.sh .env
 docker compose -f docker-compose.prod.yml --env-file .env pull backend
 docker compose -f docker-compose.prod.yml --env-file .env up -d --no-deps backend
+docker compose -f docker-compose.prod.yml --env-file .env up --no-deps keycloak-realm-config
 '
 ```
 
@@ -98,6 +106,19 @@ curl -sS -D - https://api.theitorder.global/actuator/health/readiness -o /tmp/re
 cat /tmp/readiness.json
 curl -sS -D - https://auth.theitorder.global/realms/oei -o /tmp/realm.json
 head -c 200 /tmp/realm.json
+```
+
+Vérification SMTP/Keycloak après une mise à jour secrets ou une première mise
+en place SES :
+
+```bash
+ssh -i /Users/ydeungoue/oei-prod-key.pem ec2-user@52.47.88.137 '
+cd ~/oei/infra
+chmod +x ./scripts/fetch-secrets.sh
+./scripts/fetch-secrets.sh .env
+docker compose -f docker-compose.prod.yml --env-file .env up --no-deps keycloak-realm-config
+docker compose -f docker-compose.prod.yml --env-file .env logs --no-color keycloak-realm-config | tail -n 100
+'
 ```
 
 ## 8) Exposition Grafana HTTPS (Caddy + auth renforcée)

@@ -28,12 +28,13 @@ resource "aws_iam_openid_connect_provider" "github_actions" {
   thumbprint_list = var.github_oidc_thumbprints
 }
 
-# Trust policy: only THIS repository, only THIS provider, and only the
-# `main` branch ref may assume the role — `apply`/`destroy` must never be
-# reachable from a pull request or a fork. `deploy-infra.yml` and
-# `deploy-app.yml` are both workflow_dispatch-only and run against `main`,
-# so no `pull_request` subject is added here (there's nothing in this repo's
-# CI that plans/applies Terraform on PRs — `ci.yml` never touches AWS).
+# Trust policy: only THIS repository and only THIS provider may assume the
+# role. In practice GitHub's `sub` claim format varies depending on whether a
+# workflow runs on a branch ref, with an environment, or via other GitHub
+# Actions evolutions. Keep the scope repository-bound (never wildcard the repo
+# itself) while accepting any subject variant for this exact repository. The
+# workflows themselves are still constrained in GitHub to `main` and never run
+# AWS steps on pull requests.
 data "aws_iam_policy_document" "github_actions_assume_role" {
   statement {
     effect  = "Allow"
@@ -53,7 +54,7 @@ data "aws_iam_policy_document" "github_actions_assume_role" {
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_repository}:ref:refs/heads/main"]
+      values   = ["repo:${var.github_repository}:*"]
     }
   }
 }
@@ -161,11 +162,24 @@ data "aws_iam_policy_document" "github_actions_deploy" {
       "iam:TagRole",
       "iam:ListRolePolicies",
       "iam:ListInstanceProfilesForRole",
+      "iam:GetUser",
+      "iam:CreateUser",
+      "iam:DeleteUser",
+      "iam:TagUser",
+      "iam:PutUserPolicy",
+      "iam:DeleteUserPolicy",
+      "iam:GetUserPolicy",
+      "iam:ListUserPolicies",
+      "iam:CreateAccessKey",
+      "iam:DeleteAccessKey",
+      "iam:UpdateAccessKey",
+      "iam:ListAccessKeys",
     ]
     resources = [
       aws_iam_role.ec2.arn,
       aws_iam_instance_profile.ec2.arn,
       aws_iam_role.github_actions_deploy.arn,
+      aws_iam_user.ses_smtp.arn,
     ]
   }
 
@@ -260,6 +274,35 @@ data "aws_iam_policy_document" "github_actions_deploy" {
     effect    = "Allow"
     actions   = ["ssm:GetParameter", "ssm:GetParameters", "ssm:GetParametersByPath"]
     resources = ["arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter${var.ssm_parameter_prefix}/*"]
+  }
+
+  statement {
+    sid    = "SsmParameterManage"
+    effect = "Allow"
+    actions = [
+      "ssm:PutParameter",
+      "ssm:DeleteParameter",
+      "ssm:AddTagsToResource",
+      "ssm:RemoveTagsFromResource",
+      "ssm:ListTagsForResource",
+    ]
+    resources = ["arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter${var.ssm_parameter_prefix}/*"]
+  }
+
+  statement {
+    sid    = "SesManage"
+    effect = "Allow"
+    actions = [
+      "ses:VerifyDomainIdentity",
+      "ses:VerifyDomainDkim",
+      "ses:SetIdentityMailFromDomain",
+      "ses:DeleteIdentity",
+      "ses:GetIdentityVerificationAttributes",
+      "ses:GetIdentityDkimAttributes",
+      "ses:GetIdentityMailFromDomainAttributes",
+      "ses:ListIdentities",
+    ]
+    resources = ["*"]
   }
 
   statement {

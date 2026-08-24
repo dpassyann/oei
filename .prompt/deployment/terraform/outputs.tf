@@ -67,3 +67,25 @@ output "ecr_backend_repository_url" {
   description = "URL of the ECR repository holding the oei-backend image, used by deploy-app.yml to push/pull and by docker-compose.prod.yml's `backend.image`."
   value       = aws_ecr_repository.backend.repository_url
 }
+
+output "ses_domain_identity_arn" {
+  description = "ARN of the SES domain identity backing production emails."
+  value       = aws_ses_domain_identity.primary.arn
+}
+
+output "ses_mail_from_domain" {
+  description = "Custom MAIL FROM subdomain configured for SES."
+  value       = aws_ses_domain_mail_from.primary.mail_from_domain
+}
+
+output "smtp_parameter_names" {
+  description = "SSM Parameter Store names written by Terraform for runtime SMTP configuration."
+  value = {
+    host     = aws_ssm_parameter.smtp_host.name
+    port     = aws_ssm_parameter.smtp_port.name
+    username = aws_ssm_parameter.smtp_username.name
+    password = aws_ssm_parameter.smtp_password.name
+    from     = aws_ssm_parameter.mail_from.name
+  }
+}
+

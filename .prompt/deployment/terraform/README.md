@@ -24,6 +24,9 @@ Périmètre couvert par ce Terraform :
   scopé + policy moindre-privilège (`github_oidc.tf`), utilisés par
   `.github/workflows/deploy-infra.yml` et `deploy-app.yml`.
 - Dépôt ECR unique `oei-backend` (`ecr.tf`) pour l'image du backend.
+- Amazon SES pour les emails de production : identité de domaine, DKIM,
+  MAIL FROM personnalisé, DNS Route 53, credentials SMTP IAM et paramètres
+  SSM consommés par le backend et Keycloak (`ses.tf`).
 
 Le pilotage CI/CD (workflows GitHub Actions, bootstrap manuel unique) est
 documenté dans
@@ -100,10 +103,20 @@ Après un premier `apply` réussi :
 - suivre le manuel §8-§11.3 pour construire/pousser les images Docker,
   déployer `docker-compose.prod.yml` sur l'instance, et publier le build
   Angular sur `oei-web-static` ;
+- exécuter ensuite `infra/scripts/fetch-secrets.sh` sur l'instance avant le
+  `docker compose up`, afin que `.env` récupère les credentials SMTP générés
+  dans SSM et que `keycloak-realm-config` puisse configurer le realm ;
 - acheter séparément la Reserved Instance (`aws ec2
   purchase-reserved-instances-offering ...`, manuel §4.3) — c'est un
   engagement de facturation, pas une ressource Terraform, il n'y a rien à
   "provisionner" pour ça au-delà de l'instance déjà lancée par ce code.
+
+### Emails de création de compte : point important
+
+Les emails d'inscription/vérification de compte ne partent **pas** du backend
+Spring Boot : ils sont envoyés par **Keycloak** (`VERIFY_EMAIL`). Terraform
+prépare donc l'infrastructure SES/DNS/credentials, puis la stack de production
+applique ces credentials au realm Keycloak via `docker-compose.prod.yml`.
 
 ## Gestion du state
 
@@ -188,6 +201,9 @@ d'isolation réseau avancée. Pour migrer vers un VPC dédié :
 - **Hosted zone Route 53** : toujours référencée en data source
   (`data.aws_route53_zone.primary`), jamais créée par ce Terraform,
   conformément à la contrainte "un domaine ne s'achète pas via Terraform".
+- **Sortie du sandbox SES** : l'identité, le DNS et les credentials SMTP sont
+  automatisés ici, mais l'activation de l'accès production SES peut encore
+  nécessiter une validation AWS séparée.
 
 ## Rappel important
 

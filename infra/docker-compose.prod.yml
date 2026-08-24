@@ -113,6 +113,57 @@ services:
       - oei-net
     logging: *logging-cloudwatch
 
+  # Configure le SMTP du realm OEI après le démarrage de Keycloak.
+  # Indispensable en production car les emails de création/vérification de compte
+  # sont envoyés par Keycloak (VERIFY_EMAIL), pas par le backend Spring.
+  keycloak-realm-config:
+    image: quay.io/keycloak/keycloak:25.0
+    restart: "no"
+    depends_on:
+      keycloak:
+        condition: service_started
+    environment:
+      KEYCLOAK_ADMIN: ${OEI_USER}
+      KEYCLOAK_ADMIN_PASSWORD: ${OEI_PASSWORD}
+      OEI_SMTP_HOST: ${OEI_SMTP_HOST}
+      OEI_SMTP_PORT: ${OEI_SMTP_PORT:-587}
+      OEI_SMTP_USERNAME: ${OEI_SMTP_USERNAME}
+      OEI_SMTP_PASSWORD: ${OEI_SMTP_PASSWORD}
+      OEI_MAIL_FROM: ${OEI_MAIL_FROM:-no-reply@theitorder.global}
+    entrypoint:
+      - /bin/bash
+      - -ec
+      - |
+        set -euo pipefail
+        test -n "$$OEI_SMTP_HOST"
+        test -n "$$OEI_SMTP_USERNAME"
+        test -n "$$OEI_SMTP_PASSWORD"
+
+        for attempt in {1..30}; do
+          if /opt/keycloak/bin/kcadm.sh config credentials --server http://keycloak:8080 --realm master --user "$$KEYCLOAK_ADMIN" --password "$$KEYCLOAK_ADMIN_PASSWORD"; then
+            break
+          fi
+          if [ "$$attempt" -eq 30 ]; then
+            echo "Keycloak admin API is still unavailable after 30 attempts" >&2
+            exit 1
+          fi
+          sleep 5
+        done
+
+        /opt/keycloak/bin/kcadm.sh update realms/oei \
+          -s "smtpServer.host=$$OEI_SMTP_HOST" \
+          -s "smtpServer.port=$$OEI_SMTP_PORT" \
+          -s 'smtpServer.starttls=true' \
+          -s 'smtpServer.auth=true' \
+          -s 'smtpServer.ssl=false' \
+          -s "smtpServer.user=$$OEI_SMTP_USERNAME" \
+          -s "smtpServer.password=$$OEI_SMTP_PASSWORD" \
+          -s "smtpServer.from=$$OEI_MAIL_FROM" \
+          -s "smtpServer.fromDisplayName=Ordre International des Experts"
+    networks:
+      - oei-net
+    logging: *logging-cloudwatch
+
   postgres-exporter:
     profiles: [obs]
     image: prometheuscommunity/postgres-exporter:v0.15.0
