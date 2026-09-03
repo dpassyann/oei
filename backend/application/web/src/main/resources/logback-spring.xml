@@ -12,11 +12,11 @@
         <pattern>%d{HH:mm:ss.SSS} %highlight(%-5level) [%cyan(%thread)] %yellow(%logger{36}) - %msg%replace(%magenta( [%mdc])){' \[\]', ''}%n</pattern>
       </encoder>
     </appender>
-    <!-- Loki is NOT attached by default here: the "obs" docker-compose profile (Grafana/
-         Loki/Promtail) isn't started by default `dev-up.sh`, so pushing logs unconditionally
+    <!-- Loki is NOT attached by default here: the "obs" docker-compose profile (Grafana,
+         Loki, Promtail) isn't started by the plain dev-up.sh, so pushing logs unconditionally
          floods the console with connection-refused retries on every startup. Activate the
          "obs" Spring profile too (spring.profiles.active=local,obs) once you've run
-         `./infra/scripts/dev-up.sh --obs` to also stream logs to Loki — see the "obs"
+         dev-up.sh with the obs flag to also stream logs to Loki — see the "obs"
          springProfile block below, which adds the LOKI appender to this same root logger. -->
     <root level="INFO">
       <appender-ref ref="CONSOLE_TEXT"/>
