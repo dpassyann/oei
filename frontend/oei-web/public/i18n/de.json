@@ -477,7 +477,10 @@
       "experiences": {
         "organization": "Organisation",
         "jobTitle": "Position",
-        "startDate": "Beginndatum"
+        "startDate": "Beginndatum",
+        "grossAnnualSalary": "Brutto-Jahresgehalt",
+        "salaryCurrency": "Währung",
+        "salaryPrivateNotice": "Diese Angabe ist strikt privat — sie wird nie öffentlich, in Ihrem öffentlichen Profil, Ihrem Lebenslauf oder Ihrer digitalen Karte angezeigt. Sie fließt nur in das anonymisierte Aggregat des beruflichen neuronalen Netzwerks ein, sobald mindestens 5 Mitglieder einen Betrag für dieselbe Domäne angegeben haben."
       },
       "formations": {
         "institution": "Institution",

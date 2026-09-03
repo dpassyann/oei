@@ -43,6 +43,8 @@ import global.oei.domain.core.profile.GetMemberBootstrapService;
 import global.oei.domain.core.profile.GetMyProfileService;
 import global.oei.domain.core.profile.ImportLinkedinBasicService;
 import global.oei.domain.core.profile.UpdateMyProfileService;
+import global.oei.domain.core.profileimport.AdvanceProfileImportService;
+import global.oei.domain.core.profileimport.InitiateProfileImportService;
 import global.oei.domain.core.publicprofile.GenerateDigitalBusinessCardService;
 import global.oei.domain.core.publicprofile.PublishPublicProfileService;
 import global.oei.domain.core.store.CreateOrderService;
@@ -127,6 +129,7 @@ import global.oei.domain.shared.membershipfee.MembershipFeeAccountPort;
 import global.oei.domain.shared.membershipfee.PayMembershipFeeUseCase;
 import global.oei.domain.shared.network.GetSalaryInsightUseCase;
 import global.oei.domain.shared.network.NetworkGraphPort;
+import global.oei.domain.shared.network.RecordCompensationDeclarationsPort;
 import global.oei.domain.shared.profile.GetMemberBootstrapUseCase;
 import global.oei.domain.shared.profile.GetMyProfileUseCase;
 import global.oei.domain.shared.profile.ImportLinkedinBasicUseCase;
@@ -134,6 +137,9 @@ import global.oei.domain.shared.profile.LinkedinAuthorizationPort;
 import global.oei.domain.shared.profile.LinkedinIdentityPort;
 import global.oei.domain.shared.profile.ProfileLookupPort;
 import global.oei.domain.shared.profile.UpdateMyProfileUseCase;
+import global.oei.domain.shared.profileimport.AdvanceProfileImportUseCase;
+import global.oei.domain.shared.profileimport.InitiateProfileImportUseCase;
+import global.oei.domain.shared.profileimport.ProfileImportPort;
 import global.oei.domain.shared.publicprofile.GenerateDigitalBusinessCardUseCase;
 import global.oei.domain.shared.publicprofile.PublicProfilePort;
 import global.oei.domain.shared.publicprofile.PublishPublicProfileUseCase;
@@ -181,6 +187,7 @@ import global.oei.infrastructure.persistence.certification.RecognizedCertificati
 import global.oei.infrastructure.persistence.charter.EthicalCharterSignaturePersistenceAdapter;
 import global.oei.infrastructure.persistence.charter.EthicalCharterSignatureRepository;
 import global.oei.infrastructure.persistence.compensation.CompensationDeclarationRepository;
+import global.oei.infrastructure.persistence.compensation.CompensationDeclarationWriteAdapter;
 import global.oei.infrastructure.persistence.compensation.SalaryInsightPersistenceAdapter;
 import global.oei.infrastructure.persistence.config.audit.PersistenceAuditingConfiguration;
 import global.oei.infrastructure.persistence.content.ContentApprovalPersistenceAdapter;
@@ -268,6 +275,8 @@ import global.oei.infrastructure.persistence.pdf.PdfGenerationJobPersistenceAdap
 import global.oei.infrastructure.persistence.pdf.PdfGenerationJobRepository;
 import global.oei.infrastructure.persistence.profile.ProfessionalProfilePersistenceAdapter;
 import global.oei.infrastructure.persistence.profile.ProfessionalProfileRepository;
+import global.oei.infrastructure.persistence.profileimport.ProfileImportPersistenceAdapter;
+import global.oei.infrastructure.persistence.profileimport.ProfileImportRepository;
 import global.oei.infrastructure.persistence.publicprofile.PublicProfilePersistenceAdapter;
 import global.oei.infrastructure.persistence.publicprofile.PublicProfileRepository;
 import global.oei.infrastructure.persistence.store.BusinessCardTemplateRepository;
@@ -338,6 +347,12 @@ public class OeiWiringConfiguration {
     }
 
     @Bean
+    public RecordCompensationDeclarationsPort recordCompensationDeclarationsPort(
+            final CompensationDeclarationRepository repository) {
+        return new CompensationDeclarationWriteAdapter(repository);
+    }
+
+    @Bean
     public ProfileLookupPort profileLookupPort(final ProfessionalProfileRepository repository,
             final MemberRepository memberRepository) {
         return new ProfessionalProfilePersistenceAdapter(repository, memberRepository);
@@ -361,8 +376,10 @@ public class OeiWiringConfiguration {
 
     @Bean
     public GetMemberBootstrapUseCase getMemberBootstrapUseCase(
-            final ProfileLookupPort profileLookupPort, final MembershipLookupPort membershipLookupPort) {
-        return new GetMemberBootstrapService(profileLookupPort, membershipLookupPort);
+            final ProfileLookupPort profileLookupPort,
+            final MembershipLookupPort membershipLookupPort,
+            final ProfileImportPort profileImportPort) {
+        return new GetMemberBootstrapService(profileLookupPort, membershipLookupPort, profileImportPort);
     }
 
     @Bean
@@ -374,8 +391,26 @@ public class OeiWiringConfiguration {
     }
 
     @Bean
-    public UpdateMyProfileUseCase updateMyProfileUseCase(final ProfileLookupPort profileLookupPort) {
-        return new UpdateMyProfileService(profileLookupPort);
+    public ProfileImportPort profileImportPort(final ProfileImportRepository repository) {
+        return new ProfileImportPersistenceAdapter(repository);
+    }
+
+    @Bean
+    public InitiateProfileImportUseCase initiateProfileImportUseCase(final ProfileImportPort profileImportPort) {
+        return new InitiateProfileImportService(profileImportPort);
+    }
+
+    @Bean
+    public AdvanceProfileImportUseCase advanceProfileImportUseCase(final ProfileImportPort profileImportPort) {
+        return new AdvanceProfileImportService(profileImportPort);
+    }
+
+    @Bean
+    public UpdateMyProfileUseCase updateMyProfileUseCase(
+            final ProfileLookupPort profileLookupPort,
+            final MemberPort memberPort,
+            final RecordCompensationDeclarationsPort recordCompensationDeclarationsPort) {
+        return new UpdateMyProfileService(profileLookupPort, memberPort, recordCompensationDeclarationsPort);
     }
 
     @Bean

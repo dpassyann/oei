@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0059-demo-additional-network-members
+      author: oei-backend
+      comment: >
+        40 additional demo members + memberships (all account_type='DEMO'), continuing the
+        0004 index sequence and adding 5 new countries (Maroc, Sénégal, Tunisie, Côte
+        d'Ivoire, Cameroun) so the network graph and salary map read as globally populated
+        for demos instead of sparse. Depends on 0002-create-membership (membership table).
+      changes:
+        - sqlFile:
+            path: db/changelog/changes/0059-demo-additional-network-members.sql
+            relativeToChangelogFile: false
+            splitStatements: true
+            stripComments: true

@@ -34,10 +34,6 @@ export class ProfileImportApplicationService {
     return this.port.confirmImport(importId);
   }
 
-  importLinkedinBasic(accessToken: string): Observable<ProfessionalProfile> {
-    return this.port.importLinkedinBasic(accessToken);
-  }
-
   importLinkedinBasicFromAuthorizationCode(authorizationCode: string, redirectUri: string): Observable<ProfessionalProfile> {
     return this.port.importLinkedinBasicFromAuthorizationCode(authorizationCode, redirectUri);
   }

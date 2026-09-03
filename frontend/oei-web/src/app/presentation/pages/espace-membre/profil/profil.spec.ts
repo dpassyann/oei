@@ -156,7 +156,6 @@ describe('Profil', () => {
             getImportDraft: () => of({}),
             updateImportDraft: () => of({}),
             confirmImport: () => of({}),
-            importLinkedinBasic: () => of({}),
             importLinkedinBasicFromAuthorizationCode: () => of({}),
           },
         },

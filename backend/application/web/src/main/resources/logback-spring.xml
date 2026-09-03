@@ -12,11 +12,26 @@
         <pattern>%d{HH:mm:ss.SSS} %highlight(%-5level) [%cyan(%thread)] %yellow(%logger{36}) - %msg%replace(%magenta( [%mdc])){' \[\]', ''}%n</pattern>
       </encoder>
     </appender>
+    <!-- Loki is NOT attached by default here: the "obs" docker-compose profile (Grafana/
+         Loki/Promtail) isn't started by default `dev-up.sh`, so pushing logs unconditionally
+         floods the console with connection-refused retries on every startup. Activate the
+         "obs" Spring profile too (spring.profiles.active=local,obs) once you've run
+         `./infra/scripts/dev-up.sh --obs` to also stream logs to Loki — see the "obs"
+         springProfile block below, which adds the LOKI appender to this same root logger. -->
+    <root level="INFO">
+      <appender-ref ref="CONSOLE_TEXT"/>
+    </root>
+    <logger name="org.hibernate.SQL" level="WARN"/>
+    <logger name="org.hibernate.orm.jdbc.bind" level="WARN"/>
+    <logger name="io.swagger.v3.core.util.Json" level="OFF"/>
+  </springProfile>
+
+  <springProfile name="obs">
     <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
       <labels>
         service=oei-backend
         application=${applicationName}
-        environment=local
+        environment=${activeProfile}
       </labels>
       <structuredMetadata>
         level=%level
@@ -43,13 +58,12 @@
         <drainOnStop>true</drainOnStop>
       </batch>
     </appender>
+    <!-- Adds to the root logger already declared by whichever profile ("local" or "!local")
+         is also active — logback accumulates appender-refs for the same logger across
+         profile blocks rather than replacing them. -->
     <root level="INFO">
-      <appender-ref ref="CONSOLE_TEXT"/>
       <appender-ref ref="LOKI"/>
     </root>
-    <logger name="org.hibernate.SQL" level="WARN"/>
-    <logger name="org.hibernate.orm.jdbc.bind" level="WARN"/>
-    <logger name="io.swagger.v3.core.util.Json" level="OFF"/>
   </springProfile>
 
   <springProfile name="!local">

@@ -64,6 +64,14 @@ jobs:
           test -n "${AWS_REGION}"
           test -n "${FRONTEND_S3_BUCKET}"
 
+      - name: Swap in production runtime config
+        # public/config.json in the repo/dist build is the LOCAL DEV default (localhost
+        # backend/Keycloak) so `pnpm start`/`ng test` never accidentally target production.
+        # The real production runtime config lives in public/config.prod.json (non-secret:
+        # just apiBaseUrl/oidcIssuer/feature flags) and replaces it here, right before upload.
+        working-directory: frontend/oei-web
+        run: cp public/config.prod.json dist/oei-web/browser/config.json
+
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -77,15 +85,19 @@ jobs:
           aws s3 sync dist/oei-web/browser "s3://${FRONTEND_S3_BUCKET}" \
             --delete \
             --cache-control "public, max-age=31536000, immutable" \
-            --exclude "index.html"
+            --exclude "index.html" \
+            --exclude "config.json"
 
-      - name: Upload index.html with no-cache
+      - name: Upload index.html and config.json with no-cache
         working-directory: frontend/oei-web
         run: |
           set -euo pipefail
           aws s3 cp dist/oei-web/browser/index.html "s3://${FRONTEND_S3_BUCKET}/index.html" \
             --cache-control "no-cache" \
             --content-type "text/html"
+          aws s3 cp dist/oei-web/browser/config.json "s3://${FRONTEND_S3_BUCKET}/config.json" \
+            --cache-control "no-cache" \
+            --content-type "application/json"
 
       - name: Invalidate CloudFront
         if: ${{ env.FRONTEND_CLOUDFRONT_DISTRIBUTION_ID != '' }}

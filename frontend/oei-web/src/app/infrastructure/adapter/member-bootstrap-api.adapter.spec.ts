@@ -24,6 +24,7 @@ describe('MemberBootstrapApiAdapter', () => {
       profileStatus: 'READY',
       membershipStatus: 'ACTIVE',
       profileId: 'profile-1',
+      cvStatus: 'COMPLETED',
     });
 
     const bootstrap = await result;
@@ -31,6 +32,7 @@ describe('MemberBootstrapApiAdapter', () => {
     expect(bootstrap.profileStatus).toBe('READY');
     expect(bootstrap.membershipStatus).toBe('ACTIVE');
     expect(bootstrap.profileId).toBe('profile-1');
+    expect(bootstrap.cvStatus).toBe('COMPLETED');
     httpMock.verify();
   });
 
@@ -45,12 +47,34 @@ describe('MemberBootstrapApiAdapter', () => {
       profileStatus: 'ONBOARDING_REQUIRED',
       membershipStatus: null,
       profileId: null,
+      cvStatus: null,
     });
 
     const bootstrap = await result;
     expect(bootstrap.profileStatus).toBe('ONBOARDING_REQUIRED');
     expect(bootstrap.membershipStatus).toBeNull();
     expect(bootstrap.profileId).toBeNull();
+    expect(bootstrap.cvStatus).toBeNull();
+    httpMock.verify();
+  });
+
+  it('givenOnboardingInProgress_whenGetBootstrap_thenReturnsCvStatusProjectedFromTheImportPipeline', async () => {
+    const { adapter, httpMock } = createAdapter();
+
+    const result = firstValueFrom(adapter.getBootstrap());
+
+    const req = httpMock.expectOne('/api/member/v1/bootstrap');
+    req.flush({
+      memberId: 'member-3',
+      profileStatus: 'ONBOARDING_IN_PROGRESS',
+      membershipStatus: null,
+      profileId: null,
+      cvStatus: 'AI_PROCESSING',
+    });
+
+    const bootstrap = await result;
+    expect(bootstrap.profileStatus).toBe('ONBOARDING_IN_PROGRESS');
+    expect(bootstrap.cvStatus).toBe('AI_PROCESSING');
     httpMock.verify();
   });
 });

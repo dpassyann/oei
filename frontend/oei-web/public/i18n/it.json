@@ -477,7 +477,10 @@
       "experiences": {
         "organization": "Organizzazione",
         "jobTitle": "Ruolo",
-        "startDate": "Data di inizio"
+        "startDate": "Data di inizio",
+        "grossAnnualSalary": "Stipendio annuo lordo",
+        "salaryCurrency": "Valuta",
+        "salaryPrivateNotice": "Questa informazione è strettamente privata — non viene mai mostrata pubblicamente, sul profilo pubblico, sul CV o sulla carta digitale. Alimenta solo l’aggregato anonimizzato della Rete Neurale Professionale una volta che almeno 5 membri abbiano dichiarato un importo per lo stesso dominio."
       },
       "formations": {
         "institution": "Istituto",

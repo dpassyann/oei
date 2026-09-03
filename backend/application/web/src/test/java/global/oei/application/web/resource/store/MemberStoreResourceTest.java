@@ -1,6 +1,8 @@
 package global.oei.application.web.resource.store;
 
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -15,12 +17,17 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.server.ResponseStatusException;
 
+import global.oei.application.web.config.security.MemberEntitlementGuard;
+import global.oei.application.web.config.web.GlobalExceptionHandler;
 import global.oei.application.web.resource.store.adapter.StoreAdapter;
 import global.oei.domain.shared.member.MemberId;
+import global.oei.domain.shared.membership.MembershipEntitlement;
 import global.oei.domain.shared.payment.PaymentMethod;
 import global.oei.domain.shared.store.BusinessCardPreview;
 import global.oei.domain.shared.store.Order;
@@ -36,12 +43,35 @@ class MemberStoreResourceTest {
     private static final String ORDER_ID = "order-1";
 
     private StoreAdapter storeAdapter;
+    private MemberEntitlementGuard entitlementGuard;
     private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
         storeAdapter = mock(StoreAdapter.class);
-        mockMvc = MockMvcBuilders.standaloneSetup(new MemberStoreResource(storeAdapter)).build();
+        entitlementGuard = mock(MemberEntitlementGuard.class);
+        mockMvc = MockMvcBuilders.standaloneSetup(new MemberStoreResource(storeAdapter, entitlementGuard))
+                .setControllerAdvice(new GlobalExceptionHandler())
+                .build();
+    }
+
+    // Server-side enforcement of `BUSINESS_CARD_ORDER` (docs/audit/MEMBER-SPACE-CURRENT-STATE.md
+    // §4): a direct API call without the entitlement must be rejected with 403 (never a raw
+    // stack trace/500) and must never reach `StoreAdapter.createMyOrder`.
+    @Test
+    void createMyStoreOrder_returnsForbiddenAsProblemDetailWhenCallerLacksBusinessCardOrderEntitlement() throws Exception {
+        doThrow(new ResponseStatusException(HttpStatus.FORBIDDEN, "Membership status SUSPENDED does not grant BUSINESS_CARD_ORDER."))
+                .when(entitlementGuard).require(MembershipEntitlement.BUSINESS_CARD_ORDER);
+
+        mockMvc.perform(post("/api/member/v1/store/orders")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"lines":[{"productId":"prod-1","quantity":1}]}"""))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.status").value(403))
+                .andExpect(jsonPath("$.detail").value("Membership status SUSPENDED does not grant BUSINESS_CARD_ORDER."));
+
+        verifyNoInteractions(storeAdapter);
     }
 
     private Order pendingPaymentOrder() {

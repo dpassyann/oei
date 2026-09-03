@@ -18,6 +18,17 @@ export interface Experience {
   // Demonstration data must always be explicitly flagged so it can never be mistaken
   // for a real member's history — see spec requirement "données de démonstration honnêtes".
   readonly isDemoData?: boolean;
+  // The member's own gross annual salary ("salaire brut annuel") for THIS experience.
+  // Deliberately private, always — same rule as `CurrentCompensation` below: never part of
+  // `PublicProfile.visibleFields`, never rendered on the digital business card/CV/member
+  // directory, never sent to any `/api/public/**` endpoint. Saving/updating an experience that
+  // carries this field is the trigger for a `compensation_declaration` row feeding the
+  // anonymized Professional Neural Network salary-transparency aggregate — never an
+  // individually-visible figure. Required together with `salaryCurrency`.
+  readonly grossAnnualSalary?: number;
+  // ISO 4217 currency code (e.g. "CHF", "EUR") for `grossAnnualSalary` — free text, same
+  // convention as `CurrentCompensation.currency`. Required together with `grossAnnualSalary`.
+  readonly salaryCurrency?: string;
 }
 
 export interface Education {
@@ -64,6 +75,10 @@ export type CompensationPeriod = 'YEAR' | 'MONTH';
 //   `country` below — again only ever surfaced as a computed range once at least
 //   `MIN_ANONYMIZED_SAMPLE_SIZE` members contributed to that specific node (+country) pool, never
 //   as an individual figure.
+// NOTE: the actual write path into `compensation_declaration` is now `Experience.grossAnnualSalary`
+// (per-experience, see that field's own doc comment), not this field — this field remains for
+// the member's own benchmark comparison only, per the owner's decision to model the trigger at
+// the experience level instead of a single profile-wide figure.
 export interface CurrentCompensation {
   readonly amount: number;
   // ISO 4217 currency code (e.g. "CHF", "EUR") — free text input, not a hardcoded list, since

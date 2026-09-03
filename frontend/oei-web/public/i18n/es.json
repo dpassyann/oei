@@ -477,7 +477,10 @@
       "experiences": {
         "organization": "Organización",
         "jobTitle": "Puesto",
-        "startDate": "Fecha de inicio"
+        "startDate": "Fecha de inicio",
+        "grossAnnualSalary": "Salario bruto anual",
+        "salaryCurrency": "Moneda",
+        "salaryPrivateNotice": "Esta información es estrictamente privada — nunca se muestra públicamente, en su perfil público, su CV o su tarjeta digital. Solo alimenta el agregado anonimizado de la Red Neuronal Profesional una vez que al menos 5 miembros hayan declarado una cifra para el mismo dominio."
       },
       "formations": {
         "institution": "Institución",

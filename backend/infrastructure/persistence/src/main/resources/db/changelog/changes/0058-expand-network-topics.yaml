@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0058-expand-network-topics
+      author: oei-backend
+      comment: >
+        Closes the topic-coverage TODO left by 0008-demo-network-graph.sql: adds 28 more
+        network_topic rows across the same 9 domains, bringing the demo dataset to the same
+        ~46-topic taxonomy as network-graph-mock.adapter.ts's TOPICS constant (full
+        front/back parity).
+      changes:
+        - sqlFile:
+            path: db/changelog/changes/0058-expand-network-topics.sql
+            relativeToChangelogFile: false
+            splitStatements: true
+            stripComments: true

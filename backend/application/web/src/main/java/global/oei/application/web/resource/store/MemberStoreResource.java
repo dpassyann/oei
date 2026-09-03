@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 
 import global.oei.application.web.MemberStoreApi;
+import global.oei.application.web.config.security.MemberEntitlementGuard;
 import global.oei.application.web.model.BusinessCardCustomizationDTO;
 import global.oei.application.web.model.BusinessCardPreviewDTO;
 import global.oei.application.web.model.CreateOrderRequestDTO;
@@ -17,6 +18,7 @@ import global.oei.application.web.model.OrderDTO;
 import global.oei.application.web.model.PayOrderRequestDTO;
 import global.oei.application.web.resource.store.adapter.StoreAdapter;
 import global.oei.application.web.resource.store.mapper.StoreDtoMapper;
+import global.oei.domain.shared.membership.MembershipEntitlement;
 import global.oei.domain.shared.payment.PaymentMethod;
 import global.oei.domain.shared.store.BusinessCardCustomization;
 import global.oei.domain.shared.store.BusinessCardPreview;
@@ -26,12 +28,18 @@ import global.oei.domain.shared.store.Order;
 /**
  * Implements every operation of {@link MemberStoreApi}: business-card preview, order
  * creation/history, and order payment for the currently authenticated member.
+ *
+ * <p>{@link #createMyStoreOrder} is gated server-side by {@code BUSINESS_CARD_ORDER} — the
+ * store only sells the customizable business card in this iteration (see {@code Product}'s
+ * OpenAPI Javadoc: {@code customizable} is true only for it), so ordering anything through
+ * this endpoint is, today, ordering a business card.</p>
  */
 @RestController
 @RequiredArgsConstructor
 public class MemberStoreResource implements MemberStoreApi {
 
     private final StoreAdapter storeAdapter;
+    private final MemberEntitlementGuard entitlementGuard;
 
     @Override
     public ResponseEntity<BusinessCardPreviewDTO> generateBusinessCardPreview(final BusinessCardCustomizationDTO businessCardCustomizationDTO) {
@@ -42,6 +50,7 @@ public class MemberStoreResource implements MemberStoreApi {
 
     @Override
     public ResponseEntity<OrderDTO> createMyStoreOrder(final CreateOrderRequestDTO createOrderRequestDTO) {
+        entitlementGuard.require(MembershipEntitlement.BUSINESS_CARD_ORDER);
         final List<NewOrderLine> lines = createOrderRequestDTO.getLines().stream().map(StoreDtoMapper::toDomain).toList();
         final Order order = storeAdapter.createMyOrder(lines);
         return ResponseEntity.status(HttpStatus.CREATED).body(StoreDtoMapper.toDto(order));

@@ -1,8 +1,8 @@
 {
   "dataSource": "api",
-  "apiBaseUrl": "https://api.theitorder.global/api/v1",
-  "oidcIssuer": "https://auth.theitorder.global/realms/oei",
-  "hideEspaceMembre": true,
+  "apiBaseUrl": "/api/v1",
+  "oidcIssuer": "http://localhost:8081/realms/oei",
+  "hideEspaceMembre": false,
   "linkedinOAuthAuthorizeUrl": "https://www.linkedin.com/oauth/v2/authorization",
   "linkedinOAuthClientId": "",
   "linkedinOAuthScope": "openid profile email"

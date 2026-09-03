@@ -76,7 +76,7 @@ class ProfessionalProfilePersistenceAdapterIT {
         
         final Experience experience = new Experience(
                 "exp-1", "OEI Démonstration SA", "Architecte logiciel", LocalDate.of(2020, 1, 1), null, true,
-                "Conception de systèmes distribués.", false);
+                "Conception de systèmes distribués.", false, null, null);
         final ProfessionalProfile profile = new ProfessionalProfile(
                 memberId, null, "Architecte logiciel senior", "Résumé de démonstration.", "Genève, Suisse", Availability.AVAILABLE,
                 List.of("Cloud", "Sécurité"), List.of("Java", "Kubernetes"), List.of("Banque"), List.of(), List.of(experience),

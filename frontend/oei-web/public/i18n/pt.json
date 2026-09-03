@@ -477,7 +477,10 @@
       "experiences": {
         "organization": "Organização",
         "jobTitle": "Cargo",
-        "startDate": "Data de início"
+        "startDate": "Data de início",
+        "grossAnnualSalary": "Salário bruto anual",
+        "salaryCurrency": "Moeda",
+        "salaryPrivateNotice": "Esta informação é estritamente privada — nunca é exibida publicamente, no seu perfil público, no seu CV ou no seu cartão digital. Ela só alimenta o agregado anonimizado da Rede Neural Profissional depois que pelo menos 5 membros tiverem declarado um valor para o mesmo domínio."
       },
       "formations": {
         "institution": "Instituição",

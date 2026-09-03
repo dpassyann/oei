@@ -106,6 +106,11 @@ services:
     volumes:
       - ../keycloak/realm-export:/opt/keycloak/data/import
       - ../keycloak/themes/oei:/opt/keycloak/themes/oei
+      # Custom SPI jars (email-OTP authenticator, see keycloak/extensions/email-otp-authenticator).
+      # NOTE: mounting + relying on Keycloak's auto-rebuild-on-start is acceptable for now but
+      # adds ~10-20s to every prod restart; baking the jar into a custom Keycloak image at build
+      # time (multi-stage Dockerfile + `kc.sh build`) is the recommended hardening for later.
+      - ../keycloak/providers:/opt/keycloak/providers
     depends_on:
       postgres:
         condition: service_healthy
@@ -201,6 +206,12 @@ services:
       OEI_PUBLIC_BASE_URL: https://theitorder.global
       OEI_MAIL_FROM: ${OEI_MAIL_FROM:-no-reply@theitorder.global}
     # Aucun port publié : Caddy proxifie vers backend:8080 via oei-net.
+    healthcheck:
+      test: ["CMD-SHELL", "wget --quiet --tries=1 --spider http://localhost:8080/actuator/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 8
+      start_period: 60s
     depends_on:
       postgres:
         condition: service_healthy
@@ -228,9 +239,16 @@ services:
     environment:
       GRAFANA_BASICAUTH_USER: ${GRAFANA_BASICAUTH_USER}
       GRAFANA_BASICAUTH_PASSWORD_HASH: ${GRAFANA_BASICAUTH_PASSWORD_HASH}
+    healthcheck:
+      test: ["CMD-SHELL", "wget --quiet --tries=1 --spider http://localhost:2019/metrics || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
     depends_on:
-      - backend
-      - keycloak
+      backend:
+        condition: service_healthy
+      keycloak:
+        condition: service_started
     networks:
       - oei-net
     logging: *logging-cloudwatch

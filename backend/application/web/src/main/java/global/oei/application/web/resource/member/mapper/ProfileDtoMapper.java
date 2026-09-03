@@ -100,6 +100,8 @@ public class ProfileDtoMapper {
         dto.setCurrent(experience.current());
         dto.setDescription(experience.description());
         dto.setIsDemoData(experience.isDemoData());
+        dto.setGrossAnnualSalary(org.openapitools.jackson.nullable.JsonNullable.of(experience.grossAnnualSalary()));
+        dto.setSalaryCurrency(org.openapitools.jackson.nullable.JsonNullable.of(experience.salaryCurrency()));
         return dto;
     }
 
@@ -112,7 +114,9 @@ public class ProfileDtoMapper {
                 dto.getEndDate() == null ? null : dto.getEndDate().orElse(null),
                 Boolean.TRUE.equals(dto.getCurrent()),
                 dto.getDescription(),
-                Boolean.TRUE.equals(dto.getIsDemoData()));
+                Boolean.TRUE.equals(dto.getIsDemoData()),
+                dto.getGrossAnnualSalary() == null ? null : dto.getGrossAnnualSalary().orElse(null),
+                dto.getSalaryCurrency() == null ? null : dto.getSalaryCurrency().orElse(null));
     }
 
     private EducationDTO toDto(final Education education) {

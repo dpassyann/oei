@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 
 import global.oei.application.web.MemberCvApi;
+import global.oei.application.web.config.security.MemberEntitlementGuard;
 import global.oei.application.web.model.CvCreationDTO;
 import global.oei.application.web.model.CvDTO;
 import global.oei.application.web.model.CvRenderRequestDTO;
@@ -19,6 +20,7 @@ import global.oei.application.web.model.PdfGenerationJobDTO;
 import global.oei.application.web.resource.cv.adapter.CvAdapter;
 import global.oei.application.web.resource.cv.mapper.CvDtoMapper;
 import global.oei.domain.shared.cv.CvSectionType;
+import global.oei.domain.shared.membership.MembershipEntitlement;
 
 /**
  * Implements every operation of {@link MemberCvApi}: no stub left on this interface. CV
@@ -30,6 +32,7 @@ import global.oei.domain.shared.cv.CvSectionType;
 public class CvResource implements MemberCvApi {
 
     private final CvAdapter cvAdapter;
+    private final MemberEntitlementGuard entitlementGuard;
 
     @Override
     public ResponseEntity<List<CvTemplateDTO>> listCvTemplates() {
@@ -101,6 +104,7 @@ public class CvResource implements MemberCvApi {
 
     @Override
     public ResponseEntity<PdfGenerationJobDTO> renderCv(final String id, final CvRenderRequestDTO cvRenderRequestDTO) {
+        entitlementGuard.require(MembershipEntitlement.CV_EXPORT_PDF);
         return cvAdapter.renderCv(id, cvRenderRequestDTO.getLanguage(), cvRenderRequestDTO.getIncludeBadges())
                 .map(CvDtoMapper::toDto)
                 .map(job -> ResponseEntity.status(HttpStatus.ACCEPTED).body(job))

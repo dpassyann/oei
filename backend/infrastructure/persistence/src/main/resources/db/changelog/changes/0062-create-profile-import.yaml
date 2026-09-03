@@ -1,0 +1,73 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0062-create-profile-import
+      author: oei-backend
+      comment: >
+        A ProfileImport session tracks the "Smart CV Import" pipeline lifecycle (upload ->
+        extraction -> AI processing -> review -> confirm), a concept orthogonal to cv.status
+        (which models content-editing of a hand-built Cv document). Every field maps to its
+        own column -- no nested collections worth a jsonb blob here, unlike cv/cv_json. See
+        global.oei.infrastructure.persistence.profileimport.ProfileImportEntity's Javadoc.
+      changes:
+        - createTable:
+            tableName: profile_import
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: member_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_profile_import_member
+                    references: member(id)
+              - column:
+                  name: source
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: started_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status_updated_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: error_code
+                  type: varchar(100)
+              - column:
+                  name: created_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_by
+                  type: varchar(255)
+              - column:
+                  name: last_modified_at
+                  type: timestamptz
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_modified_by
+                  type: varchar(255)
+        - createIndex:
+            indexName: idx_profile_import_member_id
+            tableName: profile_import
+            columns:
+              - column:
+                  name: member_id

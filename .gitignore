@@ -5,6 +5,10 @@ dist/
 out/
 *.class
 
+# Built Keycloak SPI provider jars (rebuild via
+# `mvn -f keycloak/extensions/*/pom.xml package` + copy into keycloak/providers/)
+keycloak/providers/*.jar
+
 # Maven
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
@@ -57,3 +61,8 @@ frontend/**/src/**/infrastructure/clients/**/
 # and not this project's own artifact); see the header comments in
 # backend/infrastructure/client/src/main/resources/openapi/{stripe,paypal}-api.yaml.
 .prompt/deployment/vendor-openapi-raw/
+
+# Production secrets/credentials that must never be committed
+oei-prod-key.pem
+.prompt/local/oei-prod-secrets.txt
+.prompt/local/oei-prod.env

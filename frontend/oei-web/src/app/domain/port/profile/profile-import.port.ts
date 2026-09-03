@@ -27,10 +27,16 @@ export abstract class ProfileImportPort {
   /** Confirm the draft — creates/updates the profile. */
   abstract confirmImport(importId: string): Observable<ProfessionalProfile>;
 
-  /** Import LinkedIn basic identity and bootstrap profile source. */
-  abstract importLinkedinBasic(accessToken: string): Observable<ProfessionalProfile>;
-
-  /** Finalize LinkedIn OAuth callback (authorization-code exchange server-side + import). */
+  /**
+   * Finalize LinkedIn OAuth callback (authorization-code exchange server-side + import).
+   *
+   * This is the only LinkedIn-import entry point: the server exchanges the authorization
+   * code for a token itself, so the frontend never has to hold or forward a raw LinkedIn
+   * access token. A prior "basic" variant accepting a client-supplied access token directly
+   * was removed as dead code (no caller, and no planned native/mobile client needing it —
+   * see .prompt/plan/integration/*.md); re-add only alongside a concrete client that performs
+   * its own OAuth handshake.
+   */
   abstract importLinkedinBasicFromAuthorizationCode(
     authorizationCode: string,
     redirectUri: string,
