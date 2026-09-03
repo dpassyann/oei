@@ -171,3 +171,9 @@ variable "frontend_release_id" {
   default     = ""
 }
 
+variable "backend_release_id" {
+  description = "Optional manual trigger id to force a backend rollout via Terraform SSM Run Command. Change this value for each new backend release (e.g. git SHA or timestamp). Leave empty to skip."
+  type        = string
+  default     = ""
+}
+

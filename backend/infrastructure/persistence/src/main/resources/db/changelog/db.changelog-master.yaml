@@ -167,3 +167,18 @@ databaseChangeLog:
   - include:
       file: db/changelog/changes/0057-home-fixtures-from-mocks.yaml
       relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0058-expand-network-topics.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0059-demo-additional-network-members.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0060-expand-network-experts.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0061-demo-topic-certification-compensation.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/changes/0062-create-profile-import.yaml
+      relativeToChangelogFile: false

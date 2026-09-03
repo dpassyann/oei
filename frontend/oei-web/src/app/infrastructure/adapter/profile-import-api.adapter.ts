@@ -37,10 +37,6 @@ export class ProfileImportApiAdapter extends ProfileImportPort {
     return this.http.post<ProfessionalProfile>(`${PROFILE_IMPORT_API_BASE}/${importId}/confirm`, {});
   }
 
-  override importLinkedinBasic(accessToken: string): Observable<ProfessionalProfile> {
-    return this.http.post<ProfessionalProfile>(`${PROFILE_IMPORT_API_BASE}/linkedin/basic`, { accessToken });
-  }
-
   override importLinkedinBasicFromAuthorizationCode(
     authorizationCode: string,
     redirectUri: string,

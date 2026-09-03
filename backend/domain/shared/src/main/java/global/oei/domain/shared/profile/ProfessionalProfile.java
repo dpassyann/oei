@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Objects;
 
 import global.oei.domain.shared.member.MemberId;
+import global.oei.domain.shared.network.CompensationDeclarationCandidate;
+import global.oei.domain.shared.network.CompensationPeriod;
+import global.oei.domain.shared.network.NetworkSalaryNodeType;
 
 /**
  * A member's professional profile — deliberately a "big object" replaced wholesale by
@@ -154,5 +157,42 @@ public record ProfessionalProfile(
 
     private static boolean isNotBlank(final String value) {
         return value != null && !value.isBlank();
+    }
+
+    /**
+     * Derives the full set of anonymized-pool candidate rows this profile currently feeds,
+     * from every {@link Experience} that carries a {@code grossAnnualSalary} (the trigger — see
+     * that field's own Javadoc), fanned out across this profile's {@link #expertiseAreas()} as
+     * {@link NetworkSalaryNodeType#DOMAIN} graph nodes.
+     *
+     * <p><strong>Open modeling question</strong> (see MEMBER-SPACE-CURRENT-STATE.md §6): a
+     * member's freeform {@code expertiseAreas} entries are not validated against the canonical
+     * {@code NetworkDomain} catalog (fixed slugs such as {@code "ia"}/{@code "cloud"}); a
+     * declaration whose {@code nodeId} does not match a real domain slug is stored but never
+     * surfaces in any {@code SalaryInsight} aggregate. A dedicated expertise-area-to-domain
+     * mapping (or a domain picker constrained to the catalog) would close this gap; out of
+     * scope here since {@code Experience} itself carries no domain/topic linkage today.</p>
+     *
+     * @param country free-text country label (same format as {@code CurrentCompensation.country}
+     *                 / {@code NetworkExpert.country}), or {@code null} to leave every derived
+     *                 declaration country-agnostic
+     * @return one candidate per (salaried experience × expertise area) pair; empty when no
+     *         experience carries a salary or the profile lists no expertise area to attach to
+     */
+    public List<CompensationDeclarationCandidate> deriveCompensationDeclarations(final String country) {
+        if (expertiseAreas.isEmpty()) {
+            return List.of();
+        }
+        return experiences.stream()
+                .filter(Experience::hasGrossAnnualSalary)
+                .flatMap(experience -> expertiseAreas.stream()
+                        .map(domainId -> new CompensationDeclarationCandidate(
+                                NetworkSalaryNodeType.DOMAIN,
+                                domainId,
+                                country,
+                                experience.grossAnnualSalary(),
+                                experience.salaryCurrency(),
+                                CompensationPeriod.YEAR)))
+                .toList();
     }
 }

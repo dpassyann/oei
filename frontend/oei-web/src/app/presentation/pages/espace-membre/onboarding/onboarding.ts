@@ -128,7 +128,17 @@ export class Onboarding {
 
   // Mini-form state for "add experience / education / certification / language" — kept
   // outside `draft` since they're transient inputs, not part of the saved profile.
-  protected readonly newExperience = signal({ organization: '', title: '', startDate: '' });
+  protected readonly newExperience = signal({
+    organization: '',
+    title: '',
+    startDate: '',
+    // Draft strings kept separate from the parsed `Experience.grossAnnualSalary`/`salaryCurrency`
+    // (a number/string pair) — parsed to a number only when the experience is actually added,
+    // see `addExperience()`. Never sent anywhere public — see `Experience.grossAnnualSalary`'s
+    // doc comment in the domain model.
+    grossAnnualSalary: '',
+    salaryCurrency: '',
+  });
   protected readonly newEducation = signal({ institution: '', program: '', startDate: '' });
   protected readonly newCertification = signal('');
   protected readonly newLanguage = signal<{ language: string; level: LanguageLevel }>({
@@ -213,14 +223,18 @@ export class Onboarding {
     if (!form.organization.trim() || !form.title.trim() || !form.startDate.trim()) {
       return;
     }
+    const grossAnnualSalary = Number(form.grossAnnualSalary);
+    const hasSalary = form.grossAnnualSalary.trim() !== '' && Number.isFinite(grossAnnualSalary) && form.salaryCurrency.trim();
     const experience: Experience = {
       id: newId('experience'),
       organization: form.organization.trim(),
       title: form.title.trim(),
       startDate: form.startDate.trim(),
+      grossAnnualSalary: hasSalary ? grossAnnualSalary : undefined,
+      salaryCurrency: hasSalary ? form.salaryCurrency.trim() : undefined,
     };
     this.updateDraft({ experiences: [...this.draft().experiences, experience] });
-    this.newExperience.set({ organization: '', title: '', startDate: '' });
+    this.newExperience.set({ organization: '', title: '', startDate: '', grossAnnualSalary: '', salaryCurrency: '' });
   }
 
   protected removeExperience(id: string): void {

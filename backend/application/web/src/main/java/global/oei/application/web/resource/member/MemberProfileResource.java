@@ -1,12 +1,7 @@
 package global.oei.application.web.resource.member;
 
-import jakarta.validation.Valid;
-
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -24,13 +19,10 @@ import global.oei.application.web.resource.member.adapter.CharterAdapter;
 import global.oei.application.web.resource.member.adapter.MemberSelfAdapter;
 import global.oei.application.web.resource.member.adapter.MembershipAdapter;
 import global.oei.application.web.resource.member.adapter.ProfileAdapter;
-import global.oei.application.web.resource.member.adapter.ProfileImportAdapter;
 import global.oei.application.web.resource.member.mapper.BootstrapDtoMapper;
 import global.oei.application.web.resource.member.mapper.CharterDtoMapper;
 import global.oei.application.web.resource.member.mapper.MembershipDtoMapper;
 import global.oei.application.web.resource.member.mapper.ProfileDtoMapper;
-import global.oei.application.web.resource.member.model.LinkedinBasicImportRequest;
-import global.oei.application.web.resource.member.model.LinkedinOAuthCallbackRequest;
 import global.oei.domain.shared.member.MemberId;
 
 /**
@@ -41,6 +33,11 @@ import global.oei.domain.shared.member.MemberId;
  * same interface would double-register every route) — all four operations share this one
  * class even though they use separate {@code *Adapter}/{@code service.*Service} pairs
  * internally.
+ *
+ * <p>The {@code member-profile-import} operations (Smart CV Import + LinkedIn OAuth callback)
+ * live in {@link global.oei.application.web.resource.member.ProfileImportResource} instead,
+ * as the sole implementer of {@link global.oei.application.web.MemberProfileImportApi} — see
+ * that class's Javadoc.</p>
  *
  * <p>{@code @RestController} + Lombok {@code @RequiredArgsConstructor}: discovered by
  * {@code OeiBackendApplication}'s own {@code @SpringBootApplication} component scan (scoped
@@ -57,7 +54,6 @@ public class MemberProfileResource implements MemberProfileApi {
     private final CharterAdapter charterAdapter;
     private final MemberSelfAdapter memberSelfAdapter;
     private final BootstrapAdapter bootstrapAdapter;
-    private final ProfileImportAdapter profileImportAdapter;
 
     /**
      * Bootstrap endpoint — returns profile and membership state so the frontend can decide
@@ -99,31 +95,6 @@ public class MemberProfileResource implements MemberProfileApi {
         // overriding whatever this request body carried (see ProfessionalProfile#withMemberId).
         final var submitted = ProfileDtoMapper.toDomain(MemberId.newId(), professionalProfileDTO);
         return ResponseEntity.ok(ProfileDtoMapper.toDto(profileAdapter.updateMyProfile(submitted)));
-    }
-
-    /**
-     * LinkedIn basic import orchestration (identity bootstrap): updates member identity fields
-     * from LinkedIn userinfo and marks profile source as LINKEDIN_BASIC/LINKEDIN_AND_CV.
-     */
-    @PostMapping(path = "/api/member/v1/profile-import/linkedin/basic", consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProfessionalProfileDTO> importLinkedinBasic(
-            @Valid @RequestBody final LinkedinBasicImportRequest request) {
-        return ResponseEntity.ok(ProfileDtoMapper.toDto(profileImportAdapter.importLinkedinBasic(request.accessToken())));
-    }
-
-    /**
-     * LinkedIn OAuth callback completion: receives authorization code from frontend callback,
-     * exchanges it server-side for an access token, then runs the standard LinkedIn basic import.
-     */
-    @PostMapping(path = "/api/member/v1/profile-import/linkedin/basic/callback", consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProfessionalProfileDTO> importLinkedinBasicFromAuthorizationCode(
-            @Valid @RequestBody final LinkedinOAuthCallbackRequest request) {
-        return ResponseEntity.ok(ProfileDtoMapper.toDto(
-                profileImportAdapter.importLinkedinBasicWithAuthorizationCode(
-                        request.authorizationCode(),
-                        request.redirectUri())));
     }
 
     @Override

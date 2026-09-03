@@ -51,21 +51,6 @@ describe('ProfileImportApiAdapter', () => {
     httpMock.verify();
   });
 
-  it('givenLinkedinAccessToken_whenImportLinkedinBasic_thenCallsLinkedinEndpoint', async () => {
-    const { adapter, httpMock } = createAdapter();
-
-    const result = firstValueFrom(adapter.importLinkedinBasic('linkedin-token-abc'));
-
-    const req = httpMock.expectOne('/api/member/v1/profile-import/linkedin/basic');
-    expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual({ accessToken: 'linkedin-token-abc' });
-    req.flush({ memberId: 'member-2' });
-
-    const profile = await result;
-    expect(profile.memberId).toBe('member-2');
-    httpMock.verify();
-  });
-
   it('givenLinkedinAuthorizationCode_whenImportLinkedinBasicFromAuthorizationCode_thenCallsCallbackEndpoint', async () => {
     const { adapter, httpMock } = createAdapter();
 

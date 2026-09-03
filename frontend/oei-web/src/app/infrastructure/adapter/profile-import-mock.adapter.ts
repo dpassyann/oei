@@ -76,13 +76,6 @@ export class ProfileImportMockAdapter extends ProfileImportPort {
     return of(profile);
   }
 
-  override importLinkedinBasic(_accessToken: string): Observable<ProfessionalProfile> {
-    return of({
-      ...DEMO_PROFESSIONAL_PROFILE,
-      source: 'LINKEDIN_BASIC' as const,
-    });
-  }
-
   override importLinkedinBasicFromAuthorizationCode(
     _authorizationCode: string,
     _redirectUri: string,

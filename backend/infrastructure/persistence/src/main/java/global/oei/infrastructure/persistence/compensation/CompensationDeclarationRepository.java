@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface CompensationDeclarationRepository extends JpaRepository<CompensationDeclarationEntity, UUID> {
 
+    void deleteByMemberId(UUID memberId);
+
     @Query(
             """
             SELECT MIN(c.amount) AS low, MAX(c.amount) AS high, COUNT(c) AS sampleSize,

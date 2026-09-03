@@ -477,7 +477,10 @@
       "experiences": {
         "organization": "Organization",
         "jobTitle": "Job title",
-        "startDate": "Start date"
+        "startDate": "Start date",
+        "grossAnnualSalary": "Gross annual salary",
+        "salaryCurrency": "Currency",
+        "salaryPrivateNotice": "This information is strictly private — it is never shown publicly, on your public profile, on your CV, or on your digital card. It only feeds the anonymized Professional Neural Network salary aggregate once at least 5 members have declared a figure for the same domain."
       },
       "formations": {
         "institution": "Institution",

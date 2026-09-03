@@ -82,6 +82,12 @@ services:
     volumes:
       - ../keycloak/realm-export:/opt/keycloak/data/import
       - ../keycloak/themes/oei:/opt/keycloak/themes/oei
+      # Custom SPI jars (e.g. the email-OTP authenticator, see
+      # keycloak/extensions/email-otp-authenticator). Build with:
+      #   mvn -f keycloak/extensions/email-otp-authenticator/pom.xml package
+      #   cp keycloak/extensions/email-otp-authenticator/target/*.jar keycloak/providers/
+      # `start-dev` auto-rebuilds the server when it detects new/changed providers here.
+      - ../keycloak/providers:/opt/keycloak/providers
     depends_on:
       postgres:
         condition: service_healthy

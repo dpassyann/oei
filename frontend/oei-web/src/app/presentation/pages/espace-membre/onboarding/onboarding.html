@@ -161,6 +161,26 @@
                 name="newExperienceStartDate"
               />
             </label>
+            <label>
+              {{ i18n.translate('espaceMembre.onboarding.experiences.grossAnnualSalary') }}
+              <input class="oei-input"
+                type="number"
+                min="0"
+                [ngModel]="newExperience().grossAnnualSalary"
+                (ngModelChange)="newExperience.set({ ...newExperience(), grossAnnualSalary: $event })"
+                name="newExperienceGrossAnnualSalary"
+              />
+            </label>
+            <label>
+              {{ i18n.translate('espaceMembre.onboarding.experiences.salaryCurrency') }}
+              <input class="oei-input"
+                type="text"
+                [ngModel]="newExperience().salaryCurrency"
+                (ngModelChange)="newExperience.set({ ...newExperience(), salaryCurrency: $event })"
+                name="newExperienceSalaryCurrency"
+              />
+            </label>
+            <p class="oei-onboarding__hint">{{ i18n.translate('espaceMembre.onboarding.experiences.salaryPrivateNotice') }}</p>
             <button type="button" class="oei-btn oei-btn--secondary" (click)="addExperience()">{{ i18n.translate('espaceMembre.onboarding.add') }}</button>
           </div>
           <ul class="oei-onboarding__list">

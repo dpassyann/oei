@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 
 import global.oei.application.web.MemberEventsApi;
+import global.oei.application.web.config.security.MemberEntitlementGuard;
 import global.oei.application.web.model.EventCommentDTO;
 import global.oei.application.web.model.EventCommentDraftDTO;
 import global.oei.application.web.model.EventPhotoConsentDTO;
@@ -25,15 +26,18 @@ import global.oei.application.web.resource.event.adapter.EventAdapter;
 import global.oei.application.web.resource.event.mapper.EventDtoMapper;
 import global.oei.domain.shared.event.EventLocation;
 import global.oei.domain.shared.event.EventType;
+import global.oei.domain.shared.membership.MembershipEntitlement;
 
 /**
  * Implements every operation of {@link MemberEventsApi}: no stub left on this interface.
+ * {@link #createEventPost} is gated server-side by {@code EVENT_POST}.
  */
 @RestController
 @RequiredArgsConstructor
 public class MemberEventsResource implements MemberEventsApi {
 
     private final EventAdapter eventAdapter;
+    private final MemberEntitlementGuard entitlementGuard;
 
     @Override
     public ResponseEntity<EventProposalDTO> submitEventProposal(final EventProposalDraftDTO dto) {
@@ -77,6 +81,7 @@ public class MemberEventsResource implements MemberEventsApi {
 
     @Override
     public ResponseEntity<EventPostDTO> createEventPost(final String id, final EventPostDraftDTO dto) {
+        entitlementGuard.require(MembershipEntitlement.EVENT_POST);
         return eventAdapter.createEventPost(id, dto.getText(), dto.getPhotoUrl() == null ? null : dto.getPhotoUrl().toString())
                 .map(post -> EventDtoMapper.toDto(post, eventAdapter.currentMemberId()))
                 .map(post -> ResponseEntity.status(HttpStatus.CREATED).body(post))

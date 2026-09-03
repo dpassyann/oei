@@ -180,12 +180,59 @@ describe('Onboarding', () => {
     fixture.detectChanges();
     const component = fixture.componentInstance;
 
-    component['newExperience'].set({ organization: 'OEI', title: 'Analyste', startDate: '2024-01-01' });
+    component['newExperience'].set({
+      organization: 'OEI',
+      title: 'Analyste',
+      startDate: '2024-01-01',
+      grossAnnualSalary: '',
+      salaryCurrency: '',
+    });
     component['addExperience']();
     fixture.detectChanges();
 
     expect(component['draft']().experiences.length).toBe(1);
     expect(component['draft']().experiences[0].organization).toBe('OEI');
+    expect(component['draft']().experiences[0].grossAnnualSalary).toBeUndefined();
+  });
+
+  it('givenAddExperience_whenSalaryAndCurrencyFilled_thenExperienceCarriesGrossAnnualSalary', () => {
+    configure();
+    const fixture = TestBed.createComponent(Onboarding);
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+
+    component['newExperience'].set({
+      organization: 'OEI',
+      title: 'Analyste',
+      startDate: '2024-01-01',
+      grossAnnualSalary: '90000',
+      salaryCurrency: 'CHF',
+    });
+    component['addExperience']();
+    fixture.detectChanges();
+
+    const experience = component['draft']().experiences[0];
+    expect(experience.grossAnnualSalary).toBe(90000);
+    expect(experience.salaryCurrency).toBe('CHF');
+  });
+
+  it('givenAddExperience_whenSalaryFilledWithoutCurrency_thenGrossAnnualSalaryIsNotSet', () => {
+    configure();
+    const fixture = TestBed.createComponent(Onboarding);
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+
+    component['newExperience'].set({
+      organization: 'OEI',
+      title: 'Analyste',
+      startDate: '2024-01-01',
+      grossAnnualSalary: '90000',
+      salaryCurrency: '',
+    });
+    component['addExperience']();
+    fixture.detectChanges();
+
+    expect(component['draft']().experiences[0].grossAnnualSalary).toBeUndefined();
   });
 
   it('givenFinalStepWithCharterAccepted_whenSubmitted_thenUpdatesProfileSignsCharterAndClearsDraft', () => {

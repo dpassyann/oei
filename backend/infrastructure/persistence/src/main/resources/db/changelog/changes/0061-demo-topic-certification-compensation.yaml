@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0061-demo-topic-certification-compensation
+      author: oei-backend
+      comment: >
+        Adds TOPIC- and CERTIFICATION-level compensation_declaration rows, completing the
+        DOMAIN-only coverage from 0004. Every topic/certification node gets 1-8 declarations
+        in a single country each, so both the anonymized-range case (>= the
+        MIN_ANONYMIZED_SAMPLE_SIZE = 5 threshold enforced by
+        global.oei.domain.core.network.GetSalaryInsightService, for roughly a third of the
+        nodes) and the not-enough-data case (the rest) are exercised end to end. Declarations
+        are never exposed individually, only through that anonymized aggregate -- see
+        0003-create-compensation-declaration.yaml's comment. Depends on 0058 (topics), 0059
+        (members) and 0010 (certifications).
+      changes:
+        - sqlFile:
+            path: db/changelog/changes/0061-demo-topic-certification-compensation.sql
+            relativeToChangelogFile: false
+            splitStatements: true
+            stripComments: true

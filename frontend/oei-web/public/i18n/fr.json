@@ -477,7 +477,10 @@
       "experiences": {
         "organization": "Organisation",
         "jobTitle": "Poste",
-        "startDate": "Date de début"
+        "startDate": "Date de début",
+        "grossAnnualSalary": "Salaire brut annuel",
+        "salaryCurrency": "Devise",
+        "salaryPrivateNotice": "Cette information est strictement privée — elle n’est jamais affichée publiquement, sur votre profil public, votre CV ou votre carte numérique. Elle n’alimente que l’agrégat anonymisé du Réseau Neuronal Professionnel, une fois qu’au moins 5 membres ont déclaré un montant pour le même domaine."
       },
       "formations": {
         "institution": "Établissement",

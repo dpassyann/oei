@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0060-expand-network-experts
+      author: oei-backend
+      comment: >
+        Enriches network_expert coverage: every one of the 46 topics from 0008/0058 now has
+        2-4 experts instead of the original 1-per-topic from 0008, reusing the 0004 and 0059
+        demo members, so the Professional Neural Network graph feels populated/fluid for
+        demos instead of sparse. Depends on 0058 (topics) and 0059 (members).
+      changes:
+        - sqlFile:
+            path: db/changelog/changes/0060-expand-network-experts.sql
+            relativeToChangelogFile: false
+            splitStatements: true
+            stripComments: true

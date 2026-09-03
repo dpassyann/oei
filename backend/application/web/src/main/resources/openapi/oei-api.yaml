@@ -809,32 +809,6 @@ paths:
               schema:
                 $ref: "#/components/schemas/Problem"
 
-  /api/member/v1/profile-import/linkedin/basic:
-    parameters:
-      - $ref: "#/components/parameters/ApiVersionHeader"
-    post:
-      tags: [member-profile-import]
-      operationId: importLinkedinBasicProfile
-      summary: >
-        Importe l'identité LinkedIn de base (userinfo OpenID) puis marque la source
-        du profil comme LINKEDIN_BASIC ou LINKEDIN_AND_CV.
-      security: [{ bearerAuth: [member] }]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/LinkedinBasicImportRequest"
-      responses:
-        "200":
-          description: Profil mis à jour après import LinkedIn basic
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ProfessionalProfile"
-        "400":
-          $ref: "#/components/responses/ValidationError"
-
   /api/member/v1/profile-import/linkedin/basic/callback:
     parameters:
       - $ref: "#/components/parameters/ApiVersionHeader"
@@ -4429,6 +4403,11 @@ components:
         profileId:
           type: string
           nullable: true
+        # Projection du statut le plus récent du pipeline de Smart CV Import (voir
+        # ProfileImportStatus). Null si le membre n'a jamais démarré d'import.
+        cvStatus:
+          $ref: "#/components/schemas/ProfileImportStatus"
+          nullable: true
 
     ProfileImportStatus:
       type: string
@@ -4464,15 +4443,6 @@ components:
         processingStepLabel:
           type: string
           nullable: true
-
-    LinkedinBasicImportRequest:
-      type: object
-      required: [accessToken]
-      properties:
-        accessToken:
-          type: string
-          minLength: 1
-          description: Access token LinkedIn obtenu via OAuth côté frontend.
 
     LinkedinOAuthCallbackRequest:
       type: object
@@ -4616,6 +4586,22 @@ components:
         isDemoData:
           type: boolean
           default: false
+        grossAnnualSalary:
+          type: number
+          nullable: true
+          description: >
+            The member's own gross annual salary ("salaire brut annuel") for this specific
+            experience. Deliberately private, always -- never part of any public-facing
+            schema/endpoint (same rule as CurrentCompensation). Saving/updating an experience
+            that carries this field is the trigger for a compensation_declaration row feeding
+            the anonymized Professional Neural Network salary-transparency aggregate; never an
+            individually-visible figure. Required together with salaryCurrency.
+        salaryCurrency:
+          type: string
+          nullable: true
+          description: >
+            ISO 4217 currency code (e.g. "CHF", "EUR") for grossAnnualSalary, free text.
+            Required together with grossAnnualSalary.
 
     Education:
       type: object

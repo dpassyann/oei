@@ -15,7 +15,7 @@
     "e2e": "playwright test"
   },
   "private": true,
-  "packageManager": "pnpm@11.22.0",
+  "packageManager": "pnpm@11.25.0",
   "dependencies": {
     "@angular/common": "^22.1.0",
     "@angular/compiler": "^22.1.0",
@@ -43,10 +43,5 @@
     "prettier": "^3.8.1",
     "typescript": "~6.0.2",
     "vitest": "^4.0.8"
-  },
-  "pnpm": {
-    "overrides": {
-      "lmdb": "npm:is-odd@3.0.1"
-    }
   }
 }

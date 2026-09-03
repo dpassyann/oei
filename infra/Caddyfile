@@ -5,6 +5,11 @@
 }
 
 api.theitorder.global {
+    # Caddy-level healthcheck (test: curl https://api.theitorder.global/caddy-health)
+    handle /caddy-health {
+        respond "OK" 200
+    }
+
     reverse_proxy backend:8080
     encode gzip
 }

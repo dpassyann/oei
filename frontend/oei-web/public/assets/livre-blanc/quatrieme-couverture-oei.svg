@@ -135,7 +135,7 @@
   </text>
 
   <!-- Zone ISBN / code-barres -->
-  <text x="905" y="1418" class="sans white" font-size="17" letter-spacing="1.5">ISBN : EN ATTENTE</text>
+  <text x="905" y="1418" class="sans white" font-size="17" letter-spacing="1.5">ISBN : 9782322661350</text>
   <g id="barcode-editable">
     <rect x="890" y="1430" width="232" height="145" fill="#fff"/>
     <rect x="903.0" y="1440" width="6.6" height="110" fill="#111"/>
@@ -169,7 +169,7 @@
 <rect x="1131.8" y="1440" width="4.4" height="110" fill="#111"/>
 <rect x="1138.4" y="1440" width="6.6" height="110" fill="#111"/>
     <text x="1007" y="1563" text-anchor="middle" class="sans" fill="#111" font-size="20" letter-spacing="2">
-      9 782491 234567
+      9 782322 661350
     </text>
   </g>
 

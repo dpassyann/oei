@@ -192,7 +192,6 @@ describe('CvBuilder', () => {
             getImportDraft: () => of({}),
             updateImportDraft: () => of({}),
             confirmImport: () => of({}),
-            importLinkedinBasic: () => of({}),
             importLinkedinBasicFromAuthorizationCode: () => of({}),
           },
         },

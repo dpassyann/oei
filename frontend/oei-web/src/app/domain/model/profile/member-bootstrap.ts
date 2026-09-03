@@ -1,3 +1,5 @@
+import { ProfileImportStatus } from './profile-import';
+
 /**
  * Statut du cycle de vie du profil professionnel, retourné par GET /api/member/v1/bootstrap.
  */
@@ -19,11 +21,17 @@ export type ProfileSource = 'MANUAL' | 'LINKEDIN_BASIC' | 'CV_IMPORTED' | 'LINKE
  *
  * `membershipStatus` peut être null si le membre n'a pas d'adhésion OEI formelle
  * (profil professionnel libre sans membership — intentionnellement supporté).
+ *
+ * `cvStatus` est une projection du statut le plus récent du pipeline de Smart CV Import
+ * (voir `ProfileImportStatus`) ; null si le membre n'a jamais démarré d'import. `profileStatus`
+ * intègre déjà cette information dans `ONBOARDING_IN_PROGRESS`/`ONBOARDING_REQUIRED` — ce champ
+ * reste informatif pour l'UI (ex. afficher l'étape courante du traitement).
  */
 export interface MemberBootstrap {
   readonly memberId: string;
   readonly profileStatus: ProfileStatus;
   readonly membershipStatus: string | null;
   readonly profileId: string | null;
+  readonly cvStatus: ProfileImportStatus | null;
 }
 
