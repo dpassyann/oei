@@ -7,5 +7,5 @@ oei:
   payment:
     stripe:
       api-base-url: ${OEI_STRIPE_API_BASE_URL:https://api.stripe.com/v1}
-      api-key: ${OEI_STRIPE_API_KEY:sk_test_51U4tD7JhLVJyf2F7Od2qp7pWs7RGOS7tGoReaumrtgJVOQwY7sMdM69fOFSq254jR2WE0Maruq3oF9qJdOq7pPCZ00y5Ojg9BW}
+      api-key: ${OEI_STRIPE_API_KEY:sk_test_placeholder}
 
