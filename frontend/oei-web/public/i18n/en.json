@@ -256,9 +256,66 @@
     },
     "foundingStatus": {
       "message": "Movement currently being formed — be among the first founding members.",
-      "note": "The online membership form is coming soon. In the meantime, contact us to express your interest in supporting the movement.",
+      "note": "Discover our membership plans below and choose the one that suits you. Full online payment is coming soon — in the meantime, contact us to express your interest in supporting the movement.",
       "cta": "Support the movement",
       "contactPrefix": "Or write to us directly at"
+    }
+  },
+  "adhesion": {
+    "title": "Choose your membership plan",
+    "intro": "Every plan gives access to the same member space — the difference lies in your level of contribution to the movement and the recognition that comes with it.",
+    "honestNote": "Today, access to the member space is identical regardless of the tier chosen: there are no differentiated technical benefits per tier yet. Each plan mainly reflects your level of support for the movement.",
+    "chooseCta": "Choose this plan",
+    "plans": {
+      "STUDENT": {
+        "advantages": [
+          "Reduced rate for students and recent graduates",
+          "Full access to the member space and the network directory",
+          "Invitations to the association's events and workshops"
+        ]
+      },
+      "MEMBER": {
+        "advantages": [
+          "Professional member status of the OEI",
+          "Full access to the member space and the network directory",
+          "Invitations to the association's events and workshops"
+        ]
+      },
+      "FOUNDING": {
+        "advantages": [
+          "Founding member recognition, among the very first supporters of the movement",
+          "Full access to the member space and the network directory",
+          "Invitations to the association's events and workshops"
+        ]
+      },
+      "SUPPORTER": {
+        "advantages": [
+          "Highest contribution level, supporting the movement's launch",
+          "Full access to the member space and the network directory",
+          "Invitations to the association's events and workshops"
+        ]
+      }
+    },
+    "modal": {
+      "title": "Choose your payment method",
+      "selectedPlanPrefix": "Selected plan:",
+      "card": "Credit card",
+      "paypal": "PayPal",
+      "cancel": "Cancel",
+      "closeAria": "Close the dialog"
+    },
+    "checkout": {
+      "title": "Complete your membership",
+      "summaryTitle": "Summary",
+      "planLabel": "Plan",
+      "methodLabel": "Payment method",
+      "method": { "CARD": "Credit card", "PAYPAL": "PayPal" },
+      "placeholderNotice": "This step is a preview of the payment interface — real online payment processing is not available yet.",
+      "deferredNotice": "Real card payment (Stripe) and the actual PayPal button will be integrated in a future step. In the meantime, create your account to join the movement; we will follow up with you to finalize your membership fee.",
+      "createAccountCta": "Create my account",
+      "goToPaymentCta": "Go to my membership fee page",
+      "backToPlans": "Back to plans",
+      "missingSelection": "No plan or payment method selected. Please choose a membership plan."
     }
   },
   "mentionsLegales": {

@@ -62,6 +62,16 @@ oei:
     # in production.
     from: ${OEI_MAIL_FROM:no-reply@theitorder.global}
   security:
+    # No default placeholder on purpose (see StripeWebhookResource's Javadoc): an unset/blank
+    # value must fail the endpoint closed (503), never silently skip signature verification —
+    # never a real Stripe webhook signing secret committed here, same posture as
+    # OEI_DB_PASSWORD/OEI_SMTP_PASSWORD above.
+    stripe-webhook-secret: ${OEI_STRIPE_WEBHOOK_SECRET:}
+    # Same fail-closed posture as stripe-webhook-secret above, but for PayPal's own
+    # verify-webhook-signature API (see PaypalWebhookResource's Javadoc): this is the webhook
+    # ID configured in the PayPal developer dashboard for this specific webhook endpoint --
+    # distinct from OEI_PAYPAL_CLIENT_ID/OEI_PAYPAL_CLIENT_SECRET (application-paypal.yml).
+    paypal-webhook-id: ${OEI_PAYPAL_WEBHOOK_ID:}
     public-urls:
       - /actuator/health
       - /actuator/health/**
@@ -71,7 +81,14 @@ oei:
       - /swagger-ui.html
       # /api/public/** backs PublicEventsApi/PublicAccountsApi/PublicInstitutionsApi/etc:
       # genuinely anonymous, visitor-facing endpoints (event listings, anonymized salary
-      # insights, public member/institution profiles) — never require a bearer token.
+      # insights, public member/institution profiles) — never require a bearer token. Also
+      # covers /api/public/v1/webhooks/stripe (StripeWebhookResource): Stripe cannot present a
+      # Keycloak bearer token either, and it authenticates itself instead via the
+      # Stripe-Signature header, verified manually (see StripeSignatureVerifier) — never skip
+      # that verification just because the path is public. Also covers
+      # /api/public/v1/webhooks/paypal (PaypalWebhookResource): PayPal authenticates itself
+      # instead via its own verify-webhook-signature API (see
+      # PaypalWebhookVerificationAdapter) — never skip that verification either.
       - /api/public/**
       # /content/** backs the legacy, unversioned ContentLegacyApi (content-legacy tag) --
       # no `security:` override in the OpenAPI contract (document-level `security: []`

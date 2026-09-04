@@ -256,9 +256,66 @@
     },
     "foundingStatus": {
       "message": "Movimento atualmente em formação — seja um dos primeiros membros fundadores.",
-      "note": "O formulário de adesão on-line estará disponível em breve. Enquanto isso, entre em contato conosco para manifestar seu interesse em apoiar o movimento.",
+      "note": "Descubra abaixo as nossas modalidades de adesão e escolha a que mais lhe convém. O pagamento on-line completo estará disponível em breve; enquanto isso, entre em contato conosco para manifestar seu interesse em apoiar o movimento.",
       "cta": "Apoiar o movimento",
       "contactPrefix": "Ou escreva diretamente para nós em"
+    }
+  },
+  "adhesion": {
+    "title": "Escolha a sua modalidade de adesão",
+    "intro": "Cada modalidade dá acesso ao mesmo espaço de membros — a diferença está no seu nível de contribuição ao movimento e no reconhecimento que o acompanha.",
+    "honestNote": "Atualmente, o acesso ao espaço de membros é idêntico independentemente do nível escolhido: ainda não existem benefícios técnicos diferenciados por nível. Cada modalidade reflete principalmente o seu nível de apoio ao movimento.",
+    "chooseCta": "Escolher esta modalidade",
+    "plans": {
+      "STUDENT": {
+        "advantages": [
+          "Tarifa reduzida para estudantes e recém-formados",
+          "Acesso completo ao espaço de membros e ao diretório da rede",
+          "Convites para eventos e workshops da associação"
+        ]
+      },
+      "MEMBER": {
+        "advantages": [
+          "Status de membro profissional da OEI",
+          "Acesso completo ao espaço de membros e ao diretório da rede",
+          "Convites para eventos e workshops da associação"
+        ]
+      },
+      "FOUNDING": {
+        "advantages": [
+          "Reconhecimento de membro fundador, entre os primeiríssimos apoiadores do movimento",
+          "Acesso completo ao espaço de membros e ao diretório da rede",
+          "Convites para eventos e workshops da associação"
+        ]
+      },
+      "SUPPORTER": {
+        "advantages": [
+          "Nível de contribuição mais alto, apoiando o lançamento do movimento",
+          "Acesso completo ao espaço de membros e ao diretório da rede",
+          "Convites para eventos e workshops da associação"
+        ]
+      }
+    },
+    "modal": {
+      "title": "Escolha o seu método de pagamento",
+      "selectedPlanPrefix": "Modalidade selecionada:",
+      "card": "Cartão de crédito",
+      "paypal": "PayPal",
+      "cancel": "Cancelar",
+      "closeAria": "Fechar a janela"
+    },
+    "checkout": {
+      "title": "Finalizar a sua adesão",
+      "summaryTitle": "Resumo",
+      "planLabel": "Modalidade",
+      "methodLabel": "Método de pagamento",
+      "method": { "CARD": "Cartão de crédito", "PAYPAL": "PayPal" },
+      "placeholderNotice": "Esta etapa é uma pré-visualização da interface de pagamento — o processamento real do pagamento on-line ainda não está disponível.",
+      "deferredNotice": "O pagamento real com cartão (Stripe) e o botão real do PayPal serão integrados em uma etapa futura. Enquanto isso, crie sua conta para se juntar ao movimento; entraremos em contato para finalizar sua cotização.",
+      "createAccountCta": "Criar minha conta",
+      "goToPaymentCta": "Ir para minha página de cotização",
+      "backToPlans": "Voltar às modalidades",
+      "missingSelection": "Nenhuma modalidade ou método de pagamento selecionado. Por favor, escolha uma modalidade de adesão."
     }
   },
   "mentionsLegales": {

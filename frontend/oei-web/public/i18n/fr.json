@@ -256,9 +256,66 @@
     },
     "foundingStatus": {
       "message": "Mouvement en cours de constitution — soyez parmi les premiers membres fondateurs.",
-      "note": "Le formulaire d'adhésion en ligne arrive bientôt. En attendant, contactez-nous pour manifester votre intérêt à soutenir le mouvement.",
+      "note": "Découvrez nos formules d'adhésion ci-dessous et choisissez celle qui vous convient. Le paiement en ligne complet arrive bientôt ; en attendant, contactez-nous pour manifester votre intérêt à soutenir le mouvement.",
       "cta": "Soutenir le mouvement",
       "contactPrefix": "Ou écrivez-nous directement à"
+    }
+  },
+  "adhesion": {
+    "title": "Choisissez votre formule d'adhésion",
+    "intro": "Chaque formule donne accès au même espace membre — la différence porte sur votre niveau de contribution au mouvement et la reconnaissance qui l'accompagne.",
+    "honestNote": "Aujourd'hui, l'accès à l'espace membre est identique quel que soit le palier choisi : il n'existe pas encore d'avantages techniques différenciés par palier. Chaque formule reflète avant tout votre niveau de soutien au mouvement.",
+    "chooseCta": "Choisir cette formule",
+    "plans": {
+      "STUDENT": {
+        "advantages": [
+          "Tarif réduit réservé aux étudiants et jeunes diplômés",
+          "Accès complet à l'espace membre et à l'annuaire du réseau",
+          "Invitations aux événements et ateliers de l'association"
+        ]
+      },
+      "MEMBER": {
+        "advantages": [
+          "Statut de membre professionnel de l'OEI",
+          "Accès complet à l'espace membre et à l'annuaire du réseau",
+          "Invitations aux événements et ateliers de l'association"
+        ]
+      },
+      "FOUNDING": {
+        "advantages": [
+          "Reconnaissance de membre fondateur, inscrit parmi les tout premiers soutiens du mouvement",
+          "Accès complet à l'espace membre et à l'annuaire du réseau",
+          "Invitations aux événements et ateliers de l'association"
+        ]
+      },
+      "SUPPORTER": {
+        "advantages": [
+          "Niveau de contribution le plus élevé, pour soutenir le lancement du mouvement",
+          "Accès complet à l'espace membre et à l'annuaire du réseau",
+          "Invitations aux événements et ateliers de l'association"
+        ]
+      }
+    },
+    "modal": {
+      "title": "Choisissez votre moyen de paiement",
+      "selectedPlanPrefix": "Formule sélectionnée :",
+      "card": "Carte bancaire",
+      "paypal": "PayPal",
+      "cancel": "Annuler",
+      "closeAria": "Fermer la fenêtre"
+    },
+    "checkout": {
+      "title": "Finaliser votre adhésion",
+      "summaryTitle": "Récapitulatif",
+      "planLabel": "Formule",
+      "methodLabel": "Moyen de paiement",
+      "method": { "CARD": "Carte bancaire", "PAYPAL": "PayPal" },
+      "placeholderNotice": "Cette étape est un aperçu de l'interface de paiement — le traitement réel du paiement en ligne n'est pas encore disponible.",
+      "deferredNotice": "Le paiement par carte (Stripe) et le bouton PayPal réel seront intégrés dans une prochaine étape. En attendant, créez votre compte pour rejoindre le mouvement ; nous vous recontacterons pour finaliser votre cotisation.",
+      "createAccountCta": "Créer mon compte",
+      "goToPaymentCta": "Aller à ma page de cotisation",
+      "backToPlans": "Retour aux formules",
+      "missingSelection": "Aucune formule ou moyen de paiement sélectionné. Merci de choisir une formule d'adhésion."
     }
   },
   "mentionsLegales": {

@@ -46,7 +46,7 @@ const INTERFACE_STRINGS: Record<string, string> = {
   'membresFondateurs.foundingStatus.message':
     'Mouvement en cours de constitution — soyez parmi les premiers membres fondateurs.',
   'membresFondateurs.foundingStatus.note':
-    "Le formulaire d'adhésion en ligne arrive bientôt. En attendant, contactez-nous pour manifester votre intérêt à soutenir le mouvement.",
+    "Découvrez nos formules d'adhésion ci-dessous et choisissez celle qui vous convient. Le paiement en ligne complet arrive bientôt ; en attendant, contactez-nous pour manifester votre intérêt à soutenir le mouvement.",
   'membresFondateurs.foundingStatus.cta': 'Soutenir le mouvement',
   'membresFondateurs.foundingStatus.contactPrefix': 'Ou écrivez-nous directement à',
 };
@@ -129,17 +129,17 @@ describe('MembresFondateurs', () => {
     expect(text.toLowerCase()).not.toContain('acheter le livre');
   });
 
-  it('givenComponent_whenCreated_thenRendersContactCtaAndMailtoWithFormComingSoonNote', () => {
+  it('givenComponent_whenCreated_thenRendersAdhesionCtaAndMailtoWithPaymentComingSoonNote', () => {
     const fixture = TestBed.createComponent(MembresFondateurs);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
 
     const cta = compiled.querySelector<HTMLAnchorElement>('.oei-cta-join');
-    expect(cta?.getAttribute('href')).toBe('/contact');
+    expect(cta?.getAttribute('href')).toBe('/adhesion');
 
     const mailtoLink = compiled.querySelector<HTMLAnchorElement>('.oei-page__link');
     expect(mailtoLink?.getAttribute('href')).toMatch(/^mailto:/);
 
-    expect(compiled.textContent).toContain("formulaire d'adhésion en ligne arrive bientôt");
+    expect(compiled.textContent).toContain('Le paiement en ligne complet arrive bientôt');
   });
 });

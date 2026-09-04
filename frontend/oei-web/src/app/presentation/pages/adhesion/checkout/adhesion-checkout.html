@@ -1,0 +1,46 @@
+<main class="oei-page oei-adhesion-checkout">
+  <h1 class="oei-page__title">{{ i18n.translate('adhesion.checkout.title') }}</h1>
+
+  @if (!hasValidSelection()) {
+    <p class="oei-page__empty">{{ i18n.translate('adhesion.checkout.missingSelection') }}</p>
+    <a class="oei-btn oei-btn--secondary" routerLink="/adhesion">
+      {{ i18n.translate('adhesion.checkout.backToPlans') }}
+    </a>
+  } @else {
+    <section class="oei-adhesion-checkout__summary">
+      <h2 class="oei-adhesion-checkout__summary-title">{{ i18n.translate('adhesion.checkout.summaryTitle') }}</h2>
+      <dl class="oei-adhesion-checkout__summary-list">
+        <div class="oei-adhesion-checkout__summary-row">
+          <dt>{{ i18n.translate('adhesion.checkout.planLabel') }}</dt>
+          <dd>{{ i18n.translate('membresFondateurs.feeTiers.tiers.' + feeTierGridIndex[tier()!] + '.label') }}</dd>
+        </div>
+        <div class="oei-adhesion-checkout__summary-row">
+          <dt>{{ i18n.translate('adhesion.checkout.methodLabel') }}</dt>
+          <dd>{{ i18n.translate('adhesion.checkout.method.' + method()!) }}</dd>
+        </div>
+      </dl>
+    </section>
+
+    <p class="oei-adhesion-checkout__placeholder-notice" role="status">
+      {{ i18n.translate('adhesion.checkout.placeholderNotice') }}
+    </p>
+    <p class="oei-adhesion-checkout__deferred-notice">
+      {{ i18n.translate('adhesion.checkout.deferredNotice') }}
+    </p>
+
+    <div class="oei-adhesion-checkout__actions">
+      @if (!isAuthenticated()) {
+        <button type="button" class="oei-btn oei-btn--primary" (click)="startAccountCreation()">
+          {{ i18n.translate('adhesion.checkout.createAccountCta') }}
+        </button>
+      } @else {
+        <a class="oei-btn oei-btn--primary" routerLink="/espace-membre/cotisation">
+          {{ i18n.translate('adhesion.checkout.goToPaymentCta') }}
+        </a>
+      }
+      <a class="oei-adhesion-checkout__back-link" routerLink="/adhesion">
+        {{ i18n.translate('adhesion.checkout.backToPlans') }}
+      </a>
+    </div>
+  }
+</main>

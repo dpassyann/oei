@@ -1,0 +1,68 @@
+<main class="oei-page oei-adhesion">
+  <h1 class="oei-page__title">{{ i18n.translate('adhesion.title') }}</h1>
+  <p class="oei-page__body">{{ i18n.translate('adhesion.intro') }}</p>
+  <p class="oei-adhesion__honest-note">{{ i18n.translate('adhesion.honestNote') }}</p>
+
+  <section class="oei-adhesion__plans">
+    @for (tier of tiers; track tier) {
+      <article class="oei-adhesion__plan-card">
+        <h2 class="oei-adhesion__plan-label">
+          {{ i18n.translate('membresFondateurs.feeTiers.tiers.' + feeTierGridIndex[tier] + '.label') }}
+        </h2>
+        <p class="oei-adhesion__plan-amount">
+          {{ i18n.translate('membresFondateurs.feeTiers.tiers.' + feeTierGridIndex[tier] + '.amount') }}
+        </p>
+        <ul class="oei-adhesion__plan-advantages">
+          @for (advantage of i18n.translateList('adhesion.plans.' + tier + '.advantages'); track advantage) {
+            <li>{{ advantage }}</li>
+          }
+        </ul>
+        <button
+          type="button"
+          class="oei-btn oei-btn--primary oei-adhesion__choose-btn"
+          (click)="openPaymentMethodModal(tier)"
+        >
+          {{ i18n.translate('adhesion.chooseCta') }}
+        </button>
+      </article>
+    }
+  </section>
+
+  @if (selectedTier(); as tier) {
+    <dialog
+      class="oei-adhesion-modal"
+      open
+      [attr.aria-label]="i18n.translate('adhesion.modal.title')"
+    >
+      <div
+        class="oei-adhesion-modal__backdrop"
+        role="button"
+        tabindex="0"
+        [attr.aria-label]="i18n.translate('adhesion.modal.closeAria')"
+        (click)="closeModal()"
+        (keydown.enter)="closeModal()"
+      ></div>
+      <section class="oei-adhesion-modal__panel">
+        <button type="button" class="oei-adhesion-modal__close" (click)="closeModal()">
+          {{ i18n.translate('adhesion.modal.closeAria') }}
+        </button>
+        <h2 class="oei-adhesion-modal__title">{{ i18n.translate('adhesion.modal.title') }}</h2>
+        <p class="oei-adhesion-modal__selected-plan">
+          {{ i18n.translate('adhesion.modal.selectedPlanPrefix') }}
+          {{ i18n.translate('membresFondateurs.feeTiers.tiers.' + selectedTierGridIndex() + '.label') }}
+        </p>
+        <div class="oei-adhesion-modal__methods">
+          <button type="button" class="oei-btn oei-btn--secondary" (click)="confirmMethod('CARD')">
+            {{ i18n.translate('adhesion.modal.card') }}
+          </button>
+          <button type="button" class="oei-btn oei-btn--secondary" (click)="confirmMethod('PAYPAL')">
+            {{ i18n.translate('adhesion.modal.paypal') }}
+          </button>
+        </div>
+        <button type="button" class="oei-adhesion-modal__cancel" (click)="closeModal()">
+          {{ i18n.translate('adhesion.modal.cancel') }}
+        </button>
+      </section>
+    </dialog>
+  }
+</main>

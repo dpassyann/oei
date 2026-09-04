@@ -1,0 +1,86 @@
+:host {
+  display: block;
+}
+
+$oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+
+.oei-page {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem;
+}
+
+.oei-page__title {
+  margin: 0 0 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-page__empty {
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.oei-adhesion-checkout__summary {
+  border: 1px solid rgba(10, 30, 63, 0.14);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.oei-adhesion-checkout__summary-title {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+  color: $oei-navy;
+}
+
+.oei-adhesion-checkout__summary-list {
+  margin: 0;
+}
+
+.oei-adhesion-checkout__summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+
+  dt {
+    color: #555;
+  }
+
+  dd {
+    margin: 0;
+    font-weight: 600;
+    color: #222;
+  }
+}
+
+.oei-adhesion-checkout__placeholder-notice {
+  margin: 0 0 1rem;
+  padding: 0.85rem 1rem;
+  border-left: 3px solid $oei-gold;
+  background: rgba(232, 165, 48, 0.08);
+  color: #444;
+  line-height: 1.5;
+}
+
+.oei-adhesion-checkout__deferred-notice {
+  margin: 0 0 2rem;
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.oei-adhesion-checkout__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.oei-adhesion-checkout__back-link {
+  color: #666;
+  text-decoration: underline;
+}

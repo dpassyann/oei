@@ -256,9 +256,66 @@
     },
     "foundingStatus": {
       "message": "Movimiento actualmente en constitución — sea uno de los primeros miembros fundadores.",
-      "note": "El formulario de inscripción en línea llegará pronto. Mientras tanto, contáctenos para manifestar su interés en apoyar el movimiento.",
+      "note": "Descubra a continuación nuestras fórmulas de afiliación y elija la que mejor le convenga. El pago en línea completo llegará pronto; mientras tanto, contáctenos para manifestar su interés en apoyar el movimiento.",
       "cta": "Apoyar el movimiento",
       "contactPrefix": "O escríbanos directamente a"
+    }
+  },
+  "adhesion": {
+    "title": "Elija su fórmula de afiliación",
+    "intro": "Cada fórmula da acceso al mismo espacio de socios — la diferencia radica en su nivel de contribución al movimiento y el reconocimiento que lo acompaña.",
+    "honestNote": "Actualmente, el acceso al espacio de socios es idéntico sin importar el nivel elegido: todavía no existen beneficios técnicos diferenciados por nivel. Cada fórmula refleja principalmente su nivel de apoyo al movimiento.",
+    "chooseCta": "Elegir esta fórmula",
+    "plans": {
+      "STUDENT": {
+        "advantages": [
+          "Tarifa reducida para estudiantes y recién graduados",
+          "Acceso completo al espacio de socios y al directorio de la red",
+          "Invitaciones a los eventos y talleres de la asociación"
+        ]
+      },
+      "MEMBER": {
+        "advantages": [
+          "Estatus de socio profesional de la OEI",
+          "Acceso completo al espacio de socios y al directorio de la red",
+          "Invitaciones a los eventos y talleres de la asociación"
+        ]
+      },
+      "FOUNDING": {
+        "advantages": [
+          "Reconocimiento de socio fundador, entre los primeros en apoyar el movimiento",
+          "Acceso completo al espacio de socios y al directorio de la red",
+          "Invitaciones a los eventos y talleres de la asociación"
+        ]
+      },
+      "SUPPORTER": {
+        "advantages": [
+          "Nivel de contribución más alto, apoyando el lanzamiento del movimiento",
+          "Acceso completo al espacio de socios y al directorio de la red",
+          "Invitaciones a los eventos y talleres de la asociación"
+        ]
+      }
+    },
+    "modal": {
+      "title": "Elija su método de pago",
+      "selectedPlanPrefix": "Fórmula seleccionada:",
+      "card": "Tarjeta bancaria",
+      "paypal": "PayPal",
+      "cancel": "Cancelar",
+      "closeAria": "Cerrar la ventana"
+    },
+    "checkout": {
+      "title": "Finalizar su afiliación",
+      "summaryTitle": "Resumen",
+      "planLabel": "Fórmula",
+      "methodLabel": "Método de pago",
+      "method": { "CARD": "Tarjeta bancaria", "PAYPAL": "PayPal" },
+      "placeholderNotice": "Este paso es una vista previa de la interfaz de pago — el procesamiento real del pago en línea aún no está disponible.",
+      "deferredNotice": "El pago real con tarjeta (Stripe) y el botón real de PayPal se integrarán en una próxima etapa. Mientras tanto, cree su cuenta para unirse al movimiento; nos pondremos en contacto con usted para finalizar su cuota.",
+      "createAccountCta": "Crear mi cuenta",
+      "goToPaymentCta": "Ir a mi página de cotización",
+      "backToPlans": "Volver a las fórmulas",
+      "missingSelection": "No se seleccionó ninguna fórmula ni método de pago. Por favor elija una fórmula de afiliación."
     }
   },
   "mentionsLegales": {

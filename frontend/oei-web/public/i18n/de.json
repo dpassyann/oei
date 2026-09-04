@@ -256,9 +256,66 @@
     },
     "foundingStatus": {
       "message": "Die Bewegung befindet sich derzeit im Aufbau — seien Sie unter den ersten Gründungsmitgliedern.",
-      "note": "Das Online-Beitrittsformular folgt in Kürze. Kontaktieren Sie uns in der Zwischenzeit, um Ihr Interesse an der Unterstützung der Bewegung zu bekunden.",
+      "note": "Entdecken Sie unten unsere Mitgliedschaftspakete und wählen Sie das passende aus. Die vollständige Online-Zahlung folgt in Kürze — kontaktieren Sie uns in der Zwischenzeit, um Ihr Interesse an der Unterstützung der Bewegung zu bekunden.",
       "cta": "Die Bewegung unterstützen",
       "contactPrefix": "Oder schreiben Sie uns direkt an"
+    }
+  },
+  "adhesion": {
+    "title": "Wählen Sie Ihr Mitgliedschaftspaket",
+    "intro": "Jedes Paket bietet Zugang zum gleichen Mitgliederbereich — der Unterschied liegt in Ihrem Beitragsniveau zur Bewegung und der damit verbundenen Anerkennung.",
+    "honestNote": "Derzeit ist der Zugang zum Mitgliederbereich unabhängig vom gewählten Paket identisch: Es gibt noch keine nach Paket differenzierten technischen Vorteile. Jedes Paket spiegelt vor allem Ihr Unterstützungsniveau für die Bewegung wider.",
+    "chooseCta": "Dieses Paket wählen",
+    "plans": {
+      "STUDENT": {
+        "advantages": [
+          "Ermäßigter Tarif für Studierende und Absolventen",
+          "Voller Zugang zum Mitgliederbereich und zum Netzwerkverzeichnis",
+          "Einladungen zu Veranstaltungen und Workshops des Vereins"
+        ]
+      },
+      "MEMBER": {
+        "advantages": [
+          "Professioneller Mitgliedsstatus der OEI",
+          "Voller Zugang zum Mitgliederbereich und zum Netzwerkverzeichnis",
+          "Einladungen zu Veranstaltungen und Workshops des Vereins"
+        ]
+      },
+      "FOUNDING": {
+        "advantages": [
+          "Anerkennung als Gründungsmitglied, unter den allerersten Unterstützern der Bewegung",
+          "Voller Zugang zum Mitgliederbereich und zum Netzwerkverzeichnis",
+          "Einladungen zu Veranstaltungen und Workshops des Vereins"
+        ]
+      },
+      "SUPPORTER": {
+        "advantages": [
+          "Höchstes Beitragsniveau zur Unterstützung des Starts der Bewegung",
+          "Voller Zugang zum Mitgliederbereich und zum Netzwerkverzeichnis",
+          "Einladungen zu Veranstaltungen und Workshops des Vereins"
+        ]
+      }
+    },
+    "modal": {
+      "title": "Wählen Sie Ihre Zahlungsmethode",
+      "selectedPlanPrefix": "Ausgewähltes Paket:",
+      "card": "Kreditkarte",
+      "paypal": "PayPal",
+      "cancel": "Abbrechen",
+      "closeAria": "Dialog schließen"
+    },
+    "checkout": {
+      "title": "Mitgliedschaft abschließen",
+      "summaryTitle": "Zusammenfassung",
+      "planLabel": "Paket",
+      "methodLabel": "Zahlungsmethode",
+      "method": { "CARD": "Kreditkarte", "PAYPAL": "PayPal" },
+      "placeholderNotice": "Dieser Schritt ist eine Vorschau der Zahlungsoberfläche — die echte Online-Zahlungsabwicklung ist noch nicht verfügbar.",
+      "deferredNotice": "Die echte Kartenzahlung (Stripe) und die tatsächliche PayPal-Schaltfläche werden in einem zukünftigen Schritt integriert. Erstellen Sie in der Zwischenzeit Ihr Konto, um der Bewegung beizutreten; wir melden uns bei Ihnen, um Ihren Mitgliedsbeitrag abzuschließen.",
+      "createAccountCta": "Konto erstellen",
+      "goToPaymentCta": "Zu meiner Beitragsseite",
+      "backToPlans": "Zurück zu den Paketen",
+      "missingSelection": "Kein Paket oder keine Zahlungsmethode ausgewählt. Bitte wählen Sie ein Mitgliedschaftspaket."
     }
   },
   "mentionsLegales": {

@@ -256,9 +256,66 @@
     },
     "foundingStatus": {
       "message": "Movimento attualmente in fase di costituzione — sii tra i primi membri fondatori.",
-      "note": "Il modulo di adesione online arriverà presto. Nel frattempo, contattaci per manifestare il tuo interesse a sostenere il movimento.",
+      "note": "Scopri qui sotto le nostre formule di adesione e scegli quella più adatta a te. Il pagamento online completo arriverà presto; nel frattempo, contattaci per manifestare il tuo interesse a sostenere il movimento.",
       "cta": "Sostieni il movimento",
       "contactPrefix": "Oppure scrivici direttamente a"
+    }
+  },
+  "adhesion": {
+    "title": "Scegli la tua formula di adesione",
+    "intro": "Ogni formula dà accesso alla stessa area soci — la differenza risiede nel tuo livello di contributo al movimento e nel riconoscimento che lo accompagna.",
+    "honestNote": "Al momento, l'accesso all'area soci è identico indipendentemente dal livello scelto: non esistono ancora vantaggi tecnici differenziati per livello. Ogni formula riflette principalmente il tuo livello di sostegno al movimento.",
+    "chooseCta": "Scegli questa formula",
+    "plans": {
+      "STUDENT": {
+        "advantages": [
+          "Tariffa ridotta per studenti e neolaureati",
+          "Accesso completo all'area soci e alla directory della rete",
+          "Inviti agli eventi e workshop dell'associazione"
+        ]
+      },
+      "MEMBER": {
+        "advantages": [
+          "Status di socio professionale dell'OEI",
+          "Accesso completo all'area soci e alla directory della rete",
+          "Inviti agli eventi e workshop dell'associazione"
+        ]
+      },
+      "FOUNDING": {
+        "advantages": [
+          "Riconoscimento di membro fondatore, tra i primissimi sostenitori del movimento",
+          "Accesso completo all'area soci e alla directory della rete",
+          "Inviti agli eventi e workshop dell'associazione"
+        ]
+      },
+      "SUPPORTER": {
+        "advantages": [
+          "Livello di contributo più alto, a sostegno del lancio del movimento",
+          "Accesso completo all'area soci e alla directory della rete",
+          "Inviti agli eventi e workshop dell'associazione"
+        ]
+      }
+    },
+    "modal": {
+      "title": "Scegli il tuo metodo di pagamento",
+      "selectedPlanPrefix": "Formula selezionata:",
+      "card": "Carta di credito",
+      "paypal": "PayPal",
+      "cancel": "Annulla",
+      "closeAria": "Chiudi la finestra"
+    },
+    "checkout": {
+      "title": "Completa la tua adesione",
+      "summaryTitle": "Riepilogo",
+      "planLabel": "Formula",
+      "methodLabel": "Metodo di pagamento",
+      "method": { "CARD": "Carta di credito", "PAYPAL": "PayPal" },
+      "placeholderNotice": "Questo passaggio è un'anteprima dell'interfaccia di pagamento — l'elaborazione reale del pagamento online non è ancora disponibile.",
+      "deferredNotice": "Il pagamento reale con carta (Stripe) e il vero pulsante PayPal saranno integrati in una fase successiva. Nel frattempo, crea il tuo account per unirti al movimento; ti ricontatteremo per finalizzare la tua quota.",
+      "createAccountCta": "Crea il mio account",
+      "goToPaymentCta": "Vai alla mia pagina della quota",
+      "backToPlans": "Torna alle formule",
+      "missingSelection": "Nessuna formula o metodo di pagamento selezionato. Scegli una formula di adesione."
     }
   },
   "mentionsLegales": {

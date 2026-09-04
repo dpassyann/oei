@@ -2,23 +2,32 @@
 # REDUCED SUBSET OF THE PAYPAL ORDERS V2 / PAYMENTS API — FIELD-VERIFIED AGAINST THE REAL
 # VENDOR SPECS.
 #
-# PayPal publishes per-product OpenAPI specs on its developer portal (Orders v2, Payments);
-# this file keeps ONLY the four operations the OEI store feature actually needs (create
-# Order, capture Order, retrieve Order, refund a Capture — exactly the four operations
-# listed in .prompt/plan/store/04-architecture-technique.md §2).
+# PayPal publishes per-product OpenAPI specs on its developer portal (Orders v2, Payments,
+# Webhooks Management); this file keeps ONLY the five operations the OEI store feature
+# actually needs (create Order, capture Order, retrieve Order, refund a Capture, verify a
+# webhook signature — the first four listed in .prompt/plan/store/04-architecture-technique.md
+# §2, the fifth added for the PayPal webhook endpoint).
 #
 # Every field name/status enum below (order_request.intent/purchase_units,
 # purchase_unit_request.reference_id/amount, money.currency_code/value, order.id/status,
 # refund.id/status with CREATED/APPROVED/COMPLETED/VOIDED and
-# CANCELLED/FAILED/PENDING/COMPLETED status vocabularies) was checked field-by-field on
-# 2026-08-16 against real copies of the vendor Orders v2 (paths /v2/checkout/orders,
-# /v2/checkout/orders/{id}, /v2/checkout/orders/{id}/capture) and Payments
-# (/v2/payments/captures/{capture_id}/refund) specs — every one matched exactly, so no
+# CANCELLED/FAILED/PENDING/COMPLETED status vocabularies, and
+# verify-webhook-signature-response.verification_status with SUCCESS/FAILURE) was checked
+# field-by-field on 2026-08-16 against real copies of the vendor Orders v2 (paths
+# /v2/checkout/orders, /v2/checkout/orders/{id}, /v2/checkout/orders/{id}/capture), Payments
+# (/v2/payments/captures/{capture_id}/refund) and Webhooks Management
+# (/v1/notifications/verify-webhook-signature) specs — every one matched exactly, so no
 # schema/operationId change was needed here (the {captureId} path-parameter name is a purely
 # cosmetic, internally-consistent choice — it has no bearing on the generated client, unlike
 # the vendor's {capture_id}). The full vendor files used for that check are gitignored (see
 # .gitignore) and never committed — they are multi-MB third-party artifacts, not this
 # project's own source.
+#
+# NOTE: /v1/notifications/verify-webhook-signature lives under PayPal's v1 host, unlike the
+# Orders/Payments operations above which are v2 — the path below is deliberately relative
+# (no version segment), mirroring how the other paths in this file omit their own /v2 segment:
+# the version prefix is supplied by whichever RestClient base URL a given generated *Api
+# interface is wired onto (see PaypalClientConfiguration), not by this contract.
 # -----------------------------------------------------------------------------------------
 openapi: 3.0.3
 info:
@@ -127,6 +136,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PaypalErrorResponse'
+  /notifications/verify-webhook-signature:
+    post:
+      operationId: verifyPaypalWebhookSignature
+      tags: [Notifications]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyPaypalWebhookSignatureRequest'
+      responses:
+        '200':
+          description: The verification verdict.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaypalVerifyWebhookSignatureResponse'
+        default:
+          description: PayPal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaypalErrorResponse'
 components:
   schemas:
     CreatePaypalOrderRequest:
@@ -197,3 +229,30 @@ components:
                 type: string
               description:
                 type: string
+    VerifyPaypalWebhookSignatureRequest:
+      type: object
+      required: [auth_algo, cert_url, transmission_id, transmission_sig, transmission_time, webhook_id, webhook_event]
+      properties:
+        auth_algo:
+          type: string
+        cert_url:
+          type: string
+        transmission_id:
+          type: string
+        transmission_sig:
+          type: string
+        transmission_time:
+          type: string
+        webhook_id:
+          type: string
+        webhook_event:
+          description: The exact JSON body PayPal delivered to the webhook endpoint, forwarded unparsed/untyped.
+          type: object
+          additionalProperties: true
+    PaypalVerifyWebhookSignatureResponse:
+      type: object
+      required: [verification_status]
+      properties:
+        verification_status:
+          type: string
+          description: SUCCESS | FAILURE.

@@ -7,6 +7,7 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.client.support.RestClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
+import global.oei.infrastructure.client.paypal.generated.api.NotificationsApi;
 import global.oei.infrastructure.client.paypal.generated.api.OrdersApi;
 import global.oei.infrastructure.client.paypal.generated.api.PaymentsApi;
 
@@ -15,6 +16,11 @@ import global.oei.infrastructure.client.paypal.generated.api.PaymentsApi;
  * a single {@link RestClient}, authenticated with a bearer OAuth2 access token obtained/cached
  * by {@link PaypalAccessTokenProvider} (never hardcoded, never logged). The sandbox host
  * default below is dev-only and must be overridden in production.
+ *
+ * <p>{@link NotificationsApi} (webhook signature verification) is wired onto a second
+ * {@link RestClient}, based at PayPal's {@code /v1} host rather than {@code /v2} like
+ * Orders/Payments above — see the file-header comment in {@code paypal-api.yaml} for why the
+ * contract's path is version-agnostic and the base URL alone carries that distinction.</p>
  */
 @Configuration
 public class PaypalClientConfiguration {
@@ -52,5 +58,25 @@ public class PaypalClientConfiguration {
         return HttpServiceProxyFactory.builderFor(RestClientAdapter.create(paypalRestClient))
                 .build()
                 .createClient(PaymentsApi.class);
+    }
+
+    @Bean
+    RestClient paypalNotificationsRestClient(
+            @Value("${oei.payment.paypal.host-base-url:https://api-m.sandbox.paypal.com}") final String hostBaseUrl,
+            final PaypalAccessTokenProvider accessTokenProvider) {
+        return RestClient.builder()
+                .baseUrl(hostBaseUrl + "/v1")
+                .requestInterceptor((request, body, execution) -> {
+                    request.getHeaders().setBearerAuth(accessTokenProvider.currentAccessToken());
+                    return execution.execute(request, body);
+                })
+                .build();
+    }
+
+    @Bean
+    NotificationsApi notificationsApi(final RestClient paypalNotificationsRestClient) {
+        return HttpServiceProxyFactory.builderFor(RestClientAdapter.create(paypalNotificationsRestClient))
+                .build()
+                .createClient(NotificationsApi.class);
     }
 }

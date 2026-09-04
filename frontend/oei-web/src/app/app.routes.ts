@@ -10,6 +10,7 @@ import { Contact } from './presentation/pages/contact/contact';
 import { MentionsLegales } from './presentation/pages/mentions-legales/mentions-legales';
 import { PlanDuSite } from './presentation/pages/plan-du-site/plan-du-site';
 import { MembresFondateurs } from './presentation/pages/membres-fondateurs/membres-fondateurs';
+import { Adhesion } from './presentation/pages/adhesion/adhesion';
 import { Publications } from './presentation/pages/publications/publications';
 import { Partenaires } from './presentation/pages/partenaires/partenaires';
 import { PartenaireDetail } from './presentation/pages/partenaire-detail/partenaire-detail';
@@ -72,6 +73,17 @@ export const routes: Routes = [
   { path: 'domaines/:slug', component: DomaineDetail },
   { path: 'contact', component: Contact },
   { path: 'membres-fondateurs', component: MembresFondateurs },
+  // Public plan-selection page reached from `/membres-fondateurs`'s CTA (see `Adhesion`'s doc
+  // comment) — comparing the 4 `MembershipFeeTier` values with a payment-method modal, then
+  // forwarding to the placeholder checkout step below.
+  { path: 'adhesion', component: Adhesion },
+  // Lazy-loaded like `espace-membre/cotisation` below: a placeholder checkout step, only ever
+  // needed once a visitor has actually picked a plan and payment method on `/adhesion`.
+  {
+    path: 'adhesion/finaliser',
+    loadComponent: () =>
+      import('./presentation/pages/adhesion/checkout/adhesion-checkout').then((m) => m.AdhesionCheckout),
+  },
   // NOTE: there used to be a homemade `/inscription` public account-creation page here. It has
   // been removed in favor of redirecting straight to Keycloak's native registration screen
   // (see `KeycloakAuthService.register()` and `home.ts`'s `onJoinClick`) — the custom OEI login

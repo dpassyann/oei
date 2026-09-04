@@ -1,0 +1,150 @@
+:host {
+  display: block;
+}
+
+$oei-navy: #0a1e3f;
+$oei-gold: #e8a530;
+
+.oei-page {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem;
+}
+
+.oei-page__title {
+  margin: 0 0 1.5rem;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-page__body {
+  margin: 0 0 1rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.oei-adhesion__honest-note {
+  margin: 0 0 2.5rem;
+  padding: 0.85rem 1rem;
+  border-left: 3px solid $oei-gold;
+  background: rgba(232, 165, 48, 0.08);
+  color: #555;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.oei-adhesion__plans {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1.5rem;
+}
+
+.oei-adhesion__plan-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(10, 30, 63, 0.14);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  background: #fff;
+}
+
+.oei-adhesion__plan-label {
+  margin: 0 0 0.35rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: $oei-navy;
+}
+
+.oei-adhesion__plan-amount {
+  margin: 0 0 1rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: $oei-gold;
+}
+
+.oei-adhesion__plan-advantages {
+  flex: 1;
+  margin: 0 0 1.25rem;
+  padding-left: 1.1rem;
+  color: #333;
+  line-height: 1.5;
+
+  li {
+    margin-bottom: 0.4rem;
+  }
+}
+
+.oei-adhesion__choose-btn {
+  width: 100%;
+}
+
+// Modal — same native `<dialog>` + backdrop + panel pattern as `Profil`'s
+// `oei-onboarding-modal` (no reusable modal component/CDK Dialog exists in this codebase).
+.oei-adhesion-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 4000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border: none;
+  background: transparent;
+}
+
+.oei-adhesion-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 30, 63, 0.88);
+}
+
+.oei-adhesion-modal__panel {
+  position: relative;
+  z-index: 1;
+  width: min(28rem, 100%);
+  background: #fff;
+  border-radius: 0.75rem;
+  padding: 2rem 1.75rem 1.75rem;
+}
+
+.oei-adhesion-modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  border: 1px solid rgba(10, 30, 63, 0.24);
+  border-radius: 999px;
+  background: #fff;
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.oei-adhesion-modal__title {
+  margin: 0 0 0.75rem;
+  font-size: 1.35rem;
+  color: $oei-navy;
+}
+
+.oei-adhesion-modal__selected-plan {
+  margin: 0 0 1.5rem;
+  color: #444;
+}
+
+.oei-adhesion-modal__methods {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.oei-adhesion-modal__cancel {
+  display: block;
+  margin: 0 auto;
+  border: none;
+  background: none;
+  color: #666;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.9rem;
+}

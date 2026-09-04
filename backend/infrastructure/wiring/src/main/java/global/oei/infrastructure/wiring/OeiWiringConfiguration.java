@@ -12,6 +12,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
+import tools.jackson.databind.ObjectMapper;
+
 import global.oei.domain.core.badge.AwardBadgeService;
 import global.oei.domain.core.book.CreateBookCompilationService;
 import global.oei.domain.core.book.RenderBookCompilationService;
@@ -50,6 +52,7 @@ import global.oei.domain.core.publicprofile.PublishPublicProfileService;
 import global.oei.domain.core.store.CreateOrderService;
 import global.oei.domain.core.store.GenerateBusinessCardPreviewService;
 import global.oei.domain.core.store.PayOrderService;
+import global.oei.domain.core.store.ProcessPaymentWebhookService;
 import global.oei.domain.core.store.RefundOrderService;
 import global.oei.domain.core.verification.ApproveVerificationRequestService;
 import global.oei.domain.core.verification.CreateVerificationRequestService;
@@ -130,6 +133,7 @@ import global.oei.domain.shared.membershipfee.PayMembershipFeeUseCase;
 import global.oei.domain.shared.network.GetSalaryInsightUseCase;
 import global.oei.domain.shared.network.NetworkGraphPort;
 import global.oei.domain.shared.network.RecordCompensationDeclarationsPort;
+import global.oei.domain.shared.payment.PaypalWebhookVerificationPort;
 import global.oei.domain.shared.profile.GetMemberBootstrapUseCase;
 import global.oei.domain.shared.profile.GetMyProfileUseCase;
 import global.oei.domain.shared.profile.ImportLinkedinBasicUseCase;
@@ -150,6 +154,7 @@ import global.oei.domain.shared.store.GenerateBusinessCardPreviewUseCase;
 import global.oei.domain.shared.store.OrderPort;
 import global.oei.domain.shared.store.PayOrderUseCase;
 import global.oei.domain.shared.store.PaymentPort;
+import global.oei.domain.shared.store.ProcessPaymentWebhookUseCase;
 import global.oei.domain.shared.store.ProductPort;
 import global.oei.domain.shared.store.RefundOrderUseCase;
 import global.oei.domain.shared.verification.ApproveVerificationRequestUseCase;
@@ -164,6 +169,8 @@ import global.oei.infrastructure.client.linkedin.LinkedinProfileClient;
 import global.oei.infrastructure.client.payment.PaymentProviderBinder;
 import global.oei.infrastructure.client.paypal.PaypalClientConfiguration;
 import global.oei.infrastructure.client.paypal.PaypalPaymentProviderAdapter;
+import global.oei.infrastructure.client.paypal.PaypalWebhookVerificationAdapter;
+import global.oei.infrastructure.client.paypal.generated.api.NotificationsApi;
 import global.oei.infrastructure.client.paypal.generated.api.OrdersApi;
 import global.oei.infrastructure.client.paypal.generated.api.PaymentsApi;
 import global.oei.infrastructure.client.stripe.StripeClientConfiguration;
@@ -856,6 +863,18 @@ public class OeiWiringConfiguration {
     }
 
     /**
+     * Builds its own dedicated {@link ObjectMapper} rather than depending on whichever Jackson
+     * auto-configuration a given host application context happens to provide (or not — this
+     * bean must resolve the same way inside {@code application-web}'s full Spring MVC context
+     * and inside {@code OeiWiringConfigurationTest}'s minimal, servlet-less test app). No custom
+     * configuration is needed for this adapter's single, simple {@code readValue} call.
+     */
+    @Bean
+    public PaypalWebhookVerificationPort paypalWebhookVerificationPort(final NotificationsApi notificationsApi) {
+        return new PaypalWebhookVerificationAdapter(notificationsApi, new ObjectMapper());
+    }
+
+    /**
      * Binds {@link global.oei.domain.shared.payment.PaymentMethod#CARD}/{@code PAYPAL} to
      * their respective {@link global.oei.domain.shared.payment.PaymentProviderPort} adapter
      * at startup (see {@code PaymentProviderBinder}'s own Javadoc for the enum-strategy
@@ -897,6 +916,11 @@ public class OeiWiringConfiguration {
             final OrderPort orderPort, final PaymentPort paymentPort, final MemberPort memberPort,
             final EmailNotificationPort emailNotificationPort) {
         return new PayOrderService(orderPort, paymentPort, memberPort, emailNotificationPort);
+    }
+
+    @Bean
+    public ProcessPaymentWebhookUseCase processPaymentWebhookUseCase(final PaymentPort paymentPort) {
+        return new ProcessPaymentWebhookService(paymentPort);
     }
 
     @Bean

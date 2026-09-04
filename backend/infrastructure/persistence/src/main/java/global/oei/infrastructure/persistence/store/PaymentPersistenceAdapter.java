@@ -3,6 +3,7 @@ package global.oei.infrastructure.persistence.store;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.UnaryOperator;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,6 +42,23 @@ public class PaymentPersistenceAdapter implements PaymentPort {
     @Override
     public List<Payment> findByOrderId(final String orderId) {
         return repository.findByOrderId(UUID.fromString(orderId)).stream().map(PaymentPersistenceAdapter::toDomain).toList();
+    }
+
+    @Override
+    public Optional<Payment> findByProviderReference(final String providerReference) {
+        return repository.findByProviderReference(providerReference).map(PaymentPersistenceAdapter::toDomain);
+    }
+
+    @Override
+    @Transactional
+    public Optional<Payment> lockAndApply(final String providerReference, final UnaryOperator<Payment> transition) {
+        // Single transaction spanning the pessimistic-locked read, the caller-supplied
+        // decide/transition step, and the write: the row lock is held until this method's
+        // transaction commits, so a concurrent call for the same providerReference blocks until
+        // this one is done -- closing the TOCTOU window that a plain findByProviderReference()
+        // + save() pair leaves open.
+        return repository.findByProviderReferenceForUpdate(providerReference)
+                .map(entity -> save(transition.apply(toDomain(entity))));
     }
 
     private static Payment toDomain(final StorePaymentEntity entity) {
